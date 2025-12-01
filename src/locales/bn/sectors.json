@@ -1,0 +1,119 @@
+{
+  "hero": {
+    "title": "অভিজ্ঞ experts এর কাছ থেকে সঠিক advice পান",
+    "description": "Health, টাকা এবং পড়াশোনায় experts এর কাছ থেকে সাহায্য পান। প্রতিটি decision আপনার future এর জন্য সঠিক হওয়া উচিত, ভুল নয়। Confusion এ থাকবেন না, সঠিক advice নিন এবং confidence এর সাথে এগিয়ে যান।",
+    "wellnessEcosystem": "Health Services",
+    "wellnessDescription": "আপনার mental health, আপনার মতো করে",
+    "financeSector": "টাকার Advice",
+    "financeDescription": "Experts এর কাছ থেকে টাকার advice",
+    "educationSector": "পড়াশোনার Advice",
+    "educationDescription": "আপনার পড়াশোনা, আপনার মতো করে",
+    "personalizedCare": "আপনার জন্য বিশেষ care",
+    "personalizedDescription": "আপনার প্রয়োজনের according",
+    "expertSupport": "Expert Help",
+    "expertSupportDescription": "অভিজ্ঞ doctors এর সাথে যুক্ত হন",
+    "emotionalHealing": "হৃদয়ের Care",
+    "emotionalHealingDescription": "Peace এবং খুশি পান"
+  },
+  "whyChooseUs": {
+    "title": "MindCurePath কেন choose করবেন?",
+    "expertTherapists": {
+      "title": "অভিজ্ঞ Doctors",
+      "description": "বুঝুন যে আপনি কীভাবে ভাবেন এবং কেন এমন feel করেন।",
+      "cta": "আপনার doctor খুঁজুন"
+    },
+    "accessibility": {
+      "title": "সবসময় available",
+      "description": "Mobile বা computer থেকে যেকোনো সময়, যেকোনো জায়গায় সাহায্য পান।",
+      "cta": "শুরু করুন"
+    },
+    "privacy": {
+      "title": "সম্পূর্ণ privacy",
+      "description": "আপনার কথোপকথন সম্পূর্ণ safe থাকে।",
+      "cta": "আরও জানুন"
+    },
+    "progressTracking": {
+      "title": "Progress দেখুন",
+      "description": "আপনার improvement এর report দেখুন এবং আরও ভালো হতে থাকুন।",
+      "cta": "দেখুন"
+    },
+    "affordableCare": {
+      "title": "সস্তা service",
+      "description": "ভালো care দামি হওয়া উচিত নয়। আপনার budget অনুযায়ী price।",
+      "cta": "মূল্য দেখুন"
+    },
+    "communitySupport": {
+      "title": "Community এর সাহায্য",
+      "description": "অন্যান্য মানুষের সাথে যুক্ত হন যারা আপনার মতো problem এর মধ্য দিয়ে যাচ্ছেন।",
+      "cta": "যুক্ত হন"
+    }
+  },
+  "howDoesItWork": {
+    "title": "এটি কীভাবে কাজ করে?",
+    "subtitle": "MindCurePath এর সাথে শুরু করার সহজ steps",
+    "step1": {
+      "title": "1. Form পূরণ করুন বা WhatsApp করুন",
+      "description": "Form পূরণ করুন বা WhatsApp এ কথা বলুন। তৎক্ষণাৎ সাহায্য পান!"
+    },
+    "step2": {
+      "title": "2. Appointment নিন",
+      "description": "আমাদের team এর সাথে কথা বলার জন্য appointment book করুন!"
+    },
+    "step3": {
+      "title": "3. আপনার সাথে contact করা হবে",
+      "description": "আমাদের team আপনার time এ আপনার সাথে contact করবে। অপেক্ষা করুন!"
+    },
+    "step4": {
+      "title": "4. প্রয়োজনে আবার কথা বলুন",
+      "description": "যখনই প্রয়োজন, free তে আবার কথা বলতে পারেন!"
+    }
+  },
+  "whatOurUsersSay": {
+    "title": "আমাদের users কী বলেন",
+    "subtitle": "সেই মানুষদের গল্প যারা MindCurePath এর সাথে তাদের জীবন বদলে দিয়েছেন",
+    "reviews": {
+      "sarah": {
+        "name": "Sarah M.",
+        "review": "প্রথমবার কথা বলার পর আমি খুব light feel করেছি। আমি খুশি যে আমি এই app ব্যবহার করেছি!"
+      },
+      "john": {
+        "name": "John D.",
+        "review": "Shark Tank এ দেখেছি এবং তৎক্ষণাৎ app download করেছি। তখন থেকে সাহায্য নিচ্ছি - খুব ভালো। প্রতিবার কথা বলার পর ভালো লাগে!"
+      },
+      "james": {
+        "name": "James L.",
+        "review": "আমি ভাবতাম আমি যথেষ্ট নই, কিন্তু আমার doctor আমাকে নিজের উপর trust করতে শিখিয়েছেন। এটি আমার জীবন বদলে দিয়েছে!"
+      }
+    }
+  },
+  "selfAssessment": {
+    "title": "জানুন যে আপনি আসলে কে",
+    "description": "সহজ প্রশ্ন যা আপনার আসল personality দেখায় - নিজেকে বোঝার journey শুরু করুন।"
+  },
+  "cvt": {
+    "trauma": {
+      "title": "পুরানো খারাপ স্মৃতি আমাকে কীভাবে affect করছে?",
+      "description": "পুরানো জিনিস আজ আপনাকে কীভাবে সমস্যা করছে, এটি বুঝুন"
+    },
+    "adhd": {
+      "title": "আমার ADHD আছে কি?",
+      "description": "জানুন যে আপনার attention না দেওয়ার problem হতে পারে"
+    },
+    "anxiety": {
+      "title": "আমার anxiety কত?",
+      "description": "জানুন যে আপনি কতটা anxious এবং সামনে কী করতে হবে"
+    },
+    "mood": {
+      "title": "এটি শুধু খারাপ দিন নাকি আরও কিছু?",
+      "description": "জানুন যে আপনার sadness শুধু এক দিনের ব্যাপার নাকি আরও serious"
+    },
+    "resilience": {
+      "title": "আমি সমস্যার সাথে কীভাবে মোকাবিলা করি?",
+      "description": "জানুন যে আপনি কঠিন সময়ে কতটা strong থাকেন"
+    },
+    "relationship": {
+      "title": "Relationships এর check",
+      "description": "আপনার relationships বুঝুন এবং সামনে কী করতে হবে, এটি জানুন"
+    }
+  }
+}

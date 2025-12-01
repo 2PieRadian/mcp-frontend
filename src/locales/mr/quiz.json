@@ -1,0 +1,139 @@
+{
+  "questions": {
+    "q1": {
+      "question": "नवीन लोकांना भेटताना मी कसे feel करतो?",
+      "options": {
+        "option1": "Calm पण थोडे shy",
+        "option2": "खूप confident आणि बोलका",
+        "option3": "Friendly आणि open",
+        "option4": "Nervous आणि बोलण्यापासून घाबरतो"
+      }
+    },
+    "q2": {
+      "question": "जेव्हा कुणाला help हवी असते, मी",
+      "options": {
+        "option1": "तेव्हापर्यंत ignore करतो जेव्हापर्यंत ते म्हणत नाहीत",
+        "option2": "फक्त तेव्हा help करतो जेव्हा मला time असतो",
+        "option3": "ताबडतोब help करतो",
+        "option4": "जेव्हा शक्य असेल, help करण्याचा प्रयत्न करतो"
+      }
+    },
+    "q3": {
+      "question": "मी माझा free time कसा घालवायला आवडतो?",
+      "options": {
+        "option1": "बहुतेकदा friends किंवा family सोबत",
+        "option2": "बहुतेकदा एकटा",
+        "option3": "नेहमी एकटा",
+        "option4": "Friends सोबत आणि एकटा दोन्ही प्रकारे"
+      }
+    },
+    "q4": {
+      "question": "जर कोणी माझ्या मताशी agree नसेल, मी",
+      "options": {
+        "option1": "Angry होतो",
+        "option2": "बोलणे बंद करतो",
+        "option3": "ऐकतो पण वाईट वाटते",
+        "option4": "Calm राहतो आणि बोलतो"
+      }
+    },
+    "q5": {
+      "question": "मी माझ्या feelings समजू शकतो?",
+      "options": {
+        "option1": "खूप कमी",
+        "option2": "कधीकधी",
+        "option3": "बहुतेकदा",
+        "option4": "नेहमी"
+      }
+    },
+    "q6": {
+      "question": "जेव्हा मी upset होतो, मी",
+      "options": {
+        "option1": "Control गमावतो",
+        "option2": "Calm राहतो पण angry होतो",
+        "option3": "स्वतःला calm करण्याचा प्रयत्न करतो",
+        "option4": "Peacefully विचार करतो आणि समजूतदारपणे काम करतो"
+      }
+    },
+    "q7": {
+      "question": "जेव्हा कोणी मला hurt करते, मी",
+      "options": {
+        "option1": "कधीही माफ करत नाही",
+        "option2": "खूप उशीरा माफ करतो",
+        "option3": "काही वेळाने माफ करतो",
+        "option4": "लवकर माफ करतो"
+      }
+    },
+    "q8": {
+      "question": "मी thank you म्हणतो?",
+      "options": {
+        "option1": "खूप कमी",
+        "option2": "कधीकधी",
+        "option3": "अनेकदा",
+        "option4": "नेहमी"
+      }
+    },
+    "q9": {
+      "question": "Decision घेण्यापूर्वी, मी",
+      "options": {
+        "option1": "थोडे विचार करतो",
+        "option2": "विचार न करता काम करतो",
+        "option3": "चांगले विचार करतो आणि सर्व बाबी पाहतो",
+        "option4": "सर्व options पाहतो"
+      }
+    },
+    "q10": {
+      "question": "जेव्हा माझी plan काम करत नाही, मी",
+      "options": {
+        "option1": "Changes करण्याचा प्रयत्न करतो",
+        "option2": "Calm राहतो आणि नवीन plan बनवतो",
+        "option3": "वाईट वाटते आणि हार मानतो",
+        "option4": "खूप निराश होतो"
+      }
+    },
+    "q11": {
+      "question": "जेव्हा कोणी मला suggestion देते, मी",
+      "options": {
+        "option1": "Ignore करतो",
+        "option2": "विचार करतो",
+        "option3": "शिकतो आणि अधिक चांगले होण्याचा प्रयत्न करतो",
+        "option4": "Angry किंवा दुःखी होतो"
+      }
+    },
+    "q12": {
+      "question": "जेव्हा मी stress मध्ये असतो, मी",
+      "options": {
+        "option1": "चांगले handle करतो",
+        "option2": "Helpless feel करतो",
+        "option3": "Panic होतो",
+        "option4": "कधीकधी calm राहू शकतो"
+      }
+    },
+    "q13": {
+      "question": "Failure नंतर, मी",
+      "options": {
+        "option1": "खूप उशीरा पर्यंत वाईट feel करतो",
+        "option2": "हार मानतो",
+        "option3": "पुन्हा प्रयत्न करतो",
+        "option4": "थोडे विश्रांती घेऊन पुन्हा try करतो"
+      }
+    },
+    "q14": {
+      "question": "मी problems कसे पाहतो?",
+      "options": {
+        "option1": "खूप कठीण गोष्टी",
+        "option2": "Challenge ज्याला सामोरे जावे लागते",
+        "option3": "काहीतरी शिकण्याची संधी",
+        "option4": "वाईट नशीब"
+      }
+    },
+    "q15": {
+      "question": "मी लोकांसोबत kindness दाखवतो?",
+      "options": {
+        "option1": "अनेकदा",
+        "option2": "खूप कमी",
+        "option3": "कधीकधी",
+        "option4": "नेहमी"
+      }
+    }
+  }
+}

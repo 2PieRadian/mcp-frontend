@@ -1,0 +1,119 @@
+{
+  "hero": {
+    "title": "అనుభవజ్ఞులైన experts నుండి సరైన advice పొందండి",
+    "description": "Health, డబ్బు మరియు చదువులో experts నుండి సహాయం పొందండి. ప్రతి decision మీ future కోసం సరైనదిగా ఉండాలి, తప్పుగా ఉండకూడదు. Confusion లో ఉండకండి, సరైన advice తీసుకోండి మరియు confidence తో ముందుకు వెళ్లండి.",
+    "wellnessEcosystem": "Health Services",
+    "wellnessDescription": "మీ mental health, మీ విధంగా",
+    "financeSector": "డబ్బు యొక్క Advice",
+    "financeDescription": "Experts నుండి డబ్బు యొక్క advice",
+    "educationSector": "చదువు యొక్క Advice",
+    "educationDescription": "మీ చదువు, మీ విధంగా",
+    "personalizedCare": "మీ కోసం ప్రత్యేక care",
+    "personalizedDescription": "మీ అవసరాలకు అనుగుణంగా",
+    "expertSupport": "Expert Help",
+    "expertSupportDescription": "అనుభవజ్ఞులైన doctors తో కనెక్ట్ అవండి",
+    "emotionalHealing": "హృదయం యొక్క Care",
+    "emotionalHealingDescription": "Peace మరియు సంతోషం పొందండి"
+  },
+  "whyChooseUs": {
+    "title": "MindCurePath ఎందుకు choose చేయాలి?",
+    "expertTherapists": {
+      "title": "అనుభవజ్ఞులైన Doctors",
+      "description": "మీరు ఎలా ఆలోచిస్తారు మరియు ఎందుకు ఇలా feel చేస్తారు అని అర్థం చేసుకోండి.",
+      "cta": "మీ doctor కనుగొనండి"
+    },
+    "accessibility": {
+      "title": "ఎప్పుడూ available",
+      "description": "Mobile లేదా computer నుండి ఎప్పుడు అయినా, ఎక్కడ అయినా సహాయం పొందండి.",
+      "cta": "ప్రారంభించండి"
+    },
+    "privacy": {
+      "title": "పూర్తి privacy",
+      "description": "మీ సంభాషణలు పూర్తిగా safe ఉంటాయి.",
+      "cta": "మరింత తెలుసుకోండి"
+    },
+    "progressTracking": {
+      "title": "Progress చూడండి",
+      "description": "మీ improvement యొక్క report చూడండి మరియు మరింత మంచిగా ఉండండి.",
+      "cta": "చూడండి"
+    },
+    "affordableCare": {
+      "title": "చౌకైన service",
+      "description": "మంచి care ఖరీదైనదిగా ఉండకూడదు. మీ budget కు అనుగుణంగా price.",
+      "cta": "ధర చూడండి"
+    },
+    "communitySupport": {
+      "title": "Community యొక్క సహాయం",
+      "description": "మీలాగే problem ద్వారా వెళుతున్న ఇతర వ్యక్తులతో కనెక్ట్ అవండి.",
+      "cta": "కనెక్ట్ అవండి"
+    }
+  },
+  "howDoesItWork": {
+    "title": "ఇది ఎలా పని చేస్తుంది?",
+    "subtitle": "MindCurePath తో ప్రారంభించడానికి సులభమైన steps",
+    "step1": {
+      "title": "1. Form పూరించండి లేదా WhatsApp చేయండి",
+      "description": "Form పూరించండి లేదా WhatsApp లో మాట్లాడండి. వెంటనే సహాయం పొందండి!"
+    },
+    "step2": {
+      "title": "2. Appointment తీసుకోండి",
+      "description": "మా team తో మాట్లాడడానికి appointment book చేయండి!"
+    },
+    "step3": {
+      "title": "3. మీతో contact చేయబడుతుంది",
+      "description": "మా team మీ time లో మీతో contact చేస్తుంది. వేచి ఉండండి!"
+    },
+    "step4": {
+      "title": "4. అవసరమైతే మళ్లీ మాట్లాడండి",
+      "description": "అవసరమైనప్పుడు, free లో మళ్లీ మాట్లాడవచ్చు!"
+    }
+  },
+  "whatOurUsersSay": {
+    "title": "మా users ఏమి చెబుతారు",
+    "subtitle": "MindCurePath తో తమ జీవితాలను మార్చిన వ్యక్తుల కథలు",
+    "reviews": {
+      "sarah": {
+        "name": "Sarah M.",
+        "review": "మొదటిసారి మాట్లాడిన తర్వాత నాకు చాలా light అనిపించింది. నేను ఈ app ను ఉపయోగించినందుకు నాకు సంతోషం!"
+      },
+      "john": {
+        "name": "John D.",
+        "review": "Shark Tank లో చూసి వెంటనే app download చేసాను. అప్పటి నుండి సహాయం పొందుతున్నాను - చాలా మంచిది. ప్రతిసారి మాట్లాడిన తర్వాత మంచిగా అనిపిస్తుంది!"
+      },
+      "james": {
+        "name": "James L.",
+        "review": "నేను సరిపోని అని అనుకునేవాడిని, కానీ నా doctor నన్ను నాపై trust చేయడం నేర్పించారు. ఇది నా జీవితాన్ని మార్చింది!"
+      }
+    }
+  },
+  "selfAssessment": {
+    "title": "మీరు నిజంగా ఎవరు అని తెలుసుకోండి",
+    "description": "మీ నిజమైన personality ను చూపించే సులభమైన ప్రశ్నలు - మిమ్మల్ని అర్థం చేసుకునే journey ప్రారంభించండి."
+  },
+  "cvt": {
+    "trauma": {
+      "title": "పాత చెడు జ్ఞాపకాలు నన్ను ఎలా affect చేస్తున్నాయి?",
+      "description": "పాత విషయాలు ఈనాడు మీకు ఎలా సమస్య చేస్తున్నాయి, దీనిని అర్థం చేసుకోండి"
+    },
+    "adhd": {
+      "title": "నాకు ADHD ఉందా?",
+      "description": "మీకు attention ఇవ్వని problem ఉండవచ్చు అని తెలుసుకోండి"
+    },
+    "anxiety": {
+      "title": "నా anxiety ఎంత?",
+      "description": "మీరు ఎంత anxious మరియు ముందుకు ఏమి చేయాలి అని తెలుసుకోండి"
+    },
+    "mood": {
+      "title": "ఇది చెడు రోజు మాత్రమేనా లేదా మరేదైనా?",
+      "description": "మీ sadness ఒక రోజు విషయం మాత్రమేనా లేదా మరింత serious అని తెలుసుకోండి"
+    },
+    "resilience": {
+      "title": "నేను సమస్యలను ఎలా ఎదుర్కొంటాను?",
+      "description": "మీరు కష్టమైన సమయంలో ఎంత strong గా ఉంటారు అని తెలుసుకోండి"
+    },
+    "relationship": {
+      "title": "Relationships యొక్క check",
+      "description": "మీ relationships ను అర్థం చేసుకోండి మరియు ముందుకు ఏమి చేయాలి, దీనిని తెలుసుకోండి"
+    }
+  }
+}

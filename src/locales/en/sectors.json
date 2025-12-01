@@ -1,0 +1,120 @@
+{
+  "hero": {
+    "title": "Transform Your Decisions Through Proven Expert Guidance",
+    "description": "Unlock expert guidance in Wellness, finance, and education—so every decision strengthens your future, not risks it. Skip the confusion, trust proven insight, and move forward with confidence, clarity, and real results.",
+    "wellnessEcosystem": "Wellness Ecosystem",
+    "wellnessDescription": "Your mental Wellness, your way",
+    "financeSector": "Finance Sector",
+    "financeDescription": "Expert financial guidance",
+    "educationSector": "Education Sector",
+    "educationDescription": "Your learning, your way",
+    "personalizedCare": "Personalized Care",
+    "personalizedDescription": "Tailored to your unique needs",
+    "expertSupport": "Expert Support",
+    "expertSupportDescription": "Connect with licensed professionals",
+    "emotionalHealing": "Emotional Healing",
+    "emotionalHealingDescription": "Find peace and emotional balance"
+  },
+  "whyChooseUs": {
+    "title": "Why Choose MindCurePath?",
+    "expertTherapists": {
+      "title": "Expert Therapists",
+      "description": "Understand what drives your behavior and thoughts with intelligent mood tracking.",
+      "cta": "Find your match"
+    },
+    "accessibility": {
+      "title": "24/7 Accessibility",
+      "description": "Access therapy and mental Wellness tools anytime, anywhere through our mobile or desktop.",
+      "cta": "Start your journey"
+    },
+    "privacy": {
+      "title": "Complete Privacy",
+      "description": "Your conversations and data are completely secure with end-to-end encryption and HIPAA compliance.",
+      "cta": "Learn more"
+    },
+    "progressTracking": {
+      "title": "Progress Tracking",
+      "description": "Monitor your mental Wellness journey with detailed insights and personalized progress reports.",
+      "cta": "View Demo"
+    },
+    "affordableCare": {
+      "title": "Affordable Care",
+      "description": "Quality mental Wellness care shouldn't break the bank. Flexible pricing plans to suit your budget.",
+      "cta": "View Pricing"
+    },
+    "communitySupport": {
+      "title": "Community Support",
+      "description": "Join supportive community groups and connect with others on similar mental Wellness journeys.",
+      "cta": "Join Community"
+    }
+  },
+  "howDoesItWork": {
+    "title": "How Does It Work?",
+    "subtitle": "Simple steps to get started with MindCurePath",
+    "step1": {
+      "title": "1. Get to the form / WhatsApp",
+      "description": "Fill out the form or contact us on WhatsApp to proceed. Get quick assistance instantly!"
+    },
+    "step2": {
+      "title": "2. Book your appointment",
+      "description": "Schedule your appointment now to get timely assistance from our team!"
+    },
+    "step3": {
+      "title": "3. You'll be contacted at your booked time.",
+      "description": "Our team will reach out to you at your scheduled time for further assistance. Stay tuned!"
+    },
+    "step4": {
+      "title": "4. Free Follow-ups as needed",
+      "description": "Get free follow-ups whenever you need for continued support!"
+    }
+  },
+  "whatOurUsersSay": {
+    "title": "What Our Users Say",
+    "subtitle": "Real stories from people who transformed their lives with MindCurePath",
+    "reviews": {
+      "sarah": {
+        "name": "Sarah M.",
+        "review": "After my first session, I felt like a weight was lifted off my shoulders. I'm so grateful to have found this app!"
+      },
+      "john": {
+        "name": "John D.",
+        "review": "Saw you guys on Shark Tank and immediately downloaded the app. Have been taking therapy since then - going great. Feels so light after every session!"
+      },
+      "james": {
+        "name": "James L.",
+        "review": "I used to constantly feel like I'm not enough but my therapist is awesome - she made me believe in myself. It's been life changing!"
+      }
+    }
+  },
+  "selfAssessment": {
+    "title": "Discover Who You Really Are",
+    "description": "Psychologically curated questions designed to uncover your true personality — embark on a journey of self-awareness and insight."
+  },
+  "cvt": {
+    "trauma": {
+      "title": "How has trauma impacted me?",
+      "description": "Understand the effects of past experiences on your current well-being"
+    },
+    "adhd": {
+      "title": "Do I have ADHD?",
+      "description": "Find out if you may have attention deficit hyperactivity disorder (ADHD)"
+    },
+    "anxiety": {
+      "title": "What is my anxiety level?",
+      "description": "Find out your current level of anxiety and get a report to guide your next steps."
+    },
+    "mood": {
+      "title": "Is it just bad mood or more?",
+      "description": "Discover if your mood issues are more than just a bad day"
+    },
+    "resilience": {
+      "title": "How resilient am I?",
+      "description": "Discover how resilient you are to stress and adversity"
+    },
+    "relationship": {
+      "title": "Relationship Wellness Check",
+      "description": "Check your relationship Wellness and get a report to guide your next steps."
+    }
+  }
+}
+

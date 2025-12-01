@@ -1,0 +1,119 @@
+{
+  "hero": {
+    "title": "અનુભવી experts પાસેથી સાચી advice મેળવો",
+    "description": "Health, પૈસા અને પઢાઈમાં experts પાસેથી મદદ મેળવો. દરેક decision તમારા future માટે સાચું હોવું જોઈએ, ખોટું નહીં. Confusion માં ન રહો, સાચી advice લો અને confidence સાથે આગળ વધો.",
+    "wellnessEcosystem": "Health Services",
+    "wellnessDescription": "તમારું mental health, તમારી રીતે",
+    "financeSector": "પૈસાની Advice",
+    "financeDescription": "Experts પાસેથી પૈસાની advice",
+    "educationSector": "પઢાઈની Advice",
+    "educationDescription": "તમારી પઢાઈ, તમારી રીતે",
+    "personalizedCare": "તમારા માટે ખાસ care",
+    "personalizedDescription": "તમારી જરૂરિયાતો મુજબ",
+    "expertSupport": "Expert Help",
+    "expertSupportDescription": "અનુભવી doctors સાથે જોડાઓ",
+    "emotionalHealing": "દિલની Care",
+    "emotionalHealingDescription": "Peace અને ખુશી મેળવો"
+  },
+  "whyChooseUs": {
+    "title": "MindCurePath કેમ choose કરો?",
+    "expertTherapists": {
+      "title": "અનુભવી Doctors",
+      "description": "સમજો કે તમે કેવી રીતે વિચારો છો અને કેમ આવું feel કરો છો.",
+      "cta": "તમારા doctor શોધો"
+    },
+    "accessibility": {
+      "title": "હંમેશા available",
+      "description": "Mobile અથવા computer થી ક્યારેય પણ, ક્યાંય પણ મદદ મેળવો.",
+      "cta": "શરૂ કરો"
+    },
+    "privacy": {
+      "title": "પૂરી privacy",
+      "description": "તમારી વાતો પૂરી રીતે safe રહે છે.",
+      "cta": "વધુ જાણો"
+    },
+    "progressTracking": {
+      "title": "Progress જુઓ",
+      "description": "તમારી improvement ની report જુઓ અને વધુ સારા બનતા જાઓ.",
+      "cta": "જુઓ"
+    },
+    "affordableCare": {
+      "title": "સસ્તી service",
+      "description": "સારી care મોંઘી ન હોવી જોઈએ. તમારા budget મુજબ price.",
+      "cta": "કિંમત જુઓ"
+    },
+    "communitySupport": {
+      "title": "Community ની મદદ",
+      "description": "બીજા લોકો સાથે જોડાઓ જે તમારી જેવી problem થી પસાર થઈ રહ્યા છે.",
+      "cta": "જોડાઓ"
+    }
+  },
+  "howDoesItWork": {
+    "title": "આ કેવી રીતે કામ કરે છે?",
+    "subtitle": "MindCurePath સાથે શરૂ કરવા માટે સરળ steps",
+    "step1": {
+      "title": "1. Form ભરો અથવા WhatsApp કરો",
+      "description": "Form ભરો અથવા WhatsApp પર વાત કરો. તરત મદદ મેળવો!"
+    },
+    "step2": {
+      "title": "2. Appointment લો",
+      "description": "અમારી team સાથે વાત કરવા માટે appointment book કરો!"
+    },
+    "step3": {
+      "title": "3. તમારો contact કરવામાં આવશે",
+      "description": "અમારી team તમારા time પર તમારો contact કરશે. રાહ જુઓ!"
+    },
+    "step4": {
+      "title": "4. જરૂર પડે તો ફરી વાત કરો",
+      "description": "જ્યારે પણ જરૂર પડે, free માં ફરી વાત કરી શકો છો!"
+    }
+  },
+  "whatOurUsersSay": {
+    "title": "અમારા users શું કહે છે",
+    "subtitle": "તે લોકોની કહાનીઓ જેમણે MindCurePath થી તેમની જીંદગી બદલી દીધી",
+    "reviews": {
+      "sarah": {
+        "name": "Sarah M.",
+        "review": "પહેલી વાર વાત કર્યા પછી મને ખૂબ light લાગ્યું. મને ખુશી છે કે મેં આ app વાપર્યું!"
+      },
+      "john": {
+        "name": "John D.",
+        "review": "Shark Tank પર જોયું અને તરત app download કર્યું. ત્યારથી મદદ લઈ રહ્યો છું - ખૂબ સારું છે. દર વખતે વાત કર્યા પછી સારું લાગે છે!"
+      },
+      "james": {
+        "name": "James L.",
+        "review": "મને લાગતું હતું કે હું પૂરતો નથી, પણ મારા doctor ને મને મારી જાત પર trust કરવાનું શીખવ્યું. આ મારી જીંદગી બદલી દીધી!"
+      }
+    }
+  },
+  "selfAssessment": {
+    "title": "જાણો કે તમે ખરેખર કોણ છો",
+    "description": "સરળ પ્રશ્નો જે તમારી સાચી personality દર્શાવે છે - તમારી જાતને સમજવાની journey શરૂ કરો."
+  },
+  "cvt": {
+    "trauma": {
+      "title": "જૂની ખરાબ યાદો મને કેવી રીતે affect કરી રહી છે?",
+      "description": "જૂની વાતો આજે તમને કેવી રીતે પરેશાન કરી રહી છે, આ સમજો"
+    },
+    "adhd": {
+      "title": "શું મને ADHD છે?",
+      "description": "જાણો કે શું તમને ધ્યાન ન આપવાની problem હોઈ શકે છે"
+    },
+    "anxiety": {
+      "title": "મારી anxiety કેટલી છે?",
+      "description": "જાણો કે તમે કેટલા anxious છો અને આગળ શું કરવું છે"
+    },
+    "mood": {
+      "title": "આ ફક્ત ખરાબ દિવસ છે કે કંઈક વધુ?",
+      "description": "જાણો કે તમારી sadness ફક્ત એક દિવસની વાત છે કે કંઈક serious"
+    },
+    "resilience": {
+      "title": "હું મુશ્કેલીઓથી કેવી રીતે નિપટું છું?",
+      "description": "જાણો કે તમે મુશ્કેલ સમયમાં કેટલા strong રહો છો"
+    },
+    "relationship": {
+      "title": "Relationships ની check",
+      "description": "તમારા relationships ને સમજો અને આગળ શું કરવું છે, આ જાણો"
+    }
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "hero": {
+    "title": "அனுபவமுள்ள experts இலிருந்து சரியான advice பெறுங்கள்",
+    "description": "Health, பணம் மற்றும் படிப்பில் experts இலிருந்து உதவி பெறுங்கள். ஒவ்வொரு decision உம் உங்கள் future க்கு சரியாக இருக்க வேண்டும், தவறாக இருக்கக்கூடாது. Confusion இல் இருக்காதீர்கள், சரியான advice எடுத்து confidence உடன் முன்னோக்கி செல்லுங்கள்.",
+    "wellnessEcosystem": "Health Services",
+    "wellnessDescription": "உங்கள் mental health, உங்கள் வழியில்",
+    "financeSector": "பணத்தின் Advice",
+    "financeDescription": "Experts இலிருந்து பணத்தின் advice",
+    "educationSector": "படிப்பின் Advice",
+    "educationDescription": "உங்கள் படிப்பு, உங்கள் வழியில்",
+    "personalizedCare": "உங்களுக்காக சிறப்பு care",
+    "personalizedDescription": "உங்கள் தேவைகளுக்கு ஏற்ப",
+    "expertSupport": "Expert Help",
+    "expertSupportDescription": "அனுபவமுள்ள doctors உடன் இணையுங்கள்",
+    "emotionalHealing": "இதயத்தின் Care",
+    "emotionalHealingDescription": "Peace மற்றும் மகிழ்ச்சி பெறுங்கள்"
+  },
+  "whyChooseUs": {
+    "title": "MindCurePath ஏன் choose செய்ய வேண்டும்?",
+    "expertTherapists": {
+      "title": "அனுபவமுள்ள Doctors",
+      "description": "நீங்கள் எப்படி சிந்திக்கிறீர்கள் மற்றும் ஏன் இப்படி feel செய்கிறீர்கள் என்பதைப் புரிந்துகொள்ளுங்கள்.",
+      "cta": "உங்கள் doctor கண்டறியவும்"
+    },
+    "accessibility": {
+      "title": "எப்போதும் available",
+      "description": "Mobile அல்லது computer இலிருந்து எப்போது வேண்டுமானாலும், எங்கு வேண்டுமானாலும் உதவி பெறுங்கள்.",
+      "cta": "தொடங்கவும்"
+    },
+    "privacy": {
+      "title": "முழுமையான privacy",
+      "description": "உங்கள் உரையாடல்கள் முழுமையாக safe இருக்கும்.",
+      "cta": "மேலும் அறிக"
+    },
+    "progressTracking": {
+      "title": "Progress பார்க்கவும்",
+      "description": "உங்கள் improvement இன் report பார்க்கவும் மற்றும் மேலும் சிறப்பாக இருங்கள்.",
+      "cta": "பார்க்கவும்"
+    },
+    "affordableCare": {
+      "title": "மலிவான service",
+      "description": "நல்ல care விலை உயர்ந்ததாக இருக்கக்கூடாது. உங்கள் budget க்கு ஏற்ப price.",
+      "cta": "விலை பார்க்கவும்"
+    },
+    "communitySupport": {
+      "title": "Community இன் உதவி",
+      "description": "உங்களைப் போலவே problem வழியாகச் செல்லும் மற்றவர்களுடன் இணையுங்கள்.",
+      "cta": "இணையுங்கள்"
+    }
+  },
+  "howDoesItWork": {
+    "title": "இது எப்படி வேலை செய்கிறது?",
+    "subtitle": "MindCurePath உடன் தொடங்க எளிய steps",
+    "step1": {
+      "title": "1. Form நிரப்பவும் அல்லது WhatsApp செய்யவும்",
+      "description": "Form நிரப்பவும் அல்லது WhatsApp இல் பேசவும். உடனடியாக உதவி பெறுங்கள்!"
+    },
+    "step2": {
+      "title": "2. Appointment எடுக்கவும்",
+      "description": "எங்கள் team உடன் பேச appointment book செய்யவும்!"
+    },
+    "step3": {
+      "title": "3. உங்களுடன் contact செய்யப்படும்",
+      "description": "எங்கள் team உங்கள் time இல் உங்களுடன் contact செய்யும். காத்திருங்கள்!"
+    },
+    "step4": {
+      "title": "4. தேவைப்பட்டால் மீண்டும் பேசவும்",
+      "description": "தேவைப்பட்டால், free இல் மீண்டும் பேசலாம்!"
+    }
+  },
+  "whatOurUsersSay": {
+    "title": "எங்கள் users என்ன சொல்கிறார்கள்",
+    "subtitle": "MindCurePath உடன் தங்கள் வாழ்க்கையை மாற்றியவர்களின் கதைகள்",
+    "reviews": {
+      "sarah": {
+        "name": "Sarah M.",
+        "review": "முதல் முறையாக பேசிய பிறகு எனக்கு மிகவும் light உணர்ந்தேன். நான் இந்த app ஐப் பயன்படுத்தியதற்காக மகிழ்ச்சியடைகிறேன்!"
+      },
+      "john": {
+        "name": "John D.",
+        "review": "Shark Tank இல் பார்த்து உடனடியாக app download செய்தேன். அன்றிலிருந்து உதவி பெற்று வருகிறேன் - மிகவும் நல்லது. ஒவ்வொரு முறையும் பேசிய பிறகு நன்றாக உணர்கிறேன்!"
+      },
+      "james": {
+        "name": "James L.",
+        "review": "நான் போதுமானதாக இல்லை என்று உணர்ந்தேன், ஆனால் என் doctor என்னை என்னிடம் trust செய்ய கற்றுக்கொடுத்தார். இது என் வாழ்க்கையை மாற்றியது!"
+      }
+    }
+  },
+  "selfAssessment": {
+    "title": "நீங்கள் உண்மையில் யார் என்பதை அறியவும்",
+    "description": "உங்கள் உண்மையான personality ஐக் காட்டும் எளிய கேள்விகள் - உங்களைப் புரிந்துகொள்ளும் journey தொடங்கவும்."
+  },
+  "cvt": {
+    "trauma": {
+      "title": "பழைய மோசமான நினைவுகள் என்னை எப்படி affect செய்கின்றன?",
+      "description": "பழைய விஷயங்கள் இன்று உங்களுக்கு எப்படி பிரச்சனை செய்கின்றன, இதைப் புரிந்துகொள்ளுங்கள்"
+    },
+    "adhd": {
+      "title": "எனக்கு ADHD உள்ளதா?",
+      "description": "உங்களுக்கு attention கொடுக்காத problem இருக்கலாம் என்பதை அறியவும்"
+    },
+    "anxiety": {
+      "title": "என் anxiety எவ்வளவு?",
+      "description": "நீங்கள் எவ்வளவு anxious மற்றும் முன்னோக்கி என்ன செய்ய வேண்டும் என்பதை அறியவும்"
+    },
+    "mood": {
+      "title": "இது மோசமான ஒரு நாள் மட்டுமா அல்லது இன்னும் ஏதாவது?",
+      "description": "உங்கள் sadness ஒரு நாள் விஷயம் மட்டுமா அல்லது இன்னும் serious ஆகுமா என்பதை அறியவும்"
+    },
+    "resilience": {
+      "title": "நான் பிரச்சனைகளை எப்படி சமாளிக்கிறேன்?",
+      "description": "நீங்கள் கடினமான நேரத்தில் எவ்வளவு strong இருக்கிறீர்கள் என்பதை அறியவும்"
+    },
+    "relationship": {
+      "title": "Relationships இன் check",
+      "description": "உங்கள் relationships ஐப் புரிந்துகொள்ளவும் மற்றும் முன்னோக்கி என்ன செய்ய வேண்டும், இதை அறியவும்"
+    }
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "questions": {
+    "q1": {
+      "question": "নতুন মানুহৰ সৈতে দেখা হলে মই কেনেকৈ feel কৰো?",
+      "options": {
+        "option1": "Calm কিন্তু অলপ shy",
+        "option2": "বহুত confident আৰু কথা-বতৰা",
+        "option3": "Friendly আৰু open",
+        "option4": "Nervous আৰু কথা কোৱাত ভয় পাওঁ"
+      }
+    },
+    "q2": {
+      "question": "যেতিয়া কাৰোবাৰ help লাগে, মই",
+      "options": {
+        "option1": "তেতিয়ালৈকে ignore কৰো যেতিয়ালৈকে তেওঁলোকে নকয়",
+        "option2": "কেৱল তেতিয়া help কৰো যেতিয়া মোৰ time থাকে",
+        "option3": "তৎক্ষণাত help কৰো",
+        "option4": "যেতিয়া সম্ভৱ, help কৰাৰ চেষ্টা কৰো"
+      }
+    },
+    "q3": {
+      "question": "মই মোৰ free time কেনেকৈ কটাওঁ?",
+      "options": {
+        "option1": "বেছিভাগ সময় friends বা family ৰ সৈতে",
+        "option2": "বেছিভাগ সময় অকলে",
+        "option3": "সদায় অকলে",
+        "option4": "Friends ৰ সৈতে আৰু অকলে দুয়োটা"
+      }
+    },
+    "q4": {
+      "question": "যদি কোনোবাই মোৰ মতৰ সৈতে agree নকৰে, মই",
+      "options": {
+        "option1": "Angry হৈ যাওঁ",
+        "option2": "কথা কোৱা বন্ধ কৰি দিওঁ",
+        "option3": "শুনো কিন্তু বেয়া লাগে",
+        "option4": "Calm থাকো আৰু কথা কোৱা"
+      }
+    },
+    "q5": {
+      "question": "মই মোৰ feelings বুজি পাৰো?",
+      "options": {
+        "option1": "বহুত কম",
+        "option2": "কেতিয়াবা",
+        "option3": "বেছিভাগ সময়",
+        "option4": "সদায়"
+      }
+    },
+    "q6": {
+      "question": "যেতিয়া মই upset হওঁ, মই",
+      "options": {
+        "option1": "Control হেৰুৱাওঁ",
+        "option2": "Calm থাকো কিন্তু angry হওঁ",
+        "option3": "নিজকে calm কৰাৰ চেষ্টা কৰো",
+        "option4": "Peacefully ভাবো আৰু বুজি-বুজি কাম কৰো"
+      }
+    },
+    "q7": {
+      "question": "যেতিয়া কোনোবাই মোক hurt কৰে, মই",
+      "options": {
+        "option1": "কেতিয়াও ক্ষমা নকৰো",
+        "option2": "বহুত পলমে ক্ষমা কৰো",
+        "option3": "কিছু সময়ৰ পিছত ক্ষমা কৰি দিওঁ",
+        "option4": "খৰকৈ ক্ষমা কৰি দিওঁ"
+      }
+    },
+    "q8": {
+      "question": "মই thank you কওঁ?",
+      "options": {
+        "option1": "বহুত কম",
+        "option2": "কেতিয়াবা",
+        "option3": "বহুতে",
+        "option4": "সদায়"
+      }
+    },
+    "q9": {
+      "question": "Decision লোৱাৰ আগতে, মই",
+      "options": {
+        "option1": "অলপ ভাবো",
+        "option2": "ভাবি-চিন্তি নকৰাকৈ কাম কৰো",
+        "option3": "ভালকৈ ভাবো আৰু সকলো কথা চাওঁ",
+        "option4": "সকলো options চাওঁ"
+      }
+    },
+    "q10": {
+      "question": "যেতিয়া মোৰ plan কাম নকৰে, মই",
+      "options": {
+        "option1": "Changes কৰাৰ চেষ্টা কৰো",
+        "option2": "Calm থাকো আৰু নতুন plan তৈয়াৰ কৰো",
+        "option3": "বেয়া লাগে আৰু হাৰ মানি লওঁ",
+        "option4": "বহুত upset হৈ যাওঁ"
+      }
+    },
+    "q11": {
+      "question": "যেতিয়া কোনোবাই মোক suggestion দিয়ে, মই",
+      "options": {
+        "option1": "Ignore কৰো",
+        "option2": "ভাবো",
+        "option3": "শিকো আৰু আৰু ভাল হোৱাৰ চেষ্টা কৰো",
+        "option4": "Angry বা দুখিত হৈ যাওঁ"
+      }
+    },
+    "q12": {
+      "question": "যেতিয়া মই stress ত থাকো, মই",
+      "options": {
+        "option1": "ভালকৈ handle কৰি লওঁ",
+        "option2": "Helpless feel কৰো",
+        "option3": "Panic হৈ যাওঁ",
+        "option4": "কেতিয়াবা calm থাকিব পাৰো"
+      }
+    },
+    "q13": {
+      "question": "Failure ৰ পিছত, মই",
+      "options": {
+        "option1": "বহুত পলমলৈকে বেয়া feel কৰো",
+        "option2": "হাৰ মানি লওঁ",
+        "option3": "পুনৰ try কৰো",
+        "option4": "অলপ জিৰণি লৈ পুনৰ try কৰো"
+      }
+    },
+    "q14": {
+      "question": "মই problems ক কেনেকৈ চাওঁ?",
+      "options": {
+        "option1": "বহুত কঠিন বস্তু",
+        "option2": "Challenge যাক মোকাবিলা কৰিব লাগিব",
+        "option3": "কিছু শিকাৰ সুযোগ",
+        "option4": "বেয়া ভাগ্য"
+      }
+    },
+    "q15": {
+      "question": "মই মানুহৰ সৈতে kindness দেখুৱাওঁ?",
+      "options": {
+        "option1": "বহুতে",
+        "option2": "বহুত কম",
+        "option3": "কেতিয়াবা",
+        "option4": "সদায়"
+      }
+    }
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "questions": {
+    "q1": {
+      "question": "નવા લોકો સાથે મળતા વખતે હું કેવું feel કરું છું?",
+      "options": {
+        "option1": "Calm પણ થોડું shy",
+        "option2": "ખૂબ confident અને વાતુન",
+        "option3": "Friendly અને open",
+        "option4": "Nervous અને વાત કરવાથી ડરું છું"
+      }
+    },
+    "q2": {
+      "question": "જ્યારે કોઈને help જોઈએ, હું",
+      "options": {
+        "option1": "ત્યાં સુધી ignore કરું છું જ્યાં સુધી તેઓ ન કહે",
+        "option2": "ફક્ત ત્યારે help કરું છું જ્યારે મને time હોય",
+        "option3": "તરત જ help કરું છું",
+        "option4": "જ્યારે પણ શક્ય હોય, help કરવાનો પ્રયાસ કરું છું"
+      }
+    },
+    "q3": {
+      "question": "હું મારો free time કેવી રીતે વિતાવવું પસંદ કરું છું?",
+      "options": {
+        "option1": "મોટે ભાગે friends અથવા family સાથે",
+        "option2": "મોટે ભાગે એકલા",
+        "option3": "હંમેશા એકલા",
+        "option4": "Friends સાથે અને એકલા બંને રીતે"
+      }
+    },
+    "q4": {
+      "question": "જો કોઈ મારી વાતથી agree ન કરે, હું",
+      "options": {
+        "option1": "Angry થઈ જાઉં છું",
+        "option2": "વાત કરવાનું બંધ કરું છું",
+        "option3": "સાંભળું છું પણ ખરાબ લાગે છે",
+        "option4": "Calm રહું છું અને વાત કરું છું"
+      }
+    },
+    "q5": {
+      "question": "હું મારી feelings ને સમજી શકું છું?",
+      "options": {
+        "option1": "ખૂબ ઓછું",
+        "option2": "ક્યારેક",
+        "option3": "મોટે ભાગે",
+        "option4": "હંમેશા"
+      }
+    },
+    "q6": {
+      "question": "જ્યારે હું upset થાઉં છું, હું",
+      "options": {
+        "option1": "Control ગુમાવું છું",
+        "option2": "Calm રહું છું પણ angry થાઉં છું",
+        "option3": "મારી જાતને calm કરવાનો પ્રયાસ કરું છું",
+        "option4": "Peacefully વિચારું છું અને સમજદારીથી કામ લઉં છું"
+      }
+    },
+    "q7": {
+      "question": "જ્યારે કોઈ મને hurt કરે છે, હું",
+      "options": {
+        "option1": "કદી માફ નથી કરતો",
+        "option2": "ખૂબ મોડું માફ કરું છું",
+        "option3": "કેટલાક સમય પછી માફ કરી દઉં છું",
+        "option4": "ઝડપથી માફ કરી દઉં છું"
+      }
+    },
+    "q8": {
+      "question": "હું thank you કહું છું?",
+      "options": {
+        "option1": "ખૂબ ઓછું",
+        "option2": "ક્યારેક",
+        "option3": "ઘણી વખત",
+        "option4": "હંમેશા"
+      }
+    },
+    "q9": {
+      "question": "Decision લેતા પહેલાં, હું",
+      "options": {
+        "option1": "થોડું વિચારું છું",
+        "option2": "વિચાર્યા વગર કામ કરું છું",
+        "option3": "સારી રીતે વિચારું છું અને બધી બાબતો જોઉં છું",
+        "option4": "બધા options જોઉં છું"
+      }
+    },
+    "q10": {
+      "question": "જ્યારે મારી plan કામ નથી કરતી, હું",
+      "options": {
+        "option1": "Changes કરવાનો પ્રયાસ કરું છું",
+        "option2": "Calm રહું છું અને નવી plan બનાવું છું",
+        "option3": "ખરાબ લાગે છે અને હાર માની લઉં છું",
+        "option4": "ખૂબ પરેશાન થઈ જાઉં છું"
+      }
+    },
+    "q11": {
+      "question": "જ્યારે કોઈ મને suggestion આપે છે, હું",
+      "options": {
+        "option1": "Ignore કરું છું",
+        "option2": "વિચારું છું",
+        "option3": "શીખું છું અને વધુ સારો બનવાનો પ્રયાસ કરું છું",
+        "option4": "Angry અથવા દુઃખી થઈ જાઉં છું"
+      }
+    },
+    "q12": {
+      "question": "જ્યારે હું stress માં હોઉં છું, હું",
+      "options": {
+        "option1": "સારી રીતે handle કરી લઉં છું",
+        "option2": "Helpless feel કરું છું",
+        "option3": "Panic થઈ જાઉં છું",
+        "option4": "ક્યારેક calm રહી શકું છું"
+      }
+    },
+    "q13": {
+      "question": "Failure પછી, હું",
+      "options": {
+        "option1": "ખૂબ મોડું સુધી ખરાબ feel કરું છું",
+        "option2": "હાર માની લઉં છું",
+        "option3": "ફરી પ્રયાસ કરું છું",
+        "option4": "થોડું આરામ કરીને ફરી try કરું છું"
+      }
+    },
+    "q14": {
+      "question": "હું problems ને કેવી રીતે જોઉં છું?",
+      "options": {
+        "option1": "ખૂબ મુશ્કેલ વસ્તુઓ",
+        "option2": "Challenge જેનો સામનો કરવો છે",
+        "option3": "કંઈક શીખવાની તક",
+        "option4": "ખરાબ કિસ્મત"
+      }
+    },
+    "q15": {
+      "question": "હું લોકો સાથે kindness દર્શાવું છું?",
+      "options": {
+        "option1": "ઘણી વખત",
+        "option2": "ખૂબ ઓછું",
+        "option3": "ક્યારેક",
+        "option4": "હંમેશા"
+      }
+    }
+  }
+}

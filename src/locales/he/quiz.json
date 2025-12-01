@@ -1,0 +1,140 @@
+{
+  "questions": {
+    "q1": {
+      "question": "Naye logon se milne par main kaise feel karta hoon?",
+      "options": {
+        "option1": "Calm lekin thoda shy",
+        "option2": "Bahut confident aur baatun",
+        "option3": "Friendly aur open",
+        "option4": "Nervous aur baat karne se darta hoon"
+      }
+    },
+    "q2": {
+      "question": "Jab kisi ko help chahiye, main",
+      "options": {
+        "option1": "Tab tak ignore karta hoon jab tak wo na bole",
+        "option2": "Sirf tab help karta hoon jab mujhe time ho",
+        "option3": "Turant help karta hoon",
+        "option4": "Jab bhi ho sake, help karne ki koshish karta hoon"
+      }
+    },
+    "q3": {
+      "question": "Main apna free time kaise bitana pasand karta hoon?",
+      "options": {
+        "option1": "Zyada tar friends ya family ke saath",
+        "option2": "Zyada tar akela",
+        "option3": "Hamesha akela",
+        "option4": "Friends ke saath aur akela dono tarah se"
+      }
+    },
+    "q4": {
+      "question": "Agar koi meri baat se agree nahi karta, main",
+      "options": {
+        "option1": "Angry ho jata hoon",
+        "option2": "Baat karna band kar deta hoon",
+        "option3": "Sunta hoon lekin bura lagta hai",
+        "option4": "Calm rehta hoon aur baat karta hoon"
+      }
+    },
+    "q5": {
+      "question": "Main apni feelings ko samajh sakta hoon?",
+      "options": {
+        "option1": "Bahut kam",
+        "option2": "Kabhi kabhi",
+        "option3": "Zyada tar time",
+        "option4": "Hamesha"
+      }
+    },
+    "q6": {
+      "question": "Jab main upset hota hoon, main",
+      "options": {
+        "option1": "Control kho deta hoon",
+        "option2": "Calm rehta hoon lekin angry hota hoon",
+        "option3": "Khud ko calm karne ki koshish karta hoon",
+        "option4": "Peacefully sochta hoon aur samajhdari se kaam leta hoon"
+      }
+    },
+    "q7": {
+      "question": "Jab koi mujhe hurt karta hai, main",
+      "options": {
+        "option1": "Kabhi maaf nahi karta",
+        "option2": "Bahut der baad maaf karta hoon",
+        "option3": "Kuch time baad maaf kar deta hoon",
+        "option4": "Jaldi maaf kar deta hoon"
+      }
+    },
+    "q8": {
+      "question": "Main thank you deta hoon?",
+      "options": {
+        "option1": "Bahut kam",
+        "option2": "Kabhi kabhi",
+        "option3": "Aksar",
+        "option4": "Hamesha"
+      }
+    },
+    "q9": {
+      "question": "Decision lene se pehle, main",
+      "options": {
+        "option1": "Thoda sochta hoon",
+        "option2": "Bina soche kaam karta hoon",
+        "option3": "Achhi tarah sochta hoon aur sab baatein dekhta hoon",
+        "option4": "Sab options dekhta hoon"
+      }
+    },
+    "q10": {
+      "question": "Jab meri plan kaam nahi karti, main",
+      "options": {
+        "option1": "Changes karne ki koshish karta hoon",
+        "option2": "Calm rehta hoon aur nayi plan banata hoon",
+        "option3": "Bura lagta hai aur haar maan leta hoon",
+        "option4": "Bahut pareshan ho jata hoon"
+      }
+    },
+    "q11": {
+      "question": "Jab koi mujhe suggestion deta hai, main",
+      "options": {
+        "option1": "Ignore karta hoon",
+        "option2": "Sochta hoon",
+        "option3": "Seekhta hoon aur behtar hone ki koshish karta hoon",
+        "option4": "Angry ya dukhi ho jata hoon"
+      }
+    },
+    "q12": {
+      "question": "Jab main stress mein hota hoon, main",
+      "options": {
+        "option1": "Achhi tarah handle kar leta hoon",
+        "option2": "Helpless feel karta hoon",
+        "option3": "Panic ho jata hoon",
+        "option4": "Kabhi kabhi calm reh pata hoon"
+      }
+    },
+    "q13": {
+      "question": "Failure ke baad, main",
+      "options": {
+        "option1": "Bahut der tak bura feel karta hoon",
+        "option2": "Haar maan leta hoon",
+        "option3": "Phir se try karta hoon",
+        "option4": "Thoda aaram karke phir try karta hoon"
+      }
+    },
+    "q14": {
+      "question": "Main problems ko kaise dekhta hoon?",
+      "options": {
+        "option1": "Bahut mushkil cheezein",
+        "option2": "Challenge jisse nipatna hai",
+        "option3": "Kuch seekhne ka mauka",
+        "option4": "Buri kismat"
+      }
+    },
+    "q15": {
+      "question": "Main logon ke saath kindness dikhata hoon?",
+      "options": {
+        "option1": "Aksar",
+        "option2": "Bahut kam",
+        "option3": "Kabhi kabhi",
+        "option4": "Hamesha"
+      }
+    }
+  }
+}
+

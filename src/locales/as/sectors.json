@@ -1,0 +1,119 @@
+{
+  "hero": {
+    "title": "অভিজ্ঞ experts ৰ পৰা সঠিক advice পাওক",
+    "description": "Health, টকা আৰু পঢ়াত experts ৰ পৰা সহায় পাওক। প্ৰতিটো decision আপোনাৰ future ৰ বাবে সঠিক হ'ব লাগে, ভুল নহয়। Confusion ত নাথাকিব, সঠিক advice লওক আৰু confidence ৰ সৈতে আগবাঢ়ক।",
+    "wellnessEcosystem": "Health Services",
+    "wellnessDescription": "আপোনাৰ mental health, আপোনাৰ ধৰণে",
+    "financeSector": "টকাৰ Advice",
+    "financeDescription": "Experts ৰ পৰা টকাৰ advice",
+    "educationSector": "পঢ়াৰ Advice",
+    "educationDescription": "আপোনাৰ পঢ়া, আপোনাৰ ধৰণে",
+    "personalizedCare": "আপোনাৰ বাবে বিশেষ care",
+    "personalizedDescription": "আপোনাৰ প্ৰয়োজন অনুসৰি",
+    "expertSupport": "Expert Help",
+    "expertSupportDescription": "অভিজ্ঞ doctors ৰ সৈতে যুক্ত হওক",
+    "emotionalHealing": "হৃদয়ৰ Care",
+    "emotionalHealingDescription": "Peace আৰু সুখ পাওক"
+  },
+  "whyChooseUs": {
+    "title": "MindCurePath কিয় choose কৰিব?",
+    "expertTherapists": {
+      "title": "অভিজ্ঞ Doctors",
+      "description": "বুজক যে আপুনি কেনেকৈ ভাবে আৰু কিয় এনে feel কৰে।",
+      "cta": "আপোনাৰ doctor বিচাৰক"
+    },
+    "accessibility": {
+      "title": "সদায় available",
+      "description": "Mobile বা computer ৰ পৰা যিকোনো সময়, যিকোনো ঠাইত সহায় পাওক।",
+      "cta": "আৰম্ভ কৰক"
+    },
+    "privacy": {
+      "title": "সম্পূৰ্ণ privacy",
+      "description": "আপোনাৰ কথোপকথন সম্পূৰ্ণ safe থাকে।",
+      "cta": "অধিক জানক"
+    },
+    "progressTracking": {
+      "title": "Progress চাওক",
+      "description": "আপোনাৰ improvement ৰ report চাওক আৰু আৰু ভাল হৈ থাকক।",
+      "cta": "চাওক"
+    },
+    "affordableCare": {
+      "title": "সস্তা service",
+      "description": "ভাল care দামী নহ'ব লাগে। আপোনাৰ budget অনুসৰি price।",
+      "cta": "দাম চাওক"
+    },
+    "communitySupport": {
+      "title": "Community ৰ সহায়",
+      "description": "অন্যান্য মানুহৰ সৈতে যুক্ত হওক যিসকলে আপোনাৰ দৰে problem ৰ মাজেৰে যাব লাগিছে।",
+      "cta": "যুক্ত হওক"
+    }
+  },
+  "howDoesItWork": {
+    "title": "এইটো কেনেকৈ কাম কৰে?",
+    "subtitle": "MindCurePath ৰ সৈতে আৰম্ভ কৰিবলৈ সহজ steps",
+    "step1": {
+      "title": "1. Form পূৰণ কৰক বা WhatsApp কৰক",
+      "description": "Form পূৰণ কৰক বা WhatsApp ত কথা কওক। তৎক্ষণাত সহায় পাওক!"
+    },
+    "step2": {
+      "title": "2. Appointment লওক",
+      "description": "আমাৰ team ৰ সৈতে কথা কোৱাৰ বাবে appointment book কৰক!"
+    },
+    "step3": {
+      "title": "3. আপোনাৰ সৈতে contact কৰা হ'ব",
+      "description": "আমাৰ team আপোনাৰ time ত আপোনাৰ সৈতে contact কৰিব। অপেক্ষা কৰক!"
+    },
+    "step4": {
+      "title": "4. প্ৰয়োজন হলে পুনৰ কথা কওক",
+      "description": "যেতিয়া প্ৰয়োজন, free ত পুনৰ কথা কব পাৰে!"
+    }
+  },
+  "whatOurUsersSay": {
+    "title": "আমাৰ users কি কয়",
+    "subtitle": "সেই মানুহবোৰৰ কাহিনী যিসকলে MindCurePath ৰ সৈতে তেওঁলোকৰ জীৱন সলনি কৰিছে",
+    "reviews": {
+      "sarah": {
+        "name": "Sarah M.",
+        "review": "প্ৰথমবাৰ কথা কোৱাৰ পিছত মই বহুত light feel কৰিছিলো। মই সুখী যে মই এই app ব্যৱহাৰ কৰিছিলো!"
+      },
+      "john": {
+        "name": "John D.",
+        "review": "Shark Tank ত দেখিছিলো আৰু তৎক্ষণাত app download কৰিছিলো। তেতিয়াৰ পৰা সহায় লৈ আছো - বহুত ভাল। প্ৰতিবাৰ কথা কোৱাৰ পিছত ভাল লাগে!"
+      },
+      "james": {
+        "name": "James L.",
+        "review": "মই ভাবিছিলো মই যথেষ্ট নহয়, কিন্তু মোৰ doctor ৰে মোক নিজৰ ওপৰত trust কৰিবলৈ শিকাইছে। এইটোৱে মোৰ জীৱন সলনি কৰিছে!"
+      }
+    }
+  },
+  "selfAssessment": {
+    "title": "জানক যে আপুনি প্ৰকৃততে কোন",
+    "description": "সহজ প্ৰশ্ন যিবোৰে আপোনাৰ প্ৰকৃত personality দেখুৱায় - নিজকে বুজাৰ journey আৰম্ভ কৰক।"
+  },
+  "cvt": {
+    "trauma": {
+      "title": "পুৰণি বেয়া স্মৃতিবোৰে মোক কেনেকৈ affect কৰিছে?",
+      "description": "পুৰণি কথা আজি আপোনাক কেনেকৈ সমস্যা কৰিছে, এইটো বুজক"
+    },
+    "adhd": {
+      "title": "মোৰ ADHD আছে নেকি?",
+      "description": "জানক যে আপোনাৰ attention নিদিয়াৰ problem হ'ব পাৰে"
+    },
+    "anxiety": {
+      "title": "মোৰ anxiety কিমান?",
+      "description": "জানক যে আপুনি কিমান anxious আৰু আগলৈ কি কৰিব লাগে"
+    },
+    "mood": {
+      "title": "এইটো কেৱল বেয়া দিন নেকি আৰু কিছু?",
+      "description": "জানক যে আপোনাৰ sadness কেৱল এটা দিনৰ কথা নেকি আৰু কিছু serious"
+    },
+    "resilience": {
+      "title": "মই সমস্যাবোৰৰ সৈতে কেনেকৈ মোকাবিলা কৰো?",
+      "description": "জানক যে আপুনি কঠিন সময়ত কিমান strong থাকে"
+    },
+    "relationship": {
+      "title": "Relationships ৰ check",
+      "description": "আপোনাৰ relationships বুজক আৰু আগলৈ কি কৰিব লাগে, এইটো জানক"
+    }
+  }
+}

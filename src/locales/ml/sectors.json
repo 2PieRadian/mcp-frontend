@@ -1,0 +1,119 @@
+{
+  "hero": {
+    "title": "പരിചയസമ്പന്നരായ experts എന്നിൽ നിന്ന് ശരിയായ advice നേടുക",
+    "description": "Health, പണം, പഠനം എന്നിവയിൽ experts എന്നിൽ നിന്ന് സഹായം നേടുക. ഓരോ decision ഉം നിങ്ങളുടെ future ന് ശരിയായിരിക്കണം, തെറ്റായിരിക്കരുത്. Confusion ൽ തുടരരുത്, ശരിയായ advice എടുക്കുക ഒപ്പം confidence യോടെ മുന്നോട്ട് പോകുക.",
+    "wellnessEcosystem": "Health Services",
+    "wellnessDescription": "നിങ്ങളുടെ mental health, നിങ്ങളുടെ രീതിയിൽ",
+    "financeSector": "പണത്തിന്റെ Advice",
+    "financeDescription": "Experts എന്നിൽ നിന്ന് പണത്തിന്റെ advice",
+    "educationSector": "പഠനത്തിന്റെ Advice",
+    "educationDescription": "നിങ്ങളുടെ പഠനം, നിങ്ങളുടെ രീതിയിൽ",
+    "personalizedCare": "നിങ്ങൾക്ക് വേണ്ടി പ്രത്യേക care",
+    "personalizedDescription": "നിങ്ങളുടെ ആവശ്യങ്ങൾക്കനുസരിച്ച്",
+    "expertSupport": "Expert Help",
+    "expertSupportDescription": "പരിചയസമ്പന്നരായ doctors യോടൊപ്പം ചേരുക",
+    "emotionalHealing": "ഹൃദയത്തിന്റെ Care",
+    "emotionalHealingDescription": "Peace ഉം സന്തോഷവും നേടുക"
+  },
+  "whyChooseUs": {
+    "title": "MindCurePath എന്തുകൊണ്ട് choose ചെയ്യണം?",
+    "expertTherapists": {
+      "title": "പരിചയസമ്പന്നരായ Doctors",
+      "description": "നിങ്ങൾ എങ്ങനെ ചിന്തിക്കുന്നു എന്നും എന്തുകൊണ്ട് ഇങ്ങനെ feel ചെയ്യുന്നു എന്നും മനസ്സിലാക്കുക.",
+      "cta": "നിങ്ങളുടെ doctor കണ്ടെത്തുക"
+    },
+    "accessibility": {
+      "title": "എല്ലായ്പ്പോഴും available",
+      "description": "Mobile അല്ലെങ്കിൽ computer ൽ നിന്ന് എപ്പോൾ വേണമെങ്കിലും, എവിടെയും സഹായം നേടുക.",
+      "cta": "ആരംഭിക്കുക"
+    },
+    "privacy": {
+      "title": "പൂർണ്ണ privacy",
+      "description": "നിങ്ങളുടെ സംഭാഷണങ്ങൾ പൂർണ്ണമായും safe ആയി തുടരുന്നു.",
+      "cta": "കൂടുതൽ അറിയുക"
+    },
+    "progressTracking": {
+      "title": "Progress കാണുക",
+      "description": "നിങ്ങളുടെ improvement ന്റെ report കാണുക ഒപ്പം കൂടുതൽ നന്നാകുക.",
+      "cta": "കാണുക"
+    },
+    "affordableCare": {
+      "title": "വിലകുറഞ്ഞ service",
+      "description": "നല്ല care വിലയേറിയതായിരിക്കരുത്. നിങ്ങളുടെ budget നനുസരിച്ച് price.",
+      "cta": "വില കാണുക"
+    },
+    "communitySupport": {
+      "title": "Community യുടെ സഹായം",
+      "description": "നിങ്ങളെപ്പോലെ problem നെ അഭിമുഖീകരിക്കുന്ന മറ്റ് ആളുകളോടൊപ്പം ചേരുക.",
+      "cta": "ചേരുക"
+    }
+  },
+  "howDoesItWork": {
+    "title": "ഇത് എങ്ങനെ പ്രവർത്തിക്കുന്നു?",
+    "subtitle": "MindCurePath ഉപയോഗിച്ച് ആരംഭിക്കാനുള്ള എളുപ്പമുള്ള steps",
+    "step1": {
+      "title": "1. Form പൂരിപ്പിക്കുക അല്ലെങ്കിൽ WhatsApp ചെയ്യുക",
+      "description": "Form പൂരിപ്പിക്കുക അല്ലെങ്കിൽ WhatsApp ൽ സംസാരിക്കുക. ഉടനെ സഹായം നേടുക!"
+    },
+    "step2": {
+      "title": "2. Appointment എടുക്കുക",
+      "description": "ഞങ്ങളുടെ team യോട് സംസാരിക്കാൻ appointment book ചെയ്യുക!"
+    },
+    "step3": {
+      "title": "3. നിങ്ങളുമായി contact ചെയ്യും",
+      "description": "ഞങ്ങളുടെ team നിങ്ങളുടെ time ൽ നിങ്ങളുമായി contact ചെയ്യും. കാത്തിരിക്കുക!"
+    },
+    "step4": {
+      "title": "4. ആവശ്യമെങ്കിൽ വീണ്ടും സംസാരിക്കുക",
+      "description": "ആവശ്യമെങ്കിൽ, free യിൽ വീണ്ടും സംസാരിക്കാം!"
+    }
+  },
+  "whatOurUsersSay": {
+    "title": "ഞങ്ങളുടെ users എന്ത് പറയുന്നു",
+    "subtitle": "MindCurePath ഉപയോഗിച്ച് അവരുടെ ജീവിതം മാറ്റിയ ആളുകളുടെ കഥകൾ",
+    "reviews": {
+      "sarah": {
+        "name": "Sarah M.",
+        "review": "ആദ്യമായി സംസാരിച്ചതിന് ശേഷം എനിക്ക് വളരെ light തോന്നി. ഞാൻ ഈ app ഉപയോഗിച്ചതിൽ എനിക്ക് സന്തോഷമുണ്ട്!"
+      },
+      "john": {
+        "name": "John D.",
+        "review": "Shark Tank ൽ കണ്ടു ഒപ്പം ഉടനെ app download ചെയ്തു. അന്ന് മുതൽ സഹായം നേടുന്നു - വളരെ നല്ലതാണ്. ഓരോ തവണയും സംസാരിച്ചതിന് ശേഷം നന്നായി തോന്നുന്നു!"
+      },
+      "james": {
+        "name": "James L.",
+        "review": "ഞാൻ പര്യാപ്തമല്ലെന്ന് തോന്നിയിരുന്നു, എന്നാൽ എന്റെ doctor എന്നെ എന്നിൽ trust ചെയ്യാൻ പഠിപ്പിച്ചു. ഇത് എന്റെ ജീവിതം മാറ്റി!"
+      }
+    }
+  },
+  "selfAssessment": {
+    "title": "നിങ്ങൾ യഥാർത്ഥത്തിൽ ആരാണെന്ന് അറിയുക",
+    "description": "നിങ്ങളുടെ യഥാർത്ഥ personality കാണിക്കുന്ന എളുപ്പമുള്ള ചോദ്യങ്ങൾ - നിങ്ങളെ മനസ്സിലാക്കുന്ന journey ആരംഭിക്കുക."
+  },
+  "cvt": {
+    "trauma": {
+      "title": "പഴയ മോശമായ ഓർമ്മകൾ എന്നെ എങ്ങനെ affect ചെയ്യുന്നു?",
+      "description": "പഴയ കാര്യങ്ങൾ ഇന്ന് നിങ്ങൾക്ക് എങ്ങനെ പ്രശ്നമാകുന്നു, ഇത് മനസ്സിലാക്കുക"
+    },
+    "adhd": {
+      "title": "എനിക്ക് ADHD ഉണ്ടോ?",
+      "description": "നിങ്ങൾക്ക് attention നൽകാത്ത problem ഉണ്ടാകാം എന്ന് അറിയുക"
+    },
+    "anxiety": {
+      "title": "എന്റെ anxiety എത്രയാണ്?",
+      "description": "നിങ്ങൾ എത്ര anxious ആണെന്നും മുന്നോട്ട് എന്ത് ചെയ്യണം എന്നും അറിയുക"
+    },
+    "mood": {
+      "title": "ഇത് മോശമായ ഒരു ദിവസം മാത്രമാണോ അല്ലെങ്കിൽ കൂടുതലോ?",
+      "description": "നിങ്ങളുടെ sadness ഒരു ദിവസത്തെ കാര്യം മാത്രമാണോ അല്ലെങ്കിൽ കൂടുതൽ serious ആണോ എന്ന് അറിയുക"
+    },
+    "resilience": {
+      "title": "ഞാൻ പ്രശ്നങ്ങളെ എങ്ങനെ നേരിടുന്നു?",
+      "description": "നിങ്ങൾ ബുദ്ധിമുട്ടുള്ള സമയത്ത് എത്ര strong ആണെന്ന് അറിയുക"
+    },
+    "relationship": {
+      "title": "Relationships ന്റെ check",
+      "description": "നിങ്ങളുടെ relationships മനസ്സിലാക്കുക ഒപ്പം മുന്നോട്ട് എന്ത് ചെയ്യണം, ഇത് അറിയുക"
+    }
+  }
+}

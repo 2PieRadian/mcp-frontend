@@ -1,0 +1,140 @@
+{
+  "questions": {
+    "q1": {
+      "question": "When I meet new people, I usually feel",
+      "options": {
+        "option1": "Quiet but polite",
+        "option2": "Very confident and outgoing",
+        "option3": "Friendly and open",
+        "option4": "Nervous and avoid talking"
+      }
+    },
+    "q2": {
+      "question": "When someone needs help, I",
+      "options": {
+        "option1": "Ignore it unless told",
+        "option2": "Help only if it's convenient",
+        "option3": "Always offer help immediately",
+        "option4": "Try to help when I can"
+      }
+    },
+    "q3": {
+      "question": "I prefer spending my free time —",
+      "options": {
+        "option1": "Mostly with friends or family",
+        "option2": "Mostly alone",
+        "option3": "Alone only",
+        "option4": "With both friends and alone time equally"
+      }
+    },
+    "q4": {
+      "question": "If someone disagrees with me, I",
+      "options": {
+        "option1": "Get angry",
+        "option2": "Stop talking to them",
+        "option3": "Listen but feel uncomfortable",
+        "option4": "Stay calm and discuss peacefully"
+      }
+    },
+    "q5": {
+      "question": "I can identify my feelings —",
+      "options": {
+        "option1": "Hardly ever",
+        "option2": "Sometimes",
+        "option3": "Most of the time",
+        "option4": "Almost always"
+      }
+    },
+    "q6": {
+      "question": "When I am upset, I",
+      "options": {
+        "option1": "Lose control",
+        "option2": "Stay quiet but angry",
+        "option3": "Try to calm myself",
+        "option4": "Handle emotions calmly"
+      }
+    },
+    "q7": {
+      "question": "When someone hurts me, I",
+      "options": {
+        "option1": "Never forgive",
+        "option2": "Forgive slowly",
+        "option3": "Forgive after some time",
+        "option4": "Forgive quickly"
+      }
+    },
+    "q8": {
+      "question": "I express gratitude —",
+      "options": {
+        "option1": "Rarely",
+        "option2": "Occasionally",
+        "option3": "Often",
+        "option4": "Always"
+      }
+    },
+    "q9": {
+      "question": "Before making decisions, I",
+      "options": {
+        "option1": "Think a little",
+        "option2": "Act without thinking",
+        "option3": "Think carefully and evaluate all sides",
+        "option4": "Analyze options"
+      }
+    },
+    "q10": {
+      "question": "When plans fail, I",
+      "options": {
+        "option1": "Try to adjust",
+        "option2": "Stay calm and find a new plan",
+        "option3": "Feel bad but give up",
+        "option4": "Get upset easily"
+      }
+    },
+    "q11": {
+      "question": "When I get feedback, I",
+      "options": {
+        "option1": "Ignore it",
+        "option2": "Think about it",
+        "option3": "Learn and improve from it",
+        "option4": "Feel angry or hurt"
+      }
+    },
+    "q12": {
+      "question": "When I am under pressure, I",
+      "options": {
+        "option1": "Handle pressure well",
+        "option2": "Feel helpless",
+        "option3": "Panic",
+        "option4": "Stay calm sometimes"
+      }
+    },
+    "q13": {
+      "question": "After failure, I",
+      "options": {
+        "option1": "Feel low for long",
+        "option2": "Quit",
+        "option3": "Try again confidently",
+        "option4": "Try again after a break"
+      }
+    },
+    "q14": {
+      "question": "I view problems as",
+      "options": {
+        "option1": "Difficult situations",
+        "option2": "Challenges to face",
+        "option3": "Chances to learn",
+        "option4": "Bad luck"
+      }
+    },
+    "q15": {
+      "question": "I show kindness in daily life",
+      "options": {
+        "option1": "Often",
+        "option2": "Very rarely",
+        "option3": "Occasionally",
+        "option4": "Always"
+      }
+    }
+  }
+}
+

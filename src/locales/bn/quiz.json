@@ -1,0 +1,139 @@
+{
+  "questions": {
+    "q1": {
+      "question": "নতুন মানুষের সাথে দেখা হলে আমি কেমন feel করি?",
+      "options": {
+        "option1": "Calm কিন্তু একটু shy",
+        "option2": "খুব confident এবং কথা বলা",
+        "option3": "Friendly এবং open",
+        "option4": "Nervous এবং কথা বলতে ভয় পাই"
+      }
+    },
+    "q2": {
+      "question": "যখন কারো help দরকার, আমি",
+      "options": {
+        "option1": "তখন পর্যন্ত ignore করি যতক্ষণ না তারা বলে",
+        "option2": "শুধুমাত্র তখন help করি যখন আমার time থাকে",
+        "option3": "তৎক্ষণাৎ help করি",
+        "option4": "যখনই সম্ভব, help করার চেষ্টা করি"
+      }
+    },
+    "q3": {
+      "question": "আমি আমার free time কীভাবে কাটাতে পছন্দ করি?",
+      "options": {
+        "option1": "বেশিরভাগ সময় friends বা family এর সাথে",
+        "option2": "বেশিরভাগ সময় একা",
+        "option3": "সবসময় একা",
+        "option4": "Friends এর সাথে এবং একা দুটোই"
+      }
+    },
+    "q4": {
+      "question": "যদি কেউ আমার মতের সাথে agree না করে, আমি",
+      "options": {
+        "option1": "Angry হয়ে যাই",
+        "option2": "কথা বলা বন্ধ করে দিই",
+        "option3": "শুনি কিন্তু খারাপ লাগে",
+        "option4": "Calm থাকি এবং কথা বলি"
+      }
+    },
+    "q5": {
+      "question": "আমি আমার feelings বুঝতে পারি?",
+      "options": {
+        "option1": "খুব কম",
+        "option2": "কখনো কখনো",
+        "option3": "বেশিরভাগ সময়",
+        "option4": "সবসময়"
+      }
+    },
+    "q6": {
+      "question": "যখন আমি upset হই, আমি",
+      "options": {
+        "option1": "Control হারিয়ে ফেলি",
+        "option2": "Calm থাকি কিন্তু angry হই",
+        "option3": "নিজেকে calm করার চেষ্টা করি",
+        "option4": "Peacefully ভাবি এবং বুদ্ধিমত্তার সাথে কাজ করি"
+      }
+    },
+    "q7": {
+      "question": "যখন কেউ আমাকে hurt করে, আমি",
+      "options": {
+        "option1": "কখনোই ক্ষমা করি না",
+        "option2": "খুব দেরিতে ক্ষমা করি",
+        "option3": "কিছু সময় পর ক্ষমা করে দিই",
+        "option4": "দ্রুত ক্ষমা করে দিই"
+      }
+    },
+    "q8": {
+      "question": "আমি thank you বলি?",
+      "options": {
+        "option1": "খুব কম",
+        "option2": "কখনো কখনো",
+        "option3": "প্রায়ই",
+        "option4": "সবসময়"
+      }
+    },
+    "q9": {
+      "question": "Decision নেওয়ার আগে, আমি",
+      "options": {
+        "option1": "একটু ভাবি",
+        "option2": "ভাবনা না করে কাজ করি",
+        "option3": "ভালো করে ভাবি এবং সব দিক দেখি",
+        "option4": "সব options দেখি"
+      }
+    },
+    "q10": {
+      "question": "যখন আমার plan কাজ করে না, আমি",
+      "options": {
+        "option1": "Changes করার চেষ্টা করি",
+        "option2": "Calm থাকি এবং নতুন plan তৈরি করি",
+        "option3": "খারাপ লাগে এবং হাল ছেড়ে দিই",
+        "option4": "খুব upset হয়ে যাই"
+      }
+    },
+    "q11": {
+      "question": "যখন কেউ আমাকে suggestion দেয়, আমি",
+      "options": {
+        "option1": "Ignore করি",
+        "option2": "ভাবি",
+        "option3": "শিখি এবং আরও ভালো হওয়ার চেষ্টা করি",
+        "option4": "Angry বা দুঃখিত হয়ে যাই"
+      }
+    },
+    "q12": {
+      "question": "যখন আমি stress এ থাকি, আমি",
+      "options": {
+        "option1": "ভালো handle করতে পারি",
+        "option2": "Helpless feel করি",
+        "option3": "Panic হয়ে যাই",
+        "option4": "কখনো কখনো calm থাকতে পারি"
+      }
+    },
+    "q13": {
+      "question": "Failure এর পর, আমি",
+      "options": {
+        "option1": "খুব দেরি পর্যন্ত খারাপ feel করি",
+        "option2": "হাল ছেড়ে দিই",
+        "option3": "আবার try করি",
+        "option4": "একটু বিশ্রাম নিয়ে আবার try করি"
+      }
+    },
+    "q14": {
+      "question": "আমি problems কে কীভাবে দেখি?",
+      "options": {
+        "option1": "খুব কঠিন জিনিস",
+        "option2": "Challenge যা মোকাবিলা করতে হবে",
+        "option3": "কিছু শেখার সুযোগ",
+        "option4": "খারাপ ভাগ্য"
+      }
+    },
+    "q15": {
+      "question": "আমি মানুষের সাথে kindness দেখাই?",
+      "options": {
+        "option1": "প্রায়ই",
+        "option2": "খুব কম",
+        "option3": "কখনো কখনো",
+        "option4": "সবসময়"
+      }
+    }
+  }
+}
