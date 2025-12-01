@@ -111,8 +111,6 @@ export default function SelfAssessmentQuestions() {
     currentSelectedOption !== null && currentQuestion < totalQuestions;
   const canGoPrevious = currentQuestion > 1;
   const isLastQuestion = currentQuestion === totalQuestions;
-  const hasAnsweredAllQuestions =
-    Object.keys(answers).length === totalQuestions;
 
   // Create translated options for current question - display translated text but keep original for comparison
   const currentQuizQuestion = SELF_ASSESSMENT_QUIZ[currentQuestion - 1];

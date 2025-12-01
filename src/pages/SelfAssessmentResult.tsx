@@ -3,11 +3,6 @@ import { useTranslation } from "react-i18next";
 import SelfAssessmentNavbar from "../components/SelfAssessmentNavbar";
 import { SELF_ASSESSMENT_QUIZ } from "../lib/constants";
 
-interface SelfAssessmentResultProps {
-  totalScore: number;
-  maxScore: number;
-}
-
 export default function SelfAssessmentResult() {
   const { t } = useTranslation("common");
   // Get score from URL params or state (for now, using mock data)
@@ -161,9 +156,7 @@ export default function SelfAssessmentResult() {
                     <span className="font-semibold text-[#1F2937]">
                       30-44 {t("points")}:
                     </span>
-                    <p className="text-[#6B7280]">
-                      {t("generallyHealthy")}
-                    </p>
+                    <p className="text-[#6B7280]">{t("generallyHealthy")}</p>
                   </div>
                 </div>
 
