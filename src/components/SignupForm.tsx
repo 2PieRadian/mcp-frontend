@@ -81,7 +81,7 @@ export default function SignupForm() {
   };
 
   return (
-    <div className="login-form flex justify-between items-start gap-[20px] mt-[20px] rounded-lg flex-1">
+    <div className="login-form flex justify-between items-start gap-[20px] [@media(max-width:959px)]:mt-0 [@media(min-width:960px)]:mt-[20px] rounded-lg flex-1 [@media(max-width:959px)]:items-center">
       <AuthImage altTextKey="createAccount" objectPosition="0% 50%" />
 
       <div className="flex-1 rounded-lg border-0 [@media(min-width:960px)]:border-2 [@media(min-width:960px)]:border-border-light flex items-center justify-center">

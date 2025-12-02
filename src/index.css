@@ -9,7 +9,7 @@
 @theme {
   /* Base Colors */
   --color-primary: hsl(187, 73%, 16%);
-  --color-light-100: hsl(0, 0%, 96%);
+  --color-light-100: hsl(0, 0%, 100%);
   --color-input-bg: hsl(187, 57%, 96%);
   --color-role-bg: hsl(170, 27%, 32%);
   --color-navbar-dropdown-bg: hsl(200, 11%, 17%, 0.96);
@@ -30,8 +30,8 @@
   /* Drop Shadows */
   --shadow-drop-shadow: 0px 0px 5px 0px hsl(0, 0%, 0%, 0.25);
   --shadow-background-light: 0 0 250px 200px hsl(194, 27%, 21%, 50%);
-  --shadow-m: inset 0 2px 1px hsl(0, 0%, 90%), 0 0px 3px hsl(0, 0%, 0%, 0.20), 0 8px 16px hsl(0, 0%, 0%, 0.15);
-  --shadow-m-profile: inset 0 1px 1px hsl(0, 0%, 90%), 0 0px 3px hsl(0, 0%, 0%, 0.20), 0 8px 16px hsl(0, 0%, 0%, 0.15);
+  --shadow-m: inset 0 3px 1px white, 0 1px 2px #00000030, 0 2px 8px #00000015;
+  --shadow-m-profile: inset 0 1px 1px hsla(0, 0%, 100%, 0.5), 0 0px 2px hsl(0, 0%, 0%, 0.20), 0 8px 16px hsl(0, 0%, 0%, 0.15);
   --shadow-m-dark: inset 0 2px 1px hsl(0, 0%, 20%), 0 0px 3px hsl(0, 0%, 0%, 0.40), 0 8px 16px hsl(0, 0%, 0%, 0.30);
 
   /* Hover Colors */
@@ -128,4 +128,15 @@
 .scrollbar-custom::-webkit-scrollbar-thumb:hover {
   cursor: pointer;
   background: hsl(200, 11%, 30%);
+}
+
+/* Hide native browser password reveal icons */
+input[type="password"]::-webkit-credentials-auto-fill-button,
+input[type="password"]::-webkit-strong-password-auto-fill-button,
+input[type="password"]::-ms-reveal {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
 }

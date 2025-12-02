@@ -49,7 +49,7 @@ export default function Profile() {
         </header>
 
         {/* Hero / header */}
-        <section className="bg-gradient-to-r from-[hsl(194,27%,21%)] to-[hsl(187,73%,24%)] rounded-[16px] sm:rounded-[20px] p-[16px] sm:p-[28px] text-light-100 shadow-[0_20px_40px_rgba(0,0,0,0.15)] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-[16px] sm:gap-[20px]">
+        <section className="bg-gradient-to-r from-[hsl(194,27%,21%)] to-[hsl(187,73%,24%)] rounded-[16px] sm:rounded-[20px] p-[16px] sm:p-[28px] text-light-100 shadow-[0_5px_10px_rgba(0,0,0,0.15)] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-[16px] sm:gap-[20px]">
           <div className="flex items-center gap-[12px] sm:gap-[16px] shadow-m-profile rounded-[30px] sm:rounded-[25px] p-[12px] sm:p-[18px]">
             <div className="w-[56px] h-[56px] sm:w-[64px] sm:h-[64px] rounded-full bg-light-100/10 border border-light-100/40 flex items-center justify-center text-[22px] sm:text-[26px] font-semibold overflow-hidden flex-shrink-0">
               {user.avatarUrl ? (
@@ -63,13 +63,13 @@ export default function Profile() {
               )}
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-[10px] sm:text-xs uppercase tracking-[0.12em] opacity-80">
+              <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.12em] opacity-80">
                 Account
               </p>
-              <h1 className="text-[clamp(18px,4vw,28px)] font-semibold leading-tight truncate">
+              <h1 className="text-[clamp(16px,3.5vw,24px)] font-semibold leading-tight truncate">
                 {displayName}
               </h1>
-              <p className="text-xs sm:text-sm opacity-80 break-all">
+              <p className="text-[11px] sm:text-xs opacity-80 break-all">
                 {user.email}
               </p>
             </div>
@@ -78,7 +78,7 @@ export default function Profile() {
           <button
             type="button"
             onClick={handleLogout}
-            className="self-start shadow-m-profile sm:self-auto w-full sm:w-auto cursor-pointer border border-light-100/70 text-light-100 rounded-full px-[18px] py-[10px] sm:py-[8px] text-sm font-medium hover:bg-light-100 hover:text-[hsl(187,73%,16%)] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)]"
+            className="self-start shadow-m-profile sm:self-auto w-full sm:w-auto cursor-pointer border border-light-100/10 text-light-100 rounded-full px-[18px] py-[10px] sm:py-[8px] text-sm font-medium hover:bg-light-100 hover:text-[hsl(187,73%,16%)] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)]"
           >
             Logout
           </button>

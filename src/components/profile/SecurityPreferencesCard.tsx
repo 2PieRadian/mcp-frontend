@@ -1,6 +1,6 @@
 export default function SecurityPreferencesCard() {
   return (
-    <div className="bg-[hsl(0,0%,87%)] shadow-m rounded-[12px] sm:rounded-[16px] p-[12px] sm:p-[18px] sm:col-span-2">
+    <div className="bg-[hsl(0,0%,97%)] shadow-m rounded-[12px] sm:rounded-[16px] p-[12px] sm:p-[18px] sm:col-span-2">
       <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.16em] text-gray-500 mb-[6px]">
         Security & preferences
       </p>

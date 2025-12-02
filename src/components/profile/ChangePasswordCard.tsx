@@ -160,7 +160,7 @@ export default function ChangePasswordCard() {
   };
 
   return (
-    <div className="bg-[hsl(0,0%,87%)] shadow-m rounded-[12px] sm:rounded-[16px] p-[12px] sm:p-[18px]">
+    <div className="bg-[hsl(0,0%,97%)] shadow-m rounded-[12px] sm:rounded-[16px] p-[12px] sm:p-[18px]">
       <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.16em] text-gray-500 mb-[6px]">
         Password
       </p>
@@ -174,7 +174,7 @@ export default function ChangePasswordCard() {
             </div>
           )}
           {isEditing ? (
-            <div className="flex flex-col gap-[6px] mt-[6px]">
+            <div className="flex flex-col gap-[10px] mt-[6px]">
               {hasPassword && (
                 <input
                   type="password"
@@ -187,7 +187,7 @@ export default function ChangePasswordCard() {
                     }
                   }}
                   placeholder="Current password"
-                  className="border border-border-light rounded-full px-[12px] py-[8px] sm:py-[6px] text-[13px] sm:text-[14px] bg-input-bg placeholder:text-input-placeholder outline-none focus:ring-2 focus:ring-primary/30 w-full"
+                  className="border border-border-light rounded-full px-[12px] py-[8px] sm:py-[6px] text-[13px] sm:text-[14px] bg-white placeholder:text-input-placeholder outline-none focus:ring-2 focus:ring-primary/30 w-full"
                 />
               )}
               <input
@@ -201,7 +201,7 @@ export default function ChangePasswordCard() {
                   }
                 }}
                 placeholder={hasPassword ? "New password" : "Password"}
-                className="border border-border-light rounded-full px-[12px] py-[8px] sm:py-[6px] text-[13px] sm:text-[14px] bg-input-bg placeholder:text-input-placeholder outline-none focus:ring-2 focus:ring-primary/30 w-full"
+                className="border border-border-light rounded-full px-[12px] py-[8px] sm:py-[6px] text-[13px] sm:text-[14px] bg-white placeholder:text-input-placeholder outline-none focus:ring-2 focus:ring-primary/30 w-full"
               />
               <input
                 type="password"
@@ -216,7 +216,7 @@ export default function ChangePasswordCard() {
                 placeholder={
                   hasPassword ? "Confirm new password" : "Confirm password"
                 }
-                className="border border-border-light rounded-full px-[12px] py-[8px] sm:py-[6px] text-[13px] sm:text-[14px] bg-input-bg placeholder:text-input-placeholder outline-none focus:ring-2 focus:ring-primary/30 w-full"
+                className="border border-border-light rounded-full px-[12px] py-[8px] sm:py-[6px] text-[13px] sm:text-[14px] bg-white placeholder:text-input-placeholder outline-none focus:ring-2 focus:ring-primary/30 w-full"
               />
               <div className="flex items-center gap-[8px] sm:gap-[10px] flex-wrap">
                 <button
