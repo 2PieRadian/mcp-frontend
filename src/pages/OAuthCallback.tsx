@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { CircleCheck } from "lucide-react";
 
 export default function OAuthCallback() {
   const [searchParams] = useSearchParams();
@@ -13,11 +14,9 @@ export default function OAuthCallback() {
 
   useEffect(() => {
     const handleOAuthCallback = async () => {
-      // Step 1: Extract token and success flag from URL query parameters
       const token = searchParams.get("token");
       const success = searchParams.get("success");
 
-      // Step 2: Validate that we have the required parameters
       if (!token || success !== "true") {
         setStatus("error");
         setErrorMessage(
@@ -28,10 +27,9 @@ export default function OAuthCallback() {
       }
 
       try {
-        // Step 3: Store the JWT token in localStorage
         window.localStorage.setItem("auth:token", token);
 
-        // Step 4: Fetch user data from the backend using the token
+        // Fetch user data from the backend using the token
         // We'll try a common endpoint pattern - adjust if your backend uses a different one
         const response = await fetch("http://localhost:3000/api/v1/auth/me", {
           method: "GET",
@@ -41,7 +39,6 @@ export default function OAuthCallback() {
           },
         });
 
-        // Step 5: Handle the response
         const contentType = response.headers.get("content-type") || "";
         const isJson = contentType.includes("application/json");
 
@@ -74,11 +71,11 @@ export default function OAuthCallback() {
           throw new Error(errorText || "Failed to fetch user data");
         }
 
-        // Step 6: Parse user data from successful response
+        // Parse user data from successful response
         const data = isJson ? await response.json() : null;
         const user = data?.user || data; // Handle both { user: {...} } and direct user object
 
-        // Step 7: Update AuthContext with user data
+        // Update AuthContext with user data
         login({
           id: String(user.id),
           email: user.email,
@@ -156,7 +153,7 @@ export default function OAuthCallback() {
   return (
     <div className="min-h-screen bg-light-100 flex items-center justify-center">
       <div className="text-center max-w-md p-6">
-        <div className="text-green-600 text-4xl mb-4">✓</div>
+        <CircleCheck className="text-green-600 w-12 h-12 mx-auto mb-4" />
         <h2 className="text-2xl font-bold text-logo-heading mb-2">
           Authentication Successful!
         </h2>

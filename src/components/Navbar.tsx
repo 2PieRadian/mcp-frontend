@@ -150,6 +150,9 @@ export default function Navbar() {
         <NavbarItem textKey="selfAssessment" link="/self-assessment" />
         <NavbarItem textKey="findCounsellors" link="/find-counsellors" />
         <NavbarItem textKey="articles" link="/articles" />
+        {user?.role === "EXPERT" && (
+          <NavbarItem textKey="dashboard" link="/dashboard/expert" />
+        )}
       </div>
 
         {/* Right side controls */}

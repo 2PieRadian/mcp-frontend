@@ -12,6 +12,7 @@ import FinanceExpertsIntro from "./pages/FinanceExpertsIntro";
 import Experts from "./pages/Experts";
 import Profile from "./pages/Profile";
 import OAuthCallback from "./pages/OAuthCallback";
+import ExpertsDashboard from "./pages/dashboards/ExpertsDashboard";
 
 export default function App() {
   return (
@@ -68,6 +69,7 @@ export default function App() {
 
         {/* Authenticated */}
         <Route path="/profile" element={<Profile />} />
+        <Route path="/dashboard/expert" element={<ExpertsDashboard />} />
       </Routes>
     </ScreenProvider>
   );

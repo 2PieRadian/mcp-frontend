@@ -5,7 +5,7 @@ export default function SecurityPreferencesCard() {
         Security & preferences
       </p>
       <div className="flex flex-col sm:flex-row flex-wrap gap-[8px] sm:gap-[10px] text-[13px] sm:text-[14px] text-light-text">
-        <div className="bg-white px-[12px] sm:px-4 py-[10px] sm:py-[10px] rounded-[16px] sm:rounded-[20px] flex flex-col gap-[4px] flex-1 min-w-0">
+        <div className="bg-white px-[16px] sm:px-[20px] py-[12px] sm:py-[15px] rounded-[16px] sm:rounded-[20px] flex flex-col gap-[4px] flex-1 min-w-0">
           <p className="text-[11px] sm:text-xs text-gray-500">Login</p>
           <p className="font-medium text-[13px] sm:text-[14px]">
             Email & password
@@ -14,7 +14,8 @@ export default function SecurityPreferencesCard() {
             Contact support if you'd like to change your email.
           </p>
         </div>
-        <div className="bg-white px-[12px] sm:px-4 py-[10px] sm:py-[10px] rounded-[16px] sm:rounded-[20px] flex flex-col gap-[4px] flex-1 min-w-0">
+
+        <div className="bg-white px-[16px] sm:px-[20px] py-[12px] sm:py-[15px] rounded-[16px] sm:rounded-[20px] flex flex-col gap-[4px] flex-1 min-w-0">
           <p className="text-[11px] sm:text-xs text-gray-500">Language</p>
           <p className="font-medium text-[13px] sm:text-[14px]">
             Controlled from the top navigation.

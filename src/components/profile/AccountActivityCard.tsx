@@ -27,6 +27,7 @@ export default function AccountActivityCard() {
             {formatDate(user?.createdAt)}
           </p>
         </div>
+
         <div className="bg-white px-[16px] sm:px-[20px] py-[12px] sm:py-[15px] rounded-[16px] sm:rounded-[20px] flex-1 min-w-0">
           <p className="text-[11px] sm:text-xs text-gray-500">Last updated</p>
           <p className="font-medium text-[13px] sm:text-[14px]">

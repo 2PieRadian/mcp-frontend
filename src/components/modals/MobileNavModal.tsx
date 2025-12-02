@@ -136,6 +136,9 @@ export default function MobileNavModal({
           <MobileNavItem textKey="selfAssessment" to="/self-assessment" />
           <MobileNavItem textKey="findCounsellors" to="/find-counsellors" />
           <MobileNavItem textKey="articles" to="/articles" />
+          {user?.role === "EXPERT" && (
+            <MobileNavItem textKey="dashboard" to="/dashboard/expert" onClick={onClose} />
+          )}
         </div>
 
         {/* Bottom section with login and icons */}

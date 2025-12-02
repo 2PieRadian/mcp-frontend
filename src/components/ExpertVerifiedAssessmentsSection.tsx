@@ -31,7 +31,7 @@ function ExpertVerifiedAssessmentsSectionItem({
         <p className="text-[clamp(14px,2vw,15px)] text-[#4F5B64] mt-[10px] md:mt-[5px]">
           {description}
         </p>
-        <button className="bg-[#E0ECEE] text-primary border border-primary cursor-pointer px-[clamp(15px,3vw,20px)] py-[clamp(8px,2vw,10px)] rounded-[20px] mt-[15px] md:mt-[20px] text-[clamp(13px,2vw,16px)] w-full md:w-auto hover:bg-primary hover:text-white transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)]">
+        <button className="bg-[#ecf4f6] text-primary border border-primary cursor-pointer px-[clamp(15px,3vw,20px)] py-[clamp(8px,2vw,10px)] rounded-[20px] mt-[15px] md:mt-[20px] text-[clamp(13px,2vw,16px)] w-full md:w-auto hover:bg-primary hover:text-white transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)]">
           Take a Free Assessment
         </button>
       </div>
@@ -44,7 +44,7 @@ function ExpertVerifiedAssessmentsSectionItem({
         <img
           src={imageSrc}
           alt={title}
-          className="w-full object-cover"
+          className="w-full object-cover animate-float-2"
           style={{ maxWidth: `${imageSize}px` }}
         />
       </div>
