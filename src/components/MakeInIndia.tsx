@@ -2,11 +2,11 @@ export default function MakeInIndia() {
   return (
     <div className="bg-make-in-india-bg py-[30px] sm:py-[60px] px-[20px] sm:px-[40px] max-w-[1350px] mx-auto rounded-[20px] sm:rounded-[30px] mb-[30px] sm:mb-[50px]">
       <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-[20px] sm:gap-[20px]">
-        <div className="left flex items-center gap-[12px] sm:gap-[15px] w-full sm:w-auto justify-center sm:justify-start">
+        <div className="left flex flex-col sm:flex-row items-center gap-[12px] sm:gap-[15px] justify-center sm:justify-start max-w-[300px] mx-auto sm:w-auto sm:mx-0">
           <img
             src="/images/navbar/logo_white.png"
             alt="MindCurePath Logo"
-            className="w-[60px] sm:w-[80px] flex-shrink-0"
+            className="w-[70px] sm:w-[70px] flex-shrink-0"
           />
 
           <div className="content text-white text-center sm:text-left">
@@ -14,7 +14,7 @@ export default function MakeInIndia() {
               MindCurePath
             </h1>
 
-            <p className="text-[13px] sm:text-[16px] uppercase font-light">
+            <p className="text-[11px] sm:text-[14px] uppercase font-light">
               India's own virtual counselling platform built by Indians, for
               Indians
             </p>
