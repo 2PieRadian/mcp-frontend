@@ -54,7 +54,7 @@ export default function LanguageSwitcher() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="px-[12px] py-[6px] bg-[hsl(0,0%,90%)] border border-[#304048] rounded-full cursor-pointer hover:bg-light-200 transition-colors flex items-center gap-[8px]"
+        className="px-[12px] py-[6px] bg-[hsl(0,0%,98%)] border border-[#304048]/30 rounded-full cursor-pointer hover:bg-light-200 transition-colors flex items-center gap-[8px]"
         aria-label="Change language"
       >
         <LanguagesIcon size={20} className="text-[#304048]" />

@@ -28,8 +28,8 @@ export default function LanguageModal({
           <button
             key={lang.code}
             onClick={() => onLanguageChange(lang.code)}
-            className={`w-full text-left px-[15px] py-[10px] hover:bg-[hsl(0,0%,86%)] cursor-pointer transition-colors flex items-center justify-between ${
-              currentLanguageCode === lang.code ? "bg-[hsl(0,0%,86%)]" : ""
+            className={`w-full text-left px-[15px] py-[10px] hover:bg-[hsl(0,0%,96%)] cursor-pointer transition-colors flex items-center justify-between ${
+              currentLanguageCode === lang.code ? "bg-[hsl(0,0%,95%)]" : ""
             }`}
           >
             <div className="flex flex-col">
