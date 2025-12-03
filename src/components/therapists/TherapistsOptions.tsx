@@ -41,7 +41,7 @@ export default function TherapistsOptions({
   };
 
   return (
-    <div className="max-w-[1350px] mx-auto flex items-center justify-between gap-[10px]">
+    <div className="max-w-[1350px] mx-auto flex px-[4px] py-[4px] rounded-[30px] items-center justify-between gap-[10px]">
       {options.map((option) => {
         const route = getCategoryRoute(option, sector);
         const isSelected = selectedOption === option;
@@ -50,17 +50,23 @@ export default function TherapistsOptions({
         const label = isTherapistTopicsPage ? option : translatedOption;
 
         return (
-          <Link
-            key={option}
-            to={route}
-            className={`flex flex-1 w-full items-center cursor-pointer justify-center rounded-[30px] py-[10px] text-sm md:text-base ${
-              isSelected
-                ? "bg-therapists-hero-hover-bg text-white"
-                : "bg-light-100 text-[#304048] hover:bg-[#304048]/8"
+          <div
+            className={`bg-[hsl(0,0%,97%)] w-full rounded-[30px] shadow-l transform transition-all duration-150 hover:-translate-y-[1px] active:translate-y-[1px] ${
+              isSelected ? "shadow-[0_10px_24px_rgba(0,0,0,0.25)]" : ""
             }`}
           >
-            {label}
-          </Link>
+            <Link
+              key={option}
+              to={route}
+              className={`flex flex-1 w-full items-center cursor-pointer justify-center rounded-[30px] py-[10px] text-sm md:text-base ${
+                isSelected
+                  ? "bg-[hsl(173,17%,40%)] text-white"
+                  : "text-[#304048] hover:bg-[#304048]/6"
+              }`}
+            >
+              {label}
+            </Link>
+          </div>
         );
       })}
     </div>
