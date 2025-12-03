@@ -8,7 +8,7 @@ export default function Footer() {
   const twitterURL = "https://www.twitter.com/mindcurepath";
   const facebookURL = "https://www.facebook.com/mindcurepath";
   return (
-    <div className="FOOTER mt-[60px] max-w-[1350px] mx-auto border-t text-[#37445A] border-[hsl(0,0%,75%)] flex flex-col md:flex-row items-center md:items-start justify-center md:justify-between px-[20px] sm:px-[30px] md:px-[40px] py-[30px] md:py-[10px] gap-[30px]">
+    <div className="FOOTER mt-[60px] mb-[60px] max-w-[1350px] mx-auto border-t text-[#37445A] border-[hsl(0,0%,75%)] flex flex-col md:flex-row items-center md:items-start justify-center md:justify-between px-[20px] sm:px-[30px] md:px-[40px] py-[30px] md:py-[10px] gap-[30px]">
       <div className="COMPANY-LOGO flex justify-center md:justify-start">
         <img
           src="/images/footer/company_logo.png"

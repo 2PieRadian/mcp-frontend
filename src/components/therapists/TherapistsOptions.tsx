@@ -55,8 +55,8 @@ export default function TherapistsOptions({
             to={route}
             className={`flex flex-1 w-full items-center cursor-pointer justify-center rounded-[30px] py-[10px] text-sm md:text-base ${
               isSelected
-                ? "bg-[#304048] text-white"
-                : "bg-light-100 text-[#304048] hover:bg-[#304048]/20"
+                ? "bg-therapists-hero-hover-bg text-white"
+                : "bg-light-100 text-[#304048] hover:bg-[#304048]/8"
             }`}
           >
             {label}
