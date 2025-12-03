@@ -89,12 +89,12 @@ export default function MobileNavModal({
                 className="flex items-center justify-between cursor-pointer px-[25px] py-[12px] hover:bg-hover-bg rounded-full transition-colors duration-200"
                 onClick={() => setWeHelpWithExpanded(!weHelpWithExpanded)}
               >
-                <span className="text-light-text text-[16px]">
+                <span className="text-primary text-[16px]">
                   {t("weHelpWith", { ns: "navigation" })}
                 </span>
                 <ChevronDown
                   size={15}
-                  className={`text-light-text transition-transform duration-200 ${
+                  className={`text-primary transition-transform duration-200 ${
                     weHelpWithExpanded ? "rotate-180" : ""
                   }`}
                 />
@@ -112,21 +112,21 @@ export default function MobileNavModal({
                   <Link
                     to="/wellness-experts"
                     onClick={onClose}
-                    className="px-[20px] py-[10px] text-[16px] rounded-[10px] cursor-pointer hover:bg-gray-50 transition-colors duration-200"
+                    className="px-[20px] py-[10px] text-[16px] text-primary rounded-[10px] cursor-pointer hover:bg-gray-50 transition-colors duration-200"
                   >
                     {t("wellnessExperts", { ns: "navigation" })}
                   </Link>
                   <Link
                     to="/education-experts"
                     onClick={onClose}
-                    className="px-[20px] py-[10px] text-[16px] rounded-[10px] cursor-pointer hover:bg-gray-50 transition-colors duration-200"
+                    className="px-[20px] py-[10px] text-[16px] text-primary rounded-[10px] cursor-pointer hover:bg-gray-50 transition-colors duration-200"
                   >
                     {t("educationExperts", { ns: "navigation" })}
                   </Link>
                   <Link
                     to="/finance-experts"
                     onClick={onClose}
-                    className="px-[20px] py-[10px] text-[16px] rounded-[10px] cursor-pointer hover:bg-gray-50 transition-colors duration-200"
+                    className="px-[20px] py-[10px] text-[16px] text-primary rounded-[10px] cursor-pointer hover:bg-gray-50 transition-colors duration-200"
                   >
                     {t("financeExperts", { ns: "navigation" })}
                   </Link>

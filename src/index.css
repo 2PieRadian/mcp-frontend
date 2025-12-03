@@ -47,7 +47,13 @@
 
 .expert-hero-gradient {
   /* background: #cfdfe6; */
-  background:  linear-gradient(to right, hsl(173, 17%, 28%) 20%, rgb(158, 184, 180) 100%);
+  background: linear-gradient(to bottom, hsl(173, 17%, 28%), hsl(172, 16%, 36%), rgb(94, 121, 117) 100%);
+}
+
+@media (min-width: 770px) {
+  .expert-hero-gradient {
+    background: linear-gradient(to right, hsl(173, 17%, 28%), hsl(172, 15%, 40%), rgb(79, 106, 102) 100%);
+  }
 }
 
 /* Floating Animations */
