@@ -57,10 +57,10 @@ export default function WellnessExpertsIntro() {
   ];
 
   return (
-    <div className="max-w-[1350px] mx-auto px-[20px] mb-[40px]">
+    <div className="max-w-[1350px] mx-auto px-[20px] mb-[80px]">
       <ResponsiveNavbar />
 
-      <div className="h-[240px]">
+      <div className="h-[240px] mt-[30px]">
         <img
           src="/images/health/health.jpg"
           alt=""
@@ -68,7 +68,7 @@ export default function WellnessExpertsIntro() {
         />
       </div>
 
-      <div className="categories mt-[40px] flex flex-col md:flex-row items-stretch md:justify-between gap-[20px]">
+      <div className="categories mt-[20px] flex flex-col md:flex-row items-stretch md:justify-between gap-[20px]">
         {categories.map((category) => (
           <ExpertCategoryCard
             key={category.title}
