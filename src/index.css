@@ -34,10 +34,12 @@
   --shadow-m-profile: inset 0 1px 1px hsla(0, 0%, 100%, 0.5), 0 0px 2px hsl(0, 0%, 0%, 0.20), 0 8px 16px hsl(0, 0%, 0%, 0.15);
   --shadow-m-dark: inset 0 2px 1px hsl(0, 0%, 20%), 0 0px 3px hsl(0, 0%, 0%, 0.40), 0 8px 16px hsl(0, 0%, 0%, 0.30);
 
+  /* Large Shadows */
+  --shadow-l: inset 0 5px 3px white, 0 1px 4px #00000010, 0 2px 8px #00000015, 0 2px 5px #00000015;
+
   /* Hover Colors */
   --color-hover-bg: hsl(194, 57%, 17%, 0.08);
 }
-
 
 .expert-hero-gradient {
   background: #cfdfe6;

@@ -15,7 +15,7 @@ function ExpertCategoryCard({
   exploreText,
 }: ExpertCategoryCardProps & { exploreText: string }) {
   return (
-    <div className="flex flex-col justify-between shadow-none hover:scale-[1.018] hover:shadow-[4px_4px_10px_rgba(0,0,0,0.28)] transition-all duration-150 cursor-pointer gap-[10px] border py-[15px] px-[20px] rounded-[10px] border-[#9ba5ab] w-full md:w-auto md:flex-1 h-full">
+    <div className="flex flex-col justify-between bg-[hsl(0,0%,97%)] hover:bg-white shadow-l hover:scale-[1.025] transition-all duration-150 cursor-pointer gap-[10px] py-[15px] px-[20px] rounded-[10px] border-[#9ba5ab] w-full md:w-auto md:flex-1 h-full">
       <div>
         <h1 className="text-[20px] md:text-[25px] font-medium text-center text-[#374750]">
           {title}
@@ -64,7 +64,7 @@ export default function WellnessExpertsIntro() {
         <img
           src="/images/health/health.jpg"
           alt=""
-          className="w-full h-full object-cover rounded-[30px]"
+          className="w-full h-full object-cover rounded-[30px] shadow-lg"
         />
       </div>
 

@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import ExpertsHeroSection from "../components/ExpertsHeroSection";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import { EXPERT_CATEGORIES } from "../lib/constants";
+import TherapistsHeroSection from "../components/therapists/TherapistsHeroSection";
 import TherapistsTitle from "../components/therapists/TherapistsTitle";
 import TherapistsOptions from "../components/therapists/TherapistsOptions";
 import TherapistsFilterModal from "../components/therapists/TherapistsFilterModal";
@@ -130,7 +130,7 @@ export default function Therapists() {
     <div className="px-[20px] mb-[80px]">
       <ResponsiveNavbar />
 
-      <ExpertsHeroSection />
+      <TherapistsHeroSection />
 
       <TherapistsTitle sector={sector} />
 
