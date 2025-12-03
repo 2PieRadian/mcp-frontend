@@ -2,9 +2,9 @@ import { useState, useEffect, lazy } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "../../context/AuthContext";
+import ResponsiveNavbar from "../../components/ResponsiveNavbar";
 import type { UpcomingSession, WeeklyAvailability, TabType } from "./types";
 
-const ResponsiveNavbar = lazy(() => import("../../components/ResponsiveNavbar"));
 const DashboardTabs = lazy(() => import("./components/DashboardTabs"));
 const UpcomingSessionsTab = lazy(() => import("./components/UpcomingSessionsTab"));
 const AvailabilityManagementTab = lazy(() => import("./components/AvailabilityManagementTab"));

@@ -1,10 +1,9 @@
-import { useState, useEffect, lazy } from "react";
+import { useState, useEffect } from "react";
 import { ChevronDown, Moon, X, UserCircle2 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useTranslation } from "react-i18next";
-
-const LanguageSwitcher = lazy(() => import("../LanguageSwitcher"));
+import LanguageSwitcher from "../LanguageSwitcher";
 
 interface MobileNavModalProps {
   isOpen: boolean;
