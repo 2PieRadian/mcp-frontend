@@ -1,14 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy } from "react";
 import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import { EXPERT_CATEGORIES } from "../lib/constants";
-import TherapistsHeroSection from "../components/therapists/TherapistsHeroSection";
-import TherapistsTitle from "../components/therapists/TherapistsTitle";
-import TherapistsOptions from "../components/therapists/TherapistsOptions";
-import TherapistsFilterModal from "../components/therapists/TherapistsFilterModal";
-import TherapistsFiltersAndSearch from "../components/therapists/TherapistsFiltersAndSearch";
-import TherapistsCardsSection from "../components/therapists/TherapistsCardsSection";
+
+const ResponsiveNavbar = lazy(() => import("../components/ResponsiveNavbar"));
+const TherapistsHeroSection = lazy(() => import("../components/therapists/TherapistsHeroSection"));
+const TherapistsTitle = lazy(() => import("../components/therapists/TherapistsTitle"));
+const TherapistsOptions = lazy(() => import("../components/therapists/TherapistsOptions"));
+const TherapistsFilterModal = lazy(() => import("../components/therapists/TherapistsFilterModal"));
+const TherapistsFiltersAndSearch = lazy(() => import("../components/therapists/TherapistsFiltersAndSearch"));
+const TherapistsCardsSection = lazy(() => import("../components/therapists/TherapistsCardsSection"));
 
 const THERAPIST_TOPICS = ["Anxiety", "Couple", "Breakup", "Loneliness"];
 

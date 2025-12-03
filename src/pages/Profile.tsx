@@ -1,13 +1,15 @@
 import { Navigate, useNavigate } from "react-router-dom";
-import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import { useAuth } from "../context/AuthContext";
-import BasicInfoCard from "../components/profile/BasicInfoCard";
-import ContactCard from "../components/profile/ContactCard";
-import AccountActivityCard from "../components/profile/AccountActivityCard";
-import GenderCard from "../components/profile/GenderCard";
-import DateOfBirthCard from "../components/profile/DateOfBirthCard";
-import ChangePasswordCard from "../components/profile/ChangePasswordCard";
-import LanguagesCard from "../components/profile/LanguagesCard";
+import { lazy } from "react";
+
+const ResponsiveNavbar = lazy(() => import("../components/ResponsiveNavbar"));
+const BasicInfoCard = lazy(() => import("../components/profile/BasicInfoCard"));
+const ContactCard = lazy(() => import("../components/profile/ContactCard"));
+const AccountActivityCard = lazy(() => import("../components/profile/AccountActivityCard"));
+const GenderCard = lazy(() => import("../components/profile/GenderCard"));
+const DateOfBirthCard = lazy(() => import("../components/profile/DateOfBirthCard"));
+const ChangePasswordCard = lazy(() => import("../components/profile/ChangePasswordCard"));
+const LanguagesCard = lazy(() => import("../components/profile/LanguagesCard"));
 
 export default function Profile() {
   const { user, isLoading, logout } = useAuth();

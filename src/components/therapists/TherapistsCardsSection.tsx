@@ -1,5 +1,7 @@
+import { lazy } from "react";
+
 import { EXPERTS } from "../../lib/constants";
-import ExpertCard from "../ExpertCard";
+const ExpertCard = lazy(() => import("../ExpertCard"));
 
 export default function TherapistsCardsSection() {
   return (
