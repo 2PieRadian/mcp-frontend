@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import { ChevronDown, Moon, X, UserCircle2 } from "lucide-react";
+import { ChevronDown, Moon, X, UserCircle2, Languages as LanguagesIcon, Check } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useTranslation } from "react-i18next";
-import LanguageSwitcher from "../LanguageSwitcher";
 
 interface MobileNavModalProps {
   isOpen: boolean;
@@ -38,10 +37,34 @@ export default function MobileNavModal({
   isOpen,
   onClose,
 }: MobileNavModalProps) {
-  const { t } = useTranslation(["common", "navigation"]);
+  const { t, i18n } = useTranslation(["common", "navigation"]);
   const { user } = useAuth();
   const location = useLocation();
   const [weHelpWithExpanded, setWeHelpWithExpanded] = useState(false);
+  const [languageExpanded, setLanguageExpanded] = useState(false);
+
+  const availableLanguages = [
+    { code: "en", name: "English", nativeName: "English" },
+    { code: "hi", name: "Hindi", nativeName: "हिंदी" },
+    { code: "he", name: "Hinglish", nativeName: "Hinglish" },
+    { code: "gu", name: "Gujarati", nativeName: "ગુજરાતી" },
+    { code: "mr", name: "Marathi", nativeName: "मराठी" },
+    { code: "bn", name: "Bengali", nativeName: "বাংলা" },
+    { code: "as", name: "Assamese", nativeName: "অসমীয়া" },
+    { code: "kn", name: "Kannada", nativeName: "ಕನ್ನಡ" },
+    { code: "ml", name: "Malayalam", nativeName: "മലയാളം" },
+    { code: "ta", name: "Tamil", nativeName: "தமிழ்" },
+    { code: "te", name: "Telugu", nativeName: "తెలుగు" },
+  ];
+
+  const currentLanguage =
+    availableLanguages.find((lang) => lang.code === i18n.language) ||
+    availableLanguages[0];
+
+  const changeLanguage = (langCode: string) => {
+    i18n.changeLanguage(langCode);
+    setLanguageExpanded(false);
+  };
 
   useEffect(() => {
     if (isOpen) {
@@ -152,47 +175,103 @@ export default function MobileNavModal({
               />
             </>
           )}
+
+          {/* Dark Mode */}
+          <div className="px-[25px] py-[12px] flex items-center gap-[12px] rounded-full hover:bg-hover-bg transition-colors cursor-pointer">
+            <div className="p-[8px] bg-[hsl(0,0%,98%)] rounded-full">
+              <Moon size={20} className="text-primary" />
+            </div>
+            <span className="text-light-text text-[16px]">Change Theme</span>
+          </div>
+
+          {/* Profile/Login */}
+          {user ? (
+            <Link
+              to="/profile"
+              className={`group px-[25px] py-[12px] flex items-center gap-[12px] rounded-full transition-colors ${
+                location.pathname.startsWith("/profile")
+                  ? "bg-hover-bg"
+                  : "hover:bg-hover-bg"
+              }`}
+              onClick={onClose}
+            >
+              <UserCircle2
+                size={24}
+                className={`transition-colors ${
+                  location.pathname.startsWith("/profile")
+                    ? "text-primary"
+                    : "text-light-text group-hover:text-primary"
+                }`}
+              />
+              <span className="text-light-text text-[16px]">
+                Profile
+              </span>
+            </Link>
+          ) : (
+            <Link
+              to="/login"
+              className="px-[25px] py-[12px] text-primary transition-all duration-200 cursor-pointer rounded-full text-[16px] hover:bg-hover-bg"
+              onClick={onClose}
+            >
+              {t("login", { ns: "common" })}
+            </Link>
+          )}
         </div>
 
-        {/* Bottom section with login and icons */}
+        {/* Bottom section with language switcher only */}
         <div className="p-[20px] border-t border-gray-200 flex-shrink-0">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <LanguageSwitcher />
-              <div className="p-[8px] bg-light-100 rounded-full cursor-pointer">
-                <Moon size={20} className="text-primary" />
+          {/* Language Switcher - Expandable */}
+          <div>
+            <div
+              className="flex items-center justify-between cursor-pointer px-[12px] py-[8px] hover:bg-gray-50 rounded-full transition-colors duration-200"
+              onClick={() => setLanguageExpanded(!languageExpanded)}
+            >
+              <div className="flex items-center gap-2">
+                <LanguagesIcon size={20} className="text-primary" />
+                <span className="text-sm font-medium text-primary">
+                  {currentLanguage.nativeName}
+                </span>
               </div>
+              <ChevronDown
+                size={15}
+                className={`text-primary transition-transform duration-200 ${
+                  languageExpanded ? "rotate-180" : ""
+                }`}
+              />
             </div>
 
-            {user ? (
-              <Link
-                to="/profile"
-                className={`group p-[6px] rounded-full border border-border-light transition-colors flex items-center justify-center ${
-                  location.pathname.startsWith("/profile")
-                    ? "bg-border-light text-white"
-                    : "hover:bg-border-light hover:text-white"
-                }`}
-                onClick={onClose}
-                aria-label="Profile"
-              >
-                <UserCircle2
-                  size={26}
-                  className={`transition-colors ${
-                    location.pathname.startsWith("/profile")
-                      ? "text-white"
-                      : "text-logo-heading group-hover:text-white"
-                  }`}
-                />
-              </Link>
-            ) : (
-              <Link
-                to="/login"
-                className="border border-border-light text-primary transition-all duration-200 cursor-pointer rounded-full px-[20px] py-[8px] text-[15px] hover:bg-border-light hover:text-white"
-                onClick={onClose}
-              >
-                {t("login", { ns: "common" })}
-              </Link>
-            )}
+            {/* Language list with animation */}
+            <div
+              className={`transition-all duration-300 ease-in-out scrollbar-hide ${
+                languageExpanded
+                  ? "max-h-[200px] opacity-100 overflow-y-auto"
+                  : "max-h-0 opacity-0 overflow-hidden"
+              }`}
+            >
+              <div className="pl-[30px] pt-[8px] flex flex-col gap-[4px]">
+                {availableLanguages.map((lang) => (
+                  <button
+                    key={lang.code}
+                    onClick={() => changeLanguage(lang.code)}
+                    className={`w-full text-left px-[15px] py-[8px] rounded-[8px] cursor-pointer hover:bg-gray-50 transition-colors flex items-center justify-between ${
+                      i18n.language === lang.code ? "bg-gray-100" : ""
+                    }`}
+                  >
+                    <div className="flex flex-col">
+                      <span className="text-sm font-medium text-[#304048]">
+                        {lang.name}
+                      </span>
+                      <span className="text-xs text-gray-500">
+                        {lang.nativeName}
+                      </span>
+                    </div>
+                    {i18n.language === lang.code && (
+                      <Check size={16} className="text-primary" />
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
