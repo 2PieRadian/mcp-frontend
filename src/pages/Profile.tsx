@@ -4,7 +4,6 @@ import { useAuth } from "../context/AuthContext";
 import BasicInfoCard from "../components/profile/BasicInfoCard";
 import ContactCard from "../components/profile/ContactCard";
 import AccountActivityCard from "../components/profile/AccountActivityCard";
-import SecurityPreferencesCard from "../components/profile/SecurityPreferencesCard";
 import GenderCard from "../components/profile/GenderCard";
 import DateOfBirthCard from "../components/profile/DateOfBirthCard";
 import ChangePasswordCard from "../components/profile/ChangePasswordCard";
@@ -86,7 +85,7 @@ export default function Profile() {
         </section>
 
         {/* Info sections */}
-        <section className="grid gap-[14px] sm:gap-[18px] sm:grid-cols-2">
+        <section className="grid gap-[14px] sm:gap-[18px] sm:grid-cols-2 mb-[100px]">
           <BasicInfoCard />
           <ContactCard />
           <GenderCard />
@@ -94,7 +93,6 @@ export default function Profile() {
           <LanguagesCard />
           <ChangePasswordCard />
           <AccountActivityCard />
-          <SecurityPreferencesCard />
         </section>
       </main>
     </div>

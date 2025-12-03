@@ -83,61 +83,74 @@ export default function MobileNavModal({
         {/* Navigation items */}
         <div className="p-[20px] flex flex-col gap-[10px] overflow-y-auto flex-1">
           {/* We Help With - Expandable */}
-          <div>
-            <div
-              className="flex items-center justify-between cursor-pointer px-[25px] py-[12px] hover:bg-hover-bg rounded-full transition-colors duration-200"
-              onClick={() => setWeHelpWithExpanded(!weHelpWithExpanded)}
-            >
-              <span className="text-light-text text-[16px]">
-                {t("weHelpWith", { ns: "navigation" })}
-              </span>
-              <ChevronDown
-                size={15}
-                className={`text-light-text transition-transform duration-200 ${
-                  weHelpWithExpanded ? "rotate-180" : ""
-                }`}
-              />
-            </div>
+          {user?.role !== "EXPERT" && (
+            <div>
+              <div
+                className="flex items-center justify-between cursor-pointer px-[25px] py-[12px] hover:bg-hover-bg rounded-full transition-colors duration-200"
+                onClick={() => setWeHelpWithExpanded(!weHelpWithExpanded)}
+              >
+                <span className="text-light-text text-[16px]">
+                  {t("weHelpWith", { ns: "navigation" })}
+                </span>
+                <ChevronDown
+                  size={15}
+                  className={`text-light-text transition-transform duration-200 ${
+                    weHelpWithExpanded ? "rotate-180" : ""
+                  }`}
+                />
+              </div>
 
-            {/* Nested list with animation */}
-            <div
-              className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                weHelpWithExpanded
-                  ? "max-h-96 opacity-100"
-                  : "max-h-0 opacity-0"
-              }`}
-            >
-              <div className="pl-[30px] pt-[10px] flex flex-col gap-[8px]">
-                <Link
-                  to="/wellness-experts"
-                  onClick={onClose}
-                  className="px-[20px] py-[10px] text-[16px] rounded-[10px] cursor-pointer hover:bg-gray-50 transition-colors duration-200"
-                >
-                  {t("wellnessExperts", { ns: "navigation" })}
-                </Link>
-                <Link
-                  to="/education-experts"
-                  onClick={onClose}
-                  className="px-[20px] py-[10px] text-[16px] rounded-[10px] cursor-pointer hover:bg-gray-50 transition-colors duration-200"
-                >
-                  {t("educationExperts", { ns: "navigation" })}
-                </Link>
-                <Link
-                  to="/finance-experts"
-                  onClick={onClose}
-                  className="px-[20px] py-[10px] text-[16px] rounded-[10px] cursor-pointer hover:bg-gray-50 transition-colors duration-200"
-                >
-                  {t("financeExperts", { ns: "navigation" })}
-                </Link>
+              {/* Nested list with animation */}
+              <div
+                className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                  weHelpWithExpanded
+                    ? "max-h-96 opacity-100"
+                    : "max-h-0 opacity-0"
+                }`}
+              >
+                <div className="pl-[30px] pt-[10px] flex flex-col gap-[8px]">
+                  <Link
+                    to="/wellness-experts"
+                    onClick={onClose}
+                    className="px-[20px] py-[10px] text-[16px] rounded-[10px] cursor-pointer hover:bg-gray-50 transition-colors duration-200"
+                  >
+                    {t("wellnessExperts", { ns: "navigation" })}
+                  </Link>
+                  <Link
+                    to="/education-experts"
+                    onClick={onClose}
+                    className="px-[20px] py-[10px] text-[16px] rounded-[10px] cursor-pointer hover:bg-gray-50 transition-colors duration-200"
+                  >
+                    {t("educationExperts", { ns: "navigation" })}
+                  </Link>
+                  <Link
+                    to="/finance-experts"
+                    onClick={onClose}
+                    className="px-[20px] py-[10px] text-[16px] rounded-[10px] cursor-pointer hover:bg-gray-50 transition-colors duration-200"
+                  >
+                    {t("financeExperts", { ns: "navigation" })}
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
-          <MobileNavItem textKey="selfAssessment" to="/self-assessment" />
-          <MobileNavItem textKey="findCounsellors" to="/find-counsellors" />
+          {user?.role !== "EXPERT" && (
+            <MobileNavItem textKey="selfAssessment" to="/self-assessment" />
+          )}
+          {user?.role !== "EXPERT" && (
+            <MobileNavItem textKey="findCounsellors" to="/find-counsellors" />
+          )}
           <MobileNavItem textKey="articles" to="/articles" />
           {user?.role === "EXPERT" && (
-            <MobileNavItem textKey="dashboard" to="/dashboard/expert" onClick={onClose} />
+            <>
+              <MobileNavItem textKey="Home" to="/" onClick={onClose} />
+              <MobileNavItem
+                textKey="dashboard"
+                to="/dashboard/expert"
+                onClick={onClose}
+              />
+            </>
           )}
         </div>
 

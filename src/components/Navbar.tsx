@@ -131,8 +131,12 @@ export default function Navbar() {
         </div>
 
         {/* Desktop Navigation - Hidden on mobile */}
-        <div className="hidden lg:flex items-center gap-[2px] text-[13px] relative">
-          {weHelpWithModalOpen && (
+        <div
+          className={`hidden lg:flex items-center text-[13px] relative ${
+            user?.role === "EXPERT" ? "gap-5" : "gap-[2px]"
+          }`}
+        >
+          {weHelpWithModalOpen && user?.role !== "EXPERT" && (
             <div
               onMouseEnter={handleModalMouseEnter}
               onMouseLeave={handleModalMouseLeave}
@@ -141,31 +145,44 @@ export default function Navbar() {
             </div>
           )}
 
-          <div ref={navbarItemRef}>
-            <NavbarItemIcon
-              textKey="weHelpWith"
-              icon={
-                <ChevronDown
-                  size={15}
-                  className={`text-light-text transition-transform duration-200 ${
-                    weHelpWithModalOpen ? "rotate-180" : ""
-                  }`}
-                />
-              }
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-              isActive={weHelpWithModalOpen}
-            />
-          </div>
-          <NavbarItem textKey="selfAssessment" link="/self-assessment" />
-          {user?.role === "EXPERT" && (
-            <NavbarItem
-              textKey="dashboard"
-              link="/dashboard/expert"
-              isActive={location.pathname.startsWith("/dashboard")}
-            />
+          {user?.role !== "EXPERT" && (
+            <div ref={navbarItemRef}>
+              <NavbarItemIcon
+                textKey="weHelpWith"
+                icon={
+                  <ChevronDown
+                    size={15}
+                    className={`text-light-text transition-transform duration-200 ${
+                      weHelpWithModalOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                }
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                isActive={weHelpWithModalOpen}
+              />
+            </div>
           )}
-          <NavbarItem textKey="findCounsellors" link="/find-counsellors" />
+          {user?.role !== "EXPERT" && (
+            <NavbarItem textKey="selfAssessment" link="/self-assessment" />
+          )}
+          {user?.role === "EXPERT" && (
+            <>
+              <NavbarItem
+                textKey="Home"
+                link="/"
+                isActive={location.pathname === "/"}
+              />
+              <NavbarItem
+                textKey="dashboard"
+                link="/dashboard/expert"
+                isActive={location.pathname.startsWith("/dashboard")}
+              />
+            </>
+          )}
+          {user?.role !== "EXPERT" && (
+            <NavbarItem textKey="findCounsellors" link="/find-counsellors" />
+          )}
           <NavbarItem textKey="articles" link="/articles" />
         </div>
 
