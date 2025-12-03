@@ -208,7 +208,7 @@ export default function LanguagesCard() {
                         <button
                           type="button"
                           onClick={() => handleRemoveLanguage(language)}
-                          className="hover:text-red-600 transition-colors"
+                          className="hover:text-red-600 transition-colors text-[16px] sm:text-[18px] font-bold leading-none w-[20px] h-[20px] flex items-center justify-center hover:bg-red-100 rounded-full"
                           aria-label={`Remove ${language}`}
                         >
                           ×
@@ -240,6 +240,7 @@ export default function LanguagesCard() {
                     setCustomLanguage("");
                   }}
                   className="cursor-pointer text-[11px] sm:text-xs font-medium rounded-full px-[10px] sm:px-[12px] py-[8px] sm:py-[6px] border border-border-light text-light-text hover:bg-hover-bg transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)]"
+                  style={{ cursor: "pointer" }}
                 >
                   Cancel
                 </button>
@@ -259,7 +260,7 @@ export default function LanguagesCard() {
                     {user?.languages?.map((language, index) => (
                       <span
                         key={index}
-                        className="inline-block bg-primary/10 text-primary px-[10px] py-[4px] rounded-full text-[12px] sm:text-[13px]"
+                        className="inline-block bg-[hsl(187,73%,24%)] text-white px-[10px] py-[4px] rounded-full text-[12px] sm:text-[13px]"
                       >
                         {language}
                       </span>

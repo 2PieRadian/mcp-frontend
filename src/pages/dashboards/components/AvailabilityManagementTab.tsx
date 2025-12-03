@@ -1,4 +1,4 @@
-import { Calendar } from "lucide-react";
+import { Calendar, Check } from "lucide-react";
 import type { WeeklyAvailability } from "../types";
 
 type AvailabilityManagementTabProps = {
@@ -67,13 +67,18 @@ export default function AvailabilityManagementTab({
                   <button
                     key={`${day}-${slot}`}
                     onClick={() => onToggleSlot(day, slot)}
-                    className={`p-[8px] rounded-[8px] text-[12px] transition-all duration-200 cursor-pointer ${
+                    className={`relative p-[8px] rounded-[8px] text-[12px] transition-all duration-200 cursor-pointer ${
                       isSelected
-                        ? "bg-primary text-white font-medium shadow-sm"
+                        ? "bg-primary/88 text-white font-medium shadow-sm"
                         : "bg-white border border-border-light/30 hover:bg-primary/10"
                     }`}
                   >
-                    {isSelected ? "✓" : ""}
+                    {isSelected && (
+                      <Check
+                        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4"
+                        strokeWidth={3}
+                      />
+                    )}
                   </button>
                 );
               })}
