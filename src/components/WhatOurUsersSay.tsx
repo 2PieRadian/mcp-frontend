@@ -32,13 +32,22 @@ function ReviewCard({
 
 export default function WhatOurUsersSay() {
   const { t } = useTranslation("sectors");
-  
+
   // Map review IDs to translation keys
   const getReviewData = (id: number) => {
     const reviewMap: Record<number, { name: string; review: string }> = {
-      1: { name: t("whatOurUsersSay.reviews.sarah.name"), review: t("whatOurUsersSay.reviews.sarah.review") },
-      2: { name: t("whatOurUsersSay.reviews.john.name"), review: t("whatOurUsersSay.reviews.john.review") },
-      3: { name: t("whatOurUsersSay.reviews.james.name"), review: t("whatOurUsersSay.reviews.james.review") },
+      1: {
+        name: t("whatOurUsersSay.reviews.sarah.name"),
+        review: t("whatOurUsersSay.reviews.sarah.review"),
+      },
+      2: {
+        name: t("whatOurUsersSay.reviews.john.name"),
+        review: t("whatOurUsersSay.reviews.john.review"),
+      },
+      3: {
+        name: t("whatOurUsersSay.reviews.james.name"),
+        review: t("whatOurUsersSay.reviews.james.review"),
+      },
     };
     return reviewMap[id] || { name: "", review: "" };
   };
@@ -46,7 +55,9 @@ export default function WhatOurUsersSay() {
   return (
     <div className="py-[50px] max-w-[1350px] mx-auto mt-[50px]">
       <div>
-        <h1 className="text-3xl font-bold text-center">{t("whatOurUsersSay.title")}</h1>
+        <h1 className="text-3xl font-bold text-center">
+          {t("whatOurUsersSay.title")}
+        </h1>
         <p className="text-center mt-[10px] text-[#4F5B64]">
           {t("whatOurUsersSay.subtitle")}
         </p>

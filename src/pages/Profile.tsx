@@ -8,6 +8,7 @@ import SecurityPreferencesCard from "../components/profile/SecurityPreferencesCa
 import GenderCard from "../components/profile/GenderCard";
 import DateOfBirthCard from "../components/profile/DateOfBirthCard";
 import ChangePasswordCard from "../components/profile/ChangePasswordCard";
+import LanguagesCard from "../components/profile/LanguagesCard";
 
 export default function Profile() {
   const { user, isLoading, logout } = useAuth();
@@ -90,9 +91,10 @@ export default function Profile() {
           <ContactCard />
           <GenderCard />
           <DateOfBirthCard />
+          <LanguagesCard />
+          <ChangePasswordCard />
           <AccountActivityCard />
           <SecurityPreferencesCard />
-          <ChangePasswordCard />
         </section>
       </main>
     </div>
