@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { EXPERT_CATEGORIES } from "../lib/constants";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 
-const TherapistsHeroSection = lazy(() => import("../components/therapists/TherapistsHeroSection"));
+const ExpertsHeroSection = lazy(() => import("../components/ExpertsHeroSection"));
 const TherapistsTitle = lazy(() => import("../components/therapists/TherapistsTitle"));
 const TherapistsOptions = lazy(() => import("../components/therapists/TherapistsOptions"));
 const TherapistsFilterModal = lazy(() => import("../components/therapists/TherapistsFilterModal"));
@@ -131,7 +131,15 @@ export default function Therapists() {
     <div className="px-[20px] mb-[80px]">
       <ResponsiveNavbar />
 
-      <TherapistsHeroSection />
+      <ExpertsHeroSection
+        subtitle="Trusted mental health support"
+        title="You're safe here — healing starts now."
+        description="Connect with certified therapists who understand you, your culture, and your pace. Begin at your comfort level, one conversation at a time."
+        badgeText="100% private & secure sessions"
+        badgeDescription="Verified Indian therapists · Online counselling · Flexible slots"
+        imageSrc="/images/therapists/therapists-1.png"
+        imageAlt="Online therapy session illustration"
+      />
 
       <TherapistsTitle sector={sector} />
 
