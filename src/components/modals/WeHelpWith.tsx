@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { EXPERT_CATEGORIES } from "../../lib/constants";
+import { EXPERT_CATEGORIES } from "../../lib/constants/experts";
 
 interface WeHelpWithProps {
   modalRef: React.RefObject<HTMLDivElement | null>;

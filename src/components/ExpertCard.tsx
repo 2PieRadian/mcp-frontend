@@ -1,7 +1,9 @@
 import { Star } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 type ExpertCardProps = {
+  id: number;
   name: string;
   image: string;
   rating: number;
@@ -14,6 +16,7 @@ type ExpertCardProps = {
 };
 
 export default function ExpertCard({
+  id,
   name,
   image,
   rating,
@@ -25,15 +28,22 @@ export default function ExpertCard({
   price,
 }: ExpertCardProps) {
   const { t } = useTranslation("common");
+  const navigate = useNavigate();
   return (
     <div className="Expert-Card border flex flex-col justify-between border-[#B5B5B5] transform hover:scale-[1.011] duration-100 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.15)] transition-all p-[15px] min-[800px]:p-[15px] relative rounded-[15px] w-full">
       <div className="flex items-start justify-between gap-[16px] min-[800px]:gap-[20px]">
         <div className="Profile-Image flex flex-col flex-1">
           <img src={image} alt={`${name} Image`} className="self-start" />
 
-          <div className="w-full border border-[#44666C] hover:bg-[#44666C] hover:text-white transition-colors duration-200 text-[#44666C] text-center cursor-pointer text-xs sm:text-sm font-medium rounded-[20px] py-[4px] mt-[8px]">
+          <button
+            onClick={() => {
+              // Pass only the expert ID, ExpertDetails will look it up in context
+              navigate(`/expert/${id}`, { state: { expertId: id } });
+            }}
+            className="w-full border border-[#44666C] hover:bg-[#44666C] hover:text-white transition-colors duration-200 text-[#44666C] text-center cursor-pointer text-xs sm:text-sm font-medium rounded-[20px] py-[4px] mt-[8px]"
+          >
             {t("viewProfile")}
-          </div>
+          </button>
         </div>
 
         <div className="Profile-Details flex flex-col flex-2">

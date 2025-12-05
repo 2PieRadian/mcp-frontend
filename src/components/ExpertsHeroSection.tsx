@@ -23,10 +23,13 @@ export default function ExpertsHeroSection({
   imageSize = 420,
   maxWidth = 420,
 }: ExpertsHeroSectionProps) {
-  const imageId = useMemo(() => `expert-hero-image-${Math.random().toString(36).substr(2, 9)}`, []);
+  const imageId = useMemo(
+    () => `expert-hero-image-${Math.random().toString(36).substr(2, 9)}`,
+    []
+  );
 
   return (
-    <section className="mt-[16px] px-0 mb-[30px]">
+    <section className="mt-[16px] px-0 mb-[15px]">
       <style>{`
         #${imageId} {
           max-width: 100%;
@@ -81,4 +84,3 @@ export default function ExpertsHeroSection({
     </section>
   );
 }
-

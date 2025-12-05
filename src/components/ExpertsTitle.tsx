@@ -1,16 +1,18 @@
 import { useTranslation } from "react-i18next";
 
-type TherapistsTitleProps = {
+type ExpertsTitleProps = {
   sector: string;
 };
 
-export default function TherapistsTitle({ sector }: TherapistsTitleProps) {
+export default function ExpertsTitle({ sector }: ExpertsTitleProps) {
   const { t } = useTranslation("common");
 
   const sectorTitles: Record<string, string> = {
     wellness: "Therapists",
     education: t("educationSector"),
     finance: t("financeSector"),
+    yoga: "Yoga Experts",
+    dieticians: "Dieticians",
   };
 
   return (
@@ -21,3 +23,4 @@ export default function TherapistsTitle({ sector }: TherapistsTitleProps) {
     </div>
   );
 }
+

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import SelfAssessmentNavbar from "../components/SelfAssessmentNavbar";
-import { SELF_ASSESSMENT_QUIZ } from "../lib/constants";
+import { SELF_ASSESSMENT_QUIZ } from "../lib/constants/selfAssessment";
 
 export default function SelfAssessmentResult() {
   const { t } = useTranslation("common");

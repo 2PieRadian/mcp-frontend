@@ -2,20 +2,63 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ChevronRight, Filter, X } from "lucide-react";
 
+import type { FilterState } from "../../types/filters";
+
 type TherapistsFiltersAndSearchProps = {
-  appliedFilters: string[];
-  removeFilter: (filter: string) => void;
+  filters: FilterState;
+  searchInput: string;
   onFilterClick: () => void;
+  onSearchChange: (searchName: string) => void;
+  onRemoveFilter: (filterKey: keyof FilterState, value?: string) => void;
 };
 
 export default function TherapistsFiltersAndSearch({
-  appliedFilters,
-  removeFilter,
+  filters,
+  searchInput,
   onFilterClick,
+  onSearchChange,
+  onRemoveFilter,
 }: TherapistsFiltersAndSearchProps) {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation(["common", "experts"]);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showRightArrow, setShowRightArrow] = useState(false);
+
+  // Build active filter labels
+  const activeFilters: Array<{ key: keyof FilterState; label: string; value?: string }> = [];
+
+  if (filters.minPrice !== undefined || filters.maxPrice !== undefined) {
+    const priceLabel =
+      filters.minPrice !== undefined && filters.maxPrice !== undefined
+        ? `₹${filters.minPrice}-${filters.maxPrice}`
+        : filters.minPrice !== undefined
+        ? `Min ₹${filters.minPrice}`
+        : `Max ₹${filters.maxPrice}`;
+    activeFilters.push({ key: "minPrice", label: priceLabel });
+  }
+
+  if (filters.minRating !== undefined) {
+    activeFilters.push({
+      key: "minRating",
+      label: `${t("rating", { ns: "common" })}: ${filters.minRating}+`,
+    });
+  }
+
+  if (filters.minExperience !== undefined) {
+    activeFilters.push({
+      key: "minExperience",
+      label: `${t("experience", { ns: "common" })}: ${filters.minExperience}+ yrs`,
+    });
+  }
+
+  if (filters.languages && filters.languages.length > 0) {
+    filters.languages.forEach((lang) => {
+      activeFilters.push({
+        key: "languages",
+        label: t(lang, { ns: "experts" }),
+        value: lang,
+      });
+    });
+  }
 
   const checkScrollPosition = () => {
     if (scrollContainerRef.current) {
@@ -47,7 +90,7 @@ export default function TherapistsFiltersAndSearch({
         window.removeEventListener("resize", checkScrollPosition);
       };
     }
-  }, [appliedFilters]);
+  }, [activeFilters]);
 
   return (
     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-[15px] md:gap-0 mt-[25px] max-w-[1350px] mx-auto">
@@ -64,15 +107,15 @@ export default function TherapistsFiltersAndSearch({
           className="flex items-center gap-[10px] overflow-x-auto flex-1 min-w-0 scrollbar-hide"
         >
           <div className="flex items-center gap-[10px]">
-            {appliedFilters.length > 0 ? (
-              appliedFilters.map((filter) => (
+            {activeFilters.length > 0 ? (
+              activeFilters.map((filter, index) => (
                 <div
-                  key={filter}
+                  key={`${filter.key}-${filter.value || index}`}
                   className="flex items-center gap-[5px] bg-[#E0ECEE] border border-[#133945] text-[#133945] pl-[15px] pr-[7px] py-[6px] rounded-full text-xs md:text-[14px] whitespace-nowrap flex-shrink-0"
                 >
-                  <span>{filter}</span>
+                  <span>{filter.label}</span>
                   <button
-                    onClick={() => removeFilter(filter)}
+                    onClick={() => onRemoveFilter(filter.key, filter.value)}
                     className="hover:bg-[#bfd8df] rounded-full cursor-pointer p-[5px] transition-colors flex items-center"
                   >
                     <X size={14} />
@@ -101,6 +144,8 @@ export default function TherapistsFiltersAndSearch({
         <input
           type="text"
           placeholder={t("search", { ns: "common" })}
+          value={searchInput}
+          onChange={(e) => onSearchChange(e.target.value)}
           className="w-full px-[15px] py-[10px] rounded-full focus:outline-border-light text-border-light placeholder:text-border-light text-sm md:text-base"
         />
       </div>

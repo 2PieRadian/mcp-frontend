@@ -1,6 +1,6 @@
 import { Star } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { REVIEWS } from "../lib/constants";
+import { REVIEWS } from "../lib/constants/landingPage";
 
 function ReviewCard({
   name,

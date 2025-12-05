@@ -1,5 +1,6 @@
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import ExpertsHeroSection from "../components/ExpertsHeroSection";
+import ExpertsTitle from "../components/ExpertsTitle";
 
 export default function YogaExperts() {
   return (
@@ -17,6 +18,8 @@ export default function YogaExperts() {
         imageSize={300}
         maxWidth={300}
       />
+      
+      <ExpertsTitle sector="yoga" />
     </div>
   );
 }

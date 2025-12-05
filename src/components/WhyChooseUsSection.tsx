@@ -1,6 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { WHY_CHOOSE_US_SECTION } from "../lib/constants";
+import { WHY_CHOOSE_US_SECTION } from "../lib/constants/landingPage";
 
 function WhyChooseUsCard({
   title,
