@@ -69,12 +69,11 @@ export default function OAuthCallback() {
               });
               setStatus("success");
 
-              // Show success UI for 3 seconds before redirecting
               setTimeout(() => {
                 if (isMounted) {
                   navigate("/", { replace: true });
                 }
-              }, 3000);
+              }, 4000);
               return;
             }
           }
@@ -107,12 +106,11 @@ export default function OAuthCallback() {
 
         setStatus("success");
 
-        // Show success UI for 3 seconds before redirecting
         setTimeout(() => {
           if (isMounted) {
             navigate("/", { replace: true });
           }
-        }, 2000);
+        }, 1500);
       } catch (error: any) {
         if (!isMounted || hasProcessedRef.current) return;
         hasProcessedRef.current = true;

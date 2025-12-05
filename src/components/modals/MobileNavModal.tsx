@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
-import { ChevronDown, Moon, X, UserCircle2, Languages as LanguagesIcon, Check } from "lucide-react";
+import {
+  ChevronDown,
+  Moon,
+  X,
+  UserCircle2,
+  Languages as LanguagesIcon,
+  Check,
+} from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useTranslation } from "react-i18next";
@@ -203,9 +210,7 @@ export default function MobileNavModal({
                     : "text-light-text group-hover:text-primary"
                 }`}
               />
-              <span className="text-light-text text-[16px]">
-                Profile
-              </span>
+              <span className="text-light-text text-[16px]">Profile</span>
             </Link>
           ) : (
             <Link
