@@ -8,6 +8,7 @@ import PrimaryButton from "./PrimaryButton";
 import ErrorMessage from "./ErrorMessage";
 import FormFooterLink from "./FormFooterLink";
 import AuthImage from "./AuthImage";
+import { BACKEND_URL } from "../lib/api";
 
 export default function SignupForm() {
   const { t } = useTranslation("common");
@@ -32,7 +33,7 @@ export default function SignupForm() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("http://localhost:3000/api/v1/auth/signup", {
+      const response = await fetch(`${BACKEND_URL}/api/v1/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

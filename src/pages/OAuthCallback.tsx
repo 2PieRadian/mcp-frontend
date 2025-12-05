@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { CircleCheck } from "lucide-react";
+import { BACKEND_URL } from "../lib/api";
 
 export default function OAuthCallback() {
   const [searchParams] = useSearchParams();
@@ -11,27 +11,36 @@ export default function OAuthCallback() {
     "loading"
   );
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const hasProcessedRef = useRef(false);
 
   useEffect(() => {
+    // Prevent multiple executions
+    if (hasProcessedRef.current) {
+      return;
+    }
+
+    // Extract values once to avoid dependency issues
+    const token = searchParams.get("token");
+    const success = searchParams.get("success");
+
+    // If no token/success, don't process
+    if (!token || success !== "true") {
+      hasProcessedRef.current = true;
+      setStatus("error");
+      setErrorMessage(
+        "Authentication failed. Missing token or invalid response."
+      );
+      navigate("/login", { replace: true });
+      return;
+    }
+
+    let isMounted = true;
+
     const handleOAuthCallback = async () => {
-      const token = searchParams.get("token");
-      const success = searchParams.get("success");
-
-      if (!token || success !== "true") {
-        setStatus("error");
-        setErrorMessage(
-          "Authentication failed. Missing token or invalid response."
-        );
-        setTimeout(() => navigate("/login"), 3000);
-        return;
-      }
-
       try {
         window.localStorage.setItem("auth:token", token);
 
-        // Fetch user data from the backend using the token
-        // We'll try a common endpoint pattern - adjust if your backend uses a different one
-        const response = await fetch("http://localhost:3000/api/v1/auth/me", {
+        const response = await fetch(`${BACKEND_URL}/api/v1/auth/me`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -43,11 +52,10 @@ export default function OAuthCallback() {
         const isJson = contentType.includes("application/json");
 
         if (!response.ok) {
-          // If the /me endpoint doesn't exist, we'll decode the JWT as fallback
           if (response.status === 404) {
-            // Fallback: Decode JWT to get user info (basic implementation)
             const userData = decodeJWT(token);
-            if (userData) {
+            if (userData && isMounted && !hasProcessedRef.current) {
+              hasProcessedRef.current = true;
               login({
                 id: String(userData.id || ""),
                 email: userData.email || "",
@@ -60,7 +68,13 @@ export default function OAuthCallback() {
                 createdAt: userData.createdAt || undefined,
               });
               setStatus("success");
-              setTimeout(() => navigate("/"), 1500);
+
+              // Show success UI for 3 seconds before redirecting
+              setTimeout(() => {
+                if (isMounted) {
+                  navigate("/", { replace: true });
+                }
+              }, 3000);
               return;
             }
           }
@@ -71,11 +85,12 @@ export default function OAuthCallback() {
           throw new Error(errorText || "Failed to fetch user data");
         }
 
-        // Parse user data from successful response
         const data = isJson ? await response.json() : null;
-        const user = data?.user || data; // Handle both { user: {...} } and direct user object
+        const user = data?.user || data;
 
-        // Update AuthContext with user data
+        if (!isMounted || hasProcessedRef.current) return;
+        hasProcessedRef.current = true;
+
         login({
           id: String(user.id),
           email: user.email,
@@ -90,21 +105,32 @@ export default function OAuthCallback() {
           hasPassword: user.hasPassword ?? false, // OAuth users typically don't have passwords initially
         });
 
-        // Step 8: Mark as successful and redirect to home page
         setStatus("success");
-        setTimeout(() => navigate("/"), 1500);
+
+        // Show success UI for 3 seconds before redirecting
+        setTimeout(() => {
+          if (isMounted) {
+            navigate("/", { replace: true });
+          }
+        }, 2000);
       } catch (error: any) {
+        if (!isMounted || hasProcessedRef.current) return;
+        hasProcessedRef.current = true;
         console.error("OAuth callback error:", error);
         setStatus("error");
         setErrorMessage(error?.message || "Failed to complete authentication");
-        setTimeout(() => navigate("/login"), 3000);
+        navigate("/login", { replace: true });
       }
     };
 
     handleOAuthCallback();
-  }, [searchParams, navigate, login]);
 
-  // Helper function to decode JWT (basic implementation - not for production security)
+    return () => {
+      isMounted = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Only run once on mount
+
   const decodeJWT = (token: string): any => {
     try {
       const base64Url = token.split(".")[1];
@@ -123,44 +149,103 @@ export default function OAuthCallback() {
     }
   };
 
-  // Step 9: Render appropriate UI based on status
-  if (status === "loading") {
-    return (
-      <div className="min-h-screen bg-light-100 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-light-text">Completing authentication...</p>
-        </div>
-      </div>
-    );
-  }
-
   if (status === "error") {
     return (
-      <div className="min-h-screen bg-light-100 flex items-center justify-center">
-        <div className="text-center max-w-md p-6">
-          <div className="text-red-600 text-4xl mb-4">✕</div>
-          <h2 className="text-2xl font-bold text-logo-heading mb-2">
+      <div className="min-h-screen bg-white flex items-center justify-center p-4">
+        <div className="text-center max-w-md w-full bg-white rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] border border-red-100 p-10 animate-fade-in animate-float-card">
+          <div className="w-24 h-24 mx-auto mb-8 rounded-full bg-red-50 flex items-center justify-center shadow-[0_10px_30px_-5px_rgba(239,68,68,0.2)]">
+            <svg
+              className="w-14 h-14 text-red-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2.5}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </div>
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">
             Authentication Failed
           </h2>
-          <p className="text-light-text mb-4">{errorMessage}</p>
-          <p className="text-sm text-gray-500">Redirecting to login page...</p>
+          <p className="text-gray-600 mb-8 text-lg font-medium">
+            {errorMessage}
+          </p>
+          <div className="flex items-center justify-center gap-2 text-sm text-gray-500 font-medium">
+            <div className="animate-spin rounded-full h-4 w-4 border-2 border-red-400 border-t-transparent"></div>
+            <span>Redirecting to login page...</span>
+          </div>
         </div>
       </div>
     );
   }
 
+  if (status === "success") {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center p-4">
+        <div className="text-center max-w-md w-full bg-white rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] border border-gray-100 p-10 animate-fade-in animate-float-card">
+          {/* Success Icon with Animation */}
+          <div className="relative w-28 h-28 mx-auto mb-8">
+            <div className="absolute inset-0 rounded-full bg-green-100 animate-ping opacity-60"></div>
+            <div className="absolute inset-0 rounded-full bg-green-50 animate-pulse"></div>
+            <div className="relative w-28 h-28 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center shadow-[0_10px_30px_-5px_rgba(34,197,94,0.3)]">
+              <svg
+                className="w-16 h-16 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            </div>
+          </div>
+
+          {/* Success Message */}
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            Welcome Back!
+          </h2>
+          <p className="text-gray-600 mb-8 text-lg font-medium">
+            You've been successfully logged in.
+          </p>
+
+          {/* Loading Indicator */}
+          <div className="flex flex-col items-center gap-5">
+            <div className="flex items-center justify-center gap-2 text-sm text-gray-500 font-medium">
+              <div className="animate-spin rounded-full h-4 w-4 border-2 border-[#44666C] border-t-transparent"></div>
+              <span>Redirecting to home page...</span>
+            </div>
+
+            {/* Progress Bar */}
+            <div className="w-full max-w-xs h-2 bg-gray-100 rounded-full overflow-hidden shadow-inner">
+              <div className="h-full bg-gradient-to-r from-[#44666C] via-[#365a62] to-[#44666C] rounded-full animate-progress shadow-sm"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Loading state
   return (
-    <div className="min-h-screen bg-light-100 flex items-center justify-center">
-      <div className="text-center max-w-md p-6">
-        <CircleCheck className="text-green-600 w-12 h-12 mx-auto mb-4" />
-        <h2 className="text-2xl font-bold text-logo-heading mb-2">
-          Authentication Successful!
+    <div className="min-h-screen bg-white flex items-center justify-center p-4">
+      <div className="text-center max-w-md w-full bg-white rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] border border-gray-100 p-10 animate-float-card">
+        <div className="w-24 h-24 mx-auto mb-8">
+          <div className="animate-spin rounded-full h-24 w-24 border-4 border-[#44666C] border-t-transparent shadow-lg"></div>
+        </div>
+        <h2 className="text-3xl font-bold text-gray-900 mb-4">
+          Completing Authentication
         </h2>
-        <p className="text-light-text mb-4">
-          You have been successfully logged in.
+        <p className="text-gray-600 text-lg font-medium">
+          Please wait while we verify your credentials...
         </p>
-        <p className="text-sm text-gray-500">Redirecting to home page...</p>
       </div>
     </div>
   );

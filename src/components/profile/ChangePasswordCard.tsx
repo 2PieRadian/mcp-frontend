@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
+import { BACKEND_URL } from "../../lib/api";
 
 export default function ChangePasswordCard() {
   const { user, login } = useAuth();
@@ -44,7 +45,7 @@ export default function ChangePasswordCard() {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/v1/profile/set-password",
+        `${BACKEND_URL}/api/v1/profile/set-password`,
         {
           method: "PUT",
           headers: {
@@ -120,7 +121,7 @@ export default function ChangePasswordCard() {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/v1/profile/change-password",
+        `${BACKEND_URL}/api/v1/profile/change-password`,
         {
           method: "PUT",
           headers: {

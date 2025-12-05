@@ -8,6 +8,7 @@ import {
 import type { Expert } from "../lib/constants/experts";
 import type { FilterState } from "../types/filters";
 import { defaultFilters } from "../types/filters";
+import { BACKEND_URL } from "../lib/api";
 
 type ExpertiseArea = "anxiety" | "couple" | "breakup" | "loneliness";
 
@@ -328,7 +329,7 @@ export function ExpertsProvider({ children }: { children: ReactNode }) {
 
         // Fetch without filters - get all experts for this expertise area
         const response = await fetch(
-          `http://localhost:3000/api/v1/expert/get-experts?page=${page}&expertiseArea=${expertiseArea}`,
+          `${BACKEND_URL}/api/v1/expert/get-experts?page=${page}&expertiseArea=${expertiseArea}`,
           {
             method: "GET",
             headers,

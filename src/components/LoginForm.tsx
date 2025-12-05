@@ -8,6 +8,7 @@ import PrimaryButton from "./PrimaryButton";
 import ErrorMessage from "./ErrorMessage";
 import FormFooterLink from "./FormFooterLink";
 import AuthImage from "./AuthImage";
+import { BACKEND_URL } from "../lib/api";
 
 export default function LoginForm() {
   const { t } = useTranslation("common");
@@ -33,7 +34,7 @@ export default function LoginForm() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("http://localhost:3000/api/v1/auth/login", {
+      const response = await fetch(`${BACKEND_URL}/api/v1/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -124,7 +125,7 @@ export default function LoginForm() {
 
             <GoogleButton
               onClick={() => {
-                window.location.href = "http://localhost:3000/oauth/google";
+                window.location.href = `${BACKEND_URL}/oauth/google`;
               }}
             />
 

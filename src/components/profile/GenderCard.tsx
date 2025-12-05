@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
+import { BACKEND_URL } from "../../lib/api";
 
 export default function GenderCard() {
   const { user, login } = useAuth();
@@ -29,7 +30,7 @@ export default function GenderCard() {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/v1/profile/update-gender",
+        `${BACKEND_URL}/api/v1/profile/update-gender`,
         {
           method: "PUT",
           headers: {

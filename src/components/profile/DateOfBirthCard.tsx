@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
+import { BACKEND_URL } from "../../lib/api";
 
 export default function DateOfBirthCard() {
   const { user, login } = useAuth();
@@ -46,7 +47,7 @@ export default function DateOfBirthCard() {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/v1/profile/update-date-of-birth",
+        `${BACKEND_URL}/api/v1/profile/update-date-of-birth`,
         {
           method: "PUT",
           headers: {

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
+import { BACKEND_URL } from "../../lib/api";
 
 const COMMON_LANGUAGES = [
   "English",
@@ -94,7 +95,7 @@ export default function LanguagesCard() {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/v1/profile/update-languages",
+        `${BACKEND_URL}/api/v1/profile/update-languages`,
         {
           method: "PUT",
           headers: {
