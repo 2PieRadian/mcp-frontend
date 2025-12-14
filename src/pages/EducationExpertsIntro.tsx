@@ -1,16 +1,46 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { ArrowRight, GraduationCap, Sparkles } from "lucide-react";
+import {
+  ArrowRight,
+  Sparkles,
+  HelpCircle,
+  Target,
+  RefreshCw,
+  BookOpen,
+  Brain,
+  Clock,
+  MessageSquare,
+  FileText,
+  Briefcase,
+  GraduationCap,
+  type LucideIcon,
+} from "lucide-react";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import {
   EXPERT_CATEGORIES,
   SPECIALIZATION_DESCRIPTIONS,
 } from "../lib/constants/experts";
 
+// Icon mapping for education specializations
+const EDUCATION_ICONS: Record<string, LucideIcon> = {
+  "Career Confusion": HelpCircle,
+  "Career Planning": Target,
+  "Career Change": RefreshCw,
+  "Academic Guidance": BookOpen,
+  "Exam Stress": Brain,
+  "Study Skills": BookOpen,
+  "Time Management": Clock,
+  "Communication Skills": MessageSquare,
+  "Resume & Interviews": FileText,
+  "Internship Guidance": Briefcase,
+  "Higher Studies": GraduationCap,
+};
+
 interface ExpertCategoryCardProps {
   title: string;
   description: string;
   specialization: string;
+  icon: LucideIcon;
 }
 
 function ExpertCategoryCard({
@@ -18,6 +48,7 @@ function ExpertCategoryCard({
   description,
   specialization,
   exploreText,
+  icon: Icon,
 }: ExpertCategoryCardProps & { exploreText: string }) {
   const navigate = useNavigate();
 
@@ -40,7 +71,7 @@ function ExpertCategoryCard({
       <div className="relative z-10">
         {/* Icon */}
         <div className="mb-4 flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-[#44666C] to-[#365a62] group-hover:scale-110 transition-transform duration-300">
-          <GraduationCap className="w-6 h-6 text-white" />
+          <Icon className="w-6 h-6 text-white" />
         </div>
 
         <h3 className="text-xl font-bold text-[#1a2e35] mb-3 group-hover:text-[#44666C] transition-colors duration-300">
@@ -71,6 +102,7 @@ export default function EducationExpertsIntro() {
       SPECIALIZATION_DESCRIPTIONS[specialization] ||
       "Get expert guidance and support.",
     specialization,
+    icon: EDUCATION_ICONS[specialization] || GraduationCap,
   }));
 
   return (
@@ -125,6 +157,7 @@ export default function EducationExpertsIntro() {
               title={category.title}
               description={category.description}
               specialization={category.specialization}
+              icon={category.icon}
               exploreText={t("explore", { ns: "common" })}
             />
           ))}

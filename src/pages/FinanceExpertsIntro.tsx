@@ -1,16 +1,51 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { ArrowRight, TrendingUp, Sparkles } from "lucide-react";
+import {
+  ArrowRight,
+  Sparkles,
+  Calculator,
+  TrendingUp,
+  Shield,
+  ChartLine,
+  PieChart,
+  Target,
+  AlertCircle,
+  ArrowDown,
+  Star,
+  FileText,
+  Receipt,
+  Calendar,
+  type LucideIcon,
+} from "lucide-react";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import {
   EXPERT_CATEGORIES,
   SPECIALIZATION_DESCRIPTIONS,
 } from "../lib/constants/experts";
 
+// Icon mapping for finance specializations
+const FINANCE_ICONS: Record<string, LucideIcon> = {
+  Budgeting: Calculator,
+  "Income Planning": TrendingUp,
+  "Emergency Fund": Shield,
+  "Beginner Investing": ChartLine,
+  "Mutual Funds": PieChart,
+  "Investment Planning": Target,
+  "Loan Stress": AlertCircle,
+  "Debt Repayment": ArrowDown,
+  "Credit Score": Star,
+  "Tax Planning": FileText,
+  "GST Guidance": Receipt,
+  "Financial Planning": Target,
+  "Insurance Planning": Shield,
+  "Retirement Planning": Calendar,
+};
+
 interface ExpertCategoryCardProps {
   title: string;
   description: string;
   specialization: string;
+  icon: LucideIcon;
 }
 
 function ExpertCategoryCard({
@@ -18,6 +53,7 @@ function ExpertCategoryCard({
   description,
   specialization,
   exploreText,
+  icon: Icon,
 }: ExpertCategoryCardProps & { exploreText: string }) {
   const navigate = useNavigate();
 
@@ -40,7 +76,7 @@ function ExpertCategoryCard({
       <div className="relative z-10">
         {/* Icon */}
         <div className="mb-4 flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-[#44666C] to-[#365a62] group-hover:scale-110 transition-transform duration-300">
-          <TrendingUp className="w-6 h-6 text-white" />
+          <Icon className="w-6 h-6 text-white" />
         </div>
 
         <h3 className="text-xl font-bold text-[#1a2e35] mb-3 group-hover:text-[#44666C] transition-colors duration-300">
@@ -71,6 +107,7 @@ export default function FinanceExpertsIntro() {
       SPECIALIZATION_DESCRIPTIONS[specialization] ||
       "Get expert guidance and support.",
     specialization,
+    icon: FINANCE_ICONS[specialization] || TrendingUp,
   }));
 
   return (
@@ -124,6 +161,7 @@ export default function FinanceExpertsIntro() {
               title={category.title}
               description={category.description}
               specialization={category.specialization}
+              icon={category.icon}
               exploreText={t("explore", { ns: "common" })}
             />
           ))}
