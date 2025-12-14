@@ -16,8 +16,8 @@ export default function UserDashboard() {
       <MakeInIndia />
       <AnalyticsSection />
       <ExpertVerifiedAssessmentsSection />
-      <WhyChooseUsSection />
       <HowDoesItWork />
+      <WhyChooseUsSection />
       <WhatOurUsersSay />
       <Footer />
     </div>

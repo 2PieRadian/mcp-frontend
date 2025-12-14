@@ -9,11 +9,11 @@ const ExpertsHeroSection = lazy(
   () => import("../components/ExpertsHeroSection")
 );
 const ExpertsTitle = lazy(() => import("../components/ExpertsTitle"));
-const TherapistsFilterModal = lazy(
-  () => import("../components/therapists/TherapistsFilterModal")
+const ExpertsFilterModal = lazy(
+  () => import("../components/filters/ExpertsFilterModal")
 );
-const TherapistsFiltersAndSearch = lazy(
-  () => import("../components/therapists/TherapistsFiltersAndSearch")
+const ExpertsFiltersAndSearch = lazy(
+  () => import("../components/filters/ExpertsFiltersAndSearch")
 );
 const ExpertsCardsSection = lazy(
   () => import("../components/experts/ExpertsCardsSection")
@@ -30,20 +30,20 @@ const slugToSpecialization = (slug: string): string => {
     ...EXPERT_CATEGORIES.education,
     ...EXPERT_CATEGORIES.finance,
   ];
-  
+
   const matching = allSpecializations.find((spec) => slugify(spec) === slug);
-  
+
   return (
     matching ||
     slug
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ")
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ")
       .replace(/And/g, "&")
   );
 };
 
-export default function TherapistsContent() {
+export default function ExpertsContent() {
   const location = useLocation();
   const { filters, setFilters } = useExperts();
 
@@ -163,7 +163,7 @@ export default function TherapistsContent() {
 
       <ExpertsTitle specialization={specialization} />
 
-      <TherapistsFiltersAndSearch
+      <ExpertsFiltersAndSearch
         filters={filters}
         searchInput={searchInput}
         onFilterClick={handleOpenFilterModal}
@@ -171,7 +171,7 @@ export default function TherapistsContent() {
         onRemoveFilter={handleRemoveFilter}
       />
 
-      <TherapistsFilterModal
+      <ExpertsFilterModal
         isOpen={isFilterModalOpen}
         onClose={handleCloseFilterModal}
         filters={filters}

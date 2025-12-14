@@ -4,7 +4,7 @@ import { ChevronRight, Filter, X } from "lucide-react";
 
 import type { FilterState } from "../../types/filters";
 
-type TherapistsFiltersAndSearchProps = {
+type ExpertsFiltersAndSearchProps = {
   filters: FilterState;
   searchInput: string;
   onFilterClick: () => void;
@@ -12,19 +12,23 @@ type TherapistsFiltersAndSearchProps = {
   onRemoveFilter: (filterKey: keyof FilterState, value?: string) => void;
 };
 
-export default function TherapistsFiltersAndSearch({
+export default function ExpertsFiltersAndSearch({
   filters,
   searchInput,
   onFilterClick,
   onSearchChange,
   onRemoveFilter,
-}: TherapistsFiltersAndSearchProps) {
+}: ExpertsFiltersAndSearchProps) {
   const { t } = useTranslation(["common", "experts"]);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showRightArrow, setShowRightArrow] = useState(false);
 
   // Build active filter labels
-  const activeFilters: Array<{ key: keyof FilterState; label: string; value?: string }> = [];
+  const activeFilters: Array<{
+    key: keyof FilterState;
+    label: string;
+    value?: string;
+  }> = [];
 
   if (filters.minPrice !== undefined || filters.maxPrice !== undefined) {
     const priceLabel =
@@ -46,7 +50,9 @@ export default function TherapistsFiltersAndSearch({
   if (filters.minExperience !== undefined) {
     activeFilters.push({
       key: "minExperience",
-      label: `${t("experience", { ns: "common" })}: ${filters.minExperience}+ yrs`,
+      label: `${t("experience", { ns: "common" })}: ${
+        filters.minExperience
+      }+ yrs`,
     });
   }
 

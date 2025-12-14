@@ -5,7 +5,7 @@ import {
   Calendar,
   CreditCard,
   ArrowRight,
-  Sparkles,
+  CheckCircle2,
 } from "lucide-react";
 
 interface StepProps {
@@ -116,11 +116,6 @@ export default function HowDoesItWork() {
       <div className="max-w-6xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-16 relative">
-          <div className="inline-flex items-center justify-center mb-4">
-            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#44666C] to-[#365a62] flex items-center justify-center shadow-lg">
-              <Sparkles className="w-8 h-8 text-white" />
-            </div>
-          </div>
           <h1 className="text-4xl md:text-5xl font-bold text-[#1a2e35] mb-4">
             {t("howDoesItWork.title")}
           </h1>
@@ -155,8 +150,8 @@ export default function HowDoesItWork() {
                 <div className="relative bg-gradient-to-br from-white to-[#f8fafb] rounded-3xl p-8 shadow-2xl border border-gray-100">
                   <div className="space-y-6">
                     <div className="flex items-center justify-center">
-                      <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#44666C] to-[#365a62] flex items-center justify-center shadow-lg">
-                        <Sparkles className="w-12 h-12 text-white" />
+                      <div className="w-24 h-24 rounded-full bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center shadow-lg">
+                        <CheckCircle2 className="w-12 h-12 text-white" />
                       </div>
                     </div>
                     <div className="text-center space-y-2">

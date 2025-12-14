@@ -10,7 +10,7 @@ import SelfAssessmentResult from "./pages/SelfAssessmentResult";
 import WellnessExpertsIntro from "./pages/WellnessExpertsIntro";
 import EducationExpertsIntro from "./pages/EducationExpertsIntro";
 import FinanceExpertsIntro from "./pages/FinanceExpertsIntro";
-import Therapists from "./pages/Therapists";
+import ExpertsListing from "./pages/ExpertsListing";
 import Profile from "./pages/Profile";
 import OAuthCallback from "./pages/OAuthCallback";
 import ExpertsDashboard from "./pages/dashboards/ExpertsDashboard";
@@ -41,7 +41,7 @@ export default function App() {
           <Route path="/wellness-experts" element={<WellnessExpertsIntro />} />
           <Route
             path="/wellness-experts/:specialization"
-            element={<Therapists />}
+            element={<ExpertsListing />}
           />
 
           {/* Education Experts */}
@@ -51,14 +51,14 @@ export default function App() {
           />
           <Route
             path="/education-experts/:specialization"
-            element={<Therapists />}
+            element={<ExpertsListing />}
           />
 
           {/* Finance Experts */}
           <Route path="/finance-experts" element={<FinanceExpertsIntro />} />
           <Route
             path="/finance-experts/:specialization"
-            element={<Therapists />}
+            element={<ExpertsListing />}
           />
 
           {/* Expert Details */}

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { X, DollarSign, Star, Award, SlidersHorizontal } from "lucide-react";
 import type { FilterState } from "../../types/filters";
 
-type TherapistsFilterModalProps = {
+type ExpertsFilterModalProps = {
   isOpen: boolean;
   onClose: () => void;
   filters: FilterState;
@@ -11,13 +11,13 @@ type TherapistsFilterModalProps = {
   onApply: () => void;
 };
 
-export default function TherapistsFilterModal({
+export default function ExpertsFilterModal({
   isOpen,
   onClose,
   filters,
   onFiltersChange,
   onApply,
-}: TherapistsFilterModalProps) {
+}: ExpertsFilterModalProps) {
   const { t } = useTranslation(["common", "experts"]);
   const modalRef = useRef<HTMLDivElement>(null);
   const [localFilters, setLocalFilters] = useState<FilterState>(filters);
