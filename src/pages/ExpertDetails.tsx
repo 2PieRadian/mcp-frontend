@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Star,
   ArrowLeft,
@@ -10,89 +9,17 @@ import {
   FileText,
 } from "lucide-react";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
-import { useExperts } from "../context/ExpertsContext";
-
-type ApiUser = {
-  id: number;
-  email: string;
-  name: string;
-  languages: string[];
-  avatar?: string;
-};
-
-type ApiExpert = {
-  id: number;
-  userId: number;
-  professionalTitle: string;
-  yearsOfExperience: number;
-  expertiseAreas: string[];
-  bio: string;
-  pricePerHour: number;
-  rating: number;
-  totalReviews: number;
-  user: ApiUser;
-};
+import type { ApiExpert } from "../types/experts";
+import { getAvatarUrl } from "../lib/api";
 
 export default function ExpertDetails() {
-  const { id } = useParams<{ id: string }>();
+  const location = useLocation();
   const navigate = useNavigate();
-  const { getExpertById } = useExperts();
-  const [expert, setExpert] = useState<ApiExpert | null>(null);
-  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (!id) {
-      setError("Expert ID is required");
-      return;
-    }
+  // Get expert data from navigation state (passed via props)
+  const expert = location.state?.expert as ApiExpert | undefined;
 
-    const expertId = parseInt(id, 10);
-    if (isNaN(expertId)) {
-      setError("Invalid expert ID");
-      return;
-    }
-
-    // Get expert from context using the ID
-    const expertData = getExpertById(expertId);
-
-    if (expertData) {
-      setExpert(expertData);
-      setError(null);
-    } else {
-      setError("Expert not found in cache. Please go back and try again.");
-    }
-  }, [id, getExpertById]);
-
-  if (!expert && !error) {
-    return (
-      <div className="min-h-screen bg-gray-50">
-        <ResponsiveNavbar />
-        <div className="max-w-6xl mx-auto px-4 py-8">
-          <div className="animate-pulse">
-            <div className="h-8 bg-gray-200 rounded w-32 mb-6"></div>
-            <div className="bg-white rounded-lg shadow-lg p-8">
-              <div className="flex flex-col md:flex-row gap-8">
-                <div className="w-full md:w-1/3">
-                  <div className="h-64 bg-gray-200 rounded-lg"></div>
-                </div>
-                <div className="flex-1">
-                  <div className="h-8 bg-gray-200 rounded w-3/4 mb-4"></div>
-                  <div className="h-4 bg-gray-200 rounded w-1/2 mb-6"></div>
-                  <div className="space-y-3">
-                    <div className="h-4 bg-gray-200 rounded"></div>
-                    <div className="h-4 bg-gray-200 rounded"></div>
-                    <div className="h-4 bg-gray-200 rounded w-5/6"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (error || !expert) {
+  if (!expert) {
     return (
       <div className="min-h-screen bg-gray-50">
         <ResponsiveNavbar />
@@ -105,8 +32,9 @@ export default function ExpertDetails() {
             <span>Go Back</span>
           </button>
           <div className="bg-white rounded-lg shadow-lg p-8 text-center">
-            <p className="text-red-600 text-lg">
-              {error || "Expert not found"}
+            <p className="text-red-600 text-lg">Expert not found</p>
+            <p className="text-gray-600 mt-2">
+              Please navigate from an expert card to view their profile.
             </p>
           </div>
         </div>
@@ -148,7 +76,7 @@ export default function ExpertDetails() {
               <div className="flex-shrink-0">
                 <img
                   src={
-                    expert.user.avatar ||
+                    getAvatarUrl(expert.user.avatar) ||
                     "/images/experts/expert_profile_img.png"
                   }
                   alt={formattedName}
@@ -197,20 +125,37 @@ export default function ExpertDetails() {
                   </p>
                 </div>
 
-                {/* Expertise Areas */}
+                {/* Expertise Areas / Specializations */}
                 <div>
                   <h2 className="text-2xl font-semibold text-[#304048] mb-4">
                     Areas of Expertise
                   </h2>
                   <div className="flex flex-wrap gap-2">
-                    {expert.expertiseAreas.map((area, index) => (
-                      <span
-                        key={index}
-                        className="px-4 py-2 bg-[#E0ECEE] text-[#133945] rounded-full text-sm font-medium"
-                      >
-                        {area.charAt(0).toUpperCase() + area.slice(1)}
+                    {expert.expertSpecializations &&
+                    expert.expertSpecializations.length > 0 ? (
+                      expert.expertSpecializations.map((esp, index) => (
+                        <span
+                          key={index}
+                          className="px-4 py-2 bg-[#E0ECEE] text-[#133945] rounded-full text-sm font-medium"
+                        >
+                          {esp.specialization.name}
+                        </span>
+                      ))
+                    ) : expert.expertiseAreas &&
+                      expert.expertiseAreas.length > 0 ? (
+                      expert.expertiseAreas.map((area, index) => (
+                        <span
+                          key={index}
+                          className="px-4 py-2 bg-[#E0ECEE] text-[#133945] rounded-full text-sm font-medium"
+                        >
+                          {area.charAt(0).toUpperCase() + area.slice(1)}
+                        </span>
+                      ))
+                    ) : (
+                      <span className="text-gray-500">
+                        No specializations listed
                       </span>
-                    ))}
+                    )}
                   </div>
                 </div>
 

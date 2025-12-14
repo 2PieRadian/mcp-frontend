@@ -15,4 +15,3 @@ export const defaultFilters: FilterState = {
   languages: [],
   searchName: undefined,
 };
-

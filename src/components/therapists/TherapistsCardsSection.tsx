@@ -76,11 +76,20 @@ export default function TherapistsCardsSection({
   );
 
   // Calculate which experts to show for the current page (from filtered results)
+  // Match each Expert with its corresponding ApiExpert from cache
   const expertsForCurrentPage = useMemo(() => {
     const startIndex = (currentPage - 1) * EXPERTS_PER_PAGE;
     const endIndex = startIndex + EXPERTS_PER_PAGE;
-    return filteredExperts.slice(startIndex, endIndex);
-  }, [filteredExperts, currentPage]);
+    const experts = filteredExperts.slice(startIndex, endIndex);
+
+    // Match each Expert with its corresponding ApiExpert
+    return experts.map((expert) => {
+      const apiExpert = currentData.unfilteredApiExperts.find(
+        (api) => api.id === expert.id
+      );
+      return { expert, apiExpert };
+    });
+  }, [filteredExperts, currentPage, currentData.unfilteredApiExperts]);
 
   // Fetch the current page if not loaded - use size to avoid unnecessary re-runs
   useEffect(() => {
@@ -192,7 +201,7 @@ export default function TherapistsCardsSection({
   return (
     <div className="max-w-[1350px] mx-auto mt-[40px]">
       <div className="grid grid-cols-1 min-[930px]:grid-cols-2 gap-[20px]">
-        {expertsForCurrentPage.map((expert) => (
+        {expertsForCurrentPage.map(({ expert, apiExpert }) => (
           <ExpertCard
             key={expert.id}
             id={expert.id}
@@ -205,6 +214,7 @@ export default function TherapistsCardsSection({
             languages={expert.languages}
             nextSlot={expert.nextSlot}
             price={expert.price}
+            expertData={apiExpert}
           />
         ))}
       </div>

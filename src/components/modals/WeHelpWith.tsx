@@ -28,20 +28,10 @@ export default function WeHelpWith({
     return `${baseRoute}/${categorySlug}`;
   };
 
-  // Map category keys to translation keys
+  // Map category keys to translation keys (keeping for backward compatibility)
   const getTranslationKey = (category: string): string => {
-    const categoryMap: Record<string, string> = {
-      Therapists: "therapists",
-      "Yoga Experts": "yogaExperts",
-      Dieticians: "dieticians",
-      "Academic Counsellor": "academicCounsellor",
-      "Career Planning Specialist": "careerPlanningSpecialist",
-      "Path Finder Consultant": "pathFinderConsultant",
-      "Investment counsellor": "investmentCounsellor",
-      "Financial Expert": "financialExpert",
-      "GST & Taxation Expert": "gstTaxationExpert",
-    };
-    return categoryMap[category] || category;
+    // For new specializations, use the category name directly
+    return category;
   };
 
   return (
@@ -89,28 +79,21 @@ export default function WeHelpWith({
         </Link>
       </div>
 
-      <div className="flex-3 w-full bg-navbar-dropdown-right-outer-bg border border-navbar-dropdown-right-outer text-white p-[5px] rounded-[10px] flex">
+      <div className="flex-3 w-full bg-navbar-dropdown-right-outer-bg border border-navbar-dropdown-right-outer text-white p-[5px] rounded-[10px] flex max-h-[400px] overflow-y-auto">
         {hoveredExpert ? (
           <div className="grid grid-cols-2 gap-[5px] w-full h-full">
             {getCategories().map((category, index) => {
               const categoryRoute = getCategoryRoute(category, hoveredExpert);
-
-              const translationKey = getTranslationKey(category);
-              const translatedCategory =
-                t(translationKey, { ns: "experts" }) || category;
-
-              const isMultiLine = translatedCategory.length > 15;
+              const categorySlug = category.toLowerCase().replace(/\s+/g, "-").replace(/&/g, "and");
 
               return (
                 <Link
                   key={index}
                   to={categoryRoute}
-                  className={`group bg-navbar-dropdown-bg rounded-[10px] p-[15px] flex items-center justify-center text-center hover:bg-white hover:text-navbar-dropdown-bg transition-all cursor-pointer ${
-                    isMultiLine ? "col-span-2" : ""
-                  }`}
+                  className="group bg-navbar-dropdown-bg rounded-[10px] p-[12px] flex items-center justify-center text-center hover:bg-white hover:text-navbar-dropdown-bg transition-all cursor-pointer"
                 >
-                  <span className="text-[13px] inline-block group-hover:scale-[1.3] transition-all">
-                    {translatedCategory}
+                  <span className="text-[12px] leading-tight inline-block group-hover:scale-[1.1] transition-all">
+                    {category}
                   </span>
                 </Link>
               );

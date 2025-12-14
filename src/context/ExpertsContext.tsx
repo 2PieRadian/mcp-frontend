@@ -9,77 +9,16 @@ import type { Expert } from "../lib/constants/experts";
 import type { FilterState } from "../types/filters";
 import { defaultFilters } from "../types/filters";
 import { BACKEND_URL } from "../lib/api";
-
-type ExpertiseArea = "anxiety" | "couple" | "breakup" | "loneliness";
-
-type ApiUser = {
-  id: number;
-  email: string;
-  name: string;
-  languages: string[];
-  avatar?: string;
-};
-
-type ApiExpert = {
-  id: number;
-  userId: number;
-  professionalTitle: string;
-  yearsOfExperience: number;
-  expertiseAreas: string[];
-  bio: string;
-  pricePerHour: number;
-  rating: number;
-  totalReviews: number;
-  user: ApiUser;
-};
-
-type ApiResponse = {
-  message: string;
-  count: number;
-  totalCount: number; // Total count in DB
-  page?: number;
-  limitPerPage?: number;
-  totalPages: number; // Total pages available from API
-  experts: ApiExpert[];
-};
-
-type ExpertiseData = {
-  unfilteredExperts: Expert[]; // All experts from API (no filters)
-  unfilteredApiExperts: ApiExpert[]; // Store full API expert data for details page
-  totalCount: number; // Total count from API
-  totalPagesFromAPI: number; // Total pages available from API
-  loadedPages: Set<number>; // Pages that have been fetched from API
-  isFullyLoaded: boolean; // True if all pages are loaded
-};
-
-interface ExpertsContextType {
-  // Filter state
-  filters: FilterState;
-  setFilters: (filters: FilterState) => void;
-
-  // Data for each expertise area
-  anxietyData: ExpertiseData;
-  coupleData: ExpertiseData;
-  breakupData: ExpertiseData;
-  lonelinessData: ExpertiseData;
-
-  // Computed filtered data
-  getFilteredExperts: (expertiseArea: ExpertiseArea) => Expert[];
-  getTotalPages: (expertiseArea: ExpertiseArea) => number; // Returns API totalPages for pagination
-  getTotalPagesFiltered: (expertiseArea: ExpertiseArea) => number; // Returns filtered pages count
-  getTotalCount: (expertiseArea: ExpertiseArea) => number; // Returns API totalCount
-  getNextPageToFetch: (
-    expertiseArea: ExpertiseArea,
-    currentFilteredPage: number
-  ) => number | null;
-
-  // Actions
-  fetchExperts: (expertiseArea: ExpertiseArea, page: number) => Promise<void>;
-  getExpertById: (expertId: number) => ApiExpert | null; // Get full expert data by ID
-  isLoading: boolean;
-  error: string | null;
-  clearCache: (expertiseArea: ExpertiseArea) => void;
-}
+import type {
+  ExpertiseArea,
+  ApiExpert,
+  ApiResponse,
+  ExpertiseData,
+  SpecializationCacheEntry,
+  ExpertFilters,
+  ExpertsContextType,
+} from "../types/experts";
+import { createFilterKey } from "../types/experts";
 
 const ExpertsContext = createContext<ExpertsContextType | undefined>(undefined);
 
@@ -101,6 +40,11 @@ export function ExpertsProvider({ children }: { children: ReactNode }) {
   const [filters, setFiltersState] = useState<FilterState>(defaultFilters);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // New cache: Map<specialization, Map<filterKey, SpecializationCacheEntry>>
+  const [specializationCache, setSpecializationCache] = useState<
+    Map<string, Map<string, SpecializationCacheEntry>>
+  >(new Map());
 
   const getDataForArea = useCallback(
     (area: ExpertiseArea): ExpertiseData => {
@@ -144,18 +88,31 @@ export function ExpertsProvider({ children }: { children: ReactNode }) {
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
       .join(" ");
 
+    // Use specialization from expertSpecializations if available, otherwise use professionalTitle
+    const specializationName =
+      expert.expertSpecializations?.[0]?.specialization?.name ||
+      expert.professionalTitle ||
+      "General";
+
     const specialization = `${
-      expert.professionalTitle.charAt(0).toUpperCase() +
-      expert.professionalTitle.slice(1)
+      specializationName.charAt(0).toUpperCase() + specializationName.slice(1)
     } (${expert.yearsOfExperience}+ yrs of experience)`;
 
-    const tags = expert.expertiseAreas
-      .map((area) => area.charAt(0).toUpperCase() + area.slice(1))
-      .join(", ");
+    const tags = expert.expertSpecializations
+      ? expert.expertSpecializations
+          .map((esp) => esp.specialization.name)
+          .join(", ")
+      : expert.expertiseAreas
+      ? expert.expertiseAreas
+          .map((area) => area.charAt(0).toUpperCase() + area.slice(1))
+          .join(", ")
+      : "";
 
     const languages = expert.user.languages
-      .map((lang) => lang.charAt(0).toUpperCase() + lang.slice(1))
-      .join(", ");
+      ? expert.user.languages
+          .map((lang) => lang.charAt(0).toUpperCase() + lang.slice(1))
+          .join(", ")
+      : "";
 
     return {
       id: expert.id,
@@ -170,7 +127,7 @@ export function ExpertsProvider({ children }: { children: ReactNode }) {
       price: expert.pricePerHour,
       // Store raw data for filtering
       yearsOfExperience: expert.yearsOfExperience,
-      rawLanguages: expert.user.languages,
+      rawLanguages: expert.user.languages || [],
     } as Expert & { yearsOfExperience: number; rawLanguages: string[] };
   }, []);
 
@@ -391,10 +348,186 @@ export function ExpertsProvider({ children }: { children: ReactNode }) {
     [setDataForArea]
   );
 
-  // Get expert by ID from all cached data
+  // Get cached experts for a specialization + filter combination
+  const getCachedExperts = useCallback(
+    (specialization: string, filters?: ExpertFilters) => {
+      const filterKey = createFilterKey(filters || {});
+      const cacheForSpecialization = specializationCache.get(specialization);
+      const cacheEntry = cacheForSpecialization?.get(filterKey);
+
+      if (cacheEntry) {
+        return {
+          experts: cacheEntry.experts,
+          apiExperts: cacheEntry.apiExperts,
+          totalCount: cacheEntry.totalCount,
+          totalPages: cacheEntry.totalPages,
+          hasCache: true,
+        };
+      }
+
+      return {
+        experts: [],
+        apiExperts: [],
+        totalCount: 0,
+        totalPages: 0,
+        hasCache: false,
+      };
+    },
+    [specializationCache]
+  );
+
+  // Fetch experts by specialization with filters (server-side filtering)
+  const fetchExpertsBySpecialization = useCallback(
+    async (
+      specialization: string,
+      page: number,
+      filters?: {
+        minPrice?: number;
+        maxPrice?: number;
+        minRating?: number;
+        minExperience?: number;
+        language?: string;
+        searchName?: string;
+      }
+    ) => {
+      const filterKey = createFilterKey(filters || {});
+      const cacheForSpecialization = specializationCache.get(specialization);
+      const cacheEntry = cacheForSpecialization?.get(filterKey);
+
+      // Check if this page is already loaded for this specialization + filter combination
+      if (cacheEntry && cacheEntry.loadedPages.has(page)) {
+        console.log(
+          `[Cache Hit] Specialization: ${specialization}, Filter: ${filterKey}, Page: ${page}`
+        );
+        return; // Already have this page cached
+      }
+
+      console.log(
+        `[Cache Miss] Fetching - Specialization: ${specialization}, Filter: ${filterKey}, Page: ${page}`
+      );
+
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const token = window.localStorage.getItem("auth:token");
+        const headers: HeadersInit = {
+          "Content-Type": "application/json",
+          ...(token && { Authorization: `Bearer ${token}` }),
+        };
+
+        // Build query parameters with filters
+        const params = new URLSearchParams({
+          page: page.toString(),
+          specialization: specialization,
+          ...(filters?.minPrice && { minPrice: filters.minPrice.toString() }),
+          ...(filters?.maxPrice && { maxPrice: filters.maxPrice.toString() }),
+          ...(filters?.minRating && {
+            minRating: filters.minRating.toString(),
+          }),
+          ...(filters?.minExperience && {
+            minExperience: filters.minExperience.toString(),
+          }),
+          ...(filters?.language && {
+            language: filters.language.toLowerCase(),
+          }),
+          ...(filters?.searchName && { name: filters.searchName }),
+        });
+
+        const response = await fetch(
+          `${BACKEND_URL}/api/v1/expert/get-experts?${params.toString()}`,
+          {
+            method: "GET",
+            headers,
+          }
+        );
+
+        if (!response.ok) {
+          if (response.status === 401) {
+            throw new Error("Unauthorized. Please login to view experts.");
+          }
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.message || "Failed to fetch experts");
+        }
+
+        const data: ApiResponse = await response.json();
+
+        // Map API response to Expert type
+        const newExperts = (data.experts || []).map(mapApiExpertToExpert);
+
+        // Update cache
+        setSpecializationCache((prev) => {
+          const newCache = new Map(prev);
+          const specCache = newCache.get(specialization) || new Map();
+          const existingEntry = specCache.get(filterKey);
+
+          // Merge new experts with existing ones (avoid duplicates)
+          const existingExperts: Expert[] = existingEntry?.experts || [];
+          const existingExpertIds = new Set<number>(
+            existingExperts.map((e) => e.id)
+          );
+          const uniqueNewExperts = newExperts.filter(
+            (e: Expert) => !existingExpertIds.has(e.id)
+          );
+
+          const updatedExperts = [
+            ...(existingEntry?.experts || []),
+            ...uniqueNewExperts,
+          ];
+          const updatedApiExperts = [
+            ...(existingEntry?.apiExperts || []),
+            ...(data.experts || []),
+          ];
+
+          const updatedLoadedPages = new Set<number>(
+            existingEntry?.loadedPages || []
+          );
+          updatedLoadedPages.add(page);
+
+          const updatedEntry: SpecializationCacheEntry = {
+            experts: updatedExperts,
+            apiExperts: updatedApiExperts,
+            totalCount: data.totalCount || 0,
+            totalPages: data.totalPages || 0,
+            loadedPages: updatedLoadedPages,
+            filterKey,
+          };
+
+          specCache.set(filterKey, updatedEntry);
+          newCache.set(specialization, specCache);
+
+          console.log(
+            `[Cache Updated] Specialization: ${specialization}, Filter: ${filterKey}, Total Experts: ${updatedExperts.length}`
+          );
+
+          return newCache;
+        });
+      } catch (err: any) {
+        console.error("Error fetching experts by specialization:", err);
+        setError(err?.message || "Failed to load experts");
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [specializationCache, mapApiExpertToExpert]
+  );
+
+  // Get expert by ID from all cached data (searches both old and new cache)
   const getExpertById = useCallback(
     (expertId: number): ApiExpert | null => {
-      // Search through all expertise areas
+      // First search in new specialization cache
+      for (const [, filterCache] of specializationCache.entries()) {
+        for (const cacheEntry of filterCache.values()) {
+          const expert = cacheEntry.apiExperts.find(
+            (exp) => exp.id === expertId
+          );
+          if (expert) {
+            return expert;
+          }
+        }
+      }
+
+      // Fallback to old expertise area cache
       const allAreas: ExpertiseArea[] = [
         "anxiety",
         "couple",
@@ -412,7 +545,7 @@ export function ExpertsProvider({ children }: { children: ReactNode }) {
       }
       return null;
     },
-    [getDataForArea]
+    [getDataForArea, specializationCache]
   );
 
   const value: ExpertsContextType = {
@@ -429,9 +562,11 @@ export function ExpertsProvider({ children }: { children: ReactNode }) {
     getNextPageToFetch,
     fetchExperts,
     getExpertById,
+    clearCache,
+    fetchExpertsBySpecialization,
+    getCachedExperts,
     isLoading,
     error,
-    clearCache,
   };
 
   return (

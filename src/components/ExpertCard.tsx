@@ -1,6 +1,7 @@
 import { Star } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import type { ApiExpert } from "../types/experts";
 
 type ExpertCardProps = {
   id: number;
@@ -13,6 +14,7 @@ type ExpertCardProps = {
   languages: string;
   nextSlot: string;
   price: number;
+  expertData?: ApiExpert; // Full expert data to pass to details page
 };
 
 export default function ExpertCard({
@@ -26,19 +28,29 @@ export default function ExpertCard({
   languages,
   nextSlot,
   price,
+  expertData,
 }: ExpertCardProps) {
   const { t } = useTranslation("common");
   const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    // Pass full expert data via navigation state
+    navigate(`/expert/${id}`, { state: { expert: expertData } });
+  };
+
   return (
-    <div className="Expert-Card border flex flex-col justify-between border-[#B5B5B5] transform hover:scale-[1.011] duration-100 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.15)] transition-all p-[15px] min-[800px]:p-[15px] relative rounded-[15px] w-full">
+    <div
+      onClick={handleCardClick}
+      className="Expert-Card border flex flex-col justify-between border-[#B5B5B5] transform hover:scale-[1.011] duration-100 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.15)] transition-all p-[15px] min-[800px]:p-[15px] relative rounded-[15px] w-full cursor-pointer"
+    >
       <div className="flex items-start justify-between gap-[16px] min-[800px]:gap-[20px]">
         <div className="Profile-Image flex flex-col flex-1">
           <img src={image} alt={`${name} Image`} className="self-start" />
 
           <button
-            onClick={() => {
-              // Pass only the expert ID, ExpertDetails will look it up in context
-              navigate(`/expert/${id}`, { state: { expertId: id } });
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent card click when button is clicked
+              handleCardClick();
             }}
             className="w-full border border-[#44666C] hover:bg-[#44666C] hover:text-white transition-colors duration-200 text-[#44666C] text-center cursor-pointer text-xs sm:text-sm font-medium rounded-[20px] py-[4px] mt-[8px]"
           >
@@ -91,7 +103,13 @@ export default function ExpertCard({
         </div>
       </div>
 
-      <div className="mt-[16px] bg-[#44666C] text-white text-center cursor-pointer text-sm min-[800px]:text-base font-medium rounded-[20px] py-[8px]">
+      <div
+        onClick={(e) => {
+          e.stopPropagation(); // Prevent card click when button is clicked
+          // TODO: Implement booking functionality
+        }}
+        className="mt-[16px] bg-[#44666C] text-white text-center cursor-pointer text-sm min-[800px]:text-base font-medium rounded-[20px] py-[8px]"
+      >
         {t("bookASession")}
       </div>
     </div>

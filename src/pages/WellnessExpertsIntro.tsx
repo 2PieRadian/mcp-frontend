@@ -1,83 +1,133 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { ArrowRight, Heart, Sparkles } from "lucide-react";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
+import {
+  EXPERT_CATEGORIES,
+  SPECIALIZATION_DESCRIPTIONS,
+} from "../lib/constants/experts";
 
 interface ExpertCategoryCardProps {
   title: string;
   description: string;
-  link: string;
+  specialization: string;
 }
 
 function ExpertCategoryCard({
   title,
   description,
-  link,
+  specialization,
   exploreText,
 }: ExpertCategoryCardProps & { exploreText: string }) {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    const slug = specialization
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/&/g, "and");
+    navigate(`/wellness-experts/${slug}`, { state: { specialization } });
+  };
+
   return (
-    <div className="flex flex-col justify-between bg-[hsl(0,0%,97%)] hover:bg-white shadow-l hover:scale-[1.025] transition-all duration-150 cursor-pointer gap-[10px] py-[15px] px-[20px] rounded-[10px] border-[#9ba5ab] w-full md:w-auto md:flex-1 h-full">
-      <div>
-        <h1 className="text-[20px] md:text-[25px] font-medium text-center text-[#374750]">
+    <div
+      onClick={handleClick}
+      className="group relative flex flex-col justify-between bg-gradient-to-br from-white to-[#f8fafb] hover:from-[#f0f7fa] hover:to-white border-2 border-[#e0e7eb] hover:border-[#44666C] rounded-2xl p-6 cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-xl shadow-md h-full"
+    >
+      {/* Decorative gradient overlay on hover */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#44666C]/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+      <div className="relative z-10">
+        {/* Icon */}
+        <div className="mb-4 flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-[#44666C] to-[#365a62] group-hover:scale-110 transition-transform duration-300">
+          <Heart className="w-6 h-6 text-white" />
+        </div>
+
+        <h3 className="text-xl font-bold text-[#1a2e35] mb-3 group-hover:text-[#44666C] transition-colors duration-300">
           {title}
-        </h1>
-        <p className="text-[14px] md:text-base mt-[15px] text-[#3d4950]">
+        </h3>
+        <p className="text-[15px] text-[#5a6c75] leading-relaxed mb-6 line-clamp-3">
           {description}
         </p>
       </div>
 
-      <Link
-        to={link}
-        className="flex items-center justify-center mt-[20px] bg-[#304048] hover:bg-[#304048]/90 transition-colors duration-150 cursor-pointer text-white rounded-[30px] py-[7px] px-[20px] text-sm md:text-base"
+      <button
+        onClick={(e) => e.stopPropagation()}
+        className="relative z-10 flex items-center justify-center gap-2 mt-auto bg-gradient-to-r from-[#44666C] to-[#365a62] hover:from-[#365a62] hover:to-[#2d4d54] text-white font-semibold rounded-xl py-3 px-5 text-sm transition-all duration-300 shadow-md hover:shadow-lg group-hover:gap-3"
       >
-        {exploreText}
-      </Link>
+        <span>{exploreText}</span>
+        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+      </button>
     </div>
   );
 }
 
 export default function WellnessExpertsIntro() {
-  const { t } = useTranslation(["experts", "common"]);
+  const { t } = useTranslation(["common"]);
 
-  const categories = [
-    {
-      title: t("therapists", { ns: "experts" }),
-      description: t("therapistsDescription", { ns: "experts" }),
-      link: "/wellness-experts/therapists",
-    },
-    {
-      title: t("yogaExperts", { ns: "experts" }),
-      description: t("yogaExpertsDescription", { ns: "experts" }),
-      link: "/wellness-experts/yoga-experts",
-    },
-    {
-      title: t("dieticians", { ns: "experts" }),
-      description: t("dieticiansDescription", { ns: "experts" }),
-      link: "/wellness-experts/dieticians",
-    },
-  ];
+  const categories = EXPERT_CATEGORIES.wellness.map((specialization) => ({
+    title: specialization,
+    description:
+      SPECIALIZATION_DESCRIPTIONS[specialization] ||
+      "Get expert guidance and support.",
+    specialization,
+  }));
 
   return (
-    <div className="max-w-[1350px] mx-auto px-[20px] mb-[80px]">
+    <div className="min-h-screen bg-gradient-to-b from-[#f8fafb] to-white">
       <ResponsiveNavbar />
 
-      <div className="h-[240px] mt-[30px]">
-        <img
-          src="/images/health/health.jpg"
-          alt=""
-          className="w-full h-full object-cover rounded-[30px] shadow-lg"
-        />
-      </div>
+      <div className="max-w-[1350px] mx-auto px-[20px] pb-[80px]">
+        {/* Hero Section */}
+        <div className="relative mt-[40px] mb-[60px]">
+          <div className="relative h-[320px] md:h-[400px] rounded-3xl overflow-hidden shadow-2xl">
+            <img
+              src="/images/health/health.jpg"
+              alt="Wellness and Health"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#44666C]/90 via-[#44666C]/70 to-transparent" />
+            <div className="absolute inset-0 flex flex-col justify-center items-start px-8 md:px-12 text-white">
+              <div className="flex items-center gap-2 mb-4">
+                <Sparkles className="w-6 h-6" />
+                <span className="text-sm font-semibold uppercase tracking-wider opacity-90">
+                  Expert Wellness Support
+                </span>
+              </div>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
+                Your Journey to
+                <br />
+                Better Wellness
+              </h1>
+              <p className="text-lg md:text-xl max-w-2xl opacity-95 leading-relaxed">
+                Connect with certified wellness experts who understand your
+                unique needs and guide you toward a healthier, happier life.
+              </p>
+            </div>
+          </div>
+        </div>
 
-      <div className="categories mt-[20px] flex flex-col md:flex-row items-stretch md:justify-between gap-[20px]">
-        {categories.map((category) => (
-          <ExpertCategoryCard
-            key={category.title}
-            title={category.title}
-            description={category.description}
-            link={category.link}
-            exploreText={t("explore", { ns: "common" })}
-          />
-        ))}
+        {/* Categories Grid */}
+        <div className="mb-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-[#1a2e35] mb-2 text-center">
+            Explore Our Specializations
+          </h2>
+          <p className="text-center text-[#5a6c75] text-lg mb-10">
+            Choose the area where you need expert guidance
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {categories.map((category) => (
+            <ExpertCategoryCard
+              key={category.specialization}
+              title={category.title}
+              description={category.description}
+              specialization={category.specialization}
+              exploreText={t("explore", { ns: "common" })}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

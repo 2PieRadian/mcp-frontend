@@ -42,14 +42,9 @@ export default function App() {
           {/* Wellness Experts */}
           <Route path="/wellness-experts" element={<WellnessExpertsIntro />} />
           <Route
-            path="/wellness-experts/therapists/*"
+            path="/wellness-experts/:specialization"
             element={<Therapists />}
           />
-          <Route
-            path="/wellness-experts/yoga-experts"
-            element={<YogaExperts />}
-          />
-          <Route path="/wellness-experts/dieticians" element={<Dieticians />} />
 
           {/* Education Experts */}
           <Route
@@ -57,30 +52,14 @@ export default function App() {
             element={<EducationExpertsIntro />}
           />
           <Route
-            path="/education-experts/academic-counsellor"
-            element={<Therapists />}
-          />
-          <Route
-            path="/education-experts/career-planning-specialist"
-            element={<Therapists />}
-          />
-          <Route
-            path="/education-experts/path-finder-consultant"
+            path="/education-experts/:specialization"
             element={<Therapists />}
           />
 
           {/* Finance Experts */}
           <Route path="/finance-experts" element={<FinanceExpertsIntro />} />
           <Route
-            path="/finance-experts/investment-counsellor"
-            element={<Therapists />}
-          />
-          <Route
-            path="/finance-experts/financial-expert"
-            element={<Therapists />}
-          />
-          <Route
-            path="/finance-experts/gst-&-taxation-expert"
+            path="/finance-experts/:specialization"
             element={<Therapists />}
           />
 
