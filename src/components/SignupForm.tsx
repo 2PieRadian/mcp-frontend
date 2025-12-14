@@ -8,7 +8,7 @@ import PrimaryButton from "./PrimaryButton";
 import ErrorMessage from "./ErrorMessage";
 import FormFooterLink from "./FormFooterLink";
 import AuthImage from "./AuthImage";
-import { BACKEND_URL } from "../lib/api";
+import { BACKEND_URL, getAvatarUrl } from "../lib/api";
 
 export default function SignupForm() {
   const { t } = useTranslation("common");
@@ -58,11 +58,14 @@ export default function SignupForm() {
       }
 
       // Map backend user shape to AuthUser
+      const avatarValue = user.avatar || user.avatarUrl;
+      console.log("SignupForm - Raw avatar value from backend:", avatarValue);
+
       login({
         id: String(user.id),
         email: user.email,
         name: fullName || user.name || undefined,
-        avatarUrl: user.avatar || undefined,
+        avatarUrl: getAvatarUrl(avatarValue),
         phoneNumber: user.phoneNumber,
         role: user.role,
         dateOfBirth: user.dateOfBirth,

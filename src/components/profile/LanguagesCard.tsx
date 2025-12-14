@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
-import { BACKEND_URL } from "../../lib/api";
+import { BACKEND_URL, getAvatarUrl } from "../../lib/api";
 
 const COMMON_LANGUAGES = [
   "English",
@@ -118,11 +118,12 @@ export default function LanguagesCard() {
       const updatedUser = data.user;
 
       // Update auth context
+      const avatarValue = updatedUser.avatar || updatedUser.avatarUrl;
       login({
         id: String(updatedUser.id),
         email: updatedUser.email,
         name: updatedUser.name,
-        avatarUrl: updatedUser.avatar || undefined,
+        avatarUrl: getAvatarUrl(avatarValue),
         phoneNumber: updatedUser.phoneNumber || undefined,
         role: updatedUser.role,
         dateOfBirth: updatedUser.dateOfBirth || undefined,

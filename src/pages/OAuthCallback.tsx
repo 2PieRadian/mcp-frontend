@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { BACKEND_URL } from "../lib/api";
+import { BACKEND_URL, getAvatarUrl } from "../lib/api";
 
 export default function OAuthCallback() {
   const [searchParams] = useSearchParams();
@@ -56,11 +56,17 @@ export default function OAuthCallback() {
             const userData = decodeJWT(token);
             if (userData && isMounted && !hasProcessedRef.current) {
               hasProcessedRef.current = true;
+              const avatarValue = userData.avatar || userData.avatarUrl;
+              console.log(
+                "OAuthCallback (JWT) - Raw avatar value:",
+                avatarValue
+              );
+
               login({
                 id: String(userData.id || ""),
                 email: userData.email || "",
                 name: userData.name || undefined,
-                avatarUrl: userData.avatar || undefined,
+                avatarUrl: getAvatarUrl(avatarValue),
                 phoneNumber: userData.phoneNumber || undefined,
                 role: userData.role || undefined,
                 dateOfBirth: userData.dateOfBirth || undefined,
@@ -90,11 +96,14 @@ export default function OAuthCallback() {
         if (!isMounted || hasProcessedRef.current) return;
         hasProcessedRef.current = true;
 
+        const avatarValue = user.avatar || user.avatarUrl;
+        console.log("OAuthCallback (API) - Raw avatar value:", avatarValue);
+
         login({
           id: String(user.id),
           email: user.email,
           name: user.name || undefined,
-          avatarUrl: user.avatar || undefined,
+          avatarUrl: getAvatarUrl(avatarValue),
           phoneNumber: user.phoneNumber || undefined,
           role: user.role || undefined,
           dateOfBirth: user.dateOfBirth || undefined,

@@ -9,39 +9,48 @@ function HeroSectionCard({
   className,
   icon,
   isHorizontal = false,
+  linkTo,
 }: {
   title: string;
   description: string;
   className?: string;
   icon?: React.ReactNode;
   isHorizontal?: boolean;
+  linkTo?: string;
 }) {
   return (
-    <div
-      className={`shadow-drop-shadow flex flex-col gap-[8px]${
-        isHorizontal ? "" : "w-[274px]"
-      } rounded-[15px] ${
-        isHorizontal
-          ? "py-[20px] px-[15px] border border-hero"
-          : "py-[25px] px-[25px]"
-      } ${isHorizontal ? "relative" : "absolute"} ${className}`}
-    >
-      <div className="flex justify-center">{icon}</div>
-      <div className={isHorizontal ? "text-center" : ""}>
-        <h3
-          className={`${
-            isHorizontal ? "text-[16px]" : "text-[18px]"
-          } font-medium`}
-        >
-          {title}
-        </h3>
-        <p
-          className={`${isHorizontal ? "text-[12px]" : "text-[14px]"} mt-[5px]`}
-        >
-          {description}
-        </p>
+    <Link to={linkTo || ""}>
+      <div
+        className={`shadow-drop-shadow flex flex-col gap-[8px] hover:scale-[1.03] hover:shadow-[4px_4px_10px_rgba(0,0,0,0.28)] transition-all duration-150 cursor-pointer ${
+          isHorizontal ? "" : "w-[274px]"
+        } rounded-[15px] ${
+          isHorizontal
+            ? "py-[20px] px-[15px] border border-hero"
+            : "py-[25px] px-[25px]"
+        } ${isHorizontal ? "relative" : "absolute"} ${className}`}
+      >
+        {/* Icon */}
+        <div className="flex justify-center">{icon}</div>
+
+        {/* Title and Description */}
+        <div className={isHorizontal ? "text-center" : "text-center"}>
+          <h3
+            className={`${
+              isHorizontal ? "text-[16px]" : "text-[18px]"
+            } font-medium`}
+          >
+            {title}
+          </h3>
+          <p
+            className={`${
+              isHorizontal ? "text-[12px]" : "text-[14px]"
+            } mt-[5px]`}
+          >
+            {description}
+          </p>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
@@ -85,6 +94,7 @@ function HeroSectionFloatingCards() {
         title={t("hero.wellnessEcosystem")}
         description={t("hero.wellnessDescription")}
         className="bg-[hsl(0,0%,98%,70%)] top-[-80px] right-[250px] z-2 text-hero-heading animate-float-1"
+        linkTo="/wellness-experts"
       />
 
       <HeroSectionCard
@@ -92,6 +102,7 @@ function HeroSectionFloatingCards() {
         title={t("hero.financeSector")}
         description={t("hero.financeDescription")}
         className="bg-[hsl(0,0%,98%,60%)] top-[140px] right-[285px] text-hero-heading z-1 animate-float-2"
+        linkTo="/finance-experts"
       />
 
       <HeroSectionCard
@@ -105,6 +116,7 @@ function HeroSectionFloatingCards() {
         title={t("hero.educationSector")}
         description={t("hero.educationDescription")}
         className="bg-[hsl(194,19%,18%)] top-[50px] right-[0px] text-white z-1 animate-float-3"
+        linkTo="/education-experts"
       />
 
       <div className="absolute top-[129px] right-[280px] w-[10px] h-[10px] bg-[hsl(194,7%,64%)] shadow-background-light"></div>
