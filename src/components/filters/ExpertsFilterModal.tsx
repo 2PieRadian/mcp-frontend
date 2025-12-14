@@ -215,7 +215,7 @@ export default function ExpertsFilterModal({
           <button
             onClick={handleClear}
             disabled={!hasActiveFilters}
-            className={`flex-1 py-3 px-5 rounded-xl font-semibold transition-all duration-200 ${
+            className={`flex-1 py-3 px-5 rounded-xl capitalize font-semibold transition-all duration-200 ${
               hasActiveFilters
                 ? "bg-white border-2 border-[#e0e7eb] text-[#5a6c75] hover:bg-[#f0f4f5] hover:border-[#44666C]/30 cursor-pointer"
                 : "bg-gray-100 border-2 border-gray-200 text-gray-400 cursor-not-allowed"
@@ -223,6 +223,7 @@ export default function ExpertsFilterModal({
           >
             {t("clear", { ns: "common" })}
           </button>
+
           <button
             onClick={handleApply}
             className="flex-1 bg-gradient-to-r from-[#44666C] to-[#365a62] hover:from-[#365a62] hover:to-[#2d4d54] text-white py-3 px-5 rounded-xl font-semibold transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 cursor-pointer"
