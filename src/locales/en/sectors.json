@@ -50,22 +50,22 @@
   },
   "howDoesItWork": {
     "title": "How Does It Work?",
-    "subtitle": "Simple steps to get started with MindCurePath",
+    "subtitle": "Get expert guidance in just a few simple steps",
     "step1": {
-      "title": "1. Get to the form / WhatsApp",
-      "description": "Fill out the form or contact us on WhatsApp to proceed. Get quick assistance instantly!"
+      "title": "Login to the Website",
+      "description": "Start by creating an account or logging in to access our platform and explore expert services."
     },
     "step2": {
-      "title": "2. Book your appointment",
-      "description": "Schedule your appointment now to get timely assistance from our team!"
+      "title": "Choose Your Area & Topic",
+      "description": "Select the category (Wellness, Education, or Finance) and the specific topic where you need expert guidance."
     },
     "step3": {
-      "title": "3. You'll be contacted at your booked time.",
-      "description": "Our team will reach out to you at your scheduled time for further assistance. Stay tuned!"
+      "title": "Browse Experts & Select a Slot",
+      "description": "Explore our verified experts in your chosen field, view their profiles, and book an available time slot that works for you."
     },
     "step4": {
-      "title": "4. Free Follow-ups as needed",
-      "description": "Get free follow-ups whenever you need for continued support!"
+      "title": "Get Your Session",
+      "description": "Enjoy a free demo session if available, or pay for a 1-hour live one-on-one session with your chosen expert."
     }
   },
   "whatOurUsersSay": {
