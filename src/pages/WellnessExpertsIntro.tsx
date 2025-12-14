@@ -89,8 +89,8 @@ function ExpertCategoryCard({
       </div>
 
       <button
-        onClick={(e) => e.stopPropagation()}
-        className="relative z-10 flex items-center justify-center gap-2 mt-auto bg-gradient-to-r from-[#44666C] to-[#365a62] hover:from-[#365a62] hover:to-[#2d4d54] text-white font-semibold rounded-xl py-3 px-5 text-sm transition-all duration-300 shadow-md hover:shadow-lg group-hover:gap-3"
+        onClick={handleClick}
+        className="relative z-10 flex items-center justify-center gap-2 mt-auto bg-gradient-to-r from-[#44666C] to-[#365a62] hover:from-[#365a62] hover:to-[#2d4d54] text-white font-semibold rounded-xl py-3 px-5 text-sm transition-all duration-300 shadow-md hover:shadow-lg group-hover:gap-3 cursor-pointer"
       >
         <span>{exploreText}</span>
         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
@@ -148,7 +148,7 @@ export default function WellnessExpertsIntro() {
         {/* Categories Grid */}
         <div className="mb-8">
           <h2 className="text-3xl md:text-4xl font-bold text-[#1a2e35] mb-2 text-center">
-            Explore Our Specializations
+            Choose Your Focus Area
           </h2>
           <p className="text-center text-[#5a6c75] text-lg mb-10">
             Choose the area where you need expert guidance
