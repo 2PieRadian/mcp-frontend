@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { X } from "lucide-react";
+import { X, DollarSign, Star, Award, SlidersHorizontal } from "lucide-react";
 import type { FilterState } from "../../types/filters";
 
 type TherapistsFilterModalProps = {
@@ -58,14 +58,6 @@ export default function TherapistsFilterModal({
     setLocalFilters((prev) => ({ ...prev, [key]: value }));
   };
 
-  const toggleLanguage = (language: string) => {
-    const currentLanguages = localFilters.languages || [];
-    const updatedLanguages = currentLanguages.includes(language)
-      ? currentLanguages.filter((lang) => lang !== language)
-      : [...currentLanguages, language];
-    updateFilter("languages", updatedLanguages);
-  };
-
   const handleApply = () => {
     onFiltersChange(localFilters);
     onApply();
@@ -85,69 +77,96 @@ export default function TherapistsFilterModal({
     onApply();
   };
 
+  const hasActiveFilters =
+    localFilters.minPrice !== undefined ||
+    localFilters.maxPrice !== undefined ||
+    localFilters.minRating !== undefined ||
+    localFilters.minExperience !== undefined;
+
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-[100px]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div
-        className="absolute inset-0 bg-black/20 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
 
       <div
         ref={modalRef}
-        className="relative bg-white rounded-[15px] shadow-lg max-w-[600px] w-full mx-[20px] max-h-[85vh] flex flex-col overflow-hidden"
+        className="relative bg-white rounded-2xl shadow-2xl max-w-[520px] w-full max-h-[90vh] flex flex-col overflow-hidden transform transition-all"
       >
-        <div className="flex justify-between items-center p-[25px] pb-[20px] border-b border-gray-200 flex-shrink-0">
-          <h2 className="text-[20px] font-semibold text-[#304048]">
-            {t("selectFilters", { ns: "common" })}
-          </h2>
+        {/* Header */}
+        <div className="bg-gradient-to-r from-[#44666C] to-[#365a62] px-6 py-5 flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-white/20 rounded-lg">
+              <SlidersHorizontal className="w-5 h-5 text-white" />
+            </div>
+            <h2 className="text-xl font-bold text-white">
+              {t("selectFilters", { ns: "common" })}
+            </h2>
+          </div>
           <button
             onClick={onClose}
-            className="p-[5px] hover:bg-gray-100 rounded-full transition-colors"
+            className="p-2 hover:bg-white/20 rounded-lg transition-colors cursor-pointer"
           >
-            <X size={20} className="text-[#304048] cursor-pointer" />
+            <X size={20} className="text-white" />
           </button>
         </div>
 
-        <div className="overflow-y-auto flex-1 px-[25px] py-[20px]">
+        {/* Content */}
+        <div className="overflow-y-auto flex-1 px-6 py-6 space-y-6">
           {/* Price Range */}
-          <div className="mb-[25px]">
-            <label className="block text-[14px] font-medium text-[#304048] mb-[10px]">
-              {t("price", { ns: "common" })} (₹ per hour)
-            </label>
-            <div className="flex items-center gap-[10px]">
-              <input
-                type="number"
-                placeholder="Min"
-                value={localFilters.minPrice || ""}
-                onChange={(e) =>
-                  updateFilter(
-                    "minPrice",
-                    e.target.value ? Number(e.target.value) : undefined
-                  )
-                }
-                className="flex-1 px-[12px] py-[8px] border border-gray-300 rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#304048] text-sm"
-              />
-              <span className="text-gray-500">-</span>
-              <input
-                type="number"
-                placeholder="Max"
-                value={localFilters.maxPrice || ""}
-                onChange={(e) =>
-                  updateFilter(
-                    "maxPrice",
-                    e.target.value ? Number(e.target.value) : undefined
-                  )
-                }
-                className="flex-1 px-[12px] py-[8px] border border-gray-300 rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#304048] text-sm"
-              />
+          <div className="bg-gradient-to-br from-[#f8fafb] to-white rounded-xl p-5 border border-[#e0e7eb] hover:border-[#44666C]/30 transition-all">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 bg-gradient-to-br from-[#44666C] to-[#365a62] rounded-lg">
+                <DollarSign className="w-5 h-5 text-white" />
+              </div>
+              <label className="text-base font-semibold text-[#1a2e35]">
+                {t("price", { ns: "common" })} (₹ per hour)
+              </label>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="flex-1">
+                <input
+                  type="number"
+                  placeholder="Min"
+                  value={localFilters.minPrice || ""}
+                  onChange={(e) =>
+                    updateFilter(
+                      "minPrice",
+                      e.target.value ? Number(e.target.value) : undefined
+                    )
+                  }
+                  className="w-full px-4 py-3 border-2 border-[#e0e7eb] rounded-xl focus:outline-none focus:border-[#44666C] focus:ring-2 focus:ring-[#44666C]/20 transition-all text-sm font-medium"
+                />
+              </div>
+              <span className="text-[#5a6c75] font-medium">-</span>
+              <div className="flex-1">
+                <input
+                  type="number"
+                  placeholder="Max"
+                  value={localFilters.maxPrice || ""}
+                  onChange={(e) =>
+                    updateFilter(
+                      "maxPrice",
+                      e.target.value ? Number(e.target.value) : undefined
+                    )
+                  }
+                  className="w-full px-4 py-3 border-2 border-[#e0e7eb] rounded-xl focus:outline-none focus:border-[#44666C] focus:ring-2 focus:ring-[#44666C]/20 transition-all text-sm font-medium"
+                />
+              </div>
             </div>
           </div>
 
           {/* Rating */}
-          <div className="mb-[25px]">
-            <label className="block text-[14px] font-medium text-[#304048] mb-[10px]">
-              {t("rating", { ns: "common" })} (Minimum)
-            </label>
+          <div className="bg-gradient-to-br from-[#f8fafb] to-white rounded-xl p-5 border border-[#e0e7eb] hover:border-[#44666C]/30 transition-all">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 bg-gradient-to-br from-[#44666C] to-[#365a62] rounded-lg">
+                <Star className="w-5 h-5 text-white fill-white" />
+              </div>
+              <label className="text-base font-semibold text-[#1a2e35]">
+                {t("rating", { ns: "common" })} (Minimum)
+              </label>
+            </div>
             <input
               type="number"
               min="0"
@@ -161,15 +180,20 @@ export default function TherapistsFilterModal({
                   e.target.value ? Number(e.target.value) : undefined
                 )
               }
-              className="w-full px-[12px] py-[8px] border border-gray-300 rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#304048] text-sm"
+              className="w-full px-4 py-3 border-2 border-[#e0e7eb] rounded-xl focus:outline-none focus:border-[#44666C] focus:ring-2 focus:ring-[#44666C]/20 transition-all text-sm font-medium"
             />
           </div>
 
           {/* Experience */}
-          <div className="mb-[25px]">
-            <label className="block text-[14px] font-medium text-[#304048] mb-[10px]">
-              {t("experience", { ns: "common" })} (Minimum years)
-            </label>
+          <div className="bg-gradient-to-br from-[#f8fafb] to-white rounded-xl p-5 border border-[#e0e7eb] hover:border-[#44666C]/30 transition-all">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 bg-gradient-to-br from-[#44666C] to-[#365a62] rounded-lg">
+                <Award className="w-5 h-5 text-white" />
+              </div>
+              <label className="text-base font-semibold text-[#1a2e35]">
+                {t("experience", { ns: "common" })} (Minimum years)
+              </label>
+            </div>
             <input
               type="number"
               min="0"
@@ -181,46 +205,27 @@ export default function TherapistsFilterModal({
                   e.target.value ? Number(e.target.value) : undefined
                 )
               }
-              className="w-full px-[12px] py-[8px] border border-gray-300 rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#304048] text-sm"
+              className="w-full px-4 py-3 border-2 border-[#e0e7eb] rounded-xl focus:outline-none focus:border-[#44666C] focus:ring-2 focus:ring-[#44666C]/20 transition-all text-sm font-medium"
             />
-          </div>
-
-          {/* Languages */}
-          <div className="mb-[25px]">
-            <label className="block text-[14px] font-medium text-[#304048] mb-[10px]">
-              {t("languages", { ns: "common" })}
-            </label>
-            <div className="flex flex-col gap-[8px]">
-              {["hindi", "english"].map((lang) => (
-                <label
-                  key={lang}
-                  className="flex items-center gap-[10px] cursor-pointer p-[10px] hover:bg-gray-50 rounded-[10px] transition-colors"
-                >
-                  <input
-                    type="checkbox"
-                    checked={localFilters.languages?.includes(lang) || false}
-                    onChange={() => toggleLanguage(lang)}
-                    className="w-[18px] h-[18px] cursor-pointer accent-[#304048]"
-                  />
-                  <span className="text-[14px] text-[#304048] capitalize">
-                    {t(lang, { ns: "experts" })}
-                  </span>
-                </label>
-              ))}
-            </div>
           </div>
         </div>
 
-        <div className="p-[25px] pt-[20px] border-t border-gray-200 flex-shrink-0 flex gap-[10px]">
+        {/* Footer */}
+        <div className="px-6 py-5 border-t border-[#e0e7eb] bg-[#f8fafb] flex gap-3">
           <button
             onClick={handleClear}
-            className="flex-1 bg-gray-200 text-[#304048] py-[12px] rounded-[10px] font-medium hover:bg-gray-300 transition-colors"
+            disabled={!hasActiveFilters}
+            className={`flex-1 py-3 px-5 rounded-xl font-semibold transition-all duration-200 ${
+              hasActiveFilters
+                ? "bg-white border-2 border-[#e0e7eb] text-[#5a6c75] hover:bg-[#f0f4f5] hover:border-[#44666C]/30 cursor-pointer"
+                : "bg-gray-100 border-2 border-gray-200 text-gray-400 cursor-not-allowed"
+            }`}
           >
             {t("clear", { ns: "common" })}
           </button>
           <button
             onClick={handleApply}
-            className="flex-1 bg-[#304048] text-white py-[12px] rounded-[10px] font-medium hover:bg-[#304048]/90 transition-colors"
+            className="flex-1 bg-gradient-to-r from-[#44666C] to-[#365a62] hover:from-[#365a62] hover:to-[#2d4d54] text-white py-3 px-5 rounded-xl font-semibold transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 cursor-pointer"
           >
             {t("apply", { ns: "common" })}
           </button>
