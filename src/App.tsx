@@ -11,8 +11,6 @@ import WellnessExpertsIntro from "./pages/WellnessExpertsIntro";
 import EducationExpertsIntro from "./pages/EducationExpertsIntro";
 import FinanceExpertsIntro from "./pages/FinanceExpertsIntro";
 import Therapists from "./pages/Therapists";
-import YogaExperts from "./pages/YogaExperts";
-import Dieticians from "./pages/Dieticians";
 import Profile from "./pages/Profile";
 import OAuthCallback from "./pages/OAuthCallback";
 import ExpertsDashboard from "./pages/dashboards/ExpertsDashboard";

@@ -117,26 +117,26 @@ export default function FinanceExpertsIntro() {
       <div className="max-w-[1350px] mx-auto pb-[80px]">
         {/* Hero Section */}
         <div className="relative mt-[40px] mb-[60px]">
-          <div className="relative h-[320px] md:h-[400px] rounded-3xl overflow-hidden shadow-2xl">
+          <div className="relative h-[240px] sm:h-[280px] md:h-[400px] rounded-3xl overflow-hidden shadow-2xl">
             <img
               src="/images/finance/finance.jpg"
               alt="Financial Planning"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-[#44666C]/90 via-[#44666C]/70 to-transparent" />
-            <div className="absolute inset-0 flex flex-col justify-center items-start px-8 md:px-12 text-white">
-              <div className="flex items-center gap-2 mb-4">
-                <Sparkles className="w-6 h-6" />
-                <span className="text-sm font-semibold uppercase tracking-wider opacity-90">
+            <div className="absolute inset-0 flex flex-col justify-center items-start px-4 sm:px-6 md:px-8 lg:px-12 text-white">
+              <div className="flex items-center gap-2 mb-3 sm:mb-4">
+                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
+                <span className="text-xs sm:text-sm md:text-base font-semibold uppercase tracking-wider opacity-90">
                   Expert Financial Guidance
                 </span>
               </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 sm:mb-4 leading-tight">
                 Build Your Financial
                 <br />
                 Future With Confidence
               </h1>
-              <p className="text-lg md:text-xl max-w-2xl opacity-95 leading-relaxed">
+              <p className="text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl opacity-95 leading-relaxed">
                 Get expert financial advice from certified professionals who
                 help you make smart decisions and achieve your financial goals.
               </p>
