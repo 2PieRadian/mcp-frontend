@@ -40,7 +40,7 @@ export default function WeHelpWith({
       <div className="flex flex-col text-white gap-[10px] flex-2">
         <Link
           to="/wellness-experts"
-          className={`transition-all px-[15px] py-[7px] text-[14px] rounded-[10px] cursor-pointer hover:scale-[1.05] ${
+          className={`transition-all px-[15px] py-[7px] text-center text-[14px] rounded-[10px] cursor-pointer hover:scale-[1.05] ${
             hoveredExpert === "wellness"
               ? "bg-white text-navbar-dropdown-bg"
               : "hover:bg-white hover:text-navbar-dropdown-bg"
@@ -51,7 +51,7 @@ export default function WeHelpWith({
         </Link>
         <Link
           to="/education-experts"
-          className={`transition-all px-[15px] py-[7px] text-[14px] rounded-[10px] cursor-pointer hover:scale-[1.05] ${
+          className={`transition-all px-[15px] py-[7px] text-center text-[14px] rounded-[10px] cursor-pointer hover:scale-[1.05] ${
             hoveredExpert === "education"
               ? "bg-white text-navbar-dropdown-bg"
               : "hover:bg-white hover:text-navbar-dropdown-bg"
@@ -62,7 +62,7 @@ export default function WeHelpWith({
         </Link>
         <Link
           to="/finance-experts"
-          className={`transition-all px-[15px] py-[7px] text-[14px] rounded-[10px] cursor-pointer hover:scale-[1.05] ${
+          className={`transition-all px-[15px] py-[7px] text-center text-[14px] rounded-[10px] cursor-pointer hover:scale-[1.05] ${
             hoveredExpert === "finance"
               ? "bg-white text-navbar-dropdown-bg"
               : "hover:bg-white hover:text-navbar-dropdown-bg"

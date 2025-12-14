@@ -101,6 +101,17 @@ export default function ExpertsCardsSection({
   const totalPages = cachedData.totalPages || 0;
   const totalCount = cachedData.totalCount || 0;
 
+  // Check if current page is fully loaded (has enough experts for this page)
+  const isCurrentPageLoaded = useMemo(() => {
+    if (!cachedData.hasCache) {
+      return false;
+    }
+    const startIndex = (currentPage - 1) * EXPERTS_PER_PAGE;
+    const endIndex = startIndex + EXPERTS_PER_PAGE;
+    // Check if we have enough experts to fill this page
+    return cachedData.experts.length >= endIndex;
+  }, [cachedData, currentPage]);
+
   // Check if there's a next/previous page
   const hasNextPage = currentPage < totalPages;
   const hasPreviousPage = currentPage > 1;
@@ -117,7 +128,21 @@ export default function ExpertsCardsSection({
     }
   };
 
+  // Show skeletons on initial load (no cache at all)
   if (isLoading && expertsForCurrentPage.length === 0 && !cachedData.hasCache) {
+    return (
+      <div className="max-w-[1350px] mx-auto mt-[40px]">
+        <div className="grid grid-cols-1 min-[930px]:grid-cols-2 gap-[20px]">
+          {Array.from({ length: 4 }).map((_, index) => (
+            <ExpertCardSkeleton key={index} />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // Show skeletons when loading a new page that isn't cached yet
+  if (isLoading && !isCurrentPageLoaded) {
     return (
       <div className="max-w-[1350px] mx-auto mt-[40px]">
         <div className="grid grid-cols-1 min-[930px]:grid-cols-2 gap-[20px]">
