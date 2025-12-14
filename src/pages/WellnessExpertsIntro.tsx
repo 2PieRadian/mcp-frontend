@@ -112,10 +112,10 @@ export default function WellnessExpertsIntro() {
   }));
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#f8fafb] to-white">
+    <div className="min-h-screen bg-gradient-to-b from-[#f8fafb] to-white px-[20px]">
       <ResponsiveNavbar />
 
-      <div className="max-w-[1350px] mx-auto px-[20px] pb-[80px]">
+      <div className="max-w-[1350px] mx-auto pb-[80px]">
         {/* Hero Section */}
         <div className="relative mt-[40px] mb-[60px]">
           <div className="relative h-[320px] md:h-[400px] rounded-3xl overflow-hidden shadow-2xl">

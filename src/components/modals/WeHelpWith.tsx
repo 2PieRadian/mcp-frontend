@@ -28,17 +28,11 @@ export default function WeHelpWith({
     return `${baseRoute}/${categorySlug}`;
   };
 
-  // Map category keys to translation keys (keeping for backward compatibility)
-  const getTranslationKey = (category: string): string => {
-    // For new specializations, use the category name directly
-    return category;
-  };
-
   return (
     <div
       ref={modalRef}
       className={`absolute top-[50px] ${
-        navbarType === "landing" && "left-[50%] -translate-x-1/2 min-w-[570px]"
+        navbarType === "landing" && "left-[50%] -translate-x-1/2 min-w-[800px]"
       } ${
         navbarType === "experts" && "left-[50px] w-full"
       } flex items-stretch justify-between gap-[20px] bg-navbar-dropdown-bg z-20 rounded-[10px] p-[10px]`}
@@ -79,12 +73,11 @@ export default function WeHelpWith({
         </Link>
       </div>
 
-      <div className="flex-3 w-full bg-navbar-dropdown-right-outer-bg border border-navbar-dropdown-right-outer text-white p-[5px] rounded-[10px] flex max-h-[400px] overflow-y-auto">
+      <div className="flex-4 w-full bg-navbar-dropdown-right-outer-bg border border-navbar-dropdown-right-outer text-white p-[5px] rounded-[10px] flex max-h-[400px] overflow-y-auto">
         {hoveredExpert ? (
           <div className="grid grid-cols-2 gap-[5px] w-full h-full">
             {getCategories().map((category, index) => {
               const categoryRoute = getCategoryRoute(category, hoveredExpert);
-              const categorySlug = category.toLowerCase().replace(/\s+/g, "-").replace(/&/g, "and");
 
               return (
                 <Link
@@ -92,7 +85,7 @@ export default function WeHelpWith({
                   to={categoryRoute}
                   className="group bg-navbar-dropdown-bg rounded-[10px] p-[12px] flex items-center justify-center text-center hover:bg-white hover:text-navbar-dropdown-bg transition-all cursor-pointer"
                 >
-                  <span className="text-[12px] leading-tight inline-block group-hover:scale-[1.1] transition-all">
+                  <span className="text-[14px] leading-tight inline-block group-hover:scale-[1.1] transition-all">
                     {category}
                   </span>
                 </Link>
