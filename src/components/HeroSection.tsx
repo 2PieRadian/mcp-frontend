@@ -19,10 +19,13 @@ function HeroSectionCard({
   linkTo?: string;
 }) {
   return (
-    <Link to={linkTo || ""}>
+    <Link
+      to={linkTo || ""}
+      className={isHorizontal ? "flex-1 flex flex-col" : ""}
+    >
       <div
         className={`shadow-drop-shadow flex flex-col gap-[8px] hover:scale-[1.03] hover:shadow-[4px_4px_10px_rgba(0,0,0,0.28)] transition-all duration-150 cursor-pointer ${
-          isHorizontal ? "" : "w-[274px]"
+          isHorizontal ? "w-full flex-1" : "w-[274px]"
         } rounded-[15px] ${
           isHorizontal
             ? "py-[20px] px-[15px] border border-hero"
@@ -75,7 +78,7 @@ function HeroSectionContent() {
       >
         <Link
           to="/login"
-          className="border-none bg-[hsl(186,46%,22%)] cursor-pointer text-white text-center rounded-[15px] px-[25px] py-[10px] hover:bg-[hsl(189,62%,30%)] transition shadow-drop-shadow hover:translate-y-[-2px]"
+          className="border-none bg-[hsl(186,46%,22%)] cursor-pointer text-white text-center rounded-[15px] px-[25px] py-[13px] hover:bg-[hsl(189,62%,30%)] transition shadow-drop-shadow hover:translate-y-[-2px]"
         >
           {t("bookYourAppointment", { ns: "common" })}
         </Link>
@@ -138,16 +141,18 @@ function HeroSectionHorizontalCards() {
         icon={<HandHeart size={50} className="m-auto mb-[6px]" />}
         title={t("hero.personalizedCare")}
         description={t("hero.personalizedDescription")}
-        className="bg-[hsl(0,0%,98%,70%)] text-hero-heading flex-1"
+        className="bg-[hsl(0,0%,98%,70%)] text-hero-heading"
         isHorizontal={true}
+        linkTo="/wellness-experts"
       />
 
       <HeroSectionCard
         icon={<UserStar size={50} className="m-auto mb-[6px]" />}
         title={t("hero.expertSupport")}
         description={t("hero.expertSupportDescription")}
-        className="bg-[hsl(0,0%,98%,60%)] text-hero-heading flex-1"
+        className="bg-[hsl(0,0%,98%,60%)] text-hero-heading"
         isHorizontal={true}
+        linkTo="/finance-experts"
       />
 
       <HeroSectionCard
@@ -160,8 +165,9 @@ function HeroSectionHorizontalCards() {
         }
         title={t("hero.emotionalHealing")}
         description={t("hero.emotionalHealingDescription")}
-        className="bg-[hsl(194,19%,18%)] text-white flex-1"
+        className="bg-[hsl(194,19%,18%)] text-white"
         isHorizontal={true}
+        linkTo="/education-experts"
       />
     </div>
   );
