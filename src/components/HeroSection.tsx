@@ -139,8 +139,8 @@ function HeroSectionHorizontalCards() {
     >
       <HeroSectionCard
         icon={<HandHeart size={50} className="m-auto mb-[6px]" />}
-        title={t("hero.personalizedCare")}
-        description={t("hero.personalizedDescription")}
+        title={t("hero.wellnessEcosystem")}
+        description={t("hero.wellnessDescription")}
         className="bg-[hsl(0,0%,98%,70%)] text-hero-heading"
         isHorizontal={true}
         linkTo="/wellness-experts"
@@ -148,8 +148,8 @@ function HeroSectionHorizontalCards() {
 
       <HeroSectionCard
         icon={<UserStar size={50} className="m-auto mb-[6px]" />}
-        title={t("hero.expertSupport")}
-        description={t("hero.expertSupportDescription")}
+        title={t("hero.financeSector")}
+        description={t("hero.financeDescription")}
         className="bg-[hsl(0,0%,98%,60%)] text-hero-heading"
         isHorizontal={true}
         linkTo="/finance-experts"
@@ -159,12 +159,12 @@ function HeroSectionHorizontalCards() {
         icon={
           <img
             src="./images/healing.png"
-            alt="Emotional Healing"
+            alt="Education Sector"
             className="w-[50px] m-auto mb-[6px]"
           />
         }
-        title={t("hero.emotionalHealing")}
-        description={t("hero.emotionalHealingDescription")}
+        title={t("hero.educationSector")}
+        description={t("hero.educationDescription")}
         className="bg-[hsl(194,19%,18%)] text-white"
         isHorizontal={true}
         linkTo="/education-experts"
