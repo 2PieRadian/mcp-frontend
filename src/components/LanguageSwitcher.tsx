@@ -6,7 +6,6 @@ import LanguageModal from "./modals/LanguageModal";
 const availableLanguages = [
   { code: "en", name: "English", nativeName: "English" },
   { code: "hi", name: "Hindi", nativeName: "हिंदी" },
-  { code: "he", name: "Hinglish", nativeName: "Hinglish" },
   { code: "gu", name: "Gujarati", nativeName: "ગુજરાતી" },
   { code: "mr", name: "Marathi", nativeName: "मराठी" },
   { code: "bn", name: "Bengali", nativeName: "বাংলা" },

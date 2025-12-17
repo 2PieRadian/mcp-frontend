@@ -1,4 +1,10 @@
-import { Moon, Menu, Languages as LanguagesIcon, ChevronDown, Check } from "lucide-react";
+import {
+  Moon,
+  Menu,
+  Languages as LanguagesIcon,
+  ChevronDown,
+  Check,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -12,7 +18,6 @@ export default function AuthNavbar() {
   const availableLanguages = [
     { code: "en", name: "English", nativeName: "English" },
     { code: "hi", name: "Hindi", nativeName: "हिंदी" },
-    { code: "he", name: "Hinglish", nativeName: "Hinglish" },
     { code: "gu", name: "Gujarati", nativeName: "ગુજરાતી" },
     { code: "mr", name: "Marathi", nativeName: "मराठी" },
     { code: "bn", name: "Bengali", nativeName: "বাংলা" },
@@ -69,7 +74,9 @@ export default function AuthNavbar() {
               >
                 <div className="flex items-center gap-3">
                   <LanguagesIcon size={18} color="hsl(194, 57%, 17%)" />
-                  <span className="text-logo-heading">{currentLanguage.nativeName}</span>
+                  <span className="text-logo-heading">
+                    {currentLanguage.nativeName}
+                  </span>
                 </div>
                 <ChevronDown
                   size={14}

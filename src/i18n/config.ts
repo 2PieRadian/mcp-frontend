@@ -63,12 +63,6 @@ import teExperts from "../locales/te/experts.json";
 import teQuiz from "../locales/te/quiz.json";
 import teSectors from "../locales/te/sectors.json";
 
-import heCommon from "../locales/he/common.json";
-import heNavigation from "../locales/he/navigation.json";
-import heExperts from "../locales/he/experts.json";
-import heQuiz from "../locales/he/quiz.json";
-import heSectors from "../locales/he/sectors.json";
-
 const resources = {
   en: {
     common: enCommon,
@@ -139,13 +133,6 @@ const resources = {
     experts: teExperts,
     quiz: teQuiz,
     sectors: teSectors,
-  },
-  he: {
-    common: heCommon,
-    navigation: heNavigation,
-    experts: heExperts,
-    quiz: heQuiz,
-    sectors: heSectors,
   },
 };
 

@@ -1,7 +1,5 @@
 import type { Expert } from "../lib/constants/experts";
 
-export type ExpertiseArea = "anxiety" | "couple" | "breakup" | "loneliness";
-
 export type ApiUser = {
   id: number;
   email: string;
@@ -44,15 +42,6 @@ export type ApiResponse = {
   experts: ApiExpert[];
 };
 
-export type ExpertiseData = {
-  unfilteredExperts: Expert[]; // All experts from API (no filters)
-  unfilteredApiExperts: ApiExpert[]; // Store full API expert data for details page
-  totalCount: number; // Total count from API
-  totalPagesFromAPI: number; // Total pages available from API
-  loadedPages: Set<number>; // Pages that have been fetched from API
-  isFullyLoaded: boolean; // True if all pages are loaded
-};
-
 // Cache entry for specialization + filter combination
 export type SpecializationCacheEntry = {
   experts: Expert[];
@@ -90,28 +79,7 @@ export interface ExpertsContextType {
   filters: import("./filters").FilterState;
   setFilters: (filters: import("./filters").FilterState) => void;
 
-  // Data for each expertise area (legacy - kept for backward compatibility)
-  anxietyData: ExpertiseData;
-  coupleData: ExpertiseData;
-  breakupData: ExpertiseData;
-  lonelinessData: ExpertiseData;
-
-  // Computed filtered data (legacy)
-  getFilteredExperts: (expertiseArea: ExpertiseArea) => Expert[];
-  getTotalPages: (expertiseArea: ExpertiseArea) => number;
-  getTotalPagesFiltered: (expertiseArea: ExpertiseArea) => number;
-  getTotalCount: (expertiseArea: ExpertiseArea) => number;
-  getNextPageToFetch: (
-    expertiseArea: ExpertiseArea,
-    currentFilteredPage: number
-  ) => number | null;
-
-  // Legacy actions
-  fetchExperts: (expertiseArea: ExpertiseArea, page: number) => Promise<void>;
-  getExpertById: (expertId: number) => ApiExpert | null;
-  clearCache: (expertiseArea: ExpertiseArea) => void;
-
-  // New specialization-based methods
+  // Specialization-based methods
   fetchExpertsBySpecialization: (
     specialization: string,
     page: number,
@@ -127,6 +95,7 @@ export interface ExpertsContextType {
     totalPages: number;
     hasCache: boolean;
   };
+  getExpertById: (expertId: number) => ApiExpert | null;
   isLoading: boolean;
   error: string | null;
 }
