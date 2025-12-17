@@ -25,15 +25,6 @@ export default function Profile() {
   const displayName = user?.name || user?.email || "";
   const initial = displayName?.charAt(0)?.toUpperCase() ?? "?";
 
-  // Debug: Log user data to see what we have
-  useEffect(() => {
-    if (user) {
-      console.log("Profile - Current user object:", user);
-      console.log("Profile - AvatarUrl value:", user.avatarUrl);
-      console.log("Profile - AvatarUrl type:", typeof user.avatarUrl);
-    }
-  }, [user]);
-
   if (!isLoading && !user) {
     return <Navigate to="/login" replace />;
   }
@@ -48,7 +39,6 @@ export default function Profile() {
   };
 
   const handleImageError = () => {
-    console.error("Profile - Image failed to load:", user.avatarUrl);
     setImageError(true);
   };
 

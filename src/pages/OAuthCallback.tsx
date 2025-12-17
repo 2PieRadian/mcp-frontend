@@ -57,10 +57,6 @@ export default function OAuthCallback() {
             if (userData && isMounted && !hasProcessedRef.current) {
               hasProcessedRef.current = true;
               const avatarValue = userData.avatar || userData.avatarUrl;
-              console.log(
-                "OAuthCallback (JWT) - Raw avatar value:",
-                avatarValue
-              );
 
               login({
                 id: String(userData.id || ""),
@@ -97,7 +93,6 @@ export default function OAuthCallback() {
         hasProcessedRef.current = true;
 
         const avatarValue = user.avatar || user.avatarUrl;
-        console.log("OAuthCallback (API) - Raw avatar value:", avatarValue);
 
         login({
           id: String(user.id),

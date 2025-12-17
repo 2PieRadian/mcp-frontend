@@ -120,15 +120,8 @@ export function ExpertsProvider({ children }: { children: ReactNode }) {
 
       // Check if this page is already loaded for this specialization + filter combination
       if (cacheEntry && cacheEntry.loadedPages.has(page)) {
-        console.log(
-          `[Cache Hit] Specialization: ${specialization}, Filter: ${filterKey}, Page: ${page}`
-        );
         return; // Already have this page cached
       }
-
-      console.log(
-        `[Cache Miss] Fetching - Specialization: ${specialization}, Filter: ${filterKey}, Page: ${page}`
-      );
 
       setIsLoading(true);
       setError(null);
@@ -207,10 +200,6 @@ export function ExpertsProvider({ children }: { children: ReactNode }) {
 
           specCache.set(filterKey, updatedEntry);
           newCache.set(specialization, specCache);
-
-          console.log(
-            `[Cache Updated] Specialization: ${specialization}, Filter: ${filterKey}, Total Experts: ${updatedEntry.experts.length}`
-          );
 
           return newCache;
         });

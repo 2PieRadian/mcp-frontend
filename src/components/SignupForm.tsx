@@ -59,7 +59,6 @@ export default function SignupForm() {
 
       // Map backend user shape to AuthUser
       const avatarValue = user.avatar || user.avatarUrl;
-      console.log("SignupForm - Raw avatar value from backend:", avatarValue);
 
       login({
         id: String(user.id),

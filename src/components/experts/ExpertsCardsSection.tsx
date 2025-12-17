@@ -59,15 +59,7 @@ export default function ExpertsCardsSection({
       cacheEntry.experts.length >= currentPage * EXPERTS_PER_PAGE;
 
     if (!hasPageCached) {
-      console.log(
-        `[ExpertsCardsSection] Fetching page ${currentPage} for specialization "${specialization}" with filters:`,
-        filters
-      );
       fetchExpertsBySpecialization(specialization, currentPage, filters);
-    } else {
-      console.log(
-        `[ExpertsCardsSection] Using cached data for specialization "${specialization}", page ${currentPage}`
-      );
     }
   }, [
     specialization,

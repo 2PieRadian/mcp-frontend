@@ -111,11 +111,13 @@ export default function Navbar() {
       <div className="navbar max-w-[1350px] mx-auto flex justify-between items-center py-[12px] sm:py-[20px] px-0">
         {/* Logo and App Name */}
         <div className="flex items-center gap-[8px] sm:gap-[10px] min-w-0 flex-1 sm:flex-initial">
-          <img
-            src="/images/navbar/logo.png"
-            alt={t("appName") + " Logo"}
-            className="w-[45px] sm:w-[60px] flex-shrink-0"
-          />
+          <Link to="/">
+            <img
+              src="/images/navbar/logo.png"
+              alt={t("appName") + " Logo"}
+              className="w-[45px] sm:w-[60px] flex-shrink-0"
+            />
+          </Link>
           <Link
             to="/"
             className="text-[18px] sm:text-[22px] font-semibold text-logo-heading cursor-pointer truncate"

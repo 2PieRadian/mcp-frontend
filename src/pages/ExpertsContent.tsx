@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, useCallback, useRef } from "react";
+import { useState, useEffect, lazy, useCallback, useRef, useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import { useExperts } from "../context/ExpertsContext";
@@ -145,6 +145,25 @@ export default function ExpertsContent() {
     setIsFilterModalOpen(false);
   };
 
+  const cardsFilters = useMemo(
+    () => ({
+      minPrice: filters.minPrice,
+      maxPrice: filters.maxPrice,
+      minRating: filters.minRating,
+      minExperience: filters.minExperience,
+      language: filters.languages?.[0],
+      searchName: filters.searchName,
+    }),
+    [
+      filters.minPrice,
+      filters.maxPrice,
+      filters.minRating,
+      filters.minExperience,
+      filters.languages,
+      filters.searchName,
+    ]
+  );
+
   return (
     <div className="px-[20px] mb-[80px]">
       <ResponsiveNavbar />
@@ -183,14 +202,7 @@ export default function ExpertsContent() {
         specialization={specialization}
         currentPage={currentPage}
         onPageChange={setCurrentPage}
-        filters={{
-          minPrice: filters.minPrice,
-          maxPrice: filters.maxPrice,
-          minRating: filters.minRating,
-          minExperience: filters.minExperience,
-          language: filters.languages?.[0],
-          searchName: filters.searchName,
-        }}
+        filters={cardsFilters}
       />
     </div>
   );
