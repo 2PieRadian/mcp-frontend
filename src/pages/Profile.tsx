@@ -1,7 +1,7 @@
 import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
-import { lazy, useEffect, useState } from "react";
+import { lazy, useState } from "react";
 
 const BasicInfoCard = lazy(() => import("../components/profile/BasicInfoCard"));
 const ContactCard = lazy(() => import("../components/profile/ContactCard"));
