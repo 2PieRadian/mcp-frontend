@@ -21,9 +21,9 @@ export default function ExpertDetails() {
 
   if (!expert) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 px-[20px]">
         <ResponsiveNavbar />
-        <div className="max-w-6xl mx-auto px-4 py-8">
+        <div className="max-w-6xl mx-auto py-8">
           <button
             onClick={() => navigate(-1)}
             className="flex items-center gap-2 text-[#44666C] hover:text-[#365a62] mb-6 transition-colors cursor-pointer"
@@ -56,9 +56,9 @@ export default function ExpertDetails() {
     .join(", ");
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 px-[20px]">
       <ResponsiveNavbar />
-      <div className="max-w-6xl mx-auto px-4 py-8">
+      <div className="max-w-6xl mx-auto py-8">
         {/* Back Button */}
         <button
           onClick={() => navigate(-1)}

@@ -1,4 +1,5 @@
-export const BACKEND_URL = "http://api.mindcurepath.com";
+// export const BACKEND_URL = "http://api.mindcurepath.com";
+export const BACKEND_URL = "http://localhost:3000";
 
 /**
  * Constructs a full avatar URL from a backend avatar value.

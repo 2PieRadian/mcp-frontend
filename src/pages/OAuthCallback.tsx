@@ -51,35 +51,14 @@ export default function OAuthCallback() {
         const contentType = response.headers.get("content-type") || "";
         const isJson = contentType.includes("application/json");
 
+        console.log("--------------------------------");
+        console.log(contentType);
+        console.log(isJson);
+        console.log("Token: ", token);
+        console.log("Response: ", response);
+        console.log("--------------------------------");
+
         if (!response.ok) {
-          if (response.status === 404) {
-            const userData = decodeJWT(token);
-            if (userData && isMounted && !hasProcessedRef.current) {
-              hasProcessedRef.current = true;
-              const avatarValue = userData.avatar || userData.avatarUrl;
-
-              login({
-                id: String(userData.id || ""),
-                email: userData.email || "",
-                name: userData.name || undefined,
-                avatarUrl: getAvatarUrl(avatarValue),
-                phoneNumber: userData.phoneNumber || undefined,
-                role: userData.role || undefined,
-                dateOfBirth: userData.dateOfBirth || undefined,
-                languages: userData.languages || undefined,
-                createdAt: userData.createdAt || undefined,
-              });
-              setStatus("success");
-
-              setTimeout(() => {
-                if (isMounted) {
-                  navigate("/", { replace: true });
-                }
-              }, 4000);
-              return;
-            }
-          }
-
           const errorText = isJson
             ? (await response.json()).message
             : await response.text();
@@ -119,36 +98,15 @@ export default function OAuthCallback() {
         if (!isMounted || hasProcessedRef.current) return;
         hasProcessedRef.current = true;
 
-        console.warn(
-          "OAuth verification failed, falling back to token:",
-          error
-        );
+        console.error("OAuth verification failed:", error);
 
-        // Fallback: trust the token
-        const userData = decodeJWT(token);
+        // Clear the token since /me failed
+        window.localStorage.removeItem("auth:token");
 
-        if (userData) {
-          login({
-            id: String(userData.userId || userData.id || ""),
-            email: userData.email || "",
-            name: userData.name || undefined,
-            role: userData.role || undefined,
-          });
-
-          setStatus("success");
-
-          setTimeout(() => {
-            if (isMounted) {
-              navigate("/", { replace: true });
-            }
-          }, 1000);
-
-          return;
-        }
-
-        // ONLY if token itself is invalid
         setStatus("error");
-        setErrorMessage("Authentication failed.");
+        setErrorMessage(
+          error?.message || "Failed to verify authentication. Please try again."
+        );
         navigate("/login", { replace: true });
       }
     };
@@ -160,24 +118,6 @@ export default function OAuthCallback() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Only run once on mount
-
-  const decodeJWT = (token: string): any => {
-    try {
-      const base64Url = token.split(".")[1];
-      if (!base64Url) return null;
-      const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-      const jsonPayload = decodeURIComponent(
-        atob(base64)
-          .split("")
-          .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-          .join("")
-      );
-      return JSON.parse(jsonPayload);
-    } catch (error) {
-      console.error("Failed to decode JWT:", error);
-      return null;
-    }
-  };
 
   if (status === "error") {
     return (
