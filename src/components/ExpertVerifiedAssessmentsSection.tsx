@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 function ExpertVerifiedAssessmentsSectionItem({
   title,
@@ -7,6 +8,7 @@ function ExpertVerifiedAssessmentsSectionItem({
   imageSrc,
   imageSize,
   rightImage,
+  linkTo,
 }: {
   title: string;
   subtitle: string;
@@ -14,41 +16,44 @@ function ExpertVerifiedAssessmentsSectionItem({
   imageSrc: string;
   imageSize: number;
   rightImage: boolean;
+  linkTo: string;
 }) {
   return (
-    <div
-      className={`flex flex-col md:flex-row ${
-        rightImage ? "md:flex-row" : "md:flex-row-reverse"
-      } mb-[20px] md:mb-[30px] overflow-hidden items-center justify-between gap-[15px] md:gap-[20px] px-[20px] md:px-0`}
-    >
-      <div className="left flex-1 w-full md:w-auto order-2 md:order-none">
-        <h1 className="text-[clamp(28px,5vw,40px)] font-bold text-primary">
-          {title}
-        </h1>
-        <p className="text-[clamp(18px,3vw,25px)] text-[#12434a] mt-[5px] md:mt-0">
-          {subtitle}
-        </p>
-        <p className="text-[clamp(14px,2vw,15px)] text-[#4F5B64] mt-[10px] md:mt-[5px]">
-          {description}
-        </p>
-        <button className="bg-[#ecf4f6] text-primary border border-primary cursor-pointer px-[clamp(15px,3vw,20px)] py-[clamp(8px,2vw,10px)] rounded-[20px] mt-[15px] md:mt-[20px] text-[clamp(13px,2vw,16px)] w-full md:w-auto hover:bg-primary hover:text-white transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)]">
-          Take a Free Assessment
-        </button>
-      </div>
-
+    <Link to={linkTo}>
       <div
-        className={`right flex-1 w-full md:w-auto md:mt-[-40px] mt-0 flex justify-center order-1 md:order-none ${
-          rightImage ? "md:justify-end" : "md:justify-start"
-        }`}
+        className={`flex flex-col md:flex-row ${
+          rightImage ? "md:flex-row" : "md:flex-row-reverse"
+        } mb-[20px] md:mb-[30px] overflow-hidden items-center justify-between gap-[15px] md:gap-[20px] px-[20px] md:px-0`}
       >
-        <img
-          src={imageSrc}
-          alt={title}
-          className="w-full object-cover animate-float-2"
-          style={{ maxWidth: `${imageSize}px` }}
-        />
+        <div className="left flex-1 w-full md:w-auto order-2 md:order-none">
+          <h1 className="text-[clamp(28px,5vw,40px)] font-bold text-primary">
+            {title}
+          </h1>
+          <p className="text-[clamp(18px,3vw,25px)] text-[#12434a] mt-[5px] md:mt-0">
+            {subtitle}
+          </p>
+          <p className="text-[clamp(14px,2vw,15px)] text-[#4F5B64] mt-[10px] md:mt-[5px]">
+            {description}
+          </p>
+          <button className="bg-[#ecf4f6] text-primary border border-primary cursor-pointer px-[clamp(15px,3vw,20px)] py-[clamp(8px,2vw,10px)] rounded-[20px] mt-[15px] md:mt-[20px] text-[clamp(13px,2vw,16px)] w-full md:w-auto hover:bg-primary hover:text-white transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)]">
+            Take a Free Assessment
+          </button>
+        </div>
+
+        <div
+          className={`right flex-1 w-full md:w-auto md:mt-[-40px] mt-0 flex justify-center order-1 md:order-none ${
+            rightImage ? "md:justify-end" : "md:justify-start"
+          }`}
+        >
+          <img
+            src={imageSrc}
+            alt={title}
+            className="w-full object-cover animate-float-2"
+            style={{ maxWidth: `${imageSize}px` }}
+          />
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
@@ -72,6 +77,7 @@ export default function ExpertVerifiedAssessmentsSection() {
           imageSrc="images/expert-verified-assessment/wellness.png"
           imageSize={900}
           rightImage={true}
+          linkTo="/assessments/wellness"
         />
 
         <ExpertVerifiedAssessmentsSectionItem
@@ -81,6 +87,7 @@ export default function ExpertVerifiedAssessmentsSection() {
           imageSrc="images/expert-verified-assessment/education.png"
           imageSize={600}
           rightImage={false}
+          linkTo="/assessments/education"
         />
 
         <ExpertVerifiedAssessmentsSectionItem
@@ -90,6 +97,7 @@ export default function ExpertVerifiedAssessmentsSection() {
           imageSrc="images/expert-verified-assessment/finance.png"
           imageSize={500}
           rightImage={true}
+          linkTo="/assessments/finance"
         />
       </div>
     </div>

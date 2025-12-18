@@ -15,6 +15,9 @@ import Profile from "./pages/Profile";
 import OAuthCallback from "./pages/OAuthCallback";
 import ExpertsDashboard from "./pages/dashboards/ExpertsDashboard";
 import ExpertDetails from "./pages/ExpertDetails";
+import Wellness from "./pages/assessments/Wellness";
+import Finance from "./pages/assessments/Finance";
+import Education from "./pages/assessments/Education";
 
 export default function App() {
   return (
@@ -36,6 +39,11 @@ export default function App() {
             path="/self-assessment/result"
             element={<SelfAssessmentResult />}
           />
+
+          {/* Assessments */}
+          <Route path="/assessments/wellness" element={<Wellness />} />
+          <Route path="/assessments/education" element={<Education />} />
+          <Route path="/assessments/finance" element={<Finance />} />
 
           {/* Wellness Experts */}
           <Route path="/wellness-experts" element={<WellnessExpertsIntro />} />

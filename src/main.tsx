@@ -5,12 +5,15 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import "./i18n/config";
 import { AuthProvider } from "./context/AuthContext";
+import { HelmetProvider } from "react-helmet-async";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <App />
+        <HelmetProvider>
+          <App />
+        </HelmetProvider>
       </AuthProvider>
     </BrowserRouter>
   </StrictMode>
