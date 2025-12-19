@@ -22,8 +22,8 @@ function OptionItem({
     <div
       className={`option-item text-[16px] cursor-pointer py-[15px] px-[25px] rounded-[25px] ${
         isSelected
-          ? "bg-[#7772db] text-white"
-          : "bg-[#f3f5fe] hover:bg-[#e2e5fb] text-[#7d88dc]"
+          ? "bg-[#44666C] text-white"
+          : "bg-[#D8E1E2] hover:bg-[#c4d2d3] text-[#44666C]"
       } transition-colors duration-200`}
       onClick={() => onClick(option)}
     >
@@ -91,19 +91,19 @@ export default function AssessmentQuestions() {
   return (
     <div className="self-assessment-questions-page max-w-[1350px] mx-auto px-[25px]">
       <ResponsiveNavbar />
-      <h1 className="text-[20px] font-semibold text-[#6075de] mt-[30px]">
+      <h1 className="text-[20px] font-semibold text-[#44666C] mt-[30px]">
         {t("question")} {currentQuestion} {t("of")} {totalQuestions}
       </h1>
       {/* Progress bar */}
-      <div className="w-full h-[12px] bg-[#E0E7FF] rounded-[10px] mt-[14px]">
+      <div className="w-full h-[12px] bg-[#D9D9D9] rounded-[10px] mt-[14px]">
         <div
-          className="h-full bg-[#6075de] rounded-[10px] transition-all duration-300"
+          className="h-full bg-[#44666C] rounded-[10px] transition-all duration-300"
           style={{ width: `${(currentQuestion / totalQuestions) * 100}%` }}
         ></div>
       </div>
 
       {/* Question Text */}
-      <h2 className="question-text text-[24px] font-medium text-[#635cdc] mt-[50px]">
+      <h2 className="question-text text-[24px] font-medium text-[#44666C] mt-[50px]">
         {currentQuizQuestion.question}
       </h2>
 
@@ -130,7 +130,7 @@ export default function AssessmentQuestions() {
           disabled={!canGoPrevious}
           className={`px-[40px] py-[12px] rounded-[30px] text-[18px] font-medium transition-all duration-200 ${
             canGoPrevious
-              ? "bg-[#4F46E5] text-white hover:bg-[#6366F1] cursor-pointer hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)]"
+              ? "bg-[#44666C] text-white hover:bg-[#365a62] cursor-pointer hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)]"
               : "bg-gray-300 text-gray-500 cursor-not-allowed"
           }`}
         >
@@ -143,7 +143,7 @@ export default function AssessmentQuestions() {
             disabled={!currentSelectedOption}
             className={`px-[40px] py-[12px] rounded-[30px] text-[18px] font-medium transition-all duration-200 ${
               currentSelectedOption
-                ? "bg-[#4F46E5] text-white hover:bg-[#6366F1] cursor-pointer hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)]"
+                ? "bg-[#44666C] text-white hover:bg-[#365a62] cursor-pointer hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)]"
                 : "bg-gray-300 text-gray-500 cursor-not-allowed"
             }`}
           >
@@ -155,7 +155,7 @@ export default function AssessmentQuestions() {
             disabled={!canGoNext}
             className={`px-[40px] py-[12px] rounded-[30px] text-[18px] font-medium transition-all duration-200 ${
               canGoNext
-                ? "bg-[#4F46E5] text-white hover:bg-[#6366F1] cursor-pointer hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)]"
+                ? "bg-[#44666C] text-white hover:bg-[#365a62] cursor-pointer hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)]"
                 : "bg-gray-300 text-gray-500 cursor-not-allowed"
             }`}
           >
