@@ -1,4 +1,3 @@
-import AnalyticsSection from "../components/AnalyticsSection";
 import HeroSection from "../components/HeroSection";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import WhyChooseUsSection from "../components/WhyChooseUsSection";
@@ -47,16 +46,17 @@ export default function UserDashboard() {
         />
       </Helmet>
 
-      <div className="landing-page px-[20px]">
+      <div className="landing-page">
         <ResponsiveNavbar />
         <HeroSection />
-        <MakeInIndia />
-        <AnalyticsSection />
-        <ExpertVerifiedAssessmentsSection />
-        <HowDoesItWork />
-        <WhyChooseUsSection />
-        <WhatOurUsersSay />
-        <Footer />
+        <div className="px-[20px]">
+          <MakeInIndia />
+          <ExpertVerifiedAssessmentsSection />
+          <HowDoesItWork />
+          <WhyChooseUsSection />
+          <WhatOurUsersSay />
+          <Footer />
+        </div>
       </div>
     </>
   );

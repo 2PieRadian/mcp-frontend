@@ -26,7 +26,7 @@ export default function SelfAssessmentNavbar() {
       <div className="hidden sm:flex items-center gap-2">
         <LanguageSwitcher />
 
-        <div className="p-[8px] bg-light-100 rounded-full cursor-pointer">
+        <div className="p-[8px] rounded-full cursor-pointer">
           <Moon size={20} color="hsl(189, 62%, 25%)" />
         </div>
       </div>

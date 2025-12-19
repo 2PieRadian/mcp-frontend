@@ -97,7 +97,7 @@ export default function MobileNavModal({
       {/* Modal content */}
       <div className="relative h-full bg-white flex flex-col">
         {/* Header with close button */}
-        <div className="flex justify-between items-center px-[25px] py-[20px] border-b border-gray-200 flex-shrink-0">
+        <div className="flex justify-between items-center px-[25px] py-[20px] border-b border-gray-200 shrink-0">
           <h1 className="text-[22px] font-semibold text-logo-heading">
             {t("appName", { ns: "common" })}
           </h1>
@@ -184,7 +184,7 @@ export default function MobileNavModal({
 
           {/* Dark Mode */}
           <div className="px-[25px] py-[12px] flex items-center gap-[12px] rounded-full hover:bg-hover-bg transition-colors cursor-pointer">
-            <div className="p-[8px] bg-[hsl(0,0%,98%)] rounded-full">
+            <div className="p-[8px] rounded-full">
               <Moon size={20} className="text-primary" />
             </div>
             <span className="text-light-text text-[16px]">Change Theme</span>
@@ -223,7 +223,7 @@ export default function MobileNavModal({
         </div>
 
         {/* Bottom section with language switcher only */}
-        <div className="p-[20px] border-t border-gray-200 flex-shrink-0">
+        <div className="p-[20px] border-t border-gray-200 shrink-0">
           {/* Language Switcher - Expandable */}
           <div>
             <div

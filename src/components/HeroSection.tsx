@@ -1,201 +1,192 @@
-import { HandHeart, UserStar } from "lucide-react";
+import { ArrowRight, Sparkles, BadgeCheck } from "lucide-react";
 import { useScreen } from "../context/ScreenContext";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-function HeroSectionCard({
-  title,
-  description,
-  className,
-  icon,
-  isHorizontal = false,
-  linkTo,
-}: {
-  title: string;
-  description: string;
-  className?: string;
-  icon?: React.ReactNode;
-  isHorizontal?: boolean;
-  linkTo?: string;
-}) {
-  return (
-    <Link
-      to={linkTo || ""}
-      className={isHorizontal ? "flex-1 flex flex-col" : ""}
-    >
-      <div
-        className={`shadow-drop-shadow flex flex-col gap-[8px] hover:scale-[1.03] hover:shadow-[4px_4px_10px_rgba(0,0,0,0.28)] transition-all duration-150 cursor-pointer ${
-          isHorizontal ? "w-full flex-1" : "w-[274px]"
-        } rounded-[15px] ${
-          isHorizontal
-            ? "py-[20px] px-[15px] border border-hero"
-            : "py-[25px] px-[25px]"
-        } ${isHorizontal ? "relative" : "absolute"} ${className}`}
-      >
-        {/* Icon */}
-        <div className="flex justify-center">{icon}</div>
-
-        {/* Title and Description */}
-        <div className={isHorizontal ? "text-center" : "text-center"}>
-          <h3
-            className={`${
-              isHorizontal ? "text-[16px]" : "text-[18px]"
-            } font-medium`}
-          >
-            {title}
-          </h3>
-          <p
-            className={`${
-              isHorizontal ? "text-[12px]" : "text-[14px]"
-            } mt-[5px]`}
-          >
-            {description}
-          </p>
-        </div>
-      </div>
-    </Link>
-  );
-}
-
-function HeroSectionContent() {
-  const { screenWidth } = useScreen();
-  const { t } = useTranslation("sectors");
-
-  return (
-    <div className="flex-1">
-      <h1 className="font-bold text-[45px] text-[hsl(190,40%,29%)] leading-14">
-        Get Expert Guidance for Life, Career, and Money.
-      </h1>
-
-      <p className="text-[18px] mt-[20px] text-[hsl(190,40%,29%)]">
-        Because the right advice can change everything.
-      </p>
-
-      <div
-        className={`flex mt-[30px] ${
-          screenWidth <= 500 ? "flex-col gap-[10px]" : "gap-[20px]"
-        }`}
-      >
-        <Link
-          to="/login"
-          className="border-none bg-[hsl(190,40%,29%)] cursor-pointer text-white text-center rounded-[15px] px-[25px] py-[13px] hover:bg-[hsl(190,38%,31%)] transition shadow-drop-shadow hover:translate-y-[-2px]"
-        >
-          {t("bookYourAppointment", { ns: "common" })}
-        </Link>
-      </div>
-    </div>
-  );
-}
-
-function HeroSectionFloatingCards() {
-  const { t } = useTranslation("sectors");
-
-  return (
-    <div className="flex-1 relative">
-      <HeroSectionCard
-        icon={<HandHeart size={70} className="m-auto mb-[10px]" />}
-        title={t("hero.wellnessEcosystem")}
-        description={t("hero.wellnessDescription")}
-        className="bg-[hsl(0,0%,98%,70%)] top-[-80px] right-[250px] z-2 text-hero-heading animate-float-1"
-        linkTo="/wellness-experts"
-      />
-
-      <HeroSectionCard
-        icon={<UserStar size={70} className="m-auto mb-[10px]" />}
-        title={t("hero.financeSector")}
-        description={t("hero.financeDescription")}
-        className="bg-[hsl(0,0%,98%,60%)] top-[140px] right-[285px] text-hero-heading z-1 animate-float-2"
-        linkTo="/finance-experts"
-      />
-
-      <HeroSectionCard
-        icon={
-          <img
-            src="./images/healing.png"
-            alt="Education Sector"
-            className="w-[70px] m-auto mb-[10px]"
-          />
-        }
-        title={t("hero.educationSector")}
-        description={t("hero.educationDescription")}
-        className="bg-[hsl(194,19%,18%)] top-[50px] right-0 text-white z-1 animate-float-3"
-        linkTo="/education-experts"
-      />
-
-      <div className="absolute top-[129px] right-[280px] w-[10px] h-[10px] bg-[hsl(194,7%,64%)] shadow-background-light"></div>
-    </div>
-  );
-}
-
-function HeroSectionHorizontalCards() {
-  const { screenWidth } = useScreen();
-  const { t } = useTranslation("sectors");
-
-  return (
-    <div
-      className={`flex items-stretch gap-[15px] mt-16 mb-[70px] ${
-        screenWidth <= 500 ? "flex-col" : ""
-      }`}
-    >
-      <HeroSectionCard
-        icon={<HandHeart size={50} className="m-auto mb-[6px]" />}
-        title={t("hero.wellnessEcosystem")}
-        description={t("hero.wellnessDescription")}
-        className="bg-[hsl(0,0%,98%,70%)] text-hero-heading"
-        isHorizontal={true}
-        linkTo="/wellness-experts"
-      />
-
-      <HeroSectionCard
-        icon={<UserStar size={50} className="m-auto mb-[6px]" />}
-        title={t("hero.financeSector")}
-        description={t("hero.financeDescription")}
-        className="bg-[hsl(0,0%,98%,60%)] text-hero-heading"
-        isHorizontal={true}
-        linkTo="/finance-experts"
-      />
-
-      <HeroSectionCard
-        icon={
-          <img
-            src="./images/healing.png"
-            alt="Education Sector"
-            className="w-[50px] m-auto mb-[6px]"
-          />
-        }
-        title={t("hero.educationSector")}
-        description={t("hero.educationDescription")}
-        className="bg-[hsl(194,19%,18%)] text-white"
-        isHorizontal={true}
-        linkTo="/education-experts"
-      />
-    </div>
-  );
-}
-
 export default function HeroSection() {
   const { screenWidth } = useScreen();
+  const { t } = useTranslation("sectors");
+  const showCardsBelow = screenWidth <= 1024;
 
-  if (screenWidth <= 1170) {
-    return (
-      <div className="max-w-[1350px] mx-auto mt-16">
-        {/* Content */}
-        <HeroSectionContent />
-
-        {/* Horizontal Cards */}
-        <HeroSectionHorizontalCards />
-      </div>
-    );
-  }
-
-  // Desktop layout
   return (
-    <div className="flex max-w-[1350px] mx-auto justify-between mt-44 min-h-[480px]">
-      {/* Left Div */}
-      <HeroSectionContent />
+    <div className="relative w-full bg-white">
+      {/* Content Container */}
+      <div className="max-w-[1400px] mx-auto px-[20px] md:px-[40px] lg:px-[60px] py-[70px] md:py-[100px] lg:py-[120px]">
+        <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-[40px] lg:gap-[80px]">
+          {/* Left Content */}
+          <div className="flex-1 text-center lg:text-left space-y-6">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-1.5 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-[#ecf4f6] rounded-full border border-primary/20 animate-badge-pulse">
+              <BadgeCheck className="w-3 h-3 md:w-4 md:h-4 text-primary" />
+              <span className="text-xs md:text-sm font-medium text-primary">
+                Expert-Verified Assessments
+              </span>
+            </div>
 
-      {/* Right Div */}
-      <HeroSectionFloatingCards />
+            {/* Main Heading */}
+            <h1 className="text-[clamp(32px,5vw,48px)] font-bold leading-[1.1] text-primary tracking-tight">
+              Discover Your Path to
+              <span className="block mt-2 text-[hsl(190,40%,29%)]">
+                Better Living
+              </span>
+            </h1>
+
+            {/* Subheading */}
+            <p className="text-[clamp(16px,2.5vw,20px)] text-[#4F5B64] leading-relaxed max-w-[600px] mx-auto lg:mx-0">
+              Take expert-verified assessments in wellness, education, and
+              finance. Get personalized insights and connect with trusted
+              professionals.
+            </p>
+
+            {/* Key Points */}
+            <div className="flex flex-row gap-2 md:gap-3 justify-center lg:justify-start overflow-x-auto">
+              <div className="inline-flex items-center px-2 py-0.5 md:px-3 md:py-1 bg-[#ecf4f6] rounded-full border border-primary/10 whitespace-nowrap">
+                <span className="text-[10px] md:text-[12px] font-medium text-primary">
+                  Science-Backed
+                </span>
+              </div>
+              <div className="inline-flex items-center px-2 py-0.5 md:px-3 md:py-1 bg-[#ecf4f6] rounded-full border border-primary/10 whitespace-nowrap">
+                <span className="text-[10px] md:text-[12px] font-medium text-primary">
+                  Expert-Verified
+                </span>
+              </div>
+              <div className="inline-flex items-center px-2 py-0.5 md:px-3 md:py-1 bg-[#ecf4f6] rounded-full border border-primary/10 whitespace-nowrap">
+                <span className="text-[10px] md:text-[12px] font-medium text-primary">
+                  Free Assessments
+                </span>
+              </div>
+            </div>
+
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-[30px]">
+              <Link
+                to="/assessments/wellness"
+                className="group inline-flex items-center whitespace-nowrap justify-center gap-2 px-[25px] py-[12px] bg-primary text-white rounded-[16px] font-medium text-[13px] md:text-[16px] hover:bg-[hsl(187,73%,18%)] transition-all duration-300 hover:scale-[1.02] shadow-[0_2px_8px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)]"
+              >
+                Start Free Assessment
+                <ArrowRight className="w-[15px] h-[15px] group-hover:translate-x-1 transition-transform" />
+              </Link>
+
+              <Link
+                to="/login"
+                className="inline-flex items-center whitespace-nowrap justify-center px-[25px] py-[12px] bg-transparent text-primary rounded-[16px] font-medium text-[13px] md:text-[16px] border border-gray-300 hover:bg-[#ecf4f6] transition-all duration-300 shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.12)]"
+              >
+                {t("bookYourAppointment", { ns: "common" })}
+              </Link>
+            </div>
+          </div>
+
+          {/* Right Content - Visual Elements */}
+          {!showCardsBelow && (
+            <div className="flex-1 relative w-full max-w-[500px] lg:max-w-[600px]">
+              {/* Floating Cards Preview */}
+              <div className="relative h-[400px] lg:h-[500px]">
+                {/* Card 1 - Wellness */}
+                <Link
+                  to="/wellness-experts"
+                  className="absolute top-0 right-0 w-[200px] lg:w-[240px] bg-white/95 backdrop-blur-md rounded-[20px] p-6 shadow-lg animate-float-1 border border-gray-100 hover:scale-[1.05] transition-transform cursor-pointer block"
+                >
+                  <div className="w-12 h-12 bg-linear-to-br from-[#0ea5e9] to-[#06b6d4] rounded-[12px] flex items-center justify-center mb-4">
+                    <Sparkles className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="font-bold text-primary text-lg mb-2">
+                    Wellness
+                  </h3>
+                  <p className="text-[#4F5B64] text-sm leading-relaxed">
+                    Assess your mental health and well-being
+                  </p>
+                </Link>
+
+                {/* Card 2 - Education */}
+                <Link
+                  to="/education-experts"
+                  className="absolute top-[120px] left-0 w-[200px] lg:w-[240px] bg-white/95 backdrop-blur-md rounded-[20px] p-6 shadow-lg animate-float-2 border border-gray-100 hover:scale-[1.05] transition-transform cursor-pointer block"
+                >
+                  <div className="w-12 h-12 bg-linear-to-br from-[#10b981] to-[#059669] rounded-[12px] flex items-center justify-center mb-4">
+                    <Sparkles className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="font-bold text-primary text-lg mb-2">
+                    Education
+                  </h3>
+                  <p className="text-[#4F5B64] text-sm leading-relaxed">
+                    Plan your career and educational journey
+                  </p>
+                </Link>
+
+                {/* Card 3 - Finance */}
+                <Link
+                  to="/finance-experts"
+                  className="absolute bottom-0 right-[40px] w-[200px] lg:w-[240px] bg-white/95 backdrop-blur-md rounded-[20px] p-6 shadow-lg animate-float-3 border border-gray-100 hover:scale-[1.05] transition-transform cursor-pointer block"
+                >
+                  <div className="w-12 h-12 bg-linear-to-br from-[#f59e0b] to-[#d97706] rounded-[12px] flex items-center justify-center mb-4">
+                    <Sparkles className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="font-bold text-primary text-lg mb-2">
+                    Finance
+                  </h3>
+                  <p className="text-[#4F5B64] text-sm leading-relaxed">
+                    Build your financial foundation
+                  </p>
+                </Link>
+              </div>
+            </div>
+          )}
+
+          {showCardsBelow && (
+            <div className="w-full mt-[15px] pt-[40px] border-t border-gray-200">
+              <h2 className="text-[clamp(20px,5vw,24px)] font-bold text-primary text-center mb-4">
+                Explore Our Expert Categories
+              </h2>
+              <p className="text-[#4F5B64] text-sm text-center mb-6">
+                Connect with verified professionals in wellness, education, and
+                finance
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full">
+                <Link
+                  to="/wellness-experts"
+                  className="bg-white rounded-[16px] p-5 shadow-md border border-gray-100 hover:scale-[1.02] transition-transform"
+                >
+                  <div className="w-10 h-10 bg-linear-to-br from-[#0ea5e9] to-[#06b6d4] rounded-[10px] flex items-center justify-center mb-3">
+                    <Sparkles className="w-5 h-5 text-white" />
+                  </div>
+                  <h3 className="font-bold text-primary text-base mb-1">
+                    Wellness
+                  </h3>
+                  <p className="text-[#4F5B64] text-xs">
+                    Mental health assessment
+                  </p>
+                </Link>
+
+                <Link
+                  to="/education-experts"
+                  className="bg-white rounded-[16px] p-5 shadow-md border border-gray-100 hover:scale-[1.02] transition-transform"
+                >
+                  <div className="w-10 h-10 bg-linear-to-br from-[#10b981] to-[#059669] rounded-[10px] flex items-center justify-center mb-3">
+                    <Sparkles className="w-5 h-5 text-white" />
+                  </div>
+                  <h3 className="font-bold text-primary text-base mb-1">
+                    Education
+                  </h3>
+                  <p className="text-[#4F5B64] text-xs">Career planning</p>
+                </Link>
+
+                <Link
+                  to="/finance-experts"
+                  className="bg-white rounded-[16px] p-5 shadow-md border border-gray-100 hover:scale-[1.02] transition-transform"
+                >
+                  <div className="w-10 h-10 bg-linear-to-br from-[#f59e0b] to-[#d97706] rounded-[10px] flex items-center justify-center mb-3">
+                    <Sparkles className="w-5 h-5 text-white" />
+                  </div>
+                  <h3 className="font-bold text-primary text-base mb-1">
+                    Finance
+                  </h3>
+                  <p className="text-[#4F5B64] text-xs">Financial planning</p>
+                </Link>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

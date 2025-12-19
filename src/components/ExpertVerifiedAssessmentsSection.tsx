@@ -38,11 +38,11 @@ function ExpertVerifiedAssessmentsSectionItem({
   }, [imageSize]);
 
   return (
-    <Link to={linkTo} className="block">
+    <Link to={linkTo} className="block w-full">
       <div
         className={`flex flex-col md:flex-row ${
           rightImage ? "md:flex-row" : "md:flex-row-reverse"
-        } overflow-hidden items-center justify-center gap-[20px] md:gap-[30px] bg-white rounded-[20px] shadow-lg p-[24px] md:p-[32px] border border-gray-100 hover:shadow-xl transition-all duration-300`}
+        } overflow-hidden items-center justify-center gap-[20px] md:gap-[30px] bg-white rounded-[10px] md:rounded-[20px] shadow-lg p-[24px] md:p-[32px] border border-gray-100 hover:shadow-xl transition-all duration-300 w-full`}
       >
         <div className="left flex-1 w-full md:w-auto order-2 md:order-0">
           <h1 className="text-[clamp(26px,5vw,40px)] font-bold text-primary leading-tight">
@@ -79,7 +79,7 @@ export default function ExpertVerifiedAssessmentsSection() {
   const { t } = useTranslation(["common", "navigation"]);
 
   return (
-    <div className="mt-[40px] md:mt-[70px] max-w-[1200px] mx-auto px-[20px] md:px-0">
+    <div className="mt-[40px] md:mt-[70px] max-w-[1200px] mx-auto md:px-0">
       <h1 className="text-[clamp(24px,5vw,30px)] md:text-3xl font-bold text-center">
         {t("expertVerifiedAssessments", { ns: "common" })}
       </h1>
@@ -87,7 +87,7 @@ export default function ExpertVerifiedAssessmentsSection() {
         {t("takePreScreenerTests", { ns: "common" })}
       </p>
 
-      <div className="flex flex-col mt-[40px] md:mt-[70px] h-fit gap-[32px] md:gap-[30px]">
+      <div className="flex flex-col mt-[40px] md:mt-[70px] h-fit gap-[32px] md:gap-[30px] -mx-[20px] md:mx-0 px-[20px] md:px-0">
         <ExpertVerifiedAssessmentsSectionItem
           title="Wellness"
           subtitle="The greatest wealth is health."

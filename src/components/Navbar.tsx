@@ -108,14 +108,14 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="navbar max-w-[1350px] mx-auto flex justify-between items-center py-[12px] sm:py-[20px] px-0">
+      <div className="navbar max-w-[1350px] mx-auto flex justify-between items-center py-[12px] sm:py-[20px] px-[20px]">
         {/* Logo and App Name */}
         <div className="flex items-center gap-[8px] sm:gap-[10px] min-w-0 flex-1 sm:flex-initial">
           <Link to="/">
             <img
               src="/images/navbar/logo.png"
               alt={t("appName") + " Logo"}
-              className="w-[45px] sm:w-[60px] flex-shrink-0"
+              className="w-[45px] sm:w-[60px] shrink-0"
             />
           </Link>
           <Link
@@ -189,11 +189,11 @@ export default function Navbar() {
         </div>
 
         {/* Right side controls */}
-        <div className="flex items-center gap-[6px] sm:gap-2 flex-shrink-0">
+        <div className="flex items-center gap-[6px] sm:gap-2 shrink-0">
           {/* Desktop Language Switcher and Moon - Hidden on mobile */}
           <div className="hidden sm:flex items-center gap-2">
             <LanguageSwitcher />
-            <div className="p-[8px] bg-light-100 rounded-full cursor-pointer">
+            <div className="p-[8px] rounded-full cursor-pointer">
               <Moon size={20} color={textColor} />
             </div>
           </div>
@@ -211,7 +211,7 @@ export default function Navbar() {
           {user ? (
             <Link
               to="/profile"
-              className={`group p-[6px] rounded-full border border-border-light transition-colors flex items-center justify-center flex-shrink-0 ${
+              className={`group p-[6px] rounded-full border border-border-light transition-colors flex items-center justify-center shrink-0 ${
                 location.pathname.startsWith("/profile")
                   ? "bg-border-light text-white"
                   : "hover:bg-border-light hover:text-white"

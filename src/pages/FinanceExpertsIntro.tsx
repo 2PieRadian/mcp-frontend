@@ -124,7 +124,7 @@ export default function FinanceExpertsIntro() {
               alt="Financial Planning"
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-lieanr-to-r from-[#44666C]/90 via-[#44666C]/70 to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-r from-[#44666C]/90 via-[#44666C]/70 to-transparent" />
             <div className="absolute inset-0 flex flex-col justify-center items-start px-4 sm:px-6 md:px-8 lg:px-12 text-white">
               <div className="flex items-center gap-2 mb-3 sm:mb-4">
                 <span className="text-xs sm:text-sm md:text-base font-semibold uppercase tracking-wider opacity-90">
