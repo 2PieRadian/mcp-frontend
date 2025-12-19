@@ -2,6 +2,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import { lazy, useState } from "react";
+import useScrollToTop from "../hooks/useScrollToTop";
 
 const BasicInfoCard = lazy(() => import("../components/profile/BasicInfoCard"));
 const ContactCard = lazy(() => import("../components/profile/ContactCard"));
@@ -18,6 +19,7 @@ const ChangePasswordCard = lazy(
 const LanguagesCard = lazy(() => import("../components/profile/LanguagesCard"));
 
 export default function Profile() {
+  useScrollToTop();
   const { user, isLoading, logout } = useAuth();
   const navigate = useNavigate();
   const [imageError, setImageError] = useState(false);

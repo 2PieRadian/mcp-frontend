@@ -15,6 +15,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
+import useScrollToTop from "../hooks/useScrollToTop";
 import {
   EXPERT_CATEGORIES,
   SPECIALIZATION_DESCRIPTIONS,
@@ -93,6 +94,7 @@ function ExpertCategoryCard({
 }
 
 export default function EducationExpertsIntro() {
+  useScrollToTop();
   const { t } = useTranslation(["common"]);
 
   const categories = EXPERT_CATEGORIES.education.map((specialization) => ({

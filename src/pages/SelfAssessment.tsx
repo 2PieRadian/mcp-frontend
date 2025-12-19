@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import SelfAssessmentNavbar from "../components/SelfAssessmentNavbar";
+import useScrollToTop from "../hooks/useScrollToTop";
 
 export default function SelfAssessment() {
+  useScrollToTop();
   const { t } = useTranslation("sectors");
 
   return (

@@ -2,8 +2,10 @@ import { useEffect, useState, useRef } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { BACKEND_URL, getAvatarUrl } from "../lib/api";
+import useScrollToTop from "../hooks/useScrollToTop";
 
 export default function OAuthCallback() {
+  useScrollToTop();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { login } = useAuth();
@@ -161,7 +163,7 @@ export default function OAuthCallback() {
           <div className="relative w-28 h-28 mx-auto mb-8">
             <div className="absolute inset-0 rounded-full bg-green-100 animate-ping opacity-60"></div>
             <div className="absolute inset-0 rounded-full bg-green-50 animate-pulse"></div>
-            <div className="relative w-28 h-28 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center shadow-[0_10px_30px_-5px_rgba(34,197,94,0.3)]">
+            <div className="relative w-28 h-28 rounded-full bg-linear-to-br from-green-400 to-green-600 flex items-center justify-center shadow-[0_10px_30px_-5px_rgba(34,197,94,0.3)]">
               <svg
                 className="w-16 h-16 text-white"
                 fill="none"
@@ -195,7 +197,7 @@ export default function OAuthCallback() {
 
             {/* Progress Bar */}
             <div className="w-full max-w-xs h-2 bg-gray-100 rounded-full overflow-hidden shadow-inner">
-              <div className="h-full bg-gradient-to-r from-[#44666C] via-[#365a62] to-[#44666C] rounded-full animate-progress shadow-sm"></div>
+              <div className="h-full bg-linear-to-r from-[#44666C] via-[#365a62] to-[#44666C] rounded-full animate-progress shadow-sm"></div>
             </div>
           </div>
         </div>

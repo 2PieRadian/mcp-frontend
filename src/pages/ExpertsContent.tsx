@@ -4,6 +4,7 @@ import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import { useExperts } from "../context/ExpertsContext";
 import type { FilterState } from "../types/filters";
 import { EXPERT_CATEGORIES } from "../lib/constants/experts";
+import useScrollToTop from "../hooks/useScrollToTop";
 
 const ExpertsHeroSection = lazy(
   () => import("../components/ExpertsHeroSection")
@@ -44,6 +45,7 @@ const slugToSpecialization = (slug: string): string => {
 };
 
 export default function ExpertsContent() {
+  useScrollToTop();
   const location = useLocation();
   const { filters, setFilters } = useExperts();
 

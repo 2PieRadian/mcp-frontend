@@ -5,6 +5,7 @@ import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import { useScreen } from "../context/ScreenContext";
 import { ADHD_QUESTIONS } from "../lib/constants/assessments";
 import type { QuizOption } from "../lib/interfaces";
+import useScrollToTop from "../hooks/useScrollToTop";
 
 function OptionItem({
   option,
@@ -32,6 +33,7 @@ function OptionItem({
 }
 
 export default function AssessmentQuestions() {
+  useScrollToTop();
   const { t } = useTranslation("common");
   const navigate = useNavigate();
   const { assessmentType } = useParams<{ assessmentType: string }>();

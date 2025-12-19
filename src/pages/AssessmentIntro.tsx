@@ -10,6 +10,7 @@ import {
   Clock,
   Shield,
 } from "lucide-react";
+import useScrollToTop from "../hooks/useScrollToTop";
 
 interface AssessmentInfo {
   title: string;
@@ -120,6 +121,7 @@ const assessmentData: Record<string, AssessmentInfo> = {
 };
 
 export default function AssessmentIntro() {
+  useScrollToTop();
   const { assessmentType } = useParams<{ assessmentType: string }>();
   const data = assessmentData[assessmentType || ""];
 

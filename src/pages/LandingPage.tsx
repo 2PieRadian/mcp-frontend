@@ -8,8 +8,10 @@ import Footer from "../components/Footer";
 import ExpertVerifiedAssessmentsSection from "../components/ExpertVerifiedAssessmentsSection";
 import MakeInIndia from "../components/MakeInIndia";
 import { Helmet } from "react-helmet-async";
+import useScrollToTop from "../hooks/useScrollToTop";
 
 export default function UserDashboard() {
+  useScrollToTop();
   return (
     <>
       <Helmet>

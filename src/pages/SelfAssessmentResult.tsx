@@ -2,8 +2,10 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import SelfAssessmentNavbar from "../components/SelfAssessmentNavbar";
 import { SELF_ASSESSMENT_QUIZ } from "../lib/constants/selfAssessment";
+import useScrollToTop from "../hooks/useScrollToTop";
 
 export default function SelfAssessmentResult() {
+  useScrollToTop();
   const { t } = useTranslation("common");
   // Get score from URL params or state (for now, using mock data)
   const params = new URLSearchParams(window.location.search);
@@ -139,7 +141,7 @@ export default function SelfAssessmentResult() {
               </h3>
               <div className="space-y-[15px]">
                 <div className="flex items-start gap-[15px]">
-                  <div className="w-[12px] h-[12px] rounded-full bg-[#10B981] mt-[6px] flex-shrink-0"></div>
+                  <div className="w-[12px] h-[12px] rounded-full bg-[#10B981] mt-[6px] shrink-0"></div>
                   <div>
                     <span className="font-semibold text-[#1F2937]">
                       45-60 {t("points")}:
@@ -151,7 +153,7 @@ export default function SelfAssessmentResult() {
                 </div>
 
                 <div className="flex items-start gap-[15px]">
-                  <div className="w-[12px] h-[12px] rounded-full bg-[#3B82F6] mt-[6px] flex-shrink-0"></div>
+                  <div className="w-[12px] h-[12px] rounded-full bg-[#3B82F6] mt-[6px] shrink-0"></div>
                   <div>
                     <span className="font-semibold text-[#1F2937]">
                       30-44 {t("points")}:
@@ -161,7 +163,7 @@ export default function SelfAssessmentResult() {
                 </div>
 
                 <div className="flex items-start gap-[15px]">
-                  <div className="w-[12px] h-[12px] rounded-full bg-[#F59E0B] mt-[6px] flex-shrink-0"></div>
+                  <div className="w-[12px] h-[12px] rounded-full bg-[#F59E0B] mt-[6px] shrink-0"></div>
                   <div>
                     <span className="font-semibold text-[#1F2937]">
                       15-29 {t("points")}:
@@ -173,7 +175,7 @@ export default function SelfAssessmentResult() {
                 </div>
 
                 <div className="flex items-start gap-[15px]">
-                  <div className="w-[12px] h-[12px] rounded-full bg-[#EF4444] mt-[6px] flex-shrink-0"></div>
+                  <div className="w-[12px] h-[12px] rounded-full bg-[#EF4444] mt-[6px] shrink-0"></div>
                   <div>
                     <span className="font-semibold text-[#1F2937]">
                       {t("below", { defaultValue: "Below" })} 15 {t("points")}:

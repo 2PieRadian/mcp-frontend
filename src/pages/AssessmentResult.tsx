@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import { ArrowLeft, CheckCircle2, TrendingUp, BookOpen } from "lucide-react";
+import useScrollToTop from "../hooks/useScrollToTop";
 
 const assessmentData: Record<
   string,
@@ -71,7 +72,7 @@ const assessmentData: Record<
     gradientTo: "#10B981",
     accentColor: "#34D399",
     lightBg: "#ECFDF5",
-    getInterpretation: (score: number) => {
+    getInterpretation: () => {
       return {
         category: "Analysis",
         title: "Nutrition Assessment Complete",
@@ -87,7 +88,7 @@ const assessmentData: Record<
     gradientTo: "#F43F5E",
     accentColor: "#FB7185",
     lightBg: "#FEF2F2",
-    getInterpretation: (score: number) => {
+    getInterpretation: () => {
       return {
         category: "Analysis",
         title: "Relationship Assessment Complete",
@@ -102,7 +103,7 @@ const assessmentData: Record<
     gradientTo: "#14B8A6",
     accentColor: "#2DD4BF",
     lightBg: "#F0FDFA",
-    getInterpretation: (score: number) => {
+    getInterpretation: () => {
       return {
         category: "Analysis",
         title: "Yoga Assessment Complete",
@@ -115,6 +116,7 @@ const assessmentData: Record<
 };
 
 export default function AssessmentResult() {
+  useScrollToTop();
   const { assessmentType } = useParams<{ assessmentType: string }>();
   const params = new URLSearchParams(window.location.search);
   const totalScore = parseInt(params.get("score") || "0");

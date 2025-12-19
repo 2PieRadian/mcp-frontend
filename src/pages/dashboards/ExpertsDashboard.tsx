@@ -4,13 +4,19 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import ResponsiveNavbar from "../../components/ResponsiveNavbar";
 import type { UpcomingSession, WeeklyAvailability, TabType } from "./types";
+import useScrollToTop from "../../hooks/useScrollToTop";
 
 const DashboardTabs = lazy(() => import("./components/DashboardTabs"));
-const UpcomingSessionsTab = lazy(() => import("./components/UpcomingSessionsTab"));
-const AvailabilityManagementTab = lazy(() => import("./components/AvailabilityManagementTab"));
+const UpcomingSessionsTab = lazy(
+  () => import("./components/UpcomingSessionsTab")
+);
+const AvailabilityManagementTab = lazy(
+  () => import("./components/AvailabilityManagementTab")
+);
 const EarningsTab = lazy(() => import("./components/EarningsTab"));
 
 export default function ExpertsDashboard() {
+  useScrollToTop();
   const { user } = useAuth();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<TabType>("sessions");

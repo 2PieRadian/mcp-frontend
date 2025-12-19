@@ -11,8 +11,10 @@ import {
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import type { ApiExpert } from "../types/experts";
 import { getAvatarUrl } from "../lib/api";
+import useScrollToTop from "../hooks/useScrollToTop";
 
 export default function ExpertDetails() {
+  useScrollToTop();
   const location = useLocation();
   const navigate = useNavigate();
 
