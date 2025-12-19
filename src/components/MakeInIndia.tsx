@@ -7,32 +7,32 @@ export default function MakeInIndia() {
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-[24px]">
             {/* Logo and Brand */}
             <div className="flex items-center gap-[16px]">
-              <img
-                src="/images/navbar/logo_white.png"
-                alt="MindCurePath Logo"
+          <img
+            src="/images/navbar/logo_white.png"
+            alt="MindCurePath Logo"
                 className="w-[56px] h-[56px] shrink-0"
-              />
+          />
               <div>
                 <h2 className="text-white text-[20px] md:text-[24px] font-medium leading-tight mb-[4px]">
-                  MindCurePath
+              MindCurePath
                 </h2>
                 <p className="text-white/80 text-[13px] md:text-[14px] font-normal leading-snug">
                   India's own virtual counselling platform
-                </p>
-              </div>
-            </div>
+            </p>
+          </div>
+        </div>
 
             {/* Make in India Badge */}
             <div className="flex flex-col items-start md:items-end">
               <p className="text-white/70 text-[12px] md:text-[13px] font-normal tracking-wide uppercase mb-[6px]">
-                Proudly Supports
+            Proudly Supports
               </p>
               <h3 className="text-white text-[32px] whitespace-nowrap md:text-[42px] font-bold tracking-tight leading-none">
-                MAKE IN INDIA
+            MAKE IN INDIA
               </h3>
             </div>
-          </div>
         </div>
+      </div>
 
         {/* Content Section */}
         <div className="px-[24px] md:px-[48px] py-[32px] md:py-[48px]">
@@ -44,8 +44,8 @@ export default function MakeInIndia() {
               </div>
               <p className="text-white/85 text-[14px] md:text-[15px] leading-relaxed">
                 Certified Indian Counselors, Therapists & Dieticians
-              </p>
-            </div>
+          </p>
+        </div>
 
             <div className="flex items-start gap-[14px] py-[16px] px-[20px] bg-white/10 rounded-[12px] backdrop-blur-sm border border-white/20 shadow-[0_8px_24px_rgba(0,0,0,0.25)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.35)] transition-all duration-300 hover:-translate-y-1 animate-float-subtle-2">
               <div className="shrink-0 mt-[2px]">
@@ -54,7 +54,7 @@ export default function MakeInIndia() {
               <p className="text-white/85 text-[14px] md:text-[15px] leading-relaxed">
                 Academic Advisors, Financial Consultants & GST & Taxation
                 Experts
-              </p>
+            </p>
             </div>
           </div>
 

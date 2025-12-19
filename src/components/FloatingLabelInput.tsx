@@ -24,15 +24,17 @@ export default function FloatingLabelInput({
   const inputType = isPassword && showPassword ? "text" : type;
 
   const baseClasses =
-    "rounded-full px-[clamp(15px,3vw,20px)] text-[clamp(14px,2vw,16px)] bg-white placeholder:text-transparent w-full outline-none focus:ring-2 focus:ring-primary/30 transition-all duration-200";
+    "rounded-[10px] px-[clamp(15px,3vw,20px)] text-[clamp(14px,2vw,16px)] text-[#5a6c75] bg-white placeholder:text-transparent w-full outline-none focus:ring-2 focus:ring-primary/30 transition-all duration-200 shadow-[0_1px_3px_rgba(0,0,0,0.08)]";
 
   const variantClasses =
-    variant === "with-border" ? "border border-border-light" : "border";
+    variant === "with-border"
+      ? "border border-gray-200"
+      : "border border-gray-200";
 
   const labelClasses = `absolute left-[clamp(15px,3vw,20px)] pointer-events-none transition-all duration-200 ${
     isFloating
-      ? "top-[8px] text-[11px] text-primary px-[4px]"
-      : "top-[50%] translate-y-[-50%] text-[clamp(14px,2vw,16px)] text-input-placeholder"
+      ? "top-[8px] text-[11px] text-primary"
+      : "top-[50%] translate-y-[-50%] text-[clamp(14px,2vw,16px)] text-gray-500"
   }`;
 
   const paddingRight = isPassword ? "pr-[45px]" : "";

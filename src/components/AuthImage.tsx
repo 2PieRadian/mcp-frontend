@@ -12,12 +12,12 @@ export default function AuthImage({
   const { t } = useTranslation("common");
 
   return (
-    <div className="hidden [@media(min-width:960px)]:block flex-1 overflow-hidden h-[600px] animate-float-1 shadow-[0_20px_40px_rgba(0,0,0,0.35)] rounded-lg">
+    <div className="[@media(max-width:959px)]:hidden [@media(min-width:960px)]:flex flex-[1.5] overflow-hidden h-[600px] animate-float-1 rounded-lg border border-gray-200 shadow-[0_2px_8px_rgba(0,0,0,0.08)] items-center justify-center">
       <img
         src="./images/login_image.png"
         alt={t(altTextKey) + " Image"}
-        className="border rounded-lg w-full h-full object-cover"
-        style={{ objectPosition }}
+        className="rounded-lg w-full h-full object-cover"
+        style={{ objectPosition: "center center" }}
       />
     </div>
   );

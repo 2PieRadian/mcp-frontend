@@ -84,19 +84,17 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="login-form flex justify-between gap-[20px] mt-[20px] rounded-lg flex-1">
-      <AuthImage altTextKey="login" objectPosition="0% 50%" />
-
-      <div className="flex-1 rounded-lg border-0 [@media(min-width:960px)]:border-2 [@media(min-width:960px)]:border-border-light flex items-center justify-center">
-        <div className="rounded-lg w-full max-w-[500px] p-0 [@media(min-width:960px)]:p-[clamp(1.5rem,4vw,3rem)]">
+    <div className="login-form flex justify-between gap-[20px] mt-[20px] [@media(max-width:959px)]:mt-[16px] rounded-lg flex-1">
+      <div className="flex-1 rounded-lg border border-gray-200 shadow-[0_2px_8px_rgba(0,0,0,0.08)] flex items-center justify-center [@media(max-width:959px)]:min-h-[400px]">
+        <div className="rounded-lg w-full max-w-[500px] px-[24px] py-[32px] [@media(min-width:960px)]:px-[clamp(1.5rem,4vw,3rem)] [@media(min-width:960px)]:py-[clamp(1.5rem,4vw,3rem)]">
           <h2 className="text-[clamp(24px,5vw,30px)] font-bold text-logo-heading">
             {t("welcomeBack")}
           </h2>
-          <p className="text-[clamp(13px,2vw,15px)] font-light text-light-text">
+          <p className="text-[clamp(13px,2vw,15px)] font-light text-light-text mt-[8px]">
             {t("transformMentalHealthJourney")}
           </p>
 
-          <form className="mt-[30px]" onSubmit={handleLogin} noValidate={false}>
+          <form className="mt-[28px]" onSubmit={handleLogin} noValidate={false}>
             <div className="inputs flex flex-col gap-[15px]">
               <FloatingLabelInput
                 type="email"
@@ -139,6 +137,8 @@ export default function LoginForm() {
           </form>
         </div>
       </div>
+
+      <AuthImage altTextKey="login" objectPosition="0% 50%" />
     </div>
   );
 }
