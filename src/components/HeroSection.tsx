@@ -63,11 +63,11 @@ function HeroSectionContent() {
 
   return (
     <div className="flex-1">
-      <h1 className="font-bold text-[45px] leading-none text-hero-heading">
+      <h1 className="font-bold text-[45px] leading-none text-[hsl(186,48%,28%)]">
         Get Expert Guidance for Life, Career, and Money.
       </h1>
 
-      <p className="font-light text-[15px] mt-[20px] text-[hsl(194,19%,18%)]">
+      <p className="text-[18px] mt-[20px] text-[hsl(186,22%,37%)]">
         Because the right advice can change everything.
       </p>
 
@@ -78,7 +78,7 @@ function HeroSectionContent() {
       >
         <Link
           to="/login"
-          className="border-none bg-hero-heading cursor-pointer text-white text-center rounded-[15px] px-[25px] py-[13px] hover:bg-[hsl(189,62%,30%)] transition shadow-drop-shadow hover:translate-y-[-2px]"
+          className="border-none bg-[hsl(186,54%,29%)] cursor-pointer text-white text-center rounded-[15px] px-[25px] py-[13px] hover:bg-[hsl(185,39%,25%)] transition shadow-drop-shadow hover:translate-y-[-2px]"
         >
           {t("bookYourAppointment", { ns: "common" })}
         </Link>
