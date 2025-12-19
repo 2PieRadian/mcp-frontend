@@ -21,6 +21,7 @@ import Education from "./pages/assessments/Education";
 import AssessmentIntro from "./pages/AssessmentIntro";
 import AssessmentQuestions from "./pages/AssessmentQuestions";
 import AssessmentResult from "./pages/AssessmentResult";
+import FindCounsellors from "./pages/FindCounsellors";
 
 export default function App() {
   return (
@@ -83,6 +84,9 @@ export default function App() {
             path="/finance-experts/:specialization"
             element={<ExpertsListing />}
           />
+
+          {/* Find Counsellors */}
+          <Route path="/find-counsellors" element={<FindCounsellors />} />
 
           {/* Expert Details */}
           <Route path="/expert/:id" element={<ExpertDetails />} />

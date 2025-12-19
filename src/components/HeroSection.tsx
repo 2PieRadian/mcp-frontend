@@ -136,7 +136,7 @@ export default function HeroSection() {
               <h2 className="text-[clamp(20px,5vw,24px)] font-bold text-primary text-center mb-4">
                 Explore Our Expert Categories
               </h2>
-              <p className="text-[#4F5B64] text-sm text-center mb-6">
+              <p className="text-[#4F5B64] text-center mb-6">
                 Connect with verified professionals in wellness, education, and
                 finance
               </p>
