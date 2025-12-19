@@ -3,13 +3,13 @@ import { Flag, Users, Shield, Heart } from "lucide-react";
 export default function MakeInIndia() {
   return (
     <section className="max-w-[1350px] mx-auto mb-[60px] md:mb-[80px]">
-      <div className="bg-white rounded-[20px] shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300">
+      <div className="bg-[#ffffff] rounded-[24px] p-[20px] md:p-[24px] shadow-[inset_0_2px_4px_rgba(0,0,0,0.09),0_8px_16px_rgba(0,0,0,0.08)] overflow-hidden transition-all duration-300">
         {/* Header Section with Gradient Background */}
-        <div className="bg-linear-to-br from-[#ecf4f6] to-[#d4e8eb] px-[24px] md:px-[48px] pt-[40px] md:pt-[56px] pb-[32px] md:pb-[40px]">
+        <div className="bg-linear-to-br from-[#d4e8eb] via-[#ffffff] to-[#b8d4db] rounded-[20px] p-[24px] md:p-[32px] shadow-[inset_0_2px_4px_rgba(255,255,255,0.7),0_4px_8px_rgba(0,0,0,0.1)]">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-[24px]">
             {/* Logo and Brand */}
             <div className="flex items-center gap-[16px]">
-              <div className="w-[64px] h-[64px] bg-white rounded-[16px] flex items-center justify-center shadow-md border border-gray-100">
+              <div className="w-[64px] h-[64px] bg-white/80 rounded-[16px] flex items-center justify-center shadow-[inset_0_2px_4px_rgba(0,0,0,0.1),0_4px_8px_rgba(0,0,0,0.1)] backdrop-blur-sm">
                 <img
                   src="/images/navbar/logo.png"
                   alt="MindCurePath Logo"
@@ -20,7 +20,7 @@ export default function MakeInIndia() {
                 <h2 className="text-primary text-[22px] md:text-[28px] font-bold leading-tight mb-[4px]">
                   MindCurePath
                 </h2>
-                <p className="text-[#4F5B64] text-[14px] md:text-[15px] font-medium leading-snug">
+                <p className="text-[#44666C] text-[14px] md:text-[15px] font-medium leading-snug">
                   India's own virtual counselling platform
                 </p>
               </div>
@@ -28,7 +28,7 @@ export default function MakeInIndia() {
 
             {/* Make in India Badge */}
             <div className="flex flex-col items-start md:items-end">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/80 rounded-full border border-primary/20 mb-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/70 rounded-full shadow-[inset_0_1px_2px_rgba(255,255,255,0.8),0_2px_4px_rgba(0,0,0,0.1)] backdrop-blur-sm mb-2">
                 <Flag className="w-4 h-4 text-primary" />
                 <span className="text-[11px] md:text-[12px] font-semibold text-primary uppercase tracking-wide">
                   Proudly Supports
@@ -42,11 +42,11 @@ export default function MakeInIndia() {
         </div>
 
         {/* Content Section */}
-        <div className="px-[24px] md:px-[48px] py-[40px] md:py-[56px]">
-          {/* Services Grid - Modern Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-[10px] md:gap-[15px] mb-[32px] md:mb-[40px]">
-            <div className="flex items-start gap-[16px] p-[20px] md:p-[24px] bg-[#ecf4f6] rounded-[16px] border border-primary/10 hover:shadow-md transition-all duration-300 hover:-translate-y-1">
-              <div className="w-[48px] h-[48px] bg-primary/10 rounded-[12px] flex items-center justify-center shrink-0">
+        <div className="px-[4px] md:px-[8px] py-[32px] md:py-[40px]">
+          {/* Services Grid - Soft UI Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-[16px] md:gap-[20px] mb-[32px] md:mb-[40px]">
+            <div className="flex items-start gap-[16px] p-[20px] md:p-[24px] bg-[#ecf4f6] rounded-[16px] shadow-[inset_0_1px_2px_rgba(255,255,255,0.3),0_4px_8px_rgba(0,0,0,0.16)] hover:shadow-[inset_0_1px_2px_rgba(255,255,255,0.3),0_6px_12px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-1">
+              <div className="w-[48px] h-[48px] bg-white/70 rounded-[6px] flex items-center justify-center shrink-0 shadow-[inset_0_1px_2px_rgba(0,0,0,0.05),0_2px_4px_rgba(0,0,0,0.08)]">
                 <Users className="w-6 h-6 text-primary" />
               </div>
               <div>
@@ -60,8 +60,8 @@ export default function MakeInIndia() {
               </div>
             </div>
 
-            <div className="flex items-start gap-[16px] p-[20px] md:p-[24px] bg-[#ecf4f6] rounded-[16px] border border-primary/10 hover:shadow-md transition-all duration-300 hover:-translate-y-1">
-              <div className="w-[48px] h-[48px] bg-primary/10 rounded-[12px] flex items-center justify-center shrink-0">
+            <div className="flex items-start gap-[16px] p-[20px] md:p-[24px] bg-[#ecf4f6] rounded-[16px] shadow-[inset_0_1px_2px_rgba(255,255,255,0.3),0_4px_8px_rgba(0,0,0,0.16)] hover:shadow-[inset_0_1px_2px_rgba(255,255,255,0.3),0_6px_12px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-1">
+              <div className="w-[48px] h-[48px] bg-white/70 rounded-[6px] flex items-center justify-center shrink-0 shadow-[inset_0_1px_2px_rgba(0,0,0,0.05),0_2px_4px_rgba(0,0,0,0.08)]">
                 <Shield className="w-6 h-6 text-primary" />
               </div>
               <div>
@@ -78,7 +78,7 @@ export default function MakeInIndia() {
 
           {/* Main Description */}
           <div>
-            <div className="flex items-start gap-[16px] p-[24px] md:p-[28px] bg-linear-to-br from-[#f3f7f9] to-[#f3f7f9] rounded-[16px] border border-gray-200">
+            <div className="flex items-start gap-[16px] p-[24px] md:p-[28px] bg-[#f3f7f9] rounded-[20px] shadow-[inset_0_2px_4px_rgba(255,255,255,0.7),0_4px_8px_rgba(0,0,0,0.08)]">
               <Heart className="hidden md:block w-6 h-6 text-primary shrink-0 mt-[2px]" />
 
               <div>
