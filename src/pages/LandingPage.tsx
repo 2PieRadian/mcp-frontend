@@ -47,8 +47,11 @@ export default function UserDashboard() {
       </Helmet>
 
       <div className="landing-page">
-        <ResponsiveNavbar />
+        <div className="px-[20px]">
+          <ResponsiveNavbar />
+        </div>
         <HeroSection />
+
         <div className="px-[20px]">
           <MakeInIndia />
           <ExpertVerifiedAssessmentsSection />

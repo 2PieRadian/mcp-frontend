@@ -20,7 +20,7 @@ export default function ResponsiveNavbar() {
     return (
       <>
         {/* Mobile Header */}
-        <div className="navbar max-w-[1350px] mx-auto flex justify-between items-center py-[12px] sm:py-[20px] px-[20px]">
+        <div className="navbar max-w-[1350px] flex justify-between items-center py-[12px] sm:py-[20px]">
           <div className="flex items-center gap-[8px] sm:gap-[10px] min-w-0 flex-1 sm:flex-initial">
             <Link
               to="/"
@@ -31,7 +31,7 @@ export default function ResponsiveNavbar() {
           </div>
 
           {/* Right side controls */}
-          <div className="flex items-center gap-[6px] sm:gap-2 shrink-0">
+          <div className="flex items-center gap-[10px] shrink-0">
             {/* Profile/Login Button */}
             {user ? (
               <Link
@@ -64,10 +64,10 @@ export default function ResponsiveNavbar() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(true)}
-              className="p-[8px] rounded-full cursor-pointer"
+              className="rounded-full cursor-pointer"
               aria-label="Open menu"
             >
-              <Menu size={28} className="text-primary" />
+              <Menu size={30} className="text-primary" />
             </button>
           </div>
         </div>

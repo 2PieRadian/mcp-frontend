@@ -108,7 +108,7 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="navbar max-w-[1350px] mx-auto flex justify-between items-center py-[12px] sm:py-[20px] px-[20px]">
+      <div className="navbar max-w-[1350px] flex justify-between items-center py-[12px] sm:py-[20px]">
         {/* Logo and App Name */}
         <div className="flex items-center gap-[8px] sm:gap-[10px] min-w-0 flex-1 sm:flex-initial">
           <Link to="/">
@@ -230,7 +230,7 @@ export default function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(true)}
-            className="sm:hidden p-[8px] rounded-full cursor-pointer"
+            className="sm:hidden rounded-full cursor-pointer"
             aria-label="Open menu"
           >
             <Menu size={28} color={textColor} />
