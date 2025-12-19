@@ -5,10 +5,7 @@ type AuthImageProps = {
   objectPosition?: string;
 };
 
-export default function AuthImage({
-  altTextKey = "login",
-  objectPosition = "0% 50%",
-}: AuthImageProps) {
+export default function AuthImage({ altTextKey = "login" }: AuthImageProps) {
   const { t } = useTranslation("common");
 
   return (

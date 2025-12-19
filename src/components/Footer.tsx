@@ -63,7 +63,7 @@ export default function Footer() {
             className="rounded-[25px] px-[15px] sm:px-[20px] py-[12px] text-[14px] placeholder:text-input-placeholder w-full outline-none"
           />
 
-          <button className="bg-[#404957] hover:bg-[#4b5667] transition-all duration-200 border border-[#798BA9] text-white rounded-full px-[12px] sm:px-[15px] py-[8px] text-[14px] cursor-pointer whitespace-nowrap flex-shrink-0 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)]">
+          <button className="bg-[#404957] hover:bg-[#4b5667] transition-all duration-200 border border-[#798BA9] text-white rounded-full px-[12px] sm:px-[15px] py-[8px] text-[14px] cursor-pointer whitespace-nowrap shrink-0 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)]">
             Subscribe
           </button>
         </div>

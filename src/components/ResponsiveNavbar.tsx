@@ -31,7 +31,7 @@ export default function ResponsiveNavbar() {
           </div>
 
           {/* Right side controls */}
-          <div className="flex items-center gap-[6px] sm:gap-2 flex-shrink-0">
+          <div className="flex items-center gap-[6px] sm:gap-2 shrink-0">
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(true)}
@@ -45,7 +45,7 @@ export default function ResponsiveNavbar() {
             {user ? (
               <Link
                 to="/profile"
-                className={`group p-[6px] rounded-full border border-border-light transition-colors flex items-center justify-center flex-shrink-0 ${
+                className={`group p-[6px] rounded-full border border-border-light transition-colors flex items-center justify-center shrink-0 ${
                   location.pathname.startsWith("/profile")
                     ? "bg-border-light text-white"
                     : "hover:bg-border-light hover:text-white"
