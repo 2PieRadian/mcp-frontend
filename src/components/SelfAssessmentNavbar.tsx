@@ -34,11 +34,11 @@ export default function SelfAssessmentNavbar() {
       {/* Mobile Menu Button */}
       <div className="sm:hidden relative">
         <div
-          className="p-[8px] bg-light-100 rounded-full cursor-pointer"
+          className="p-[8px] rounded-full cursor-pointer"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
           <Menu
-            size={20}
+            size={28}
             color="hsl(189, 62%, 25%)"
             className="cursor-pointer"
           />

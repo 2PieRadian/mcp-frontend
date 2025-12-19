@@ -57,10 +57,10 @@ export default function AuthNavbar() {
       {/* Mobile Menu Button */}
       <div className="sm:hidden relative">
         <div
-          className="p-[8px] bg-light-100 rounded-full cursor-pointer"
+          className="p-[8px] rounded-full cursor-pointer"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
-          <Menu size={20} color="hsl(194, 57%, 17%)" />
+          <Menu size={28} color="hsl(194, 57%, 17%)" />
         </div>
 
         {/* Mobile Menu Dropdown */}

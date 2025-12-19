@@ -198,15 +198,6 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMobileMenuOpen(true)}
-            className="sm:hidden p-[8px] bg-light-100 rounded-full cursor-pointer"
-            aria-label="Open menu"
-          >
-            <Menu size={20} color={textColor} />
-          </button>
-
           {/* Profile/Login - Always visible */}
           {user ? (
             <Link
@@ -235,6 +226,15 @@ export default function Navbar() {
               {t("login")}
             </Link>
           )}
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMobileMenuOpen(true)}
+            className="sm:hidden p-[8px] rounded-full cursor-pointer"
+            aria-label="Open menu"
+          >
+            <Menu size={28} color={textColor} />
+          </button>
         </div>
       </div>
 

@@ -32,15 +32,6 @@ export default function ResponsiveNavbar() {
 
           {/* Right side controls */}
           <div className="flex items-center gap-[6px] sm:gap-2 shrink-0">
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(true)}
-              className="p-[8px] bg-light-100 rounded-full cursor-pointer"
-              aria-label="Open menu"
-            >
-              <Menu size={20} className="text-primary" />
-            </button>
-
             {/* Profile/Login Button */}
             {user ? (
               <Link
@@ -69,6 +60,15 @@ export default function ResponsiveNavbar() {
                 {t("login")}
               </Link>
             )}
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="p-[8px] rounded-full cursor-pointer"
+              aria-label="Open menu"
+            >
+              <Menu size={28} className="text-primary" />
+            </button>
           </div>
         </div>
 
