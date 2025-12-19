@@ -45,8 +45,8 @@ export default function MakeInIndia() {
         <div className="px-[4px] md:px-[8px] py-[32px] md:py-[40px]">
           {/* Services Grid - Soft UI Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-[16px] md:gap-[20px] mb-[32px] md:mb-[40px]">
-            <div className="flex items-start gap-[16px] p-[20px] md:p-[24px] bg-[#ecf4f6] rounded-[16px] shadow-[inset_0_1px_2px_rgba(255,255,255,0.3),0_4px_8px_rgba(0,0,0,0.16)] hover:shadow-[inset_0_1px_2px_rgba(255,255,255,0.3),0_6px_12px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-1">
-              <div className="w-[48px] h-[48px] bg-white/70 rounded-[6px] flex items-center justify-center shrink-0 shadow-[inset_0_1px_2px_rgba(0,0,0,0.05),0_2px_4px_rgba(0,0,0,0.08)]">
+            <div className="flex items-start gap-[16px] p-[20px] md:p-[24px] bg-[#f4f9fb] rounded-[16px] shadow-m transition-all duration-300 hover:-translate-y-1">
+              <div className="w-[48px] h-[48px] bg-white/80 rounded-[6px] flex items-center justify-center shrink-0 shadow-[inset_0_1px_2px_rgba(0,0,0,0.05),0_2px_4px_rgba(0,0,0,0.08)]">
                 <Users className="w-6 h-6 text-primary" />
               </div>
               <div>
@@ -60,8 +60,8 @@ export default function MakeInIndia() {
               </div>
             </div>
 
-            <div className="flex items-start gap-[16px] p-[20px] md:p-[24px] bg-[#ecf4f6] rounded-[16px] shadow-[inset_0_1px_2px_rgba(255,255,255,0.3),0_4px_8px_rgba(0,0,0,0.16)] hover:shadow-[inset_0_1px_2px_rgba(255,255,255,0.3),0_6px_12px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-1">
-              <div className="w-[48px] h-[48px] bg-white/70 rounded-[6px] flex items-center justify-center shrink-0 shadow-[inset_0_1px_2px_rgba(0,0,0,0.05),0_2px_4px_rgba(0,0,0,0.08)]">
+            <div className="flex items-start gap-[16px] p-[20px] md:p-[24px] bg-[#f4f9fb] rounded-[16px] shadow-m transition-all duration-300 hover:-translate-y-1">
+              <div className="w-[48px] h-[48px] bg-white/80 rounded-[6px] flex items-center justify-center shrink-0 shadow-[inset_0_1px_2px_rgba(0,0,0,0.05),0_2px_4px_rgba(0,0,0,0.08)]">
                 <Shield className="w-6 h-6 text-primary" />
               </div>
               <div>
