@@ -11,7 +11,7 @@ export default function HeroSection() {
   return (
     <div className="relative w-full bg-white">
       {/* Content Container */}
-      <div className="max-w-[1400px] mx-auto px-[20px] md:px-[40px] lg:px-[60px] py-[70px] md:py-[100px] lg:py-[120px]">
+      <div className="max-w-[1350px] mx-auto py-[70px] md:py-[100px] lg:py-[120px]">
         <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-[40px] lg:gap-[80px]">
           {/* Left Content */}
           <div className="flex-1 text-center lg:text-left space-y-6">

@@ -42,7 +42,7 @@ function ExpertVerifiedAssessmentsSectionItem({
       <div
         className={`flex flex-col md:flex-row ${
           rightImage ? "md:flex-row" : "md:flex-row-reverse"
-        } overflow-hidden items-center justify-center gap-[20px] md:gap-[30px] bg-white rounded-[10px] md:rounded-[20px] shadow-lg p-[24px] md:p-[32px] border border-gray-100 hover:shadow-xl transition-all duration-300 w-full`}
+        } overflow-hidden items-center justify-center gap-[20px] md:gap-[16px] bg-white rounded-[10px] md:rounded-[20px] shadow-lg p-[24px] md:p-[32px] border border-gray-100 hover:shadow-xl transition-all duration-300 w-full`}
       >
         <div className="left flex-1 w-full md:w-auto order-2 md:order-0">
           <h1 className="text-[clamp(26px,5vw,40px)] font-bold text-primary leading-tight">
@@ -79,11 +79,11 @@ export default function ExpertVerifiedAssessmentsSection() {
   const { t } = useTranslation(["common", "navigation"]);
 
   return (
-    <div className="mt-[40px] md:mt-[70px] max-w-[1200px] mx-auto md:px-0">
-      <h1 className="text-[clamp(24px,5vw,30px)] md:text-3xl font-bold text-center">
+    <div className="mt-[40px] md:mt-[70px] max-w-[1000px] mx-auto md:px-0">
+      <h1 className="text-[clamp(24px,6vw,34px)] md:text-3xl font-bold text-center">
         {t("expertVerifiedAssessments", { ns: "common" })}
       </h1>
-      <p className="text-[clamp(13px,2vw,15px)] mt-[10px] max-w-[800px] mx-auto text-center text-[#4F5B64]">
+      <p className="text-[clamp(16px,2vw,17px)] mt-[10px] max-w-[800px] mx-auto text-center text-[#4F5B64]">
         {t("takePreScreenerTests", { ns: "common" })}
       </p>
 
@@ -93,7 +93,7 @@ export default function ExpertVerifiedAssessmentsSection() {
           subtitle="The greatest wealth is health."
           description="Wellness means complete well-being. We offer personalized tools to reduce stress, boost vitality, and achieve the holistic balance needed to live your most resilient, purposeful life."
           imageSrc="images/expert-verified-assessment/wellness.png"
-          imageSize={500}
+          imageSize={400}
           rightImage={true}
           linkTo="/assessments/wellness"
         />
@@ -103,7 +103,7 @@ export default function ExpertVerifiedAssessmentsSection() {
           subtitle="A good education is a foundation for a better future."
           description="Education is power and opportunity. We provide the knowledge and skills needed to confidently build a successful future and create lasting change."
           imageSrc="images/expert-verified-assessment/education.png"
-          imageSize={450}
+          imageSize={360}
           rightImage={false}
           linkTo="/assessments/education"
         />
@@ -113,7 +113,7 @@ export default function ExpertVerifiedAssessmentsSection() {
           subtitle="The best investment is in the tools of one’s own trade."
           description="Finance is the foundation of wealth. We offer personalized tools to build a strong financial foundation and achieve financial freedom."
           imageSrc="images/expert-verified-assessment/finance.png"
-          imageSize={380}
+          imageSize={320}
           rightImage={true}
           linkTo="/assessments/finance"
         />

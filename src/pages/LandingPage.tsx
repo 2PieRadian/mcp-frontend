@@ -46,20 +46,15 @@ export default function UserDashboard() {
         />
       </Helmet>
 
-      <div className="landing-page">
-        <div className="px-[20px]">
-          <ResponsiveNavbar />
-        </div>
+      <div className="landing-page px-[20px]">
+        <ResponsiveNavbar />
         <HeroSection />
-
-        <div className="px-[20px]">
-          <MakeInIndia />
-          <ExpertVerifiedAssessmentsSection />
-          <HowDoesItWork />
-          <WhyChooseUsSection />
-          <WhatOurUsersSay />
-          <Footer />
-        </div>
+        <MakeInIndia />
+        <ExpertVerifiedAssessmentsSection />
+        <HowDoesItWork />
+        <WhyChooseUsSection />
+        <WhatOurUsersSay />
+        <Footer />
       </div>
     </>
   );

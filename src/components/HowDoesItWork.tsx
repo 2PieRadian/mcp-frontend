@@ -30,13 +30,13 @@ function Step({
   return (
     <div className="group relative">
       {/* Connecting line for desktop */}
-      <div className="hidden lg:block absolute left-8 top-16 w-0.5 h-full bg-gradient-to-b from-transparent via-[#44666C]/30 to-transparent -z-10" />
+      <div className="hidden lg:block absolute left-8 top-16 w-0.5 h-full bg-linear-to-b from-transparent via-[#44666C]/30 to-transparent -z-10" />
 
       <div className="relative flex gap-4 md:gap-6 items-start">
         {/* Step number circle with gradient */}
-        <div className="relative flex-shrink-0">
+        <div className="relative shrink-0">
           <div
-            className={`w-12 h-12 md:w-16 md:h-16 rounded-full bg-gradient-to-br ${gradientFrom} ${gradientTo} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}
+            className={`w-12 h-12 md:w-16 md:h-16 rounded-full bg-linear-to-br ${gradientFrom} ${gradientTo} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}
           >
             <div
               className={`w-9 h-9 md:w-12 md:h-12 rounded-full ${iconBg} flex items-center justify-center`}
@@ -111,15 +111,15 @@ export default function HowDoesItWork() {
   return (
     <div className="mt-[80px] mb-[80px] px-4 sm:px-6 lg:px-8">
       {/* Background decoration */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#f8fafb] via-white to-[#f8fafb] -z-10" />
+      <div className="absolute inset-0 bg-linear-to-b from-[#f8fafb] via-white to-[#f8fafb] -z-10" />
 
       <div className="max-w-6xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-16 relative">
-          <h1 className="text-4xl md:text-5xl font-bold text-[#1a2e35] mb-4">
+          <h1 className="text-[clamp(24px,6vw,34px)] md:text-3xl font-bold text-center">
             {t("howDoesItWork.title")}
           </h1>
-          <p className="text-lg md:text-xl text-[#5a6c75] max-w-2xl mx-auto">
+          <p className="text-[clamp(16px,2vw,17px)] mt-[10px] max-w-[800px] mx-auto text-center text-[#4F5B64]">
             {t("howDoesItWork.subtitle")}
           </p>
         </div>
@@ -143,14 +143,14 @@ export default function HowDoesItWork() {
               <div className="relative w-full max-w-md">
                 {/* Animated gradient circles */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-64 h-64 bg-gradient-to-br from-blue-400/30 via-purple-400/30 to-pink-400/30 rounded-full blur-2xl animate-pulse" />
+                  <div className="w-64 h-64 bg-linear-to-br from-blue-400/30 via-purple-400/30 to-pink-400/30 rounded-full blur-2xl animate-pulse" />
                 </div>
 
                 {/* Central illustration card */}
-                <div className="relative bg-gradient-to-br from-white to-[#f8fafb] rounded-3xl p-8 shadow-2xl border border-gray-100">
+                <div className="relative bg-linear-to-br from-white to-[#f8fafb] rounded-3xl p-8 shadow-2xl border border-gray-100">
                   <div className="space-y-6">
                     <div className="flex items-center justify-center">
-                      <div className="w-24 h-24 rounded-full bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center shadow-lg">
+                      <div className="w-24 h-24 rounded-full bg-linear-to-br from-green-500 to-green-600 flex items-center justify-center shadow-lg">
                         <CheckCircle2 className="w-12 h-12 text-white" />
                       </div>
                     </div>

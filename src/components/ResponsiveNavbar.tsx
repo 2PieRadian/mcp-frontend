@@ -20,55 +20,57 @@ export default function ResponsiveNavbar() {
     return (
       <>
         {/* Mobile Header */}
-        <div className="navbar max-w-[1350px] flex justify-between items-center py-[12px] sm:py-[20px]">
-          <div className="flex items-center gap-[8px] sm:gap-[10px] min-w-0 flex-1 sm:flex-initial">
-            <Link
-              to="/"
-              className="text-[18px] sm:text-[22px] font-semibold text-logo-heading cursor-pointer truncate"
-            >
-              {t("appName")}
-            </Link>
-          </div>
-
-          {/* Right side controls */}
-          <div className="flex items-center gap-[10px] shrink-0">
-            {/* Profile/Login Button */}
-            {user ? (
+        <div className="w-full">
+          <div className="navbar max-w-[1350px] mx-auto flex justify-between items-center py-[12px] sm:py-[20px]">
+            <div className="flex items-center gap-[8px] sm:gap-[10px] min-w-0 flex-1 sm:flex-initial">
               <Link
-                to="/profile"
-                className={`group p-[6px] rounded-full border border-border-light transition-colors flex items-center justify-center shrink-0 ${
-                  location.pathname.startsWith("/profile")
-                    ? "bg-border-light text-white"
-                    : "hover:bg-border-light hover:text-white"
-                }`}
-                aria-label="Profile"
+                to="/"
+                className="text-[18px] sm:text-[22px] font-semibold text-logo-heading cursor-pointer truncate"
               >
-                <UserCircle2
-                  size={22}
-                  className={`sm:w-[26px] sm:h-[26px] transition-colors ${
+                {t("appName")}
+              </Link>
+            </div>
+
+            {/* Right side controls */}
+            <div className="flex items-center gap-[10px] shrink-0">
+              {/* Profile/Login Button */}
+              {user ? (
+                <Link
+                  to="/profile"
+                  className={`group p-[6px] rounded-full border border-border-light transition-colors flex items-center justify-center shrink-0 ${
                     location.pathname.startsWith("/profile")
-                      ? "text-white"
-                      : "text-logo-heading group-hover:text-white"
+                      ? "bg-border-light text-white"
+                      : "hover:bg-border-light hover:text-white"
                   }`}
-                />
-              </Link>
-            ) : (
-              <Link
-                to="/login"
-                className={`border border-border-light text-[${textColor}] transition-all duration-200 cursor-pointer rounded-full px-[14px] sm:px-[20px] py-[6px] text-[13px] sm:text-[15px] bg-primary text-white hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)]`}
-              >
-                {t("login")}
-              </Link>
-            )}
+                  aria-label="Profile"
+                >
+                  <UserCircle2
+                    size={22}
+                    className={`sm:w-[26px] sm:h-[26px] transition-colors ${
+                      location.pathname.startsWith("/profile")
+                        ? "text-white"
+                        : "text-logo-heading group-hover:text-white"
+                    }`}
+                  />
+                </Link>
+              ) : (
+                <Link
+                  to="/login"
+                  className={`border border-border-light text-[${textColor}] transition-all duration-200 cursor-pointer rounded-full px-[14px] sm:px-[20px] py-[6px] text-[13px] sm:text-[15px] bg-primary text-white hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)]`}
+                >
+                  {t("login")}
+                </Link>
+              )}
 
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(true)}
-              className="rounded-full cursor-pointer"
-              aria-label="Open menu"
-            >
-              <Menu size={30} className="text-primary" />
-            </button>
+              {/* Mobile Menu Button */}
+              <button
+                onClick={() => setIsMobileMenuOpen(true)}
+                className="rounded-full cursor-pointer"
+                aria-label="Open menu"
+              >
+                <Menu size={30} className="text-primary" />
+              </button>
+            </div>
           </div>
         </div>
 
