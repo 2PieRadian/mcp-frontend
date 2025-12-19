@@ -1,49 +1,44 @@
 import { Brain, Apple, Heart, Flower2, ArrowRight } from "lucide-react";
 import { Helmet } from "react-helmet-async";
+import { useNavigate } from "react-router-dom";
 import ResponsiveNavbar from "../../components/ResponsiveNavbar";
 
 interface WellnessCardProps {
   title: string;
-
   subtitle: string;
-
   description: string;
-
   icon: React.ReactNode;
-
   gradientFrom: string;
-
   gradientTo: string;
-
   accentColor: string;
-
   index: number;
 }
 
 function WellnessCard({
   title,
-
   subtitle,
-
   description,
-
   icon,
-
   gradientFrom,
-
   gradientTo,
-
   accentColor,
 }: WellnessCardProps) {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    const assessmentPath = title.toLowerCase();
+    navigate(`/assessments/wellness/${assessmentPath}`);
+  };
+
   return (
     <div
       className="group relative overflow-hidden rounded-2xl md:rounded-3xl transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl cursor-pointer"
       style={{
         background: `linear-gradient(135deg, ${gradientFrom} 0%, ${gradientTo} 100%)`,
       }}
+      onClick={handleClick}
     >
       {/* Decorative Pattern Overlay */}
-
       <div className="absolute inset-0 opacity-5">
         <div
           className="absolute inset-0"
@@ -56,8 +51,7 @@ function WellnessCard({
       </div>
 
       {/* Content */}
-
-      <div className="relative z-10 p-[clamp(1rem,2.1vw,1.8rem)] flex flex-col h-full min-h-[clamp(200px,25vw,260px)]">
+      <div className="relative z-10 px-[clamp(20px,2.1vw,35px)] py-[clamp(25px,2.5vw,35px)] flex flex-col h-full min-h-[clamp(200px,25vw,260px)]">
         {/* Icon Container */}
 
         <div
@@ -77,12 +71,10 @@ function WellnessCard({
         </div>
 
         {/* Subtitle */}
-
         <p
           className="font-semibold uppercase tracking-wider mb-[clamp(0.25rem,1vw,0.5rem)] opacity-90"
           style={{
             color: accentColor,
-
             fontSize: "clamp(0.625rem, 1.5vw, 0.75rem)",
           }}
         >
@@ -90,7 +82,6 @@ function WellnessCard({
         </p>
 
         {/* Title */}
-
         <h3
           className="font-bold text-white mb-[clamp(0.5rem,1.5vw,0.75rem)] leading-tight group-hover:translate-x-1 transition-transform duration-300"
           style={{ fontSize: "clamp(1.125rem, 3vw, 1.875rem)" }}
@@ -99,16 +90,14 @@ function WellnessCard({
         </h3>
 
         {/* Description */}
-
         <p
-          className="text-white/90 leading-relaxed mb-[clamp(0.75rem,2vw,1rem)] flex-grow"
+          className="text-white/90 leading-relaxed mb-[clamp(0.75rem,2vw,1rem)] grow"
           style={{ fontSize: "clamp(0.75rem, 2vw, 1rem)" }}
         >
           {description}
         </p>
 
         {/* CTA Button */}
-
         <div className="flex items-center gap-[clamp(0.25rem,1vw,0.5rem)] text-white font-semibold mt-auto group-hover:gap-3 transition-all duration-300">
           <span style={{ fontSize: "clamp(0.75rem, 2vw, 1rem)" }}>
             Begin Assessment
@@ -118,7 +107,6 @@ function WellnessCard({
             className="group-hover:translate-x-1 transition-transform duration-300"
             style={{
               width: "clamp(0.875rem, 2vw, 1rem)",
-
               height: "clamp(0.875rem, 2vw, 1rem)",
             }}
           />
@@ -210,12 +198,11 @@ export default function Wellness() {
         />
       </Helmet>
 
-      <div className="min-h-screen bg-gradient-to-b from-[#f8fafb] via-white to-[#f0f7fa] px-[20px]">
+      <div className="min-h-screen bg-linear-to-b from-[#f8fafb] via-white to-[#f0f7fa] px-[20px]">
         <ResponsiveNavbar />
 
         <div className="max-w-[1000px] mx-auto py-[clamp(2rem,5vw,4rem)]">
           {/* Header Section */}
-
           <div className="text-center mb-[clamp(2rem,5vw,4rem)]">
             <div className="inline-block mb-[clamp(0.75rem,2vw,1rem)]">
               <span
@@ -245,15 +232,13 @@ export default function Wellness() {
           </div>
 
           {/* Cards Grid */}
-
-          <div className="grid grid-cols-2 gap-[clamp(0.5rem,2vw,2.5rem)]">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-[clamp(0.5rem,2vw,2.5rem)]">
             {wellnessCards.map((card, index) => (
               <WellnessCard key={card.title} {...card} index={index} />
             ))}
           </div>
 
           {/* Footer Note */}
-
           <div className="mt-[clamp(2rem,5vw,3rem)] text-center">
             <p
               className="text-[#5a6c75]"

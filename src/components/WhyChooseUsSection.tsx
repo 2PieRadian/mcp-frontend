@@ -25,8 +25,12 @@ function WhyChooseUsCard({
             />
           </div>
         )}
-        <h2 className="font-bold text-lg mt-[30px]">{title}</h2>
-        <p className="text-[#4F5B64]">{description}</p>
+        <h2 className="font-semibold text-[0.95rem] md:text-[1.05rem] mt-[30px]">
+          {title}
+        </h2>
+        <p className="text-[#4F5B64] text-[0.9rem] md:text-[0.95rem] mt-[6px]">
+          {description}
+        </p>
       </div>
 
       <div className="text-blue-500 hover:underline transform-all duration-300 cursor-pointer mt-[25px] whitespace-nowrap">

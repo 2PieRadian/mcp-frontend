@@ -141,7 +141,11 @@ export default function SignupForm() {
               {t("createAccount")}
             </PrimaryButton>
 
-            <GoogleButton text="Sign up with Google" />
+            <GoogleButton
+              onClick={() => {
+                window.location.href = `${BACKEND_URL}/oauth/google`;
+              }}
+            />
 
             <FormFooterLink
               questionKey="alreadyHaveAccount"

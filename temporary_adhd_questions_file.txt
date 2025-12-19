@@ -1,0 +1,78 @@
+Instructions:
+Select the option that feels most like you in everyday life.
+Be honest — this is for self-reflection only, not diagnosis.
+________________________________________
+1. Do you find it difficult to stay focused on one task for a long time?
+a) I manage fine most of the time. (1)
+b) I try but often drift off midway. (3)
+c) I usually stay focused unless it’s boring. (2)
+d) I lose focus quickly — my mind keeps jumping. (4)
+________________________________________
+2. Do you get easily distracted by small things (like sounds, phone, or people)?
+a) Distractions hardly affect me. (1)
+b) Rarely — I’m pretty good at tuning things out. (2)
+c) Even a tiny noise or notification breaks my focus. (4)
+d) Sometimes I get distracted, but I can get back on track. (3)
+________________________________________
+3. Do you struggle to organize your work or daily routine?
+a) I make to-do lists but still get behind sometimes. (3)
+b) I often start things but forget to finish them. (4)
+c) I’m usually organized, but mess happens occasionally. (2)
+d) I plan and manage things smoothly. (1)
+________________________________________
+4. Do you tend to say or do things without thinking (act impulsively)?
+a) I sometimes blurt things out and regret later. (3)
+b) I usually think before acting. (1)
+c) I rarely do that unless I’m stressed. (2)
+d) I often react before thinking. (4)
+________________________________________
+
+
+
+5. Do you feel restless while sitting (tapping, moving, or needing to get up)?
+a) Sometimes I do that when I’m bored or anxious. (3)
+b) Only once in a while, not a big issue. (2)
+c) I can’t sit still for long — I keep moving or fidgeting. (4)
+d) I sit comfortably most of the time. (1)
+________________________________________
+6. Do you often forget important things (keys, phone, meetings, dates)?
+a) I’m generally very mindful and don’t forget. (1)
+b) Sometimes I forget, but I usually remember later. (3)
+c) I misplace things or forget plans quite often. (4)
+d) It happens rarely — mostly I keep track. (2)
+________________________________________
+7. Do you find it difficult to follow instructions or complete multi-step tasks?
+a) I can follow steps but need focus. (2)
+b) Sometimes I need reminders to stay on track. (3)
+c) I get lost in the middle or skip steps accidentally. (4)
+d) I do fine with instructions. (1)
+________________________________________
+8. Do you struggle to control your energy (too active or suddenly tired)?
+a) My energy keeps switching — full power to zero fast. (4)
+b) Occasionally I feel that, but mostly balanced. (2)
+c) Sometimes I’m hyper, sometimes drained — depends on the day. (3)
+d) I’m mostly steady and calm. (1)
+________________________________________
+9. Do you tend to avoid boring or repetitive tasks?
+a) I delay them till the last minute or skip them. (4)
+b) I start them but lose motivation halfway. (3)
+c) I push through even if it’s boring. (1)
+d) I do them but with zero interest. (2)
+________________________________________
+
+
+
+
+10. Do you find it hard to control your emotions (easily frustrated, irritated, or overwhelmed)?
+a) I get overwhelmed fast — small things hit hard. (4)
+b) I lose patience sometimes, but not often. (2)
+c) I stay mostly calm and steady. (1)
+d) I manage okay, but some days it’s tough. (3)
+________________________________________
+
+
+Add your total score (Minimum = 10, Maximum = 40):
+•	10–18: Unlikely to have ADHD symptoms.
+•	19–27: Mild attention or impulsivity traits.
+•	28–34: Moderate ADHD-like patterns — self-management or evaluation may help.
+•	35–40: Strong indicators — professional assessment recommended.

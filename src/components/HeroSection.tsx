@@ -64,11 +64,11 @@ function HeroSectionContent() {
   return (
     <div className="flex-1">
       <h1 className="font-bold text-[45px] leading-none text-hero-heading">
-        {t("hero.title")}
+        Get Expert Guidance for Life, Career, and Money.
       </h1>
 
       <p className="font-light text-[15px] mt-[20px] text-[hsl(194,19%,18%)]">
-        {t("hero.description")}
+        Because the right advice can change everything.
       </p>
 
       <div
@@ -78,7 +78,7 @@ function HeroSectionContent() {
       >
         <Link
           to="/login"
-          className="border-none bg-[hsl(186,46%,22%)] cursor-pointer text-white text-center rounded-[15px] px-[25px] py-[13px] hover:bg-[hsl(189,62%,30%)] transition shadow-drop-shadow hover:translate-y-[-2px]"
+          className="border-none bg-hero-heading cursor-pointer text-white text-center rounded-[15px] px-[25px] py-[13px] hover:bg-[hsl(189,62%,30%)] transition shadow-drop-shadow hover:translate-y-[-2px]"
         >
           {t("bookYourAppointment", { ns: "common" })}
         </Link>
@@ -118,7 +118,7 @@ function HeroSectionFloatingCards() {
         }
         title={t("hero.educationSector")}
         description={t("hero.educationDescription")}
-        className="bg-[hsl(194,19%,18%)] top-[50px] right-[0px] text-white z-1 animate-float-3"
+        className="bg-[hsl(194,19%,18%)] top-[50px] right-0 text-white z-1 animate-float-3"
         linkTo="/education-experts"
       />
 
@@ -133,7 +133,7 @@ function HeroSectionHorizontalCards() {
 
   return (
     <div
-      className={`flex items-stretch gap-[15px] mt-[4rem] mb-[70px] ${
+      className={`flex items-stretch gap-[15px] mt-16 mb-[70px] ${
         screenWidth <= 500 ? "flex-col" : ""
       }`}
     >
@@ -178,7 +178,7 @@ export default function HeroSection() {
 
   if (screenWidth <= 1170) {
     return (
-      <div className="max-w-[1350px] mx-auto mt-[4rem]">
+      <div className="max-w-[1350px] mx-auto mt-16">
         {/* Content */}
         <HeroSectionContent />
 
@@ -190,7 +190,7 @@ export default function HeroSection() {
 
   // Desktop layout
   return (
-    <div className="flex max-w-[1350px] mx-auto justify-between mt-[11rem] min-h-[480px]">
+    <div className="flex max-w-[1350px] mx-auto justify-between mt-44 min-h-[480px]">
       {/* Left Div */}
       <HeroSectionContent />
 

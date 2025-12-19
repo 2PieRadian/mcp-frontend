@@ -19,7 +19,9 @@ export default function Footer() {
 
       {/* Connect with us */}
       <div className="connect-with-us flex flex-col gap-[10px] mt-0 md:mt-[30px] items-center md:items-start">
-        <h1 className="text-[16px] font-bold uppercase">Connect with us</h1>
+        <h3 className="text-[0.9rem] font-semibold uppercase tracking-wide">
+          Connect with us
+        </h3>
         <div className="flex items-center gap-[17px]">
           <Instagram
             size={25}
@@ -46,7 +48,9 @@ export default function Footer() {
 
       {/* Newsletter */}
       <div className="newsletter mt-0 md:mt-[30px] md:w-auto flex flex-col items-center md:items-start">
-        <h1 className="text-[16px] font-bold uppercase">Newsletter</h1>
+        <h3 className="text-[0.9rem] font-semibold uppercase tracking-wide">
+          Newsletter
+        </h3>
         <p className="text-[14px] font-light text-center md:text-left max-w-[300px] md:max-w-none">
           Stay up to date with our latest news, receive exclusive deals, and
           more.

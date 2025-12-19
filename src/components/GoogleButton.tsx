@@ -6,7 +6,7 @@ type GoogleButtonProps = {
 };
 
 export default function GoogleButton({
-  text = "Google",
+  text = "Continue with Google",
   onClick,
 }: GoogleButtonProps) {
   return (

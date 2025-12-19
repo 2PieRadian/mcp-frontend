@@ -18,6 +18,9 @@ import ExpertDetails from "./pages/ExpertDetails";
 import Wellness from "./pages/assessments/Wellness";
 import Finance from "./pages/assessments/Finance";
 import Education from "./pages/assessments/Education";
+import AssessmentIntro from "./pages/AssessmentIntro";
+import AssessmentQuestions from "./pages/AssessmentQuestions";
+import AssessmentResult from "./pages/AssessmentResult";
 
 export default function App() {
   return (
@@ -42,6 +45,18 @@ export default function App() {
 
           {/* Assessments */}
           <Route path="/assessments/wellness" element={<Wellness />} />
+          <Route
+            path="/assessments/wellness/:assessmentType"
+            element={<AssessmentIntro />}
+          />
+          <Route
+            path="/assessments/wellness/:assessmentType/questions"
+            element={<AssessmentQuestions />}
+          />
+          <Route
+            path="/assessments/wellness/:assessmentType/result"
+            element={<AssessmentResult />}
+          />
           <Route path="/assessments/education" element={<Education />} />
           <Route path="/assessments/finance" element={<Finance />} />
 
