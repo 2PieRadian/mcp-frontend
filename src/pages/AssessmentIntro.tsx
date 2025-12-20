@@ -273,7 +273,7 @@ export default function AssessmentIntro() {
         />
       </Helmet>
 
-      <div className="min-h-screen bg-linear-to-b from-[#f8fafb] via-white to-[#f0f7fa] px-[20px]">
+      <div className="min-h-screen bg-white px-[20px]">
         <ResponsiveNavbar />
 
         <div className="max-w-[1200px] mx-auto py-[clamp(1.5rem,4vw,3rem)]">

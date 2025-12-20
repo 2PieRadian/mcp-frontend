@@ -178,7 +178,7 @@ export default function Finance() {
         />
       </Helmet>
 
-      <div className="min-h-screen bg-linear-to-b from-[#f8fafb] via-white to-[#f0f7fa] px-[20px]">
+      <div className="min-h-screen bg-white px-[20px]">
         <ResponsiveNavbar />
 
         <div className="max-w-[1000px] mx-auto py-[clamp(2rem,5vw,4rem)]">
