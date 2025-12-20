@@ -54,7 +54,7 @@ body {
   --shadow-l: inset 0 5px 3px white, 0 1px 4px #00000010, 0 2px 8px #00000015, 0 2px 5px #00000015;
 
   /* Hover Colors */
-  --color-hover-bg: hsl(194, 57%, 17%, 0.08);
+  --color-hover-bg: hsl(194, 57%, 17%, 0.03);
 }
 
 .expert-hero-gradient {

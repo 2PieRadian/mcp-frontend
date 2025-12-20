@@ -119,15 +119,15 @@ export default function OAuthCallback() {
       isMounted = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Only run once on mount
+  }, []);
 
   if (status === "error") {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center p-4">
-        <div className="text-center max-w-md w-full bg-white rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] border border-red-100 p-10 animate-fade-in animate-float-card">
-          <div className="w-24 h-24 mx-auto mb-8 rounded-full bg-red-50 flex items-center justify-center shadow-[0_10px_30px_-5px_rgba(239,68,68,0.2)]">
+      <div className="min-h-screen bg-[#f8fafb] flex items-center justify-center p-4">
+        <div className="text-center max-w-md w-full bg-white rounded-2xl shadow-lg border border-gray-200 p-8 animate-fade-in">
+          <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-red-50 flex items-center justify-center">
             <svg
-              className="w-14 h-14 text-red-600"
+              className="w-12 h-12 text-red-600"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -135,19 +135,22 @@ export default function OAuthCallback() {
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth={2.5}
+                strokeWidth={2}
                 d="M6 18L18 6M6 6l12 12"
               />
             </svg>
           </div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+          <h2 className="text-2xl font-bold text-[#1a2e35] mb-3">
             Authentication Failed
           </h2>
-          <p className="text-gray-600 mb-8 text-lg font-medium">
+          <p className="text-[#5a6c75] mb-6" style={{ fontSize: "16px" }}>
             {errorMessage}
           </p>
-          <div className="flex items-center justify-center gap-2 text-sm text-gray-500 font-medium">
-            <div className="animate-spin rounded-full h-4 w-4 border-2 border-red-400 border-t-transparent"></div>
+          <div
+            className="flex items-center justify-center gap-2 text-[#5a6c75]"
+            style={{ fontSize: "14px" }}
+          >
+            <div className="animate-spin rounded-full h-4 w-4 border-2 border-[#44666C] border-t-transparent"></div>
             <span>Redirecting to login page...</span>
           </div>
         </div>
@@ -157,47 +160,46 @@ export default function OAuthCallback() {
 
   if (status === "success") {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center p-4">
-        <div className="text-center max-w-md w-full bg-white rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] border border-gray-100 p-10 animate-fade-in animate-float-card">
-          {/* Success Icon with Animation */}
-          <div className="relative w-28 h-28 mx-auto mb-8">
-            <div className="absolute inset-0 rounded-full bg-green-100 animate-ping opacity-60"></div>
-            <div className="absolute inset-0 rounded-full bg-green-50 animate-pulse"></div>
-            <div className="relative w-28 h-28 rounded-full bg-linear-to-br from-green-400 to-green-600 flex items-center justify-center shadow-[0_10px_30px_-5px_rgba(34,197,94,0.3)]">
-              <svg
-                className="w-16 h-16 text-white"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={3}
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-            </div>
+      <div className="min-h-screen bg-[#f8fafb] flex items-center justify-center p-4">
+        <div className="text-center max-w-md w-full bg-white rounded-2xl shadow-lg border border-gray-200 p-8 animate-fade-in">
+          {/* Success Icon */}
+          <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-green-50 flex items-center justify-center">
+            <svg
+              className="w-12 h-12 text-green-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2.5}
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
           </div>
 
           {/* Success Message */}
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-2xl font-bold text-[#1a2e35] mb-3">
             Welcome Back!
           </h2>
-          <p className="text-gray-600 mb-8 text-lg font-medium">
+          <p className="text-[#5a6c75] mb-6" style={{ fontSize: "16px" }}>
             You've been successfully logged in.
           </p>
 
           {/* Loading Indicator */}
-          <div className="flex flex-col items-center gap-5">
-            <div className="flex items-center justify-center gap-2 text-sm text-gray-500 font-medium">
+          <div className="flex flex-col items-center gap-4">
+            <div
+              className="flex items-center justify-center gap-2 text-[#5a6c75]"
+              style={{ fontSize: "14px" }}
+            >
               <div className="animate-spin rounded-full h-4 w-4 border-2 border-[#44666C] border-t-transparent"></div>
               <span>Redirecting to home page...</span>
             </div>
 
             {/* Progress Bar */}
-            <div className="w-full max-w-xs h-2 bg-gray-100 rounded-full overflow-hidden shadow-inner">
-              <div className="h-full bg-linear-to-r from-[#44666C] via-[#365a62] to-[#44666C] rounded-full animate-progress shadow-sm"></div>
+            <div className="w-full max-w-xs h-1.5 bg-gray-100 rounded-full overflow-hidden">
+              <div className="h-full bg-[#44666C] rounded-full animate-progress"></div>
             </div>
           </div>
         </div>
@@ -207,15 +209,15 @@ export default function OAuthCallback() {
 
   // Loading state
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center p-4">
-      <div className="text-center max-w-md w-full bg-white rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] border border-gray-100 p-10 animate-float-card">
-        <div className="w-24 h-24 mx-auto mb-8">
-          <div className="animate-spin rounded-full h-24 w-24 border-4 border-[#44666C] border-t-transparent shadow-lg"></div>
+    <div className="min-h-screen bg-[#f8fafb] flex items-center justify-center p-4">
+      <div className="text-center max-w-md w-full bg-white rounded-2xl shadow-lg border border-gray-200 p-8 animate-fade-in">
+        <div className="w-16 h-16 mx-auto mb-6">
+          <div className="animate-spin rounded-full h-16 w-16 border-3 border-[#44666C] border-t-transparent"></div>
         </div>
-        <h2 className="text-3xl font-bold text-gray-900 mb-4">
+        <h2 className="text-2xl font-bold text-[#1a2e35] mb-3">
           Completing Authentication
         </h2>
-        <p className="text-gray-600 text-lg font-medium">
+        <p className="text-[#5a6c75]" style={{ fontSize: "16px" }}>
           Please wait while we verify your credentials...
         </p>
       </div>

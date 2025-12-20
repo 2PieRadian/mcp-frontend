@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { BACKEND_URL, getAvatarUrl } from "../../lib/api";
+import ProfileButton from "./ProfileButton";
 
 export default function BasicInfoCard() {
   const { user, login } = useAuth();
@@ -104,16 +105,16 @@ export default function BasicInfoCard() {
                 placeholder="Enter your full name"
               />
               <div className="flex items-center gap-[8px] sm:gap-[10px] flex-wrap">
-                <button
+                <ProfileButton
                   type="button"
                   onClick={handleNameSave}
                   disabled={nameStatus === "saving" || !editingName.trim()}
-                  className="cursor-pointer bg-primary text-light-100 font-medium rounded-[10px] px-[12px] sm:px-[14px] py-[6px] sm:py-[4px] disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)] disabled:hover:translate-y-0 disabled:hover:shadow-none"
-                  style={{ fontSize: "14px" }}
+                  variant="primary"
+                  className="px-[12px] sm:px-[14px]"
                 >
                   {nameStatus === "saving" ? "Saving..." : "Save"}
-                </button>
-                <button
+                </ProfileButton>
+                <ProfileButton
                   type="button"
                   onClick={() => {
                     setEditingName(displayName);
@@ -121,11 +122,10 @@ export default function BasicInfoCard() {
                     setNameStatus("idle");
                     setNameError(null);
                   }}
-                  className="cursor-pointer font-medium rounded-[10px] px-[10px] sm:px-[12px] py-[6px] sm:py-[4px] border border-gray-300 text-light-text hover:bg-hover-bg transition-all duration-200 hover:-translate-y-1 shadow-[0_2px_4px_rgba(0,0,0,0.1)]"
-                  style={{ fontSize: "14px" }}
+                  variant="secondary"
                 >
                   Cancel
-                </button>
+                </ProfileButton>
                 {nameStatus === "success" && (
                   <span className="text-[14px] text-green-600">
                     Name updated
@@ -144,7 +144,7 @@ export default function BasicInfoCard() {
               >
                 {displayName}
               </p>
-              <button
+              <ProfileButton
                 type="button"
                 onClick={() => {
                   setEditingName(displayName);
@@ -152,11 +152,11 @@ export default function BasicInfoCard() {
                   setNameStatus("idle");
                   setNameError(null);
                 }}
-                className="cursor-pointer font-medium rounded-[10px] px-[10px] sm:px-[12px] py-[6px] sm:py-[4px] border border-gray-300 text-light-text hover:bg-hover-bg transition-all duration-200 hover:-translate-y-1 shadow-[0_2px_4px_rgba(0,0,0,0.1)] shrink-0"
-                style={{ fontSize: "14px" }}
+                variant="secondary"
+                className="shrink-0"
               >
                 Edit
-              </button>
+              </ProfileButton>
             </div>
           )}
         </div>

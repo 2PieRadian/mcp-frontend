@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { BACKEND_URL, getAvatarUrl } from "../../lib/api";
+import ProfileButton from "./ProfileButton";
 
 const COMMON_LANGUAGES = [
   "English",
@@ -187,15 +188,15 @@ export default function LanguagesCard() {
                   className="flex-1 min-w-0 border border-border-light rounded-full px-[12px] py-[6px] bg-input-bg placeholder:text-input-placeholder outline-none focus:ring-2 focus:ring-primary/30"
                   style={{ fontSize: "16px" }}
                 />
-                <button
+                <ProfileButton
                   type="button"
                   onClick={handleAddCustomLanguage}
                   disabled={!customLanguage.trim()}
-                  className="cursor-pointer font-medium rounded-[10px] px-[12px] py-[6px] sm:py-[4px] border border-gray-300 text-light-text hover:bg-hover-bg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shrink-0 shadow-[0_2px_4px_rgba(0,0,0,0.1)]"
-                  style={{ fontSize: "14px" }}
+                  variant="secondary"
+                  className="px-[12px] shrink-0"
                 >
                   Add
-                </button>
+                </ProfileButton>
               </div>
 
               {/* Selected languages display */}
@@ -226,18 +227,18 @@ export default function LanguagesCard() {
               )}
 
               <div className="flex items-center gap-[8px] sm:gap-[10px] flex-wrap mt-[8px]">
-                <button
+                <ProfileButton
                   type="button"
                   onClick={handleSave}
                   disabled={
                     status === "saving" || selectedLanguages.length === 0
                   }
-                  className="cursor-pointer bg-primary text-light-100 font-medium rounded-[10px] px-[12px] sm:px-[14px] py-[6px] sm:py-[4px] disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)] disabled:hover:translate-y-0 disabled:hover:shadow-none"
-                  style={{ fontSize: "14px" }}
+                  variant="primary"
+                  className="px-[12px] sm:px-[14px]"
                 >
                   {status === "saving" ? "Saving..." : "Save"}
-                </button>
-                <button
+                </ProfileButton>
+                <ProfileButton
                   type="button"
                   onClick={() => {
                     setSelectedLanguages(user?.languages || []);
@@ -246,11 +247,10 @@ export default function LanguagesCard() {
                     setError(null);
                     setCustomLanguage("");
                   }}
-                  className="cursor-pointer font-medium rounded-[10px] px-[10px] sm:px-[12px] py-[6px] sm:py-[4px] border border-gray-300 text-light-text hover:bg-hover-bg transition-all duration-200 hover:-translate-y-1 shadow-[0_2px_4px_rgba(0,0,0,0.1)]"
-                  style={{ fontSize: "14px" }}
+                  variant="secondary"
                 >
                   Cancel
-                </button>
+                </ProfileButton>
                 {status === "success" && (
                   <span className="text-xs text-green-600">
                     Languages updated
@@ -279,7 +279,7 @@ export default function LanguagesCard() {
                   </p>
                 )}
               </div>
-              <button
+              <ProfileButton
                 type="button"
                 onClick={() => {
                   setSelectedLanguages(user?.languages || []);
@@ -288,11 +288,11 @@ export default function LanguagesCard() {
                   setError(null);
                   setCustomLanguage("");
                 }}
-                className="cursor-pointer font-medium rounded-[10px] px-[10px] sm:px-[12px] py-[6px] sm:py-[4px] border border-gray-300 text-light-text hover:bg-hover-bg transition-all duration-200 hover:-translate-y-1 shadow-[0_2px_4px_rgba(0,0,0,0.1)] shrink-0"
-                style={{ fontSize: "14px" }}
+                variant="secondary"
+                className="shrink-0"
               >
                 {hasLanguages ? "Edit" : "Set"}
-              </button>
+              </ProfileButton>
             </div>
           )}
         </div>
