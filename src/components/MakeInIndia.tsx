@@ -3,17 +3,17 @@ import { Flag, Users, Shield, Heart } from "lucide-react";
 export default function MakeInIndia() {
   return (
     <section className="max-w-[1350px] mx-auto mb-[60px] md:mb-[80px]">
-      <div className="bg-[#ffffff] rounded-[24px] p-[20px] md:p-[24px] shadow-[inset_0_2px_4px_rgba(0,0,0,0.09),0_8px_16px_rgba(0,0,0,0.08)] overflow-hidden transition-all duration-300">
+      <div className="bg-[#ffffff] rounded-[24px] p-[15px] md:p-[24px] shadow-[inset_0_2px_4px_rgba(0,0,0,0.09),0_8px_16px_rgba(0,0,0,0.08)] overflow-hidden transition-all duration-300">
         {/* Header Section with Gradient Background */}
         <div className="bg-linear-to-br from-[#d4e8eb] via-[#ffffff] to-[#b8d4db] rounded-[20px] p-[24px] md:p-[32px] shadow-[inset_0_2px_4px_rgba(255,255,255,0.7),0_4px_8px_rgba(0,0,0,0.1)]">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-[24px]">
             {/* Logo and Brand */}
             <div className="flex items-center gap-[16px]">
-              <div className="w-[64px] h-[64px] bg-white/80 rounded-[16px] flex items-center justify-center shadow-[inset_0_2px_4px_rgba(0,0,0,0.1),0_4px_8px_rgba(0,0,0,0.1)] backdrop-blur-sm">
+              <div className="p-[5px] bg-white/80 rounded-[16px] flex items-center justify-center shadow-[inset_0_2px_4px_rgba(0,0,0,0.1),0_4px_8px_rgba(0,0,0,0.1)] backdrop-blur-sm shrink-0">
                 <img
                   src="/images/navbar/logo.png"
                   alt="MindCurePath Logo"
-                  className="w-[48px] h-[48px]"
+                  className="w-[50px] h-[50px] object-contain aspect-square mt-[2px]"
                 />
               </div>
               <div>
@@ -27,14 +27,15 @@ export default function MakeInIndia() {
             </div>
 
             {/* Make in India Badge */}
-            <div className="flex flex-col items-start md:items-end">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/70 rounded-full shadow-[inset_0_1px_2px_rgba(255,255,255,0.8),0_2px_4px_rgba(0,0,0,0.1)] backdrop-blur-sm mb-2">
+            <div className="flex flex-col items-start md:items-end gap-[5px]">
+              <div className="inline-flex items-center gap-[10px] px-3 py-1.5 bg-white/70 rounded-full shadow-[inset_0_1px_2px_rgba(255,255,255,0.8),0_2px_4px_rgba(0,0,0,0.1)] backdrop-blur-sm mb-2">
                 <Flag className="w-4 h-4 text-primary" />
                 <span className="text-[11px] md:text-[12px] font-semibold text-primary uppercase tracking-wide">
                   Proudly Supports
                 </span>
               </div>
-              <h3 className="text-primary whitespace-nowrap text-[28px] md:text-[36px] font-bold tracking-tight leading-none">
+
+              <h3 className="text-primary whitespace-nowrap text-[24px] md:text-[36px] font-bold tracking-tight leading-none">
                 MAKE IN INDIA
               </h3>
             </div>
