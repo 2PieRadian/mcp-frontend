@@ -21,7 +21,7 @@ export default function ResponsiveNavbar() {
       <>
         {/* Mobile Header */}
         <div className="w-full bg-white">
-          <div className="navbar max-w-[1350px] mx-auto flex justify-between items-center py-[12px] sm:py-[20px]">
+          <div className="navbar max-w-[1350px] mx-auto flex justify-between items-center py-[20px] sm:py-[20px]">
             <div className="flex items-center gap-[8px] sm:gap-[10px] min-w-0 flex-1 sm:flex-initial">
               <Link to="/">
                 <img
@@ -32,7 +32,7 @@ export default function ResponsiveNavbar() {
               </Link>
               <Link
                 to="/"
-                className="text-[18px] sm:text-[22px] font-semibold text-logo-heading cursor-pointer truncate"
+                className="text-[20px] sm:text-[22px] font-semibold text-logo-heading cursor-pointer truncate"
               >
                 {t("appName") === "MindCurePath" ? (
                   <>

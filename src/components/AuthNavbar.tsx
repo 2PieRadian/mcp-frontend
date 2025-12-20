@@ -39,8 +39,16 @@ export default function AuthNavbar() {
 
   return (
     <div className="auth-navbar w-full max-w-[1350px] mx-auto flex justify-between items-center py-[20px] relative">
-      <Link to="/">
-        <h1 className="text-[22px] font-semibold text-logo-heading">
+      <Link
+        to="/"
+        className="flex items-center gap-[8px] sm:gap-[10px] min-w-0 flex-1 sm:flex-initial"
+      >
+        <img
+          src="/images/navbar/logo.png"
+          alt={t("appName") + " Logo"}
+          className="w-[45px] sm:w-[60px] shrink-0"
+        />
+        <h1 className="text-[20px] sm:text-[22px] font-semibold text-logo-heading truncate">
           {t("appName") === "MindCurePath" ? (
             <>
               Mind<span className="text-[#119c95]">Cure</span>Path

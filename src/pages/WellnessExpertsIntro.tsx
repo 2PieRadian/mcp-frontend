@@ -113,7 +113,7 @@ export default function WellnessExpertsIntro() {
   }));
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-[#f8fafb] to-white px-[20px]">
+    <div className="min-h-screen bg-white px-[20px]">
       <ResponsiveNavbar />
 
       <div className="max-w-[1350px] mx-auto pb-[80px]">

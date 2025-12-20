@@ -63,14 +63,14 @@ function ExpertCategoryCard({
   return (
     <div
       onClick={handleClick}
-      className="group relative flex flex-col justify-between bg-gradient-to-br from-white to-[#f8fafb] hover:from-[#f0f7fa] hover:to-white border-2 border-[#e0e7eb] hover:border-[#44666C] rounded-2xl p-6 cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-xl shadow-md h-full"
+      className="group relative flex flex-col justify-between bg-linear-to-br from-white to-[#f8fafb] hover:from-[#f0f7fa] hover:to-white border-2 border-[#e0e7eb] hover:border-[#44666C] rounded-2xl p-6 cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-xl shadow-md h-full"
     >
       {/* Decorative gradient overlay on hover */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#44666C]/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <div className="absolute inset-0 bg-linear-to-br from-[#44666C]/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
       <div className="relative z-10">
         {/* Icon */}
-        <div className="mb-4 flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-[#44666C] to-[#365a62] group-hover:scale-110 transition-transform duration-300">
+        <div className="mb-4 flex items-center justify-center w-12 h-12 rounded-xl bg-linear-to-br from-[#44666C] to-[#365a62] group-hover:scale-110 transition-transform duration-300">
           <Icon className="w-6 h-6 text-white" />
         </div>
 
@@ -84,7 +84,7 @@ function ExpertCategoryCard({
 
       <button
         onClick={handleClick}
-        className="relative z-10 flex items-center justify-center gap-2 mt-auto bg-gradient-to-r from-[#44666C] to-[#365a62] hover:from-[#365a62] hover:to-[#2d4d54] text-white font-semibold rounded-xl py-3 px-5 text-sm transition-all duration-300 shadow-md hover:shadow-lg group-hover:gap-3 cursor-pointer"
+        className="relative z-10 flex items-center justify-center gap-2 mt-auto bg-linear-to-r from-[#44666C] to-[#365a62] hover:from-[#365a62] hover:to-[#2d4d54] text-white font-semibold rounded-xl py-3 px-5 text-sm transition-all duration-300 shadow-md hover:shadow-lg group-hover:gap-3 cursor-pointer"
       >
         <span>{exploreText}</span>
         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
@@ -107,7 +107,7 @@ export default function EducationExpertsIntro() {
   }));
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#f8fafb] to-white px-[20px]">
+    <div className="min-h-screen bg-white px-[20px]">
       <ResponsiveNavbar />
 
       <div className="max-w-[1350px] mx-auto pb-[80px]">
@@ -119,7 +119,7 @@ export default function EducationExpertsIntro() {
               alt="Education and Career"
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#44666C]/90 via-[#44666C]/70 to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-r from-[#44666C]/90 via-[#44666C]/70 to-transparent" />
             <div className="absolute inset-0 flex flex-col justify-center items-start px-4 sm:px-6 md:px-8 lg:px-12 text-white">
               <div className="flex items-center gap-2 mb-3 sm:mb-4">
                 <span className="text-xs sm:text-sm md:text-base font-semibold uppercase tracking-wider opacity-90">
