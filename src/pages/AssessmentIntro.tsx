@@ -310,42 +310,42 @@ export default function AssessmentIntro() {
 
             <div className="relative z-10">
               <div className="flex flex-row items-center gap-[clamp(1rem,3vw,2rem)] mb-[clamp(0.75rem,2vw,1rem)]">
-                <div
+              <div
                   className="w-[clamp(3.5rem,9vw,5rem)] h-[clamp(3.5rem,9vw,5rem)] rounded-xl md:rounded-2xl flex items-center justify-center shadow-2xl shrink-0"
-                  style={{ backgroundColor: data.accentColor }}
+                style={{ backgroundColor: data.accentColor }}
+              >
+                <div
+                  className="text-white"
+                  style={{ width: "60%", height: "60%" }}
                 >
-                  <div
-                    className="text-white"
-                    style={{ width: "60%", height: "60%" }}
-                  >
-                    {data.icon}
-                  </div>
-                </div>
-
-                <div className="flex-1 text-left min-w-0">
-                  <p
-                    className="font-semibold uppercase tracking-widest mb-[clamp(0.5rem,1.5vw,0.75rem)]"
-                    style={{
-                      color: data.accentColor,
-                      fontSize: "clamp(12px, 1.5vw, 14px)",
-                    }}
-                  >
-                    {data.subtitle}
-                  </p>
-                  <h1
-                    className="text-white font-bold leading-tight"
-                    style={{ fontSize: "clamp(24px, 4vw, 32px)" }}
-                  >
-                    {data.title}
-                  </h1>
+                  {data.icon}
                 </div>
               </div>
-              <p
-                className="text-white/90 leading-relaxed"
+
+                <div className="flex-1 text-left min-w-0">
+                <p
+                  className="font-semibold uppercase tracking-widest mb-[clamp(0.5rem,1.5vw,0.75rem)]"
+                  style={{
+                    color: data.accentColor,
+                      fontSize: "clamp(12px, 1.5vw, 14px)",
+                  }}
+                >
+                  {data.subtitle}
+                </p>
+                <h1
+                    className="text-white font-bold leading-tight"
+                    style={{ fontSize: "clamp(24px, 4vw, 32px)" }}
+                >
+                  {data.title}
+                </h1>
+                </div>
+              </div>
+                <p
+                  className="text-white/90 leading-relaxed"
                 style={{ fontSize: "16px" }}
-              >
-                {data.description}
-              </p>
+                >
+                  {data.description}
+                </p>
             </div>
           </div>
 

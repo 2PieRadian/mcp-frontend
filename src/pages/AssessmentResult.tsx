@@ -110,14 +110,14 @@ const assessmentData: Record<
             "Consider making structured changes to your eating habits. Consulting with a nutritionist can help you create a personalized plan for better nutrition.",
         };
       } else {
-        return {
+      return {
           category: "Needs Improvement",
           title: "Poor habits; needs structured nutrition counselling",
           description:
             "Your responses indicate that your current dietary habits may need significant improvement. Structured guidance can help you build healthier eating patterns.",
-          recommendation:
+        recommendation:
             "We strongly recommend consulting with a qualified nutritionist for comprehensive dietary counseling and a structured plan to improve your nutrition habits.",
-        };
+      };
       }
     },
   },
@@ -157,7 +157,7 @@ const assessmentData: Record<
             "Consider relationship counseling to address insecurities and build healthier relationship patterns. Professional guidance can help you develop better communication and trust.",
         };
       } else {
-        return {
+      return {
           category: "High Anxiety",
           title: "High Relationship Anxiety",
           description:
@@ -439,14 +439,14 @@ const assessmentData: Record<
             "Consider working with a financial planner for structured financial planning. Focus on building savings habits, creating investment plans, and developing better financial tracking.",
         };
       } else {
-        return {
+      return {
           category: "Weak",
           title: "Weak Financial Discipline",
           description:
             "Your responses indicate high spending, low savings, and weak financial discipline. Serious financial planning is required to build a secure financial future.",
-          recommendation:
+        recommendation:
             "We strongly recommend working with a financial planner for comprehensive financial planning. Focus on building emergency funds, controlling spending, creating savings habits, and developing a structured financial plan.",
-        };
+      };
       }
     },
   },
@@ -633,23 +633,23 @@ export default function AssessmentResult() {
           {/* Score Card and Right Panel - Side by Side */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
             {/* Left: Score Card */}
-            <div
+          <div
               className="rounded-2xl p-[clamp(1.5rem,3vw,2.5rem)] relative overflow-hidden"
-              style={{
-                background: `linear-gradient(135deg, ${data.gradientFrom} 0%, ${data.gradientTo} 100%)`,
-              }}
-            >
-              <div className="absolute inset-0 opacity-10">
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    backgroundImage: `radial-gradient(circle at 30% 40%, rgba(255,255,255,0.3) 1px, transparent 1px)`,
-                    backgroundSize: "30px 30px",
-                  }}
-                />
-              </div>
+            style={{
+              background: `linear-gradient(135deg, ${data.gradientFrom} 0%, ${data.gradientTo} 100%)`,
+            }}
+          >
+            <div className="absolute inset-0 opacity-10">
+              <div
+                className="absolute inset-0"
+                style={{
+                  backgroundImage: `radial-gradient(circle at 30% 40%, rgba(255,255,255,0.3) 1px, transparent 1px)`,
+                  backgroundSize: "30px 30px",
+                }}
+              />
+            </div>
 
-              <div className="relative z-10">
+            <div className="relative z-10">
                 {/* Score Display */}
                 <div className="mb-6 text-center">
                   <p
@@ -810,31 +810,31 @@ export default function AssessmentResult() {
                       Maximum points possible
                     </p>
                   </div>
-                </div>
               </div>
             </div>
+          </div>
 
             {/* Right: Two Vertical Divs */}
             <div className="flex flex-col gap-6">
               {/* First Div: Category Indicator */}
-              <div
+          <div
                 className="rounded-2xl p-[clamp(1.5rem,3vw,2rem)] border flex-1"
-                style={{
-                  backgroundColor: data.lightBg,
-                  borderColor: data.accentColor + "30",
-                }}
-              >
+            style={{
+              backgroundColor: data.lightBg,
+              borderColor: data.accentColor + "30",
+            }}
+          >
                 <div className="flex items-start gap-3 mb-3">
-                  <div
+              <div
                     className="p-2 rounded-lg shrink-0"
-                    style={{ backgroundColor: data.accentColor + "20" }}
-                  >
+                style={{ backgroundColor: data.accentColor + "20" }}
+              >
                     <CheckCircle2
                       size={24}
                       style={{ color: data.accentColor }}
                     />
-                  </div>
-                  <div className="flex-1">
+              </div>
+              <div className="flex-1">
                     <div
                       className="inline-block px-4 py-2 rounded-full text-white font-semibold mb-3"
                       style={{
@@ -850,40 +850,40 @@ export default function AssessmentResult() {
                         color: data.gradientFrom,
                         fontSize: "clamp(20px, 2.5vw, 24px)",
                       }}
-                    >
-                      {interpretation.title}
+                >
+                  {interpretation.title}
                     </h3>
                     <p
                       className="text-[#5a6c75] leading-relaxed"
                       style={{ fontSize: "16px" }}
                     >
-                      {interpretation.description}
-                    </p>
-                  </div>
-                </div>
+                  {interpretation.description}
+                </p>
               </div>
+            </div>
+          </div>
 
               {/* Second Div: Recommendation */}
               <div className="bg-white rounded-2xl p-[clamp(1.5rem,3vw,2rem)] border border-[#E5E7EB] shadow-sm flex-1">
-                <div className="flex items-start gap-3 mb-3">
-                  <TrendingUp
-                    size={20}
+            <div className="flex items-start gap-3 mb-3">
+              <TrendingUp
+                size={20}
                     className="mt-1 shrink-0"
-                    style={{ color: data.accentColor }}
-                  />
+                style={{ color: data.accentColor }}
+              />
                   <h3
                     className="text-[#1a2e35] font-semibold"
                     style={{ fontSize: "20px" }}
                   >
-                    Recommendation
-                  </h3>
-                </div>
+                Recommendation
+              </h3>
+            </div>
                 <p
                   className="text-[#5a6c75] leading-relaxed pl-8 mb-4"
                   style={{ fontSize: "16px" }}
                 >
-                  {interpretation.recommendation}
-                </p>
+              {interpretation.recommendation}
+            </p>
                 <Link
                   to={getExpertsPageUrl(data.domain)}
                   className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-white font-medium transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg w-full group"
@@ -929,25 +929,25 @@ export default function AssessmentResult() {
                 ];
                 return (
                   <div key={index} className="flex items-start gap-3">
-                    <div
-                      className="w-2 h-2 rounded-full mt-2 shrink-0"
+                <div
+                  className="w-2 h-2 rounded-full mt-2 shrink-0"
                       style={{ backgroundColor: colors[index % colors.length] }}
-                    />
-                    <div className="flex-1">
+                />
+                <div className="flex-1">
                       <span
                         className="font-medium text-[#1a2e35]"
                         style={{ fontSize: "16px" }}
                       >
                         {range.range}:{" "}
-                      </span>
+                  </span>
                       <span
                         className="text-[#5a6c75]"
                         style={{ fontSize: "14px" }}
                       >
                         {range.label}
-                      </span>
-                    </div>
-                  </div>
+                  </span>
+                </div>
+              </div>
                 );
               })}
             </div>

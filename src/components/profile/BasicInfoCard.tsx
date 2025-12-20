@@ -81,12 +81,12 @@ export default function BasicInfoCard() {
 
   return (
     <div className="bg-[hsl(0,0%,97%)] shadow-m rounded-[12px] sm:rounded-[16px] p-[12px] sm:p-[18px]">
-      <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.16em] text-gray-500 mb-[6px]">
+      <p className="text-[12px] uppercase tracking-[0.16em] text-gray-500 mb-[6px]">
         Basic info
       </p>
       <div className="space-y-[6px] sm:space-y-[8px] text-[13px] sm:text-[14px] text-light-text">
         <div className="bg-white px-[12px] sm:px-4 py-[8px] sm:py-[10px] rounded-[16px] sm:rounded-[20px]">
-          <p className="text-xs text-gray-500">Name</p>
+          <p className="text-[14px] sm:text-[15px] text-gray-500">Name</p>
           {isEditingName ? (
             <div className="flex flex-col gap-[6px] mt-[6px]">
               <input
@@ -99,7 +99,8 @@ export default function BasicInfoCard() {
                     setNameError(null);
                   }
                 }}
-                className="border border-border-light rounded-full px-[12px] py-[8px] sm:py-[6px] text-[13px] sm:text-[14px] bg-input-bg placeholder:text-input-placeholder outline-none focus:ring-2 focus:ring-primary/30 w-full"
+                className="border border-gray-300 rounded-[10px] px-[12px] py-[8px] sm:py-[6px] bg-white placeholder:text-input-placeholder outline-none focus:border-gray-400 focus:shadow-[0_2px_4px_rgba(0,0,0,0.1)] w-full transition-all"
+                style={{ fontSize: "16px" }}
                 placeholder="Enter your full name"
               />
               <div className="flex items-center gap-[8px] sm:gap-[10px] flex-wrap">
@@ -107,7 +108,8 @@ export default function BasicInfoCard() {
                   type="button"
                   onClick={handleNameSave}
                   disabled={nameStatus === "saving" || !editingName.trim()}
-                  className="cursor-pointer bg-primary text-light-100 text-[11px] sm:text-xs font-medium rounded-full px-[12px] sm:px-[14px] py-[8px] sm:py-[6px] disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)] disabled:hover:translate-y-0 disabled:hover:shadow-none"
+                  className="cursor-pointer bg-primary text-light-100 font-medium rounded-[10px] px-[12px] sm:px-[14px] py-[6px] sm:py-[4px] disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)] disabled:hover:translate-y-0 disabled:hover:shadow-none"
+                  style={{ fontSize: "14px" }}
                 >
                   {nameStatus === "saving" ? "Saving..." : "Save"}
                 </button>
@@ -119,21 +121,27 @@ export default function BasicInfoCard() {
                     setNameStatus("idle");
                     setNameError(null);
                   }}
-                  className="cursor-pointer text-[11px] sm:text-xs font-medium rounded-full px-[10px] sm:px-[12px] py-[8px] sm:py-[6px] border border-border-light text-light-text hover:bg-hover-bg transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)]"
+                  className="cursor-pointer font-medium rounded-[10px] px-[10px] sm:px-[12px] py-[6px] sm:py-[4px] border border-gray-300 text-light-text hover:bg-hover-bg transition-all duration-200 hover:-translate-y-1 shadow-[0_2px_4px_rgba(0,0,0,0.1)]"
+                  style={{ fontSize: "14px" }}
                 >
                   Cancel
                 </button>
                 {nameStatus === "success" && (
-                  <span className="text-xs text-green-600">Name updated</span>
+                  <span className="text-[14px] text-green-600">
+                    Name updated
+                  </span>
                 )}
                 {nameError && (
-                  <span className="text-xs text-red-600">{nameError}</span>
+                  <span className="text-[14px] text-red-600">{nameError}</span>
                 )}
               </div>
             </div>
           ) : (
             <div className="flex items-center justify-between gap-[8px] sm:gap-[10px] mt-[-2px]">
-              <p className="font-medium truncate flex-1 min-w-0">
+              <p
+                className="font-medium truncate flex-1 min-w-0"
+                style={{ fontSize: "16px" }}
+              >
                 {displayName}
               </p>
               <button
@@ -144,7 +152,8 @@ export default function BasicInfoCard() {
                   setNameStatus("idle");
                   setNameError(null);
                 }}
-                className="cursor-pointer text-[11px] sm:text-xs font-medium rounded-full px-[10px] sm:px-[12px] py-[6px] sm:py-[6px] border border-border-light text-light-text hover:bg-hover-bg transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)] shrink-0"
+                className="cursor-pointer font-medium rounded-[10px] px-[10px] sm:px-[12px] py-[6px] sm:py-[4px] border border-gray-300 text-light-text hover:bg-hover-bg transition-all duration-200 hover:-translate-y-1 shadow-[0_2px_4px_rgba(0,0,0,0.1)] shrink-0"
+                style={{ fontSize: "14px" }}
               >
                 Edit
               </button>
@@ -152,8 +161,8 @@ export default function BasicInfoCard() {
           )}
         </div>
         <div className="bg-white px-[12px] sm:px-4 py-[8px] sm:py-[10px] rounded-[16px] sm:rounded-[20px]">
-          <p className="text-[11px] sm:text-xs text-gray-500">Role</p>
-          <p className="font-medium text-[13px] sm:text-[14px]">
+          <p className="text-[14px] sm:text-[15px] text-gray-500">Role</p>
+          <p className="font-medium text-[16px] sm:text-[17px]">
             {user?.role || "USER"}
           </p>
         </div>

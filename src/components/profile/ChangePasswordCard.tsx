@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { BACKEND_URL } from "../../lib/api";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function ChangePasswordCard() {
   const { user, login } = useAuth();
@@ -9,6 +10,9 @@ export default function ChangePasswordCard() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [status, setStatus] = useState<"idle" | "saving" | "success" | "error">(
     "idle"
   );
@@ -162,10 +166,10 @@ export default function ChangePasswordCard() {
 
   return (
     <div className="bg-[hsl(0,0%,97%)] shadow-m rounded-[12px] sm:rounded-[16px] p-[12px] sm:p-[18px]">
-      <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.16em] text-gray-500 mb-[6px]">
+      <p className="text-[12px] sm:text-[13px] uppercase tracking-[0.16em] text-gray-500 mb-[6px]">
         Password
       </p>
-      <div className="space-y-[6px] sm:space-y-[8px] text-[13px] sm:text-[14px] text-light-text">
+      <div className="space-y-[6px] sm:space-y-[8px] text-[16px] sm:text-[17px] text-light-text">
         <div className="bg-white px-[12px] sm:px-4 py-[8px] sm:py-[10px] rounded-[16px] sm:rounded-[20px]">
           {status === "success" && !isEditing && (
             <div className="mb-[8px] p-[8px] sm:p-[10px] bg-green-50 border border-green-200 rounded-[12px] sm:rounded-[16px]">
@@ -177,48 +181,95 @@ export default function ChangePasswordCard() {
           {isEditing ? (
             <div className="flex flex-col gap-[10px] mt-[6px]">
               {hasPassword && (
+                <div className="relative">
+                  <input
+                    type={showCurrentPassword ? "text" : "password"}
+                    value={currentPassword}
+                    onChange={(e) => {
+                      setCurrentPassword(e.target.value);
+                      if (status !== "idle") {
+                        setStatus("idle");
+                        setError(null);
+                      }
+                    }}
+                    placeholder="Current password"
+                    className="border border-gray-300 rounded-[10px] px-[12px] pr-[40px] py-[8px] sm:py-[6px] bg-white placeholder:text-input-placeholder outline-none focus:border-gray-400 focus:shadow-[0_2px_4px_rgba(0,0,0,0.1)] w-full transition-all"
+                    style={{ fontSize: "16px" }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                    className="absolute right-[12px] top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer"
+                    aria-label={
+                      showCurrentPassword ? "Hide password" : "Show password"
+                    }
+                  >
+                    {showCurrentPassword ? (
+                      <EyeOff size={18} />
+                    ) : (
+                      <Eye size={18} />
+                    )}
+                  </button>
+                </div>
+              )}
+              <div className="relative">
                 <input
-                  type="password"
-                  value={currentPassword}
+                  type={showNewPassword ? "text" : "password"}
+                  value={newPassword}
                   onChange={(e) => {
-                    setCurrentPassword(e.target.value);
+                    setNewPassword(e.target.value);
                     if (status !== "idle") {
                       setStatus("idle");
                       setError(null);
                     }
                   }}
-                  placeholder="Current password"
-                  className="border border-border-light rounded-full px-[12px] py-[8px] sm:py-[6px] text-[13px] sm:text-[14px] bg-white placeholder:text-input-placeholder outline-none focus:ring-2 focus:ring-primary/30 w-full"
+                  placeholder={hasPassword ? "New password" : "Password"}
+                  className="border border-gray-300 rounded-[10px] px-[12px] pr-[40px] py-[8px] sm:py-[6px] bg-white placeholder:text-input-placeholder outline-none focus:border-gray-400 focus:shadow-[0_2px_4px_rgba(0,0,0,0.1)] w-full transition-all"
+                  style={{ fontSize: "16px" }}
                 />
-              )}
-              <input
-                type="password"
-                value={newPassword}
-                onChange={(e) => {
-                  setNewPassword(e.target.value);
-                  if (status !== "idle") {
-                    setStatus("idle");
-                    setError(null);
+                <button
+                  type="button"
+                  onClick={() => setShowNewPassword(!showNewPassword)}
+                  className="absolute right-[12px] top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer"
+                  aria-label={
+                    showNewPassword ? "Hide password" : "Show password"
                   }
-                }}
-                placeholder={hasPassword ? "New password" : "Password"}
-                className="border border-border-light rounded-full px-[12px] py-[8px] sm:py-[6px] text-[13px] sm:text-[14px] bg-white placeholder:text-input-placeholder outline-none focus:ring-2 focus:ring-primary/30 w-full"
-              />
-              <input
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => {
-                  setConfirmPassword(e.target.value);
-                  if (status !== "idle") {
-                    setStatus("idle");
-                    setError(null);
+                >
+                  {showNewPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+              <div className="relative">
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  value={confirmPassword}
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                    if (status !== "idle") {
+                      setStatus("idle");
+                      setError(null);
+                    }
+                  }}
+                  placeholder={
+                    hasPassword ? "Confirm new password" : "Confirm password"
                   }
-                }}
-                placeholder={
-                  hasPassword ? "Confirm new password" : "Confirm password"
-                }
-                className="border border-border-light rounded-full px-[12px] py-[8px] sm:py-[6px] text-[13px] sm:text-[14px] bg-white placeholder:text-input-placeholder outline-none focus:ring-2 focus:ring-primary/30 w-full"
-              />
+                  className="border border-gray-300 rounded-[10px] px-[12px] pr-[40px] py-[8px] sm:py-[6px] bg-white placeholder:text-input-placeholder outline-none focus:border-gray-400 focus:shadow-[0_2px_4px_rgba(0,0,0,0.1)] w-full transition-all"
+                  style={{ fontSize: "16px" }}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-[12px] top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer"
+                  aria-label={
+                    showConfirmPassword ? "Hide password" : "Show password"
+                  }
+                >
+                  {showConfirmPassword ? (
+                    <EyeOff size={18} />
+                  ) : (
+                    <Eye size={18} />
+                  )}
+                </button>
+              </div>
               <div className="flex items-center gap-[8px] sm:gap-[10px] flex-wrap">
                 <button
                   type="button"
@@ -231,7 +282,8 @@ export default function ChangePasswordCard() {
                     !newPassword ||
                     !confirmPassword
                   }
-                  className="cursor-pointer bg-primary text-light-100 text-[11px] sm:text-xs font-medium rounded-full px-[12px] sm:px-[14px] py-[8px] sm:py-[6px] disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)] disabled:hover:translate-y-0 disabled:hover:shadow-none"
+                  className="cursor-pointer bg-primary text-light-100 font-medium rounded-[10px] px-[12px] sm:px-[14px] py-[6px] sm:py-[4px] disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)] disabled:hover:translate-y-0 disabled:hover:shadow-none"
+                  style={{ fontSize: "14px" }}
                 >
                   {status === "saving"
                     ? "Saving..."
@@ -245,11 +297,15 @@ export default function ChangePasswordCard() {
                     setCurrentPassword("");
                     setNewPassword("");
                     setConfirmPassword("");
+                    setShowCurrentPassword(false);
+                    setShowNewPassword(false);
+                    setShowConfirmPassword(false);
                     setIsEditing(false);
                     setStatus("idle");
                     setError(null);
                   }}
-                  className="cursor-pointer text-[11px] sm:text-xs font-medium rounded-full px-[10px] sm:px-[12px] py-[8px] sm:py-[6px] border border-border-light text-light-text hover:bg-hover-bg transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)]"
+                  className="cursor-pointer font-medium rounded-[10px] px-[10px] sm:px-[12px] py-[6px] sm:py-[4px] border border-gray-300 text-light-text hover:bg-hover-bg transition-all duration-200 hover:-translate-y-1 shadow-[0_2px_4px_rgba(0,0,0,0.1)]"
+                  style={{ fontSize: "14px" }}
                 >
                   Cancel
                 </button>
@@ -273,7 +329,8 @@ export default function ChangePasswordCard() {
                   setStatus("idle");
                   setError(null);
                 }}
-                className="cursor-pointer text-[11px] sm:text-xs font-medium rounded-full px-[10px] sm:px-[12px] py-[6px] sm:py-[6px] border border-border-light text-light-text hover:bg-hover-bg transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)] shrink-0"
+                className="cursor-pointer font-medium rounded-[10px] px-[10px] sm:px-[12px] py-[6px] sm:py-[4px] border border-gray-300 text-light-text hover:bg-hover-bg transition-all duration-200 hover:-translate-y-1 shadow-[0_2px_4px_rgba(0,0,0,0.1)] shrink-0"
+                style={{ fontSize: "14px" }}
               >
                 {hasPassword ? "Change" : "Set a Password"}
               </button>

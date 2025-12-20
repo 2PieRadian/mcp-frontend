@@ -78,10 +78,10 @@ export default function GenderCard() {
 
   return (
     <div className="bg-[hsl(0,0%,97%)] shadow-m rounded-[12px] sm:rounded-[16px] p-[12px] sm:p-[18px]">
-      <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.16em] text-gray-500 mb-[6px]">
+      <p className="text-[12px] sm:text-[13px] uppercase tracking-[0.16em] text-gray-500 mb-[6px]">
         Gender
       </p>
-      <div className="space-y-[6px] sm:space-y-[8px] text-[13px] sm:text-[14px] text-light-text">
+      <div className="space-y-[6px] sm:space-y-[8px] text-[16px] sm:text-[17px] text-light-text">
         <div className="bg-white px-[12px] sm:px-4 py-[8px] sm:py-[10px] rounded-[16px] sm:rounded-[20px]">
           {isEditing ? (
             <div className="flex flex-col gap-[6px] mt-[6px]">
@@ -94,7 +94,8 @@ export default function GenderCard() {
                     setError(null);
                   }
                 }}
-                className="border border-border-light rounded-full px-[12px] py-[8px] sm:py-[6px] text-[13px] sm:text-[14px] bg-input-bg outline-none focus:ring-2 focus:ring-primary/30 w-full"
+                className="border border-gray-300 rounded-[10px] px-[12px] py-[8px] sm:py-[6px] bg-white outline-none focus:border-gray-400 focus:shadow-[0_2px_4px_rgba(0,0,0,0.1)] w-full transition-all"
+                style={{ fontSize: "16px" }}
               >
                 <option value="">Select gender</option>
                 <option value="male">Male</option>
@@ -107,7 +108,8 @@ export default function GenderCard() {
                   type="button"
                   onClick={handleSave}
                   disabled={status === "saving" || !selectedGender}
-                  className="cursor-pointer bg-primary text-light-100 text-[11px] sm:text-xs font-medium rounded-full px-[12px] sm:px-[14px] py-[8px] sm:py-[6px] disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)] disabled:hover:translate-y-0 disabled:hover:shadow-none"
+                  className="cursor-pointer bg-primary text-light-100 font-medium rounded-[10px] px-[12px] sm:px-[14px] py-[6px] sm:py-[4px] disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)] disabled:hover:translate-y-0 disabled:hover:shadow-none"
+                  style={{ fontSize: "14px" }}
                 >
                   {status === "saving" ? "Saving..." : "Save"}
                 </button>
@@ -119,7 +121,8 @@ export default function GenderCard() {
                     setStatus("idle");
                     setError(null);
                   }}
-                  className="cursor-pointer text-[11px] sm:text-xs font-medium rounded-full px-[10px] sm:px-[12px] py-[8px] sm:py-[6px] border border-border-light text-light-text hover:bg-hover-bg transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)]"
+                  className="cursor-pointer font-medium rounded-[10px] px-[10px] sm:px-[12px] py-[6px] sm:py-[4px] text-light-text hover:bg-hover-bg transition-all duration-200 hover:-translate-y-1 shadow-[0_2px_4px_rgba(0,0,0,0.1)]"
+                  style={{ fontSize: "14px" }}
                 >
                   Cancel
                 </button>
@@ -142,7 +145,8 @@ export default function GenderCard() {
                   setStatus("idle");
                   setError(null);
                 }}
-                className="cursor-pointer text-[11px] sm:text-xs font-medium rounded-full px-[10px] sm:px-[12px] py-[6px] sm:py-[6px] border border-border-light text-light-text hover:bg-hover-bg transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)] shrink-0"
+                className="cursor-pointer font-medium rounded-[10px] px-[10px] sm:px-[12px] py-[6px] sm:py-[4px] border border-gray-300 text-light-text hover:bg-hover-bg transition-all duration-200 hover:-translate-y-1 shadow-[0_2px_4px_rgba(0,0,0,0.1)] shrink-0"
+                style={{ fontSize: "14px" }}
               >
                 {user?.gender ? "Edit" : "Set"}
               </button>

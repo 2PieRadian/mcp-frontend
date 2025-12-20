@@ -51,13 +51,13 @@ export default function Profile() {
       <main className="w-full py-[20px] sm:py-[30px] space-y-[16px] sm:space-y-[24px] [@media(min-width:950px)]:max-w-[900px] [@media(min-width:950px)]:mx-auto [@media(min-width:950px)]:px-[25px]">
         {/* Page heading */}
         <header className="flex flex-col gap-[4px]">
-          <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.24em] text-gray-500">
+          <p className="text-[12px] sm:text-[13px] uppercase tracking-[0.24em] text-gray-500">
             Your space
           </p>
-          <h1 className="text-[clamp(22px,5vw,32px)] font-bold text-logo-heading">
+          <h1 className="text-[clamp(28px,5vw,36px)] font-bold text-logo-heading">
             Your Profile
           </h1>
-          <p className="text-[12px] sm:text-[13px] text-light-text max-w-[520px]">
+          <p className="text-[16px] sm:text-[17px] text-light-text max-w-[520px]">
             Manage your personal details and keep your account information up to
             date.
           </p>
@@ -79,13 +79,13 @@ export default function Profile() {
               )}
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.12em] opacity-80">
+              <p className="text-[12px] sm:text-[13px] uppercase tracking-[0.12em] opacity-80">
                 Account
               </p>
-              <h1 className="text-[clamp(16px,3.5vw,24px)] font-semibold leading-tight truncate">
+              <h1 className="text-[clamp(16px,3.5vw,26px)] font-semibold leading-tight truncate">
                 {displayName}
               </h1>
-              <p className="text-[11px] sm:text-xs opacity-80 break-all">
+              <p className="text-[12px] sm:text-[13px] opacity-80 break-all">
                 {user.email}
               </p>
             </div>
@@ -94,7 +94,8 @@ export default function Profile() {
           <button
             type="button"
             onClick={handleLogout}
-            className="self-start shadow-m-profile sm:self-auto w-full sm:w-auto cursor-pointer border border-light-100/10 text-light-100 rounded-full px-[18px] py-[10px] sm:py-[8px] text-sm font-medium hover:bg-light-100 hover:text-[hsl(187,73%,16%)] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)]"
+            className="self-start shadow-m-profile sm:self-auto w-full sm:w-auto cursor-pointer border border-light-100/10 text-light-100 rounded-full px-[18px] py-[10px] sm:py-[8px] font-medium hover:bg-light-100 hover:text-[hsl(187,73%,16%)] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)]"
+            style={{ fontSize: "16px" }}
           >
             Logout
           </button>

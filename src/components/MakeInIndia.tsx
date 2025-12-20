@@ -10,11 +10,11 @@ export default function MakeInIndia() {
             {/* Logo and Brand */}
             <div className="flex items-center gap-[16px]">
               <div className="p-[5px] bg-white/80 rounded-[16px] flex items-center justify-center shadow-[inset_0_2px_4px_rgba(0,0,0,0.1),0_4px_8px_rgba(0,0,0,0.1)] backdrop-blur-sm shrink-0">
-                <img
+          <img
                   src="/images/navbar/logo.png"
-                  alt="MindCurePath Logo"
+            alt="MindCurePath Logo"
                   className="w-[50px] h-[50px] object-contain aspect-square mt-[2px]"
-                />
+          />
               </div>
               <div>
                 <h2 className="text-primary text-[22px] md:text-[28px] font-bold leading-tight mb-[4px]">
@@ -22,25 +22,25 @@ export default function MakeInIndia() {
                 </h2>
                 <p className="text-[#44666C] text-[14px] md:text-[15px] font-medium leading-snug">
                   India's own virtual counselling platform
-                </p>
-              </div>
-            </div>
+            </p>
+          </div>
+        </div>
 
             {/* Make in India Badge */}
             <div className="flex flex-col items-start md:items-end gap-[5px]">
               <div className="inline-flex items-center gap-[10px] px-3 py-1.5 bg-white/70 rounded-full shadow-[inset_0_1px_2px_rgba(255,255,255,0.8),0_2px_4px_rgba(0,0,0,0.1)] backdrop-blur-sm mb-2">
                 <Flag className="w-4 h-4 text-primary" />
                 <span className="text-[11px] md:text-[12px] font-semibold text-primary uppercase tracking-wide">
-                  Proudly Supports
+            Proudly Supports
                 </span>
               </div>
 
               <h3 className="text-primary whitespace-nowrap text-[24px] md:text-[36px] font-bold tracking-tight leading-none">
-                MAKE IN INDIA
+            MAKE IN INDIA
               </h3>
             </div>
-          </div>
         </div>
+      </div>
 
         {/* Content Section */}
         <div className="px-[4px] md:px-[8px] py-[32px] md:py-[40px]">
@@ -57,9 +57,9 @@ export default function MakeInIndia() {
                 <p className="text-[#4F5B64] text-[14px] md:text-[15px] leading-relaxed">
                   Licensed Counselors, Therapists, Nutritionists & Expert
                   Advisors
-                </p>
+          </p>
               </div>
-            </div>
+        </div>
 
             <div className="flex items-start gap-[16px] p-[20px] md:p-[24px] bg-[#f4f9fb] rounded-[16px] shadow-m transition-all duration-300 hover:-translate-y-1">
               <div className="w-[48px] h-[48px] bg-white/80 rounded-[6px] flex items-center justify-center shrink-0 shadow-[inset_0_1px_2px_rgba(0,0,0,0.05),0_2px_4px_rgba(0,0,0,0.08)]">
@@ -71,8 +71,8 @@ export default function MakeInIndia() {
                 </h4>
                 <p className="text-[#4F5B64] text-[14px] md:text-[15px] leading-relaxed">
                   Academic Advisors, Career Counselors, Financial Planners & Tax
-                  Experts
-                </p>
+                Experts
+            </p>
               </div>
             </div>
           </div>
@@ -84,20 +84,20 @@ export default function MakeInIndia() {
 
               <div>
                 <p className="text-[#4F5B64] text-[15px] md:text-[16px] leading-relaxed mb-[12px]">
-                  MindCurePath proudly supports the Make in India initiative — a
-                  movement that celebrates innovation, entrepreneurship, and
+              MindCurePath proudly supports the Make in India initiative — a
+              movement that celebrates innovation, entrepreneurship, and
                   self-reliance across the nation. By connecting individuals
                   with certified Indian counselors, therapists, dieticians,
                   academic advisors, financial consultants, and GST & taxation
                   experts, we aim to build a trusted virtual platform where
                   personal and professional guidance is accessible, affordable,
                   and locally empowered.
-                </p>
+            </p>
                 <p className="text-primary text-[15px] md:text-[16px] font-semibold leading-relaxed">
                   At MindCurePath, we believe true growth begins from within —
                   both for individuals and for our nation. India's own virtual
-                  counselling platform — built by Indians, for Indians.
-                </p>
+              counselling platform — built by Indians, for Indians.
+            </p>
               </div>
             </div>
           </div>
