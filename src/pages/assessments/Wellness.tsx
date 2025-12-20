@@ -1,6 +1,6 @@
 import { Brain, Apple, Heart, Flower2, ArrowRight } from "lucide-react";
 import { Helmet } from "react-helmet-async";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ResponsiveNavbar from "../../components/ResponsiveNavbar";
 import useScrollToTop from "../../hooks/useScrollToTop";
 

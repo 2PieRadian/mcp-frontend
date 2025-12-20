@@ -1,12 +1,5 @@
 import { useTranslation } from "react-i18next";
-import {
-  LogIn,
-  Search,
-  Calendar,
-  CreditCard,
-  ArrowRight,
-  CheckCircle2,
-} from "lucide-react";
+import { LogIn, Search, Calendar, CreditCard } from "lucide-react";
 
 interface StepProps {
   stepNumber: number;
@@ -29,9 +22,6 @@ function Step({
 }: StepProps) {
   return (
     <div className="group relative">
-      {/* Connecting line for desktop */}
-      <div className="hidden lg:block absolute left-8 top-16 w-0.5 h-full bg-linear-to-b from-transparent via-[#44666C]/30 to-transparent -z-10" />
-
       <div className="relative flex gap-4 md:gap-6 items-start">
         {/* Step number circle with gradient */}
         <div className="relative shrink-0">
@@ -130,48 +120,11 @@ export default function HowDoesItWork() {
           <div className="absolute top-0 left-1/4 w-72 h-72 bg-blue-200/20 rounded-full blur-3xl -z-10" />
           <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-200/20 rounded-full blur-3xl -z-10" />
 
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-            {/* Left side - Steps */}
-            <div className="space-y-8 lg:space-y-12">
-              {steps.map((step, index) => (
-                <Step key={index} {...step} />
-              ))}
-            </div>
-
-            {/* Right side - Visual element */}
-            <div className="hidden lg:flex items-center justify-center sticky top-20">
-              <div className="relative w-full max-w-md">
-                {/* Animated gradient circles */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-64 h-64 bg-linear-to-br from-blue-400/30 via-purple-400/30 to-pink-400/30 rounded-full blur-2xl animate-pulse" />
-                </div>
-
-                {/* Central illustration card */}
-                <div className="relative bg-linear-to-br from-white to-[#f8fafb] rounded-3xl p-8 shadow-2xl border border-gray-100">
-                  <div className="space-y-6">
-                    <div className="flex items-center justify-center">
-                      <div className="w-24 h-24 rounded-full bg-linear-to-br from-green-500 to-green-600 flex items-center justify-center shadow-lg">
-                        <CheckCircle2 className="w-12 h-12 text-white" />
-                      </div>
-                    </div>
-                    <div className="text-center space-y-2">
-                      <h3 className="text-2xl font-bold text-[#1a2e35]">
-                        Simple & Easy
-                      </h3>
-                      <p className="text-[#5a6c75]">
-                        Get started in just a few clicks
-                      </p>
-                    </div>
-                    <div className="flex items-center justify-center gap-2 text-[#44666C]">
-                      <span className="text-sm font-medium">
-                        Start your journey
-                      </span>
-                      <ArrowRight className="w-5 h-5" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          {/* 2x2 Grid on large screens, 1 column on smaller screens */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+            {steps.map((step, index) => (
+              <Step key={index} {...step} />
+            ))}
           </div>
         </div>
       </div>
