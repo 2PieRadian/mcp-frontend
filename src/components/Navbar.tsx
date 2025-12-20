@@ -1,4 +1,4 @@
-import { ChevronDown, Moon, UserCircle2, Menu } from "lucide-react";
+import { ChevronDown, UserCircle2, Menu } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -190,13 +190,10 @@ export default function Navbar() {
           </div>
 
           {/* Right side controls */}
-          <div className="flex items-center gap-[6px] sm:gap-2 shrink-0">
-            {/* Desktop Language Switcher and Moon - Hidden on mobile */}
+          <div className="flex items-center gap-[15px] shrink-0">
+            {/* Desktop Language Switcher - Hidden on mobile */}
             <div className="hidden sm:flex items-center gap-2">
               <LanguageSwitcher />
-              <div className="p-[8px] rounded-full cursor-pointer">
-                <Moon size={20} color={textColor} />
-              </div>
             </div>
 
             {/* Profile/Login - Always visible */}

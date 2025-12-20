@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import {
   ChevronDown,
-  Moon,
   X,
-  UserCircle2,
   Languages as LanguagesIcon,
   Check,
 } from "lucide-react";
@@ -125,7 +123,7 @@ export default function MobileNavModal({
                 onClick={() => setWeHelpWithExpanded(!weHelpWithExpanded)}
               >
                 <span className="text-primary text-[16px]">
-                  {t("weHelpWith", { ns: "navigation" })}
+                  Expert Categories
                 </span>
                 <ChevronDown
                   size={15}
@@ -188,14 +186,6 @@ export default function MobileNavModal({
             </>
           )}
 
-          {/* Dark Mode */}
-          <div className="px-[25px] py-[12px] flex items-center gap-[12px] rounded-full hover:bg-hover-bg transition-colors cursor-pointer">
-            <div className="p-[8px] rounded-full">
-              <Moon size={20} className="text-primary" />
-            </div>
-            <span className="text-light-text text-[16px]">Change Theme</span>
-          </div>
-
           {/* Profile/Login */}
           {user ? (
             <Link
@@ -207,14 +197,6 @@ export default function MobileNavModal({
               }`}
               onClick={onClose}
             >
-              <UserCircle2
-                size={24}
-                className={`transition-colors ${
-                  location.pathname.startsWith("/profile")
-                    ? "text-primary"
-                    : "text-light-text group-hover:text-primary"
-                }`}
-              />
               <span className="text-light-text text-[16px]">Profile</span>
             </Link>
           ) : (

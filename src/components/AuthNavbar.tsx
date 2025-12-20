@@ -1,5 +1,4 @@
 import {
-  Moon,
   Menu,
   Languages as LanguagesIcon,
   ChevronDown,
@@ -62,10 +61,6 @@ export default function AuthNavbar() {
       {/* Desktop Logos */}
       <div className="hidden sm:flex items-center gap-2">
         <LanguageSwitcher />
-
-        <div className="p-[8px] rounded-full cursor-pointer">
-          <Moon size={20} color="hsl(194, 57%, 17%)" />
-        </div>
       </div>
 
       {/* Mobile Menu Button */}
@@ -132,11 +127,6 @@ export default function AuthNavbar() {
                   ))}
                 </div>
               </div>
-            </div>
-
-            <div className="p-3 hover:bg-light-100 cursor-pointer flex items-center gap-3">
-              <Moon size={18} color="hsl(194, 57%, 17%)" />
-              <span className="text-logo-heading">Color Scheme</span>
             </div>
           </div>
         )}
