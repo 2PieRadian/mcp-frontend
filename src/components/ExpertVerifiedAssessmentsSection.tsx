@@ -99,7 +99,7 @@ export default function ExpertVerifiedAssessmentsSection() {
           subtitle="The greatest wealth is health."
           description="Wellness means complete well-being. We offer personalized tools to reduce stress, boost vitality, and achieve the holistic balance needed to live your most resilient, purposeful life."
           imageSrc="images/expert-verified-assessment/wellness.png"
-          imageSize={400}
+          imageSize={360}
           rightImage={true}
           linkTo="/assessments/wellness"
         />
@@ -116,10 +116,10 @@ export default function ExpertVerifiedAssessmentsSection() {
 
         <ExpertVerifiedAssessmentsSectionItem
           title="Finance"
-          subtitle="The best investment is in the tools of one’s own trade."
+          subtitle="The best investment is in the tools of one's own trade."
           description="Finance is the foundation of wealth. We offer personalized tools to build a strong financial foundation and achieve financial freedom."
           imageSrc="images/expert-verified-assessment/finance.png"
-          imageSize={320}
+          imageSize={360}
           rightImage={true}
           linkTo="/assessments/finance"
         />
