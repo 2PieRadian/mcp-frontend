@@ -1,0 +1,102 @@
+Instructions:
+Select the option that feels most like you in everyday life.
+Be honest — this is for self-reflection only.
+1. When it comes to GST filing, you…
+a) File regularly without reminders. (4)
+b) File but sometimes delay. (3)
+c) Often forget or skip deadlines. (2)
+d) Don’t file unless someone forces you. (1)
+________________________________________
+2. Your understanding of GST rules is…
+a) Clear and updated. (4)
+b) Basic but workable. (3)
+c) Very limited. (2)
+d) Almost zero. (1)
+________________________________________
+3. When receiving an invoice, you…
+a) Check GST details properly. (4)
+b) Check sometimes. (3)
+c) Rarely check. (2)
+d) Never check GST details. (1)
+________________________________________
+4. When a new GST update comes, you…
+a) Read and understand it. (4)
+b) Hear about it from others. (3)
+c) Ignore unless it affects you. (2)
+d) Never follow updates. (1)
+________________________________________
+5. Your knowledge of input tax credit (ITC) is…
+a) Very good; you claim correctly. (4)
+b) Basic; you try but sometimes miss. (3)
+c) Slight idea only. (2)
+d) No idea. (1)
+________________________________________
+6. When a tax-related document is needed, you…
+a) Have everything well-organized. (4)
+b) Can find things after some effort. (3)
+c) Search everywhere and get stressed. (2)
+d) Don’t maintain documents. (1)
+________________________________________
+7. For income tax planning, you…
+a) Plan early with proper calculations. (4)
+b) Decide slowly after thinking. (3)
+c) Plan at the last moment. (2)
+d) Don’t plan at all. (1)
+________________________________________
+8. Your awareness of tax-saving options (80C, 80D, etc.) is…
+a) Strong; you use them effectively. (4)
+b) Moderate understanding. (3)
+c) Very limited knowledge. (2)
+d) No awareness. (1)
+________________________________________
+9. When you receive your salary/business income, you…
+a) Record everything properly. (4)
+b) Maintain basic notes. (3)
+c) Rarely track it. (2)
+d) Don’t track income at all. (1)
+________________________________________
+10. When you need to calculate tax, you…
+a) Calculate accurately. (4)
+b) Try but need help. (3)
+c) Get confused. (2)
+d) Cannot calculate at all. (1)
+________________________________________
+11. Your compliance with due dates (GST, TDS, ITR) is…
+a) Always on time. (4)
+b) Mostly on time. (3)
+c) Frequently delayed. (2)
+d) Usually missed. (1)
+________________________________________
+12. If a tax notice arrives, you…
+a) Understand the issue and respond. (4)
+b) Ask someone and respond. (3)
+c) Panic and delay action. (2)
+d) Ignore it. (1)
+________________________________________
+13. Your record-keeping for business or profession is…
+a) Very systematic. (4)
+b) Good but not perfect. (3)
+c) Disorganized. (2)
+d) Non-existent. (1)
+________________________________________
+14. How well do you understand your own tax liability?
+a) Very clear. (4)
+b) Somewhat clear. (3)
+c) Confusing. (2)
+d) No idea at all. (1)
+________________________________________
+15. How confident are you in managing GST & taxation?
+a) Very confident. (4)
+b) Fairly confident. (3)
+c) Not very confident. (2)
+d) No confidence at all. (1)
+________________________________________
+📊 Score Interpretation (Total: 15–60)
+55 – 60 → GST & Taxation Expert
+Clear knowledge, strong compliance, excellent handling.
+45 – 54 → Good Tax Awareness
+Mostly disciplined with minor gaps.
+30 – 44 → Basic / Needs Improvement
+Confusion, irregular filing, low planning.
+15 – 29 → Poor Compliance / High Risk
+Weak awareness — strong improvement needed to avoid penalties.

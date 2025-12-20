@@ -59,7 +59,31 @@ export default function App() {
             element={<AssessmentResult />}
           />
           <Route path="/assessments/education" element={<Education />} />
+          <Route
+            path="/assessments/education/:assessmentType"
+            element={<AssessmentIntro />}
+          />
+          <Route
+            path="/assessments/education/:assessmentType/questions"
+            element={<AssessmentQuestions />}
+          />
+          <Route
+            path="/assessments/education/:assessmentType/result"
+            element={<AssessmentResult />}
+          />
           <Route path="/assessments/finance" element={<Finance />} />
+          <Route
+            path="/assessments/finance/:assessmentType"
+            element={<AssessmentIntro />}
+          />
+          <Route
+            path="/assessments/finance/:assessmentType/questions"
+            element={<AssessmentQuestions />}
+          />
+          <Route
+            path="/assessments/finance/:assessmentType/result"
+            element={<AssessmentResult />}
+          />
 
           {/* Wellness Experts */}
           <Route path="/wellness-experts" element={<WellnessExpertsIntro />} />

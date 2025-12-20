@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import { useScreen } from "../context/ScreenContext";
@@ -8,6 +8,11 @@ import {
   DIET_QUESTIONS,
   RELATIONSHIP_QUESTIONS,
   YOGA_QUESTIONS,
+  PATH_FINDER_QUESTIONS,
+  CAREER_PLANNING_QUESTIONS,
+  ACADEMIC_QUESTIONS,
+  GST_TAXATION_QUESTIONS,
+  FINANCIAL_PLANNING_QUESTIONS,
 } from "../lib/constants/assessments";
 import type { QuizOption } from "../lib/interfaces";
 import useScrollToTop from "../hooks/useScrollToTop";
@@ -41,8 +46,16 @@ export default function AssessmentQuestions() {
   useScrollToTop();
   const { t } = useTranslation("common");
   const navigate = useNavigate();
+  const location = useLocation();
   const { assessmentType } = useParams<{ assessmentType: string }>();
   const { screenWidth } = useScreen();
+
+  // Determine domain from pathname
+  const domain = location.pathname.includes("/assessments/education/")
+    ? "education"
+    : location.pathname.includes("/assessments/finance/")
+    ? "finance"
+    : "wellness";
 
   // Get questions based on assessment type
   const getQuestions = () => {
@@ -55,6 +68,16 @@ export default function AssessmentQuestions() {
         return RELATIONSHIP_QUESTIONS;
       case "yoga":
         return YOGA_QUESTIONS;
+      case "path-finder":
+        return PATH_FINDER_QUESTIONS;
+      case "career-planning":
+        return CAREER_PLANNING_QUESTIONS;
+      case "academic":
+        return ACADEMIC_QUESTIONS;
+      case "gst-taxation":
+        return GST_TAXATION_QUESTIONS;
+      case "financial-planning":
+        return FINANCIAL_PLANNING_QUESTIONS;
       default:
         return ADHD_QUESTIONS;
     }
@@ -98,7 +121,7 @@ export default function AssessmentQuestions() {
     const totalScore = calculateTotalScore();
     // Navigate to results page with score as URL parameter
     navigate(
-      `/assessments/wellness/${assessmentType}/result?score=${totalScore}`
+      `/assessments/${domain}/${assessmentType}/result?score=${totalScore}`
     );
   }
 

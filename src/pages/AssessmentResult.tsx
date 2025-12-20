@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import {
@@ -215,13 +215,256 @@ const assessmentData: Record<
       }
     },
   },
+  "path-finder": {
+    title: "Path Finder Assessment",
+    domain: "education",
+    gradientFrom: "#7C3AED",
+    gradientTo: "#8B5CF6",
+    accentColor: "#A78BFA",
+    lightBg: "#F3E8FF",
+    getInterpretation: (score: number) => {
+      if (score >= 55 && score <= 60) {
+        return {
+          category: "Clear",
+          title: "Clear Life Path Finder",
+          description:
+            "Your responses indicate strong clarity, self-awareness, direction, and decision-making abilities. You have a clear vision of your life path.",
+          recommendation:
+            "Continue building on your strengths. Consider mentoring others or exploring advanced opportunities to further your growth.",
+        };
+      } else if (score >= 45 && score <= 54) {
+        return {
+          category: "Good",
+          title: "Good Path Awareness",
+          description:
+            "You know your direction but need minor refinement. You have a good foundation with some areas that could benefit from more clarity.",
+          recommendation:
+            "Focus on areas where you feel less certain. Consider working with a career counselor or life coach to refine your path.",
+        };
+      } else if (score >= 30 && score <= 44) {
+        return {
+          category: "Moderate",
+          title: "Moderate Clarity",
+          description:
+            "Your responses show some confusion and inconsistent planning. There are several areas where you could benefit from structured guidance.",
+          recommendation:
+            "Consider working with a career counselor or life coach for structured guidance. Focus on building self-awareness and decision-making skills.",
+        };
+      } else {
+        return {
+          category: "Needs Guidance",
+          title: "Lost / Confused Path",
+          description:
+            "Your responses indicate very unclear direction. You may benefit significantly from structured guidance and self-discovery activities.",
+          recommendation:
+            "We strongly recommend working with a career counselor or life coach for comprehensive guidance. Focus on self-discovery, building clarity, and developing decision-making skills.",
+        };
+      }
+    },
+  },
+  "career-planning": {
+    title: "Career Planning Assessment",
+    domain: "education",
+    gradientFrom: "#DC2626",
+    gradientTo: "#EF4444",
+    accentColor: "#F87171",
+    lightBg: "#FEF2F2",
+    getInterpretation: (score: number) => {
+      if (score >= 55 && score <= 60) {
+        return {
+          category: "Excellent",
+          title: "Excellent Career Readiness",
+          description:
+            "Your responses show clear goals, strong planning, and active skill building. You demonstrate excellent career readiness and direction.",
+          recommendation:
+            "Continue your excellent career development. Consider exploring advanced opportunities, networking, and mentoring others in your field.",
+        };
+      } else if (score >= 45 && score <= 54) {
+        return {
+          category: "Good",
+          title: "Good Career Direction",
+          description:
+            "You have a mostly clear career path with minor gaps. Your foundation is solid with some areas that could benefit from more focus.",
+          recommendation:
+            "Address the areas where you scored lower. Consider working with a career counselor to refine your career plan and fill any gaps.",
+        };
+      } else if (score >= 30 && score <= 44) {
+        return {
+          category: "Average",
+          title: "Average / Needs More Clarity",
+          description:
+            "Your responses indicate confusion, irregular efforts, and limited planning. There are several areas where structured career planning could help significantly.",
+          recommendation:
+            "Consider working with a career counselor for structured career planning. Focus on building clarity, setting goals, and developing consistent career-building habits.",
+        };
+      } else {
+        return {
+          category: "Unclear",
+          title: "Unclear & Unplanned Career Path",
+          description:
+            "Your responses show low clarity and low confidence about your career path. Structured planning and guidance are strongly recommended.",
+          recommendation:
+            "We strongly recommend working with a career counselor for comprehensive career planning. Focus on self-assessment, exploring options, and building a structured career development plan.",
+        };
+      }
+    },
+  },
+  academic: {
+    title: "Academic Assessment",
+    domain: "education",
+    gradientFrom: "#0891B2",
+    gradientTo: "#06B6D4",
+    accentColor: "#22D3EE",
+    lightBg: "#ECFEFF",
+    getInterpretation: (score: number) => {
+      if (score >= 55 && score <= 60) {
+        return {
+          category: "Excellent",
+          title: "Excellent Academic Habits",
+          description:
+            "Your responses indicate excellent academic habits. You are focused, consistent, and self-driven in your studies.",
+          recommendation:
+            "Continue maintaining your excellent study habits. Consider mentoring other students or exploring advanced academic opportunities.",
+        };
+      } else if (score >= 45 && score <= 54) {
+        return {
+          category: "Strong",
+          title: "Strong Student",
+          description:
+            "You have good academic habits overall with minor issues. Your foundation is solid with some areas that could be improved.",
+          recommendation:
+            "Focus on the areas that scored lower. Consider working with an academic counselor or tutor to refine your study strategies.",
+        };
+      } else if (score >= 30 && score <= 44) {
+        return {
+          category: "Average",
+          title: "Average / Needs Improvement",
+          description:
+            "Your responses show irregular study patterns, distractions, and inconsistency. There are several areas where improvement could significantly benefit your academic performance.",
+          recommendation:
+            "Consider working with an academic counselor or tutor for structured study planning. Focus on building consistency, reducing distractions, and developing better study habits.",
+        };
+      } else {
+        return {
+          category: "Weak",
+          title: "Weak Study Patterns",
+          description:
+            "Your responses indicate high distraction, poor planning, and weak study patterns. Structured academic support is strongly recommended.",
+          recommendation:
+            "We strongly recommend working with an academic counselor or tutor for comprehensive study planning. Focus on building focus, creating study schedules, and developing effective learning strategies.",
+        };
+      }
+    },
+  },
+  "gst-taxation": {
+    title: "GST & Taxation Assessment",
+    domain: "finance",
+    gradientFrom: "#F59E0B",
+    gradientTo: "#D97706",
+    accentColor: "#FBBF24",
+    lightBg: "#FFFBEB",
+    getInterpretation: (score: number) => {
+      if (score >= 55 && score <= 60) {
+        return {
+          category: "Expert",
+          title: "GST & Taxation Expert",
+          description:
+            "Your responses indicate clear knowledge, strong compliance, and excellent handling of GST and taxation matters. You demonstrate expert-level understanding.",
+          recommendation:
+            "Continue maintaining your excellent compliance. Consider helping others or consulting as a tax advisor to share your expertise.",
+        };
+      } else if (score >= 45 && score <= 54) {
+        return {
+          category: "Good",
+          title: "Good Tax Awareness",
+          description:
+            "You have mostly disciplined tax practices with minor gaps. Your foundation is solid with some areas that could benefit from more attention.",
+          recommendation:
+            "Focus on areas where you scored lower. Consider working with a tax consultant to refine your tax planning and compliance practices.",
+        };
+      } else if (score >= 30 && score <= 44) {
+        return {
+          category: "Basic",
+          title: "Basic / Needs Improvement",
+          description:
+            "Your responses show confusion, irregular filing, and low planning. There are several areas where structured tax guidance could help significantly.",
+          recommendation:
+            "Consider working with a tax consultant for structured tax planning and compliance. Focus on building better record-keeping, understanding tax rules, and improving compliance habits.",
+        };
+      } else {
+        return {
+          category: "High Risk",
+          title: "Poor Compliance / High Risk",
+          description:
+            "Your responses indicate weak awareness and poor compliance. This poses a high risk of penalties and legal issues. Immediate professional guidance is strongly recommended.",
+          recommendation:
+            "We strongly recommend working with a qualified tax consultant immediately. Focus on building compliance, understanding tax obligations, and creating a structured system to avoid penalties and legal issues.",
+        };
+      }
+    },
+  },
+  "financial-planning": {
+    title: "Financial Planning Assessment",
+    domain: "finance",
+    gradientFrom: "#10B981",
+    gradientTo: "#059669",
+    accentColor: "#34D399",
+    lightBg: "#ECFDF5",
+    getInterpretation: (score: number) => {
+      if (score >= 55 && score <= 60) {
+        return {
+          category: "Excellent",
+          title: "Excellent Financial Planner",
+          description:
+            "Your responses indicate strong savings, investments, discipline, and future-readiness. You demonstrate excellent financial planning skills.",
+          recommendation:
+            "Continue your excellent financial planning. Consider exploring advanced investment strategies or becoming a financial advisor to help others.",
+        };
+      } else if (score >= 45 && score <= 54) {
+        return {
+          category: "Good",
+          title: "Good Financial Planning",
+          description:
+            "You have mostly balanced financial planning with minor areas to improve. Your foundation is solid with some gaps that could be addressed.",
+          recommendation:
+            "Focus on the areas that scored lower. Consider working with a financial planner to refine your financial strategy and fill any gaps.",
+        };
+      } else if (score >= 30 && score <= 44) {
+        return {
+          category: "Average",
+          title: "Average / Needs Improvement",
+          description:
+            "Your responses show irregular planning, low investments, and poor tracking. There are several areas where structured financial planning could significantly benefit you.",
+          recommendation:
+            "Consider working with a financial planner for structured financial planning. Focus on building savings habits, creating investment plans, and developing better financial tracking.",
+        };
+      } else {
+        return {
+          category: "Weak",
+          title: "Weak Financial Discipline",
+          description:
+            "Your responses indicate high spending, low savings, and weak financial discipline. Serious financial planning is required to build a secure financial future.",
+          recommendation:
+            "We strongly recommend working with a financial planner for comprehensive financial planning. Focus on building emergency funds, controlling spending, creating savings habits, and developing a structured financial plan.",
+        };
+      }
+    },
+  },
 };
 
 export default function AssessmentResult() {
   useScrollToTop();
+  const location = useLocation();
   const { assessmentType } = useParams<{ assessmentType: string }>();
   const params = new URLSearchParams(window.location.search);
   const totalScore = parseInt(params.get("score") || "0");
+
+  // Determine domain from pathname
+  const domain = location.pathname.includes("/assessments/education/")
+    ? "education"
+    : location.pathname.includes("/assessments/finance/")
+    ? "finance"
+    : "wellness";
 
   // Calculate max score based on assessment type
   const getMaxScore = (type: string | undefined) => {
@@ -233,6 +476,16 @@ export default function AssessmentResult() {
       case "relationship":
         return 60; // 15 questions × 4
       case "yoga":
+        return 60; // 15 questions × 4
+      case "path-finder":
+        return 60; // 15 questions × 4
+      case "career-planning":
+        return 60; // 15 questions × 4
+      case "academic":
+        return 60; // 15 questions × 4
+      case "gst-taxation":
+        return 60; // 15 questions × 4
+      case "financial-planning":
         return 60; // 15 questions × 4
       default:
         return 40;
@@ -295,6 +548,41 @@ export default function AssessmentResult() {
           { range: "30–44", label: "Average / Needs Improvement" },
           { range: "15–29", label: "Weak Yogic Discipline" },
         ];
+      case "path-finder":
+        return [
+          { range: "55–60", label: "Clear Life Path Finder" },
+          { range: "45–54", label: "Good Path Awareness" },
+          { range: "30–44", label: "Moderate Clarity" },
+          { range: "15–29", label: "Lost / Confused Path" },
+        ];
+      case "career-planning":
+        return [
+          { range: "55–60", label: "Excellent Career Readiness" },
+          { range: "45–54", label: "Good Career Direction" },
+          { range: "30–44", label: "Average / Needs More Clarity" },
+          { range: "15–29", label: "Unclear & Unplanned Career Path" },
+        ];
+      case "academic":
+        return [
+          { range: "55–60", label: "Excellent Academic Habits" },
+          { range: "45–54", label: "Strong Student" },
+          { range: "30–44", label: "Average / Needs Improvement" },
+          { range: "15–29", label: "Weak Study Patterns" },
+        ];
+      case "gst-taxation":
+        return [
+          { range: "55–60", label: "GST & Taxation Expert" },
+          { range: "45–54", label: "Good Tax Awareness" },
+          { range: "30–44", label: "Basic / Needs Improvement" },
+          { range: "15–29", label: "Poor Compliance / High Risk" },
+        ];
+      case "financial-planning":
+        return [
+          { range: "55–60", label: "Excellent Financial Planner" },
+          { range: "45–54", label: "Good Financial Planning" },
+          { range: "30–44", label: "Average / Needs Improvement" },
+          { range: "15–29", label: "Weak Financial Discipline" },
+        ];
       default:
         return [
           { range: "10–18", label: "Low indicators" },
@@ -323,7 +611,7 @@ export default function AssessmentResult() {
           {/* Header */}
           <div className="mb-[clamp(2rem,4vw,3rem)]">
             <Link
-              to={`/assessments/wellness/${assessmentType}`}
+              to={`/assessments/${domain}/${assessmentType}`}
               className="inline-flex items-center gap-2 text-[#5a6c75] hover:text-[#44666C] transition-colors mb-4"
             >
               <ArrowLeft size={18} />
@@ -396,6 +684,36 @@ export default function AssessmentResult() {
                       "Your score indicates strong patterns. Professional evaluation and support are recommended for comprehensive understanding."}
                     {interpretation.category === "Analysis" &&
                       "Your assessment has been completed and analyzed. Review your results below for personalized insights."}
+                    {interpretation.category === "Excellent" &&
+                      "Your score indicates excellent performance in this area. You demonstrate strong habits and understanding."}
+                    {interpretation.category === "Good" &&
+                      "Your score shows good performance with minor areas for improvement. You have a solid foundation."}
+                    {interpretation.category === "Average" &&
+                      "Your score indicates average performance. There are several areas where improvement could benefit you significantly."}
+                    {interpretation.category === "Needs Improvement" &&
+                      "Your score suggests areas that need improvement. Structured guidance can help you build better habits."}
+                    {interpretation.category === "Secure" &&
+                      "Your score shows secure relationship traits. You demonstrate trust, healthy communication, and emotional stability."}
+                    {interpretation.category === "Healthy" &&
+                      "Your score indicates mostly healthy relationship patterns. You have good foundations with some areas that could benefit from attention."}
+                    {interpretation.category === "High Anxiety" &&
+                      "Your score suggests high levels of relationship anxiety. Professional support can help you address anxiety and build security."}
+                    {interpretation.category === "Clear" &&
+                      "Your score indicates strong clarity, self-awareness, direction, and decision-making abilities. You have a clear vision of your path."}
+                    {interpretation.category === "Needs Guidance" &&
+                      "Your score indicates very unclear direction. Structured guidance and self-discovery activities can help significantly."}
+                    {interpretation.category === "Unclear" &&
+                      "Your score shows low clarity and confidence. Structured planning and guidance are strongly recommended."}
+                    {interpretation.category === "Strong" &&
+                      "Your score shows good performance overall with minor issues. Your foundation is solid with some areas that could be improved."}
+                    {interpretation.category === "Weak" &&
+                      "Your score indicates weak patterns that need significant improvement. Structured support is strongly recommended."}
+                    {interpretation.category === "Expert" &&
+                      "Your score indicates expert-level knowledge and compliance. You demonstrate excellent understanding and handling of tax matters."}
+                    {interpretation.category === "Basic" &&
+                      "Your score shows basic understanding with areas needing improvement. Structured tax guidance can help significantly."}
+                    {interpretation.category === "High Risk" &&
+                      "Your score indicates poor compliance and high risk. Immediate professional guidance is strongly recommended to avoid penalties."}
                   </p>
                 </div>
 
@@ -564,7 +882,7 @@ export default function AssessmentResult() {
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-3">
             <Link
-              to={`/assessments/wellness/${assessmentType}/questions`}
+              to={`/assessments/${domain}/${assessmentType}/questions`}
               className="flex-1 text-center px-6 py-3 rounded-xl text-white font-medium transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg"
               style={{
                 background: `linear-gradient(135deg, ${data.gradientFrom} 0%, ${data.gradientTo} 100%)`,
@@ -573,7 +891,7 @@ export default function AssessmentResult() {
               Retake Assessment
             </Link>
             <Link
-              to="/assessments/wellness"
+              to={`/assessments/${domain}`}
               className="flex-1 text-center px-6 py-3 rounded-xl bg-white border border-[#E5E7EB] text-[#44666C] font-medium hover:bg-[#F9FAFB] transition-colors"
             >
               View All Assessments

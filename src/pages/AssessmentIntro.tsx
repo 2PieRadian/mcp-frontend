@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import {
   Brain,
@@ -9,6 +9,11 @@ import {
   CheckCircle2,
   Clock,
   Shield,
+  Compass,
+  Briefcase,
+  GraduationCap,
+  Receipt,
+  Wallet,
 } from "lucide-react";
 import useScrollToTop from "../hooks/useScrollToTop";
 
@@ -118,12 +123,135 @@ const assessmentData: Record<string, AssessmentInfo> = {
       "Expert-guided practice suggestions",
     ],
   },
+  "path-finder": {
+    title: "Path Finder Assessment",
+    subtitle: "Life Direction & Clarity",
+    description:
+      "Discover your life path and gain clarity on your direction. Understand your strengths, decision-making patterns, and build a clear vision for your future.",
+    icon: <Compass style={{ width: "100%", height: "100%" }} />,
+    gradientFrom: "#7C3AED",
+    gradientTo: "#8B5CF6",
+    accentColor: "#A78BFA",
+    benefits: [
+      "Gain clarity on your life direction",
+      "Understand your strengths and decision-making",
+      "Build a clear vision for your future",
+      "Get personalized guidance for your path",
+    ],
+    duration: "5-10 minutes",
+    whatYouGet: [
+      "Life direction analysis",
+      "Self-awareness assessment",
+      "Personalized path-finding insights",
+      "Expert-verified recommendations",
+    ],
+  },
+  "career-planning": {
+    title: "Career Planning Assessment",
+    subtitle: "Professional Growth",
+    description:
+      "Evaluate your career readiness and planning skills. Discover your strengths, set clear goals, and build a structured path for professional success.",
+    icon: <Briefcase style={{ width: "100%", height: "100%" }} />,
+    gradientFrom: "#DC2626",
+    gradientTo: "#EF4444",
+    accentColor: "#F87171",
+    benefits: [
+      "Evaluate your career readiness",
+      "Set clear professional goals",
+      "Build structured career planning",
+      "Develop professional growth strategies",
+    ],
+    duration: "5-10 minutes",
+    whatYouGet: [
+      "Career readiness analysis",
+      "Professional goal setting guidance",
+      "Structured career planning insights",
+      "Expert-verified career recommendations",
+    ],
+  },
+  academic: {
+    title: "Academic Assessment",
+    subtitle: "Study Habits & Performance",
+    description:
+      "Assess your academic habits, study patterns, and learning strategies. Identify areas for improvement and develop effective study techniques for better performance.",
+    icon: <GraduationCap style={{ width: "100%", height: "100%" }} />,
+    gradientFrom: "#0891B2",
+    gradientTo: "#06B6D4",
+    accentColor: "#22D3EE",
+    benefits: [
+      "Assess your study habits and patterns",
+      "Identify areas for academic improvement",
+      "Develop effective study techniques",
+      "Enhance learning and performance",
+    ],
+    duration: "5-10 minutes",
+    whatYouGet: [
+      "Comprehensive academic habit analysis",
+      "Personalized study strategy recommendations",
+      "Performance improvement insights",
+      "Expert-verified academic guidance",
+    ],
+  },
+  "gst-taxation": {
+    title: "GST & Taxation Assessment",
+    subtitle: "Tax Compliance & Planning",
+    description:
+      "Evaluate your GST and taxation knowledge, compliance practices, and tax planning skills. Get expert guidance to improve your tax management and avoid penalties.",
+    icon: <Receipt style={{ width: "100%", height: "100%" }} />,
+    gradientFrom: "#F59E0B",
+    gradientTo: "#D97706",
+    accentColor: "#FBBF24",
+    benefits: [
+      "Evaluate your GST and tax compliance",
+      "Understand your tax knowledge gaps",
+      "Improve tax planning and record-keeping",
+      "Avoid penalties with better compliance",
+    ],
+    duration: "5-10 minutes",
+    whatYouGet: [
+      "Comprehensive tax compliance analysis",
+      "Personalized tax planning recommendations",
+      "GST and taxation knowledge assessment",
+      "Expert-verified tax guidance",
+    ],
+  },
+  "financial-planning": {
+    title: "Financial Planning Assessment",
+    subtitle: "Wealth & Future Planning",
+    description:
+      "Assess your financial planning skills, savings habits, and investment knowledge. Discover areas for improvement and build a secure financial future with expert guidance.",
+    icon: <Wallet style={{ width: "100%", height: "100%" }} />,
+    gradientFrom: "#10B981",
+    gradientTo: "#059669",
+    accentColor: "#34D399",
+    benefits: [
+      "Assess your financial planning skills",
+      "Evaluate savings and investment habits",
+      "Identify areas for financial improvement",
+      "Build a secure financial future",
+    ],
+    duration: "5-10 minutes",
+    whatYouGet: [
+      "Comprehensive financial planning analysis",
+      "Personalized financial strategy recommendations",
+      "Savings and investment insights",
+      "Expert-verified financial guidance",
+    ],
+  },
 };
 
 export default function AssessmentIntro() {
   useScrollToTop();
+  const location = useLocation();
   const { assessmentType } = useParams<{ assessmentType: string }>();
   const data = assessmentData[assessmentType || ""];
+
+  // Determine domain from pathname
+  const domain = location.pathname.includes("/assessments/education/")
+    ? "education"
+    : location.pathname.includes("/assessments/finance/")
+    ? "finance"
+    : "wellness";
 
   if (!data) {
     return (
@@ -139,7 +267,7 @@ export default function AssessmentIntro() {
         <title>{data.title} | MindCurePath</title>
         <meta name="description" content={data.description} />
         <link
-          href={`https://mindcurepath.com/assessments/wellness/${assessmentType}`}
+          href={`https://mindcurepath.com/assessments/${domain}/${assessmentType}`}
           rel="canonical"
         />
       </Helmet>
@@ -207,7 +335,7 @@ export default function AssessmentIntro() {
           {/* Start Assessment Button */}
           <div className="mb-[clamp(1.5rem,3vw,3rem)]">
             <Link
-              to={`/assessments/wellness/${assessmentType}/questions`}
+              to={`/assessments/${domain}/${assessmentType}/questions`}
               className="w-full md:w-auto inline-block px-[clamp(2rem,5vw,3rem)] py-[clamp(0.75rem,1.5vw,1rem)] rounded-[clamp(25px,30px,30px)] text-white font-semibold text-[clamp(1rem,2vw,1.125rem)] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)] text-center"
               style={{
                 background: `linear-gradient(135deg, ${data.gradientFrom} 0%, ${data.gradientTo} 100%)`,

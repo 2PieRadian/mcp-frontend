@@ -95,7 +95,7 @@ export default function ExpertsFilterModal({
         className="relative bg-white rounded-2xl shadow-2xl max-w-[520px] w-full max-h-[90vh] flex flex-col overflow-hidden transform transition-all"
       >
         {/* Header */}
-        <div className="bg-gradient-to-r from-[#44666C] to-[#365a62] px-6 py-5 flex justify-between items-center">
+        <div className="bg-linear-to-r from-[#44666C] to-[#365a62] px-6 py-5 flex justify-between items-center">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-white/20 rounded-lg">
               <SlidersHorizontal className="w-5 h-5 text-white" />
@@ -115,9 +115,9 @@ export default function ExpertsFilterModal({
         {/* Content */}
         <div className="overflow-y-auto flex-1 px-6 py-6 space-y-6">
           {/* Price Range */}
-          <div className="bg-gradient-to-br from-[#f8fafb] to-white rounded-xl p-5 border border-[#e0e7eb] hover:border-[#44666C]/30 transition-all">
+          <div className="bg-linear-to-br from-[#f8fafb] to-white rounded-xl p-5 border border-[#e0e7eb] hover:border-[#44666C]/30 transition-all">
             <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-gradient-to-br from-[#44666C] to-[#365a62] rounded-lg">
+              <div className="p-2 bg-linear-to-br from-[#44666C] to-[#365a62] rounded-lg">
                 <DollarSign className="w-5 h-5 text-white" />
               </div>
               <label className="text-base font-semibold text-[#1a2e35]">
@@ -158,9 +158,9 @@ export default function ExpertsFilterModal({
           </div>
 
           {/* Rating */}
-          <div className="bg-gradient-to-br from-[#f8fafb] to-white rounded-xl p-5 border border-[#e0e7eb] hover:border-[#44666C]/30 transition-all">
+          <div className="bg-linear-to-br from-[#f8fafb] to-white rounded-xl p-5 border border-[#e0e7eb] hover:border-[#44666C]/30 transition-all">
             <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-gradient-to-br from-[#44666C] to-[#365a62] rounded-lg">
+              <div className="p-2 bg-linear-to-br from-[#44666C] to-[#365a62] rounded-lg">
                 <Star className="w-5 h-5 text-white fill-white" />
               </div>
               <label className="text-base font-semibold text-[#1a2e35]">
@@ -185,9 +185,9 @@ export default function ExpertsFilterModal({
           </div>
 
           {/* Experience */}
-          <div className="bg-gradient-to-br from-[#f8fafb] to-white rounded-xl p-5 border border-[#e0e7eb] hover:border-[#44666C]/30 transition-all">
+          <div className="bg-linear-to-br from-[#f8fafb] to-white rounded-xl p-5 border border-[#e0e7eb] hover:border-[#44666C]/30 transition-all">
             <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-gradient-to-br from-[#44666C] to-[#365a62] rounded-lg">
+              <div className="p-2 bg-linear-to-br from-[#44666C] to-[#365a62] rounded-lg">
                 <Award className="w-5 h-5 text-white" />
               </div>
               <label className="text-base font-semibold text-[#1a2e35]">
@@ -226,7 +226,7 @@ export default function ExpertsFilterModal({
 
           <button
             onClick={handleApply}
-            className="flex-1 bg-gradient-to-r from-[#44666C] to-[#365a62] hover:from-[#365a62] hover:to-[#2d4d54] text-white py-3 px-5 rounded-xl font-semibold transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 cursor-pointer"
+            className="flex-1 bg-linear-to-r from-[#44666C] to-[#365a62] hover:from-[#365a62] hover:to-[#2d4d54] text-white py-3 px-5 rounded-xl font-semibold transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 cursor-pointer"
           >
             {t("apply", { ns: "common" })}
           </button>
