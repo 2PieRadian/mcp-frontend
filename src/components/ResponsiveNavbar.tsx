@@ -45,7 +45,7 @@ export default function ResponsiveNavbar() {
             </div>
 
             {/* Right side controls */}
-            <div className="flex items-center gap-[10px] shrink-0">
+            <div className="flex items-center gap-[20px] shrink-0">
               {/* Profile/Login Button */}
               {user ? (
                 <Link
