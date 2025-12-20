@@ -1,6 +1,6 @@
 import { Brain, Apple, Heart, Flower2, ArrowRight } from "lucide-react";
 import { Helmet } from "react-helmet-async";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import ResponsiveNavbar from "../../components/ResponsiveNavbar";
 import useScrollToTop from "../../hooks/useScrollToTop";
 
@@ -24,20 +24,15 @@ function WellnessCard({
   gradientTo,
   accentColor,
 }: WellnessCardProps) {
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    const assessmentPath = title.toLowerCase();
-    navigate(`/assessments/wellness/${assessmentPath}`);
-  };
+  const assessmentPath = title.toLowerCase();
+  const linkTo = `/assessments/wellness/${assessmentPath}`;
 
   return (
     <div
-      className="group relative overflow-hidden rounded-2xl md:rounded-3xl transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl cursor-pointer"
+      className="group relative overflow-hidden rounded-2xl md:rounded-3xl transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl"
       style={{
         background: `linear-gradient(135deg, ${gradientFrom} 0%, ${gradientTo} 100%)`,
       }}
-      onClick={handleClick}
     >
       {/* Decorative Pattern Overlay */}
       <div className="absolute inset-0 opacity-5">
@@ -99,11 +94,8 @@ function WellnessCard({
         </p>
 
         {/* CTA Button */}
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            handleClick();
-          }}
+        <Link
+          to={linkTo}
           className="flex items-center justify-center gap-2 bg-white text-[#44666C] font-semibold px-[clamp(20px,3vw,28px)] py-[clamp(12px,2vw,16px)] rounded-xl mt-auto transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-gray-50 group/btn cursor-pointer"
         >
           <span style={{ fontSize: "16px" }}>Begin Assessment</span>
@@ -111,7 +103,7 @@ function WellnessCard({
             className="group-hover/btn:translate-x-1 transition-transform duration-300"
             size={18}
           />
-        </button>
+        </Link>
 
         {/* Bottom Accent Line */}
         <div

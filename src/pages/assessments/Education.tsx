@@ -1,6 +1,6 @@
 import { Compass, Briefcase, GraduationCap, ArrowRight } from "lucide-react";
 import { Helmet } from "react-helmet-async";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import ResponsiveNavbar from "../../components/ResponsiveNavbar";
 import useScrollToTop from "../../hooks/useScrollToTop";
 
@@ -24,21 +24,16 @@ function EducationCard({
   gradientTo,
   accentColor,
 }: EducationCardProps) {
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    // Convert title to route-friendly format
-    const assessmentPath = title.toLowerCase().replace(/\s+/g, "-");
-    navigate(`/assessments/education/${assessmentPath}`);
-  };
+  // Convert title to route-friendly format
+  const assessmentPath = title.toLowerCase().replace(/\s+/g, "-");
+  const linkTo = `/assessments/education/${assessmentPath}`;
 
   return (
     <div
-      className="group relative overflow-hidden rounded-2xl md:rounded-3xl transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl cursor-pointer"
+      className="group relative overflow-hidden rounded-2xl md:rounded-3xl transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl"
       style={{
         background: `linear-gradient(135deg, ${gradientFrom} 0%, ${gradientTo} 100%)`,
       }}
-      onClick={handleClick}
     >
       {/* Decorative Pattern Overlay */}
       <div className="absolute inset-0 opacity-5">
@@ -97,11 +92,8 @@ function EducationCard({
         </p>
 
         {/* CTA Button */}
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            handleClick();
-          }}
+        <Link
+          to={linkTo}
           className="flex items-center justify-center gap-2 bg-white text-[#44666C] font-semibold px-[clamp(20px,3vw,28px)] py-[clamp(12px,2vw,16px)] rounded-xl mt-auto transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-gray-50 group/btn cursor-pointer"
         >
           <span style={{ fontSize: "16px" }}>Begin Assessment</span>
@@ -109,7 +101,7 @@ function EducationCard({
             className="group-hover/btn:translate-x-1 transition-transform duration-300"
             size={18}
           />
-        </button>
+        </Link>
 
         {/* Bottom Accent Line */}
         <div

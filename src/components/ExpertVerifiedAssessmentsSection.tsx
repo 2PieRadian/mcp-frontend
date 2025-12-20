@@ -38,7 +38,7 @@ function ExpertVerifiedAssessmentsSectionItem({
   }, [imageSize]);
 
   return (
-    <Link to={linkTo} className="block w-full">
+    <div className="block w-full">
       <div
         className={`flex flex-col md:flex-row ${
           rightImage ? "md:flex-row" : "md:flex-row-reverse"
@@ -54,9 +54,12 @@ function ExpertVerifiedAssessmentsSectionItem({
           <p className="text-[16px] text-[#4F5B64] mt-[12px] md:mt-[5px] leading-relaxed">
             {description}
           </p>
-          <button className="bg-[#ecf4f6] text-primary border border-primary cursor-pointer px-[20px] py-[12px] rounded-[20px] mt-[20px] md:mt-[20px] text-[16px] w-full md:w-auto hover:bg-primary hover:text-white transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)] font-medium">
+          <Link
+            to={linkTo}
+            className="inline-block bg-[#ecf4f6] text-primary border border-primary cursor-pointer px-[20px] py-[12px] rounded-[20px] mt-[20px] md:mt-[20px] text-[16px] w-full md:w-auto hover:bg-primary hover:text-white transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)] font-medium text-center"
+          >
             Take a Free Assessment
-          </button>
+          </Link>
         </div>
 
         <div
@@ -71,7 +74,7 @@ function ExpertVerifiedAssessmentsSectionItem({
           />
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
 

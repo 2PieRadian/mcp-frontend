@@ -34,7 +34,7 @@ function OptionItem({
       className={`option-item text-[16px] cursor-pointer py-[15px] px-[25px] rounded-[25px] ${
         isSelected
           ? "bg-[#44666C] text-white"
-          : "bg-[#D8E1E2] hover:bg-[#c4d2d3] text-[#44666C]"
+          : "bg-[#f2f8f9] hover:bg-[#dae7e7] text-[#44666C]"
       } transition-colors duration-200`}
       onClick={() => onClick(option)}
     >
@@ -196,8 +196,8 @@ export default function AssessmentQuestions() {
           disabled={!canGoPrevious}
           className={`px-[40px] py-[12px] rounded-[30px] text-[18px] font-medium transition-all duration-200 ${
             canGoPrevious
-              ? "bg-[#44666C] text-white hover:bg-[#365a62] cursor-pointer hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)]"
-              : "bg-gray-300 text-gray-500 cursor-not-allowed"
+              ? "bg-[#f2f8f9] text-[#44666C] border border-gray-300 shadow-[0_2px_4px_rgba(0,0,0,0.1)] hover:bg-[#dae7e7] cursor-pointer hover:-translate-y-1 hover:shadow-[0_4px_8px_rgba(0,0,0,0.15)]"
+              : "bg-[#f8fbfb] text-gray-400 border border-gray-200 shadow-[0_2px_4px_rgba(0,0,0,0.05)] cursor-not-allowed opacity-60"
           }`}
         >
           {t("previous")}
@@ -209,8 +209,8 @@ export default function AssessmentQuestions() {
             disabled={!currentSelectedOption}
             className={`px-[40px] py-[12px] rounded-[30px] text-[18px] font-medium transition-all duration-200 ${
               currentSelectedOption
-                ? "bg-[#44666C] text-white hover:bg-[#365a62] cursor-pointer hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)]"
-                : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                ? "bg-[#f2f8f9] text-[#44666C] border border-gray-300 shadow-[0_2px_4px_rgba(0,0,0,0.1)] hover:bg-[#dae7e7] cursor-pointer hover:-translate-y-1 hover:shadow-[0_4px_8px_rgba(0,0,0,0.15)]"
+                : "bg-[#f8fbfb] text-gray-400 border border-gray-200 shadow-[0_2px_4px_rgba(0,0,0,0.05)] cursor-not-allowed opacity-60"
             }`}
           >
             {t("finish")}
@@ -221,8 +221,8 @@ export default function AssessmentQuestions() {
             disabled={!canGoNext}
             className={`px-[40px] py-[12px] rounded-[30px] text-[18px] font-medium transition-all duration-200 ${
               canGoNext
-                ? "bg-[#44666C] text-white hover:bg-[#365a62] cursor-pointer hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)]"
-                : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                ? "bg-[#f2f8f9] text-[#44666C] border border-gray-300 shadow-[0_2px_4px_rgba(0,0,0,0.1)] hover:bg-[#dae7e7] cursor-pointer hover:-translate-y-1 hover:shadow-[0_4px_8px_rgba(0,0,0,0.15)]"
+                : "bg-[#f8fbfb] text-gray-400 border border-gray-200 shadow-[0_2px_4px_rgba(0,0,0,0.05)] cursor-not-allowed opacity-60"
             }`}
           >
             {t("next")}
