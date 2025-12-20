@@ -116,7 +116,8 @@ export default function DateOfBirthCard() {
                   }
                 }}
                 max={new Date().toISOString().split("T")[0]}
-                className="border border-gray-300 rounded-[10px] px-[12px] py-[8px] sm:py-[6px] bg-white outline-none focus:border-gray-400 focus:shadow-[0_2px_4px_rgba(0,0,0,0.1)] w-full transition-all"
+                placeholder="Choose your DOB"
+                className="border border-gray-300 rounded-[10px] px-[12px] py-[8px] sm:py-[6px] bg-white placeholder:text-input-placeholder outline-none focus:border-gray-400 focus:shadow-[0_2px_4px_rgba(0,0,0,0.1)] w-full transition-all"
                 style={{ fontSize: "16px" }}
               />
               <div className="flex items-center gap-[8px] sm:gap-[10px] flex-wrap">
