@@ -90,7 +90,7 @@ function EducationCard({
 
         {/* Description */}
         <p
-          className="text-white/90 leading-relaxed mb-[clamp(0.75rem,2vw,1rem)] grow"
+          className="text-white/90 leading-relaxed mb-[clamp(1.5rem,3vw,2rem)] grow"
           style={{ fontSize: "16px" }}
         >
           {description}
@@ -202,7 +202,7 @@ export default function Education() {
 
             <h1
               className="font-bold text-[#1a2e35] mb-[clamp(0.75rem,2vw,1rem)] leading-tight"
-              style={{ fontSize: "clamp(1.75rem, 5vw, 3.75rem)" }}
+              style={{ fontSize: "clamp(30px, 5vw, 60px)" }}
             >
               Discover Your Learning
               <br />
