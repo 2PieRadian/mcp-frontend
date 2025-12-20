@@ -615,12 +615,17 @@ export default function AssessmentResult() {
               className="inline-flex items-center gap-2 text-[#5a6c75] hover:text-[#44666C] transition-colors mb-4"
             >
               <ArrowLeft size={18} />
-              <span className="text-sm font-medium">Back to Assessment</span>
+              <span className="font-medium" style={{ fontSize: "14px" }}>
+                Back to Assessment
+              </span>
             </Link>
-            <h1 className="text-[clamp(1.75rem,4vw,2.5rem)] font-bold text-[#1a2e35]">
+            <h1
+              className="font-bold text-[#1a2e35]"
+              style={{ fontSize: "clamp(28px, 4vw, 40px)" }}
+            >
               {data.title} - Results
             </h1>
-            <p className="text-[#5a6c75] mt-2 text-[clamp(0.875rem,2vw,1rem)]">
+            <p className="text-[#5a6c75] mt-2" style={{ fontSize: "16px" }}>
               Your assessment is complete and results are ready
             </p>
           </div>
@@ -647,18 +652,27 @@ export default function AssessmentResult() {
               <div className="relative z-10">
                 {/* Score Display */}
                 <div className="mb-6 text-center">
-                  <p className="text-white/80 text-xs font-medium mb-2 uppercase tracking-wide">
+                  <p
+                    className="text-white/80 font-medium mb-2 uppercase tracking-wide"
+                    style={{ fontSize: "12px" }}
+                  >
                     Your Assessment Result
                   </p>
                   <div className="flex items-baseline justify-center gap-3 mb-2">
                     <span className="text-white text-[clamp(3rem,7vw,5rem)] font-bold leading-none">
                       {totalScore}
                     </span>
-                    <span className="text-white/70 text-[clamp(1.25rem,3vw,1.75rem)] font-medium">
+                    <span
+                      className="text-white/70 font-medium"
+                      style={{ fontSize: "clamp(20px, 3vw, 28px)" }}
+                    >
                       out of {maxScore}
                     </span>
                   </div>
-                  <p className="text-white/80 text-xs mb-4">
+                  <p
+                    className="text-white/80 mb-4"
+                    style={{ fontSize: "14px" }}
+                  >
                     Based on your responses to {maxScore / 4} questions
                   </p>
                 </div>
@@ -669,11 +683,17 @@ export default function AssessmentResult() {
                     className="inline-block px-4 py-2 rounded-full mb-3"
                     style={{ backgroundColor: data.accentColor + "30" }}
                   >
-                    <p className="text-white text-sm font-semibold">
+                    <p
+                      className="text-white font-semibold"
+                      style={{ fontSize: "14px" }}
+                    >
                       {interpretation.category} Level
                     </p>
                   </div>
-                  <p className="text-white/90 text-xs leading-relaxed px-2">
+                  <p
+                    className="text-white/90 leading-relaxed px-2"
+                    style={{ fontSize: "14px" }}
+                  >
                     {interpretation.category === "Low" &&
                       "Your score shows minimal indicators. This suggests you have good control and management in this area."}
                     {interpretation.category === "Mild" &&
@@ -720,10 +740,16 @@ export default function AssessmentResult() {
                 {/* Progress Bar Section */}
                 <div className="mb-6">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-white/90 text-xs font-medium">
+                    <span
+                      className="text-white/90 font-medium"
+                      style={{ fontSize: "14px" }}
+                    >
                       Score Percentage
                     </span>
-                    <span className="text-white text-sm font-bold">
+                    <span
+                      className="text-white font-bold"
+                      style={{ fontSize: "16px" }}
+                    >
                       {percentage}%
                     </span>
                   </div>
@@ -733,7 +759,10 @@ export default function AssessmentResult() {
                       style={{ width: `${percentage}%` }}
                     />
                   </div>
-                  <p className="text-white/70 text-xs mt-2 text-center">
+                  <p
+                    className="text-white/70 mt-2 text-center"
+                    style={{ fontSize: "12px" }}
+                  >
                     This percentage shows how your score compares to the maximum
                     possible score
                   </p>
@@ -742,22 +771,42 @@ export default function AssessmentResult() {
                 {/* Bottom Info Grid */}
                 <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/20">
                   <div className="text-center">
-                    <p className="text-white/70 text-xs mb-1">
+                    <p
+                      className="text-white/70 mb-1"
+                      style={{ fontSize: "14px" }}
+                    >
                       Questions Answered
                     </p>
-                    <p className="text-white text-xl font-bold">
+                    <p
+                      className="text-white font-bold"
+                      style={{ fontSize: "24px" }}
+                    >
                       {maxScore / 4}
                     </p>
-                    <p className="text-white/60 text-[10px] mt-1">
+                    <p
+                      className="text-white/60 mt-1"
+                      style={{ fontSize: "12px" }}
+                    >
                       All questions completed
                     </p>
                   </div>
                   <div className="text-center">
-                    <p className="text-white/70 text-xs mb-1">
+                    <p
+                      className="text-white/70 mb-1"
+                      style={{ fontSize: "14px" }}
+                    >
                       Points Per Question
                     </p>
-                    <p className="text-white text-xl font-bold">4</p>
-                    <p className="text-white/60 text-[10px] mt-1">
+                    <p
+                      className="text-white font-bold"
+                      style={{ fontSize: "24px" }}
+                    >
+                      4
+                    </p>
+                    <p
+                      className="text-white/60 mt-1"
+                      style={{ fontSize: "12px" }}
+                    >
                       Maximum points possible
                     </p>
                   </div>
@@ -787,18 +836,27 @@ export default function AssessmentResult() {
                   </div>
                   <div className="flex-1">
                     <div
-                      className="inline-block px-4 py-2 rounded-full text-white text-sm font-semibold mb-3"
-                      style={{ backgroundColor: data.accentColor }}
+                      className="inline-block px-4 py-2 rounded-full text-white font-semibold mb-3"
+                      style={{
+                        backgroundColor: data.accentColor,
+                        fontSize: "14px",
+                      }}
                     >
                       {interpretation.category} Level
                     </div>
                     <h3
-                      className="text-[clamp(1.1rem,2.5vw,1.3rem)] font-bold mb-2"
-                      style={{ color: data.gradientFrom }}
+                      className="font-bold mb-2"
+                      style={{
+                        color: data.gradientFrom,
+                        fontSize: "clamp(20px, 2.5vw, 24px)",
+                      }}
                     >
                       {interpretation.title}
                     </h3>
-                    <p className="text-[#5a6c75] leading-relaxed text-[clamp(0.875rem,2vw,1rem)]">
+                    <p
+                      className="text-[#5a6c75] leading-relaxed"
+                      style={{ fontSize: "16px" }}
+                    >
                       {interpretation.description}
                     </p>
                   </div>
@@ -813,11 +871,17 @@ export default function AssessmentResult() {
                     className="mt-1 shrink-0"
                     style={{ color: data.accentColor }}
                   />
-                  <h3 className="text-[#1a2e35] font-semibold text-lg">
+                  <h3
+                    className="text-[#1a2e35] font-semibold"
+                    style={{ fontSize: "20px" }}
+                  >
                     Recommendation
                   </h3>
                 </div>
-                <p className="text-[#5a6c75] leading-relaxed text-[clamp(0.875rem,2vw,1rem)] pl-8 mb-4">
+                <p
+                  className="text-[#5a6c75] leading-relaxed pl-8 mb-4"
+                  style={{ fontSize: "16px" }}
+                >
                   {interpretation.recommendation}
                 </p>
                 <Link
@@ -825,6 +889,7 @@ export default function AssessmentResult() {
                   className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-white font-medium transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg w-full group"
                   style={{
                     background: `linear-gradient(135deg, ${data.gradientFrom} 0%, ${data.gradientTo} 100%)`,
+                    fontSize: "16px",
                   }}
                 >
                   View{" "}
@@ -847,7 +912,10 @@ export default function AssessmentResult() {
           <div className="bg-white rounded-2xl p-[clamp(1.5rem,3vw,2rem)] mb-6 border border-[#E5E7EB]">
             <div className="flex items-center gap-3 mb-4">
               <BookOpen size={20} style={{ color: data.accentColor }} />
-              <h3 className="text-[#1a2e35] font-semibold text-lg">
+              <h3
+                className="text-[#1a2e35] font-semibold"
+                style={{ fontSize: "20px" }}
+              >
                 Score Interpretation
               </h3>
             </div>
@@ -866,10 +934,16 @@ export default function AssessmentResult() {
                       style={{ backgroundColor: colors[index % colors.length] }}
                     />
                     <div className="flex-1">
-                      <span className="font-medium text-[#1a2e35]">
+                      <span
+                        className="font-medium text-[#1a2e35]"
+                        style={{ fontSize: "16px" }}
+                      >
                         {range.range}:{" "}
                       </span>
-                      <span className="text-[#5a6c75] text-sm">
+                      <span
+                        className="text-[#5a6c75]"
+                        style={{ fontSize: "14px" }}
+                      >
                         {range.label}
                       </span>
                     </div>
@@ -886,6 +960,7 @@ export default function AssessmentResult() {
               className="flex-1 text-center px-6 py-3 rounded-xl text-white font-medium transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg"
               style={{
                 background: `linear-gradient(135deg, ${data.gradientFrom} 0%, ${data.gradientTo} 100%)`,
+                fontSize: "16px",
               }}
             >
               Retake Assessment
@@ -893,6 +968,7 @@ export default function AssessmentResult() {
             <Link
               to={`/assessments/${domain}`}
               className="flex-1 text-center px-6 py-3 rounded-xl bg-white border border-[#E5E7EB] text-[#44666C] font-medium hover:bg-[#F9FAFB] transition-colors"
+              style={{ fontSize: "16px" }}
             >
               View All Assessments
             </Link>
