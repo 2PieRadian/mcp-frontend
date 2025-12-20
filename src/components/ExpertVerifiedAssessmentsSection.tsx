@@ -79,7 +79,10 @@ export default function ExpertVerifiedAssessmentsSection() {
   const { t } = useTranslation(["common", "navigation"]);
 
   return (
-    <div className="mt-[40px] md:mt-[70px] max-w-[1000px] mx-auto md:px-0">
+    <div
+      id="expert-verified-assessments"
+      className="mt-[40px] md:mt-[70px] max-w-[1000px] mx-auto md:px-0 scroll-mt-[60px] md:scroll-mt-[80px]"
+    >
       <h1 className="text-[clamp(24px,6vw,34px)] md:text-3xl font-bold text-center">
         {t("expertVerifiedAssessments", { ns: "common" })}
       </h1>

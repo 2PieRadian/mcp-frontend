@@ -7,6 +7,10 @@
     "Segoe UI Symbol", "Noto Color Emoji"; */
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 @theme {
   /* Base Colors */
   --color-primary: hsl(187, 73%, 16%);
