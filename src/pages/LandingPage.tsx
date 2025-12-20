@@ -46,7 +46,7 @@ export default function UserDashboard() {
         />
       </Helmet>
 
-      <div className="landing-page px-[20px]">
+      <div className="landing-page px-[20px] overflow-x-hidden w-full max-w-full">
         <ResponsiveNavbar />
         <HeroSection />
         <MakeInIndia />

@@ -90,7 +90,7 @@ export default function ExpertVerifiedAssessmentsSection() {
         {t("takePreScreenerTests", { ns: "common" })}
       </p>
 
-      <div className="flex flex-col mt-[40px] md:mt-[70px] h-fit gap-[32px] md:gap-[30px] -mx-[20px] md:mx-0 px-[20px] md:px-0">
+      <div className="flex flex-col mt-[40px] md:mt-[70px] h-fit gap-[32px] md:gap-[30px]">
         <ExpertVerifiedAssessmentsSectionItem
           title="Wellness"
           subtitle="The greatest wealth is health."
