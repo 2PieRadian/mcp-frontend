@@ -1,0 +1,87 @@
+Instructions:
+Select the option that feels most like you in everyday life.
+Be honest — this is for self-reflection only, not diagnosis.
+1. What type of food do you prefer most often?
+a) Equal mix of home food and outside food (2)
+b) Homemade balanced meals (4)
+c) Mostly fast food or processed food (1)
+d) Mostly home-cooked but sometimes fast food (3)
+2. How often do you eat fruits and vegetables?
+a) Rarely or never (1)
+b) 1–2 times a week (2)
+c) 4–5 times a week (3)
+d) Daily (2–3 servings) (4)
+3. How often do you consume fried or junk food?
+a) Almost daily (1)
+b) 2–3 times a week (2)
+c) Once a week (3)
+d) Rarely (4)
+4. How much water do you drink per day?
+a) 1–1.5 litres (2)
+b) More than 2.5 litres (4)
+c) Less than 1 litre (1)
+d) 1.5–2.5 litres (3)
+5. How often do you eat breakfast?
+a) Rarely or never (1)
+b) Occasionally (2)
+c) 4–5 times a week (3)
+d) Every day (4)
+6. At what time do you usually eat your meals?
+a) No fixed schedule (1)
+b) Often skip or delay meals (2)
+c) Slightly irregular but mostly on time (3)
+d) Fixed routine every day (4)
+7. How many meals do you usually have in a day?
+a) Eat randomly, no pattern (1)
+b) 3 meals only (3)
+c) 2 main meals (2)
+d) 3 main meals + 2 small snacks (4)
+
+8. How many cups of tea/coffee/soft drinks do you consume daily?
+a) More than 5 cups (1)
+b) 4–5 cups (2)
+c) 2–3 cups (3)
+d) None or 1 cup (4)
+9. Do you consume alcohol or sugary drinks?
+a) Regularly (almost daily) (1)
+b) Frequently (weekly) (2)
+c) Occasionally (once or twice a month) (3)
+d) Never (4)
+10. Do you eat while watching TV or using a phone?
+a) Always (1)
+b) Often (2)
+c) Sometimes (3)
+d) Never (4)
+11. How often do you crave sweets or fried snacks?
+a) Daily (1)
+b) Often (2)
+c) Sometimes (3)
+d) Rarely (4)
+12. How would you describe your physical activity level?
+a) Sedentary (no regular exercise) (1)
+b) Lightly active (1–2 days/week) (2)
+c) Moderately active (3–4 days/week) (3)
+d) Very active (exercise 5–7 days/week) (4)
+13. How many hours of sleep do you get daily?
+a) 4–5 hours (2)
+b) 6–7 hours (3)
+c) Less than 4 hours (1)
+d) 7–8 hours (4)
+14. How do you feel after meals?
+a) Always tired or uncomfortable (1)
+b) Normal but slightly heavy sometimes (3)
+c) Often bloated or sleepy (2)
+d) Energetic and satisfied (4)
+
+15. What is your main goal?
+Score	Interpretation
+51–60	Excellent eating & lifestyle habits
+41–50	Good habits; minor improvements needed
+31–40	Average; dietary correction recommended
+Below 30	Poor habits; needs structured nutrition counselling
+a) Lose weight (3)
+b) Maintain healthy lifestyle (4)
+c) Manage medical condition (2)
+d) Gain weight (1)
+
+

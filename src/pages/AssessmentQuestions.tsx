@@ -3,7 +3,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import { useScreen } from "../context/ScreenContext";
-import { ADHD_QUESTIONS } from "../lib/constants/assessments";
+import {
+  ADHD_QUESTIONS,
+  DIET_QUESTIONS,
+  RELATIONSHIP_QUESTIONS,
+  YOGA_QUESTIONS,
+} from "../lib/constants/assessments";
 import type { QuizOption } from "../lib/interfaces";
 import useScrollToTop from "../hooks/useScrollToTop";
 
@@ -39,8 +44,22 @@ export default function AssessmentQuestions() {
   const { assessmentType } = useParams<{ assessmentType: string }>();
   const { screenWidth } = useScreen();
 
-  // Get questions based on assessment type (for now only ADHD)
-  const questions = assessmentType === "adhd" ? ADHD_QUESTIONS : ADHD_QUESTIONS;
+  // Get questions based on assessment type
+  const getQuestions = () => {
+    switch (assessmentType) {
+      case "adhd":
+        return ADHD_QUESTIONS;
+      case "diet":
+        return DIET_QUESTIONS;
+      case "relationship":
+        return RELATIONSHIP_QUESTIONS;
+      case "yoga":
+        return YOGA_QUESTIONS;
+      default:
+        return ADHD_QUESTIONS;
+    }
+  };
+  const questions = getQuestions();
   const totalQuestions = questions.length;
 
   const [answers, setAnswers] = useState<Record<number, QuizOption>>({});

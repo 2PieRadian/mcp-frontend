@@ -1,0 +1,85 @@
+Instructions:
+Select the option that feels most like you in everyday life.
+Be honest — this is for self-reflection only.
+1.	How often do you stretch or do yoga in a week?
+a) Maybe once or twice. (3)
+b) Never at all. (1)
+c) Almost daily. (4)
+d) Only when body pain hits. (2)
+2.	Your breathing awareness during the day is…
+a) Rarely think about it. (2)
+b) Often stay aware and breathe calmly. (4)
+c) Sometimes take deep breaths intentionally. (3)
+d) Hardly notice my breathing. (1)
+3.	During routine tasks (bending, lifting), you feel…
+a) Slight stiffness sometimes. (2)
+b) Very stiff or tight. (1)
+c) Very flexible and free. (4)
+d) Mostly comfortable. (3)
+4.	When stress builds up, you usually…
+a) Ignore it till it gets worse. (2)
+b) Use meditation/relaxation techniques. (4)
+c) Try to breathe slowly. (3)
+d) Get irritated or overwhelmed. (1)
+5.	Your posture while sitting or using phone is…
+a) I try but forget often. (2)
+b) Mostly slouched. (1)
+c) Mindful and straight almost always. (4)
+d) Mixed—sometimes good, sometimes not. (3)
+6.	How regularly do you meditate?
+a) Very rarely. (2)
+b) Whenever I remember. (3)
+c) Don’t meditate at all. (1)
+d) Regularly with focus. (4)
+7.	How well do you notice your body's signals (pain, tension, fatigue)?
+a) Realize only when it gets serious. (1)
+b) Catch early signs easily. (4)
+c) Sometimes confused about signals. (2)
+d) Notice most signals. (3)
+8.	Your energy levels on a normal day are…
+a) Generally fine, with few low moments. (3)
+b) Mostly low or drained. (1)
+c) Quite stable throughout. (4)
+d) Up and down frequently. (2)
+9.	How often do you do any form of relaxation (Shavasana, deep rest)?
+a) Rarely remember to do it. (2)
+b) Very regularly. (4)
+c) Sometimes when feeling heavy. (3)
+d) Never. (1)
+10.	Your daily eating pattern is…
+a) Random—skip meals or overeat. (1)
+b) Balanced in many meals. (3)
+c) Mindful, slow and balanced. (4)
+d) Not perfect but manageable. (2)
+11.	While walking, exercising or climbing stairs, your breath is…
+a) I become aware sometimes. (3)
+b) Very controlled and smooth. (4)
+c) Notice only when breathless. (2)
+d) Not noticed at all. (1)
+12.	Your overall wellness routine (sleep, food, activity) is…
+a) A bit irregular. (2)
+b) Well-maintained and mindful. (4)
+c) Not consistent at all. (1)
+d) Somewhat stable. (3)
+13.	When you sit for long hours, you…
+a) Sit straight most of the time. (4)
+b) Stay slouched till back hurts. (1)
+c) Try but fail to sit straight. (2)
+d) Adjust posture a few times. (3)
+14.	How easy is it for you to calm your thoughts?
+a) Slightly difficult. (2)
+b) Quite easy with practice. (4)
+c) Manageable sometimes. (3)
+d) Very difficult. (1)
+15.	How connected do you feel with your body and mind?
+a) Strongly connected. (4)
+b) Slightly aware. (2)
+c) Don’t feel connected at all. (1)
+d) Somewhat connected. (3)
+________________________________________
+📊 Score Interpretation (Total: 15–60)
+55–60: Excellent Yogic Lifestyle
+45–54: Good Yoga Practice
+30–44: Average / Needs Improvement
+15–29: Weak Yogic Discipline
+
