@@ -41,7 +41,13 @@ export default function AuthNavbar() {
     <div className="auth-navbar w-full max-w-[1350px] mx-auto flex justify-between items-center py-[20px] relative">
       <Link to="/">
         <h1 className="text-[22px] font-semibold text-logo-heading">
-          {t("appName")}
+          {t("appName") === "MindCurePath" ? (
+            <>
+              Mind<span className="text-[#119c95]">Cure</span>Path
+            </>
+          ) : (
+            t("appName")
+          )}
         </h1>
       </Link>
 

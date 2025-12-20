@@ -18,7 +18,7 @@ export default function MakeInIndia() {
               </div>
               <div>
                 <h2 className="text-primary text-[22px] md:text-[28px] font-bold leading-tight mb-[4px]">
-                  MindCurePath
+                  Mind<span className="text-[#119c95]">Cure</span>Path
                 </h2>
                 <p className="text-[#44666C] text-[14px] md:text-[15px] font-medium leading-snug">
                   India's own virtual counselling platform

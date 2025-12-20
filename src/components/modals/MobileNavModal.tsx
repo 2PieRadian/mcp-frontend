@@ -99,7 +99,13 @@ export default function MobileNavModal({
         {/* Header with close button */}
         <div className="flex justify-between items-center px-[25px] py-[20px] border-b border-gray-200 shrink-0">
           <h1 className="text-[22px] font-semibold text-logo-heading">
-            {t("appName", { ns: "common" })}
+            {t("appName", { ns: "common" }) === "MindCurePath" ? (
+              <>
+                Mind<span className="text-[#119c95]">Cure</span>Path
+              </>
+            ) : (
+              t("appName", { ns: "common" })
+            )}
           </h1>
           <button
             onClick={onClose}
