@@ -111,61 +111,6 @@ export default function Profile() {
           </button>
         </section>
 
-        {/* Logout Confirmation Modal */}
-        {showLogoutModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-            <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 md:p-8 relative">
-              {/* Close Button */}
-              <button
-                onClick={handleCancelLogout}
-                className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
-                aria-label="Close"
-              >
-                <X size={24} />
-              </button>
-
-              {/* Icon */}
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center">
-                  <AlertTriangle className="text-red-500" size={32} />
-                </div>
-              </div>
-
-              {/* Title */}
-              <h2 className="text-2xl font-bold text-[#1a2e35] text-center mb-3">
-                Confirm Logout
-              </h2>
-
-              {/* Description */}
-              <p
-                className="text-[#5a6c75] text-center mb-6"
-                style={{ fontSize: "16px" }}
-              >
-                Are you sure you want to logout? You will need to sign in again
-                to access your account.
-              </p>
-
-              {/* Action Buttons */}
-              <div className="flex gap-3">
-                <button
-                  onClick={handleCancelLogout}
-                  className="flex-1 px-6 py-3 rounded-[10px] border hover:scale-102 border-gray-300 text-[#1a2e35] font-medium hover:bg-gray-50 transition-all duration-200 cursor-pointer"
-                  style={{ fontSize: "16px" }}
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleConfirmLogout}
-                  className="flex-1 px-6 py-3 rounded-[10px] bg-[hsl(0,89%,60%)] text-white hover:scale-102 font-medium hover:bg-[hsl(0,89%,56%)] transition-all duration-200 cursor-pointer"
-                  style={{ fontSize: "16px" }}
-                >
-                  Logout
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
         {/* Info sections */}
         <section className="grid gap-[14px] sm:gap-[18px] sm:grid-cols-2 mb-[100px]">
           <BasicInfoCard />
@@ -177,6 +122,67 @@ export default function Profile() {
           <AccountActivityCard />
         </section>
       </main>
+
+      {/* Logout Confirmation Modal */}
+      {showLogoutModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          onClick={handleCancelLogout}
+        >
+          <div
+            className="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 md:p-8 relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={handleCancelLogout}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
+              aria-label="Close"
+            >
+              <X size={24} />
+            </button>
+
+            {/* Icon */}
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center">
+                <AlertTriangle className="text-red-500" size={32} />
+              </div>
+            </div>
+
+            {/* Title */}
+            <h2 className="text-2xl font-bold text-[#1a2e35] text-center mb-3">
+              Confirm Logout
+            </h2>
+
+            {/* Description */}
+            <p
+              className="text-[#5a6c75] text-center mb-6"
+              style={{ fontSize: "16px" }}
+            >
+              Are you sure you want to logout? You will need to sign in again to
+              access your account.
+            </p>
+
+            {/* Action Buttons */}
+            <div className="flex gap-3">
+              <button
+                onClick={handleCancelLogout}
+                className="flex-1 px-6 py-3 rounded-[10px] border hover:scale-102 border-gray-300 text-[#1a2e35] font-medium hover:bg-gray-50 transition-all duration-200 cursor-pointer"
+                style={{ fontSize: "16px" }}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleConfirmLogout}
+                className="flex-1 px-6 py-3 rounded-[10px] bg-[hsl(0,89%,60%)] text-white hover:scale-102 font-medium hover:bg-[hsl(0,89%,56%)] transition-all duration-200 cursor-pointer"
+                style={{ fontSize: "16px" }}
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
