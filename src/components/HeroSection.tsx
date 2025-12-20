@@ -99,8 +99,10 @@ export default function HeroSection() {
                     Assess your mental health and well-being
                   </p>
                   <div className="max-h-0 group-hover:max-h-20 overflow-hidden transition-all duration-300 flex items-center justify-center gap-1 text-primary">
-                    <span className="text-sm font-medium">Explore</span>
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                    <span className="text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-150">
+                      Explore
+                    </span>
+                    <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300 delay-150" />
                   </div>
                 </Link>
 
@@ -119,8 +121,10 @@ export default function HeroSection() {
                     Plan your career and educational journey
                   </p>
                   <div className="max-h-0 group-hover:max-h-20 overflow-hidden transition-all duration-300 flex items-center justify-center gap-1 text-primary">
-                    <span className="text-sm font-medium">Explore</span>
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                    <span className="text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-150">
+                      Explore
+                    </span>
+                    <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300 delay-150" />
                   </div>
                 </Link>
 
@@ -139,8 +143,10 @@ export default function HeroSection() {
                     Build your financial foundation
                   </p>
                   <div className="max-h-0 group-hover:max-h-20 overflow-hidden transition-all duration-300 flex items-center justify-center gap-1 text-primary">
-                    <span className="text-sm font-medium">Explore</span>
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                    <span className="text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-150">
+                      Explore
+                    </span>
+                    <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300 delay-150" />
                   </div>
                 </Link>
               </div>
