@@ -1,4 +1,4 @@
-import { Sparkles, BadgeCheck } from "lucide-react";
+import { BadgeCheck, Heart, GraduationCap, TrendingUp } from "lucide-react";
 import { useScreen } from "../context/ScreenContext";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -86,7 +86,7 @@ export default function HeroSection() {
                   className="absolute top-0 right-0 w-[200px] lg:w-[240px] bg-white/95 backdrop-blur-md rounded-[20px] p-6 shadow-lg animate-float-1 border border-gray-100 hover:scale-[1.05] transition-transform cursor-pointer block"
                 >
                   <div className="w-12 h-12 bg-linear-to-br from-[#0ea5e9] to-[#06b6d4] rounded-[12px] flex items-center justify-center mb-4">
-                    <Sparkles className="w-6 h-6 text-white" />
+                    <Heart className="w-6 h-6 text-white" />
                   </div>
                   <h3 className="font-bold text-primary text-lg mb-2">
                     Wellness
@@ -102,7 +102,7 @@ export default function HeroSection() {
                   className="absolute top-[120px] left-0 w-[200px] lg:w-[240px] bg-white/95 backdrop-blur-md rounded-[20px] p-6 shadow-lg animate-float-2 border border-gray-100 hover:scale-[1.05] transition-transform cursor-pointer block"
                 >
                   <div className="w-12 h-12 bg-linear-to-br from-[#10b981] to-[#059669] rounded-[12px] flex items-center justify-center mb-4">
-                    <Sparkles className="w-6 h-6 text-white" />
+                    <GraduationCap className="w-6 h-6 text-white" />
                   </div>
                   <h3 className="font-bold text-primary text-lg mb-2">
                     Education
@@ -118,7 +118,7 @@ export default function HeroSection() {
                   className="absolute bottom-0 right-[40px] w-[200px] lg:w-[240px] bg-white/95 backdrop-blur-md rounded-[20px] p-6 shadow-lg animate-float-3 border border-gray-100 hover:scale-[1.05] transition-transform cursor-pointer block"
                 >
                   <div className="w-12 h-12 bg-linear-to-br from-[#f59e0b] to-[#d97706] rounded-[12px] flex items-center justify-center mb-4">
-                    <Sparkles className="w-6 h-6 text-white" />
+                    <TrendingUp className="w-6 h-6 text-white" />
                   </div>
                   <h3 className="font-bold text-primary text-lg mb-2">
                     Finance
@@ -146,7 +146,7 @@ export default function HeroSection() {
                   className="bg-white rounded-[16px] p-5 shadow-md border border-gray-100 hover:scale-[1.02] transition-transform"
                 >
                   <div className="w-10 h-10 bg-linear-to-br from-[#0ea5e9] to-[#06b6d4] rounded-[10px] flex items-center justify-center mb-3">
-                    <Sparkles className="w-5 h-5 text-white" />
+                    <Heart className="w-5 h-5 text-white" />
                   </div>
                   <h3 className="font-bold text-primary text-base mb-1">
                     Wellness
@@ -161,7 +161,7 @@ export default function HeroSection() {
                   className="bg-white rounded-[16px] p-5 shadow-md border border-gray-100 hover:scale-[1.02] transition-transform"
                 >
                   <div className="w-10 h-10 bg-linear-to-br from-[#10b981] to-[#059669] rounded-[10px] flex items-center justify-center mb-3">
-                    <Sparkles className="w-5 h-5 text-white" />
+                    <GraduationCap className="w-5 h-5 text-white" />
                   </div>
                   <h3 className="font-bold text-primary text-base mb-1">
                     Education
@@ -174,7 +174,7 @@ export default function HeroSection() {
                   className="bg-white rounded-[16px] p-5 shadow-md border border-gray-100 hover:scale-[1.02] transition-transform"
                 >
                   <div className="w-10 h-10 bg-linear-to-br from-[#f59e0b] to-[#d97706] rounded-[10px] flex items-center justify-center mb-3">
-                    <Sparkles className="w-5 h-5 text-white" />
+                    <TrendingUp className="w-5 h-5 text-white" />
                   </div>
                   <h3 className="font-bold text-primary text-base mb-1">
                     Finance
