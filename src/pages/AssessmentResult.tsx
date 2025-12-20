@@ -808,8 +808,8 @@ export default function AssessmentResult() {
                       style={{ fontSize: "12px" }}
                     >
                       Maximum points possible
-                    </p>
-                  </div>
+                  </p>
+                </div>
               </div>
             </div>
           </div>

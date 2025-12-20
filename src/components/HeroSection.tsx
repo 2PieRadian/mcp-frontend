@@ -1,4 +1,10 @@
-import { BadgeCheck, Heart, GraduationCap, TrendingUp } from "lucide-react";
+import {
+  BadgeCheck,
+  Heart,
+  GraduationCap,
+  TrendingUp,
+  ArrowRight,
+} from "lucide-react";
 import { useScreen } from "../context/ScreenContext";
 import { Link } from "react-router-dom";
 
@@ -81,49 +87,61 @@ export default function HeroSection() {
                 {/* Card 1 - Wellness */}
                 <Link
                   to="/wellness-experts"
-                  className="absolute top-0 right-0 w-[200px] lg:w-[240px] bg-white/95 backdrop-blur-md rounded-[20px] p-6 shadow-lg animate-float-1 border border-gray-100 hover:scale-[1.05] transition-transform cursor-pointer block"
+                  className="group absolute top-0 right-0 w-[200px] lg:w-[240px] bg-white/95 backdrop-blur-md rounded-[20px] p-6 shadow-lg animate-float-1 border border-gray-100 hover:border-primary/30 hover:scale-[1.05] hover:shadow-xl transition-all duration-300 cursor-pointer block text-center overflow-hidden"
                 >
-                  <div className="w-12 h-12 bg-linear-to-br from-[#0ea5e9] to-[#06b6d4] rounded-[12px] flex items-center justify-center mb-4">
+                  <div className="w-12 h-12 bg-linear-to-br from-[#0ea5e9] to-[#06b6d4] rounded-[12px] flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
                     <Heart className="w-6 h-6 text-white" />
                   </div>
-                  <h3 className="font-bold text-primary text-lg mb-2">
+                  <h3 className="font-bold text-primary text-lg mb-2 group-hover:text-[#0ea5e9] transition-colors duration-300">
                     Wellness
                   </h3>
-                  <p className="text-[#4F5B64] text-sm leading-relaxed">
+                  <p className="text-[#4F5B64] text-sm leading-relaxed mb-0 group-hover:mb-3 transition-all duration-300">
                     Assess your mental health and well-being
                   </p>
+                  <div className="max-h-0 group-hover:max-h-20 overflow-hidden transition-all duration-300 flex items-center justify-center gap-1 text-primary">
+                    <span className="text-sm font-medium">Explore</span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                  </div>
                 </Link>
 
                 {/* Card 2 - Education */}
                 <Link
                   to="/education-experts"
-                  className="absolute top-[120px] left-0 w-[200px] lg:w-[240px] bg-white/95 backdrop-blur-md rounded-[20px] p-6 shadow-lg animate-float-2 border border-gray-100 hover:scale-[1.05] transition-transform cursor-pointer block"
+                  className="group absolute top-[120px] left-0 w-[200px] lg:w-[240px] bg-white/95 backdrop-blur-md rounded-[20px] p-6 shadow-lg animate-float-2 border border-gray-100 hover:border-primary/30 hover:scale-[1.05] hover:shadow-xl transition-all duration-300 cursor-pointer block text-center overflow-hidden"
                 >
-                  <div className="w-12 h-12 bg-linear-to-br from-[#10b981] to-[#059669] rounded-[12px] flex items-center justify-center mb-4">
+                  <div className="w-12 h-12 bg-linear-to-br from-[#10b981] to-[#059669] rounded-[12px] flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
                     <GraduationCap className="w-6 h-6 text-white" />
                   </div>
-                  <h3 className="font-bold text-primary text-lg mb-2">
+                  <h3 className="font-bold text-primary text-lg mb-2 group-hover:text-[#10b981] transition-colors duration-300">
                     Education
                   </h3>
-                  <p className="text-[#4F5B64] text-sm leading-relaxed">
+                  <p className="text-[#4F5B64] text-sm leading-relaxed mb-0 group-hover:mb-3 transition-all duration-300">
                     Plan your career and educational journey
                   </p>
+                  <div className="max-h-0 group-hover:max-h-20 overflow-hidden transition-all duration-300 flex items-center justify-center gap-1 text-primary">
+                    <span className="text-sm font-medium">Explore</span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                  </div>
                 </Link>
 
                 {/* Card 3 - Finance */}
                 <Link
                   to="/finance-experts"
-                  className="absolute bottom-0 right-[40px] w-[200px] lg:w-[240px] bg-white/95 backdrop-blur-md rounded-[20px] p-6 shadow-lg animate-float-3 border border-gray-100 hover:scale-[1.05] transition-transform cursor-pointer block"
+                  className="group absolute top-[240px] right-[40px] w-[200px] lg:w-[240px] bg-white/95 backdrop-blur-md rounded-[20px] p-6 shadow-lg animate-float-3 border border-gray-100 hover:border-primary/30 hover:scale-[1.05] hover:shadow-xl transition-all duration-300 cursor-pointer block text-center overflow-hidden"
                 >
-                  <div className="w-12 h-12 bg-linear-to-br from-[#f59e0b] to-[#d97706] rounded-[12px] flex items-center justify-center mb-4">
+                  <div className="w-12 h-12 bg-linear-to-br from-[#f59e0b] to-[#d97706] rounded-[12px] flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
                     <TrendingUp className="w-6 h-6 text-white" />
                   </div>
-                  <h3 className="font-bold text-primary text-lg mb-2">
+                  <h3 className="font-bold text-primary text-lg mb-2 group-hover:text-[#f59e0b] transition-colors duration-300">
                     Finance
                   </h3>
-                  <p className="text-[#4F5B64] text-sm leading-relaxed">
+                  <p className="text-[#4F5B64] text-sm leading-relaxed mb-0 group-hover:mb-3 transition-all duration-300">
                     Build your financial foundation
                   </p>
+                  <div className="max-h-0 group-hover:max-h-20 overflow-hidden transition-all duration-300 flex items-center justify-center gap-1 text-primary">
+                    <span className="text-sm font-medium">Explore</span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                  </div>
                 </Link>
               </div>
             </div>
@@ -138,46 +156,50 @@ export default function HeroSection() {
                 Connect with verified professionals in wellness, education, and
                 finance
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full">
+              <div className="grid grid-cols-3 gap-2 sm:gap-4 w-full">
                 <Link
                   to="/wellness-experts"
-                  className="bg-white rounded-[16px] p-5 shadow-md border border-gray-100 hover:scale-[1.02] transition-transform"
+                  className="group bg-white rounded-[16px] p-2.5 sm:p-5 shadow-md border border-gray-100 hover:scale-[1.02] transition-transform text-left max-[500px]:text-center"
                 >
-                  <div className="w-10 h-10 bg-linear-to-br from-[#0ea5e9] to-[#06b6d4] rounded-[10px] flex items-center justify-center mb-3">
-                    <Heart className="w-5 h-5 text-white" />
+                  <div className="w-full aspect-100/70 bg-linear-to-br from-[#0ea5e9] to-[#06b6d4] rounded-[10px] flex items-center justify-center mb-3 sm:mb-4">
+                    <Heart className="w-6 h-6 sm:w-10 sm:h-10 md:w-16 md:h-16 text-white group-hover:scale-125 transition-transform duration-300" />
                   </div>
-                  <h3 className="font-bold text-primary text-base mb-1">
+                  <h3 className="font-bold text-primary text-[clamp(14px,2vw,18px)] mb-1">
                     Wellness
                   </h3>
-                  <p className="text-[#4F5B64] text-xs">
+                  <p className="text-[#4F5B64] text-[clamp(12px,1.5vw,16px)]">
                     Mental health assessment
                   </p>
                 </Link>
 
                 <Link
                   to="/education-experts"
-                  className="bg-white rounded-[16px] p-5 shadow-md border border-gray-100 hover:scale-[1.02] transition-transform"
+                  className="group bg-white rounded-[16px] p-2.5 sm:p-5 shadow-md border border-gray-100 hover:scale-[1.02] transition-transform text-left max-[500px]:text-center"
                 >
-                  <div className="w-10 h-10 bg-linear-to-br from-[#10b981] to-[#059669] rounded-[10px] flex items-center justify-center mb-3">
-                    <GraduationCap className="w-5 h-5 text-white" />
+                  <div className="w-full aspect-100/70 bg-linear-to-br from-[#10b981] to-[#059669] rounded-[10px] flex items-center justify-center mb-3 sm:mb-4">
+                    <GraduationCap className="w-6 h-6 sm:w-10 sm:h-10 md:w-16 md:h-16 text-white group-hover:scale-125 transition-transform duration-300" />
                   </div>
-                  <h3 className="font-bold text-primary text-base mb-1">
+                  <h3 className="font-bold text-primary text-[clamp(14px,2vw,18px)] mb-1">
                     Education
                   </h3>
-                  <p className="text-[#4F5B64] text-xs">Career planning</p>
+                  <p className="text-[#4F5B64] text-[clamp(12px,1.5vw,16px)]">
+                    Career planning
+                  </p>
                 </Link>
 
                 <Link
                   to="/finance-experts"
-                  className="bg-white rounded-[16px] p-5 shadow-md border border-gray-100 hover:scale-[1.02] transition-transform"
+                  className="group bg-white rounded-[16px] p-2.5 sm:p-5 shadow-md border border-gray-100 hover:scale-[1.02] transition-transform text-left max-[500px]:text-center"
                 >
-                  <div className="w-10 h-10 bg-linear-to-br from-[#f59e0b] to-[#d97706] rounded-[10px] flex items-center justify-center mb-3">
-                    <TrendingUp className="w-5 h-5 text-white" />
+                  <div className="w-full aspect-100/70 bg-linear-to-br from-[#f59e0b] to-[#d97706] rounded-[10px] flex items-center justify-center mb-3 sm:mb-4">
+                    <TrendingUp className="w-6 h-6 sm:w-10 sm:h-10 md:w-16 md:h-16 text-white group-hover:scale-125 transition-transform duration-300" />
                   </div>
-                  <h3 className="font-bold text-primary text-base mb-1">
+                  <h3 className="font-bold text-primary text-[clamp(14px,2vw,18px)] mb-1">
                     Finance
                   </h3>
-                  <p className="text-[#4F5B64] text-xs">Financial planning</p>
+                  <p className="text-[#4F5B64] text-[clamp(12px,1.5vw,16px)]">
+                    Financial planning
+                  </p>
                 </Link>
               </div>
             </div>

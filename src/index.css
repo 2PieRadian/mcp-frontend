@@ -10,12 +10,14 @@
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+  background-color: white;
 }
 
 body {
   overflow-x: hidden;
   width: 100%;
   max-width: 100vw;
+  background-color: white;
 }
 
 @theme {
@@ -247,4 +249,39 @@ input[type="password"]::-ms-reveal {
   opacity: 0 !important;
   width: 0 !important;
   height: 0 !important;
+}
+
+/* Flag wave animation */
+@keyframes flag-wave {
+  0%, 100% {
+    transform: rotate(0deg) translateY(0);
+  }
+  25% {
+    transform: rotate(-5deg) translateY(-2px);
+  }
+  50% {
+    transform: rotate(0deg) translateY(0);
+  }
+  75% {
+    transform: rotate(5deg) translateY(-2px);
+  }
+}
+
+.animate-flag-wave {
+  animation: flag-wave 2s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+/* Badge glow animation - maintains color saturation */
+@keyframes badge-glow {
+  0%, 100% {
+    box-shadow: 0_4px_12px_rgba(17,156,149,0.3), inset_0_1px_2px_rgba(255,255,255,0.2);
+  }
+  50% {
+    box-shadow: 0_6px_16px_rgba(17,156,149,0.5), inset_0_1px_2px_rgba(255,255,255,0.2);
+  }
+}
+
+.animate-badge-glow {
+  animation: badge-glow 2s ease-in-out infinite;
 }
