@@ -14,6 +14,7 @@ import {
   GraduationCap,
   Receipt,
   Wallet,
+  ArrowLeft,
 } from "lucide-react";
 import useScrollToTop from "../hooks/useScrollToTop";
 
@@ -293,42 +294,58 @@ export default function AssessmentIntro() {
               />
             </div>
 
-            <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center gap-[clamp(1rem,3vw,2rem)]">
-              <div
-                className="w-[clamp(3.5rem,9vw,5rem)] h-[clamp(3.5rem,9vw,5rem)] rounded-xl md:rounded-2xl flex items-center justify-center shadow-2xl"
-                style={{ backgroundColor: data.accentColor }}
-              >
+            {/* Back Button */}
+            <Link
+              to={`/assessments/${domain}`}
+              className="relative z-10 inline-flex items-center gap-2 text-white/90 hover:text-white mb-[clamp(1rem,2vw,1.5rem)] transition-colors duration-200 group cursor-pointer"
+            >
+              <ArrowLeft
+                size={20}
+                className="group-hover:-translate-x-1 transition-transform duration-200"
+              />
+              <span className="text-[clamp(0.875rem,2vw,1rem)] font-medium">
+                Back to Assessments
+              </span>
+            </Link>
+
+            <div className="relative z-10">
+              <div className="flex flex-row items-center gap-[clamp(1rem,3vw,2rem)] mb-[clamp(0.75rem,2vw,1rem)]">
                 <div
-                  className="text-white"
-                  style={{ width: "60%", height: "60%" }}
+                  className="w-[clamp(3.5rem,9vw,5rem)] h-[clamp(3.5rem,9vw,5rem)] rounded-xl md:rounded-2xl flex items-center justify-center shadow-2xl shrink-0"
+                  style={{ backgroundColor: data.accentColor }}
                 >
-                  {data.icon}
+                  <div
+                    className="text-white"
+                    style={{ width: "60%", height: "60%" }}
+                  >
+                    {data.icon}
+                  </div>
+                </div>
+
+                <div className="flex-1 text-left min-w-0">
+                  <p
+                    className="font-semibold uppercase tracking-widest mb-[clamp(0.5rem,1.5vw,0.75rem)]"
+                    style={{
+                      color: data.accentColor,
+                      fontSize: "clamp(12px, 1.5vw, 14px)",
+                    }}
+                  >
+                    {data.subtitle}
+                  </p>
+                  <h1
+                    className="text-white font-bold leading-tight"
+                    style={{ fontSize: "clamp(24px, 4vw, 32px)" }}
+                  >
+                    {data.title}
+                  </h1>
                 </div>
               </div>
-
-              <div className="flex-1 text-left">
-                <p
-                  className="font-semibold uppercase tracking-widest mb-[clamp(0.5rem,1.5vw,0.75rem)]"
-                  style={{
-                    color: data.accentColor,
-                    fontSize: "clamp(0.7rem, 2vw, 0.875rem)",
-                  }}
-                >
-                  {data.subtitle}
-                </p>
-                <h1
-                  className="text-white font-bold mb-[clamp(0.75rem,2vw,1rem)] leading-tight"
-                  style={{ fontSize: "clamp(1.75rem, 5vw, 2.5rem)" }}
-                >
-                  {data.title}
-                </h1>
-                <p
-                  className="text-white/90 leading-relaxed"
-                  style={{ fontSize: "clamp(0.9rem, 2.5vw, 1.1rem)" }}
-                >
-                  {data.description}
-                </p>
-              </div>
+              <p
+                className="text-white/90 leading-relaxed"
+                style={{ fontSize: "16px" }}
+              >
+                {data.description}
+              </p>
             </div>
           </div>
 

@@ -3,6 +3,7 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import { useScreen } from "../context/ScreenContext";
+import { ArrowLeft, AlertTriangle, X } from "lucide-react";
 import {
   ADHD_QUESTIONS,
   DIET_QUESTIONS,
@@ -87,6 +88,7 @@ export default function AssessmentQuestions() {
 
   const [answers, setAnswers] = useState<Record<number, QuizOption>>({});
   const [currentQuestion, setCurrentQuestion] = useState<number>(1);
+  const [showBackModal, setShowBackModal] = useState<boolean>(false);
 
   const currentSelectedOption = answers[currentQuestion] || null;
   const currentQuizQuestion = questions[currentQuestion - 1];
@@ -130,10 +132,32 @@ export default function AssessmentQuestions() {
   const canGoPrevious = currentQuestion > 1;
   const isLastQuestion = currentQuestion === totalQuestions;
 
+  const handleBackClick = () => {
+    setShowBackModal(true);
+  };
+
+  const handleConfirmBack = () => {
+    navigate(`/assessments/${domain}/${assessmentType}`);
+  };
+
+  const handleCancelBack = () => {
+    setShowBackModal(false);
+  };
+
   return (
     <div className="self-assessment-questions-page max-w-[1350px] mx-auto px-[25px]">
       <ResponsiveNavbar />
-      <h1 className="text-[20px] font-semibold text-[#44666C] mt-[30px]">
+      <button
+        onClick={handleBackClick}
+        className="inline-flex items-center gap-2 text-[#44666C] hover:text-[#365a62] mt-[30px] mb-[20px] transition-colors duration-200 group cursor-pointer"
+      >
+        <ArrowLeft
+          size={20}
+          className="group-hover:-translate-x-1 transition-transform duration-200"
+        />
+        <span className="text-[16px] font-medium">Back to Assessment</span>
+      </button>
+      <h1 className="text-[20px] font-semibold text-[#44666C]">
         {t("question")} {currentQuestion} {t("of")} {totalQuestions}
       </h1>
       {/* Progress bar */}
@@ -205,6 +229,82 @@ export default function AssessmentQuestions() {
           </button>
         )}
       </div>
+
+      {/* Back Confirmation Modal */}
+      {showBackModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300"
+            onClick={handleCancelBack}
+          />
+
+          {/* Modal */}
+          <div className="relative bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 md:p-8 transform transition-all duration-300 scale-100">
+            {/* Close Button */}
+            <button
+              onClick={handleCancelBack}
+              className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-full transition-colors duration-200 cursor-pointer"
+            >
+              <X size={20} className="text-gray-500" />
+            </button>
+
+            {/* Icon */}
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center">
+                <AlertTriangle size={32} className="text-amber-600" />
+              </div>
+            </div>
+
+            {/* Content */}
+            <div className="text-center mb-6">
+              <h2 className="text-2xl font-bold text-[#1a2e35] mb-3">
+                Leave Assessment?
+              </h2>
+              <p className="text-[#5a6c75] leading-relaxed">
+                You will lose your progress in this assessment. All your answers
+                will be discarded and you'll need to start over.
+              </p>
+            </div>
+
+            {/* Progress Info */}
+            <div className="bg-[#f8fafb] rounded-xl p-4 mb-6">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-medium text-[#44666C]">
+                  Progress
+                </span>
+                <span className="text-sm font-semibold text-[#44666C]">
+                  {currentQuestion} of {totalQuestions} questions
+                </span>
+              </div>
+              <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-[#44666C] rounded-full transition-all duration-300"
+                  style={{
+                    width: `${(currentQuestion / totalQuestions) * 100}%`,
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3">
+              <button
+                onClick={handleCancelBack}
+                className="flex-1 px-6 py-3 rounded-xl font-medium text-[#44666C] bg-gray-100 hover:bg-gray-200 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md whitespace-nowrap cursor-pointer"
+              >
+                Continue Assessment
+              </button>
+              <button
+                onClick={handleConfirmBack}
+                className="flex-1 px-6 py-3 rounded-xl font-medium text-white bg-[#44666C] hover:bg-[#365a62] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md whitespace-nowrap cursor-pointer"
+              >
+                Leave Assessment
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

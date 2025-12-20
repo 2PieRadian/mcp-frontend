@@ -85,7 +85,7 @@ function FinanceCard({
           className="font-semibold uppercase tracking-wider mb-[clamp(0.25rem,1vw,0.5rem)] opacity-90"
           style={{
             color: accentColor,
-            fontSize: "clamp(0.625rem, 1.5vw, 0.75rem)",
+            fontSize: "clamp(12px, 1.5vw, 14px)",
           }}
         >
           {subtitle}
@@ -94,7 +94,7 @@ function FinanceCard({
         {/* Title */}
         <h3
           className="font-bold text-white mb-[clamp(0.5rem,1.5vw,0.75rem)] leading-tight group-hover:translate-x-1 transition-transform duration-300"
-          style={{ fontSize: "clamp(1.125rem, 3vw, 1.875rem)" }}
+          style={{ fontSize: "clamp(20px, 3vw, 28px)" }}
         >
           {title}
         </h3>
@@ -102,25 +102,25 @@ function FinanceCard({
         {/* Description */}
         <p
           className="text-white/90 leading-relaxed mb-[clamp(0.75rem,2vw,1rem)] grow"
-          style={{ fontSize: "clamp(0.75rem, 2vw, 1rem)" }}
+          style={{ fontSize: "16px" }}
         >
           {description}
         </p>
 
         {/* CTA Button */}
-        <div className="flex items-center gap-[clamp(0.25rem,1vw,0.5rem)] text-white font-semibold mt-auto group-hover:gap-3 transition-all duration-300">
-          <span style={{ fontSize: "clamp(0.75rem, 2vw, 1rem)" }}>
-            Begin Assessment
-          </span>
-
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            handleClick();
+          }}
+          className="flex items-center justify-center gap-2 bg-white text-[#44666C] font-semibold px-[clamp(20px,3vw,28px)] py-[clamp(12px,2vw,16px)] rounded-xl mt-auto transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-gray-50 group/btn cursor-pointer"
+        >
+          <span style={{ fontSize: "16px" }}>Begin Assessment</span>
           <ArrowRight
-            className="group-hover:translate-x-1 transition-transform duration-300"
-            style={{
-              width: "clamp(0.875rem, 2vw, 1rem)",
-              height: "clamp(0.875rem, 2vw, 1rem)",
-            }}
+            className="group-hover/btn:translate-x-1 transition-transform duration-300"
+            size={18}
           />
-        </div>
+        </button>
 
         {/* Bottom Accent Line */}
         <div
@@ -212,7 +212,7 @@ export default function Finance() {
 
             <p
               className="text-[#5a6c75] max-w-2xl mx-auto leading-relaxed"
-              style={{ fontSize: "clamp(0.875rem, 2.5vw, 1.25rem)" }}
+              style={{ fontSize: "clamp(16px, 2.5vw, 20px)" }}
             >
               Take a personalized assessment to understand your financial needs
               and receive tailored guidance from certified experts.
