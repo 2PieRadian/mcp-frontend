@@ -19,6 +19,7 @@ function ExpertVerifiedAssessmentsSectionItem({
   rightImage: boolean;
   linkTo: string;
 }) {
+  const { t } = useTranslation("common");
   const imgRef = useRef<HTMLImageElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -212,7 +213,7 @@ function ExpertVerifiedAssessmentsSectionItem({
             {/* Button shine effect */}
             <div className="absolute inset-0 -translate-x-full group-hover/button:translate-x-full transition-transform duration-700 ease-in-out bg-linear-to-r from-transparent via-white/30 to-transparent"></div>
             <span className="relative z-10 group-hover/button:scale-105 transition-transform duration-300">
-              Take a Free Assessment
+              {t("takeFreeAssessment", { ns: "common" })}
             </span>
             <svg
               className="w-4 h-4 relative z-10 opacity-70 group-hover/button:translate-x-1 group-hover/button:opacity-100 group-hover/button:scale-110 transition-all duration-300"
@@ -335,9 +336,9 @@ export default function ExpertVerifiedAssessmentsSection() {
 
       <div className="flex flex-col mt-[40px] md:mt-[70px] h-fit gap-[40px] md:gap-[48px]">
         <ExpertVerifiedAssessmentsSectionItem
-          title="Wellness"
-          subtitle="The greatest wealth is health."
-          description="Wellness means complete well-being. We offer personalized tools to reduce stress, boost vitality, and achieve the holistic balance needed to live your most resilient, purposeful life."
+          title={t("wellness", { ns: "common" })}
+          subtitle={t("wellnessSubtitle", { ns: "common" })}
+          description={t("wellnessDescription", { ns: "common" })}
           imageSrc="images/expert-verified-assessment/wellness.png"
           imageSize={360}
           rightImage={true}
@@ -345,9 +346,9 @@ export default function ExpertVerifiedAssessmentsSection() {
         />
 
         <ExpertVerifiedAssessmentsSectionItem
-          title="Education"
-          subtitle="A good education is a foundation for a better future."
-          description="Education is power and opportunity. We provide the knowledge and skills needed to confidently build a successful future and create lasting change."
+          title={t("education", { ns: "common" })}
+          subtitle={t("educationSubtitle", { ns: "common" })}
+          description={t("educationDescription", { ns: "common" })}
           imageSrc="images/expert-verified-assessment/education.png"
           imageSize={360}
           rightImage={false}
@@ -355,9 +356,9 @@ export default function ExpertVerifiedAssessmentsSection() {
         />
 
         <ExpertVerifiedAssessmentsSectionItem
-          title="Finance"
-          subtitle="The best investment is in the tools of one's own trade."
-          description="Finance is the foundation of wealth. We offer personalized tools to build a strong financial foundation and achieve financial freedom."
+          title={t("finance", { ns: "common" })}
+          subtitle={t("financeSubtitle", { ns: "common" })}
+          description={t("financeDescription", { ns: "common" })}
           imageSrc="images/expert-verified-assessment/finance.png"
           imageSize={360}
           rightImage={true}

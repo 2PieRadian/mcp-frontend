@@ -7,8 +7,10 @@ import {
 } from "lucide-react";
 import { useScreen } from "../context/ScreenContext";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function HeroSection() {
+  const { t } = useTranslation("common");
   const { screenWidth } = useScreen();
   const showCardsBelow = screenWidth <= 1024;
 
@@ -23,40 +25,38 @@ export default function HeroSection() {
             <div className="inline-flex items-center gap-1.5 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-[#ecf4f6] rounded-full border border-primary/20 animate-badge-pulse">
               <BadgeCheck className="w-3 h-3 md:w-4 md:h-4 text-primary" />
               <span className="text-xs md:text-sm font-medium text-primary">
-                Expert-Verified Assessments
+                {t("expertVerifiedAssessmentsBadge")}
               </span>
             </div>
 
             {/* Main Heading */}
             <h1 className="text-[clamp(32px,5vw,48px)] font-bold leading-[1.1] text-primary tracking-tight">
-              Discover Your Path to
+              {t("discoverYourPath")}
               <span className="block mt-2 text-[hsl(190,40%,29%)]">
-                Better Living
+                {t("betterLiving")}
               </span>
             </h1>
 
             {/* Subheading */}
             <p className="text-[clamp(16px,2.5vw,20px)] text-[#4F5B64] leading-relaxed max-w-[600px] mx-auto lg:mx-0">
-              Take expert-verified assessments in wellness, education, and
-              finance. Get personalized insights and connect with trusted
-              professionals.
+              {t("heroSubheading")}
             </p>
 
             {/* Key Points */}
             <div className="flex flex-row gap-2 md:gap-3 justify-center lg:justify-start overflow-x-auto">
               <div className="inline-flex items-center px-2 py-0.5 md:px-3 md:py-1 bg-[#ecf4f6] rounded-full border border-primary/10 whitespace-nowrap">
                 <span className="text-[10px] md:text-[12px] font-medium text-primary">
-                  Science-Backed
+                  {t("scienceBacked")}
                 </span>
               </div>
               <div className="inline-flex items-center px-2 py-0.5 md:px-3 md:py-1 bg-[#ecf4f6] rounded-full border border-primary/10 whitespace-nowrap">
                 <span className="text-[10px] md:text-[12px] font-medium text-primary">
-                  Expert-Verified
+                  {t("expertVerifiedAssessmentsBadge")}
                 </span>
               </div>
               <div className="inline-flex items-center px-2 py-0.5 md:px-3 md:py-1 bg-[#ecf4f6] rounded-full border border-primary/10 whitespace-nowrap">
                 <span className="text-[10px] md:text-[12px] font-medium text-primary">
-                  Free Assessments
+                  {t("freeAssessments")}
                 </span>
               </div>
             </div>
@@ -67,14 +67,14 @@ export default function HeroSection() {
                 href="#expert-verified-assessments"
                 className="group inline-flex items-center whitespace-nowrap justify-center gap-2 px-[25px] py-[12px] bg-primary text-white rounded-[16px] font-medium text-[16px] hover:bg-[hsl(187,73%,18%)] transition-all duration-300 hover:scale-[1.02] shadow-[0_2px_8px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)]"
               >
-                Start Free Assessment
+                {t("startFreeAssessment")}
               </a>
 
               <Link
                 to="/login"
                 className="inline-flex items-center whitespace-nowrap justify-center px-[25px] py-[12px] bg-transparent text-primary rounded-[16px] font-medium text-[16px] border border-gray-300 hover:bg-[#ecf4f6] transition-all duration-300 hover:scale-[1.02] shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.12)]"
               >
-                Get Free Consultation
+                {t("getFreeConsultation")}
               </Link>
             </div>
           </div>
@@ -93,14 +93,14 @@ export default function HeroSection() {
                     <Heart className="w-6 h-6 text-white" />
                   </div>
                   <h3 className="font-bold text-primary text-lg mb-2 group-hover:text-[#0ea5e9] transition-colors duration-300">
-                    Wellness
+                    {t("wellness")}
                   </h3>
                   <p className="text-[#4F5B64] text-sm leading-relaxed mb-0 group-hover:mb-3 transition-all duration-300">
-                    Assess your mental health and well-being
+                    {t("assessMentalHealth")}
                   </p>
                   <div className="max-h-0 group-hover:max-h-20 overflow-hidden transition-all duration-300 flex items-center justify-center gap-1 text-primary">
                     <span className="text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-150">
-                      Explore
+                      {t("explore")}
                     </span>
                     <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300 delay-150" />
                   </div>
@@ -115,14 +115,14 @@ export default function HeroSection() {
                     <GraduationCap className="w-6 h-6 text-white" />
                   </div>
                   <h3 className="font-bold text-primary text-lg mb-2 group-hover:text-[#10b981] transition-colors duration-300">
-                    Education
+                    {t("education")}
                   </h3>
                   <p className="text-[#4F5B64] text-sm leading-relaxed mb-0 group-hover:mb-3 transition-all duration-300">
-                    Plan your career and educational journey
+                    {t("planCareerEducational")}
                   </p>
                   <div className="max-h-0 group-hover:max-h-20 overflow-hidden transition-all duration-300 flex items-center justify-center gap-1 text-primary">
                     <span className="text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-150">
-                      Explore
+                      {t("explore")}
                     </span>
                     <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300 delay-150" />
                   </div>
@@ -137,14 +137,14 @@ export default function HeroSection() {
                     <TrendingUp className="w-6 h-6 text-white" />
                   </div>
                   <h3 className="font-bold text-primary text-lg mb-2 group-hover:text-[#f59e0b] transition-colors duration-300">
-                    Finance
+                    {t("finance")}
                   </h3>
                   <p className="text-[#4F5B64] text-sm leading-relaxed mb-0 group-hover:mb-3 transition-all duration-300">
-                    Build your financial foundation
+                    {t("buildFinancialFoundation")}
                   </p>
                   <div className="max-h-0 group-hover:max-h-20 overflow-hidden transition-all duration-300 flex items-center justify-center gap-1 text-primary">
                     <span className="text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-150">
-                      Explore
+                      {t("explore")}
                     </span>
                     <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300 delay-150" />
                   </div>
@@ -156,11 +156,10 @@ export default function HeroSection() {
           {showCardsBelow && (
             <div className="w-full mt-[15px] pt-[40px] border-t border-gray-200">
               <h2 className="text-[clamp(20px,5vw,24px)] font-bold text-primary text-center mb-4">
-                Explore Our Expert Categories
+                {t("exploreOurExpertCategories")}
               </h2>
               <p className="text-[#4F5B64] text-center mb-6">
-                Connect with verified professionals in wellness, education, and
-                finance
+                {t("connectWithVerified")}
               </p>
               <div className="grid grid-cols-3 gap-2 sm:gap-4 w-full">
                 <Link
@@ -171,10 +170,10 @@ export default function HeroSection() {
                     <Heart className="w-6 h-6 sm:w-10 sm:h-10 md:w-16 md:h-16 text-white group-hover:scale-125 transition-transform duration-300" />
                   </div>
                   <h3 className="font-bold text-primary text-[clamp(14px,2vw,18px)] mb-1">
-                    Wellness
+                    {t("wellness")}
                   </h3>
                   <p className="text-[#4F5B64] text-[clamp(12px,1.5vw,16px)]">
-                    Mental health assessment
+                    {t("mentalHealthAssessment")}
                   </p>
                 </Link>
 
@@ -186,10 +185,10 @@ export default function HeroSection() {
                     <GraduationCap className="w-6 h-6 sm:w-10 sm:h-10 md:w-16 md:h-16 text-white group-hover:scale-125 transition-transform duration-300" />
                   </div>
                   <h3 className="font-bold text-primary text-[clamp(14px,2vw,18px)] mb-1">
-                    Education
+                    {t("education")}
                   </h3>
                   <p className="text-[#4F5B64] text-[clamp(12px,1.5vw,16px)]">
-                    Career planning
+                    {t("careerPlanning")}
                   </p>
                 </Link>
 
@@ -201,10 +200,10 @@ export default function HeroSection() {
                     <TrendingUp className="w-6 h-6 sm:w-10 sm:h-10 md:w-16 md:h-16 text-white group-hover:scale-125 transition-transform duration-300" />
                   </div>
                   <h3 className="font-bold text-primary text-[clamp(14px,2vw,18px)] mb-1">
-                    Finance
+                    {t("finance")}
                   </h3>
                   <p className="text-[#4F5B64] text-[clamp(12px,1.5vw,16px)]">
-                    Financial planning
+                    {t("financialPlanning")}
                   </p>
                 </Link>
               </div>

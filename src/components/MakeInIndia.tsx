@@ -1,6 +1,8 @@
 import { Flag, Users, Shield, Heart } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export default function MakeInIndia() {
+  const { t } = useTranslation("common");
   return (
     <section className="max-w-[1350px] mx-auto mb-[60px] md:mb-[80px] pt-[8px]">
       <div className="bg-[#ffffff] rounded-[24px] p-[15px] md:p-[24px] shadow-[inset_0_2px_4px_rgba(0,0,0,0.09),0_8px_16px_rgba(0,0,0,0.08)] transition-all duration-300">
@@ -21,7 +23,7 @@ export default function MakeInIndia() {
                   Mind<span className="text-[#119c95]">Cure</span>Path
                 </h2>
                 <p className="text-[#44666C] text-[14px] md:text-[15px] font-medium leading-snug">
-                  India's own virtual counselling platform
+                  {t("indiasOwnVirtualCounselling")}
                 </p>
               </div>
             </div>
@@ -31,12 +33,12 @@ export default function MakeInIndia() {
               <div className="inline-flex items-center gap-[10px] px-4 py-2 bg-linear-to-r from-[#0c9d96] to-[#0f4c5c] rounded-full shadow-[0_4px_12px_rgba(17,156,149,0.3),inset_0_1px_2px_rgba(255,255,255,0.2)] backdrop-blur-sm mb-2 animate-badge-glow">
                 <Flag className="w-4 h-4 text-white animate-flag-wave" />
                 <span className="text-[11px] md:text-[12px] font-bold text-white uppercase tracking-wide">
-                  Proudly Supports
+                  {t("proudlySupports")}
                 </span>
               </div>
 
               <h3 className="text-primary whitespace-nowrap text-[24px] md:text-[36px] font-bold tracking-tight leading-none">
-                MAKE IN INDIA
+                {t("makeInIndia")}
               </h3>
             </div>
           </div>
@@ -52,11 +54,10 @@ export default function MakeInIndia() {
               </div>
               <div>
                 <h4 className="text-primary text-[16px] md:text-[17px] font-semibold mb-[6px]">
-                  Certified Indian Professionals
+                  {t("certifiedIndianProfessionals")}
                 </h4>
                 <p className="text-[#4F5B64] text-[14px] md:text-[15px] leading-relaxed">
-                  Licensed Counselors, Therapists, Nutritionists & Expert
-                  Advisors
+                  {t("licensedCounselorsTherapists")}
                 </p>
               </div>
             </div>
@@ -67,11 +68,10 @@ export default function MakeInIndia() {
               </div>
               <div>
                 <h4 className="text-primary text-[16px] md:text-[17px] font-semibold mb-[6px]">
-                  Career & Financial Advisors
+                  {t("careerFinancialAdvisors")}
                 </h4>
                 <p className="text-[#4F5B64] text-[14px] md:text-[15px] leading-relaxed">
-                  Academic Advisors, Career Counselors, Financial Planners & Tax
-                  Experts
+                  {t("academicAdvisorsCareer")}
                 </p>
               </div>
             </div>
@@ -84,19 +84,10 @@ export default function MakeInIndia() {
 
               <div>
                 <p className="text-[#4F5B64] text-[15px] md:text-[16px] leading-relaxed mb-[12px]">
-                  MindCurePath proudly supports the Make in India initiative — a
-                  movement that celebrates innovation, entrepreneurship, and
-                  self-reliance across the nation. By connecting individuals
-                  with certified Indian counselors, therapists, dieticians,
-                  academic advisors, financial consultants, and GST & taxation
-                  experts, we aim to build a trusted virtual platform where
-                  personal and professional guidance is accessible, affordable,
-                  and locally empowered.
+                  {t("makeInIndiaDescription")}
                 </p>
                 <p className="text-primary text-[15px] md:text-[16px] font-semibold leading-relaxed">
-                  At MindCurePath, we believe true growth begins from within —
-                  both for individuals and for our nation. India's own virtual
-                  counselling platform — built by Indians, for Indians.
+                  {t("trueGrowthBegins")}
                 </p>
               </div>
             </div>
