@@ -135,5 +135,31 @@
         "option4": "ಯಾವಾಗಲೂ"
       }
     }
-  }
+  },
+  "assessmentNotFound": "ಅಸೆಸ್ಮೆಂಟ್ ಸಿಗಲಿಲ್ಲ",
+  "backToAssessments": "ಅಸೆಸ್ಮೆಂಟ್ ಪುಟಕ್ಕೆ ಹಿಂತಿರುಗಿ",
+  "startAssessmentCta": "ಅಸೆಸ್ಮೆಂಟ್ ಆರಂಭಿಸಿ",
+  "whatYouLearnHeading": "ನೀವು ಏನು ಕಲಿಯುತ್ತೀರಿ",
+  "whatYouGetHeading": "ನಿಮಗೆ ಏನು ಸಿಗುತ್ತದೆ",
+  "assessmentDurationHeading": "ಅಸೆಸ್ಮೆಂಟ್ ಅವಧಿ",
+  "instructionsHeading": "ಸೂಚನೆಗಳು",
+  "instruction1": "ನಿಮ್ಮ ದಿನನಿತ್ಯದ ಜೀವನಕ್ಕೆ ಹತ್ತಿರವಾಗಿರುವ ಆಯ್ಕೆಯನ್ನು ಆರಿಸಿ.",
+  "instruction2": "ಪ್ರಾಮಾಣಿಕವಾಗಿ ಉತ್ತರಿಸಿ. ಇದು ನಿಮ್ಮ ಅರ್ಥಮಾಡಿಕೊಳ್ಳಲು ಮಾತ್ರ, ಇದು ವೈದ್ಯಕೀಯ ಪರೀಕ್ಷೆ ಅಲ್ಲ.",
+  "instruction3": "ಸಮಯ ತೆಗೆದುಕೊಂಡು, ಶಾಂತವಾಗಿ ಉತ್ತರಿಸಿ.",
+  "instruction4": "ನಿಮ್ಮ ಎಲ್ಲಾ ಉತ್ತರಗಳು ಖಾಸಗಿ ಮತ್ತು ಸುರಕ್ಷಿತವಾಗಿರುತ್ತವೆ.",
+  "wellnessHeaderBadge": "ವೆಲ್‌ನೆಸ್ ಅಸೆಸ್ಮೆಂಟ್",
+  "wellnessHeaderTitleLine1": "ನಿಮ್ಮ ವೆಲ್‌ನೆಸ್",
+  "wellnessHeaderTitleLine2": "ಪ್ರಯಾಣವನ್ನು ತಿಳಿಯಿರಿ",
+  "wellnessHeaderSubtitle": "ಸರಳ ಅಸೆಸ್ಮೆಂಟ್ ಮೂಲಕ ನಿಮ್ಮ ವೆಲ್‌ನೆಸ್ ಅಗತ್ಯಗಳನ್ನು ಅರ್ಥಮಾಡಿಕೊಂಡು ಸರಳ ಮಾರ್ಗದರ್ಶನವನ್ನು ಪಡೆಯಿರಿ.",
+  "wellnessFooterNote": "ಎಲ್ಲಾ ವೆಲ್‌ನೆಸ್ ಅಸೆಸ್ಮೆಂಟ್‌ಗಳು ಖಾಸಗಿ ಮತ್ತು ನಿಮ್ಮ ಅರ್ಥಮಾಡಿಕೊಳ್ಳಲು ಮಾತ್ರ.",
+  "educationHeaderBadge": "ಶಿಕ್ಷಣ ಅಸೆಸ್ಮೆಂಟ್",
+  "educationHeaderTitleLine1": "ನಿಮ್ಮ ಕಲಿಕೆಯ",
+  "educationHeaderTitleLine2": "ಪ್ರಯಾಣವನ್ನು ತಿಳಿಯಿರಿ",
+  "educationHeaderSubtitle": "ಸರಳ ಅಸೆಸ್ಮೆಂಟ್ ಮೂಲಕ ನಿಮ್ಮ ಅಧ್ಯಯನ ಅಗತ್ಯಗಳನ್ನು ಅರ್ಥಮಾಡಿಕೊಂಡು ಸ್ಪಷ್ಟ, ಸರಳ ಸಹಾಯವನ್ನು ಪಡೆಯಿರಿ.",
+  "educationFooterNote": "ಎಲ್ಲಾ ಶಿಕ್ಷಣ ಅಸೆಸ್ಮೆಂಟ್‌ಗಳು ಖಾಸಗಿ ಮತ್ತು ನಿಮ್ಮ ಬೆಳವಣಿಗೆಗಾಗಿ ಮಾತ್ರ.",
+  "financeAssessHeaderTitleLine1": "ನಿಮ್ಮ ಫೈನಾನ್ಷಿಯಲ್",
+  "financeAssessHeaderTitleLine2": "ಪ್ರಯಾಣವನ್ನು ತಿಳಿಯಿರಿ",
+  "financeAssessHeaderSubtitle": "ಸರಳ ಅಸೆಸ್ಮೆಂಟ್ ಮೂಲಕ ನಿಮ್ಮ ಹಣದ ಅಭ್ಯಾಸಗಳನ್ನು ಅರ್ಥಮಾಡಿಕೊಂಡು ಸರಳ ಮಾರ್ಗದರ್ಶನ ಪಡೆಯಿರಿ.",
+  "financeFooterNote": "ಎಲ್ಲಾ ಫೈನಾನ್ಸ್ ಅಸೆಸ್ಮೆಂಟ್‌ಗಳು ಖಾಸಗಿ ಮತ್ತು ನಿಮ್ಮ ಯೋಜನೆಗಾಗಿ ಮಾತ್ರ.",
+  "beginAssessmentCta": "ಅಸೆಸ್ಮೆಂಟ್ ಆರಂಭಿಸಿ"
 }

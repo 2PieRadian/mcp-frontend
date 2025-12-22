@@ -1,6 +1,7 @@
 import { Compass, Briefcase, GraduationCap, ArrowRight } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import ResponsiveNavbar from "../../components/ResponsiveNavbar";
 import useScrollToTop from "../../hooks/useScrollToTop";
 
@@ -13,6 +14,8 @@ interface EducationCardProps {
   gradientTo: string;
   accentColor: string;
   index: number;
+  ctaLabel: string;
+  linkTo: string;
 }
 
 function EducationCard({
@@ -23,11 +26,9 @@ function EducationCard({
   gradientFrom,
   gradientTo,
   accentColor,
+  ctaLabel,
+  linkTo,
 }: EducationCardProps) {
-  // Convert title to route-friendly format
-  const assessmentPath = title.toLowerCase().replace(/\s+/g, "-");
-  const linkTo = `/assessments/education/${assessmentPath}`;
-
   return (
     <div
       className="group relative overflow-hidden rounded-2xl md:rounded-3xl transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl"
@@ -96,7 +97,7 @@ function EducationCard({
           to={linkTo}
           className="flex items-center justify-center gap-2 bg-white text-[#44666C] font-semibold px-[clamp(20px,3vw,28px)] py-[clamp(12px,2vw,16px)] rounded-xl mt-auto transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-gray-50 group/btn cursor-pointer"
         >
-          <span style={{ fontSize: "16px" }}>Begin Assessment</span>
+          <span style={{ fontSize: "16px" }}>{ctaLabel}</span>
           <ArrowRight
             className="group-hover/btn:translate-x-1 transition-transform duration-300"
             size={18}
@@ -115,32 +116,33 @@ function EducationCard({
 
 export default function Education() {
   useScrollToTop();
+  const { t } = useTranslation("quiz");
   const educationCards = [
     {
-      title: "Path Finder",
-      subtitle: "Life Direction & Clarity",
-      description:
-        "Discover your life path and gain clarity on your direction. Understand your strengths, decision-making patterns, and build a clear vision for your future.",
+      slug: "path-finder",
+      titleKey: "educationCardPathFinderTitle",
+      subtitleKey: "educationCardPathFinderSubtitle",
+      descriptionKey: "educationCardPathFinderDescription",
       icon: <Compass style={{ width: "100%", height: "100%" }} />,
       gradientFrom: "#7C3AED",
       gradientTo: "#8B5CF6",
       accentColor: "#A78BFA",
     },
     {
-      title: "Career Planning",
-      subtitle: "Professional Growth",
-      description:
-        "Evaluate your career readiness and planning skills. Discover your strengths, set clear goals, and build a structured path for professional success.",
+      slug: "career-planning",
+      titleKey: "educationCardCareerPlanningTitle",
+      subtitleKey: "educationCardCareerPlanningSubtitle",
+      descriptionKey: "educationCardCareerPlanningDescription",
       icon: <Briefcase style={{ width: "100%", height: "100%" }} />,
       gradientFrom: "#DC2626",
       gradientTo: "#EF4444",
       accentColor: "#F87171",
     },
     {
-      title: "Academic",
-      subtitle: "Study Habits & Performance",
-      description:
-        "Assess your academic habits, study patterns, and learning strategies. Identify areas for improvement and develop effective study techniques for better performance.",
+      slug: "academic",
+      titleKey: "educationCardAcademicTitle",
+      subtitleKey: "educationCardAcademicSubtitle",
+      descriptionKey: "educationCardAcademicDescription",
       icon: <GraduationCap style={{ width: "100%", height: "100%" }} />,
       gradientFrom: "#0891B2",
       gradientTo: "#06B6D4",
@@ -188,7 +190,7 @@ export default function Education() {
                 className="font-semibold uppercase tracking-widest text-[#44666C] bg-[#E0ECEE] px-[clamp(0.75rem,2vw,1rem)] py-[clamp(0.375rem,1vw,0.5rem)] rounded-full"
                 style={{ fontSize: "clamp(0.625rem, 1.5vw, 0.875rem)" }}
               >
-                Education Assessment
+                {t("educationHeaderBadge")}
               </span>
             </div>
 
@@ -196,24 +198,37 @@ export default function Education() {
               className="font-bold text-[#1a2e35] mb-[clamp(0.75rem,2vw,1rem)] leading-tight"
               style={{ fontSize: "clamp(30px, 5vw, 60px)" }}
             >
-              Discover Your Learning
+              {t("educationHeaderTitleLine1")}
               <br />
-              <span className="text-[#44666C]">Journey</span>
+              <span className="text-[#44666C]">
+                {t("educationHeaderTitleLine2")}
+              </span>
             </h1>
 
             <p
               className="text-[#5a6c75] max-w-2xl mx-auto leading-relaxed"
               style={{ fontSize: "clamp(16px, 2.5vw, 20px)" }}
             >
-              Take a personalized assessment to understand your educational
-              needs and receive tailored guidance from certified experts.
+              {t("educationHeaderSubtitle")}
             </p>
           </div>
 
           {/* Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-[clamp(0.5rem,2vw,2.5rem)]">
             {educationCards.map((card, index) => (
-              <EducationCard key={card.title} {...card} index={index} />
+              <EducationCard
+                key={card.slug}
+                title={t(card.titleKey)}
+                subtitle={t(card.subtitleKey)}
+                description={t(card.descriptionKey)}
+                icon={card.icon}
+                gradientFrom={card.gradientFrom}
+                gradientTo={card.gradientTo}
+                accentColor={card.accentColor}
+                index={index}
+                ctaLabel={t("beginAssessmentCta")}
+                linkTo={`/assessments/education/${card.slug}`}
+              />
             ))}
           </div>
 
@@ -223,8 +238,7 @@ export default function Education() {
               className="text-[#5a6c75]"
               style={{ fontSize: "clamp(0.75rem, 2vw, 1rem)" }}
             >
-              All assessments are confidential and designed to provide insights
-              for your educational journey.
+              {t("educationFooterNote")}
             </p>
           </div>
         </div>

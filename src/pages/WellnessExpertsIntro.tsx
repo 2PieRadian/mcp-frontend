@@ -107,7 +107,7 @@ export default function WellnessExpertsIntro() {
     title: specialization,
     description:
       SPECIALIZATION_DESCRIPTIONS[specialization] ||
-      "Get expert guidance and support.",
+      t("expertsFallbackDescription"),
     specialization,
     icon: WELLNESS_ICONS[specialization] || Heart,
   }));
@@ -129,17 +129,16 @@ export default function WellnessExpertsIntro() {
             <div className="absolute inset-0 flex flex-col justify-center items-start px-4 sm:px-6 md:px-8 lg:px-12 text-white">
               <div className="flex items-center gap-2 mb-3 sm:mb-4">
                 <span className="text-xs sm:text-sm md:text-base font-semibold uppercase tracking-wider opacity-90">
-                  Expert Wellness Support
+                  {t("wellnessExpertsBadge")}
                 </span>
               </div>
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 sm:mb-4 leading-tight">
-                Your Journey to
+                {t("wellnessExpertsTitleLine1")}
                 <br />
-                Better Wellness
+                {t("wellnessExpertsTitleLine2")}
               </h1>
               <p className="text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl opacity-95 leading-relaxed">
-                Connect with certified wellness experts who understand your
-                unique needs and guide you toward a healthier, happier life.
+                {t("wellnessExpertsSubtitle")}
               </p>
             </div>
           </div>
@@ -148,10 +147,10 @@ export default function WellnessExpertsIntro() {
         {/* Categories Grid */}
         <div className="mb-8">
           <h2 className="text-3xl md:text-4xl font-bold text-[#1a2e35] mb-2 text-center">
-            Choose Your Focus Area
+            {t("expertsChooseHeading")}
           </h2>
           <p className="text-center text-[#5a6c75] text-lg mb-10">
-            Choose the area where you need expert guidance
+            {t("expertsChooseSubheading")}
           </p>
         </div>
 

@@ -135,5 +135,31 @@
         "option4": "সবসময়"
       }
     }
-  }
+  },
+  "assessmentNotFound": "অ্যাসেসমেন্ট পাওয়া যায়নি",
+  "backToAssessments": "অ্যাসেসমেন্ট পাতায় ফিরে যান",
+  "startAssessmentCta": "অ্যাসেসমেন্ট শুরু করুন",
+  "whatYouLearnHeading": "আপনি কী শিখবেন",
+  "whatYouGetHeading": "আপনি কী পাবেন",
+  "assessmentDurationHeading": "অ্যাসেসমেন্টের সময়",
+  "instructionsHeading": "নির্দেশনা",
+  "instruction1": "আপনার দৈনন্দিন জীবনের সাথে সবচেয়ে মিল থাকা অপশনটি বেছে নিন।",
+  "instruction2": "সত্যি করে উত্তর দিন। এটি শুধু আপনার বোঝার জন্য, এটি কোনও মেডিকেল টেস্ট নয়।",
+  "instruction3": "শান্ত হয়ে, সময় নিয়ে উত্তর দিন।",
+  "instruction4": "আপনার সব উত্তর গোপন ও সুরক্ষিত থাকবে।",
+  "wellnessHeaderBadge": "ওয়েলনেস অ্যাসেসমেন্ট",
+  "wellnessHeaderTitleLine1": "আপনার ওয়েলনেস",
+  "wellnessHeaderTitleLine2": "যাত্রা জানুন",
+  "wellnessHeaderSubtitle": "একটি সহজ অ্যাসেসমেন্টে আপনার ওয়েলনেসের প্রয়োজন বুঝুন এবং সহজ পরামর্শ পান।",
+  "wellnessFooterNote": "সব ওয়েলনেস অ্যাসেসমেন্ট ব্যক্তিগত এবং শুধু আপনার বোঝার জন্য।",
+  "educationHeaderBadge": "এডুকেশন অ্যাসেসমেন্ট",
+  "educationHeaderTitleLine1": "আপনার শেখার",
+  "educationHeaderTitleLine2": "যাত্রা জানুন",
+  "educationHeaderSubtitle": "একটি সহজ অ্যাসেসমেন্টে আপনার পড়াশোনার প্রয়োজন বুঝুন এবং পরিষ্কার, সহজ সহায়তা পান।",
+  "educationFooterNote": "সব এডুকেশন অ্যাসেসমেন্ট ব্যক্তিগত এবং আপনার উন্নতির জন্য।",
+  "financeAssessHeaderTitleLine1": "আপনার ফাইন্যান্সিয়াল",
+  "financeAssessHeaderTitleLine2": "যাত্রা জানুন",
+  "financeAssessHeaderSubtitle": "একটি সহজ অ্যাসেসমেন্টে আপনার টাকা ব্যবহারের অভ্যাস বুঝুন এবং সহজ গাইডেন্স পান।",
+  "financeFooterNote": "সব ফাইন্যান্স অ্যাসেসমেন্ট ব্যক্তিগত এবং শুধু আপনার প্ল্যানিংয়ের জন্য।",
+  "beginAssessmentCta": "অ্যাসেসমেন্ট শুরু করুন"
 }

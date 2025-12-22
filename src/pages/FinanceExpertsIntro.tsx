@@ -106,7 +106,7 @@ export default function FinanceExpertsIntro() {
     title: specialization,
     description:
       SPECIALIZATION_DESCRIPTIONS[specialization] ||
-      "Get expert guidance and support.",
+      t("financeFallbackDescription"),
     specialization,
     icon: FINANCE_ICONS[specialization] || TrendingUp,
   }));
@@ -128,17 +128,14 @@ export default function FinanceExpertsIntro() {
             <div className="absolute inset-0 flex flex-col justify-center items-start px-4 sm:px-6 md:px-8 lg:px-12 text-white">
               <div className="flex items-center gap-2 mb-3 sm:mb-4">
                 <span className="text-xs sm:text-sm md:text-base font-semibold uppercase tracking-wider opacity-90">
-                  Expert Financial Guidance
+                  {t("financeHeroBadge")}
                 </span>
               </div>
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 sm:mb-4 leading-tight">
-                Build Your Financial
-                <br />
-                Future With Confidence
+                {t("financeHeroTitle")}
               </h1>
               <p className="text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl opacity-95 leading-relaxed">
-                Get expert financial advice from certified professionals who
-                help you make smart decisions and achieve your financial goals.
+                {t("financeHeroSubtitle")}
               </p>
             </div>
           </div>
@@ -147,10 +144,10 @@ export default function FinanceExpertsIntro() {
         {/* Categories Grid */}
         <div className="mb-8">
           <h2 className="text-3xl md:text-4xl font-bold text-[#1a2e35] mb-2 text-center">
-            Choose Your Focus Area
+            {t("financeChooseHeading")}
           </h2>
           <p className="text-center text-[#5a6c75] text-lg mb-10">
-            Choose the area where you need expert guidance
+            {t("financeChooseSubheading")}
           </p>
         </div>
 

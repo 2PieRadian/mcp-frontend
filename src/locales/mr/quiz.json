@@ -135,5 +135,31 @@
         "option4": "नेहमी"
       }
     }
-  }
+  },
+  "assessmentNotFound": "असेसमेंट सापडले नाही",
+  "backToAssessments": "असेसमेंटच्या पानावर परत जा",
+  "startAssessmentCta": "असेसमेंट सुरू करा",
+  "whatYouLearnHeading": "तुम्ही काय शिकाल",
+  "whatYouGetHeading": "तुम्हाला काय मिळेल",
+  "assessmentDurationHeading": "असेसमेंटचा वेळ",
+  "instructionsHeading": "सूचना",
+  "instruction1": "तुमच्या रोजच्या जीवनासारखी वाटणारी पर्याय निवडा.",
+  "instruction2": "प्रामाणिकपणे उत्तर द्या. हे फक्त तुमच्या समजण्यासाठी आहे, हा मेडिकल टेस्ट नाही.",
+  "instruction3": "शांतपणे विचार करून हळूच उत्तर द्या.",
+  "instruction4": "तुमची सर्व उत्तरे खाजगी आणि सुरक्षित राहतील.",
+  "wellnessHeaderBadge": "वेलनेस असेसमेंट",
+  "wellnessHeaderTitleLine1": "तुमची वेलनेस",
+  "wellnessHeaderTitleLine2": "यात्रा जाणून घ्या",
+  "wellnessHeaderSubtitle": "एक सोपा असेसमेंट घेऊन तुमच्या वेलनेसच्या गरजा समजा आणि सोपी मार्गदर्शन मिळवा.",
+  "wellnessFooterNote": "सर्व वेलनेस असेसमेंट खाजगी आहेत आणि फक्त तुमच्या समजण्यासाठी आहेत.",
+  "educationHeaderBadge": "शिक्षण असेसमेंट",
+  "educationHeaderTitleLine1": "तुमच्या शिकण्याची",
+  "educationHeaderTitleLine2": "यात्रा जाणून घ्या",
+  "educationHeaderSubtitle": "एक सोपा असेसमेंट घेऊन तुमच्या अभ्यासाच्या गरजा समजा आणि स्पष्ट, सोपी मदत मिळवा.",
+  "educationFooterNote": "सर्व शिक्षण असेसमेंट खाजगी आहेत आणि फक्त तुमच्या वाढीसाठी आहेत.",
+  "financeAssessHeaderTitleLine1": "तुमची आर्थिक",
+  "financeAssessHeaderTitleLine2": "यात्रा जाणून घ्या",
+  "financeAssessHeaderSubtitle": "एक सोपा असेसमेंट घेऊन तुमच्या पैशांच्या सवयी समजा आणि सोपी मार्गदर्शन मिळवा.",
+  "financeFooterNote": "सर्व फायनान्स असेसमेंट खाजगी आहेत आणि फक्त तुमच्या planning साठी आहेत.",
+  "beginAssessmentCta": "असेसमेंट सुरू करा"
 }

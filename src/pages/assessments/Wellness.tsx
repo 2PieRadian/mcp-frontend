@@ -1,6 +1,7 @@
 import { Brain, Apple, Heart, Flower2, ArrowRight } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import ResponsiveNavbar from "../../components/ResponsiveNavbar";
 import useScrollToTop from "../../hooks/useScrollToTop";
 
@@ -13,6 +14,8 @@ interface WellnessCardProps {
   gradientTo: string;
   accentColor: string;
   index: number;
+  ctaLabel: string;
+  linkTo: string;
 }
 
 function WellnessCard({
@@ -23,10 +26,9 @@ function WellnessCard({
   gradientFrom,
   gradientTo,
   accentColor,
+  ctaLabel,
+  linkTo,
 }: WellnessCardProps) {
-  const assessmentPath = title.toLowerCase();
-  const linkTo = `/assessments/wellness/${assessmentPath}`;
-
   return (
     <div
       className="group relative overflow-hidden rounded-2xl md:rounded-3xl transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl"
@@ -98,7 +100,7 @@ function WellnessCard({
           to={linkTo}
           className="flex items-center justify-center gap-2 bg-white text-[#44666C] font-semibold px-[clamp(20px,3vw,28px)] py-[clamp(12px,2vw,16px)] rounded-xl mt-auto transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-gray-50 group/btn cursor-pointer"
         >
-          <span style={{ fontSize: "16px" }}>Begin Assessment</span>
+          <span style={{ fontSize: "16px" }}>{ctaLabel}</span>
           <ArrowRight
             className="group-hover/btn:translate-x-1 transition-transform duration-300"
             size={18}
@@ -117,12 +119,13 @@ function WellnessCard({
 
 export default function Wellness() {
   useScrollToTop();
+  const { t } = useTranslation("quiz");
   const wellnessCards = [
     {
-      title: "ADHD",
-      subtitle: "Attention & Focus",
-      description:
-        "Understand your attention patterns and discover personalized strategies to enhance focus, manage distractions, and optimize your cognitive performance in daily life.",
+      slug: "adhd",
+      titleKey: "wellnessCardAdhdTitle",
+      subtitleKey: "wellnessCardAdhdSubtitle",
+      descriptionKey: "wellnessCardAdhdDescription",
       icon: <Brain style={{ width: "100%", height: "100%" }} />,
       gradientFrom: "#4F46E5",
       gradientTo: "#6366F1",
@@ -130,10 +133,10 @@ export default function Wellness() {
     },
 
     {
-      title: "Diet",
-      subtitle: "Nutrition & Wellness",
-      description:
-        "Evaluate your eating habits and receive evidence-based guidance to create a balanced nutrition plan that supports your health goals and lifestyle preferences.",
+      slug: "diet",
+      titleKey: "wellnessCardDietTitle",
+      subtitleKey: "wellnessCardDietSubtitle",
+      descriptionKey: "wellnessCardDietDescription",
       icon: <Apple style={{ width: "100%", height: "100%" }} />,
       gradientFrom: "#059669",
       gradientTo: "#10B981",
@@ -141,10 +144,10 @@ export default function Wellness() {
     },
 
     {
-      title: "Relationship",
-      subtitle: "Connection & Bonds",
-      description:
-        "Explore your relationship dynamics and communication patterns to build stronger, more meaningful connections with partners, family, and friends.",
+      slug: "relationship",
+      titleKey: "wellnessCardRelationshipTitle",
+      subtitleKey: "wellnessCardRelationshipSubtitle",
+      descriptionKey: "wellnessCardRelationshipDescription",
       icon: <Heart style={{ width: "100%", height: "100%" }} />,
       gradientFrom: "#E11D48",
       gradientTo: "#F43F5E",
@@ -152,10 +155,10 @@ export default function Wellness() {
     },
 
     {
-      title: "Yoga",
-      subtitle: "Mind & Body Balance",
-      description:
-        "Assess your physical and mental alignment to find the perfect yoga practice that harmonizes your body, mind, and spirit for holistic well-being.",
+      slug: "yoga",
+      titleKey: "wellnessCardYogaTitle",
+      subtitleKey: "wellnessCardYogaSubtitle",
+      descriptionKey: "wellnessCardYogaDescription",
       icon: <Flower2 style={{ width: "100%", height: "100%" }} />,
       gradientFrom: "#0D9488",
       gradientTo: "#14B8A6",
@@ -203,7 +206,7 @@ export default function Wellness() {
                 className="font-semibold uppercase tracking-widest text-[#44666C] bg-[#E0ECEE] px-[clamp(0.75rem,2vw,1rem)] py-[clamp(0.375rem,1vw,0.5rem)] rounded-full"
                 style={{ fontSize: "clamp(0.625rem, 1.5vw, 0.875rem)" }}
               >
-                Wellness Assessment
+                {t("wellnessHeaderBadge")}
               </span>
             </div>
 
@@ -211,24 +214,37 @@ export default function Wellness() {
               className="font-bold text-[#1a2e35] mb-[clamp(0.75rem,2vw,1rem)] leading-tight"
               style={{ fontSize: "clamp(30px, 5vw, 60px)" }}
             >
-              Discover Your Wellness
+              {t("wellnessHeaderTitleLine1")}
               <br />
-              <span className="text-[#44666C]">Journey</span>
+              <span className="text-[#44666C]">
+                {t("wellnessHeaderTitleLine2")}
+              </span>
             </h1>
 
             <p
               className="text-[#5a6c75] max-w-2xl mx-auto leading-relaxed"
               style={{ fontSize: "clamp(16px, 2.5vw, 20px)" }}
             >
-              Take a personalized assessment to understand your wellness needs
-              and receive tailored guidance from certified experts.
+              {t("wellnessHeaderSubtitle")}
             </p>
           </div>
 
           {/* Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-[clamp(0.5rem,2vw,2.5rem)]">
             {wellnessCards.map((card, index) => (
-              <WellnessCard key={card.title} {...card} index={index} />
+              <WellnessCard
+                key={card.slug}
+                title={t(card.titleKey)}
+                subtitle={t(card.subtitleKey)}
+                description={t(card.descriptionKey)}
+                icon={card.icon}
+                gradientFrom={card.gradientFrom}
+                gradientTo={card.gradientTo}
+                accentColor={card.accentColor}
+                index={index}
+                ctaLabel={t("beginAssessmentCta")}
+                linkTo={`/assessments/wellness/${card.slug}`}
+              />
             ))}
           </div>
 
@@ -238,8 +254,7 @@ export default function Wellness() {
               className="text-[#5a6c75]"
               style={{ fontSize: "clamp(0.75rem, 2vw, 1rem)" }}
             >
-              All assessments are confidential and designed to provide insights
-              for your wellness journey.
+              {t("wellnessFooterNote")}
             </p>
           </div>
         </div>

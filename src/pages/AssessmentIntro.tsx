@@ -1,5 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { useParams, Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import {
   Brain,
@@ -245,6 +246,7 @@ export default function AssessmentIntro() {
   useScrollToTop();
   const location = useLocation();
   const { assessmentType } = useParams<{ assessmentType: string }>();
+  const { t } = useTranslation("quiz");
   const data = assessmentData[assessmentType || ""];
 
   // Determine domain from pathname
@@ -257,7 +259,7 @@ export default function AssessmentIntro() {
   if (!data) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-[#44666C] text-xl">Assessment not found</p>
+        <p className="text-[#44666C] text-xl">{t("assessmentNotFound")}</p>
       </div>
     );
   }
@@ -304,7 +306,7 @@ export default function AssessmentIntro() {
                 className="group-hover:-translate-x-1 transition-transform duration-200"
               />
               <span className="text-[clamp(0.875rem,2vw,1rem)] font-medium">
-                Back to Assessments
+                {t("backToAssessments")}
               </span>
             </Link>
 
@@ -358,7 +360,7 @@ export default function AssessmentIntro() {
                 background: `linear-gradient(135deg, ${data.gradientFrom} 0%, ${data.gradientTo} 100%)`,
               }}
             >
-              Start Assessment
+              {t("startAssessmentCta")}
             </Link>
           </div>
 
@@ -368,7 +370,7 @@ export default function AssessmentIntro() {
             <div className="bg-white rounded-xl md:rounded-2xl p-[clamp(1.25rem,3vw,2rem)] shadow-lg">
               <h2 className="text-[#1a2e35] font-bold text-[clamp(1.25rem,3vw,1.5rem)] mb-[clamp(1rem,2vw,1.5rem)] flex items-center gap-2">
                 <CheckCircle2 className="text-[#44666C] w-5 h-5 md:w-7 md:h-7" />
-                What You'll Learn
+                {t("whatYouLearnHeading")}
               </h2>
               <ul className="space-y-[clamp(0.75rem,1.5vw,0.875rem)]">
                 {data.benefits.map((benefit, index) => (
@@ -392,7 +394,7 @@ export default function AssessmentIntro() {
             <div className="bg-white rounded-xl md:rounded-2xl p-[clamp(1.25rem,3vw,2rem)] shadow-lg">
               <h2 className="text-[#1a2e35] font-bold text-[clamp(1.25rem,3vw,1.5rem)] mb-[clamp(1rem,2vw,1.5rem)] flex items-center gap-2">
                 <Shield className="text-[#44666C] w-5 h-5 md:w-7 md:h-7" />
-                What You'll Get
+                {t("whatYouGetHeading")}
               </h2>
               <ul className="space-y-[clamp(0.75rem,1.5vw,0.875rem)]">
                 {data.whatYouGet.map((item, index) => (
@@ -419,7 +421,7 @@ export default function AssessmentIntro() {
               <Clock className="text-[#44666C] w-5 h-5 md:w-6 md:h-6" />
               <div>
                 <p className="text-[#1a2e35] font-semibold text-[clamp(1rem,2vw,1.125rem)]">
-                  Assessment Duration
+                  {t("assessmentDurationHeading")}
                 </p>
                 <p className="text-[#5a6c75] text-[clamp(0.875rem,1.8vw,1rem)]">
                   {data.duration}
@@ -431,17 +433,13 @@ export default function AssessmentIntro() {
           {/* Instructions */}
           <div className="bg-[#E0ECEE] rounded-xl md:rounded-2xl p-[clamp(1.25rem,3vw,2rem)]">
             <h3 className="text-[#1a2e35] font-bold text-[clamp(1.125rem,2.5vw,1.25rem)] mb-[clamp(0.75rem,1.5vw,1rem)]">
-              Instructions
+              {t("instructionsHeading")}
             </h3>
             <ul className="space-y-[clamp(0.5rem,1vw,0.625rem)] text-[#5a6c75] text-[clamp(0.875rem,1.8vw,1rem)] leading-relaxed">
-              <li>
-                • Select the option that feels most like you in everyday life.
-              </li>
-              <li>
-                • Be honest — this is for self-reflection only, not diagnosis.
-              </li>
-              <li>• Take your time and answer thoughtfully.</li>
-              <li>• All responses are confidential and secure.</li>
+              <li>• {t("instruction1")}</li>
+              <li>• {t("instruction2")}</li>
+              <li>• {t("instruction3")}</li>
+              <li>• {t("instruction4")}</li>
             </ul>
           </div>
         </div>

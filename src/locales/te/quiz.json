@@ -135,5 +135,31 @@
         "option4": "ఎప్పుడూ"
       }
     }
-  }
+  },
+  "assessmentNotFound": "అసెస్‌మెంట్ కనిపించలేదు",
+  "backToAssessments": "అసెస్‌మెంట్‌ల పేజీకి వెళ్ళండి",
+  "startAssessmentCta": "అసెస్‌మెంట్ ప్రారంభించండి",
+  "whatYouLearnHeading": "మీరు ఏమి నేర్చుకుంటారు",
+  "whatYouGetHeading": "మీకు ఏమి లభిస్తుంది",
+  "assessmentDurationHeading": "అసెస్‌మెంట్ సమయం",
+  "instructionsHeading": "సూచనలు",
+  "instruction1": "మీ రోజువారీ జీవితానికి దగ్గరగా అనిపించే ఎంపికను ఎంచుకోండి.",
+  "instruction2": "నిజాయితీగా సమాధానమివ్వండి. ఇది మీకు అర్థం చేసుకోవడానికి మాత్రమే, ఇది మెడికల్ టెస్ట్ కాదు.",
+  "instruction3": "అవసరమైన సమయం తీసుకుని, శాంతిగా సమాధానమివ్వండి.",
+  "instruction4": "మీ సమాధానాలు అన్ని వ్యక్తిగతం మరియు సురక్షితం.",
+  "wellnessHeaderBadge": "వెల్నెస్ అసెస్‌మెంట్",
+  "wellnessHeaderTitleLine1": "మీ వెల్నెస్",
+  "wellnessHeaderTitleLine2": "ప్రయాణాన్ని తెలుసుకోండి",
+  "wellnessHeaderSubtitle": "సాధారణ అసెస్‌మెంట్ ద్వారా మీ వెల్నెస్ అవసరాలను అర్థం చేసుకుని, సులభమైన మార్గదర్శకాన్ని పొందండి.",
+  "wellnessFooterNote": "అన్ని వెల్నెస్ అసెస్‌మెంట్‌లు వ్యక్తిగతమైనవి మరియు మీ అర్థం చేసుకోవడానికి మాత్రమే.",
+  "educationHeaderBadge": "ఎడ్యుకేషన్ అసెస్‌మెంట్",
+  "educationHeaderTitleLine1": "మీ లెర్నింగ్",
+  "educationHeaderTitleLine2": "ప్రయాణాన్ని తెలుసుకోండి",
+  "educationHeaderSubtitle": "సాధారణ అసెస్‌మెంట్ ద్వారా మీ చదువు అవసరాలను అర్థం చేసుకుని, స్పష్టమైన, సులభమైన సహాయం పొందండి.",
+  "educationFooterNote": "అన్ని ఎడ్యుకేషన్ అసెస్‌మెంట్‌లు వ్యక్తిగతమైనవి మరియు మీ పురోగతికి మాత్రమే.",
+  "financeAssessHeaderTitleLine1": "మీ ఫైనాన్షియల్",
+  "financeAssessHeaderTitleLine2": "ప్రయాణాన్ని తెలుసుకోండి",
+  "financeAssessHeaderSubtitle": "సాధారణ అసెస్‌మెంట్ ద్వారా మీ డబ్బు అలవాట్లను అర్థం చేసుకుని, సులభమైన మార్గదర్శకాన్ని పొందండి.",
+  "financeFooterNote": "అన్ని ఫైనాన్స్ అసెస్‌మెంట్‌లు వ్యక్తిగతమైనవి మరియు మీ ప్లానింగ్ కోసం మాత్రమే.",
+  "beginAssessmentCta": "అసెస్‌మెంట్ ప్రారంభించండి"
 }

@@ -127,7 +127,7 @@
       }
     },
     "q15": {
-      "question": "હું લોકો સાથે kindness દર્શાવું છું?",
+      "question": "હું લોકોને સાથે kindness દર્શાવું છું?",
       "options": {
         "option1": "ઘણી વખત",
         "option2": "ખૂબ ઓછું",
@@ -135,5 +135,31 @@
         "option4": "હંમેશા"
       }
     }
-  }
+  },
+  "assessmentNotFound": "એસેસમેન્ટ મળ્યું નથી",
+  "backToAssessments": "એસેસમેન્ટ પેજ પર પાછા જાઓ",
+  "startAssessmentCta": "એસેસમેન્ટ શરૂ કરો",
+  "whatYouLearnHeading": "તમે શું શીખશો",
+  "whatYouGetHeading": "તમને શું મળશે",
+  "assessmentDurationHeading": "એસેસમેન્ટ સમય",
+  "instructionsHeading": "સૂચનાઓ",
+  "instruction1": "તમારા દૈનિક જીવન જેવું લાગતું વિકલ્પ પસંદ કરો.",
+  "instruction2": "ઈમાનદારીથી જવાબ આપો. આ ફક્ત તમારી સમજ માટે છે, આ કોઈ મેડિકલ ટેસ્ટ નથી.",
+  "instruction3": "શાંત રહીને, ધીમે ધીમે જવાબ આપો.",
+  "instruction4": "તમારા બધા જવાબ ખાનગી અને સુરક્ષિત રહેશે.",
+  "wellnessHeaderBadge": "વેલનેસ એસેસમેન્ટ",
+  "wellnessHeaderTitleLine1": "તમારી વેલનેસ",
+  "wellnessHeaderTitleLine2": "યાત્રા જાણો",
+  "wellnessHeaderSubtitle": "સરળ એસેસમેન્ટ દ્વારા તમારી વેલનેસની જરૂરિયાતો સમજજો અને સરળ માર્ગદર્શન મેળવો.",
+  "wellnessFooterNote": "બધા વેલનેસ એસેસમેન્ટ ખાનગી છે અને ફક્ત તમારી સમજ માટે છે.",
+  "educationHeaderBadge": "એજ્યુકેશન એસેસમેન્ટ",
+  "educationHeaderTitleLine1": "તમારી શીખવાની",
+  "educationHeaderTitleLine2": "યાત્રા જાણો",
+  "educationHeaderSubtitle": "સરળ એસેસમેન્ટ દ્વારા તમારા અભ્યાસની જરૂરિયાતો સમજજો અને સ્પષ્ટ, સરળ મદદ મેળવો.",
+  "educationFooterNote": "બધા એજ્યુકેશન એસેસમેન્ટ ખાનગી છે અને ફક્ત તમારા વિકાસ માટે છે.",
+  "financeAssessHeaderTitleLine1": "તમારી ફાઈનાન્સિયલ",
+  "financeAssessHeaderTitleLine2": "યાત્રા જાણો",
+  "financeAssessHeaderSubtitle": "સરળ એસેસમેન્ટથી તમારા પૈસા વાપરવાની ટેવ સમજજો અને સરળ માર્ગદર્શન મેળવો.",
+  "financeFooterNote": "બધા ફાઈનાન્સ એસેસમેન્ટ ખાનગી છે અને ફક્ત તમારા પ્લાનિંગ માટે છે.",
+  "beginAssessmentCta": "એસેસમેન્ટ શરૂ કરો"
 }

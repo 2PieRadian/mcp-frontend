@@ -135,5 +135,31 @@
         "option4": "সদায়"
       }
     }
-  }
+  },
+  "assessmentNotFound": "অ্যাসেছমেণ্ট পোৱা নগ'ল",
+  "backToAssessments": "অ্যাসেছমেণ্ট পৃষ্ঠালৈ উভতি যাওক",
+  "startAssessmentCta": "অ্যাসেছমেণ্ট আৰম্ভ কৰক",
+  "whatYouLearnHeading": "আপুনি কি শিকিব",
+  "whatYouGetHeading": "আপুনি কি পাব",
+  "assessmentDurationHeading": "অ্যাসেছমেণ্ট সময়",
+  "instructionsHeading": "নিৰ্দেশনা",
+  "instruction1": "আপোনাৰ দৈনন্দিন জীৱনৰ লগত আটাইতকৈ মিল থকা option বাছনি কৰক।",
+  "instruction2": "সত্য কথাটো কওক। এইটো কেৱল আপোনাৰ বুজা-বুজিৰ বাবে, এইটো মেডিকেল টেষ্ট নহয়।",
+  "instruction3": "শান্ত মনে ধীৰে ধীৰে উত্তৰ দিয়ক।",
+  "instruction4": "আপোনাৰ সকলো উত্তৰ গোপন আৰু সুৰক্ষিত থাকিব।",
+  "wellnessHeaderBadge": "ৱেলনেছ অ্যাসেছমেণ্ট",
+  "wellnessHeaderTitleLine1": "আপোনাৰ ৱেলনেছ",
+  "wellnessHeaderTitleLine2": "যাত্ৰা জনক",
+  "wellnessHeaderSubtitle": "এটা সাধাৰণ অ্যাসেছমেণ্টৰে আপোনাৰ ৱেলনেছৰ প্ৰয়োজন বুজক আৰু সহজ সহায় লওক।",
+  "wellnessFooterNote": "সকলো ৱেলনেছ অ্যাসেছমেণ্ট ব্যক্তিগত আৰু কেৱল আপোনাৰ বুজাৰ বাবে।",
+  "educationHeaderBadge": "এডুকেচন অ্যাসেছমেণ্ট",
+  "educationHeaderTitleLine1": "আপোনাৰ শিকাৰ",
+  "educationHeaderTitleLine2": "যাত্ৰা জনক",
+  "educationHeaderSubtitle": "এটা সাধাৰণ অ্যাসেছমেণ্টৰে আপোনাৰ অধ্যয়নৰ প্ৰয়োজন বুজক আৰু স্পষ্ট, সহজ সহায় লওক।",
+  "educationFooterNote": "সকলো এডুকেচন অ্যাসেছমেণ্ট ব্যক্তিগত আৰু কেৱল আপোনাৰ উন্নতিৰ বাবে।",
+  "financeAssessHeaderTitleLine1": "আপোনাৰ ফাইনেনচিয়েল",
+  "financeAssessHeaderTitleLine2": "যাত্ৰা জনক",
+  "financeAssessHeaderSubtitle": "এটা সাধাৰণ অ্যাসেছমেণ্টৰে আপোনাৰ ধন খৰচৰ অভ্যাস বুজক আৰু সহজ গাইডেন্স লওক।",
+  "financeFooterNote": "সকলো ফাইনেনচ অ্যাসেছমেণ্ট ব্যক্তিগত আৰু কেৱল আপোনাৰ প্লেনিংৰ বাবে।",
+  "beginAssessmentCta": "অ্যাসেছমেণ্ট আৰম্ভ কৰক"
 }

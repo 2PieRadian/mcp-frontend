@@ -101,7 +101,7 @@ export default function EducationExpertsIntro() {
     title: specialization,
     description:
       SPECIALIZATION_DESCRIPTIONS[specialization] ||
-      "Get expert guidance and support.",
+      t("expertsFallbackDescription"),
     specialization,
     icon: EDUCATION_ICONS[specialization] || GraduationCap,
   }));
@@ -123,18 +123,16 @@ export default function EducationExpertsIntro() {
             <div className="absolute inset-0 flex flex-col justify-center items-start px-4 sm:px-6 md:px-8 lg:px-12 text-white">
               <div className="flex items-center gap-2 mb-3 sm:mb-4">
                 <span className="text-xs sm:text-sm md:text-base font-semibold uppercase tracking-wider opacity-90">
-                  Expert Career Guidance
+                  {t("educationExpertsBadge")}
                 </span>
               </div>
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 sm:mb-4 leading-tight">
-                Shape Your Future
+                {t("educationExpertsTitleLine1")}
                 <br />
-                With Expert Guidance
+                {t("educationExpertsTitleLine2")}
               </h1>
               <p className="text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl opacity-95 leading-relaxed">
-                Get personalized career and academic support from experienced
-                professionals who help you achieve your educational and
-                professional goals.
+                {t("educationExpertsSubtitle")}
               </p>
             </div>
           </div>
@@ -143,10 +141,10 @@ export default function EducationExpertsIntro() {
         {/* Categories Grid */}
         <div className="mb-8">
           <h2 className="text-3xl md:text-4xl font-bold text-[#1a2e35] mb-2 text-center">
-            Choose Your Focus Area
+            {t("expertsChooseHeading")}
           </h2>
           <p className="text-center text-[#5a6c75] text-lg mb-10">
-            Choose the area where you need expert guidance
+            {t("expertsChooseSubheading")}
           </p>
         </div>
 
