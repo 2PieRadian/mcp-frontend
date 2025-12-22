@@ -120,7 +120,7 @@ export default function FinanceExpertsIntro() {
         <div className="relative mt-[40px] mb-[60px]">
           <div className="relative h-[240px] sm:h-[280px] md:h-[400px] rounded-3xl overflow-hidden shadow-2xl">
             <img
-              src="/images/finance/finance.jpg"
+              src="/images/finance/finance.webp"
               alt="Financial Planning"
               className="w-full h-full object-cover"
             />

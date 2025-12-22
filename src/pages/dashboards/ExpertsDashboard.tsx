@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "../../context/AuthContext";
@@ -115,27 +115,31 @@ export default function ExpertsDashboard() {
           </p>
         </div>
 
-        <DashboardTabs activeTab={activeTab} onTabChange={setActiveTab} />
+        <Suspense fallback={<div className="text-center py-8">Loading...</div>}>
+          <DashboardTabs activeTab={activeTab} onTabChange={setActiveTab} />
+        </Suspense>
 
-        <div>
-          {activeTab === "sessions" && (
-            <UpcomingSessionsTab sessions={upcomingSessions} />
-          )}
+        <Suspense fallback={<div className="text-center py-8">Loading...</div>}>
+          <div>
+            {activeTab === "sessions" && (
+              <UpcomingSessionsTab sessions={upcomingSessions} />
+            )}
 
-          {activeTab === "availability" && (
-            <AvailabilityManagementTab
-              availability={availability}
-              onToggleSlot={toggleTimeSlot}
-            />
-          )}
+            {activeTab === "availability" && (
+              <AvailabilityManagementTab
+                availability={availability}
+                onToggleSlot={toggleTimeSlot}
+              />
+            )}
 
-          {activeTab === "earnings" && (
-            <EarningsTab
-              totalEarnings={totalEarnings}
-              monthlyEarnings={monthlyEarnings}
-            />
-          )}
-        </div>
+            {activeTab === "earnings" && (
+              <EarningsTab
+                totalEarnings={totalEarnings}
+                monthlyEarnings={monthlyEarnings}
+              />
+            )}
+          </div>
+        </Suspense>
       </div>
     </div>
   );

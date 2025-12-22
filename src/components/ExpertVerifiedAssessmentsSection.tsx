@@ -339,7 +339,7 @@ export default function ExpertVerifiedAssessmentsSection() {
           title={t("wellness", { ns: "common" })}
           subtitle={t("wellnessSubtitle", { ns: "common" })}
           description={t("wellnessDescription", { ns: "common" })}
-          imageSrc="images/expert-verified-assessment/wellness.png"
+          imageSrc="images/expert-verified-assessment/wellness.webp"
           imageSize={360}
           rightImage={true}
           linkTo="/assessments/wellness"
@@ -349,7 +349,7 @@ export default function ExpertVerifiedAssessmentsSection() {
           title={t("education", { ns: "common" })}
           subtitle={t("educationSubtitle", { ns: "common" })}
           description={t("educationDescription", { ns: "common" })}
-          imageSrc="images/expert-verified-assessment/education.png"
+          imageSrc="images/expert-verified-assessment/education.webp"
           imageSize={360}
           rightImage={false}
           linkTo="/assessments/education"
@@ -359,7 +359,7 @@ export default function ExpertVerifiedAssessmentsSection() {
           title={t("finance", { ns: "common" })}
           subtitle={t("financeSubtitle", { ns: "common" })}
           description={t("financeDescription", { ns: "common" })}
-          imageSrc="images/expert-verified-assessment/finance.png"
+          imageSrc="images/expert-verified-assessment/finance.webp"
           imageSize={360}
           rightImage={true}
           linkTo="/assessments/finance"
