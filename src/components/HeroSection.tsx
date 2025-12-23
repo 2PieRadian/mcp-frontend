@@ -1,9 +1,9 @@
 import {
   BadgeCheck,
   Heart,
-  GraduationCap,
   TrendingUp,
   ArrowRight,
+  BookOpenText,
 } from "lucide-react";
 import { useScreen } from "../context/ScreenContext";
 import { Link } from "react-router-dom";
@@ -112,7 +112,7 @@ export default function HeroSection() {
                   className="group absolute top-[120px] left-0 w-[200px] lg:w-[240px] bg-white/95 backdrop-blur-md rounded-[20px] p-6 shadow-lg animate-float-2 border border-gray-100 hover:border-primary/30 hover:scale-[1.05] hover:shadow-xl transition-all duration-300 cursor-pointer block text-center overflow-hidden"
                 >
                   <div className="w-12 h-12 bg-linear-to-br from-[#10b981] to-[#059669] rounded-[12px] flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
-                    <GraduationCap className="w-6 h-6 text-white" />
+                    <BookOpenText className="w-6 h-6 text-white" />
                   </div>
                   <h3 className="font-bold text-primary text-lg mb-2 group-hover:text-[#10b981] transition-colors duration-300">
                     {t("education")}
@@ -182,7 +182,7 @@ export default function HeroSection() {
                   className="group bg-white rounded-[16px] p-2.5 sm:p-5 shadow-md border border-gray-100 hover:scale-[1.02] transition-transform text-left max-[500px]:text-center"
                 >
                   <div className="w-full aspect-100/70 bg-linear-to-br from-[#10b981] to-[#059669] rounded-[10px] flex items-center justify-center mb-3 sm:mb-4">
-                    <GraduationCap className="w-6 h-6 sm:w-10 sm:h-10 md:w-16 md:h-16 text-white group-hover:scale-125 transition-transform duration-300" />
+                    <BookOpenText className="w-6 h-6 sm:w-10 sm:h-10 md:w-16 md:h-16 text-white group-hover:scale-125 transition-transform duration-300" />
                   </div>
                   <h3 className="font-bold text-primary text-[clamp(14px,2vw,18px)] mb-1">
                     {t("education")}
