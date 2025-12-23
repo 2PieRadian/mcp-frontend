@@ -44,17 +44,17 @@ export default function HeroSection() {
 
             {/* Key Points */}
             <div className="flex flex-row gap-2 md:gap-3 justify-center lg:justify-start overflow-x-auto">
-              <div className="inline-flex items-center px-2 py-0.5 md:px-3 md:py-1 bg-[#ecf4f6] rounded-full border border-primary/10 whitespace-nowrap">
+              <div className="inline-flex items-center px-2 py-0.5 md:px-3 md:py-1 bg-[#ecf4f6] rounded-full border border-primary/10">
                 <span className="text-[10px] md:text-[12px] font-medium text-primary">
                   {t("scienceBacked")}
                 </span>
               </div>
-              <div className="inline-flex items-center px-2 py-0.5 md:px-3 md:py-1 bg-[#ecf4f6] rounded-full border border-primary/10 whitespace-nowrap">
+              <div className="inline-flex items-center px-2 py-0.5 md:px-3 md:py-1 bg-[#ecf4f6] rounded-full border border-primary/10">
                 <span className="text-[10px] md:text-[12px] font-medium text-primary">
                   {t("expertVerifiedAssessmentsBadge")}
                 </span>
               </div>
-              <div className="inline-flex items-center px-2 py-0.5 md:px-3 md:py-1 bg-[#ecf4f6] rounded-full border border-primary/10 whitespace-nowrap">
+              <div className="inline-flex items-center px-2 py-0.5 md:px-3 md:py-1 bg-[#ecf4f6] rounded-full border border-primary/10">
                 <span className="text-[10px] md:text-[12px] font-medium text-primary">
                   {t("freeAssessments")}
                 </span>
