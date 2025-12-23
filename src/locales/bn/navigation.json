@@ -3,7 +3,10 @@
   "selfAssessment": "স্ব-মূল্যায়ন",
   "findCounsellors": "পরামর্শদাতা খুঁজুন",
   "articles": "নিবন্ধ",
-  "wellnessExperts": "স্বাস্থ্য বিশেষজ্ঞ",
-  "educationExperts": "শিক্ষা বিশেষজ্ঞ",
-  "financeExperts": "আর্থিক বিশেষজ্ঞ"
+  "wellnessExperts": "স্বাস্থ্য জানা মানুষ",
+  "educationExperts": "শিক্ষা জানা মানুষ",
+  "financeExperts": "টাকা জানা মানুষ",
+  "dashboard": "ড্যাশবোর্ড",
+  "expertCategories": "জানা মানুষের বিভাগ",
+  "profile": "প্রোফাইল"
 }

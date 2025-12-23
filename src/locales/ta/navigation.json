@@ -3,7 +3,10 @@
   "selfAssessment": "சுய மதிப்பீடு",
   "findCounsellors": "ஆலோசகர்களை கண்டறியவும்",
   "articles": "கட்டுரைகள்",
-  "wellnessExperts": "நலன் நிபுணர்கள்",
-  "educationExperts": "கல்வி நிபுணர்கள்",
-  "financeExperts": "நிதி நிபுணர்கள்"
+  "wellnessExperts": "நலன் அறிவாளர்",
+  "educationExperts": "கல்வி அறிவாளர்",
+  "financeExperts": "நிதி அறிவாளர்",
+  "dashboard": "டாஷ்போர்டு",
+  "expertCategories": "அறிவாளர் பிரிவுகள்",
+  "profile": "சுயவிவரம்"
 }

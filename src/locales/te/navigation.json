@@ -3,7 +3,10 @@
   "selfAssessment": "సెల్ఫ్ అసెస్మెంట్",
   "findCounsellors": "కౌన్సెలర్లను కనుగొనండి",
   "articles": "వ్యాసాలు",
-  "wellnessExperts": "వెల్నెస్ నిపుణులు",
-  "educationExperts": "విద్య నిపుణులు",
-  "financeExperts": "ఆర్థిక నిపుణులు"
+  "wellnessExperts": "వెల్నెస్ తెలిసినవారు",
+  "educationExperts": "చదువు తెలిసినవారు",
+  "financeExperts": "డబ్బు తెలిసినవారు",
+  "dashboard": "డాష్‌బోర్డు",
+  "expertCategories": "తెలిసినవారి విభాగాలు",
+  "profile": "ప్రొఫైల్"
 }

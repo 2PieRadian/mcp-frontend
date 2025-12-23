@@ -3,7 +3,10 @@
   "selfAssessment": "സ്വയം മൂല്യനിർണയം",
   "findCounsellors": "ഉപദേശകരെ കണ്ടെത്തുക",
   "articles": "ലേഖനങ്ങൾ",
-  "wellnessExperts": "ആരോഗ്യ വിദഗ്ധർ",
-  "educationExperts": "വിദ്യാഭ്യാസ വിദഗ്ധർ",
-  "financeExperts": "സാമ്പത്തിക വിദഗ്ധർ"
+  "wellnessExperts": "ആരോഗ്യ അറിയുന്നവർ",
+  "educationExperts": "പഠന അറിയുന്നവർ",
+  "financeExperts": "ധനകാര്യ അറിയുന്നവർ",
+  "dashboard": "ഡാഷ്ബോർഡ്",
+  "expertCategories": "അറിയുന്നവർ വിഭാഗങ്ങൾ",
+  "profile": "പ്രൊഫൈൽ"
 }

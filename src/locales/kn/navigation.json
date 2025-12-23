@@ -3,7 +3,10 @@
   "selfAssessment": "ಸ್ವಯಂ ಮೌಲ್ಯಮಾಪನ",
   "findCounsellors": "ಸಲಹೆಗಾರರನ್ನು ಹುಡುಕಿ",
   "articles": "ಲೇಖನಗಳು",
-  "wellnessExperts": "ವೆಲ್‌ನೆಸ್ ತಜ್ಞರು",
-  "educationExperts": "ಶಿಕ್ಷಣ ತಜ್ಞರು",
-  "financeExperts": "ಹಣಕಾಸು ತಜ್ಞರು"
+  "wellnessExperts": "ವೆಲ್‌ನೆಸ್ ತಿಳಿದವರು",
+  "educationExperts": "ಶಿಕ್ಷಣ ತಿಳಿದವರು",
+  "financeExperts": "ಹಣಕಾಸು ತಿಳಿದವರು",
+  "dashboard": "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+  "expertCategories": "ತಿಳಿದವರ ವಿಭಾಗಗಳು",
+  "profile": "ಪ್ರೊಫೈಲ್"
 }

@@ -3,7 +3,10 @@
   "selfAssessment": "સ્વ-મૂલ્યાંકન",
   "findCounsellors": "સલાહકાર શોધો",
   "articles": "લેખો",
-  "wellnessExperts": "સ્વાસ્થ્ય વિશેષજ્ઞ",
-  "educationExperts": "શિક્ષણ વિશેષજ્ઞ",
-  "financeExperts": "નાણાકીય વિશેષજ્ઞ"
+  "wellnessExperts": "સ્વાસ્થ્ય જાણકાર",
+  "educationExperts": "શિક્ષણ જાણકાર",
+  "financeExperts": "પૈસા જાણકાર",
+  "dashboard": "ડેશબોર્ડ",
+  "expertCategories": "જાણકાર કેટેગરી",
+  "profile": "પ્રોફાઇલ"
 }

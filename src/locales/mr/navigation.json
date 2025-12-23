@@ -3,7 +3,10 @@
   "selfAssessment": "स्व-मूल्यमापन",
   "findCounsellors": "समुपदेशक शोधा",
   "articles": "लेख",
-  "wellnessExperts": "आरोग्य तज्ज्ञ",
-  "educationExperts": "शिक्षण तज्ज्ञ",
-  "financeExperts": "आर्थिक तज्ज्ञ"
+  "wellnessExperts": "आरोग्य जाणकार",
+  "educationExperts": "शिक्षण जाणकार",
+  "financeExperts": "पैशाचे जाणकार",
+  "dashboard": "डॅशबोर्ड",
+  "expertCategories": "जाणकारांच्या विभाग",
+  "profile": "प्रोफाइल"
 }

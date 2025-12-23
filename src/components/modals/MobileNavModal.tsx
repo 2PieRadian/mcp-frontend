@@ -123,7 +123,7 @@ export default function MobileNavModal({
                 onClick={() => setWeHelpWithExpanded(!weHelpWithExpanded)}
               >
                 <span className="text-primary text-[16px]">
-                  Expert Categories
+                  {t("expertCategories", { ns: "navigation" })}
                 </span>
                 <ChevronDown
                   size={15}
@@ -196,7 +196,9 @@ export default function MobileNavModal({
               }`}
               onClick={onClose}
             >
-              <span className="text-light-text text-[16px]">Profile</span>
+              <span className="text-light-text text-[16px]">
+                {t("profile", { ns: "navigation" })}
+              </span>
             </Link>
           ) : (
             <Link
