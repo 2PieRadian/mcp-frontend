@@ -32,11 +32,6 @@ export default function GuidanceQuotesSection() {
 
   return (
     <section className="relative w-full overflow-hidden bg-white mb-[70px]">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-36 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-linear-to-br from-primary/12 via-transparent to-primary/6 blur-3xl" />
-        <div className="absolute -bottom-48 -right-24 h-[520px] w-[520px] rounded-full bg-linear-to-br from-[#0ea5e9]/12 via-transparent to-[#06b6d4]/10 blur-3xl" />
-      </div>
-
       <div className="relative max-w-[1350px] mx-auto py-[42px] sm:py-[56px]">
         <div className="text-center px-[4px]">
           <p className="text-[11px] sm:text-[12px] tracking-[0.28em] uppercase text-primary/70">
