@@ -155,6 +155,8 @@ export default function HeroSection() {
 
           {showCardsBelow && (
             <div className="w-full mt-[15px] pt-[40px] border-t border-gray-200">
+              {/* Styles moved to src/index.css */}
+
               <h2 className="text-[clamp(20px,5vw,24px)] font-bold text-primary text-center mb-4">
                 {t("exploreOurExpertCategories")}
               </h2>
@@ -164,10 +166,13 @@ export default function HeroSection() {
               <div className="grid grid-cols-3 gap-2 sm:gap-4 w-full">
                 <Link
                   to="/wellness-experts"
-                  className="group bg-white rounded-[16px] p-2.5 sm:p-5 shadow-md border border-gray-100 hover:scale-[1.02] transition-transform text-left max-[500px]:text-center"
+                  className="mcp-cat-card group bg-white rounded-[16px] p-2.5 sm:p-5 shadow-md border border-gray-100 hover:scale-[1.02] transition-transform text-left max-[500px]:text-center"
                 >
-                  <div className="w-full aspect-100/70 bg-linear-to-br from-[#0ea5e9] to-[#06b6d4] rounded-[10px] flex items-center justify-center mb-3 sm:mb-4">
-                    <Heart className="w-6 h-6 sm:w-10 sm:h-10 md:w-16 md:h-16 text-white group-hover:scale-125 transition-transform duration-300" />
+                  <div className="mcp-cat-thumb mcp-thumb--wellness w-full aspect-100/70 bg-linear-to-br from-[#0ea5e9] to-[#06b6d4] rounded-[10px] flex items-center justify-center mb-3 sm:mb-4">
+                    <span className="mcp-cat-layer mcp-layer-1" />
+                    <span className="mcp-cat-layer mcp-layer-2" />
+                    <span className="mcp-cat-layer mcp-ring" />
+                    <Heart className="mcp-cat-icon w-6 h-6 sm:w-10 sm:h-10 md:w-16 md:h-16 text-white group-hover:scale-125 transition-transform duration-300" />
                   </div>
                   <h3 className="font-bold text-primary text-[clamp(14px,2vw,18px)] mb-1">
                     {t("wellness")}
@@ -179,10 +184,13 @@ export default function HeroSection() {
 
                 <Link
                   to="/education-experts"
-                  className="group bg-white rounded-[16px] p-2.5 sm:p-5 shadow-md border border-gray-100 hover:scale-[1.02] transition-transform text-left max-[500px]:text-center"
+                  className="mcp-cat-card group bg-white rounded-[16px] p-2.5 sm:p-5 shadow-md border border-gray-100 hover:scale-[1.02] transition-transform text-left max-[500px]:text-center"
                 >
-                  <div className="w-full aspect-100/70 bg-linear-to-br from-[#10b981] to-[#059669] rounded-[10px] flex items-center justify-center mb-3 sm:mb-4">
-                    <BookOpenText className="w-6 h-6 sm:w-10 sm:h-10 md:w-16 md:h-16 text-white group-hover:scale-125 transition-transform duration-300" />
+                  <div className="mcp-cat-thumb mcp-thumb--education w-full aspect-100/70 bg-linear-to-br from-[#10b981] to-[#059669] rounded-[10px] flex items-center justify-center mb-3 sm:mb-4">
+                    <span className="mcp-cat-layer mcp-layer-1" />
+                    <span className="mcp-cat-layer mcp-layer-2" />
+                    <span className="mcp-cat-layer mcp-fold" />
+                    <BookOpenText className="mcp-cat-icon w-6 h-6 sm:w-10 sm:h-10 md:w-16 md:h-16 text-white group-hover:scale-125 transition-transform duration-300" />
                   </div>
                   <h3 className="font-bold text-primary text-[clamp(14px,2vw,18px)] mb-1">
                     {t("education")}
@@ -194,10 +202,113 @@ export default function HeroSection() {
 
                 <Link
                   to="/finance-experts"
-                  className="group bg-white rounded-[16px] p-2.5 sm:p-5 shadow-md border border-gray-100 hover:scale-[1.02] transition-transform text-left max-[500px]:text-center"
+                  className="mcp-cat-card group bg-white rounded-[16px] p-2.5 sm:p-5 shadow-md border border-gray-100 hover:scale-[1.02] transition-transform text-left max-[500px]:text-center"
                 >
-                  <div className="w-full aspect-100/70 bg-linear-to-br from-[#f59e0b] to-[#d97706] rounded-[10px] flex items-center justify-center mb-3 sm:mb-4">
-                    <TrendingUp className="w-6 h-6 sm:w-10 sm:h-10 md:w-16 md:h-16 text-white group-hover:scale-125 transition-transform duration-300" />
+                  <div className="mcp-cat-thumb mcp-thumb--finance w-full aspect-100/70 bg-linear-to-br from-[#f59e0b] to-[#d97706] rounded-[10px] flex items-center justify-center mb-3 sm:mb-4">
+                    <span className="mcp-cat-layer mcp-layer-1" />
+                    <span className="mcp-cat-layer mcp-layer-2" />
+                    <span className="mcp-fin-bars" aria-hidden="true">
+                      <span
+                        className="mcp-fin-bar"
+                        style={
+                          {
+                            "--h": "42%",
+                            "--delay": "-0.0s",
+                            "--breath": "3.2s",
+                            "--breathDelay": "0.0s",
+                          } as React.CSSProperties
+                        }
+                      />
+                      <span
+                        className="mcp-fin-bar"
+                        style={
+                          {
+                            "--h": "70%",
+                            "--delay": "-0.7s",
+                            "--breath": "3.8s",
+                            "--breathDelay": "0.15s",
+                          } as React.CSSProperties
+                        }
+                      />
+                      <span
+                        className="mcp-fin-bar"
+                        style={
+                          {
+                            "--h": "55%",
+                            "--delay": "-1.4s",
+                            "--breath": "3.4s",
+                            "--breathDelay": "0.35s",
+                          } as React.CSSProperties
+                        }
+                      />
+                      <span
+                        className="mcp-fin-bar"
+                        style={
+                          {
+                            "--h": "82%",
+                            "--delay": "-2.1s",
+                            "--breath": "4.1s",
+                            "--breathDelay": "0.25s",
+                          } as React.CSSProperties
+                        }
+                      />
+                      <span
+                        className="mcp-fin-bar"
+                        style={
+                          {
+                            "--h": "50%",
+                            "--delay": "-2.8s",
+                            "--breath": "3.6s",
+                            "--breathDelay": "0.1s",
+                          } as React.CSSProperties
+                        }
+                      />
+                      <span
+                        className="mcp-fin-bar"
+                        style={
+                          {
+                            "--h": "64%",
+                            "--delay": "-3.5s",
+                            "--breath": "4.0s",
+                            "--breathDelay": "0.4s",
+                          } as React.CSSProperties
+                        }
+                      />
+                      <span
+                        className="mcp-fin-bar"
+                        style={
+                          {
+                            "--h": "38%",
+                            "--delay": "-4.2s",
+                            "--breath": "3.1s",
+                            "--breathDelay": "0.2s",
+                          } as React.CSSProperties
+                        }
+                      />
+                      <span
+                        className="mcp-fin-bar"
+                        style={
+                          {
+                            "--h": "76%",
+                            "--delay": "-4.9s",
+                            "--breath": "4.2s",
+                            "--breathDelay": "0.3s",
+                          } as React.CSSProperties
+                        }
+                      />
+                      <span
+                        className="mcp-fin-bar"
+                        style={
+                          {
+                            "--h": "46%",
+                            "--delay": "-5.6s",
+                            "--breath": "3.3s",
+                            "--breathDelay": "0.05s",
+                          } as React.CSSProperties
+                        }
+                      />
+                    </span>
+                    <TrendingUp className="mcp-cat-icon w-6 h-6 sm:w-10 sm:h-10 md:w-16 md:h-16 text-white group-hover:scale-125 transition-transform duration-300" />
                   </div>
                   <h3 className="font-bold text-primary text-[clamp(14px,2vw,18px)] mb-1">
                     {t("finance")}
