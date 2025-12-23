@@ -30,6 +30,21 @@ export default function GuidanceQuotesSection() {
     },
   ] as const;
 
+  const destinations = [
+    {
+      assessmentHash: "#expert-verified-assessments-wellness",
+      expertsRoute: "/wellness-experts",
+    },
+    {
+      assessmentHash: "#expert-verified-assessments-education",
+      expertsRoute: "/education-experts",
+    },
+    {
+      assessmentHash: "#expert-verified-assessments-finance",
+      expertsRoute: "/finance-experts",
+    },
+  ] as const;
+
   return (
     <section className="relative w-full overflow-hidden bg-white mb-[70px]">
       <div className="relative max-w-[1350px] mx-auto py-[42px] sm:py-[56px]">
@@ -49,6 +64,7 @@ export default function GuidanceQuotesSection() {
         <div className="mt-[20px] sm:mt-[26px] flex flex-col gap-[12px] sm:gap-[16px] px-[4px]">
           {LANDING_PAGE_QUOTES.map((item, index) => {
             const accent = accents[index % accents.length];
+            const dest = destinations[index % destinations.length];
             const flip = index % 2 === 1;
             const number = String(index + 1).padStart(2, "0");
 
@@ -102,14 +118,14 @@ export default function GuidanceQuotesSection() {
 
                         <div className="mt-4 flex flex-col sm:flex-row gap-2">
                           <a
-                            href="#expert-verified-assessments"
+                            href={dest.assessmentHash}
                             className={`group inline-flex items-center justify-center gap-2 rounded-[14px] px-[14px] py-[10px] text-white text-[14px] font-medium transition-colors ${accent.ctaBg} ${accent.ctaHover}`}
                           >
                             Start free assessment
                             <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
                           </a>
                           <Link
-                            to="/wellness-experts"
+                            to={dest.expertsRoute}
                             className="inline-flex items-center justify-center rounded-[14px] border border-gray-200 bg-white px-[14px] py-[10px] text-[14px] font-medium text-primary hover:bg-[#ecf4f6] transition-colors"
                           >
                             Meet experts

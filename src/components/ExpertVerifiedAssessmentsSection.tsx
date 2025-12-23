@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 
 function ExpertVerifiedAssessmentsSectionItem({
+  id,
   title,
   subtitle,
   description,
@@ -11,6 +12,7 @@ function ExpertVerifiedAssessmentsSectionItem({
   rightImage,
   linkTo,
 }: {
+  id?: string;
   title: string;
   subtitle: string;
   description: string;
@@ -80,7 +82,7 @@ function ExpertVerifiedAssessmentsSectionItem({
   }, []);
 
   return (
-    <div className="block w-full">
+    <div id={id} className="block w-full scroll-mt-[70px] md:scroll-mt-[90px]">
       <div
         ref={cardRef}
         className={`group relative flex flex-col md:flex-row ${
@@ -336,6 +338,7 @@ export default function ExpertVerifiedAssessmentsSection() {
 
       <div className="flex flex-col mt-[40px] md:mt-[70px] h-fit gap-[40px] md:gap-[48px]">
         <ExpertVerifiedAssessmentsSectionItem
+          id="expert-verified-assessments-wellness"
           title={t("wellness", { ns: "common" })}
           subtitle={t("wellnessSubtitle", { ns: "common" })}
           description={t("wellnessDescription", { ns: "common" })}
@@ -346,6 +349,7 @@ export default function ExpertVerifiedAssessmentsSection() {
         />
 
         <ExpertVerifiedAssessmentsSectionItem
+          id="expert-verified-assessments-education"
           title={t("education", { ns: "common" })}
           subtitle={t("educationSubtitle", { ns: "common" })}
           description={t("educationDescription", { ns: "common" })}
@@ -356,6 +360,7 @@ export default function ExpertVerifiedAssessmentsSection() {
         />
 
         <ExpertVerifiedAssessmentsSectionItem
+          id="expert-verified-assessments-finance"
           title={t("finance", { ns: "common" })}
           subtitle={t("financeSubtitle", { ns: "common" })}
           description={t("financeDescription", { ns: "common" })}
