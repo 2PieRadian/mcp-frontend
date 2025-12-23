@@ -5,7 +5,7 @@ import useScrollToTop from "../hooks/useScrollToTop";
 import { useExperts } from "../context/ExpertsContext";
 import ExpertCard from "../components/ExpertCard";
 import ExpertCardSkeleton from "../components/ExpertCardSkeleton";
-import { EXPERT_CATEGORIES } from "../lib/constants/experts";
+import { EXPERT_CATEGORIES, getSpecializationByValue } from "../lib/constants/experts";
 import type { FilterState } from "../types/filters";
 import {
   SlidersHorizontal,
@@ -33,7 +33,7 @@ const AVAILABLE_LANGUAGES = [
 
 export default function FindCounsellors() {
   useScrollToTop();
-  const { t } = useTranslation(["common", "navigation"]);
+  const { t } = useTranslation(["common", "navigation", "experts"]);
   const { fetchExpertsBySpecialization, getCachedExperts, isLoading, error } =
     useExperts();
 
@@ -274,19 +274,19 @@ export default function FindCounsellors() {
                   <div className="space-y-[8px] max-h-[300px] overflow-y-auto scrollbar-hide">
                     {availableSpecializations.map((spec) => (
                       <button
-                        key={spec}
+                        key={spec.slug}
                         onClick={() =>
                           handleSpecializationChange(
-                            selectedSpecialization === spec ? null : spec
+                            selectedSpecialization === spec.value ? null : spec.value
                           )
                         }
                         className={`w-full text-left px-[14px] py-[10px] rounded-[10px] border transition-all text-[14px] font-medium ${
-                          selectedSpecialization === spec
+                          selectedSpecialization === spec.value
                             ? "bg-[#ecf4f6] border-primary text-primary"
                             : "bg-white border-gray-200 text-[#4F5B64] hover:border-gray-300 hover:bg-gray-50"
                         }`}
                       >
-                        {spec}
+                        {t(`${spec.i18nKey}.title`, { ns: "experts" })}
                       </button>
                     ))}
                   </div>
@@ -432,7 +432,14 @@ export default function FindCounsellors() {
                 <div className="mb-[24px] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-[16px]">
                   <div>
                     <h2 className="text-[20px] font-bold text-primary mb-[4px]">
-                      {selectedSpecialization}
+                      {(() => {
+                        const spec = selectedSpecialization
+                          ? getSpecializationByValue(selectedSpecialization)
+                          : undefined;
+                        return spec
+                          ? t(`${spec.i18nKey}.title`, { ns: "experts" })
+                          : selectedSpecialization;
+                      })()}
                     </h2>
                     {totalCount > 0 && (
                       <p className="text-[14px] text-[#4F5B64]">

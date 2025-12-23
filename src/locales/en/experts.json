@@ -22,6 +22,164 @@
   "pathFinderConsultantDescription": "Navigate your educational and career journey with clarity. Our consultants provide comprehensive guidance on course selection, skill development, and finding the right path that aligns with your aspirations.",
   "investmentCounsellorDescription": "Build a solid investment strategy tailored to your goals. From mutual funds to long-term wealth creation, get expert advice that keeps your portfolio balanced and resilient.",
   "financialExpertDescription": "Navigate budgeting, savings, and insurance decisions effortlessly. Our advisors help you optimise cash flow and plan for milestones like education, housing, and retirement.",
-  "gstTaxationExpertDescription": "Get expert guidance on GST compliance, tax planning, and filing. Our taxation experts help you navigate complex tax regulations, maximize deductions, and ensure timely compliance with all tax obligations."
+  "gstTaxationExpertDescription": "Get expert guidance on GST compliance, tax planning, and filing. Our taxation experts help you navigate complex tax regulations, maximize deductions, and ensure timely compliance with all tax obligations.",
+  "specializations": {
+    "anxiety-and-panic": {
+      "title": "Anxiety & panic",
+      "description": "Calm anxiety and panic with simple, supportive guidance."
+    },
+    "depression-support": {
+      "title": "Depression support",
+      "description": "Get help to feel better and handle low mood day by day."
+    },
+    "ocd-support": {
+      "title": "OCD support",
+      "description": "Understand OCD patterns and learn simple steps to manage them."
+    },
+    "adhd-support": {
+      "title": "ADHD support",
+      "description": "Get practical ways to improve focus and handle distractions."
+    },
+    "relationship-issues": {
+      "title": "Relationship issues",
+      "description": "Improve communication and reduce fights in relationships."
+    },
+    "family-issues": {
+      "title": "Family issues",
+      "description": "Handle family stress and talk better at home."
+    },
+    "breakup-recovery": {
+      "title": "Breakup recovery",
+      "description": "Heal after a breakup and feel steady again."
+    },
+    "loneliness-support": {
+      "title": "Loneliness",
+      "description": "Feel less alone and build better connections."
+    },
+    "stress-management": {
+      "title": "Stress management",
+      "description": "Learn simple ways to reduce stress and stay calm."
+    },
+    "sleep-problems": {
+      "title": "Sleep problems",
+      "description": "Fix sleep routines with easy daily changes."
+    },
+    "life-coaching": {
+      "title": "Life coaching",
+      "description": "Set goals and move forward with a clear plan."
+    },
+    "weight-management": {
+      "title": "Weight management",
+      "description": "Build healthy habits for weight in a sustainable way."
+    },
+    "nutrition-guidance": {
+      "title": "Nutrition guidance",
+      "description": "Get simple food guidance that fits your routine."
+    },
+    "yoga-therapy": {
+      "title": "Yoga therapy",
+      "description": "Use gentle yoga to support mind and body."
+    },
+    "career-confusion": {
+      "title": "Career confusion",
+      "description": "Get clarity on what to choose next in your career."
+    },
+    "career-planning": {
+      "title": "Career planning",
+      "description": "Make a simple plan to grow in your career."
+    },
+    "career-change": {
+      "title": "Career change",
+      "description": "Plan your switch to a new job path smoothly."
+    },
+    "academic-guidance": {
+      "title": "Academic guidance",
+      "description": "Improve study routine and perform better in exams."
+    },
+    "exam-stress": {
+      "title": "Exam stress",
+      "description": "Stay calm during exams and handle pressure better."
+    },
+    "study-skills": {
+      "title": "Study skills",
+      "description": "Learn simple ways to study smarter and remember more."
+    },
+    "time-management": {
+      "title": "Time management",
+      "description": "Plan your day better and avoid last-minute rush."
+    },
+    "communication-skills": {
+      "title": "Communication skills",
+      "description": "Speak clearly and confidently in daily life and work."
+    },
+    "resume-and-interviews": {
+      "title": "Resume & interviews",
+      "description": "Make a strong resume and prepare well for interviews."
+    },
+    "internship-guidance": {
+      "title": "Internship guidance",
+      "description": "Find the right internship and apply with confidence."
+    },
+    "higher-studies": {
+      "title": "Higher studies",
+      "description": "Choose the right course and plan your next step."
+    },
+    "budgeting": {
+      "title": "Budgeting",
+      "description": "Track spending and create a budget that is easy to follow."
+    },
+    "income-planning": {
+      "title": "Income planning",
+      "description": "Plan income and savings for monthly stability."
+    },
+    "emergency-fund": {
+      "title": "Emergency fund",
+      "description": "Build a safety fund for unexpected expenses."
+    },
+    "beginner-investing": {
+      "title": "Beginner investing",
+      "description": "Start investing with simple basics and clear steps."
+    },
+    "mutual-funds": {
+      "title": "Mutual funds",
+      "description": "Understand mutual funds and choose what suits you."
+    },
+    "investment-planning": {
+      "title": "Investment planning",
+      "description": "Make an investment plan based on your goals."
+    },
+    "loan-stress": {
+      "title": "Loan stress",
+      "description": "Handle EMIs better and reduce loan pressure."
+    },
+    "debt-repayment": {
+      "title": "Debt repayment",
+      "description": "Pay off debt step by step with a clear plan."
+    },
+    "credit-score": {
+      "title": "Credit score",
+      "description": "Understand and improve your credit score."
+    },
+    "tax-planning": {
+      "title": "Tax planning",
+      "description": "Save tax legally with simple planning."
+    },
+    "gst-guidance": {
+      "title": "GST guidance",
+      "description": "Understand GST basics and avoid common mistakes."
+    },
+    "financial-planning": {
+      "title": "Financial planning",
+      "description": "Plan money for near-term and long-term needs."
+    },
+    "insurance-planning": {
+      "title": "Insurance planning",
+      "description": "Choose the right insurance for your family and goals."
+    },
+    "retirement-planning": {
+      "title": "Retirement planning",
+      "description": "Build a simple plan for a secure retirement."
+    }
+  }
 }
 

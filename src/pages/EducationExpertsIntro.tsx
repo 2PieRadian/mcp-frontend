@@ -16,10 +16,7 @@ import {
 } from "lucide-react";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import useScrollToTop from "../hooks/useScrollToTop";
-import {
-  EXPERT_CATEGORIES,
-  SPECIALIZATION_DESCRIPTIONS,
-} from "../lib/constants/experts";
+import { EXPERT_CATEGORIES } from "../lib/constants/experts";
 
 // Icon mapping for education specializations
 const EDUCATION_ICONS: Record<string, LucideIcon> = {
@@ -39,25 +36,25 @@ const EDUCATION_ICONS: Record<string, LucideIcon> = {
 interface ExpertCategoryCardProps {
   title: string;
   description: string;
-  specialization: string;
+  specializationValue: string;
+  specializationSlug: string;
   icon: LucideIcon;
 }
 
 function ExpertCategoryCard({
   title,
   description,
-  specialization,
+  specializationValue,
+  specializationSlug,
   exploreText,
   icon: Icon,
 }: ExpertCategoryCardProps & { exploreText: string }) {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    const slug = specialization
-      .toLowerCase()
-      .replace(/\s+/g, "-")
-      .replace(/&/g, "and");
-    navigate(`/education-experts/${slug}`, { state: { specialization } });
+    navigate(`/education-experts/${specializationSlug}`, {
+      state: { specialization: specializationValue },
+    });
   };
 
   return (
@@ -95,15 +92,16 @@ function ExpertCategoryCard({
 
 export default function EducationExpertsIntro() {
   useScrollToTop();
-  const { t } = useTranslation(["common"]);
+  const { t } = useTranslation(["common", "experts"]);
 
-  const categories = EXPERT_CATEGORIES.education.map((specialization) => ({
-    title: specialization,
+  const categories = EXPERT_CATEGORIES.education.map((spec) => ({
+    title: t(`${spec.i18nKey}.title`, { ns: "experts" }),
     description:
-      SPECIALIZATION_DESCRIPTIONS[specialization] ||
+      t(`${spec.i18nKey}.description`, { ns: "experts" }) ||
       t("expertsFallbackDescription"),
-    specialization,
-    icon: EDUCATION_ICONS[specialization] || GraduationCap,
+    specializationValue: spec.value,
+    specializationSlug: spec.slug,
+    icon: EDUCATION_ICONS[spec.value] || GraduationCap,
   }));
 
   return (
@@ -151,10 +149,11 @@ export default function EducationExpertsIntro() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {categories.map((category) => (
             <ExpertCategoryCard
-              key={category.specialization}
+              key={category.specializationSlug}
               title={category.title}
               description={category.description}
-              specialization={category.specialization}
+              specializationValue={category.specializationValue}
+              specializationSlug={category.specializationSlug}
               icon={category.icon}
               exploreText={t("explore", { ns: "common" })}
             />

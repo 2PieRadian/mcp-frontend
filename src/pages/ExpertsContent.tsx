@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import { useExperts } from "../context/ExpertsContext";
 import type { FilterState } from "../types/filters";
-import { EXPERT_CATEGORIES } from "../lib/constants/experts";
+import { getSpecializationBySlug } from "../lib/constants/experts";
 import useScrollToTop from "../hooks/useScrollToTop";
 
 const ExpertsHeroSection = lazy(
@@ -20,28 +20,14 @@ const ExpertsCardsSection = lazy(
   () => import("../components/experts/ExpertsCardsSection")
 );
 
-const slugify = (value: string) =>
-  value.toLowerCase().replace(/&/g, "and").replace(/\s+/g, "-");
-
-// Map slugs to actual specialization names
 const slugToSpecialization = (slug: string): string => {
-  // Get all specializations and find matching one
-  const allSpecializations = [
-    ...EXPERT_CATEGORIES.wellness,
-    ...EXPERT_CATEGORIES.education,
-    ...EXPERT_CATEGORIES.finance,
-  ];
-
-  const matching = allSpecializations.find((spec) => slugify(spec) === slug);
-
-  return (
-    matching ||
-    slug
-      .split("-")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ")
-      .replace(/And/g, "&")
-  );
+  const matching = getSpecializationBySlug(slug);
+  if (matching) return matching.value;
+  return slug
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ")
+    .replace(/And/g, "&");
 };
 
 export default function ExpertsContent() {

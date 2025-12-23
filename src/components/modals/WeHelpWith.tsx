@@ -22,11 +22,8 @@ export default function WeHelpWith({
     return EXPERT_CATEGORIES[hoveredExpert];
   };
 
-  const getCategoryRoute = (category: string, expertType: string) => {
-    const baseRoute = `/${expertType}-experts`;
-    const categorySlug = category.toLowerCase().replace(/\s+/g, "-");
-    return `${baseRoute}/${categorySlug}`;
-  };
+  const getCategoryRoute = (categorySlug: string, expertType: string) =>
+    `/${expertType}-experts/${categorySlug}`;
 
   return (
     <div
@@ -76,17 +73,17 @@ export default function WeHelpWith({
       <div className="flex-4 w-full bg-navbar-dropdown-right-outer-bg border border-navbar-dropdown-right-outer text-white p-[5px] rounded-[10px] flex max-h-[400px] overflow-y-auto">
         {hoveredExpert ? (
           <div className="grid grid-cols-2 gap-[5px] w-full h-full">
-            {getCategories().map((category, index) => {
-              const categoryRoute = getCategoryRoute(category, hoveredExpert);
+            {getCategories().map((category) => {
+              const categoryRoute = getCategoryRoute(category.slug, hoveredExpert);
 
               return (
                 <Link
-                  key={index}
+                  key={category.slug}
                   to={categoryRoute}
                   className="group bg-navbar-dropdown-bg rounded-[10px] p-[12px] flex items-center justify-center text-center hover:bg-white hover:text-navbar-dropdown-bg transition-all cursor-pointer"
                 >
                   <span className="text-[14px] leading-tight inline-block group-hover:scale-[1.1] transition-all">
-                    {category}
+                    {t(`${category.i18nKey}.title`, { ns: "experts" })}
                   </span>
                 </Link>
               );

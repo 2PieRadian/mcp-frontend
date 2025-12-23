@@ -1,137 +1,235 @@
-export const EXPERT_CATEGORIES = {
+export type ExpertDomain = "wellness" | "education" | "finance";
+
+export type ExpertSpecialization = {
+  /** Stable identifier used in URLs (do NOT translate) */
+  slug: string;
+  /** Canonical value used by API/backend (currently English) */
+  value: string;
+  /** i18n key base inside `experts.json` */
+  i18nKey: `specializations.${string}`;
+};
+
+export const EXPERT_CATEGORIES: Record<ExpertDomain, ExpertSpecialization[]> = {
   wellness: [
-    "Anxiety & Panic",
-    "Depression Support",
-    "OCD Support",
-    "ADHD Support",
-    "Relationship Issues",
-    "Family Issues",
-    "Breakup Recovery",
-    "Loneliness Support",
-    "Stress Management",
-    "Sleep Problems",
-    "Life Coaching",
-    "Weight Management",
-    "Nutrition Guidance",
-    "Yoga Therapy",
+    {
+      slug: "anxiety-and-panic",
+      value: "Anxiety & Panic",
+      i18nKey: "specializations.anxiety-and-panic",
+    },
+    {
+      slug: "depression-support",
+      value: "Depression Support",
+      i18nKey: "specializations.depression-support",
+    },
+    {
+      slug: "ocd-support",
+      value: "OCD Support",
+      i18nKey: "specializations.ocd-support",
+    },
+    {
+      slug: "adhd-support",
+      value: "ADHD Support",
+      i18nKey: "specializations.adhd-support",
+    },
+    {
+      slug: "relationship-issues",
+      value: "Relationship Issues",
+      i18nKey: "specializations.relationship-issues",
+    },
+    {
+      slug: "family-issues",
+      value: "Family Issues",
+      i18nKey: "specializations.family-issues",
+    },
+    {
+      slug: "breakup-recovery",
+      value: "Breakup Recovery",
+      i18nKey: "specializations.breakup-recovery",
+    },
+    {
+      slug: "loneliness-support",
+      value: "Loneliness Support",
+      i18nKey: "specializations.loneliness-support",
+    },
+    {
+      slug: "stress-management",
+      value: "Stress Management",
+      i18nKey: "specializations.stress-management",
+    },
+    {
+      slug: "sleep-problems",
+      value: "Sleep Problems",
+      i18nKey: "specializations.sleep-problems",
+    },
+    {
+      slug: "life-coaching",
+      value: "Life Coaching",
+      i18nKey: "specializations.life-coaching",
+    },
+    {
+      slug: "weight-management",
+      value: "Weight Management",
+      i18nKey: "specializations.weight-management",
+    },
+    {
+      slug: "nutrition-guidance",
+      value: "Nutrition Guidance",
+      i18nKey: "specializations.nutrition-guidance",
+    },
+    {
+      slug: "yoga-therapy",
+      value: "Yoga Therapy",
+      i18nKey: "specializations.yoga-therapy",
+    },
   ],
   education: [
-    "Career Confusion",
-    "Career Planning",
-    "Career Change",
-    "Academic Guidance",
-    "Exam Stress",
-    "Study Skills",
-    "Time Management",
-    "Communication Skills",
-    "Resume & Interviews",
-    "Internship Guidance",
-    "Higher Studies",
+    {
+      slug: "career-confusion",
+      value: "Career Confusion",
+      i18nKey: "specializations.career-confusion",
+    },
+    {
+      slug: "career-planning",
+      value: "Career Planning",
+      i18nKey: "specializations.career-planning",
+    },
+    {
+      slug: "career-change",
+      value: "Career Change",
+      i18nKey: "specializations.career-change",
+    },
+    {
+      slug: "academic-guidance",
+      value: "Academic Guidance",
+      i18nKey: "specializations.academic-guidance",
+    },
+    {
+      slug: "exam-stress",
+      value: "Exam Stress",
+      i18nKey: "specializations.exam-stress",
+    },
+    {
+      slug: "study-skills",
+      value: "Study Skills",
+      i18nKey: "specializations.study-skills",
+    },
+    {
+      slug: "time-management",
+      value: "Time Management",
+      i18nKey: "specializations.time-management",
+    },
+    {
+      slug: "communication-skills",
+      value: "Communication Skills",
+      i18nKey: "specializations.communication-skills",
+    },
+    {
+      slug: "resume-and-interviews",
+      value: "Resume & Interviews",
+      i18nKey: "specializations.resume-and-interviews",
+    },
+    {
+      slug: "internship-guidance",
+      value: "Internship Guidance",
+      i18nKey: "specializations.internship-guidance",
+    },
+    {
+      slug: "higher-studies",
+      value: "Higher Studies",
+      i18nKey: "specializations.higher-studies",
+    },
   ],
   finance: [
-    "Budgeting",
-    "Income Planning",
-    "Emergency Fund",
-    "Beginner Investing",
-    "Mutual Funds",
-    "Investment Planning",
-    "Loan Stress",
-    "Debt Repayment",
-    "Credit Score",
-    "Tax Planning",
-    "GST Guidance",
-    "Financial Planning",
-    "Insurance Planning",
-    "Retirement Planning",
+    {
+      slug: "budgeting",
+      value: "Budgeting",
+      i18nKey: "specializations.budgeting",
+    },
+    {
+      slug: "income-planning",
+      value: "Income Planning",
+      i18nKey: "specializations.income-planning",
+    },
+    {
+      slug: "emergency-fund",
+      value: "Emergency Fund",
+      i18nKey: "specializations.emergency-fund",
+    },
+    {
+      slug: "beginner-investing",
+      value: "Beginner Investing",
+      i18nKey: "specializations.beginner-investing",
+    },
+    {
+      slug: "mutual-funds",
+      value: "Mutual Funds",
+      i18nKey: "specializations.mutual-funds",
+    },
+    {
+      slug: "investment-planning",
+      value: "Investment Planning",
+      i18nKey: "specializations.investment-planning",
+    },
+    {
+      slug: "loan-stress",
+      value: "Loan Stress",
+      i18nKey: "specializations.loan-stress",
+    },
+    {
+      slug: "debt-repayment",
+      value: "Debt Repayment",
+      i18nKey: "specializations.debt-repayment",
+    },
+    {
+      slug: "credit-score",
+      value: "Credit Score",
+      i18nKey: "specializations.credit-score",
+    },
+    {
+      slug: "tax-planning",
+      value: "Tax Planning",
+      i18nKey: "specializations.tax-planning",
+    },
+    {
+      slug: "gst-guidance",
+      value: "GST Guidance",
+      i18nKey: "specializations.gst-guidance",
+    },
+    {
+      slug: "financial-planning",
+      value: "Financial Planning",
+      i18nKey: "specializations.financial-planning",
+    },
+    {
+      slug: "insurance-planning",
+      value: "Insurance Planning",
+      i18nKey: "specializations.insurance-planning",
+    },
+    {
+      slug: "retirement-planning",
+      value: "Retirement Planning",
+      i18nKey: "specializations.retirement-planning",
+    },
   ],
 };
 
-// Specialization descriptions
-export const SPECIALIZATION_DESCRIPTIONS: Record<string, string> = {
-  // Wellness
-  "Anxiety & Panic":
-    "Get professional support to manage anxiety and panic attacks with evidence-based techniques.",
-  "Depression Support":
-    "Find compassionate experts who specialize in treating depression and mood disorders.",
-  "OCD Support":
-    "Work with specialists trained in OCD treatment and cognitive behavioral therapy.",
-  "ADHD Support":
-    "Get personalized strategies and support for managing ADHD symptoms effectively.",
-  "Relationship Issues":
-    "Navigate relationship challenges with expert guidance and communication tools.",
-  "Family Issues":
-    "Resolve family conflicts and improve relationships with professional family therapy.",
-  "Breakup Recovery":
-    "Heal from breakups and build resilience with supportive counseling.",
-  "Loneliness Support":
-    "Overcome feelings of isolation and build meaningful connections.",
-  "Stress Management":
-    "Learn effective techniques to manage stress and improve your well-being.",
-  "Sleep Problems":
-    "Address sleep issues with evidence-based interventions and lifestyle changes.",
-  "Life Coaching":
-    "Achieve your personal and professional goals with structured coaching support.",
-  "Weight Management":
-    "Get personalized guidance for sustainable weight management and healthy habits.",
-  "Nutrition Guidance":
-    "Receive expert nutrition advice tailored to your health goals and lifestyle.",
-  "Yoga Therapy":
-    "Experience therapeutic yoga sessions for physical and mental wellness.",
+export const ALL_EXPERT_SPECIALIZATIONS: ExpertSpecialization[] = [
+  ...EXPERT_CATEGORIES.wellness,
+  ...EXPERT_CATEGORIES.education,
+  ...EXPERT_CATEGORIES.finance,
+];
 
-  // Education
-  "Career Confusion":
-    "Get clarity on your career path with expert guidance and assessment tools.",
-  "Career Planning":
-    "Create a strategic career plan aligned with your skills and aspirations.",
-  "Career Change":
-    "Navigate career transitions smoothly with professional support and planning.",
-  "Academic Guidance":
-    "Improve your academic performance with personalized study strategies.",
-  "Exam Stress":
-    "Manage exam anxiety and perform your best with proven stress-reduction techniques.",
-  "Study Skills":
-    "Develop effective study habits and learning strategies for academic success.",
-  "Time Management":
-    "Master time management skills to balance studies and personal life effectively.",
-  "Communication Skills":
-    "Enhance your communication abilities for academic and professional success.",
-  "Resume & Interviews":
-    "Craft compelling resumes and ace interviews with expert preparation.",
-  "Internship Guidance":
-    "Find and secure the right internship opportunities for your career goals.",
-  "Higher Studies":
-    "Get guidance on choosing the right higher education path and institutions.",
+export function getSpecializationBySlug(
+  slug: string
+): ExpertSpecialization | undefined {
+  return ALL_EXPERT_SPECIALIZATIONS.find((s) => s.slug === slug);
+}
 
-  // Finance
-  Budgeting:
-    "Learn to create and stick to a budget that works for your financial situation.",
-  "Income Planning":
-    "Optimize your income streams and plan for financial growth.",
-  "Emergency Fund":
-    "Build a solid emergency fund to protect yourself from financial surprises.",
-  "Beginner Investing":
-    "Start your investment journey with expert guidance on the basics.",
-  "Mutual Funds":
-    "Understand mutual funds and build a diversified investment portfolio.",
-  "Investment Planning":
-    "Create a comprehensive investment strategy aligned with your goals.",
-  "Loan Stress":
-    "Manage loan repayments and reduce financial stress with expert advice.",
-  "Debt Repayment":
-    "Develop a strategic plan to pay off debt efficiently and regain financial freedom.",
-  "Credit Score":
-    "Improve your credit score and understand how to maintain good credit health.",
-  "Tax Planning":
-    "Optimize your tax strategy and maximize savings with professional guidance.",
-  "GST Guidance":
-    "Navigate GST compliance and understand tax implications for your business.",
-  "Financial Planning":
-    "Create a comprehensive financial plan for your short and long-term goals.",
-  "Insurance Planning":
-    "Choose the right insurance coverage to protect your financial future.",
-  "Retirement Planning":
-    "Plan for a secure retirement with expert financial advice and strategies.",
-};
+export function getSpecializationByValue(
+  value: string
+): ExpertSpecialization | undefined {
+  return ALL_EXPERT_SPECIALIZATIONS.find((s) => s.value === value);
+}
 
 export type Expert = {
   id: number;
