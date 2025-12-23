@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { ArrowRight } from "lucide-react";
 import { EXPERT_CATEGORIES } from "../../lib/constants/experts";
 
 interface WeHelpWithProps {
@@ -13,6 +14,7 @@ export default function WeHelpWith({
   navbarType = "experts",
 }: WeHelpWithProps) {
   const { t } = useTranslation(["navigation", "experts", "common"]);
+  const maxVisibleCategories = 7;
   const [hoveredExpert, setHoveredExpert] = useState<
     "wellness" | "education" | "finance"
   >("wellness");
@@ -24,6 +26,8 @@ export default function WeHelpWith({
 
   const getCategoryRoute = (categorySlug: string, expertType: string) =>
     `/${expertType}-experts/${categorySlug}`;
+
+  const getDomainRoute = (expertType: string) => `/${expertType}-experts`;
 
   return (
     <div
@@ -72,22 +76,47 @@ export default function WeHelpWith({
 
       <div className="flex-4 w-full bg-navbar-dropdown-right-outer-bg border border-navbar-dropdown-right-outer text-white p-[5px] rounded-[10px] flex max-h-[400px] overflow-y-auto">
         {hoveredExpert ? (
-          <div className="grid grid-cols-2 gap-[5px] w-full h-full">
-            {getCategories().map((category) => {
-              const categoryRoute = getCategoryRoute(category.slug, hoveredExpert);
+          <div className="flex flex-col gap-[8px] w-full h-full">
+            <div className="grid grid-cols-2 gap-[5px] w-full">
+              {getCategories()
+                .slice(0, maxVisibleCategories)
+                .map((category) => {
+                  const categoryRoute = getCategoryRoute(
+                    category.slug,
+                    hoveredExpert
+                  );
 
-              return (
+                  return (
+                    <Link
+                      key={category.slug}
+                      to={categoryRoute}
+                      className="group bg-navbar-dropdown-bg rounded-[10px] p-[12px] flex items-center justify-center text-center hover:bg-white hover:text-navbar-dropdown-bg transition-all cursor-pointer"
+                    >
+                      <span className="text-[14px] leading-tight inline-block group-hover:scale-[1.1] transition-all">
+                        {t(`${category.i18nKey}.title`, { ns: "experts" })}
+                      </span>
+                    </Link>
+                  );
+                })}
+
+              {getCategories().length > maxVisibleCategories && (
                 <Link
-                  key={category.slug}
-                  to={categoryRoute}
-                  className="group bg-navbar-dropdown-bg rounded-[10px] p-[12px] flex items-center justify-center text-center hover:bg-white hover:text-navbar-dropdown-bg transition-all cursor-pointer"
+                  to={getDomainRoute(hoveredExpert)}
+                  className="group bg-white text-navbar-dropdown-bg rounded-[10px] p-[12px] flex items-center justify-center text-center hover:opacity-95 transition-all cursor-pointer"
                 >
-                  <span className="text-[14px] leading-tight inline-block group-hover:scale-[1.1] transition-all">
-                    {t(`${category.i18nKey}.title`, { ns: "experts" })}
+                  <span className="text-[14px] leading-tight inline-flex items-center justify-center font-semibold group-hover:scale-[1.05] transition-transform duration-200">
+                    <span>{t("viewMore", { ns: "navigation" })}</span>
+                    {/* Animate space for the icon so text stays centered by default */}
+                    <span className="w-0 ml-0 overflow-hidden opacity-0 group-hover:w-4 group-hover:ml-2 group-hover:opacity-100 transition-all duration-200 ease-out flex items-center justify-center">
+                      <ArrowRight
+                        size={16}
+                        className="-translate-x-1 group-hover:translate-x-0 transition-transform duration-200 ease-out"
+                      />
+                    </span>
                   </span>
                 </Link>
-              );
-            })}
+              )}
+            </div>
           </div>
         ) : (
           <div className="w-full flex items-center justify-center text-gray-400">
