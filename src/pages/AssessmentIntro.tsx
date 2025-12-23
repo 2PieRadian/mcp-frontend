@@ -20,224 +20,215 @@ import {
 import useScrollToTop from "../hooks/useScrollToTop";
 
 interface AssessmentInfo {
-  title: string;
-  subtitle: string;
-  description: string;
+  titleKey: string;
+  subtitleKey: string;
+  descriptionKey: string;
   icon: React.ReactNode;
   gradientFrom: string;
   gradientTo: string;
   accentColor: string;
-  benefits: string[];
-  duration: string;
-  whatYouGet: string[];
+  benefitsKeys: string[];
+  durationKey: string;
+  whatYouGetKeys: string[];
 }
 
 const assessmentData: Record<string, AssessmentInfo> = {
   adhd: {
-    title: "ADHD Assessment",
-    subtitle: "Attention & Focus",
-    description:
-      "Understand your attention patterns and discover personalized strategies to enhance focus, manage distractions, and optimize your cognitive performance in daily life.",
+    titleKey: "assessmentIntroAdhdTitle",
+    subtitleKey: "assessmentIntroAdhdSubtitle",
+    descriptionKey: "assessmentIntroAdhdDescription",
     icon: <Brain style={{ width: "100%", height: "100%" }} />,
     gradientFrom: "#4F46E5",
     gradientTo: "#6366F1",
     accentColor: "#818CF8",
-    benefits: [
-      "Identify attention patterns and focus challenges",
-      "Discover personalized strategies for better concentration",
-      "Understand your cognitive performance strengths",
-      "Get expert-verified insights and recommendations",
+    benefitsKeys: [
+      "assessmentIntroAdhdLearn1",
+      "assessmentIntroAdhdLearn2",
+      "assessmentIntroAdhdLearn3",
+      "assessmentIntroAdhdLearn4",
     ],
-    duration: "5-10 minutes",
-    whatYouGet: [
-      "Comprehensive attention and focus analysis",
-      "Personalized improvement strategies",
-      "Expert-verified recommendations",
-      "Actionable insights for daily life",
+    durationKey: "assessmentDuration5to10",
+    whatYouGetKeys: [
+      "assessmentIntroAdhdGet1",
+      "assessmentIntroAdhdGet2",
+      "assessmentIntroAdhdGet3",
+      "assessmentIntroAdhdGet4",
     ],
   },
   diet: {
-    title: "Diet Assessment",
-    subtitle: "Nutrition & Wellness",
-    description:
-      "Evaluate your eating habits and receive evidence-based guidance to create a balanced nutrition plan that supports your health goals and lifestyle preferences.",
+    titleKey: "assessmentIntroDietTitle",
+    subtitleKey: "assessmentIntroDietSubtitle",
+    descriptionKey: "assessmentIntroDietDescription",
     icon: <Apple style={{ width: "100%", height: "100%" }} />,
     gradientFrom: "#059669",
     gradientTo: "#10B981",
     accentColor: "#34D399",
-    benefits: [
-      "Evaluate your current eating habits",
-      "Receive evidence-based nutrition guidance",
-      "Create a balanced nutrition plan",
-      "Align your diet with health goals",
+    benefitsKeys: [
+      "assessmentIntroDietLearn1",
+      "assessmentIntroDietLearn2",
+      "assessmentIntroDietLearn3",
+      "assessmentIntroDietLearn4",
     ],
-    duration: "5-10 minutes",
-    whatYouGet: [
-      "Comprehensive nutrition analysis",
-      "Personalized dietary recommendations",
-      "Evidence-based guidance",
-      "Actionable meal planning tips",
+    durationKey: "assessmentDuration5to10",
+    whatYouGetKeys: [
+      "assessmentIntroDietGet1",
+      "assessmentIntroDietGet2",
+      "assessmentIntroDietGet3",
+      "assessmentIntroDietGet4",
     ],
   },
   relationship: {
-    title: "Relationship Assessment",
-    subtitle: "Connection & Bonds",
-    description:
-      "Explore your relationship dynamics and communication patterns to build stronger, more meaningful connections with partners, family, and friends.",
+    titleKey: "assessmentIntroRelationshipTitle",
+    subtitleKey: "assessmentIntroRelationshipSubtitle",
+    descriptionKey: "assessmentIntroRelationshipDescription",
     icon: <Heart style={{ width: "100%", height: "100%" }} />,
     gradientFrom: "#E11D48",
     gradientTo: "#F43F5E",
     accentColor: "#FB7185",
-    benefits: [
-      "Understand relationship dynamics",
-      "Improve communication patterns",
-      "Build stronger connections",
-      "Enhance emotional intelligence",
+    benefitsKeys: [
+      "assessmentIntroRelationshipLearn1",
+      "assessmentIntroRelationshipLearn2",
+      "assessmentIntroRelationshipLearn3",
+      "assessmentIntroRelationshipLearn4",
     ],
-    duration: "5-10 minutes",
-    whatYouGet: [
-      "Relationship pattern analysis",
-      "Communication improvement strategies",
-      "Personalized connection tips",
-      "Expert-verified insights",
+    durationKey: "assessmentDuration5to10",
+    whatYouGetKeys: [
+      "assessmentIntroRelationshipGet1",
+      "assessmentIntroRelationshipGet2",
+      "assessmentIntroRelationshipGet3",
+      "assessmentIntroRelationshipGet4",
     ],
   },
   yoga: {
-    title: "Yoga Assessment",
-    subtitle: "Mind & Body Balance",
-    description:
-      "Assess your physical and mental alignment to find the perfect yoga practice that harmonizes your body, mind, and spirit for holistic well-being.",
+    titleKey: "assessmentIntroYogaTitle",
+    subtitleKey: "assessmentIntroYogaSubtitle",
+    descriptionKey: "assessmentIntroYogaDescription",
     icon: <Flower2 style={{ width: "100%", height: "100%" }} />,
     gradientFrom: "#0D9488",
     gradientTo: "#14B8A6",
     accentColor: "#2DD4BF",
-    benefits: [
-      "Assess physical and mental alignment",
-      "Find the perfect yoga practice for you",
-      "Harmonize body, mind, and spirit",
-      "Achieve holistic well-being",
+    benefitsKeys: [
+      "assessmentIntroYogaLearn1",
+      "assessmentIntroYogaLearn2",
+      "assessmentIntroYogaLearn3",
+      "assessmentIntroYogaLearn4",
     ],
-    duration: "5-10 minutes",
-    whatYouGet: [
-      "Personalized yoga practice recommendations",
-      "Mind-body alignment analysis",
-      "Holistic wellness insights",
-      "Expert-guided practice suggestions",
+    durationKey: "assessmentDuration5to10",
+    whatYouGetKeys: [
+      "assessmentIntroYogaGet1",
+      "assessmentIntroYogaGet2",
+      "assessmentIntroYogaGet3",
+      "assessmentIntroYogaGet4",
     ],
   },
   "path-finder": {
-    title: "Path Finder Assessment",
-    subtitle: "Life Direction & Clarity",
-    description:
-      "Discover your life path and gain clarity on your direction. Understand your strengths, decision-making patterns, and build a clear vision for your future.",
+    titleKey: "assessmentIntroPathFinderTitle",
+    subtitleKey: "assessmentIntroPathFinderSubtitle",
+    descriptionKey: "assessmentIntroPathFinderDescription",
     icon: <Compass style={{ width: "100%", height: "100%" }} />,
     gradientFrom: "#7C3AED",
     gradientTo: "#8B5CF6",
     accentColor: "#A78BFA",
-    benefits: [
-      "Gain clarity on your life direction",
-      "Understand your strengths and decision-making",
-      "Build a clear vision for your future",
-      "Get personalized guidance for your path",
+    benefitsKeys: [
+      "assessmentIntroPathFinderLearn1",
+      "assessmentIntroPathFinderLearn2",
+      "assessmentIntroPathFinderLearn3",
+      "assessmentIntroPathFinderLearn4",
     ],
-    duration: "5-10 minutes",
-    whatYouGet: [
-      "Life direction analysis",
-      "Self-awareness assessment",
-      "Personalized path-finding insights",
-      "Expert-verified recommendations",
+    durationKey: "assessmentDuration5to10",
+    whatYouGetKeys: [
+      "assessmentIntroPathFinderGet1",
+      "assessmentIntroPathFinderGet2",
+      "assessmentIntroPathFinderGet3",
+      "assessmentIntroPathFinderGet4",
     ],
   },
   "career-planning": {
-    title: "Career Planning Assessment",
-    subtitle: "Professional Growth",
-    description:
-      "Evaluate your career readiness and planning skills. Discover your strengths, set clear goals, and build a structured path for professional success.",
+    titleKey: "assessmentIntroCareerPlanningTitle",
+    subtitleKey: "assessmentIntroCareerPlanningSubtitle",
+    descriptionKey: "assessmentIntroCareerPlanningDescription",
     icon: <Briefcase style={{ width: "100%", height: "100%" }} />,
     gradientFrom: "#DC2626",
     gradientTo: "#EF4444",
     accentColor: "#F87171",
-    benefits: [
-      "Evaluate your career readiness",
-      "Set clear professional goals",
-      "Build structured career planning",
-      "Develop professional growth strategies",
+    benefitsKeys: [
+      "assessmentIntroCareerPlanningLearn1",
+      "assessmentIntroCareerPlanningLearn2",
+      "assessmentIntroCareerPlanningLearn3",
+      "assessmentIntroCareerPlanningLearn4",
     ],
-    duration: "5-10 minutes",
-    whatYouGet: [
-      "Career readiness analysis",
-      "Professional goal setting guidance",
-      "Structured career planning insights",
-      "Expert-verified career recommendations",
+    durationKey: "assessmentDuration5to10",
+    whatYouGetKeys: [
+      "assessmentIntroCareerPlanningGet1",
+      "assessmentIntroCareerPlanningGet2",
+      "assessmentIntroCareerPlanningGet3",
+      "assessmentIntroCareerPlanningGet4",
     ],
   },
   academic: {
-    title: "Academic Assessment",
-    subtitle: "Study Habits & Performance",
-    description:
-      "Assess your academic habits, study patterns, and learning strategies. Identify areas for improvement and develop effective study techniques for better performance.",
+    titleKey: "assessmentIntroAcademicTitle",
+    subtitleKey: "assessmentIntroAcademicSubtitle",
+    descriptionKey: "assessmentIntroAcademicDescription",
     icon: <GraduationCap style={{ width: "100%", height: "100%" }} />,
     gradientFrom: "#0891B2",
     gradientTo: "#06B6D4",
     accentColor: "#22D3EE",
-    benefits: [
-      "Assess your study habits and patterns",
-      "Identify areas for academic improvement",
-      "Develop effective study techniques",
-      "Enhance learning and performance",
+    benefitsKeys: [
+      "assessmentIntroAcademicLearn1",
+      "assessmentIntroAcademicLearn2",
+      "assessmentIntroAcademicLearn3",
+      "assessmentIntroAcademicLearn4",
     ],
-    duration: "5-10 minutes",
-    whatYouGet: [
-      "Comprehensive academic habit analysis",
-      "Personalized study strategy recommendations",
-      "Performance improvement insights",
-      "Expert-verified academic guidance",
+    durationKey: "assessmentDuration5to10",
+    whatYouGetKeys: [
+      "assessmentIntroAcademicGet1",
+      "assessmentIntroAcademicGet2",
+      "assessmentIntroAcademicGet3",
+      "assessmentIntroAcademicGet4",
     ],
   },
   "gst-taxation": {
-    title: "GST & Taxation Assessment",
-    subtitle: "Tax Compliance & Planning",
-    description:
-      "Evaluate your GST and taxation knowledge, compliance practices, and tax planning skills. Get expert guidance to improve your tax management and avoid penalties.",
+    titleKey: "assessmentIntroGstTaxationTitle",
+    subtitleKey: "assessmentIntroGstTaxationSubtitle",
+    descriptionKey: "assessmentIntroGstTaxationDescription",
     icon: <Receipt style={{ width: "100%", height: "100%" }} />,
     gradientFrom: "#F59E0B",
     gradientTo: "#D97706",
     accentColor: "#FBBF24",
-    benefits: [
-      "Evaluate your GST and tax compliance",
-      "Understand your tax knowledge gaps",
-      "Improve tax planning and record-keeping",
-      "Avoid penalties with better compliance",
+    benefitsKeys: [
+      "assessmentIntroGstTaxationLearn1",
+      "assessmentIntroGstTaxationLearn2",
+      "assessmentIntroGstTaxationLearn3",
+      "assessmentIntroGstTaxationLearn4",
     ],
-    duration: "5-10 minutes",
-    whatYouGet: [
-      "Comprehensive tax compliance analysis",
-      "Personalized tax planning recommendations",
-      "GST and taxation knowledge assessment",
-      "Expert-verified tax guidance",
+    durationKey: "assessmentDuration5to10",
+    whatYouGetKeys: [
+      "assessmentIntroGstTaxationGet1",
+      "assessmentIntroGstTaxationGet2",
+      "assessmentIntroGstTaxationGet3",
+      "assessmentIntroGstTaxationGet4",
     ],
   },
   "financial-planning": {
-    title: "Financial Planning Assessment",
-    subtitle: "Wealth & Future Planning",
-    description:
-      "Assess your financial planning skills, savings habits, and investment knowledge. Discover areas for improvement and build a secure financial future with expert guidance.",
+    titleKey: "assessmentIntroFinancialPlanningTitle",
+    subtitleKey: "assessmentIntroFinancialPlanningSubtitle",
+    descriptionKey: "assessmentIntroFinancialPlanningDescription",
     icon: <Wallet style={{ width: "100%", height: "100%" }} />,
     gradientFrom: "#10B981",
     gradientTo: "#059669",
     accentColor: "#34D399",
-    benefits: [
-      "Assess your financial planning skills",
-      "Evaluate savings and investment habits",
-      "Identify areas for financial improvement",
-      "Build a secure financial future",
+    benefitsKeys: [
+      "assessmentIntroFinancialPlanningLearn1",
+      "assessmentIntroFinancialPlanningLearn2",
+      "assessmentIntroFinancialPlanningLearn3",
+      "assessmentIntroFinancialPlanningLearn4",
     ],
-    duration: "5-10 minutes",
-    whatYouGet: [
-      "Comprehensive financial planning analysis",
-      "Personalized financial strategy recommendations",
-      "Savings and investment insights",
-      "Expert-verified financial guidance",
+    durationKey: "assessmentDuration5to10",
+    whatYouGetKeys: [
+      "assessmentIntroFinancialPlanningGet1",
+      "assessmentIntroFinancialPlanningGet2",
+      "assessmentIntroFinancialPlanningGet3",
+      "assessmentIntroFinancialPlanningGet4",
     ],
   },
 };
@@ -248,6 +239,8 @@ export default function AssessmentIntro() {
   const { assessmentType } = useParams<{ assessmentType: string }>();
   const { t } = useTranslation("quiz");
   const data = assessmentData[assessmentType || ""];
+  const title = data ? t(data.titleKey) : "";
+  const description = data ? t(data.descriptionKey) : "";
 
   // Determine domain from pathname
   const domain = location.pathname.includes("/assessments/education/")
@@ -267,8 +260,8 @@ export default function AssessmentIntro() {
   return (
     <>
       <Helmet>
-        <title>{data.title} | MindCurePath</title>
-        <meta name="description" content={data.description} />
+        <title>{title} | MindCurePath</title>
+        <meta name="description" content={description} />
         <link
           href={`https://mindcurepath.com/assessments/${domain}/${assessmentType}`}
           rel="canonical"
@@ -332,13 +325,13 @@ export default function AssessmentIntro() {
                       fontSize: "clamp(12px, 1.5vw, 14px)",
                     }}
                   >
-                    {data.subtitle}
+                    {t(data.subtitleKey)}
                   </p>
                   <h1
                     className="text-white font-bold leading-tight"
                     style={{ fontSize: "clamp(24px, 4vw, 32px)" }}
                   >
-                    {data.title}
+                    {title}
                   </h1>
                 </div>
               </div>
@@ -346,7 +339,7 @@ export default function AssessmentIntro() {
                 className="text-white/90 leading-relaxed"
                 style={{ fontSize: "16px" }}
               >
-                {data.description}
+                {description}
               </p>
             </div>
           </div>
@@ -373,7 +366,7 @@ export default function AssessmentIntro() {
                 {t("whatYouLearnHeading")}
               </h2>
               <ul className="space-y-[clamp(0.75rem,1.5vw,0.875rem)]">
-                {data.benefits.map((benefit, index) => (
+                {data.benefitsKeys.map((benefitKey, index) => (
                   <li
                     key={index}
                     className="flex items-start gap-[clamp(0.75rem,1.5vw,0.875rem)]"
@@ -383,7 +376,7 @@ export default function AssessmentIntro() {
                       style={{ backgroundColor: data.accentColor }}
                     />
                     <span className="text-[#5a6c75] text-[clamp(0.875rem, 2vw, 1rem)] leading-relaxed">
-                      {benefit}
+                      {t(benefitKey)}
                     </span>
                   </li>
                 ))}
@@ -397,7 +390,7 @@ export default function AssessmentIntro() {
                 {t("whatYouGetHeading")}
               </h2>
               <ul className="space-y-[clamp(0.75rem,1.5vw,0.875rem)]">
-                {data.whatYouGet.map((item, index) => (
+                {data.whatYouGetKeys.map((itemKey, index) => (
                   <li
                     key={index}
                     className="flex items-start gap-[clamp(0.75rem,1.5vw,0.875rem)]"
@@ -407,7 +400,7 @@ export default function AssessmentIntro() {
                       style={{ backgroundColor: data.accentColor }}
                     />
                     <span className="text-[#5a6c75] text-[clamp(0.875rem, 2vw, 1rem)] leading-relaxed">
-                      {item}
+                      {t(itemKey)}
                     </span>
                   </li>
                 ))}
@@ -424,7 +417,7 @@ export default function AssessmentIntro() {
                   {t("assessmentDurationHeading")}
                 </p>
                 <p className="text-[#5a6c75] text-[clamp(0.875rem,1.8vw,1rem)]">
-                  {data.duration}
+                  {t(data.durationKey)}
                 </p>
               </div>
             </div>
