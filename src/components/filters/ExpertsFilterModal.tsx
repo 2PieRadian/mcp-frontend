@@ -121,14 +121,14 @@ export default function ExpertsFilterModal({
                 <DollarSign className="w-5 h-5 text-white" />
               </div>
               <label className="text-base font-semibold text-[#1a2e35]">
-                {t("price", { ns: "common" })} (₹ per hour)
+                {t("price", { ns: "common" })} ({t("perHour", { ns: "common" })})
               </label>
             </div>
             <div className="flex items-center gap-3">
               <div className="flex-1">
                 <input
                   type="number"
-                  placeholder="Min"
+                  placeholder={t("min", { ns: "common" })}
                   value={localFilters.minPrice || ""}
                   onChange={(e) =>
                     updateFilter(
@@ -143,7 +143,7 @@ export default function ExpertsFilterModal({
               <div className="flex-1">
                 <input
                   type="number"
-                  placeholder="Max"
+                  placeholder={t("max", { ns: "common" })}
                   value={localFilters.maxPrice || ""}
                   onChange={(e) =>
                     updateFilter(
@@ -164,7 +164,7 @@ export default function ExpertsFilterModal({
                 <Star className="w-5 h-5 text-white fill-white" />
               </div>
               <label className="text-base font-semibold text-[#1a2e35]">
-                {t("rating", { ns: "common" })} (Minimum)
+                {t("rating", { ns: "common" })} ({t("minimum", { ns: "common" })})
               </label>
             </div>
             <input
@@ -172,7 +172,7 @@ export default function ExpertsFilterModal({
               min="0"
               max="5"
               step="0.1"
-              placeholder="0.0 - 5.0"
+              placeholder={t("ratingRangePlaceholder", { ns: "common" })}
               value={localFilters.minRating || ""}
               onChange={(e) =>
                 updateFilter(
@@ -191,13 +191,13 @@ export default function ExpertsFilterModal({
                 <Award className="w-5 h-5 text-white" />
               </div>
               <label className="text-base font-semibold text-[#1a2e35]">
-                {t("experience", { ns: "common" })} (Minimum years)
+                {t("experience", { ns: "common" })} ({t("minimumYears", { ns: "common" })})
               </label>
             </div>
             <input
               type="number"
               min="0"
-              placeholder="Years of experience"
+              placeholder={t("yearsOfExperience", { ns: "common" })}
               value={localFilters.minExperience || ""}
               onChange={(e) =>
                 updateFilter(

@@ -1,6 +1,7 @@
 import { lazy, useEffect, useMemo, useRef } from "react";
 import ExpertCardSkeleton from "../ExpertCardSkeleton";
 import { useExperts } from "../../context/ExpertsContext";
+import { useTranslation } from "react-i18next";
 
 const ExpertCard = lazy(() => import("../ExpertCard"));
 
@@ -28,6 +29,7 @@ export default function ExpertsCardsSection({
 }: ExpertsCardsSectionProps) {
   const { fetchExpertsBySpecialization, getCachedExperts, isLoading, error } =
     useExperts();
+  const { t } = useTranslation(["common", "experts"]);
 
   // Get cached experts for current specialization + filter combination
   const cachedData = useMemo(
@@ -150,7 +152,9 @@ export default function ExpertsCardsSection({
     return (
       <div className="max-w-[1350px] mx-auto mt-[40px]">
         <div className="text-center py-[40px]">
-          <p className="text-red-600">Error: {error}</p>
+          <p className="text-red-600">
+            {t("errorPrefix", { ns: "experts" })} {error}
+          </p>
         </div>
       </div>
     );
@@ -165,7 +169,7 @@ export default function ExpertsCardsSection({
       <div className="max-w-[1350px] mx-auto mt-[40px]">
         <div className="text-center py-[40px]">
           <p className="text-gray-600">
-            No experts found for this specialization.
+            {t("noExpertsFound", { ns: "experts" })}
           </p>
         </div>
       </div>
@@ -205,15 +209,18 @@ export default function ExpertsCardsSection({
                 : "bg-gray-300 text-gray-500 cursor-not-allowed opacity-50"
             }`}
           >
-            Previous
+            {t("previous", { ns: "common" })}
           </button>
 
           <div className="flex items-center gap-[8px]">
             <span className="text-gray-600 text-sm">
-              Page <span className="font-medium">{currentPage}</span> of{" "}
+              {t("pageLabel", { ns: "experts" })}{" "}
+              <span className="font-medium">{currentPage}</span> {t("of", { ns: "common" })}{" "}
               <span className="font-medium">{totalPages}</span>
               {totalCount > 0 && (
-                <span className="text-gray-400 ml-2">({totalCount} total)</span>
+                <span className="text-gray-400 ml-2">
+                  ({totalCount} {t("totalLabel", { ns: "experts" })})
+                </span>
               )}
             </span>
           </div>
@@ -227,7 +234,7 @@ export default function ExpertsCardsSection({
                 : "bg-gray-300 text-gray-500 cursor-not-allowed opacity-50"
             }`}
           >
-            Next
+            {t("next", { ns: "common" })}
           </button>
         </div>
       )}

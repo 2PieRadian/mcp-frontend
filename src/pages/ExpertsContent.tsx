@@ -3,8 +3,9 @@ import { useLocation } from "react-router-dom";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import { useExperts } from "../context/ExpertsContext";
 import type { FilterState } from "../types/filters";
-import { getSpecializationBySlug } from "../lib/constants/experts";
+import { getSpecializationBySlug, getSpecializationByValue } from "../lib/constants/experts";
 import useScrollToTop from "../hooks/useScrollToTop";
+import { useTranslation } from "react-i18next";
 
 const ExpertsHeroSection = lazy(
   () => import("../components/ExpertsHeroSection")
@@ -34,12 +35,18 @@ export default function ExpertsContent() {
   useScrollToTop();
   const location = useLocation();
   const { filters, setFilters } = useExperts();
+  const { t } = useTranslation(["common", "experts"]);
 
   // Get specialization from path or state
   const getSpecialization = (): string => {
     // First check if passed via state
     const state = location.state as { specialization?: string } | null;
     if (state?.specialization) {
+      // State might be a slug or a backend value; normalize to backend value
+      const fromSlug = getSpecializationBySlug(state.specialization);
+      if (fromSlug) return fromSlug.value;
+      const fromValue = getSpecializationByValue(state.specialization);
+      if (fromValue) return fromValue.value;
       return state.specialization;
     }
 
@@ -54,6 +61,18 @@ export default function ExpertsContent() {
   };
 
   const specialization = getSpecialization();
+  const specializationDisplay = useMemo(() => {
+    // specialization is the backend/API "value" (English). For display, prefer i18n title when we can.
+    const fromValue = getSpecializationByValue(specialization);
+    if (fromValue) return t(`${fromValue.i18nKey}.title`, { ns: "experts" });
+
+    const pathSegments = location.pathname.split("/").filter(Boolean);
+    const slug = pathSegments.length >= 2 ? pathSegments[pathSegments.length - 1] : "";
+    const fromSlug = getSpecializationBySlug(slug);
+    if (fromSlug) return t(`${fromSlug.i18nKey}.title`, { ns: "experts" });
+
+    return specialization;
+  }, [location.pathname, specialization, t]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [searchInput, setSearchInput] = useState("");
@@ -157,18 +176,18 @@ export default function ExpertsContent() {
       <ResponsiveNavbar />
 
       <ExpertsHeroSection
-        subtitle="Expert guidance and support"
-        title="Find the right expert for your needs."
-        description="Connect with certified experts who understand you, your culture, and your pace. Begin at your comfort level, one conversation at a time."
-        badgeText="100% private & secure sessions"
-        badgeDescription="Verified experts · Online sessions · Flexible slots"
+        subtitle={t("listingHero.subtitle", { ns: "experts" })}
+        title={t("listingHero.title", { ns: "experts" })}
+        description={t("listingHero.description", { ns: "experts" })}
+        badgeText={t("listingHero.badgeText", { ns: "experts" })}
+        badgeDescription={t("listingHero.badgeDescription", { ns: "experts" })}
         imageSrc="/images/therapists/therapists-1.png"
-        imageAlt="Online expert session illustration"
+        imageAlt={t("listingHero.imageAlt", { ns: "experts" })}
         imageSize={420}
         maxWidth={420}
       />
 
-      <ExpertsTitle specialization={specialization} />
+      <ExpertsTitle specialization={specializationDisplay} />
 
       <ExpertsFiltersAndSearch
         filters={filters}

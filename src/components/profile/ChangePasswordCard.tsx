@@ -71,7 +71,9 @@ export default function ChangePasswordCard() {
       const text = !isJson ? await response.text() : null;
 
       if (!response.ok) {
-        throw new Error(data?.message || text || t("validation.failedSetPassword"));
+        throw new Error(
+          data?.message || text || t("validation.failedSetPassword")
+        );
       }
 
       // Update user to indicate password is now set
@@ -231,7 +233,9 @@ export default function ChangePasswordCard() {
                     }
                   }}
                   placeholder={
-                    hasPassword ? t("placeholders.newPassword") : t("placeholders.password")
+                    hasPassword
+                      ? t("placeholders.newPassword")
+                      : t("placeholders.password")
                   }
                   className="border border-gray-300 rounded-[10px] px-[12px] pr-[40px] py-[8px] sm:py-[6px] bg-white placeholder:text-input-placeholder outline-none focus:border-gray-400 focus:shadow-[0_2px_4px_rgba(0,0,0,0.1)] w-full transition-all"
                   style={{ fontSize: "16px" }}
@@ -241,7 +245,9 @@ export default function ChangePasswordCard() {
                   onClick={() => setShowNewPassword(!showNewPassword)}
                   className="absolute right-[12px] top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer"
                   aria-label={
-                    showNewPassword ? t("password.hideAria") : t("password.showAria")
+                    showNewPassword
+                      ? t("password.hideAria")
+                      : t("password.showAria")
                   }
                 >
                   {showNewPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -323,7 +329,9 @@ export default function ChangePasswordCard() {
                 </ProfileButton>
                 {status === "success" && (
                   <span className="text-xs text-green-600">
-                    {hasPassword ? t("status.passwordChanged") : t("status.passwordSet")}
+                    {hasPassword
+                      ? t("status.passwordChanged")
+                      : t("status.passwordSet")}
                   </span>
                 )}
                 {error && <span className="text-xs text-red-600">{error}</span>}
@@ -332,7 +340,9 @@ export default function ChangePasswordCard() {
           ) : (
             <div className="flex items-center justify-between gap-[8px] sm:gap-[10px] mt-[-2px]">
               <p className="font-medium">
-                {hasPassword ? t("values.maskedPassword") : t("values.notSetYet")}
+                {hasPassword
+                  ? t("values.maskedPassword")
+                  : t("values.notSetYet")}
               </p>
               <ProfileButton
                 type="button"

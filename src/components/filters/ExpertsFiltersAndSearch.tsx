@@ -35,8 +35,8 @@ export default function ExpertsFiltersAndSearch({
       filters.minPrice !== undefined && filters.maxPrice !== undefined
         ? `₹${filters.minPrice}-${filters.maxPrice}`
         : filters.minPrice !== undefined
-        ? `Min ₹${filters.minPrice}`
-        : `Max ₹${filters.maxPrice}`;
+        ? `${t("min", { ns: "common" })} ₹${filters.minPrice}`
+        : `${t("max", { ns: "common" })} ₹${filters.maxPrice}`;
     activeFilters.push({ key: "minPrice", label: priceLabel });
   }
 
@@ -52,7 +52,7 @@ export default function ExpertsFiltersAndSearch({
       key: "minExperience",
       label: `${t("experience", { ns: "common" })}: ${
         filters.minExperience
-      }+ yrs`,
+      }+ ${t("yearsShort", { ns: "common" })}`,
     });
   }
 
@@ -130,7 +130,7 @@ export default function ExpertsFiltersAndSearch({
               ))
             ) : (
               <p className="text-[hsl(0,0%,58%)] text-sm whitespace-nowrap font-light">
-                Applied Filters will be here
+                {t("appliedFiltersPlaceholder", { ns: "common" })}
               </p>
             )}
           </div>
