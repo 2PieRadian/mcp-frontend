@@ -48,6 +48,14 @@ export default function MobileNavModal({
   const [weHelpWithExpanded, setWeHelpWithExpanded] = useState(false);
   const [languageExpanded, setLanguageExpanded] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+  const scrollLockRef = useRef<{
+    scrollY: number;
+    bodyOverflow: string;
+    bodyPosition: string;
+    bodyTop: string;
+    bodyWidth: string;
+    htmlOverflow: string;
+  } | null>(null);
 
   const availableLanguages = [
     { code: "en", name: "English", nativeName: "English" },
@@ -71,16 +79,41 @@ export default function MobileNavModal({
     setLanguageExpanded(false);
   };
 
+  // Robust scroll lock for mobile (prevents background page scroll, including iOS)
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
+      const body = document.body;
+      const html = document.documentElement;
+      const scrollY = window.scrollY || window.pageYOffset || 0;
 
-    return () => {
-      document.body.style.overflow = "unset";
-    };
+      scrollLockRef.current = {
+        scrollY,
+        bodyOverflow: body.style.overflow,
+        bodyPosition: body.style.position,
+        bodyTop: body.style.top,
+        bodyWidth: body.style.width,
+        htmlOverflow: html.style.overflow,
+      };
+
+      html.style.overflow = "hidden";
+      body.style.overflow = "hidden";
+      body.style.position = "fixed";
+      body.style.top = `-${scrollY}px`;
+      body.style.width = "100%";
+
+      return () => {
+        const prev = scrollLockRef.current;
+        if (!prev) return;
+
+        html.style.overflow = prev.htmlOverflow;
+        body.style.overflow = prev.bodyOverflow;
+        body.style.position = prev.bodyPosition;
+        body.style.top = prev.bodyTop;
+        body.style.width = prev.bodyWidth;
+        window.scrollTo(0, prev.scrollY);
+        scrollLockRef.current = null;
+      };
+    }
   }, [isOpen]);
 
   useEffect(() => {
