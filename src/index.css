@@ -206,174 +206,521 @@ body {
   transform: translateZ(0);
 }
 
-/* WELLNESS: calm aurora + heartbeat glow */
+/* WELLNESS: premium calming "pulse" scene (ECG + ripple + particles) */
 .mcp-thumb--wellness .mcp-layer-1 {
-  background: radial-gradient(
-      260px 260px at 25% 25%,
-      rgba(255, 255, 255, 0.35),
-      transparent 55%
-    ),
-    radial-gradient(
-      320px 320px at 80% 70%,
-      rgba(14, 165, 233, 0.35),
-      transparent 60%
-    );
-  animation: mcpAurora 5.2s ease-in-out infinite;
-  filter: blur(10px);
+  /* soft aurora base (very subtle) */
+  background:
+    radial-gradient(320px 320px at 20% 20%, rgba(255, 255, 255, 0.26), transparent 62%),
+    radial-gradient(360px 360px at 85% 75%, rgba(14, 165, 233, 0.26), transparent 64%);
+  filter: blur(12px);
+  opacity: 0.85;
+  animation: mcpWellnessAura 7.4s ease-in-out infinite;
 }
 
 .mcp-thumb--wellness .mcp-layer-2 {
   background: radial-gradient(
-    220px 220px at 55% 55%,
-    rgba(6, 182, 212, 0.35),
-    transparent 60%
+    280px 280px at 55% 55%,
+    rgba(6, 182, 212, 0.28),
+    transparent 64%
   );
-  animation: mcpDrift 6.6s ease-in-out infinite;
-  filter: blur(14px);
+  filter: blur(16px);
   opacity: 0.75;
+  animation: mcpWellnessDrift 8.6s ease-in-out infinite;
 }
 
-@keyframes mcpAurora {
+@keyframes mcpWellnessAura {
   0%,
   100% {
     transform: translate(-2%, -1%) scale(1);
+    opacity: 0.78;
   }
   50% {
-    transform: translate(3%, 2%) scale(1.05);
+    transform: translate(2.5%, 1.5%) scale(1.06);
+    opacity: 0.92;
   }
 }
 
-@keyframes mcpDrift {
+@keyframes mcpWellnessDrift {
   0%,
   100% {
-    transform: translate(2%, 1%) scale(1.02);
+    transform: translate(1.5%, 1%) scale(1.02);
   }
   50% {
-    transform: translate(-3%, -2%) scale(1.08);
+    transform: translate(-2.5%, -2%) scale(1.10);
   }
 }
 
 .mcp-thumb--wellness .mcp-ring {
   inset: 0;
   background: radial-gradient(
-    circle at 50% 55%,
-    rgba(255, 255, 255, 0) 44%,
-    rgba(255, 255, 255, 0.35) 52%,
-    rgba(255, 255, 255, 0) 64%
+    circle at 50% 50%,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0.26) 52%,
+    rgba(255, 255, 255, 0) 66%
   );
-  animation: mcpPulseRing 2.8s ease-in-out infinite;
-  opacity: 0.85;
+  opacity: 0.8;
+  animation: mcpWellnessRing 3.6s ease-in-out infinite;
 }
 
-@keyframes mcpPulseRing {
+@keyframes mcpWellnessRing {
   0%,
   100% {
     transform: scale(0.96);
     opacity: 0.55;
   }
   50% {
-    transform: scale(1.06);
-    opacity: 0.95;
+    transform: scale(1.08);
+    opacity: 0.92;
+  }
+}
+
+.mcp-thumb--wellness .mcp-wellness-scene {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ECG line that "draws" across under the icon */
+.mcp-thumb--wellness .mcp-wellness-ecg {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 62%;
+  height: 10px;
+  opacity: 0.75;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.55) 18%,
+    rgba(255, 255, 255, 0.0) 36%,
+    rgba(255, 255, 255, 0.55) 54%,
+    rgba(255, 255, 255, 0.0) 72%,
+    rgba(255, 255, 255, 0.55) 90%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  clip-path: polygon(
+    0 55%,
+    14% 55%,
+    18% 10%,
+    22% 85%,
+    27% 35%,
+    34% 55%,
+    46% 55%,
+    50% 20%,
+    54% 85%,
+    59% 45%,
+    68% 55%,
+    100% 55%
+  );
+  filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.16));
+}
+
+.mcp-cat-card:hover .mcp-thumb--wellness .mcp-wellness-ecg {
+  animation: mcpEcgSweep 2.6s ease-in-out infinite;
+}
+
+@keyframes mcpEcgSweep {
+  0% {
+    transform: translateX(-10%);
+    opacity: 0.25;
+  }
+  40% {
+    opacity: 0.75;
+  }
+  100% {
+    transform: translateX(10%);
+    opacity: 0.25;
+  }
+}
+
+/* Ripple rings centered on icon */
+.mcp-thumb--wellness .mcp-wellness-ripple {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  width: 56%;
+  height: 56%;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  opacity: 0;
+  animation: mcpWellnessRipple 3.6s ease-in-out infinite;
+}
+
+@keyframes mcpWellnessRipple {
+  0% {
+    transform: translate(-50%, -50%) scale(0.82);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.55;
+  }
+  70% {
+    opacity: 0.25;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.18);
+    opacity: 0;
+  }
+}
+
+/* Particles drift */
+.mcp-thumb--wellness .mcp-wellness-dots {
+  position: absolute;
+  inset: 0;
+  opacity: 0.6;
+  background:
+    radial-gradient(circle at 25% 35%, rgba(255, 255, 255, 0.32) 0 2px, transparent 3px),
+    radial-gradient(circle at 78% 30%, rgba(255, 255, 255, 0.22) 0 2px, transparent 3px),
+    radial-gradient(circle at 65% 75%, rgba(255, 255, 255, 0.26) 0 2px, transparent 3px),
+    radial-gradient(circle at 35% 78%, rgba(255, 255, 255, 0.18) 0 2px, transparent 3px);
+  animation: mcpWellnessDots 6.8s ease-in-out infinite;
+}
+
+@keyframes mcpWellnessDots {
+  0%,
+  100% {
+    transform: translate(0, 0);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translate(-8px, -6px);
+    opacity: 0.6;
   }
 }
 
 .mcp-thumb--wellness .mcp-cat-icon {
-  animation: mcpHeartCalm 2.8s ease-in-out infinite;
-  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.28));
+  /* synced "calm beat" with ripple */
+  animation: mcpWellnessHeart 3.6s ease-in-out infinite;
+  filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.28));
 }
 
-@keyframes mcpHeartCalm {
+@keyframes mcpWellnessHeart {
   0%,
   100% {
     transform: scale(1);
   }
-  50% {
-    transform: scale(1.06);
+  40% {
+    transform: scale(1.08);
+  }
+  55% {
+    transform: scale(1.02);
   }
 }
 
-/* EDUCATION: moving "pages" + corner fold + ink sparkle */
+/* EDUCATION: premium "study scene" (pages + notebook texture + paper plane) */
 .mcp-thumb--education .mcp-layer-1 {
-  background: repeating-linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0) 0px,
-    rgba(255, 255, 255, 0) 10px,
-    rgba(255, 255, 255, 0.18) 11px,
-    rgba(255, 255, 255, 0) 12px
-  );
-  animation: mcpPages 3.8s ease-in-out infinite;
-  opacity: 0.55;
+  /* subtle notebook grid */
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.10) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 22px 22px;
+  opacity: 0.32;
+  animation: mcpEduGrid 8.5s ease-in-out infinite;
 }
 
-@keyframes mcpPages {
+@keyframes mcpEduGrid {
   0%,
   100% {
-    transform: translateY(0);
+    transform: translate(0, 0);
+    opacity: 0.26;
   }
   50% {
-    transform: translateY(-10px);
+    transform: translate(-10px, -8px);
+    opacity: 0.36;
   }
 }
 
 .mcp-thumb--education .mcp-layer-2 {
-  background: radial-gradient(
-    260px 260px at 75% 25%,
-    rgba(255, 255, 255, 0.24),
-    transparent 60%
-  );
+  /* soft spotlight bloom */
+  background:
+    radial-gradient(260px 260px at 78% 22%, rgba(255, 255, 255, 0.22), transparent 62%),
+    radial-gradient(220px 220px at 20% 82%, rgba(255, 255, 255, 0.14), transparent 60%);
   filter: blur(10px);
-  animation: mcpInk 4.6s ease-in-out infinite;
+  opacity: 0.55;
+  animation: mcpEduBloom 6.8s ease-in-out infinite;
 }
 
-@keyframes mcpInk {
+@keyframes mcpEduBloom {
   0%,
   100% {
-    transform: translate(2%, 0) scale(1);
-    opacity: 0.55;
+    transform: translate(1%, 0) scale(1);
+    opacity: 0.45;
   }
   50% {
-    transform: translate(-2%, -2%) scale(1.06);
-    opacity: 0.85;
+    transform: translate(-2%, -2%) scale(1.08);
+    opacity: 0.8;
   }
 }
 
 .mcp-thumb--education .mcp-fold {
   inset: 0;
   background: conic-gradient(
-    from 210deg at 80% 22%,
-    rgba(255, 255, 255, 0) 0 300deg,
-    rgba(255, 255, 255, 0.28) 320deg,
+    from 210deg at 82% 22%,
+    rgba(255, 255, 255, 0) 0 295deg,
+    rgba(255, 255, 255, 0.26) 320deg,
     rgba(255, 255, 255, 0) 360deg
   );
-  animation: mcpFold 3.2s ease-in-out infinite;
+  animation: mcpEduFold 4.6s ease-in-out infinite;
   opacity: 0.75;
 }
 
-@keyframes mcpFold {
+@keyframes mcpEduFold {
   0%,
   100% {
-    transform: translate(0, 0);
+    transform: translate(0, 0) skewX(0deg);
     opacity: 0.5;
   }
   50% {
-    transform: translate(-1%, 1%);
+    transform: translate(-1.2%, 1.2%) skewX(-2deg);
+    opacity: 0.95;
+  }
+}
+
+.mcp-thumb--education .mcp-edu-scene {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Education orbit + chips (clean, premium, centered on icon) */
+.mcp-thumb--education .mcp-edu-orbit {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  width: 74%;
+  height: 74%;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  border: 1px dashed rgba(255, 255, 255, 0.26);
+  opacity: 0.7;
+  animation: mcpEduOrbitPulse 5.6s ease-in-out infinite;
+}
+
+.mcp-thumb--education .mcp-edu-orbit-items {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  width: 78%;
+  height: 78%;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  z-index: 3;
+  pointer-events: none;
+  animation: none;
+}
+
+@keyframes mcpEduOrbitPulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: translate(-50%, -50%) scale(0.995);
+  }
+  50% {
+    opacity: 0.78;
+    transform: translate(-50%, -50%) scale(1.015);
+  }
+}
+
+.mcp-thumb--education .mcp-edu-badge,
+.mcp-thumb--education .mcp-edu-icon {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+  filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.14));
+}
+
+@keyframes mcpEduFloatA {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(-50%, -50%) translate(8px, -6px) rotate(-3deg);
+  }
+}
+@keyframes mcpEduFloatB {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(-50%, -50%) translate(-7px, 6px) rotate(3deg);
+  }
+}
+@keyframes mcpEduFloatC {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(-50%, -50%) translate(6px, 8px) rotate(-2deg);
+  }
+}
+
+/* Math badges */
+.mcp-thumb--education .mcp-edu-badge {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  opacity: 0.9;
+}
+
+.mcp-thumb--education .mcp-edu-badge-pi {
+  left: 72%;
+  top: 28%;
+  animation: mcpEduFloatA 4.8s ease-in-out infinite;
+}
+.mcp-thumb--education .mcp-edu-badge-pi::before {
+  content: "π";
+}
+
+/* Flask icon */
+.mcp-thumb--education .mcp-edu-flask {
+  width: 32px;
+  height: 36px;
+  opacity: 0.85;
+  background: rgba(255, 255, 255, 0.28);
+  /* triangular (Erlenmeyer) flask */
+  clip-path: polygon(
+    44% 0%,
+    56% 0%,
+    56% 24%,
+    72% 62%,
+    86% 100%,
+    14% 100%,
+    28% 62%,
+    44% 24%
+  );
+  position: absolute;
+  left: 30%;
+  top: 72%;
+  animation: mcpEduFloatA 6.6s ease-in-out infinite;
+}
+.mcp-thumb--education .mcp-edu-flask::before {
+  content: "";
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  bottom: 12%;
+  height: 40%;
+  background: rgba(255, 255, 255, 0.18);
+  /* liquid fill inside triangle */
+  clip-path: polygon(0 100%, 100% 100%, 84% 0, 16% 0);
+  opacity: 0.9;
+}
+
+.mcp-thumb--education .mcp-edu-flask::after {
+  content: "";
+  position: absolute;
+  left: 45%;
+  top: 0;
+  width: 10%;
+  height: 24%;
+  transform: translateX(-50%);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.22);
+  opacity: 0.9;
+}
+
+.mcp-thumb--education .mcp-edu-orbit::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.55);
+  transform: translate(-50%, -50%) translateX(34%);
+  box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.10);
+  opacity: 0.9;
+}
+
+.mcp-thumb--education .mcp-edu-chip {
+  position: absolute;
+  z-index: 3;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: translate(-50%, -50%);
+  opacity: 0.85;
+  animation: mcpEduChipFloat 6s ease-in-out infinite;
+}
+
+.mcp-thumb--education .mcp-edu-chip::before {
+  content: "";
+}
+
+.mcp-thumb--education .mcp-edu-chip-a {
+  left: 18%;
+  top: 50%;
+  animation-delay: 0.0s;
+}
+.mcp-thumb--education .mcp-edu-chip-a::before {
+  content: "A+";
+}
+
+.mcp-thumb--education .mcp-edu-chip-sigma {
+  left: 84%;
+  top: 46%;
+  animation-delay: 0.8s;
+}
+.mcp-thumb--education .mcp-edu-chip-sigma::before {
+  content: "Σ";
+  letter-spacing: 0.02em;
+}
+
+
+@keyframes mcpEduChipFloat {
+  0%,
+  100% {
+    filter: brightness(1);
+    transform: translate(-50%, -50%) translate(0, 0) scale(1);
+    opacity: 0.75;
+  }
+  50% {
+    filter: brightness(1.05);
+    transform: translate(-50%, -50%) translate(7px, -5px) scale(1.02);
     opacity: 0.95;
   }
 }
 
 .mcp-thumb--education .mcp-cat-icon {
-  animation: mcpBookGlow 3.2s ease-in-out infinite;
+  animation: mcpEduIcon 4.6s ease-in-out infinite;
   filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.26));
 }
 
-@keyframes mcpBookGlow {
+@keyframes mcpEduIcon {
   0%,
   100% {
     transform: rotate(0deg) scale(1);
   }
   50% {
-    transform: rotate(-4deg) scale(1.05);
+    transform: rotate(-6deg) scale(1.07);
   }
+}
+
+/* On hover, speed up a touch to feel interactive */
+.mcp-cat-card:hover .mcp-thumb--education .mcp-edu-orbit {
+  animation-duration: 4.6s;
+}
+.mcp-cat-card:hover .mcp-thumb--education .mcp-edu-chip {
+  animation-duration: 4.8s;
 }
 
 /* FINANCE: scanning sparkline + streaming bar graph */
@@ -422,8 +769,8 @@ body {
   position: absolute;
   left: 8%;
   right: 8%;
-  bottom: 12%;
-  height: 52%;
+  bottom: 8%;
+  height: 44%;
   overflow: hidden;
   pointer-events: none;
   z-index: 2;
