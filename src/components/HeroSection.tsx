@@ -90,7 +90,7 @@ export default function HeroSection() {
                   className="group absolute top-0 right-0 w-[200px] lg:w-[240px] bg-white/95 backdrop-blur-md rounded-[20px] p-6 shadow-lg animate-float-1 border border-gray-100 hover:border-primary/30 hover:scale-[1.05] hover:shadow-xl transition-all duration-300 cursor-pointer block text-center overflow-hidden"
                 >
                   <div className="w-12 h-12 bg-linear-to-br from-[#0ea5e9] to-[#06b6d4] rounded-[12px] flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
-                    <Heart className="w-8 h-8 text-white" />
+                    <Heart className="w-7 h-7 text-white" />
                   </div>
                   <h3 className="font-bold text-primary text-lg mb-2 group-hover:text-[#0ea5e9] transition-colors duration-300">
                     {t("wellness")}
@@ -112,7 +112,7 @@ export default function HeroSection() {
                   className="group absolute top-[120px] left-0 w-[200px] lg:w-[240px] bg-white/95 backdrop-blur-md rounded-[20px] p-6 shadow-lg animate-float-2 border border-gray-100 hover:border-primary/30 hover:scale-[1.05] hover:shadow-xl transition-all duration-300 cursor-pointer block text-center overflow-hidden"
                 >
                   <div className="w-12 h-12 bg-linear-to-br from-[#10b981] to-[#059669] rounded-[12px] flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
-                    <BookOpenText className="w-8 h-8 text-white" />
+                    <BookOpenText className="w-7 h-7 text-white" />
                   </div>
                   <h3 className="font-bold text-primary text-lg mb-2 group-hover:text-[#10b981] transition-colors duration-300">
                     {t("education")}
@@ -134,7 +134,7 @@ export default function HeroSection() {
                   className="group absolute top-[240px] right-[40px] w-[200px] lg:w-[240px] bg-white/95 backdrop-blur-md rounded-[20px] p-6 shadow-lg animate-float-3 border border-gray-100 hover:border-primary/30 hover:scale-[1.05] hover:shadow-xl transition-all duration-300 cursor-pointer block text-center overflow-hidden"
                 >
                   <div className="w-12 h-12 bg-linear-to-br from-[#f59e0b] to-[#d97706] rounded-[12px] flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
-                    <TrendingUp className="w-8 h-8 text-white" />
+                    <TrendingUp className="w-7 h-7 text-white" />
                   </div>
                   <h3 className="font-bold text-primary text-lg mb-2 group-hover:text-[#f59e0b] transition-colors duration-300">
                     {t("finance")}
@@ -176,8 +176,10 @@ export default function HeroSection() {
                       <span className="mcp-wellness-ecg" />
                       <span className="mcp-wellness-ripple" />
                       <span className="mcp-wellness-dots" />
+                      <span className="mcp-wellness-breathe" />
+                      <span className="mcp-wellness-leaf" />
                     </span>
-                    <Heart className="mcp-cat-icon w-10 h-10 sm:w-14 sm:h-14 md:w-[92px] md:h-[92px] text-white group-hover:scale-125 transition-transform duration-300" />
+                    <Heart className="mcp-cat-icon w-8 h-8 sm:w-12 sm:h-12 md:w-[76px] md:h-[76px] text-white group-hover:scale-125 transition-transform duration-300" />
                   </div>
                   <h3 className="font-bold text-primary text-[clamp(14px,2vw,18px)] mb-1">
                     {t("wellness")}
@@ -204,7 +206,7 @@ export default function HeroSection() {
                       <span className="mcp-edu-chip mcp-edu-chip-a" />
                       <span className="mcp-edu-chip mcp-edu-chip-sigma" />
                     </span>
-                    <BookOpenText className="mcp-cat-icon w-10 h-10 sm:w-14 sm:h-14 md:w-[92px] md:h-[92px] text-white group-hover:scale-125 transition-transform duration-300" />
+                    <BookOpenText className="mcp-cat-icon w-8 h-8 sm:w-12 sm:h-12 md:w-[76px] md:h-[76px] text-white group-hover:scale-125 transition-transform duration-300" />
                   </div>
                   <h3 className="font-bold text-primary text-[clamp(14px,2vw,18px)] mb-1">
                     {t("education")}
@@ -322,7 +324,7 @@ export default function HeroSection() {
                         }
                       />
                     </span>
-                    <TrendingUp className="mcp-cat-icon w-10 h-10 sm:w-14 sm:h-14 md:w-[92px] md:h-[92px] text-white group-hover:scale-125 transition-transform duration-300" />
+                    <TrendingUp className="mcp-cat-icon w-8 h-8 sm:w-12 sm:h-12 md:w-[76px] md:h-[76px] text-white group-hover:scale-125 transition-transform duration-300" />
                   </div>
                   <h3 className="font-bold text-primary text-[clamp(14px,2vw,18px)] mb-1">
                     {t("finance")}
