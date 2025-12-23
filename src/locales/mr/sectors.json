@@ -1,119 +1,101 @@
 {
   "hero": {
-    "title": "अनुभवी experts कडून योग्य advice मिळवा",
-    "description": "Health, पैसे आणि पढाईत experts कडून मदत मिळवा. प्रत्येक decision तुमच्या future साठी योग्य असावे, चुकीचे नाही. Confusion मध्ये न रहा, योग्य advice घ्या आणि confidence सोबत पुढे जा.",
-    "wellnessEcosystem": "Health Services",
-    "wellnessDescription": "तुमचे mental health, तुमच्या मार्गाने",
-    "financeSector": "पैशांची Advice",
-    "financeDescription": "Experts कडून पैशांची advice",
-    "educationSector": "पढाईची Advice",
-    "educationDescription": "तुमची पढाई, तुमच्या मार्गाने",
-    "personalizedCare": "तुमच्यासाठी विशेष care",
+    "title": "अनुभवी तज्ज्ञांकडून योग्य सल्ला मिळवा",
+    "description": "आरोग्य, पैसे आणि अभ्यासासाठी तज्ज्ञांकडून मदत मिळवा. प्रत्येक निर्णय तुमच्या भविष्यासाठी योग्य असावा, चुकीचा नाही. गोंधळात न राहता योग्य सल्ला घ्या आणि आत्मविश्वासाने पुढे जा.",
+    "wellnessEcosystem": "आरोग्य सेवा",
+    "wellnessDescription": "तुमचे मानसिक आरोग्य, तुमच्या पद्धतीने",
+    "financeSector": "पैशांचा सल्ला",
+    "financeDescription": "तज्ज्ञांकडून पैशांबाबत मार्गदर्शन",
+    "educationSector": "अभ्यासाचा सल्ला",
+    "educationDescription": "तुमचा अभ्यास, तुमच्या पद्धतीने",
+    "personalizedCare": "तुमच्यासाठी वैयक्तिक काळजी",
     "personalizedDescription": "तुमच्या गरजांनुसार",
-    "expertSupport": "Expert Help",
-    "expertSupportDescription": "अनुभवी doctors सोबत जोडा",
-    "emotionalHealing": "हृदयाची Care",
-    "emotionalHealingDescription": "Peace आणि आनंद मिळवा"
+    "expertSupport": "तज्ज्ञांची मदत",
+    "expertSupportDescription": "अनुभवी डॉक्टरांशी जोडा",
+    "emotionalHealing": "मनाची काळजी",
+    "emotionalHealingDescription": "शांती आणि आनंद मिळवा"
   },
   "whyChooseUs": {
-    "title": "MindCurePath का choose करा?",
+    "title": "MindCurePath का निवडावे?",
     "expertTherapists": {
-      "title": "अनुभवी Doctors",
-      "description": "समजून घ्या की तुम्ही कसे विचार करता आणि का असे feel करता.",
-      "cta": "तुमचा doctor शोधा"
+      "title": "अनुभवी डॉक्टर",
+      "description": "तुम्ही कसे विचार करता आणि तसे का वाटते, हे समजून घ्या.",
+      "cta": "तुमचा डॉक्टर शोधा"
     },
     "accessibility": {
-      "title": "नेहमी available",
-      "description": "Mobile किंवा computer पासून कधीही, कुठेही मदत मिळवा.",
+      "title": "नेहमी उपलब्ध",
+      "description": "मोबाइल किंवा संगणकावरून कधीही, कुठेही मदत मिळवा.",
       "cta": "सुरू करा"
     },
     "privacy": {
-      "title": "पूर्ण privacy",
-      "description": "तुमच्या बोलण्या पूर्णपणे safe राहतात.",
+      "title": "पूर्ण गोपनीयता",
+      "description": "तुमचे संभाषण पूर्णपणे सुरक्षित राहते.",
       "cta": "अधिक जाणून घ्या"
     },
     "progressTracking": {
-      "title": "Progress पहा",
-      "description": "तुमच्या improvement ची report पहा आणि अधिक चांगले होत जा.",
+      "title": "प्रगती पहा",
+      "description": "तुमच्या सुधारणेचा अहवाल पहा आणि अधिक चांगले होत जा.",
       "cta": "पहा"
     },
     "affordableCare": {
-      "title": "स्वस्त service",
-      "description": "चांगली care महाग नसावी. तुमच्या budget नुसार price.",
+      "title": "परवडणारी सेवा",
+      "description": "चांगली काळजी महाग असण्याची गरज नाही. तुमच्या बजेटनुसार खर्च.",
       "cta": "किंमत पहा"
     },
     "communitySupport": {
-      "title": "Community ची मदत",
-      "description": "इतर लोकांसोबत जोडा जे तुमच्यासारख्या problem मधून जात आहेत.",
+      "title": "समुदायाची मदत",
+      "description": "तुमच्यासारख्या अडचणींमधून जाणाऱ्या इतर लोकांशी जोडा.",
       "cta": "जोडा"
     }
   },
   "howDoesItWork": {
     "title": "हे कसे काम करते?",
-    "subtitle": "MindCurePath सोबत सुरू करण्यासाठी सोपे steps",
+    "subtitle": "MindCurePath सोबत सुरुवात करण्यासाठी सोपे टप्पे",
     "step1": {
-      "title": "1. Form भरा किंवा WhatsApp करा",
-      "description": "Form भरा किंवा WhatsApp वर बोला. ताबडतोब मदत मिळवा!"
+      "title": "1. फॉर्म भरा किंवा व्हॉट्सअ‍ॅपवर संपर्क करा",
+      "description": "फॉर्म भरा किंवा व्हॉट्सअ‍ॅपवर बोला. ताबडतोब मदत मिळवा!"
     },
     "step2": {
-      "title": "2. Appointment घ्या",
-      "description": "आमच्या team सोबत बोलण्यासाठी appointment book करा!"
+      "title": "2. वेळ ठरवा",
+      "description": "आमच्या टीमसोबत बोलण्यासाठी वेळ बुक करा!"
     },
     "step3": {
-      "title": "3. तुमचा contact केला जाईल",
-      "description": "आमची team तुमच्या time वर तुमचा contact करेल. वाट पहा!"
+      "title": "3. तुमच्याशी संपर्क केला जाईल",
+      "description": "आमची टीम तुमच्या वेळेनुसार तुमच्याशी संपर्क साधेल."
     },
     "step4": {
-      "title": "4. गरज पडल्यास पुन्हा बोला",
-      "description": "जेव्हा गरज असेल, free मध्ये पुन्हा बोलू शकता!"
-    }
-  },
-  "whatOurUsersSay": {
-    "title": "आमचे users काय म्हणतात",
-    "subtitle": "त्या लोकांच्या कहाण्या ज्यांनी MindCurePath सोबत त्यांचे जीवन बदलले",
-    "reviews": {
-      "sarah": {
-        "name": "Sarah M.",
-        "review": "पहिल्यांदा बोलल्यानंतर मला खूप light वाटले. मला आनंद आहे की मी हे app वापरले!"
-      },
-      "john": {
-        "name": "John D.",
-        "review": "Shark Tank वर पाहिले आणि ताबडतोब app download केले. तेव्हापासून मदत घेत आहे - खूप चांगले आहे. प्रत्येक वेळी बोलल्यानंतर चांगले वाटते!"
-      },
-      "james": {
-        "name": "James L.",
-        "review": "मला वाटत होते की मी पुरेसा नाही, पण माझ्या doctor ने मला स्वतःवर trust करणे शिकवले. हे माझे जीवन बदलले!"
-      }
+      "title": "4. गरज असल्यास पुन्हा बोला",
+      "description": "गरज भासल्यास मोफत पुन्हा संवाद साधू शकता!"
     }
   },
   "selfAssessment": {
-    "title": "जाणून घ्या की तुम्ही खरोखर कोण आहात",
-    "description": "सोपे प्रश्न जे तुमची खरी personality दाखवतात - स्वतःला समजून घेण्याची journey सुरू करा."
+    "title": "तुम्ही खरोखर कोण आहात हे जाणून घ्या",
+    "description": "सोपे प्रश्न जे तुमचा खरा स्वभाव दाखवतात — स्वतःला समजून घेण्याची वाटचाल सुरू करा."
   },
   "cvt": {
     "trauma": {
-      "title": "जुन्या वाईट आठवणी मला कसे affect करत आहेत?",
-      "description": "जुन्या गोष्टी आज तुम्हाला कशा त्रास देत आहेत, हे समजून घ्या"
+      "title": "जुन्या वाईट आठवणी मला कशा प्रकारे परिणाम करत आहेत?",
+      "description": "भूतकाळातील घटना आज तुम्हाला कशा त्रास देत आहेत, हे समजून घ्या"
     },
     "adhd": {
-      "title": "मला ADHD आहे का?",
-      "description": "जाणून घ्या की तुम्हाला लक्ष न देण्याची problem असू शकते"
+      "title": "मला लक्ष केंद्रीत करण्याची अडचण आहे का?",
+      "description": "तुम्हाला लक्ष देण्यात अडचण येते का, हे जाणून घ्या"
     },
     "anxiety": {
-      "title": "माझी anxiety किती आहे?",
-      "description": "जाणून घ्या की तुम्ही किती anxious आहात आणि पुढे काय करावे"
+      "title": "माझी चिंता किती आहे?",
+      "description": "तुम्ही किती चिंताग्रस्त आहात आणि पुढे काय करावे हे जाणून घ्या"
     },
     "mood": {
-      "title": "हे फक्त वाईट दिवस आहे का काहीतरी अधिक?",
-      "description": "जाणून घ्या की तुमची sadness फक्त एका दिवसाची गोष्ट आहे का काहीतरी serious"
+      "title": "हा फक्त वाईट दिवस आहे की काहीतरी अधिक?",
+      "description": "तुमचे दुःख तात्पुरते आहे की अधिक खोल आहे, हे समजून घ्या"
     },
     "resilience": {
-      "title": "मी अडचणींना कसे सामोरे जातो?",
-      "description": "जाणून घ्या की तुम्ही कठीण वेळेत किती strong रहाता"
+      "title": "मी अडचणींना कसा सामोरे जातो?",
+      "description": "कठीण काळात तुम्ही किती मजबूत राहता, हे जाणून घ्या"
     },
     "relationship": {
-      "title": "Relationships ची check",
-      "description": "तुमच्या relationships समजून घ्या आणि पुढे काय करावे, हे जाणून घ्या"
+      "title": "नातेसंबंधांची तपासणी",
+      "description": "तुमचे नातेसंबंध समजून घ्या आणि पुढे काय करावे ते जाणून घ्या"
     }
   }
 }
