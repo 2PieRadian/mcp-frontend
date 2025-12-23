@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ChevronDown,
   X,
@@ -47,6 +47,7 @@ export default function MobileNavModal({
   const location = useLocation();
   const [weHelpWithExpanded, setWeHelpWithExpanded] = useState(false);
   const [languageExpanded, setLanguageExpanded] = useState(false);
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
 
   const availableLanguages = [
     { code: "en", name: "English", nativeName: "English" },
@@ -82,18 +83,47 @@ export default function MobileNavModal({
     };
   }, [isOpen]);
 
-  if (!isOpen) return null;
+  useEffect(() => {
+    if (!isOpen) return;
+
+    // Focus close button when drawer opens for better keyboard UX
+    const id = window.setTimeout(() => {
+      closeButtonRef.current?.focus();
+    }, 50);
+
+    return () => window.clearTimeout(id);
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isOpen, onClose]);
 
   return (
-    <div className="fixed inset-0 z-50">
+    <div
+      className={`fixed inset-0 z-50 ${isOpen ? "" : "pointer-events-none"}`}
+      aria-hidden={!isOpen}
+    >
       {/* Backdrop with blur effect */}
       <div
-        className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm"
-        onClick={onClose}
+        className={`absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ease-out ${
+          isOpen ? "opacity-100" : "opacity-0"
+        }`}
+        onClick={isOpen ? onClose : undefined}
       />
 
-      {/* Modal content */}
-      <div className="relative h-full bg-white flex flex-col">
+      {/* Drawer */}
+      <div
+        className={`absolute inset-y-0 left-0 w-screen bg-white flex flex-col shadow-2xl transform-gpu transition-transform duration-300 ease-out will-change-transform ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
         {/* Header with close button */}
         <div className="flex justify-between items-center px-[25px] py-[20px] border-b border-gray-200 shrink-0">
           <h1 className="text-[22px] font-semibold text-logo-heading">
@@ -106,8 +136,10 @@ export default function MobileNavModal({
             )}
           </h1>
           <button
+            ref={closeButtonRef}
             onClick={onClose}
             className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
+            aria-label="Close"
           >
             <X size={24} className="text-gray-600" />
           </button>
