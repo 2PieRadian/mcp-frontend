@@ -1,0 +1,134 @@
+{
+  "page": {
+    "kicker": "Your space",
+    "title": "Your Profile",
+    "subtitle": "Manage your personal details and keep your account information up to date."
+  },
+  "hero": {
+    "accountLabel": "Account",
+    "logout": "Logout"
+  },
+  "logoutModal": {
+    "closeAria": "Close",
+    "title": "Confirm logout",
+    "description": "Are you sure you want to logout? You will need to sign in again to access your account.",
+    "cancel": "Cancel",
+    "confirm": "Logout"
+  },
+  "buttons": {
+    "save": "Save",
+    "saving": "Saving...",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "set": "Set",
+    "change": "Change",
+    "add": "Add"
+  },
+  "status": {
+    "nameUpdated": "Name updated",
+    "dateUpdated": "Date updated",
+    "genderUpdated": "Gender updated",
+    "languagesUpdated": "Languages updated",
+    "passwordChanged": "Password changed",
+    "passwordSet": "Password set",
+    "passwordChangedSuccess": "Password was changed successfully"
+  },
+  "sections": {
+    "basicInfo": "Basic info",
+    "contact": "Contact",
+    "gender": "Gender",
+    "dateOfBirth": "Date of Birth",
+    "languages": "Languages you speak",
+    "password": "Password",
+    "accountActivity": "Account activity"
+  },
+  "labels": {
+    "name": "Name",
+    "role": "Role",
+    "email": "Email",
+    "phone": "Phone",
+    "memberSince": "Member since",
+    "lastUpdated": "Last updated",
+    "selectedLanguages": "Selected languages:"
+  },
+  "placeholders": {
+    "fullName": "Enter your full name",
+    "chooseDob": "Choose your DOB",
+    "selectGender": "Select gender",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "password": "Password",
+    "confirmNewPassword": "Confirm new password",
+    "confirmPassword": "Confirm password",
+    "customLanguage": "Add custom language"
+  },
+  "values": {
+    "notSetYet": "Not set yet",
+    "notSet": "Not set",
+    "notAdded": "Not added",
+    "maskedPassword": "••••••••"
+  },
+  "roles": {
+    "USER": "User",
+    "EXPERT": "Expert"
+  },
+  "genderOptions": {
+    "male": "Male",
+    "female": "Female",
+    "other": "Other",
+    "prefer-not-to-say": "Prefer not to say"
+  },
+  "password": {
+    "hideAria": "Hide password",
+    "showAria": "Show password",
+    "setPassword": "Set password",
+    "setAPassword": "Set a password"
+  },
+  "languages": {
+    "removeAria": "Remove {{language}}"
+  },
+  "validation": {
+    "nameRequired": "Name is required",
+    "selectDate": "Please select a date",
+    "selectGender": "Please select a gender",
+    "selectAtLeastOneLanguage": "Please select at least one language",
+    "notAuthenticated": "You are not authenticated.",
+    "failedUpdateName": "Failed to update name",
+    "failedUpdateDob": "Failed to update date of birth",
+    "failedUpdateGender": "Failed to update gender",
+    "failedUpdateLanguages": "Failed to update languages",
+    "passwordRequired": "Password is required",
+    "passwordsDoNotMatch": "Passwords do not match",
+    "passwordMinLength": "Password must be at least 6 characters",
+    "allFieldsRequired": "All fields are required",
+    "newPasswordsDoNotMatch": "New passwords do not match",
+    "newPasswordMinLength": "New password must be at least 6 characters",
+    "failedSetPassword": "Failed to set password",
+    "failedChangePassword": "Failed to change password"
+  },
+  "languageLabels": {
+    "english": "English",
+    "hindi": "Hindi",
+    "bengali": "Bengali",
+    "telugu": "Telugu",
+    "marathi": "Marathi",
+    "tamil": "Tamil",
+    "gujarati": "Gujarati",
+    "urdu": "Urdu",
+    "kannada": "Kannada",
+    "odia": "Odia",
+    "malayalam": "Malayalam",
+    "punjabi": "Punjabi",
+    "assamese": "Assamese",
+    "sanskrit": "Sanskrit",
+    "konkani": "Konkani",
+    "manipuri": "Manipuri",
+    "sindhi": "Sindhi",
+    "kashmiri": "Kashmiri",
+    "bodo": "Bodo",
+    "dogri": "Dogri",
+    "maithili": "Maithili",
+    "santali": "Santali"
+  }
+}
+

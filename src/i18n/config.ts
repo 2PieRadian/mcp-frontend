@@ -8,60 +8,70 @@ import enNavigation from "../locales/en/navigation.json";
 import enExperts from "../locales/en/experts.json";
 import enQuiz from "../locales/en/quiz.json";
 import enSectors from "../locales/en/sectors.json";
+import enProfile from "../locales/en/profile.json";
 
 import hiCommon from "../locales/hi/common.json";
 import hiNavigation from "../locales/hi/navigation.json";
 import hiExperts from "../locales/hi/experts.json";
 import hiQuiz from "../locales/hi/quiz.json";
 import hiSectors from "../locales/hi/sectors.json";
+import hiProfile from "../locales/hi/profile.json";
 
 import guCommon from "../locales/gu/common.json";
 import guNavigation from "../locales/gu/navigation.json";
 import guExperts from "../locales/gu/experts.json";
 import guQuiz from "../locales/gu/quiz.json";
 import guSectors from "../locales/gu/sectors.json";
+import guProfile from "../locales/gu/profile.json";
 
 import mrCommon from "../locales/mr/common.json";
 import mrNavigation from "../locales/mr/navigation.json";
 import mrExperts from "../locales/mr/experts.json";
 import mrQuiz from "../locales/mr/quiz.json";
 import mrSectors from "../locales/mr/sectors.json";
+import mrProfile from "../locales/mr/profile.json";
 
 import bnCommon from "../locales/bn/common.json";
 import bnNavigation from "../locales/bn/navigation.json";
 import bnExperts from "../locales/bn/experts.json";
 import bnQuiz from "../locales/bn/quiz.json";
 import bnSectors from "../locales/bn/sectors.json";
+import bnProfile from "../locales/bn/profile.json";
 
 import asCommon from "../locales/as/common.json";
 import asNavigation from "../locales/as/navigation.json";
 import asExperts from "../locales/as/experts.json";
 import asQuiz from "../locales/as/quiz.json";
 import asSectors from "../locales/as/sectors.json";
+import asProfile from "../locales/as/profile.json";
 
 import knCommon from "../locales/kn/common.json";
 import knNavigation from "../locales/kn/navigation.json";
 import knExperts from "../locales/kn/experts.json";
 import knQuiz from "../locales/kn/quiz.json";
 import knSectors from "../locales/kn/sectors.json";
+import knProfile from "../locales/kn/profile.json";
 
 import mlCommon from "../locales/ml/common.json";
 import mlNavigation from "../locales/ml/navigation.json";
 import mlExperts from "../locales/ml/experts.json";
 import mlQuiz from "../locales/ml/quiz.json";
 import mlSectors from "../locales/ml/sectors.json";
+import mlProfile from "../locales/ml/profile.json";
 
 import taCommon from "../locales/ta/common.json";
 import taNavigation from "../locales/ta/navigation.json";
 import taExperts from "../locales/ta/experts.json";
 import taQuiz from "../locales/ta/quiz.json";
 import taSectors from "../locales/ta/sectors.json";
+import taProfile from "../locales/ta/profile.json";
 
 import teCommon from "../locales/te/common.json";
 import teNavigation from "../locales/te/navigation.json";
 import teExperts from "../locales/te/experts.json";
 import teQuiz from "../locales/te/quiz.json";
 import teSectors from "../locales/te/sectors.json";
+import teProfile from "../locales/te/profile.json";
 
 const resources = {
   en: {
@@ -70,6 +80,7 @@ const resources = {
     experts: enExperts,
     quiz: enQuiz,
     sectors: enSectors,
+    profile: enProfile,
   },
   hi: {
     common: hiCommon,
@@ -77,6 +88,7 @@ const resources = {
     experts: hiExperts,
     quiz: hiQuiz,
     sectors: hiSectors,
+    profile: hiProfile,
   },
   gu: {
     common: guCommon,
@@ -84,6 +96,7 @@ const resources = {
     experts: guExperts,
     quiz: guQuiz,
     sectors: guSectors,
+    profile: guProfile,
   },
   mr: {
     common: mrCommon,
@@ -91,6 +104,7 @@ const resources = {
     experts: mrExperts,
     quiz: mrQuiz,
     sectors: mrSectors,
+    profile: mrProfile,
   },
   bn: {
     common: bnCommon,
@@ -98,6 +112,7 @@ const resources = {
     experts: bnExperts,
     quiz: bnQuiz,
     sectors: bnSectors,
+    profile: bnProfile,
   },
   as: {
     common: asCommon,
@@ -105,6 +120,7 @@ const resources = {
     experts: asExperts,
     quiz: asQuiz,
     sectors: asSectors,
+    profile: asProfile,
   },
   kn: {
     common: knCommon,
@@ -112,6 +128,7 @@ const resources = {
     experts: knExperts,
     quiz: knQuiz,
     sectors: knSectors,
+    profile: knProfile,
   },
   ml: {
     common: mlCommon,
@@ -119,6 +136,7 @@ const resources = {
     experts: mlExperts,
     quiz: mlQuiz,
     sectors: mlSectors,
+    profile: mlProfile,
   },
   ta: {
     common: taCommon,
@@ -126,6 +144,7 @@ const resources = {
     experts: taExperts,
     quiz: taQuiz,
     sectors: taSectors,
+    profile: taProfile,
   },
   te: {
     common: teCommon,
@@ -133,6 +152,7 @@ const resources = {
     experts: teExperts,
     quiz: teQuiz,
     sectors: teSectors,
+    profile: teProfile,
   },
 };
 
@@ -143,7 +163,7 @@ i18n
     resources,
     fallbackLng: "en",
     defaultNS: "common",
-    ns: ["common", "navigation", "experts", "quiz", "sectors"],
+    ns: ["common", "navigation", "experts", "quiz", "sectors", "profile"],
     interpolation: {
       escapeValue: false,
     },

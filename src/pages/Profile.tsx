@@ -4,6 +4,7 @@ import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import { lazy, useState } from "react";
 import useScrollToTop from "../hooks/useScrollToTop";
 import { AlertTriangle, X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const BasicInfoCard = lazy(() => import("../components/profile/BasicInfoCard"));
 const ContactCard = lazy(() => import("../components/profile/ContactCard"));
@@ -23,6 +24,7 @@ export default function Profile() {
   useScrollToTop();
   const { user, isLoading, logout } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation("profile");
   const [imageError, setImageError] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
@@ -62,14 +64,13 @@ export default function Profile() {
         {/* Page heading */}
         <header className="flex flex-col gap-[4px]">
           <p className="text-[12px] sm:text-[13px] uppercase tracking-[0.24em] text-gray-500">
-            Your space
+            {t("page.kicker")}
           </p>
           <h1 className="text-[clamp(28px,5vw,36px)] font-bold text-logo-heading">
-            Your Profile
+            {t("page.title")}
           </h1>
           <p className="text-[16px] sm:text-[17px] text-light-text max-w-[520px]">
-            Manage your personal details and keep your account information up to
-            date.
+            {t("page.subtitle")}
           </p>
         </header>
 
@@ -90,7 +91,7 @@ export default function Profile() {
             </div>
             <div className="min-w-0 flex-1">
               <p className="text-[12px] sm:text-[13px] uppercase tracking-[0.12em] opacity-80">
-                Account
+                {t("hero.accountLabel")}
               </p>
               <h1 className="text-[clamp(16px,3.5vw,26px)] font-semibold leading-tight truncate">
                 {displayName}
@@ -107,7 +108,7 @@ export default function Profile() {
             className="self-start shadow-m-profile sm:self-auto w-full sm:w-auto cursor-pointer border border-light-100/10 text-light-100 rounded-full px-[18px] py-[10px] sm:py-[8px] font-medium hover:bg-light-100 hover:text-primary transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)]"
             style={{ fontSize: "16px" }}
           >
-            Logout
+            {t("hero.logout")}
           </button>
         </section>
 
@@ -137,7 +138,7 @@ export default function Profile() {
             <button
               onClick={handleCancelLogout}
               className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
-              aria-label="Close"
+              aria-label={t("logoutModal.closeAria")}
             >
               <X size={24} />
             </button>
@@ -151,7 +152,7 @@ export default function Profile() {
 
             {/* Title */}
             <h2 className="text-2xl font-bold text-[#1a2e35] text-center mb-3">
-              Confirm Logout
+              {t("logoutModal.title")}
             </h2>
 
             {/* Description */}
@@ -159,8 +160,7 @@ export default function Profile() {
               className="text-[#5a6c75] text-center mb-6"
               style={{ fontSize: "16px" }}
             >
-              Are you sure you want to logout? You will need to sign in again to
-              access your account.
+              {t("logoutModal.description")}
             </p>
 
             {/* Action Buttons */}
@@ -170,14 +170,14 @@ export default function Profile() {
                 className="flex-1 px-6 py-3 rounded-[10px] border hover:scale-102 border-gray-300 text-[#1a2e35] font-medium hover:bg-gray-50 transition-all duration-200 cursor-pointer"
                 style={{ fontSize: "16px" }}
               >
-                Cancel
+                {t("logoutModal.cancel")}
               </button>
               <button
                 onClick={handleConfirmLogout}
                 className="flex-1 px-6 py-3 rounded-[10px] bg-[hsl(0,89%,60%)] text-white hover:scale-102 font-medium hover:bg-[hsl(0,89%,56%)] transition-all duration-200 cursor-pointer"
                 style={{ fontSize: "16px" }}
               >
-                Logout
+                {t("logoutModal.confirm")}
               </button>
             </div>
           </div>

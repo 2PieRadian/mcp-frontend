@@ -3,9 +3,11 @@ import { useAuth } from "../../context/AuthContext";
 import { BACKEND_URL } from "../../lib/api";
 import { Eye, EyeOff } from "lucide-react";
 import ProfileButton from "./ProfileButton";
+import { useTranslation } from "react-i18next";
 
 export default function ChangePasswordCard() {
   const { user, login } = useAuth();
+  const { t } = useTranslation("profile");
   const hasPassword = user?.hasPassword !== false; // Default to true if not specified
   const [isEditing, setIsEditing] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
@@ -21,26 +23,26 @@ export default function ChangePasswordCard() {
 
   const handleSetPassword = async () => {
     if (!newPassword) {
-      setError("Password is required");
+      setError(t("validation.passwordRequired"));
       setStatus("error");
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      setError("Passwords do not match");
+      setError(t("validation.passwordsDoNotMatch"));
       setStatus("error");
       return;
     }
 
     if (newPassword.length < 6) {
-      setError("Password must be at least 6 characters");
+      setError(t("validation.passwordMinLength"));
       setStatus("error");
       return;
     }
 
     const token = window.localStorage.getItem("auth:token");
     if (!token) {
-      setError("You are not authenticated.");
+      setError(t("validation.notAuthenticated"));
       setStatus("error");
       return;
     }
@@ -69,7 +71,7 @@ export default function ChangePasswordCard() {
       const text = !isJson ? await response.text() : null;
 
       if (!response.ok) {
-        throw new Error(data?.message || text || "Failed to set password");
+        throw new Error(data?.message || text || t("validation.failedSetPassword"));
       }
 
       // Update user to indicate password is now set
@@ -90,33 +92,33 @@ export default function ChangePasswordCard() {
       }, 3000);
     } catch (error: any) {
       console.error(error);
-      setError(error?.message || "Failed to set password");
+      setError(error?.message || t("validation.failedSetPassword"));
       setStatus("error");
     }
   };
 
   const handleChangePassword = async () => {
     if (!currentPassword || !newPassword) {
-      setError("All fields are required");
+      setError(t("validation.allFieldsRequired"));
       setStatus("error");
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      setError("New passwords do not match");
+      setError(t("validation.newPasswordsDoNotMatch"));
       setStatus("error");
       return;
     }
 
     if (newPassword.length < 6) {
-      setError("New password must be at least 6 characters");
+      setError(t("validation.newPasswordMinLength"));
       setStatus("error");
       return;
     }
 
     const token = window.localStorage.getItem("auth:token");
     if (!token) {
-      setError("You are not authenticated.");
+      setError(t("validation.notAuthenticated"));
       setStatus("error");
       return;
     }
@@ -146,7 +148,9 @@ export default function ChangePasswordCard() {
       const text = !isJson ? await response.text() : null;
 
       if (!response.ok) {
-        throw new Error(data?.message || text || "Failed to change password");
+        throw new Error(
+          data?.message || text || t("validation.failedChangePassword")
+        );
       }
 
       setStatus("success");
@@ -160,7 +164,7 @@ export default function ChangePasswordCard() {
       }, 3000);
     } catch (error: any) {
       console.error(error);
-      setError(error?.message || "Failed to change password");
+      setError(error?.message || t("validation.failedChangePassword"));
       setStatus("error");
     }
   };
@@ -168,14 +172,14 @@ export default function ChangePasswordCard() {
   return (
     <div className="bg-[hsl(0,0%,97%)] shadow-m rounded-[12px] sm:rounded-[16px] p-[12px] sm:p-[18px]">
       <p className="text-[12px] sm:text-[13px] uppercase tracking-[0.16em] text-gray-500 mb-[6px]">
-        Password
+        {t("sections.password")}
       </p>
       <div className="space-y-[6px] sm:space-y-[8px] text-[16px] sm:text-[17px] text-light-text">
         <div className="bg-white px-[12px] sm:px-4 py-[8px] sm:py-[10px] rounded-[16px] sm:rounded-[20px]">
           {status === "success" && !isEditing && (
             <div className="mb-[8px] p-[8px] sm:p-[10px] bg-green-50 border border-green-200 rounded-[12px] sm:rounded-[16px]">
               <p className="text-[12px] sm:text-[13px] text-green-700 font-medium">
-                Password was changed successfully
+                {t("status.passwordChangedSuccess")}
               </p>
             </div>
           )}
@@ -193,7 +197,7 @@ export default function ChangePasswordCard() {
                         setError(null);
                       }
                     }}
-                    placeholder="Current password"
+                    placeholder={t("placeholders.currentPassword")}
                     className="border border-gray-300 rounded-[10px] px-[12px] pr-[40px] py-[8px] sm:py-[6px] bg-white placeholder:text-input-placeholder outline-none focus:border-gray-400 focus:shadow-[0_2px_4px_rgba(0,0,0,0.1)] w-full transition-all"
                     style={{ fontSize: "16px" }}
                   />
@@ -202,7 +206,9 @@ export default function ChangePasswordCard() {
                     onClick={() => setShowCurrentPassword(!showCurrentPassword)}
                     className="absolute right-[12px] top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer"
                     aria-label={
-                      showCurrentPassword ? "Hide password" : "Show password"
+                      showCurrentPassword
+                        ? t("password.hideAria")
+                        : t("password.showAria")
                     }
                   >
                     {showCurrentPassword ? (
@@ -224,7 +230,9 @@ export default function ChangePasswordCard() {
                       setError(null);
                     }
                   }}
-                  placeholder={hasPassword ? "New password" : "Password"}
+                  placeholder={
+                    hasPassword ? t("placeholders.newPassword") : t("placeholders.password")
+                  }
                   className="border border-gray-300 rounded-[10px] px-[12px] pr-[40px] py-[8px] sm:py-[6px] bg-white placeholder:text-input-placeholder outline-none focus:border-gray-400 focus:shadow-[0_2px_4px_rgba(0,0,0,0.1)] w-full transition-all"
                   style={{ fontSize: "16px" }}
                 />
@@ -233,7 +241,7 @@ export default function ChangePasswordCard() {
                   onClick={() => setShowNewPassword(!showNewPassword)}
                   className="absolute right-[12px] top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer"
                   aria-label={
-                    showNewPassword ? "Hide password" : "Show password"
+                    showNewPassword ? t("password.hideAria") : t("password.showAria")
                   }
                 >
                   {showNewPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -251,7 +259,9 @@ export default function ChangePasswordCard() {
                     }
                   }}
                   placeholder={
-                    hasPassword ? "Confirm new password" : "Confirm password"
+                    hasPassword
+                      ? t("placeholders.confirmNewPassword")
+                      : t("placeholders.confirmPassword")
                   }
                   className="border border-gray-300 rounded-[10px] px-[12px] pr-[40px] py-[8px] sm:py-[6px] bg-white placeholder:text-input-placeholder outline-none focus:border-gray-400 focus:shadow-[0_2px_4px_rgba(0,0,0,0.1)] w-full transition-all"
                   style={{ fontSize: "16px" }}
@@ -261,7 +271,9 @@ export default function ChangePasswordCard() {
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   className="absolute right-[12px] top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer"
                   aria-label={
-                    showConfirmPassword ? "Hide password" : "Show password"
+                    showConfirmPassword
+                      ? t("password.hideAria")
+                      : t("password.showAria")
                   }
                 >
                   {showConfirmPassword ? (
@@ -287,10 +299,10 @@ export default function ChangePasswordCard() {
                   className="px-[12px] sm:px-[14px]"
                 >
                   {status === "saving"
-                    ? "Saving..."
+                    ? t("buttons.saving")
                     : hasPassword
-                    ? "Save"
-                    : "Set Password"}
+                    ? t("buttons.save")
+                    : t("password.setPassword")}
                 </ProfileButton>
                 <ProfileButton
                   type="button"
@@ -307,11 +319,11 @@ export default function ChangePasswordCard() {
                   }}
                   variant="secondary"
                 >
-                  Cancel
+                  {t("buttons.cancel")}
                 </ProfileButton>
                 {status === "success" && (
                   <span className="text-xs text-green-600">
-                    {hasPassword ? "Password changed" : "Password set"}
+                    {hasPassword ? t("status.passwordChanged") : t("status.passwordSet")}
                   </span>
                 )}
                 {error && <span className="text-xs text-red-600">{error}</span>}
@@ -320,7 +332,7 @@ export default function ChangePasswordCard() {
           ) : (
             <div className="flex items-center justify-between gap-[8px] sm:gap-[10px] mt-[-2px]">
               <p className="font-medium">
-                {hasPassword ? "••••••••" : "Not Set Yet"}
+                {hasPassword ? t("values.maskedPassword") : t("values.notSetYet")}
               </p>
               <ProfileButton
                 type="button"
@@ -332,7 +344,7 @@ export default function ChangePasswordCard() {
                 variant="secondary"
                 className="shrink-0"
               >
-                {hasPassword ? "Change" : "Set a Password"}
+                {hasPassword ? t("buttons.change") : t("password.setAPassword")}
               </ProfileButton>
             </div>
           )}

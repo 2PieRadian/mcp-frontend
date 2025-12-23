@@ -1,0 +1,134 @@
+{
+  "page": {
+    "kicker": "আপোনাৰ স্থান",
+    "title": "আপোনাৰ প্ৰফাইল",
+    "subtitle": "আপোনাৰ তথ্য মেনেজ কৰক আৰু একাউন্ট আপডেট ৰাখক।"
+  },
+  "hero": {
+    "accountLabel": "একাউন্ট",
+    "logout": "লগ আউট"
+  },
+  "logoutModal": {
+    "closeAria": "বন্ধ কৰক",
+    "title": "লগ আউট নিশ্চিত কৰক",
+    "description": "আপুনি লগ আউট কৰিব বিচাৰে নে? একাউন্ট ব্যৱহাৰ কৰিবলৈ আপুনি পুনৰ সাইন ইন কৰিব লাগিব।",
+    "cancel": "বাতিল",
+    "confirm": "লগ আউট"
+  },
+  "buttons": {
+    "save": "ছেভ",
+    "saving": "ছেভ হৈ আছে...",
+    "cancel": "বাতিল",
+    "edit": "এডিট",
+    "set": "চেট",
+    "change": "সলনি",
+    "add": "যোগ কৰক"
+  },
+  "status": {
+    "nameUpdated": "নাম আপডেট হ'ল",
+    "dateUpdated": "তাৰিখ আপডেট হ'ল",
+    "genderUpdated": "লিংগ আপডেট হ'ল",
+    "languagesUpdated": "ভাষা আপডেট হ'ল",
+    "passwordChanged": "পাছৱৰ্ড সলনি হ'ল",
+    "passwordSet": "পাছৱৰ্ড চেট হ'ল",
+    "passwordChangedSuccess": "পাছৱৰ্ড সফলভাবে সলনি হ'ল"
+  },
+  "sections": {
+    "basicInfo": "মৌলিক তথ্য",
+    "contact": "যোগাযোগ",
+    "gender": "লিংগ",
+    "dateOfBirth": "জন্ম তাৰিখ",
+    "languages": "আপুনি কোন ভাষা কথা কয়",
+    "password": "পাছৱৰ্ড",
+    "accountActivity": "একাউন্ট এক্টিভিটি"
+  },
+  "labels": {
+    "name": "নাম",
+    "role": "ভূমিকা",
+    "email": "ইমেইল",
+    "phone": "ফোন",
+    "memberSince": "সদস্য হোৱা তাৰিখ",
+    "lastUpdated": "শেষ আপডেট",
+    "selectedLanguages": "নিৰ্বাচিত ভাষা:"
+  },
+  "placeholders": {
+    "fullName": "আপোনাৰ সম্পূৰ্ণ নাম লিখক",
+    "chooseDob": "জন্ম তাৰিখ বাছক",
+    "selectGender": "লিংগ বাছক",
+    "currentPassword": "বৰ্তমান পাছৱৰ্ড",
+    "newPassword": "নতুন পাছৱৰ্ড",
+    "password": "পাছৱৰ্ড",
+    "confirmNewPassword": "নতুন পাছৱৰ্ড পুনৰ লিখক",
+    "confirmPassword": "পাছৱৰ্ড পুনৰ লিখক",
+    "customLanguage": "নিজৰ ভাষা যোগ কৰক"
+  },
+  "values": {
+    "notSetYet": "এতিয়াও চেট হোৱা নাই",
+    "notSet": "চেট হোৱা নাই",
+    "notAdded": "যোগ কৰা নাই",
+    "maskedPassword": "••••••••"
+  },
+  "roles": {
+    "USER": "ইউজাৰ",
+    "EXPERT": "জানা লোক"
+  },
+  "genderOptions": {
+    "male": "পুৰুষ",
+    "female": "মহিলা",
+    "other": "অন্য",
+    "prefer-not-to-say": "ক'ব নোৱাৰো"
+  },
+  "password": {
+    "hideAria": "পাছৱৰ্ড লুকুৱাওক",
+    "showAria": "পাছৱৰ্ড দেখুৱাওক",
+    "setPassword": "পাছৱৰ্ড চেট কৰক",
+    "setAPassword": "পাছৱৰ্ড চেট কৰক"
+  },
+  "languages": {
+    "removeAria": "{{language}} আঁতৰাওক"
+  },
+  "validation": {
+    "nameRequired": "নাম লাগিব",
+    "selectDate": "অনুগ্ৰহ কৰি তাৰিখ বাছক",
+    "selectGender": "অনুগ্ৰহ কৰি লিংগ বাছক",
+    "selectAtLeastOneLanguage": "কমেও এটা ভাষা বাছক",
+    "notAuthenticated": "আপুনি লগ ইন নহয়।",
+    "failedUpdateName": "নাম আপডেট নহ'ল",
+    "failedUpdateDob": "জন্ম তাৰিখ আপডেট নহ'ল",
+    "failedUpdateGender": "লিংগ আপডেট নহ'ল",
+    "failedUpdateLanguages": "ভাষা আপডেট নহ'ল",
+    "passwordRequired": "পাছৱৰ্ড লাগিব",
+    "passwordsDoNotMatch": "পাছৱৰ্ড মিল নাই",
+    "passwordMinLength": "পাছৱৰ্ড কমেও 6 অক্ষৰ হ'ব লাগিব",
+    "allFieldsRequired": "সকলো ঘৰ পূৰণ কৰক",
+    "newPasswordsDoNotMatch": "নতুন পাছৱৰ্ড মিল নাই",
+    "newPasswordMinLength": "নতুন পাছৱৰ্ড কমেও 6 অক্ষৰ হ'ব লাগিব",
+    "failedSetPassword": "পাছৱৰ্ড চেট নহ'ল",
+    "failedChangePassword": "পাছৱৰ্ড সলনি নহ'ল"
+  },
+  "languageLabels": {
+    "english": "ইংৰাজী",
+    "hindi": "হিন্দী",
+    "bengali": "বাংলা",
+    "telugu": "తెలుగు",
+    "marathi": "मराठी",
+    "tamil": "தமிழ்",
+    "gujarati": "ગુજરાતી",
+    "urdu": "উৰ্দু",
+    "kannada": "ಕನ್ನಡ",
+    "odia": "ଓଡିଆ",
+    "malayalam": "മലയാളം",
+    "punjabi": "ਪੰਜਾਬੀ",
+    "assamese": "অসমীয়া",
+    "sanskrit": "সংস্কৃত",
+    "konkani": "कोंकणी",
+    "manipuri": "মণিপুরী",
+    "sindhi": "সিন্ধি",
+    "kashmiri": "কشميري",
+    "bodo": "বড়ো",
+    "dogri": "ডোগरी",
+    "maithili": "মৈথিলী",
+    "santali": "সাঁওতালি"
+  }
+}
+

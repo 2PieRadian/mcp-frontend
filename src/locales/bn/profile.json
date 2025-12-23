@@ -1,0 +1,134 @@
+{
+  "page": {
+    "kicker": "আপনার জায়গা",
+    "title": "আপনার প্রোফাইল",
+    "subtitle": "আপনার তথ্য ম্যানেজ করুন এবং অ্যাকাউন্ট আপডেট রাখুন।"
+  },
+  "hero": {
+    "accountLabel": "অ্যাকাউন্ট",
+    "logout": "লগ আউট"
+  },
+  "logoutModal": {
+    "closeAria": "বন্ধ করুন",
+    "title": "লগ আউট নিশ্চিত করুন",
+    "description": "আপনি কি লগ আউট করতে চান? অ্যাকাউন্ট ব্যবহার করতে আবার সাইন ইন করতে হবে।",
+    "cancel": "বাতিল",
+    "confirm": "লগ আউট"
+  },
+  "buttons": {
+    "save": "সেভ",
+    "saving": "সেভ হচ্ছে...",
+    "cancel": "বাতিল",
+    "edit": "এডিট",
+    "set": "সেট",
+    "change": "পরিবর্তন",
+    "add": "যোগ করুন"
+  },
+  "status": {
+    "nameUpdated": "নাম আপডেট হয়েছে",
+    "dateUpdated": "তারিখ আপডেট হয়েছে",
+    "genderUpdated": "লিঙ্গ আপডেট হয়েছে",
+    "languagesUpdated": "ভাষা আপডেট হয়েছে",
+    "passwordChanged": "পাসওয়ার্ড বদলেছে",
+    "passwordSet": "পাসওয়ার্ড সেট হয়েছে",
+    "passwordChangedSuccess": "পাসওয়ার্ড সফলভাবে বদলেছে"
+  },
+  "sections": {
+    "basicInfo": "মূল তথ্য",
+    "contact": "যোগাযোগ",
+    "gender": "লিঙ্গ",
+    "dateOfBirth": "জন্মতারিখ",
+    "languages": "আপনি কোন ভাষা বলেন",
+    "password": "পাসওয়ার্ড",
+    "accountActivity": "অ্যাকাউন্ট কার্যকলাপ"
+  },
+  "labels": {
+    "name": "নাম",
+    "role": "ভূমিকা",
+    "email": "ইমেইল",
+    "phone": "ফোন",
+    "memberSince": "সদস্য হয়েছেন",
+    "lastUpdated": "শেষ আপডেট",
+    "selectedLanguages": "নির্বাচিত ভাষা:"
+  },
+  "placeholders": {
+    "fullName": "আপনার পুরো নাম লিখুন",
+    "chooseDob": "জন্মতারিখ বাছুন",
+    "selectGender": "লিঙ্গ বাছুন",
+    "currentPassword": "বর্তমান পাসওয়ার্ড",
+    "newPassword": "নতুন পাসওয়ার্ড",
+    "password": "পাসওয়ার্ড",
+    "confirmNewPassword": "নতুন পাসওয়ার্ড আবার লিখুন",
+    "confirmPassword": "পাসওয়ার্ড আবার লিখুন",
+    "customLanguage": "নিজের ভাষা যোগ করুন"
+  },
+  "values": {
+    "notSetYet": "এখনও সেট করা নেই",
+    "notSet": "সেট করা নেই",
+    "notAdded": "যোগ করা নেই",
+    "maskedPassword": "••••••••"
+  },
+  "roles": {
+    "USER": "ইউজার",
+    "EXPERT": "জানা মানুষ"
+  },
+  "genderOptions": {
+    "male": "পুরুষ",
+    "female": "নারী",
+    "other": "অন্যান্য",
+    "prefer-not-to-say": "বলতে চাই না"
+  },
+  "password": {
+    "hideAria": "পাসওয়ার্ড লুকান",
+    "showAria": "পাসওয়ার্ড দেখান",
+    "setPassword": "পাসওয়ার্ড সেট করুন",
+    "setAPassword": "পাসওয়ার্ড সেট করুন"
+  },
+  "languages": {
+    "removeAria": "{{language}} সরান"
+  },
+  "validation": {
+    "nameRequired": "নাম দরকার",
+    "selectDate": "অনুগ্রহ করে তারিখ বাছুন",
+    "selectGender": "অনুগ্রহ করে লিঙ্গ বাছুন",
+    "selectAtLeastOneLanguage": "কমপক্ষে একটি ভাষা বাছুন",
+    "notAuthenticated": "আপনি লগ ইন নন।",
+    "failedUpdateName": "নাম আপডেট হয়নি",
+    "failedUpdateDob": "জন্মতারিখ আপডেট হয়নি",
+    "failedUpdateGender": "লিঙ্গ আপডেট হয়নি",
+    "failedUpdateLanguages": "ভাষা আপডেট হয়নি",
+    "passwordRequired": "পাসওয়ার্ড দরকার",
+    "passwordsDoNotMatch": "পাসওয়ার্ড মিলছে না",
+    "passwordMinLength": "পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে",
+    "allFieldsRequired": "সব ঘর পূরণ করুন",
+    "newPasswordsDoNotMatch": "নতুন পাসওয়ার্ড মিলছে না",
+    "newPasswordMinLength": "নতুন পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে",
+    "failedSetPassword": "পাসওয়ার্ড সেট হয়নি",
+    "failedChangePassword": "পাসওয়ার্ড বদলানো যায়নি"
+  },
+  "languageLabels": {
+    "english": "ইংরেজি",
+    "hindi": "হিন্দি",
+    "bengali": "বাংলা",
+    "telugu": "తెలుగు",
+    "marathi": "मराठी",
+    "tamil": "தமிழ்",
+    "gujarati": "ગુજરાતી",
+    "urdu": "উর্দু",
+    "kannada": "ಕನ್ನಡ",
+    "odia": "ଓଡିଆ",
+    "malayalam": "മലയാളം",
+    "punjabi": "ਪੰਜਾਬੀ",
+    "assamese": "অসমীয়া",
+    "sanskrit": "সংস্কৃত",
+    "konkani": "कोंकणी",
+    "manipuri": "মণিপুরী",
+    "sindhi": "সিন্ধি",
+    "kashmiri": "کٲشُر",
+    "bodo": "बोड़ो",
+    "dogri": "डोगरी",
+    "maithili": "मैथिली",
+    "santali": "সাঁওতালি"
+  }
+}
+

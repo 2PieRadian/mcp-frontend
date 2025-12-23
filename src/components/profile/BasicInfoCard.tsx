@@ -2,9 +2,11 @@ import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { BACKEND_URL, getAvatarUrl } from "../../lib/api";
 import ProfileButton from "./ProfileButton";
+import { useTranslation } from "react-i18next";
 
 export default function BasicInfoCard() {
   const { user, login } = useAuth();
+  const { t } = useTranslation("profile");
   const displayName = user?.name || user?.email || "";
   const [editingName, setEditingName] = useState(displayName);
   const [isEditingName, setIsEditingName] = useState(false);
@@ -16,14 +18,14 @@ export default function BasicInfoCard() {
   const handleNameSave = async () => {
     const trimmed = editingName.trim();
     if (!trimmed) {
-      setNameError("Name is required");
+      setNameError(t("validation.nameRequired"));
       setNameStatus("error");
       return;
     }
 
     const token = window.localStorage.getItem("auth:token");
     if (!token) {
-      setNameError("You are not authenticated.");
+      setNameError(t("validation.notAuthenticated"));
       setNameStatus("error");
       return;
     }
@@ -50,7 +52,7 @@ export default function BasicInfoCard() {
       const text = !isJson ? await response.text() : null;
 
       if (!response.ok) {
-        throw new Error(data?.message || text || "Failed to update name");
+        throw new Error(data?.message || text || t("validation.failedUpdateName"));
       }
 
       const updatedUser = data.user;
@@ -75,7 +77,7 @@ export default function BasicInfoCard() {
       setIsEditingName(false);
     } catch (error: any) {
       console.error(error);
-      setNameError(error?.message || "Failed to update name");
+      setNameError(error?.message || t("validation.failedUpdateName"));
       setNameStatus("error");
     }
   };
@@ -83,11 +85,13 @@ export default function BasicInfoCard() {
   return (
     <div className="bg-[hsl(0,0%,97%)] shadow-m rounded-[12px] sm:rounded-[16px] p-[12px] sm:p-[18px]">
       <p className="text-[12px] uppercase tracking-[0.16em] text-gray-500 mb-[6px]">
-        Basic info
+        {t("sections.basicInfo")}
       </p>
       <div className="space-y-[6px] sm:space-y-[8px] text-[13px] sm:text-[14px] text-light-text">
         <div className="bg-white px-[12px] sm:px-4 py-[8px] sm:py-[10px] rounded-[16px] sm:rounded-[20px]">
-          <p className="text-[14px] sm:text-[15px] text-gray-500">Name</p>
+          <p className="text-[14px] sm:text-[15px] text-gray-500">
+            {t("labels.name")}
+          </p>
           {isEditingName ? (
             <div className="flex flex-col gap-[6px] mt-[6px]">
               <input
@@ -102,7 +106,7 @@ export default function BasicInfoCard() {
                 }}
                 className="border border-gray-300 rounded-[10px] px-[12px] py-[8px] sm:py-[6px] bg-white placeholder:text-input-placeholder outline-none focus:border-gray-400 focus:shadow-[0_2px_4px_rgba(0,0,0,0.1)] w-full transition-all"
                 style={{ fontSize: "16px" }}
-                placeholder="Enter your full name"
+                placeholder={t("placeholders.fullName")}
               />
               <div className="flex items-center gap-[8px] sm:gap-[10px] flex-wrap">
                 <ProfileButton
@@ -112,7 +116,7 @@ export default function BasicInfoCard() {
                   variant="primary"
                   className="px-[12px] sm:px-[14px]"
                 >
-                  {nameStatus === "saving" ? "Saving..." : "Save"}
+                  {nameStatus === "saving" ? t("buttons.saving") : t("buttons.save")}
                 </ProfileButton>
                 <ProfileButton
                   type="button"
@@ -124,11 +128,11 @@ export default function BasicInfoCard() {
                   }}
                   variant="secondary"
                 >
-                  Cancel
+                  {t("buttons.cancel")}
                 </ProfileButton>
                 {nameStatus === "success" && (
                   <span className="text-[14px] text-green-600">
-                    Name updated
+                    {t("status.nameUpdated")}
                   </span>
                 )}
                 {nameError && (
@@ -155,15 +159,19 @@ export default function BasicInfoCard() {
                 variant="secondary"
                 className="shrink-0"
               >
-                Edit
+                {t("buttons.edit")}
               </ProfileButton>
             </div>
           )}
         </div>
         <div className="bg-white px-[12px] sm:px-4 py-[8px] sm:py-[10px] rounded-[16px] sm:rounded-[20px]">
-          <p className="text-[14px] sm:text-[15px] text-gray-500">Role</p>
+          <p className="text-[14px] sm:text-[15px] text-gray-500">
+            {t("labels.role")}
+          </p>
           <p className="font-medium text-[16px] sm:text-[17px]">
-            {user?.role || "USER"}
+            {t(`roles.${user?.role || "USER"}` as const, {
+              defaultValue: user?.role || "USER",
+            })}
           </p>
         </div>
       </div>

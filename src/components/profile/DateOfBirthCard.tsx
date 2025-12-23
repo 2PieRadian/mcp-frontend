@@ -2,9 +2,11 @@ import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { BACKEND_URL, getAvatarUrl } from "../../lib/api";
 import ProfileButton from "./ProfileButton";
+import { useTranslation } from "react-i18next";
 
 export default function DateOfBirthCard() {
   const { user, login } = useAuth();
+  const { t } = useTranslation("profile");
   const [isEditing, setIsEditing] = useState(false);
   const [dateOfBirth, setDateOfBirth] = useState(() => {
     if (user?.dateOfBirth) {
@@ -19,9 +21,9 @@ export default function DateOfBirthCard() {
   const [error, setError] = useState<string | null>(null);
 
   const formatDateForDisplay = (iso?: string) => {
-    if (!iso) return "Not set yet";
+    if (!iso) return t("values.notSetYet");
     const date = new Date(iso);
-    if (Number.isNaN(date.getTime())) return "Not set yet";
+    if (Number.isNaN(date.getTime())) return t("values.notSetYet");
     return date.toLocaleDateString(undefined, {
       year: "numeric",
       month: "long",
@@ -31,14 +33,14 @@ export default function DateOfBirthCard() {
 
   const handleSave = async () => {
     if (!dateOfBirth) {
-      setError("Please select a date");
+      setError(t("validation.selectDate"));
       setStatus("error");
       return;
     }
 
     const token = window.localStorage.getItem("auth:token");
     if (!token) {
-      setError("You are not authenticated.");
+      setError(t("validation.notAuthenticated"));
       setStatus("error");
       return;
     }
@@ -66,7 +68,7 @@ export default function DateOfBirthCard() {
 
       if (!response.ok) {
         throw new Error(
-          data?.message || text || "Failed to update date of birth"
+          data?.message || text || t("validation.failedUpdateDob")
         );
       }
 
@@ -91,7 +93,7 @@ export default function DateOfBirthCard() {
       setIsEditing(false);
     } catch (error: any) {
       console.error(error);
-      setError(error?.message || "Failed to update date of birth");
+      setError(error?.message || t("validation.failedUpdateDob"));
       setStatus("error");
     }
   };
@@ -99,7 +101,7 @@ export default function DateOfBirthCard() {
   return (
     <div className="bg-[hsl(0,0%,97%)] shadow-m rounded-[12px] sm:rounded-[16px] p-[12px] sm:p-[18px]">
       <p className="text-[12px] sm:text-[13px] uppercase tracking-[0.16em] text-gray-500 mb-[6px]">
-        Date of Birth
+        {t("sections.dateOfBirth")}
       </p>
       <div className="space-y-[6px] sm:space-y-[8px] text-[16px] sm:text-[17px] text-light-text">
         <div className="bg-white px-[12px] sm:px-4 py-[8px] sm:py-[10px] rounded-[16px] sm:rounded-[20px]">
@@ -116,7 +118,7 @@ export default function DateOfBirthCard() {
                   }
                 }}
                 max={new Date().toISOString().split("T")[0]}
-                placeholder="Choose your DOB"
+                placeholder={t("placeholders.chooseDob")}
                 className="border border-gray-300 rounded-[10px] px-[12px] py-[8px] sm:py-[6px] bg-white placeholder:text-input-placeholder outline-none focus:border-gray-400 focus:shadow-[0_2px_4px_rgba(0,0,0,0.1)] w-full transition-all"
                 style={{ fontSize: "16px" }}
               />
@@ -128,7 +130,9 @@ export default function DateOfBirthCard() {
                   variant="primary"
                   className="px-[12px] sm:px-[14px]"
                 >
-                  {status === "saving" ? "Saving..." : "Save"}
+                  {status === "saving"
+                    ? t("buttons.saving")
+                    : t("buttons.save")}
                 </ProfileButton>
                 <ProfileButton
                   type="button"
@@ -145,11 +149,11 @@ export default function DateOfBirthCard() {
                   }}
                   variant="secondary"
                 >
-                  Cancel
+                  {t("buttons.cancel")}
                 </ProfileButton>
                 {status === "success" && (
                   <span className="text-[14px] text-green-600">
-                    Date updated
+                    {t("status.dateUpdated")}
                   </span>
                 )}
                 {error && (
@@ -178,7 +182,7 @@ export default function DateOfBirthCard() {
                 variant="secondary"
                 className="shrink-0"
               >
-                {user?.dateOfBirth ? "Edit" : "Set"}
+                {user?.dateOfBirth ? t("buttons.edit") : t("buttons.set")}
               </ProfileButton>
             </div>
           )}

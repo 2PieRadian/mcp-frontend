@@ -1,0 +1,134 @@
+{
+  "page": {
+    "kicker": "உங்கள் இடம்",
+    "title": "உங்கள் சுயவிவரம்",
+    "subtitle": "உங்கள் தகவல்களை நிர்வகித்து, கணக்கை புதுப்பித்து வைத்துக்கொள்ளுங்கள்."
+  },
+  "hero": {
+    "accountLabel": "கணக்கு",
+    "logout": "வெளியேறு"
+  },
+  "logoutModal": {
+    "closeAria": "மூடு",
+    "title": "வெளியேறு உறுதி",
+    "description": "நீங்கள் வெளியேற வேண்டுமா? மீண்டும் கணக்கை அணுக நீங்கள் மீண்டும் உள்நுழைய வேண்டும்.",
+    "cancel": "ரத்து",
+    "confirm": "வெளியேறு"
+  },
+  "buttons": {
+    "save": "சேமி",
+    "saving": "சேமிக்கிறது...",
+    "cancel": "ரத்து",
+    "edit": "மாற்று",
+    "set": "அமை",
+    "change": "மாற்று",
+    "add": "சேர்"
+  },
+  "status": {
+    "nameUpdated": "பெயர் புதுப்பிக்கப்பட்டது",
+    "dateUpdated": "தேதி புதுப்பிக்கப்பட்டது",
+    "genderUpdated": "பாலினம் புதுப்பிக்கப்பட்டது",
+    "languagesUpdated": "மொழிகள் புதுப்பிக்கப்பட்டது",
+    "passwordChanged": "கடவுச்சொல் மாற்றப்பட்டது",
+    "passwordSet": "கடவுச்சொல் அமைக்கப்பட்டது",
+    "passwordChangedSuccess": "கடவுச்சொல் வெற்றிகரமாக மாற்றப்பட்டது"
+  },
+  "sections": {
+    "basicInfo": "அடிப்படை தகவல்",
+    "contact": "தொடர்பு",
+    "gender": "பாலினம்",
+    "dateOfBirth": "பிறந்த தேதி",
+    "languages": "நீங்கள் பேசும் மொழிகள்",
+    "password": "கடவுச்சொல்",
+    "accountActivity": "கணக்கு விவரம்"
+  },
+  "labels": {
+    "name": "பெயர்",
+    "role": "பங்கு",
+    "email": "மின்னஞ்சல்",
+    "phone": "தொலைபேசி",
+    "memberSince": "உறுப்பினர் ஆன தேதி",
+    "lastUpdated": "கடைசியாக புதுப்பித்தது",
+    "selectedLanguages": "தேர்ந்த மொழிகள்:"
+  },
+  "placeholders": {
+    "fullName": "உங்கள் முழு பெயரை எழுதுங்கள்",
+    "chooseDob": "பிறந்த தேதியை தேர்ந்தெடுக்கவும்",
+    "selectGender": "பாலினத்தை தேர்ந்தெடுக்கவும்",
+    "currentPassword": "தற்போதைய கடவுச்சொல்",
+    "newPassword": "புதிய கடவுச்சொல்",
+    "password": "கடவுச்சொல்",
+    "confirmNewPassword": "புதிய கடவுச்சொல் மீண்டும்",
+    "confirmPassword": "கடவுச்சொல் மீண்டும்",
+    "customLanguage": "உங்கள் மொழியை சேர்க்கவும்"
+  },
+  "values": {
+    "notSetYet": "இன்னும் அமைக்கவில்லை",
+    "notSet": "அமைக்கவில்லை",
+    "notAdded": "சேர்க்கவில்லை",
+    "maskedPassword": "••••••••"
+  },
+  "roles": {
+    "USER": "பயனர்",
+    "EXPERT": "தெரிந்தவர்"
+  },
+  "genderOptions": {
+    "male": "ஆண்",
+    "female": "பெண்",
+    "other": "மற்றது",
+    "prefer-not-to-say": "சொல்ல விரும்பவில்லை"
+  },
+  "password": {
+    "hideAria": "கடவுச்சொலை மறைக்கவும்",
+    "showAria": "கடவுச்சொலை காட்டவும்",
+    "setPassword": "கடவுச்சொல் அமைக்கவும்",
+    "setAPassword": "கடவுச்சொல் அமைக்கவும்"
+  },
+  "languages": {
+    "removeAria": "{{language}} நீக்கு"
+  },
+  "validation": {
+    "nameRequired": "பெயர் தேவை",
+    "selectDate": "தயவு செய்து தேதியை தேர்ந்தெடுக்கவும்",
+    "selectGender": "தயவு செய்து பாலினத்தை தேர்ந்தெடுக்கவும்",
+    "selectAtLeastOneLanguage": "குறைந்தது ஒரு மொழியை தேர்ந்தெடுக்கவும்",
+    "notAuthenticated": "நீங்கள் உள்நுழையவில்லை.",
+    "failedUpdateName": "பெயர் புதுப்பிக்க முடியவில்லை",
+    "failedUpdateDob": "பிறந்த தேதி புதுப்பிக்க முடியவில்லை",
+    "failedUpdateGender": "பாலினம் புதுப்பிக்க முடியவில்லை",
+    "failedUpdateLanguages": "மொழிகள் புதுப்பிக்க முடியவில்லை",
+    "passwordRequired": "கடவுச்சொல் தேவை",
+    "passwordsDoNotMatch": "கடவுச்சொல் பொருந்தவில்லை",
+    "passwordMinLength": "கடவுச்சொல் குறைந்தது 6 எழுத்து இருக்க வேண்டும்",
+    "allFieldsRequired": "அனைத்து புலங்களையும் நிரப்பவும்",
+    "newPasswordsDoNotMatch": "புதிய கடவுச்சொல் பொருந்தவில்லை",
+    "newPasswordMinLength": "புதிய கடவுச்சொல் குறைந்தது 6 எழுத்து இருக்க வேண்டும்",
+    "failedSetPassword": "கடவுச்சொல் அமைக்க முடியவில்லை",
+    "failedChangePassword": "கடவுச்சொல் மாற்ற முடியவில்லை"
+  },
+  "languageLabels": {
+    "english": "ஆங்கிலம்",
+    "hindi": "ஹிந்தி",
+    "bengali": "বাংলা",
+    "telugu": "తెలుగు",
+    "marathi": "मराठी",
+    "tamil": "தமிழ்",
+    "gujarati": "ગુજરાતી",
+    "urdu": "உருது",
+    "kannada": "ಕನ್ನಡ",
+    "odia": "ଓଡିଆ",
+    "malayalam": "മലയാളം",
+    "punjabi": "ਪੰਜਾਬੀ",
+    "assamese": "অসমীয়া",
+    "sanskrit": "संस्कृत",
+    "konkani": "कोंकणी",
+    "manipuri": "মণিপুরী",
+    "sindhi": "सिंधी",
+    "kashmiri": "காஷ்மீரி",
+    "bodo": "बोड़ो",
+    "dogri": "डोगरी",
+    "maithili": "मैथिली",
+    "santali": "சந்தாலி"
+  }
+}
+

@@ -1,0 +1,134 @@
+{
+  "page": {
+    "kicker": "ನಿಮ್ಮ ಜಾಗ",
+    "title": "ನಿಮ್ಮ ಪ್ರೊಫೈಲ್",
+    "subtitle": "ನಿಮ್ಮ ವಿವರಗಳನ್ನು ನಿರ್ವಹಿಸಿ ಮತ್ತು ಅಕೌಂಟ್ ಅಪ್‌ಡೇಟ್ ಆಗಿ ಇಡಿ."
+  },
+  "hero": {
+    "accountLabel": "ಅಕೌಂಟ್",
+    "logout": "ಲಾಗ್ ಔಟ್"
+  },
+  "logoutModal": {
+    "closeAria": "ಮುಚ್ಚಿ",
+    "title": "ಲಾಗ್ ಔಟ್ ದೃಢೀಕರಿಸಿ",
+    "description": "ನೀವು ಲಾಗ್ ಔಟ್ ಮಾಡಲು ಬಯಸುತ್ತೀರಾ? ಅಕೌಂಟ್ ಬಳಕೆ ಮಾಡಲು ಮತ್ತೆ ಸೈನ್ ಇನ್ ಮಾಡಬೇಕು.",
+    "cancel": "ರದ್ದು",
+    "confirm": "ಲಾಗ್ ಔಟ್"
+  },
+  "buttons": {
+    "save": "ಸೇವ್",
+    "saving": "ಸೇವ್ ಆಗುತ್ತಿದೆ...",
+    "cancel": "ರದ್ದು",
+    "edit": "ಬದಲಿಸಿ",
+    "set": "ಸೆಟ್",
+    "change": "ಬದಲಿಸಿ",
+    "add": "ಸೇರಿಸಿ"
+  },
+  "status": {
+    "nameUpdated": "ಹೆಸರು ಅಪ್‌ಡೇಟ್ ಆಯಿತು",
+    "dateUpdated": "ದಿನಾಂಕ ಅಪ್‌ಡೇಟ್ ಆಯಿತು",
+    "genderUpdated": "ಲಿಂಗ ಅಪ್‌ಡೇಟ್ ಆಯಿತು",
+    "languagesUpdated": "ಭಾಷೆಗಳು ಅಪ್‌ಡೇಟ್ ಆಯಿತು",
+    "passwordChanged": "ಪಾಸ್‌ವರ್ಡ್ ಬದಲಾಯಿತು",
+    "passwordSet": "ಪಾಸ್‌ವರ್ಡ್ ಸೆಟ್ ಆಯಿತು",
+    "passwordChangedSuccess": "ಪಾಸ್‌ವರ್ಡ್ ಯಶಸ್ವಿಯಾಗಿ ಬದಲಾಗಿದೆ"
+  },
+  "sections": {
+    "basicInfo": "ಮೂಲ ಮಾಹಿತಿ",
+    "contact": "ಸಂಪರ್ಕ",
+    "gender": "ಲಿಂಗ",
+    "dateOfBirth": "ಜನ್ಮ ದಿನಾಂಕ",
+    "languages": "ನೀವು ಮಾತನಾಡುವ ಭಾಷೆಗಳು",
+    "password": "ಪಾಸ್‌ವರ್ಡ್",
+    "accountActivity": "ಅಕೌಂಟ್ ಮಾಹಿತಿ"
+  },
+  "labels": {
+    "name": "ಹೆಸರು",
+    "role": "ಪಾತ್ರ",
+    "email": "ಇಮೇಲ್",
+    "phone": "ಫೋನ್",
+    "memberSince": "ಸದಸ್ಯರಾದ ದಿನ",
+    "lastUpdated": "ಕೊನೆಯ ಅಪ್‌ಡೇಟ್",
+    "selectedLanguages": "ಆಯ್ಕೆ ಮಾಡಿದ ಭಾಷೆಗಳು:"
+  },
+  "placeholders": {
+    "fullName": "ನಿಮ್ಮ ಪೂರ್ಣ ಹೆಸರು ಬರೆಯಿರಿ",
+    "chooseDob": "ಜನ್ಮ ದಿನಾಂಕ ಆಯ್ಕೆ ಮಾಡಿ",
+    "selectGender": "ಲಿಂಗ ಆಯ್ಕೆ ಮಾಡಿ",
+    "currentPassword": "ಈಗಿನ ಪಾಸ್‌ವರ್ಡ್",
+    "newPassword": "ಹೊಸ ಪಾಸ್‌ವರ್ಡ್",
+    "password": "ಪಾಸ್‌ವರ್ಡ್",
+    "confirmNewPassword": "ಹೊಸ ಪಾಸ್‌ವರ್ಡ್ ಮತ್ತೆ",
+    "confirmPassword": "ಪಾಸ್‌ವರ್ಡ್ ಮತ್ತೆ",
+    "customLanguage": "ನಿಮ್ಮದೇ ಭಾಷೆ ಸೇರಿಸಿ"
+  },
+  "values": {
+    "notSetYet": "ಇನ್ನೂ ಸೆಟ್ ಆಗಿಲ್ಲ",
+    "notSet": "ಸೆಟ್ ಆಗಿಲ್ಲ",
+    "notAdded": "ಸೇರಿಸಿಲ್ಲ",
+    "maskedPassword": "••••••••"
+  },
+  "roles": {
+    "USER": "ಯೂಸರ್",
+    "EXPERT": "ತಿಳಿದವರು"
+  },
+  "genderOptions": {
+    "male": "ಪುರುಷ",
+    "female": "ಮಹಿಳೆ",
+    "other": "ಇತರೆ",
+    "prefer-not-to-say": "ಹೇಳಲು ಇಷ್ಟವಿಲ್ಲ"
+  },
+  "password": {
+    "hideAria": "ಪಾಸ್‌ವರ್ಡ್ ಅಡಗಿಸಿ",
+    "showAria": "ಪಾಸ್‌ವರ್ಡ್ ತೋರಿಸಿ",
+    "setPassword": "ಪಾಸ್‌ವರ್ಡ್ ಸೆಟ್ ಮಾಡಿ",
+    "setAPassword": "ಪಾಸ್‌ವರ್ಡ್ ಸೆಟ್ ಮಾಡಿ"
+  },
+  "languages": {
+    "removeAria": "{{language}} ತೆಗೆದುಹಾಕಿ"
+  },
+  "validation": {
+    "nameRequired": "ಹೆಸರು ಬೇಕು",
+    "selectDate": "ದಯವಿಟ್ಟು ದಿನಾಂಕ ಆಯ್ಕೆ ಮಾಡಿ",
+    "selectGender": "ದಯವಿಟ್ಟು ಲಿಂಗ ಆಯ್ಕೆ ಮಾಡಿ",
+    "selectAtLeastOneLanguage": "ಕನಿಷ್ಠ ಒಂದು ಭಾಷೆ ಆಯ್ಕೆ ಮಾಡಿ",
+    "notAuthenticated": "ನೀವು ಲಾಗ್ ಇನ್ ಆಗಿಲ್ಲ.",
+    "failedUpdateName": "ಹೆಸರು ಅಪ್‌ಡೇಟ್ ಆಗಿಲ್ಲ",
+    "failedUpdateDob": "ಜನ್ಮ ದಿನಾಂಕ ಅಪ್‌ಡೇಟ್ ಆಗಿಲ್ಲ",
+    "failedUpdateGender": "ಲಿಂಗ ಅಪ್‌ಡೇಟ್ ಆಗಿಲ್ಲ",
+    "failedUpdateLanguages": "ಭಾಷೆಗಳು ಅಪ್‌ಡೇಟ್ ಆಗಿಲ್ಲ",
+    "passwordRequired": "ಪಾಸ್‌ವರ್ಡ್ ಬೇಕು",
+    "passwordsDoNotMatch": "ಪಾಸ್‌ವರ್ಡ್ ಹೊಂದಿಕೆಯಾಗಿಲ್ಲ",
+    "passwordMinLength": "ಪಾಸ್‌ವರ್ಡ್ ಕನಿಷ್ಠ 6 ಅಕ್ಷರ ಇರಬೇಕು",
+    "allFieldsRequired": "ಎಲ್ಲಾ ಫೀಲ್ಡ್ ತುಂಬಿ",
+    "newPasswordsDoNotMatch": "ಹೊಸ ಪಾಸ್‌ವರ್ಡ್ ಹೊಂದಿಕೆಯಾಗಿಲ್ಲ",
+    "newPasswordMinLength": "ಹೊಸ ಪಾಸ್‌ವರ್ಡ್ ಕನಿಷ್ಠ 6 ಅಕ್ಷರ ಇರಬೇಕು",
+    "failedSetPassword": "ಪಾಸ್‌ವರ್ಡ್ ಸೆಟ್ ಆಗಿಲ್ಲ",
+    "failedChangePassword": "ಪಾಸ್‌ವರ್ಡ್ ಬದಲಾಗಿಲ್ಲ"
+  },
+  "languageLabels": {
+    "english": "ಇಂಗ್ಲಿಷ್",
+    "hindi": "ಹಿಂದಿ",
+    "bengali": "বাংলা",
+    "telugu": "తెలుగు",
+    "marathi": "मराठी",
+    "tamil": "தமிழ்",
+    "gujarati": "ગુજરાતી",
+    "urdu": "اردو",
+    "kannada": "ಕನ್ನಡ",
+    "odia": "ଓଡିଆ",
+    "malayalam": "മലയാളം",
+    "punjabi": "ਪੰਜਾਬੀ",
+    "assamese": "অসমীয়া",
+    "sanskrit": "संस्कृत",
+    "konkani": "कोंकणी",
+    "manipuri": "মণিপুরী",
+    "sindhi": "सिंधी",
+    "kashmiri": "کٲشُر",
+    "bodo": "बोड़ो",
+    "dogri": "डोगरी",
+    "maithili": "मैथिली",
+    "santali": "सಂತಾಳಿ"
+  }
+}
+

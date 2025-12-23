@@ -1,0 +1,134 @@
+{
+  "page": {
+    "kicker": "మీ స్థలం",
+    "title": "మీ ప్రొఫైల్",
+    "subtitle": "మీ వివరాలు మేనేజ్ చేయండి, అకౌంట్‌ను అప్డేట్‌గా ఉంచండి."
+  },
+  "hero": {
+    "accountLabel": "అకౌంట్",
+    "logout": "లాగ్ అవుట్"
+  },
+  "logoutModal": {
+    "closeAria": "మూసేయండి",
+    "title": "లాగ్ అవుట్ నిర్ధారణ",
+    "description": "మీరు లాగ్ అవుట్ చేయాలనుకుంటున్నారా? అకౌంట్‌కి మళ్లీ వెళ్లాలంటే తిరిగి సైన్ ఇన్ చేయాలి.",
+    "cancel": "రద్దు",
+    "confirm": "లాగ్ అవుట్"
+  },
+  "buttons": {
+    "save": "సేవ్",
+    "saving": "సేవ్ అవుతోంది...",
+    "cancel": "రద్దు",
+    "edit": "మార్చండి",
+    "set": "సెట్",
+    "change": "మార్చండి",
+    "add": "జోడించండి"
+  },
+  "status": {
+    "nameUpdated": "పేరు అప్డేట్ అయింది",
+    "dateUpdated": "తేదీ అప్డేట్ అయింది",
+    "genderUpdated": "లింగం అప్డేట్ అయింది",
+    "languagesUpdated": "భాషలు అప్డేట్ అయ్యాయి",
+    "passwordChanged": "పాస్‌వర్డ్ మారింది",
+    "passwordSet": "పాస్‌వర్డ్ సెట్ అయింది",
+    "passwordChangedSuccess": "పాస్‌వర్డ్ విజయవంతంగా మారింది"
+  },
+  "sections": {
+    "basicInfo": "మూల సమాచారం",
+    "contact": "సంప్రదింపు",
+    "gender": "లింగం",
+    "dateOfBirth": "పుట్టిన తేదీ",
+    "languages": "మీరు మాట్లాడే భాషలు",
+    "password": "పాస్‌వర్డ్",
+    "accountActivity": "అకౌంట్ వివరాలు"
+  },
+  "labels": {
+    "name": "పేరు",
+    "role": "పాత్ర",
+    "email": "ఈమెయిల్",
+    "phone": "ఫోన్",
+    "memberSince": "సభ్యుడైన తేదీ",
+    "lastUpdated": "చివరి అప్డేట్",
+    "selectedLanguages": "ఎంచుకున్న భాషలు:"
+  },
+  "placeholders": {
+    "fullName": "మీ పూర్తి పేరు రాయండి",
+    "chooseDob": "పుట్టిన తేదీ ఎంచుకోండి",
+    "selectGender": "లింగం ఎంచుకోండి",
+    "currentPassword": "ప్రస్తుత పాస్‌వర్డ్",
+    "newPassword": "కొత్త పాస్‌వర్డ్",
+    "password": "పాస్‌వర్డ్",
+    "confirmNewPassword": "కొత్త పాస్‌వర్డ్ మళ్లీ",
+    "confirmPassword": "పాస్‌వర్డ్ మళ్లీ",
+    "customLanguage": "మీ భాషను జోడించండి"
+  },
+  "values": {
+    "notSetYet": "ఇంకా సెట్ కాలేదు",
+    "notSet": "సెట్ కాలేదు",
+    "notAdded": "జోడించలేదు",
+    "maskedPassword": "••••••••"
+  },
+  "roles": {
+    "USER": "యూజర్",
+    "EXPERT": "తెలిసినవారు"
+  },
+  "genderOptions": {
+    "male": "పురుషుడు",
+    "female": "స్త్రీ",
+    "other": "ఇతర",
+    "prefer-not-to-say": "చెప్పదు అనుకుంటున్నాను"
+  },
+  "password": {
+    "hideAria": "పాస్‌వర్డ్ దాచండి",
+    "showAria": "పాస్‌వర్డ్ చూపండి",
+    "setPassword": "పాస్‌వర్డ్ సెట్ చేయండి",
+    "setAPassword": "పాస్‌వర్డ్ సెట్ చేయండి"
+  },
+  "languages": {
+    "removeAria": "{{language}} తీసేయండి"
+  },
+  "validation": {
+    "nameRequired": "పేరు కావాలి",
+    "selectDate": "దయచేసి తేదీ ఎంచుకోండి",
+    "selectGender": "దయచేసి లింగం ఎంచుకోండి",
+    "selectAtLeastOneLanguage": "కనీసం ఒక భాష ఎంచుకోండి",
+    "notAuthenticated": "మీరు లాగిన్ కాలేదు.",
+    "failedUpdateName": "పేరు అప్డేట్ కాలేదు",
+    "failedUpdateDob": "పుట్టిన తేదీ అప్డేట్ కాలేదు",
+    "failedUpdateGender": "లింగం అప్డేట్ కాలేదు",
+    "failedUpdateLanguages": "భాషలు అప్డేట్ కాలేదు",
+    "passwordRequired": "పాస్‌వర్డ్ కావాలి",
+    "passwordsDoNotMatch": "పాస్‌వర్డ్ సరిపోలలేదు",
+    "passwordMinLength": "పాస్‌వర్డ్ కనీసం 6 అక్షరాలు ఉండాలి",
+    "allFieldsRequired": "అన్ని ఫీల్డ్‌లు నింపండి",
+    "newPasswordsDoNotMatch": "కొత్త పాస్‌వర్డ్ సరిపోలలేదు",
+    "newPasswordMinLength": "కొత్త పాస్‌వర్డ్ కనీసం 6 అక్షరాలు ఉండాలి",
+    "failedSetPassword": "పాస్‌వర్డ్ సెట్ కాలేదు",
+    "failedChangePassword": "పాస్‌వర్డ్ మారలేదు"
+  },
+  "languageLabels": {
+    "english": "ఇంగ్లీష్",
+    "hindi": "హిందీ",
+    "bengali": "বাংলা",
+    "telugu": "తెలుగు",
+    "marathi": "मराठी",
+    "tamil": "தமிழ்",
+    "gujarati": "ગુજરાતી",
+    "urdu": "ఉర్దూ",
+    "kannada": "ಕನ್ನಡ",
+    "odia": "ଓଡିଆ",
+    "malayalam": "മലയാളം",
+    "punjabi": "ਪੰਜਾਬੀ",
+    "assamese": "অসমীয়া",
+    "sanskrit": "संस्कृत",
+    "konkani": "कोंकणी",
+    "manipuri": "মণিপুরী",
+    "sindhi": "सिंधी",
+    "kashmiri": "కశ్మీరీ",
+    "bodo": "बोड़ो",
+    "dogri": "डोगरी",
+    "maithili": "मैथिली",
+    "santali": "సంతాలి"
+  }
+}
+

@@ -1,0 +1,134 @@
+{
+  "page": {
+    "kicker": "तुमची जागा",
+    "title": "तुमचा प्रोफाइल",
+    "subtitle": "तुमची माहिती सांभाळा आणि अकाउंट अपडेट ठेवा."
+  },
+  "hero": {
+    "accountLabel": "अकाउंट",
+    "logout": "लॉगआउट"
+  },
+  "logoutModal": {
+    "closeAria": "बंद करा",
+    "title": "लॉगआउट खात्री",
+    "description": "तुम्हाला लॉगआउट करायचे आहे का? अकाउंट वापरण्यासाठी तुम्हाला पुन्हा साइन इन करावे लागेल.",
+    "cancel": "रद्द",
+    "confirm": "लॉगआउट"
+  },
+  "buttons": {
+    "save": "सेव्ह",
+    "saving": "सेव्ह होत आहे...",
+    "cancel": "रद्द",
+    "edit": "बदला",
+    "set": "सेट",
+    "change": "बदला",
+    "add": "जोडा"
+  },
+  "status": {
+    "nameUpdated": "नाव अपडेट झाले",
+    "dateUpdated": "तारीख अपडेट झाली",
+    "genderUpdated": "लिंग अपडेट झाले",
+    "languagesUpdated": "भाषा अपडेट झाल्या",
+    "passwordChanged": "पासवर्ड बदलला",
+    "passwordSet": "पासवर्ड सेट झाला",
+    "passwordChangedSuccess": "पासवर्ड यशस्वीपणे बदलला"
+  },
+  "sections": {
+    "basicInfo": "मूळ माहिती",
+    "contact": "संपर्क",
+    "gender": "लिंग",
+    "dateOfBirth": "जन्मतारीख",
+    "languages": "तुम्ही कोणत्या भाषा बोलता",
+    "password": "पासवर्ड",
+    "accountActivity": "अकाउंट माहिती"
+  },
+  "labels": {
+    "name": "नाव",
+    "role": "भूमिका",
+    "email": "ईमेल",
+    "phone": "फोन",
+    "memberSince": "कधीपासून सदस्य",
+    "lastUpdated": "शेवटचे अपडेट",
+    "selectedLanguages": "निवडलेल्या भाषा:"
+  },
+  "placeholders": {
+    "fullName": "तुमचे पूर्ण नाव लिहा",
+    "chooseDob": "जन्मतारीख निवडा",
+    "selectGender": "लिंग निवडा",
+    "currentPassword": "सध्याचा पासवर्ड",
+    "newPassword": "नवा पासवर्ड",
+    "password": "पासवर्ड",
+    "confirmNewPassword": "नवा पासवर्ड पुन्हा",
+    "confirmPassword": "पासवर्ड पुन्हा",
+    "customLanguage": "स्वतःची भाषा जोडा"
+  },
+  "values": {
+    "notSetYet": "अजून सेट नाही",
+    "notSet": "सेट नाही",
+    "notAdded": "जोडलेले नाही",
+    "maskedPassword": "••••••••"
+  },
+  "roles": {
+    "USER": "युजर",
+    "EXPERT": "जाणकार"
+  },
+  "genderOptions": {
+    "male": "पुरुष",
+    "female": "महिला",
+    "other": "इतर",
+    "prefer-not-to-say": "सांगायचे नाही"
+  },
+  "password": {
+    "hideAria": "पासवर्ड लपवा",
+    "showAria": "पासवर्ड दाखवा",
+    "setPassword": "पासवर्ड सेट करा",
+    "setAPassword": "पासवर्ड सेट करा"
+  },
+  "languages": {
+    "removeAria": "{{language}} काढा"
+  },
+  "validation": {
+    "nameRequired": "नाव आवश्यक आहे",
+    "selectDate": "कृपया तारीख निवडा",
+    "selectGender": "कृपया लिंग निवडा",
+    "selectAtLeastOneLanguage": "किमान एक भाषा निवडा",
+    "notAuthenticated": "तुम्ही लॉग इन नाही.",
+    "failedUpdateName": "नाव अपडेट झाले नाही",
+    "failedUpdateDob": "जन्मतारीख अपडेट झाली नाही",
+    "failedUpdateGender": "लिंग अपडेट झाले नाही",
+    "failedUpdateLanguages": "भाषा अपडेट झाल्या नाहीत",
+    "passwordRequired": "पासवर्ड आवश्यक आहे",
+    "passwordsDoNotMatch": "पासवर्ड जुळत नाहीत",
+    "passwordMinLength": "पासवर्ड किमान 6 अक्षरांचा असावा",
+    "allFieldsRequired": "सगळी माहिती भरा",
+    "newPasswordsDoNotMatch": "नवे पासवर्ड जुळत नाहीत",
+    "newPasswordMinLength": "नवा पासवर्ड किमान 6 अक्षरांचा असावा",
+    "failedSetPassword": "पासवर्ड सेट झाला नाही",
+    "failedChangePassword": "पासवर्ड बदलला नाही"
+  },
+  "languageLabels": {
+    "english": "इंग्रजी",
+    "hindi": "हिंदी",
+    "bengali": "বাংলা",
+    "telugu": "తెలుగు",
+    "marathi": "मराठी",
+    "tamil": "தமிழ்",
+    "gujarati": "ગુજરાતી",
+    "urdu": "उर्दू",
+    "kannada": "ಕನ್ನಡ",
+    "odia": "ଓଡିଆ",
+    "malayalam": "മലയാളം",
+    "punjabi": "ਪੰਜਾਬੀ",
+    "assamese": "অসমীয়া",
+    "sanskrit": "संस्कृत",
+    "konkani": "कोंकणी",
+    "manipuri": "মণিপুরী",
+    "sindhi": "सिंधी",
+    "kashmiri": "कश्मीरी",
+    "bodo": "बोड़ो",
+    "dogri": "डोगरी",
+    "maithili": "मैथिली",
+    "santali": "संताली"
+  }
+}
+

@@ -1,0 +1,134 @@
+{
+  "page": {
+    "kicker": "നിങ്ങളുടെ സ്ഥലം",
+    "title": "നിങ്ങളുടെ പ്രൊഫൈൽ",
+    "subtitle": "നിങ്ങളുടെ വിവരങ്ങൾ നിയന്ത്രിക്കുക, അക്കൗണ്ട് അപ്ഡേറ്റ് ആയി വെക്കുക."
+  },
+  "hero": {
+    "accountLabel": "അക്കൗണ്ട്",
+    "logout": "ലോഗ് ഔട്ട്"
+  },
+  "logoutModal": {
+    "closeAria": "അടയ്ക്കുക",
+    "title": "ലോഗ് ഔട്ട് സ്ഥിരീകരിക്കുക",
+    "description": "നിങ്ങൾക്ക് ലോഗ് ഔട്ട് ചെയ്യണോ? അക്കൗണ്ട് ഉപയോഗിക്കാൻ വീണ്ടും സൈൻ ഇൻ വേണം.",
+    "cancel": "റദ്ദാക്കുക",
+    "confirm": "ലോഗ് ഔട്ട്"
+  },
+  "buttons": {
+    "save": "സേവ്",
+    "saving": "സേവ് ചെയ്യുന്നു...",
+    "cancel": "റദ്ദാക്കുക",
+    "edit": "മാറ്റുക",
+    "set": "സെറ്റ്",
+    "change": "മാറ്റുക",
+    "add": "ചേർക്കുക"
+  },
+  "status": {
+    "nameUpdated": "പേര് അപ്ഡേറ്റ് ചെയ്തു",
+    "dateUpdated": "തീയതി അപ്ഡേറ്റ് ചെയ്തു",
+    "genderUpdated": "ലിംഗം അപ്ഡേറ്റ് ചെയ്തു",
+    "languagesUpdated": "ഭാഷകൾ അപ്ഡേറ്റ് ചെയ്തു",
+    "passwordChanged": "പാസ്‌വേഡ് മാറ്റി",
+    "passwordSet": "പാസ്‌വേഡ് സെറ്റ് ചെയ്തു",
+    "passwordChangedSuccess": "പാസ്‌വേഡ് വിജയകരമായി മാറ്റി"
+  },
+  "sections": {
+    "basicInfo": "അടിസ്ഥാന വിവരം",
+    "contact": "ബന്ധപ്പെടുക",
+    "gender": "ലിംഗം",
+    "dateOfBirth": "ജനന തീയതി",
+    "languages": "നിങ്ങൾ സംസാരിക്കുന്ന ഭാഷകൾ",
+    "password": "പാസ്‌വേഡ്",
+    "accountActivity": "അക്കൗണ്ട് വിവരം"
+  },
+  "labels": {
+    "name": "പേര്",
+    "role": "റോൾ",
+    "email": "ഇമെയിൽ",
+    "phone": "ഫോൺ",
+    "memberSince": "അംഗമായത്",
+    "lastUpdated": "അവസാനം അപ്ഡേറ്റ് ചെയ്തത്",
+    "selectedLanguages": "തിരഞ്ഞെടുത്ത ഭാഷകൾ:"
+  },
+  "placeholders": {
+    "fullName": "നിങ്ങളുടെ പൂർണ്ണ പേര് എഴുതുക",
+    "chooseDob": "ജനന തീയതി തിരഞ്ഞെടുക്കുക",
+    "selectGender": "ലിംഗം തിരഞ്ഞെടുക്കുക",
+    "currentPassword": "നിലവിലെ പാസ്‌വേഡ്",
+    "newPassword": "പുതിയ പാസ്‌വേഡ്",
+    "password": "പാസ്‌വേഡ്",
+    "confirmNewPassword": "പുതിയ പാസ്‌വേഡ് വീണ്ടും",
+    "confirmPassword": "പാസ്‌വേഡ് വീണ്ടും",
+    "customLanguage": "സ്വന്തം ഭാഷ ചേർക്കുക"
+  },
+  "values": {
+    "notSetYet": "ഇതുവരെ സെറ്റ് ചെയ്തിട്ടില്ല",
+    "notSet": "സെറ്റ് ചെയ്തിട്ടില്ല",
+    "notAdded": "ചേർത്തിട്ടില്ല",
+    "maskedPassword": "••••••••"
+  },
+  "roles": {
+    "USER": "യൂസർ",
+    "EXPERT": "അറിയുന്നവർ"
+  },
+  "genderOptions": {
+    "male": "പുരുഷൻ",
+    "female": "സ്ത്രീ",
+    "other": "മറ്റ്",
+    "prefer-not-to-say": "പറയാൻ ഇഷ്ടമില്ല"
+  },
+  "password": {
+    "hideAria": "പാസ്‌വേഡ് മറയ്ക്കുക",
+    "showAria": "പാസ്‌വേഡ് കാണിക്കുക",
+    "setPassword": "പാസ്‌വേഡ് സെറ്റ് ചെയ്യുക",
+    "setAPassword": "പാസ്‌വേഡ് സെറ്റ് ചെയ്യുക"
+  },
+  "languages": {
+    "removeAria": "{{language}} നീക്കം ചെയ്യുക"
+  },
+  "validation": {
+    "nameRequired": "പേര് വേണം",
+    "selectDate": "ദയവായി തീയതി തിരഞ്ഞെടുക്കുക",
+    "selectGender": "ദയവായി ലിംഗം തിരഞ്ഞെടുക്കുക",
+    "selectAtLeastOneLanguage": "കുറഞ്ഞത് ഒരു ഭാഷ തിരഞ്ഞെടുക്കുക",
+    "notAuthenticated": "നിങ്ങൾ ലോഗിൻ ചെയ്തിട്ടില്ല.",
+    "failedUpdateName": "പേര് അപ്ഡേറ്റ് ചെയ്തില്ല",
+    "failedUpdateDob": "ജനന തീയതി അപ്ഡേറ്റ് ചെയ്തില്ല",
+    "failedUpdateGender": "ലിംഗം അപ്ഡേറ്റ് ചെയ്തില്ല",
+    "failedUpdateLanguages": "ഭാഷകൾ അപ്ഡേറ്റ് ചെയ്തില്ല",
+    "passwordRequired": "പാസ്‌വേഡ് വേണം",
+    "passwordsDoNotMatch": "പാസ്‌വേഡ് പൊരുത്തപ്പെടുന്നില്ല",
+    "passwordMinLength": "പാസ്‌വേഡ് കുറഞ്ഞത് 6 അക്ഷരം വേണം",
+    "allFieldsRequired": "എല്ലാ ഫീൽഡുകളും പൂരിപ്പിക്കുക",
+    "newPasswordsDoNotMatch": "പുതിയ പാസ്‌വേഡ് പൊരുത്തപ്പെടുന്നില്ല",
+    "newPasswordMinLength": "പുതിയ പാസ്‌വേഡ് കുറഞ്ഞത് 6 അക്ഷരം വേണം",
+    "failedSetPassword": "പാസ്‌വേഡ് സെറ്റ് ചെയ്തില്ല",
+    "failedChangePassword": "പാസ്‌വേഡ് മാറ്റിയില്ല"
+  },
+  "languageLabels": {
+    "english": "ഇംഗ്ലീഷ്",
+    "hindi": "ഹിന്ദി",
+    "bengali": "বাংলা",
+    "telugu": "తెలుగు",
+    "marathi": "मराठी",
+    "tamil": "தமிழ்",
+    "gujarati": "ગુજરાતી",
+    "urdu": "ഉർദു",
+    "kannada": "ಕನ್ನಡ",
+    "odia": "ଓଡିଆ",
+    "malayalam": "മലയാളം",
+    "punjabi": "ਪੰਜਾਬੀ",
+    "assamese": "অসমীয়া",
+    "sanskrit": "സംസ്കൃതം",
+    "konkani": "कोंकणी",
+    "manipuri": "মণিপুরী",
+    "sindhi": "സിന്ധി",
+    "kashmiri": "കശ്മീരി",
+    "bodo": "ബോഡോ",
+    "dogri": "ഡോഗ്രി",
+    "maithili": "मैथिली",
+    "santali": "സന്താലി"
+  }
+}
+
