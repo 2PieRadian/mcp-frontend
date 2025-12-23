@@ -12,7 +12,7 @@ function ReviewCard({
   rating: number;
 }) {
   return (
-    <div className="flex justify-between flex-col border border-[#B5B5B5] shadow-[4px_4px_0px_0px_rgba(0,0,0,0.15)] hover:shadow-none hover:scale-[0.99] trasition-scale-transform transition-shadow p-[25px] relative rounded-[15px] mt-[40px] w-full md:max-w-[calc(50%-10px)] lg:max-w-[calc(33.333%-14px)] flex-shrink-0">
+    <div className="flex justify-between flex-col border border-[#B5B5B5] shadow-[4px_4px_0px_0px_rgba(0,0,0,0.15)] hover:shadow-none hover:scale-[0.99] trasition-scale-transform transition-shadow p-[25px] relative rounded-[15px] mt-[40px] w-full md:max-w-[calc(50%-10px)] lg:max-w-[calc(33.333%-14px)] shrink-0">
       <div>
         <div className="flex gap-[5px] mb-[15px]">
           {[...Array(rating)].map((_, i) => (

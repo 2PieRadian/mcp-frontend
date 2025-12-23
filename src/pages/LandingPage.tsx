@@ -1,7 +1,6 @@
 import HeroSection from "../components/HeroSection";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import WhyChooseUsSection from "../components/WhyChooseUsSection";
-import WhatOurUsersSay from "../components/WhatOurUsersSay";
 import HowDoesItWork from "../components/HowDoesItWork";
 import Footer from "../components/Footer";
 import ExpertVerifiedAssessmentsSection from "../components/ExpertVerifiedAssessmentsSection";
@@ -53,7 +52,6 @@ export default function UserDashboard() {
         <ExpertVerifiedAssessmentsSection />
         <HowDoesItWork />
         <WhyChooseUsSection />
-        <WhatOurUsersSay />
         <Footer />
       </div>
     </>

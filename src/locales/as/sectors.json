@@ -1,119 +1,101 @@
 {
   "hero": {
-    "title": "অভিজ্ঞ experts ৰ পৰা সঠিক advice পাওক",
-    "description": "Health, টকা আৰু পঢ়াত experts ৰ পৰা সহায় পাওক। প্ৰতিটো decision আপোনাৰ future ৰ বাবে সঠিক হ'ব লাগে, ভুল নহয়। Confusion ত নাথাকিব, সঠিক advice লওক আৰু confidence ৰ সৈতে আগবাঢ়ক।",
-    "wellnessEcosystem": "Health Services",
-    "wellnessDescription": "আপোনাৰ mental health, আপোনাৰ ধৰণে",
-    "financeSector": "টকাৰ Advice",
-    "financeDescription": "Experts ৰ পৰা টকাৰ advice",
-    "educationSector": "পঢ়াৰ Advice",
+    "title": "অভিজ্ঞ বিশেষজ্ঞৰ পৰা সঠিক পৰামৰ্শ পাওক",
+    "description": "স্বাস্থ্য, টকা আৰু পঢ়াৰ ক্ষেত্ৰত অভিজ্ঞ লোকৰ পৰা সহায় পাওক। প্ৰতিটো সিদ্ধান্ত আপোনাৰ ভৱিষ্যতৰ বাবে সঠিক হ'ব লাগে। বিভ্ৰান্তিত নাথাকি, সঠিক পৰামৰ্শ লৈ আত্মবিশ্বাসে আগবাঢ়ক।",
+    "wellnessEcosystem": "স্বাস্থ্য সেৱা",
+    "wellnessDescription": "আপোনাৰ মানসিক স্বাস্থ্য, আপোনাৰ ধৰণে",
+    "financeSector": "টকাৰ পৰামৰ্শ",
+    "financeDescription": "অভিজ্ঞ লোকৰ পৰা টকাৰ পৰামৰ্শ",
+    "educationSector": "পঢ়াৰ পৰামৰ্শ",
     "educationDescription": "আপোনাৰ পঢ়া, আপোনাৰ ধৰণে",
-    "personalizedCare": "আপোনাৰ বাবে বিশেষ care",
+    "personalizedCare": "আপোনাৰ বাবে বিশেষ যত্ন",
     "personalizedDescription": "আপোনাৰ প্ৰয়োজন অনুসৰি",
-    "expertSupport": "Expert Help",
-    "expertSupportDescription": "অভিজ্ঞ doctors ৰ সৈতে যুক্ত হওক",
-    "emotionalHealing": "হৃদয়ৰ Care",
-    "emotionalHealingDescription": "Peace আৰু সুখ পাওক"
+    "expertSupport": "বিশেষজ্ঞৰ সহায়",
+    "expertSupportDescription": "অভিজ্ঞ চিকিৎসকৰ সৈতে সংযোগ কৰক",
+    "emotionalHealing": "মনৰ যত্ন",
+    "emotionalHealingDescription": "শান্তি আৰু সুখ পাওক"
   },
   "whyChooseUs": {
-    "title": "MindCurePath কিয় choose কৰিব?",
+    "title": "MindCurePath কিয় বাছনি কৰিব?",
     "expertTherapists": {
-      "title": "অভিজ্ঞ Doctors",
-      "description": "বুজক যে আপুনি কেনেকৈ ভাবে আৰু কিয় এনে feel কৰে।",
-      "cta": "আপোনাৰ doctor বিচাৰক"
+      "title": "অভিজ্ঞ চিকিৎসক",
+      "description": "আপুনি কেনেকৈ ভাবে আৰু কিয় তেনেকুৱা অনুভৱ কৰে, সেইটো বুজক।",
+      "cta": "আপোনাৰ চিকিৎসক বিচাৰক"
     },
     "accessibility": {
-      "title": "সদায় available",
-      "description": "Mobile বা computer ৰ পৰা যিকোনো সময়, যিকোনো ঠাইত সহায় পাওক।",
+      "title": "সদায় উপলব্ধ",
+      "description": "মোবাইল বা কম্পিউটাৰৰ পৰা যিকোনো সময়, যিকোনো ঠাইত সহায় পাওক।",
       "cta": "আৰম্ভ কৰক"
     },
     "privacy": {
-      "title": "সম্পূৰ্ণ privacy",
-      "description": "আপোনাৰ কথোপকথন সম্পূৰ্ণ safe থাকে।",
+      "title": "সম্পূৰ্ণ গোপনীয়তা",
+      "description": "আপোনাৰ কথোপকথন সম্পূৰ্ণ সুৰক্ষিত থাকে।",
       "cta": "অধিক জানক"
     },
     "progressTracking": {
-      "title": "Progress চাওক",
-      "description": "আপোনাৰ improvement ৰ report চাওক আৰু আৰু ভাল হৈ থাকক।",
+      "title": "উন্নতি চাওক",
+      "description": "আপোনাৰ উন্নতিৰ প্ৰতিবেদন চাওক আৰু আগবাঢ়ি থাকক।",
       "cta": "চাওক"
     },
     "affordableCare": {
-      "title": "সস্তা service",
-      "description": "ভাল care দামী নহ'ব লাগে। আপোনাৰ budget অনুসৰি price।",
+      "title": "সুলভ সেৱা",
+      "description": "ভাল যত্ন দামী হোৱাৰ প্ৰয়োজন নাই। আপোনাৰ বাজেট অনুসৰি দাম।",
       "cta": "দাম চাওক"
     },
     "communitySupport": {
-      "title": "Community ৰ সহায়",
-      "description": "অন্যান্য মানুহৰ সৈতে যুক্ত হওক যিসকলে আপোনাৰ দৰে problem ৰ মাজেৰে যাব লাগিছে।",
-      "cta": "যুক্ত হওক"
+      "title": "সমুদায়ৰ সহায়",
+      "description": "আপোনাৰ দৰে সমস্যাৰ মাজেৰে যোৱা অন্য লোকৰ সৈতে সংযোগ কৰক।",
+      "cta": "সংযোগ কৰক"
     }
   },
   "howDoesItWork": {
     "title": "এইটো কেনেকৈ কাম কৰে?",
-    "subtitle": "MindCurePath ৰ সৈতে আৰম্ভ কৰিবলৈ সহজ steps",
+    "subtitle": "MindCurePath ৰ সৈতে আৰম্ভ কৰিবলৈ সহজ পদক্ষেপ",
     "step1": {
-      "title": "1. Form পূৰণ কৰক বা WhatsApp কৰক",
-      "description": "Form পূৰণ কৰক বা WhatsApp ত কথা কওক। তৎক্ষণাত সহায় পাওক!"
+      "title": "1. ফৰ্ম পূৰণ কৰক বা WhatsApp ত কথা পাতক",
+      "description": "ফৰ্ম পূৰণ কৰক বা WhatsApp ত কথা পাতক। তৎক্ষণাত সহায় পাওক!"
     },
     "step2": {
-      "title": "2. Appointment লওক",
-      "description": "আমাৰ team ৰ সৈতে কথা কোৱাৰ বাবে appointment book কৰক!"
+      "title": "2. সময় লওক",
+      "description": "আমাৰ দলৰ সৈতে কথা পাতিবলৈ সময় বুক কৰক!"
     },
     "step3": {
-      "title": "3. আপোনাৰ সৈতে contact কৰা হ'ব",
-      "description": "আমাৰ team আপোনাৰ time ত আপোনাৰ সৈতে contact কৰিব। অপেক্ষা কৰক!"
+      "title": "3. আপোনাৰ সৈতে যোগাযোগ কৰা হ'ব",
+      "description": "আমাৰ দল আপোনাৰ সময় অনুসৰি আপোনাৰ সৈতে যোগাযোগ কৰিব।"
     },
     "step4": {
-      "title": "4. প্ৰয়োজন হলে পুনৰ কথা কওক",
-      "description": "যেতিয়া প্ৰয়োজন, free ত পুনৰ কথা কব পাৰে!"
-    }
-  },
-  "whatOurUsersSay": {
-    "title": "আমাৰ users কি কয়",
-    "subtitle": "সেই মানুহবোৰৰ কাহিনী যিসকলে MindCurePath ৰ সৈতে তেওঁলোকৰ জীৱন সলনি কৰিছে",
-    "reviews": {
-      "sarah": {
-        "name": "Sarah M.",
-        "review": "প্ৰথমবাৰ কথা কোৱাৰ পিছত মই বহুত light feel কৰিছিলো। মই সুখী যে মই এই app ব্যৱহাৰ কৰিছিলো!"
-      },
-      "john": {
-        "name": "John D.",
-        "review": "Shark Tank ত দেখিছিলো আৰু তৎক্ষণাত app download কৰিছিলো। তেতিয়াৰ পৰা সহায় লৈ আছো - বহুত ভাল। প্ৰতিবাৰ কথা কোৱাৰ পিছত ভাল লাগে!"
-      },
-      "james": {
-        "name": "James L.",
-        "review": "মই ভাবিছিলো মই যথেষ্ট নহয়, কিন্তু মোৰ doctor ৰে মোক নিজৰ ওপৰত trust কৰিবলৈ শিকাইছে। এইটোৱে মোৰ জীৱন সলনি কৰিছে!"
-      }
+      "title": "4. প্ৰয়োজন হলে পুনৰ কথা পাতক",
+      "description": "প্ৰয়োজন হ'লে বিনামূলীয়াকৈ পুনৰ কথা পাতিব পাৰে!"
     }
   },
   "selfAssessment": {
-    "title": "জানক যে আপুনি প্ৰকৃততে কোন",
-    "description": "সহজ প্ৰশ্ন যিবোৰে আপোনাৰ প্ৰকৃত personality দেখুৱায় - নিজকে বুজাৰ journey আৰম্ভ কৰক।"
+    "title": "নিজকে ভালদৰে চিনাকি হওক",
+    "description": "সহজ প্ৰশ্নৰ জৰিয়তে আপোনাৰ প্ৰকৃত স্বভাৱ বুজক — নিজকে বুজাৰ যাত্ৰা আৰম্ভ কৰক।"
   },
   "cvt": {
     "trauma": {
-      "title": "পুৰণি বেয়া স্মৃতিবোৰে মোক কেনেকৈ affect কৰিছে?",
-      "description": "পুৰণি কথা আজি আপোনাক কেনেকৈ সমস্যা কৰিছে, এইটো বুজক"
+      "title": "পুৰণি বেয়া স্মৃতিয়ে মোক কেনেকৈ প্ৰভাৱিত কৰিছে?",
+      "description": "পুৰণি ঘটনাই আজি আপোনাক কেনেকৈ সমস্যাত পেলাইছে, সেইটো বুজক"
     },
     "adhd": {
-      "title": "মোৰ ADHD আছে নেকি?",
-      "description": "জানক যে আপোনাৰ attention নিদিয়াৰ problem হ'ব পাৰে"
+      "title": "মোৰ মনোযোগৰ সমস্যা আছে নেকি?",
+      "description": "আপুনি মনোযোগ ধৰি ৰাখিবলৈ অসুবিধা পাইছে নেকি, সেইটো জানক"
     },
     "anxiety": {
-      "title": "মোৰ anxiety কিমান?",
-      "description": "জানক যে আপুনি কিমান anxious আৰু আগলৈ কি কৰিব লাগে"
+      "title": "মোৰ চিন্তা কিমান বেছি?",
+      "description": "আপুনি কিমান উদ্বিগ্ন আৰু আগলৈ কি কৰিব লাগে, জানক"
     },
     "mood": {
-      "title": "এইটো কেৱল বেয়া দিন নেকি আৰু কিছু?",
-      "description": "জানক যে আপোনাৰ sadness কেৱল এটা দিনৰ কথা নেকি আৰু কিছু serious"
+      "title": "এইটো কেৱল এটা বেয়া দিন নেকি আৰু কিছু?",
+      "description": "আপোনাৰ দুখ কেৱল অলপ সময়ৰ নেকি আৰু গভীৰ, সেইটো বুজক"
     },
     "resilience": {
-      "title": "মই সমস্যাবোৰৰ সৈতে কেনেকৈ মোকাবিলা কৰো?",
-      "description": "জানক যে আপুনি কঠিন সময়ত কিমান strong থাকে"
+      "title": "মই সমস্যাৰ সৈতে কেনেকৈ মোকাবিলা কৰোঁ?",
+      "description": "কঠিন সময়ত আপুনি কিমান দৃঢ় থাকে, সেইটো জানক"
     },
     "relationship": {
-      "title": "Relationships ৰ check",
-      "description": "আপোনাৰ relationships বুজক আৰু আগলৈ কি কৰিব লাগে, এইটো জানক"
+      "title": "সম্পৰ্কৰ পৰীক্ষা",
+      "description": "আপোনাৰ সম্পৰ্কসমূহ বুজক আৰু আগলৈ কি কৰিব লাগে জানক"
     }
   }
 }

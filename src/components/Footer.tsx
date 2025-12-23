@@ -16,7 +16,7 @@ export default function Footer() {
   const facebookURL = "https://www.facebook.com/mindcurepath";
 
   return (
-    <footer className="relative w-full overflow-hidden">
+    <footer className="relative w-full overflow-hidden mt-[70px]">
       {/* Decorative Background Elements */}
       <div className="absolute inset-0 bg-linear-to-b from-white via-[#f8fafb] to-[#f1f5f9]">
         {/* Animated gradient orbs */}
