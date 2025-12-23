@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import {
   ChevronDown,
+  ChevronRight,
   X,
   Languages as LanguagesIcon,
   Check,
@@ -184,7 +185,11 @@ export default function MobileNavModal({
           {user?.role !== "EXPERT" && (
             <div>
               <div
-                className="flex items-center justify-between cursor-pointer px-[25px] py-[12px] hover:bg-hover-bg rounded-full transition-colors duration-200"
+                className={`flex items-center justify-between cursor-pointer px-[20px] py-[14px] rounded-[16px] transition-colors duration-200 border ${
+                  weHelpWithExpanded
+                    ? "bg-gray-50 border-gray-200"
+                    : "border-transparent hover:bg-hover-bg"
+                }`}
                 onClick={() => setWeHelpWithExpanded(!weHelpWithExpanded)}
               >
                 <span className="text-primary text-[16px]">
@@ -206,27 +211,36 @@ export default function MobileNavModal({
                     : "max-h-0 opacity-0"
                 }`}
               >
-                <div className="pl-[30px] pt-[10px] flex flex-col gap-[8px]">
+                <div className="mt-[10px] ml-[18px] pl-[14px] border-l border-gray-200 flex flex-col gap-[6px] pb-[2px]">
                   <Link
                     to="/wellness-experts"
                     onClick={onClose}
-                    className="px-[20px] py-[10px] text-[16px] text-primary rounded-[10px] cursor-pointer hover:bg-gray-50 transition-colors duration-200"
+                    className="flex items-center justify-between px-[14px] py-[10px] text-[15px] text-[#304048] rounded-[12px] cursor-pointer hover:bg-gray-50 transition-colors duration-200"
                   >
-                    {t("wellnessExperts", { ns: "navigation" })}
+                    <span className="font-medium">
+                      {t("wellnessExperts", { ns: "navigation" })}
+                    </span>
+                    <ChevronRight size={16} className="text-gray-400" />
                   </Link>
                   <Link
                     to="/education-experts"
                     onClick={onClose}
-                    className="px-[20px] py-[10px] text-[16px] text-primary rounded-[10px] cursor-pointer hover:bg-gray-50 transition-colors duration-200"
+                    className="flex items-center justify-between px-[14px] py-[10px] text-[15px] text-[#304048] rounded-[12px] cursor-pointer hover:bg-gray-50 transition-colors duration-200"
                   >
-                    {t("educationExperts", { ns: "navigation" })}
+                    <span className="font-medium">
+                      {t("educationExperts", { ns: "navigation" })}
+                    </span>
+                    <ChevronRight size={16} className="text-gray-400" />
                   </Link>
                   <Link
                     to="/finance-experts"
                     onClick={onClose}
-                    className="px-[20px] py-[10px] text-[16px] text-primary rounded-[10px] cursor-pointer hover:bg-gray-50 transition-colors duration-200"
+                    className="flex items-center justify-between px-[14px] py-[10px] text-[15px] text-[#304048] rounded-[12px] cursor-pointer hover:bg-gray-50 transition-colors duration-200"
                   >
-                    {t("financeExperts", { ns: "navigation" })}
+                    <span className="font-medium">
+                      {t("financeExperts", { ns: "navigation" })}
+                    </span>
+                    <ChevronRight size={16} className="text-gray-400" />
                   </Link>
                 </div>
               </div>
