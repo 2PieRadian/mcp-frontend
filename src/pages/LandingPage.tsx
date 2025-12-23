@@ -5,6 +5,7 @@ import HowDoesItWork from "../components/HowDoesItWork";
 import Footer from "../components/Footer";
 import ExpertVerifiedAssessmentsSection from "../components/ExpertVerifiedAssessmentsSection";
 import MakeInIndia from "../components/MakeInIndia";
+import GuidanceQuotesSection from "../components/GuidanceQuotesSection";
 import { Helmet } from "react-helmet-async";
 import useScrollToTop from "../hooks/useScrollToTop";
 
@@ -48,6 +49,7 @@ export default function UserDashboard() {
       <div className="landing-page px-[20px] overflow-x-hidden w-full max-w-full bg-white">
         <ResponsiveNavbar />
         <HeroSection />
+        <GuidanceQuotesSection />
         <MakeInIndia />
         <ExpertVerifiedAssessmentsSection />
         <HowDoesItWork />

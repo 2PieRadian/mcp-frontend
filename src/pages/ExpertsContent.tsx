@@ -3,7 +3,10 @@ import { useLocation } from "react-router-dom";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import { useExperts } from "../context/ExpertsContext";
 import type { FilterState } from "../types/filters";
-import { getSpecializationBySlug, getSpecializationByValue } from "../lib/constants/experts";
+import {
+  getSpecializationBySlug,
+  getSpecializationByValue,
+} from "../lib/constants/experts";
 import useScrollToTop from "../hooks/useScrollToTop";
 import { useTranslation } from "react-i18next";
 
@@ -67,7 +70,8 @@ export default function ExpertsContent() {
     if (fromValue) return t(`${fromValue.i18nKey}.title`, { ns: "experts" });
 
     const pathSegments = location.pathname.split("/").filter(Boolean);
-    const slug = pathSegments.length >= 2 ? pathSegments[pathSegments.length - 1] : "";
+    const slug =
+      pathSegments.length >= 2 ? pathSegments[pathSegments.length - 1] : "";
     const fromSlug = getSpecializationBySlug(slug);
     if (fromSlug) return t(`${fromSlug.i18nKey}.title`, { ns: "experts" });
 

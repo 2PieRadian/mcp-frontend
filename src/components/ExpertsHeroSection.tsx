@@ -68,7 +68,7 @@ export default function ExpertsHeroSection({
           {/* Right image */}
           <div className="hidden min-[770px]:flex flex-1 justify-start min-[770px]:justify-end w-full sm:w-auto">
             <div className="relative flex items-center justify-start min-[770px]:justify-end w-full mt-[10px] sm:mt-0 animate-float-1 max-[770px]:max-w-full md:max-w-[380px] lg:max-w-[420px]">
-              <div className="absolute -inset-[10%] bg-gradient-to-tr from-white/15 via-transparent to-white/5 blur-3xl opacity-70 pointer-events-none" />
+              <div className="absolute -inset-[10%] bg-linear-to-tr from-white/15 via-transparent to-white/5 blur-3xl opacity-70 pointer-events-none" />
 
               <img
                 id={imageId}

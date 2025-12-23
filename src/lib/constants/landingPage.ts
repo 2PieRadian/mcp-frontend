@@ -72,3 +72,19 @@ export const REVIEWS = [
     rating: 5,
   },
 ];
+
+export const LANDING_PAGE_QUOTES = [
+  {
+    id: 1,
+    quote: "“Invest your hard money to upgrade your thinking skills by our experts.”",
+  },
+  {
+    id: 2,
+    quote:
+      "“Consult your problems with experienced experts; one wrong guidance can lead to failure.”",
+  },
+  {
+    id: 3,
+    quote: "“Time is money; don’t waste your time following wrong guidance.”",
+  },
+] as const;
