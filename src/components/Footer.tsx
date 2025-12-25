@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 export default function Footer() {
   const { t } = useTranslation("common");
   const linkedinURL = "https://www.linkedin.com/company/mindcurepath";
-  const instagramURL = "https://www.instagram.com/mindcurepath";
+  const instagramURL = "https://www.instagram.com/mindcurepath/";
   const twitterURL = "https://www.twitter.com/mindcurepath";
   const facebookURL = "https://www.facebook.com/mindcurepath";
 
