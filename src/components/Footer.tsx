@@ -154,7 +154,7 @@ export default function Footer() {
             {/* Links and Newsletter Container */}
             <div className="flex flex-col gap-12 sm:flex-row sm:gap-10 sm:items-start md:gap-16 lg:gap-12">
               {/* Navigation Links */}
-              <div className="flex flex-row justify-center gap-[10%] sm:justify-start sm:gap-10">
+              <div className="flex flex-row justify-center gap-[20%] sm:justify-start sm:gap-10">
                 {/* Quick Links */}
                 <nav
                   aria-label={t("quickLinks", { defaultValue: "Quick links" })}
