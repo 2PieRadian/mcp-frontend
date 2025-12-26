@@ -99,10 +99,14 @@ export default function Footer() {
               </p>
 
               {/* Social Links */}
-              <div
-                aria-label={t("connectWithUs")}
-                className="flex flex-wrap items-center justify-center gap-2.5 py-6 sm:gap-3 sm:py-4 md:gap-3 md:py-0"
-              >
+              <div className="space-y-4 sm:space-y-5 py-6 sm:py-0">
+                <h3 className="text-lg font-semibold tracking-wide text-white uppercase text-center">
+                  {t("followUs", { defaultValue: "Follow Us" })}
+                </h3>
+                <div
+                  aria-label={t("connectWithUs")}
+                  className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3"
+                >
                 <a
                   href={instagramURL}
                   target="_blank"
@@ -148,6 +152,7 @@ export default function Footer() {
                 >
                   <ThreadsIcon size={20} className="sm:w-[24px] sm:h-[24px]" />
                 </a>
+                </div>
               </div>
             </div>
 
