@@ -87,7 +87,7 @@ export default function WhyChooseUsSection() {
   };
 
   return (
-    <div className="py-[50px] max-w-[1350px] mx-auto mt-[70px]">
+    <div className="py-[50px] max-w-[1350px] mx-auto mt-[70px] border-t border-gray-300">
       <h1 className="text-3xl font-bold text-center">
         {t("whyChooseUs.title")}
       </h1>
