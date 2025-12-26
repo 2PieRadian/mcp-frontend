@@ -54,8 +54,9 @@ export default function UserDashboard() {
         <ExpertVerifiedAssessmentsSection />
         <HowDoesItWork />
         <WhyChooseUsSection />
-        <Footer />
       </div>
+
+      <Footer />
     </>
   );
 }
