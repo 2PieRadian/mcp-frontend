@@ -54,7 +54,7 @@ function ThreadsIcon({
 
 export default function Footer() {
   const { t } = useTranslation("common");
-  const linkedinURL = "https://www.linkedin.com/company/mindcurepath";
+  const linkedinURL = "https://www.linkedin.com/company/mindcurepath-official";
   const instagramURL = "https://www.instagram.com/mindcurepath/";
   const xURL = "https://x.com/mindcurepath";
   const facebookURL = "https://www.facebook.com/profile.php?id=61585370654255";
@@ -107,51 +107,54 @@ export default function Footer() {
                   aria-label={t("connectWithUs")}
                   className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3"
                 >
-                <a
-                  href={instagramURL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
-                  aria-label="Instagram"
-                >
-                  <Instagram size={20} className="sm:w-[24px] sm:h-[24px]" />
-                </a>
-                <a
-                  href={linkedinURL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
-                  aria-label="LinkedIn"
-                >
-                  <Linkedin size={20} className="sm:w-[24px] sm:h-[24px]" />
-                </a>
-                <a
-                  href={xURL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
-                  aria-label="X"
-                >
-                  <XIcon size={20} className="sm:w-[24px] sm:h-[24px]" />
-                </a>
-                <a
-                  href={facebookURL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
-                  aria-label="Facebook"
-                >
-                  <Facebook size={20} className="sm:w-[24px] sm:h-[24px]" />
-                </a>
-                <a
-                  href={threadsURL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
-                  aria-label="Threads"
-                >
-                  <ThreadsIcon size={20} className="sm:w-[24px] sm:h-[24px]" />
-                </a>
+                  <a
+                    href={instagramURL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+                    aria-label="Instagram"
+                  >
+                    <Instagram size={20} className="sm:w-[24px] sm:h-[24px]" />
+                  </a>
+                  <a
+                    href={linkedinURL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+                    aria-label="LinkedIn"
+                  >
+                    <Linkedin size={20} className="sm:w-[24px] sm:h-[24px]" />
+                  </a>
+                  <a
+                    href={xURL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+                    aria-label="X"
+                  >
+                    <XIcon size={20} className="sm:w-[24px] sm:h-[24px]" />
+                  </a>
+                  <a
+                    href={facebookURL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+                    aria-label="Facebook"
+                  >
+                    <Facebook size={20} className="sm:w-[24px] sm:h-[24px]" />
+                  </a>
+                  <a
+                    href={threadsURL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+                    aria-label="Threads"
+                  >
+                    <ThreadsIcon
+                      size={20}
+                      className="sm:w-[24px] sm:h-[24px]"
+                    />
+                  </a>
                 </div>
               </div>
             </div>
