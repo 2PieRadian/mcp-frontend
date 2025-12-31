@@ -14,7 +14,7 @@ declare global {
 }
 
 // Your Google Analytics Measurement ID
-const GA_MEASUREMENT_ID = "G-5ZM5J0638Q";
+const GA_MEASUREMENT_ID = "G-5LJ400CZM3";
 
 /**
  * Custom hook to track page views in Google Analytics
