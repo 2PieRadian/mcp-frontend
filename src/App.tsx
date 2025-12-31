@@ -22,8 +22,11 @@ import AssessmentIntro from "./pages/AssessmentIntro";
 import AssessmentQuestions from "./pages/AssessmentQuestions";
 import AssessmentResult from "./pages/AssessmentResult";
 import FindCounsellors from "./pages/FindCounsellors";
+import { useGoogleAnalytics } from "./hooks/useGoogleAnalytics";
 
 export default function App() {
+  // Track page views on every route change
+  useGoogleAnalytics();
   return (
     <ScreenProvider>
       <ExpertsProvider>
