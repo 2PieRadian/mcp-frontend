@@ -11,7 +11,6 @@ export type AuthUser = {
   email: string;
   name?: string;
   avatarUrl?: string;
-  userUploadedAvatar?: string;
   phoneNumber?: string;
   role?: "USER" | "EXPERT" | "ADMIN";
   dateOfBirth?: string;
@@ -65,7 +64,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const updateUserAvatar = (url: string) => {
     if (!user) return;
 
-    const updatedUser = { ...user, userUploadedAvatar: url };
+    const updatedUser = { ...user, avatarUrl: url };
     setUser(updatedUser);
     window.localStorage.setItem("auth:user", JSON.stringify(updatedUser));
   };

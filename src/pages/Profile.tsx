@@ -214,8 +214,6 @@ export default function Profile() {
     }
   };
 
-  console.log("Avatar: ", user.avatarUrl);
-  console.log("Profile Pic: ", user.userUploadedAvatar);
   return (
     <div className="min-h-screen bg-light-100 px-[20px]">
       <ResponsiveNavbar />
@@ -241,7 +239,7 @@ export default function Profile() {
               <div className="w-full h-full rounded-full bg-light-100/10 border border-light-100/40 flex items-center justify-center text-[22px] sm:text-[26px] font-semibold overflow-hidden">
                 {user.avatarUrl && !imageError ? (
                   <img
-                    src={user.userUploadedAvatar || user.avatarUrl}
+                    src={user.avatarUrl}
                     alt={displayName}
                     className="w-full h-full object-cover"
                     onError={handleImageError}
