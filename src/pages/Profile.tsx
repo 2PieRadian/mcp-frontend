@@ -194,8 +194,6 @@ export default function Profile() {
         return;
       }
 
-      const updateData = await updateResponse.json();
-
       // Step 4: Update auth context with the new avatar URL
       updateUserAvatar(fileURL);
 
