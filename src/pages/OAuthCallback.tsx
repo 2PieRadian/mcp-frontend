@@ -80,6 +80,7 @@ export default function OAuthCallback() {
           email: user.email,
           name: user.name || undefined,
           avatarUrl: getAvatarUrl(avatarValue),
+          userUploadedAvatar: user.userUploadedAvatar || undefined,
           phoneNumber: user.phoneNumber || undefined,
           role: user.role || undefined,
           dateOfBirth: user.dateOfBirth || undefined,

@@ -3,7 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import { lazy, useState, useRef } from "react";
 import useScrollToTop from "../hooks/useScrollToTop";
-import { AlertTriangle, X, Camera } from "lucide-react";
+import { AlertTriangle, X, Camera, CheckCircle2, XCircle } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { BACKEND_URL } from "../lib/api";
 
@@ -29,6 +29,11 @@ export default function Profile() {
   const [imageError, setImageError] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [isUploadingImage, setIsUploadingImage] = useState(false);
+  const [toast, setToast] = useState<{
+    show: boolean;
+    type: "success" | "error";
+    message: string;
+  }>({ show: false, type: "success", message: "" });
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const displayName = user?.name || user?.email || "";
@@ -63,6 +68,13 @@ export default function Profile() {
     fileInputRef.current?.click();
   };
 
+  const showToast = (type: "success" | "error", message: string) => {
+    setToast({ show: true, type, message });
+    setTimeout(() => {
+      setToast({ show: false, type, message: "" });
+    }, 4000);
+  };
+
   const handleImageChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -71,13 +83,16 @@ export default function Profile() {
 
     // Validate file type
     if (!file.type.startsWith("image/")) {
-      alert("Please select a valid image file");
+      showToast("error", "Please select a valid image file (PNG, JPG, etc.)");
       return;
     }
 
     // Validate file size (e.g., max 5MB)
     if (file.size > 5 * 1024 * 1024) {
-      alert("Image size should be less than 5MB");
+      showToast(
+        "error",
+        "Image size should be less than 5MB. Please choose a smaller file."
+      );
       return;
     }
 
@@ -87,19 +102,15 @@ export default function Profile() {
       const token =
         localStorage.getItem("auth:token") || localStorage.getItem("token");
 
-      console.log("Starting image upload process...");
-      console.log("Backend URL:", BACKEND_URL);
-      console.log("Token exists:", !!token);
-      console.log("File type:", file.type);
-      console.log("File size:", file.size);
-
       if (!token) {
-        throw new Error("No authentication token found. Please log in again.");
+        showToast("error", "Your session has expired. Please log in again.");
+        return;
       }
 
       // Extract file extension from MIME type (e.g., "image/png" -> "png")
       const fileExtension = file.type.split("/")[1];
 
+      // Step 1: Get presigned URL - Updated endpoint
       const presignedResponse = await fetch(
         `${BACKEND_URL}/api/v1/upload/profile-image`,
         {
@@ -113,10 +124,19 @@ export default function Profile() {
       );
 
       if (!presignedResponse.ok) {
-        const errorText = await presignedResponse.text();
-        throw new Error(
-          `Failed to get presigned URL: ${presignedResponse.status} - ${errorText}`
+        const errorData = await presignedResponse.json().catch(() => ({}));
+        if (presignedResponse.status === 401) {
+          showToast("error", "Your session has expired. Please log in again.");
+          logout();
+          navigate("/login");
+          return;
+        }
+        showToast(
+          "error",
+          errorData.message ||
+            "Unable to prepare image upload. Please try again later."
         );
+        return;
       }
 
       const presignedData = await presignedResponse.json();
@@ -124,7 +144,8 @@ export default function Profile() {
       const { uploadURL, fileURL } = presignedData;
 
       if (!uploadURL || !fileURL) {
-        throw new Error("Invalid response: missing uploadURL or fileURL");
+        showToast("error", "Something went wrong. Please try again.");
+        return;
       }
 
       // Step 2: Upload image to presigned URL
@@ -137,16 +158,14 @@ export default function Profile() {
       });
 
       if (!uploadResponse.ok) {
-        const errorText = await uploadResponse.text();
-        throw new Error(
-          `Failed to upload image: ${uploadResponse.status} - ${errorText}`
+        showToast(
+          "error",
+          "Failed to upload image. Please check your internet connection and try again."
         );
+        return;
       }
 
-      // Step 3: Update auth context
-      updateUserAvatar(fileURL);
-
-      // Step 4: Update database
+      // Step 3: Update database
       const updateResponse = await fetch(
         `${BACKEND_URL}/api/v1/profile/profile-image`,
         {
@@ -155,23 +174,38 @@ export default function Profile() {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ profileImageUrl: fileURL }),
+          body: JSON.stringify({ fileURL: fileURL }),
         }
       );
 
       if (!updateResponse.ok) {
-        const errorText = await updateResponse.text();
-        throw new Error(
-          `Failed to update profile image in database: ${updateResponse.status} - ${errorText}`
+        const errorData = await updateResponse.json().catch(() => ({}));
+        if (updateResponse.status === 401) {
+          showToast("error", "Your session has expired. Please log in again.");
+          logout();
+          navigate("/login");
+          return;
+        }
+        showToast(
+          "error",
+          errorData.message ||
+            "Image uploaded but couldn't save to your profile. Please refresh and try again."
         );
+        return;
       }
 
+      const updateData = await updateResponse.json();
+
+      // Step 4: Update auth context with the new avatar URL
+      updateUserAvatar(fileURL);
+
       setImageError(false);
+      showToast("success", "Profile picture updated successfully! 🎉");
     } catch (error) {
-      alert(
-        `Failed to upload profile image: ${
-          error instanceof Error ? error.message : "Unknown error"
-        }`
+      console.error("Error uploading profile image:", error);
+      showToast(
+        "error",
+        "Unable to upload image. Please check your connection and try again."
       );
     } finally {
       setIsUploadingImage(false);
@@ -182,6 +216,8 @@ export default function Profile() {
     }
   };
 
+  console.log("Avatar: ", user.avatarUrl);
+  console.log("Profile Pic: ", user.userUploadedAvatar);
   return (
     <div className="min-h-screen bg-light-100 px-[20px]">
       <ResponsiveNavbar />
@@ -274,6 +310,38 @@ export default function Profile() {
           <AccountActivityCard />
         </section>
       </main>
+
+      {/* Toast Notification */}
+      {toast.show && (
+        <div className="fixed top-4 right-4 z-[100] animate-in slide-in-from-top-2 duration-300">
+          <div
+            className={`flex items-center gap-3 px-6 py-4 rounded-xl shadow-2xl backdrop-blur-sm border ${
+              toast.type === "success"
+                ? "bg-green-50/95 border-green-200 text-green-800"
+                : "bg-red-50/95 border-red-200 text-red-800"
+            } max-w-md`}
+          >
+            {toast.type === "success" ? (
+              <CheckCircle2 className="text-green-600 shrink-0" size={24} />
+            ) : (
+              <XCircle className="text-red-600 shrink-0" size={24} />
+            )}
+            <p className="text-[15px] font-medium leading-snug">
+              {toast.message}
+            </p>
+            <button
+              onClick={() => setToast({ ...toast, show: false })}
+              className={`ml-2 shrink-0 ${
+                toast.type === "success"
+                  ? "text-green-600 hover:text-green-800"
+                  : "text-red-600 hover:text-red-800"
+              } transition-colors`}
+            >
+              <X size={18} />
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Logout Confirmation Modal */}
       {showLogoutModal && (

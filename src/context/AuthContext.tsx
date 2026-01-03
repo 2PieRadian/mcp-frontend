@@ -50,9 +50,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  const login = (nextUser: AuthUser) => {
-    setUser(nextUser);
-    window.localStorage.setItem("auth:user", JSON.stringify(nextUser));
+  const login = (user: AuthUser) => {
+    console.log("Login user object:", user); // Add this to see what backend returns
+    setUser(user);
+    window.localStorage.setItem("auth:user", JSON.stringify(user));
   };
 
   const logout = () => {
@@ -61,10 +62,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     window.localStorage.removeItem("auth:token");
   };
 
-  const updateUserAvatar = (avatarUrl: string) => {
+  const updateUserAvatar = (url: string) => {
     if (!user) return;
 
-    const updatedUser = { ...user, userUploadedAvatar: avatarUrl };
+    const updatedUser = { ...user, userUploadedAvatar: url };
     setUser(updatedUser);
     window.localStorage.setItem("auth:user", JSON.stringify(updatedUser));
   };
