@@ -11,6 +11,7 @@ export type AuthUser = {
   email: string;
   name?: string;
   avatarUrl?: string;
+  userUploadedAvatar?: string;
   phoneNumber?: string;
   role?: "USER" | "EXPERT" | "ADMIN";
   dateOfBirth?: string;
@@ -25,6 +26,7 @@ type AuthContextValue = {
   isLoading: boolean;
   login: (user: AuthUser) => void;
   logout: () => void;
+  updateUserAvatar: (avatarUrl: string) => void;
 };
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
@@ -59,11 +61,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     window.localStorage.removeItem("auth:token");
   };
 
+  const updateUserAvatar = (avatarUrl: string) => {
+    if (!user) return;
+
+    const updatedUser = { ...user, userUploadedAvatar: avatarUrl };
+    setUser(updatedUser);
+    window.localStorage.setItem("auth:user", JSON.stringify(updatedUser));
+  };
+
   const value: AuthContextValue = {
     user,
     isLoading,
     login,
     logout,
+    updateUserAvatar,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -1,9 +1,9 @@
 import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
-import { lazy, useState } from "react";
+import { lazy, useState, useRef } from "react";
 import useScrollToTop from "../hooks/useScrollToTop";
-import { AlertTriangle, X } from "lucide-react";
+import { AlertTriangle, X, Camera } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 const BasicInfoCard = lazy(() => import("../components/profile/BasicInfoCard"));
@@ -22,11 +22,13 @@ const LanguagesCard = lazy(() => import("../components/profile/LanguagesCard"));
 
 export default function Profile() {
   useScrollToTop();
-  const { user, isLoading, logout } = useAuth();
+  const { user, isLoading, logout, updateUserAvatar } = useAuth();
   const navigate = useNavigate();
   const { t } = useTranslation("profile");
   const [imageError, setImageError] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const displayName = user?.name || user?.email || "";
   const initial = displayName?.charAt(0)?.toUpperCase() ?? "?";
@@ -56,6 +58,131 @@ export default function Profile() {
     setImageError(true);
   };
 
+  const handleImageUploadClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleImageChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith("image/")) {
+      alert("Please select a valid image file");
+      return;
+    }
+
+    // Validate file size (e.g., max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      alert("Image size should be less than 5MB");
+      return;
+    }
+
+    setIsUploadingImage(true);
+
+    try {
+      const BACKEND_URL =
+        import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
+      const token =
+        localStorage.getItem("auth:token") || localStorage.getItem("token");
+
+      console.log("Starting image upload process...");
+      console.log("Backend URL:", BACKEND_URL);
+      console.log("Token exists:", !!token);
+      console.log("File type:", file.type);
+      console.log("File size:", file.size);
+
+      if (!token) {
+        throw new Error("No authentication token found. Please log in again.");
+      }
+
+      // Extract file extension from MIME type (e.g., "image/png" -> "png")
+      const fileExtension = file.type.split("/")[1];
+
+      const presignedResponse = await fetch(
+        `${BACKEND_URL}/api/v1/upload/profile-image`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userId: user.id, fileType: fileExtension }),
+        }
+      );
+
+      if (!presignedResponse.ok) {
+        const errorText = await presignedResponse.text();
+        throw new Error(
+          `Failed to get presigned URL: ${presignedResponse.status} - ${errorText}`
+        );
+      }
+
+      const presignedData = await presignedResponse.json();
+
+      const { uploadURL, fileURL } = presignedData;
+
+      if (!uploadURL || !fileURL) {
+        throw new Error("Invalid response: missing uploadURL or fileURL");
+      }
+
+      // Step 2: Upload image to presigned URL
+      const uploadResponse = await fetch(uploadURL, {
+        method: "PUT",
+        headers: {
+          "Content-Type": file.type,
+        },
+        body: file,
+      });
+
+      if (!uploadResponse.ok) {
+        const errorText = await uploadResponse.text();
+        throw new Error(
+          `Failed to upload image: ${uploadResponse.status} - ${errorText}`
+        );
+      }
+
+      // Step 3: Update auth context
+      updateUserAvatar(fileURL);
+
+      // Step 4: Update database
+      const updateResponse = await fetch(
+        `${BACKEND_URL}/api/v1/profile/profile-image`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ profileImageUrl: fileURL }),
+        }
+      );
+
+      if (!updateResponse.ok) {
+        const errorText = await updateResponse.text();
+        throw new Error(
+          `Failed to update profile image in database: ${updateResponse.status} - ${errorText}`
+        );
+      }
+
+      setImageError(false);
+    } catch (error) {
+      alert(
+        `Failed to upload profile image: ${
+          error instanceof Error ? error.message : "Unknown error"
+        }`
+      );
+    } finally {
+      setIsUploadingImage(false);
+      // Reset file input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-light-100 px-[20px]">
       <ResponsiveNavbar />
@@ -77,17 +204,42 @@ export default function Profile() {
         {/* Hero / header */}
         <section className="bg-linear-to-r from-[hsl(194,27%,21%)] to-[hsl(187,73%,24%)] rounded-[16px] sm:rounded-[20px] p-[16px] sm:p-[28px] text-light-100 shadow-[inset_0px_1px_5px_hsla(0,0%,100%,0.4)] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-[16px] sm:gap-[20px]">
           <div className="flex items-center gap-[12px] sm:gap-[16px] shadow-m-profile rounded-[30px] sm:rounded-[25px] py-[12px] sm:py-[18px] px-[12px] sm:pr-[25px]">
-            <div className="w-[56px] h-[56px] sm:w-[64px] sm:h-[64px] rounded-full bg-light-100/10 border border-light-100/40 flex items-center justify-center text-[22px] sm:text-[26px] font-semibold overflow-hidden shrink-0">
-              {user.avatarUrl && !imageError ? (
-                <img
-                  src={user.avatarUrl}
-                  alt={displayName}
-                  className="w-full h-full object-cover"
-                  onError={handleImageError}
-                />
-              ) : (
-                initial
+            <div className="relative w-[56px] h-[56px] sm:w-[64px] sm:h-[64px] shrink-0">
+              <div className="w-full h-full rounded-full bg-light-100/10 border border-light-100/40 flex items-center justify-center text-[22px] sm:text-[26px] font-semibold overflow-hidden">
+                {user.avatarUrl && !imageError ? (
+                  <img
+                    src={user.userUploadedAvatar || user.avatarUrl}
+                    alt={displayName}
+                    className="w-full h-full object-cover"
+                    onError={handleImageError}
+                  />
+                ) : (
+                  initial
+                )}
+              </div>
+              {/* Upload button overlay */}
+              <button
+                type="button"
+                onClick={handleImageUploadClick}
+                disabled={isUploadingImage}
+                className="absolute inset-0 rounded-full bg-black/50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-200 cursor-pointer disabled:cursor-not-allowed"
+                aria-label="Upload profile image"
+              >
+                <Camera className="text-white" size={24} />
+              </button>
+              {isUploadingImage && (
+                <div className="absolute inset-0 rounded-full bg-black/70 flex items-center justify-center">
+                  <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                </div>
               )}
+              {/* Hidden file input */}
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="hidden"
+              />
             </div>
             <div className="min-w-0 flex-1">
               <p className="text-[12px] sm:text-[13px] uppercase tracking-[0.12em] opacity-80">
