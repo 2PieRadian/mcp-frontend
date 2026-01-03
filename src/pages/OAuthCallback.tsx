@@ -53,13 +53,6 @@ export default function OAuthCallback() {
         const contentType = response.headers.get("content-type") || "";
         const isJson = contentType.includes("application/json");
 
-        console.log("--------------------------------");
-        console.log(contentType);
-        console.log(isJson);
-        console.log("Token: ", token);
-        console.log("Response: ", response);
-        console.log("--------------------------------");
-
         if (!response.ok) {
           const errorText = isJson
             ? (await response.json()).message
@@ -73,7 +66,7 @@ export default function OAuthCallback() {
         if (!isMounted || hasProcessedRef.current) return;
         hasProcessedRef.current = true;
 
-        const avatarValue = user.avatar || user.avatarUrl;
+        const avatarValue = user.userUploadedAvatar || user.avatar;
 
         login({
           id: String(user.id),
@@ -119,8 +112,7 @@ export default function OAuthCallback() {
     return () => {
       isMounted = false;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [searchParams, navigate, login]);
 
   if (status === "error") {
     return (
