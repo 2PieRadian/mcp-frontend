@@ -66,7 +66,7 @@ export default function OAuthCallback() {
         if (!isMounted || hasProcessedRef.current) return;
         hasProcessedRef.current = true;
 
-        const avatarValue = user.userUploadedAvatar || user.avatar;
+        const avatarValue = user.avatar || "";
 
         login({
           id: String(user.id),
