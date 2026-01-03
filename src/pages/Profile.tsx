@@ -5,6 +5,7 @@ import { lazy, useState, useRef } from "react";
 import useScrollToTop from "../hooks/useScrollToTop";
 import { AlertTriangle, X, Camera } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { BACKEND_URL } from "../lib/api";
 
 const BasicInfoCard = lazy(() => import("../components/profile/BasicInfoCard"));
 const ContactCard = lazy(() => import("../components/profile/ContactCard"));
@@ -83,8 +84,6 @@ export default function Profile() {
     setIsUploadingImage(true);
 
     try {
-      const BACKEND_URL =
-        import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
       const token =
         localStorage.getItem("auth:token") || localStorage.getItem("token");
 
