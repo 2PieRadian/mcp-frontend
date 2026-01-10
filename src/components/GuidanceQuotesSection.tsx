@@ -49,11 +49,8 @@ export default function GuidanceQuotesSection() {
     <section className="relative w-full overflow-hidden bg-white mb-[70px]">
       <div className="relative max-w-[1350px] mx-auto py-[42px] sm:py-[56px]">
         <div className="text-center px-[4px]">
-          <p className="text-[11px] sm:text-[12px] tracking-[0.28em] uppercase text-primary/70">
-            Choose guidance. Choose outcomes.
-          </p>
-          <h2 className="mt-2 text-[clamp(22px,3.4vw,36px)] font-bold text-primary leading-tight">
-            The difference between progress and regret
+          <h2 className="mt-2 text-[clamp(30px,3.4vw,36px)] font-bold text-primary leading-tight">
+            Choose the right guidance for fruitful outcomes.
           </h2>
           <p className="mt-3 text-[#4F5B64] text-[14px] sm:text-[15px] leading-relaxed max-w-[860px] mx-auto">
             Before you invest your time and money, take 30 seconds to read

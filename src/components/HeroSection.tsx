@@ -1,9 +1,4 @@
-import {
-  BadgeCheck,
-  TrendingUp,
-  ArrowRight,
-  BookOpenText,
-} from "lucide-react";
+import { BadgeCheck, TrendingUp, ArrowRight, BookOpenText } from "lucide-react";
 import { useScreen } from "../context/ScreenContext";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -29,7 +24,7 @@ export default function HeroSection() {
             </div>
 
             {/* Main Heading */}
-            <h1 className="text-[clamp(32px,5vw,48px)] font-bold leading-[1.1] text-primary tracking-tight">
+            <h1 className="text-[clamp(50px,5vw,55px)] font-bold leading-[1.1] text-primary tracking-tight">
               {t("discoverYourPath")}
               <span className="block mt-2 text-[hsl(190,40%,29%)]">
                 {t("betterLiving")}
@@ -162,7 +157,7 @@ export default function HeroSection() {
             <div className="w-full mt-[15px] pt-[40px] border-t border-gray-200">
               {/* Styles moved to src/index.css */}
 
-              <h2 className="text-[clamp(20px,5vw,24px)] font-bold text-primary text-center mb-4">
+              <h2 className="text-[clamp(30px,5vw,24px)] font-bold text-primary text-center mb-4">
                 {t("exploreOurExpertCategories")}
               </h2>
               <p className="text-[#4F5B64] text-center mb-6">
@@ -184,13 +179,13 @@ export default function HeroSection() {
                       <span className="mcp-wellness-breathe" />
                       <span className="mcp-wellness-leaf" />
                     </span>
-                  <img
-                    src="/images/health/yoga.png"
-                    alt="Wellness"
-                    className="mcp-cat-icon w-10 h-10 sm:w-14 sm:h-14 md:w-[86px] md:h-[86px] object-contain group-hover:scale-125 transition-transform duration-300"
-                    loading="lazy"
-                    decoding="async"
-                  />
+                    <img
+                      src="/images/health/yoga.png"
+                      alt="Wellness"
+                      className="mcp-cat-icon w-10 h-10 sm:w-14 sm:h-14 md:w-[86px] md:h-[86px] object-contain group-hover:scale-125 transition-transform duration-300"
+                      loading="lazy"
+                      decoding="async"
+                    />
                   </div>
                   <h3 className="font-bold text-primary text-[clamp(14px,2vw,18px)] mb-1">
                     {t("wellness")}
