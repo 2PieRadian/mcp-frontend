@@ -22,6 +22,9 @@ import AssessmentIntro from "./pages/AssessmentIntro";
 import AssessmentQuestions from "./pages/AssessmentQuestions";
 import AssessmentResult from "./pages/AssessmentResult";
 import FindCounsellors from "./pages/FindCounsellors";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsAndConditions from "./pages/TermsAndConditions";
+import TermsOfUse from "./pages/TermsOfUse";
 import { useGoogleAnalytics } from "./hooks/useGoogleAnalytics";
 
 export default function App() {
@@ -121,6 +124,11 @@ export default function App() {
           {/* Authenticated */}
           <Route path="/profile" element={<Profile />} />
           <Route path="/dashboard/expert" element={<ExpertsDashboard />} />
+
+          {/* Legal Pages */}
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+          <Route path="/terms-of-use" element={<TermsOfUse />} />
         </Routes>
       </ExpertsProvider>
     </ScreenProvider>

@@ -63,251 +63,242 @@ export default function Footer() {
   return (
     <footer className="mt-16 w-full bg-linear-to-b from-[#0b1220] via-[#0a1528] to-[#08101f] text-slate-200">
       <div className="border-t border-white/10">
-        <div
-          className="mx-auto max-w-7xl py-10 sm:py-12 md:py-14 lg:py-16"
-          style={{ paddingLeft: "20px", paddingRight: "20px" }}
-        >
-          <div className="flex flex-col gap-12 sm:gap-16">
+        <div className="mx-auto max-w-7xl py-10 sm:py-12 md:py-14 lg:py-16 px-5 sm:px-6 lg:px-8">
+          {/* Main Footer Content - Single row on desktop */}
+          <div className="flex flex-col gap-12 sm:gap-14 lg:flex-row lg:gap-12 lg:justify-between">
             {/* Brand Section */}
-            <div className="flex flex-col items-center space-y-5 md:space-y-6">
+            <div className="flex flex-col items-center lg:items-start space-y-5 sm:space-y-4 lg:max-w-xs">
               <Link
                 to="/"
-                className="group flex flex-col items-center gap-3 md:gap-4 text-center transition-opacity hover:opacity-90"
+                className="group flex flex-col items-center lg:items-start gap-3 text-center lg:text-left transition-opacity hover:opacity-90"
               >
                 <img
                   src="/images/footer/company_logo.png"
                   alt={`${t("appName")} Logo`}
-                  className="h-14 w-auto sm:h-16 md:h-18 lg:h-20"
+                  className="h-12 w-auto sm:h-14 lg:h-16"
                   loading="lazy"
                 />
-
-                <div className="space-y-1.5 md:space-y-2">
-                  <h2 className="text-2xl font-bold text-white sm:text-3xl md:text-4xl">
+                <div className="space-y-1">
+                  <h2 className="text-xl font-bold text-white sm:text-2xl">
                     MindCurePath
                   </h2>
-                  <p className="text-base text-slate-300 sm:text-lg md:text-xl leading-tight">
-                    Guided by experts, driven by care, healing every mind
+                  <p className="text-sm text-slate-300 sm:text-base leading-tight">
+                    Guided by experts, driven by care
                   </p>
                 </div>
               </Link>
 
-              <p className="text-base leading-relaxed text-slate-400 max-w-[32ch] sm:max-w-[36ch] text-center sm:text-lg">
+              <p className="text-sm leading-relaxed text-slate-400 text-center lg:text-left sm:text-base max-w-[28ch]">
                 {t("footerTagline", {
                   defaultValue:
-                    "Mental wellness tools, expert-backed assessments, and guidance—built for clarity and care.",
+                    "Mental wellness tools and expert-backed guidance.",
                 })}
               </p>
 
               {/* Social Links */}
-              <div className="space-y-4 sm:space-y-5 py-6 sm:py-0">
-                <h3 className="text-lg font-semibold tracking-wide text-white uppercase text-center">
-                  {t("followUs", { defaultValue: "Follow Us" })}
-                </h3>
-                <div
-                  aria-label={t("connectWithUs")}
-                  className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3"
+              <div
+                aria-label={t("connectWithUs")}
+                className="flex items-center gap-2"
+              >
+                <a
+                  href={instagramURL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105"
+                  aria-label="Instagram"
                 >
-                  <a
-                    href={instagramURL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
-                    aria-label="Instagram"
-                  >
-                    <Instagram size={20} className="sm:w-[24px] sm:h-[24px]" />
-                  </a>
-                  <a
-                    href={linkedinURL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
-                    aria-label="LinkedIn"
-                  >
-                    <Linkedin size={20} className="sm:w-[24px] sm:h-[24px]" />
-                  </a>
-                  <a
-                    href={xURL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
-                    aria-label="X"
-                  >
-                    <XIcon size={20} className="sm:w-[24px] sm:h-[24px]" />
-                  </a>
-                  <a
-                    href={facebookURL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
-                    aria-label="Facebook"
-                  >
-                    <Facebook size={20} className="sm:w-[24px] sm:h-[24px]" />
-                  </a>
-                  <a
-                    href={threadsURL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
-                    aria-label="Threads"
-                  >
-                    <ThreadsIcon
-                      size={20}
-                      className="sm:w-[24px] sm:h-[24px]"
-                    />
-                  </a>
-                </div>
+                  <Instagram size={18} />
+                </a>
+                <a
+                  href={linkedinURL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin size={18} />
+                </a>
+                <a
+                  href={xURL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105"
+                  aria-label="X"
+                >
+                  <XIcon size={18} />
+                </a>
+                <a
+                  href={facebookURL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105"
+                  aria-label="Facebook"
+                >
+                  <Facebook size={18} />
+                </a>
+                <a
+                  href={threadsURL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105"
+                  aria-label="Threads"
+                >
+                  <ThreadsIcon size={18} />
+                </a>
               </div>
             </div>
 
-            {/* Links and Newsletter Container */}
-            <div className="flex flex-col gap-12 sm:flex-row sm:gap-10 sm:items-start md:gap-16 lg:gap-12">
-              {/* Navigation Links */}
-              <div className="flex flex-row justify-center gap-[20%] sm:justify-start sm:gap-10">
-                {/* Quick Links */}
-                <nav
-                  aria-label={t("quickLinks", { defaultValue: "Quick links" })}
-                  className="space-y-3 sm:space-y-4"
-                >
-                  <h3 className="text-lg font-semibold tracking-wide text-white uppercase">
-                    {t("quickLinks", { defaultValue: "Quick links" })}
-                  </h3>
-                  <ul className="space-y-2 sm:space-y-2.5 text-base text-slate-300">
-                    <li>
-                      <Link
-                        className="transition-colors duration-200 hover:text-white"
-                        to="/"
-                      >
-                        {t("home", { defaultValue: "Home" })}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className="transition-colors duration-200 hover:text-white"
-                        to="/assessments"
-                      >
-                        {t("assessments", { defaultValue: "Assessments" })}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className="transition-colors duration-200 hover:text-white"
-                        to="/experts"
-                      >
-                        {t("experts", { defaultValue: "Experts" })}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className="transition-colors duration-200 hover:text-white"
-                        to="/about"
-                      >
-                        {t("about", { defaultValue: "About" })}
-                      </Link>
-                    </li>
-                  </ul>
-                </nav>
+            {/* Navigation Links */}
+            <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 sm:gap-8 lg:flex lg:gap-12">
+              {/* Quick Links */}
+              <nav
+                aria-label={t("quickLinks", { defaultValue: "Quick links" })}
+                className="space-y-4 sm:space-y-3"
+              >
+                <h3 className="text-sm font-semibold tracking-wide text-white uppercase">
+                  {t("quickLinks", { defaultValue: "Quick links" })}
+                </h3>
+                <ul className="space-y-2 text-sm text-slate-300">
+                  <li>
+                    <Link
+                      className="transition-colors duration-200 hover:text-white"
+                      to="/"
+                    >
+                      {t("home", { defaultValue: "Home" })}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className="transition-colors duration-200 hover:text-white"
+                      to="/assessments/wellness"
+                    >
+                      {t("assessments", { defaultValue: "Assessments" })}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className="transition-colors duration-200 hover:text-white"
+                      to="/wellness-experts"
+                    >
+                      {t("experts", { defaultValue: "Experts" })}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className="transition-colors duration-200 hover:text-white"
+                      to="/about"
+                    >
+                      {t("about", { defaultValue: "About" })}
+                    </Link>
+                  </li>
+                </ul>
+              </nav>
 
-                {/* Support */}
-                <nav
-                  aria-label={t("support", { defaultValue: "Support" })}
-                  className="space-y-3 sm:space-y-4"
-                >
-                  <h3 className="text-lg font-semibold tracking-wide text-white uppercase">
-                    {t("support", { defaultValue: "Support" })}
-                  </h3>
-                  <ul className="space-y-2 sm:space-y-2.5 text-base text-slate-300">
-                    <li>
-                      <Link
-                        className="transition-colors duration-200 hover:text-white"
-                        to="/contact"
-                      >
-                        {t("contact", { defaultValue: "Contact" })}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className="transition-colors duration-200 hover:text-white"
-                        to="/faq"
-                      >
-                        {t("faq", { defaultValue: "FAQ" })}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className="transition-colors duration-200 hover:text-white"
-                        to="/help"
-                      >
-                        {t("helpCenter", { defaultValue: "Help Center" })}
-                      </Link>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
+              {/* Support */}
+              <nav
+                aria-label={t("support", { defaultValue: "Support" })}
+                className="space-y-4 sm:space-y-3"
+              >
+                <h3 className="text-sm font-semibold tracking-wide text-white uppercase">
+                  {t("support", { defaultValue: "Support" })}
+                </h3>
+                <ul className="space-y-2 text-sm text-slate-300">
+                  <li>
+                    <Link
+                      className="transition-colors duration-200 hover:text-white"
+                      to="/contact"
+                    >
+                      {t("contact", { defaultValue: "Contact" })}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className="transition-colors duration-200 hover:text-white"
+                      to="/faq"
+                    >
+                      {t("faq", { defaultValue: "FAQ" })}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className="transition-colors duration-200 hover:text-white"
+                      to="/help"
+                    >
+                      {t("helpCenter", { defaultValue: "Help Center" })}
+                    </Link>
+                  </li>
+                </ul>
+              </nav>
 
-              {/* Newsletter */}
-              <div className="space-y-3 sm:space-y-4 sm:flex-1">
-                <div className="space-y-2">
-                  <h3 className="text-lg font-semibold tracking-wide text-white uppercase">
-                    {t("newsletter")}
-                  </h3>
-                  <p className="text-base leading-6 text-slate-300">
-                    {t("stayUpToDate")}
-                  </p>
-                </div>
-
-                <form
-                  className="flex flex-col gap-2.5 sm:gap-3"
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                  }}
-                >
-                  <label className="sr-only" htmlFor="footer-email">
-                    {t("enterYourEmailAddress")}
-                  </label>
-                  <input
-                    id="footer-email"
-                    type="email"
-                    autoComplete="email"
-                    placeholder={t("enterYourEmailAddress")}
-                    className="h-12 w-full rounded-lg border border-white/10 bg-white/5 px-4 text-base text-white placeholder:text-slate-400 outline-none transition-all duration-200 focus:border-white/20 focus:bg-white/10 focus:ring-2 focus:ring-white/20 sm:h-14 sm:px-5"
-                  />
-                  <button
-                    type="submit"
-                    className="h-12 rounded-lg bg-white px-5 text-base font-semibold text-[#0b1220] transition-all duration-200 hover:bg-slate-100 active:bg-white/90 sm:h-14 sm:px-6"
-                  >
-                    {t("subscribe")}
-                  </button>
-                </form>
-                <p className="text-base text-slate-400">
-                  {t("newsletterNote", {
-                    defaultValue: "No spam. Unsubscribe anytime.",
-                  })}
-                </p>
-              </div>
+              {/* Legal */}
+              <nav
+                aria-label={t("legal", { defaultValue: "Legal" })}
+                className="space-y-4 sm:space-y-3 col-span-2 sm:col-span-1"
+              >
+                <h3 className="text-sm font-semibold tracking-wide text-white uppercase">
+                  {t("legal", { defaultValue: "Legal" })}
+                </h3>
+                <ul className="space-y-2 text-sm text-slate-300">
+                  <li>
+                    <Link
+                      className="transition-colors duration-200 hover:text-white"
+                      to="/privacy-policy"
+                    >
+                      {t("privacyPolicy", { defaultValue: "Privacy Policy" })}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className="transition-colors duration-200 hover:text-white"
+                      to="/terms-and-conditions"
+                    >
+                      {t("termsAndConditions", {
+                        defaultValue: "Terms & Conditions",
+                      })}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className="transition-colors duration-200 hover:text-white"
+                      to="/terms-of-use"
+                    >
+                      {t("termsOfUse", { defaultValue: "Terms of Use" })}
+                    </Link>
+                  </li>
+                </ul>
+              </nav>
             </div>
           </div>
 
           {/* Bottom bar */}
           <div className="mt-8 border-t border-white/10 pt-5 sm:mt-10 sm:pt-6 md:mt-12 md:pt-6">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-              <p className="text-base text-slate-400">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <p className="text-sm text-slate-400 text-center sm:text-left sm:text-base">
                 © {new Date().getFullYear()} {t("appName")}.{" "}
                 {t("allRightsReserved", {
                   defaultValue: "All rights reserved.",
                 })}
               </p>
-              <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-base text-slate-400 sm:gap-x-6">
+              <div className="flex flex-wrap justify-center gap-x-3 gap-y-2 text-sm text-slate-400 sm:justify-end sm:gap-x-5 sm:text-base">
                 <Link
                   className="transition-colors duration-200 hover:text-white"
-                  to="/privacy"
+                  to="/privacy-policy"
                 >
-                  {t("privacyPolicy", { defaultValue: "Privacy Policy" })}
+                  {t("privacyPolicy", { defaultValue: "Privacy" })}
                 </Link>
+                <span className="text-slate-600">•</span>
                 <Link
                   className="transition-colors duration-200 hover:text-white"
-                  to="/terms"
+                  to="/terms-and-conditions"
                 >
-                  {t("termsOfService", { defaultValue: "Terms of Service" })}
+                  {t("termsAndConditions", { defaultValue: "Terms" })}
+                </Link>
+                <span className="text-slate-600">•</span>
+                <Link
+                  className="transition-colors duration-200 hover:text-white"
+                  to="/terms-of-use"
+                >
+                  {t("termsOfUse", { defaultValue: "Use Policy" })}
                 </Link>
               </div>
             </div>
