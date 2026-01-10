@@ -24,7 +24,7 @@ export default function HeroSection() {
             </div>
 
             {/* Main Heading */}
-            <h1 className="text-[clamp(50px,5vw,55px)] font-bold leading-[1.1] text-primary tracking-tight">
+            <h1 className="text-[clamp(45px,5vw,55px)] font-bold leading-[1.1] text-primary tracking-tight">
               {t("discoverYourPath")}
               <span className="block mt-2 text-[hsl(190,40%,29%)]">
                 {t("betterLiving")}
