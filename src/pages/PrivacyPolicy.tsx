@@ -24,6 +24,7 @@ export default function PrivacyPolicy() {
       <div className="px-[20px]">
         <Navbar />
       </div>
+
       <main className="min-h-screen bg-linear-to-b from-slate-50 to-white">
         {/* Hero Section */}
         <section className="bg-linear-to-br from-[#0b1220] via-[#0f1d32] to-[#0a1528] py-16 sm:py-20 md:py-24">

@@ -14,7 +14,9 @@ export default function TermsAndConditions() {
         />
       </Helmet>
 
-      <Navbar />
+      <div className="px-[20px]">
+        <Navbar />
+      </div>
 
       <main className="min-h-screen bg-linear-to-b from-slate-50 to-white">
         {/* Hero Section */}

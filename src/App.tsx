@@ -26,110 +26,119 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import TermsOfUse from "./pages/TermsOfUse";
 import { useGoogleAnalytics } from "./hooks/useGoogleAnalytics";
+import { ScrollLayout } from "./components/Layout";
+import RouteScrollReset from "./components/RouteScrollReset";
 
 export default function App() {
   // Track page views on every route change
   useGoogleAnalytics();
+
   return (
     <ScreenProvider>
       <ExpertsProvider>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/oauth/google/callback" element={<OAuthCallback />} />
+        {/* ScrollLayout: provides scroll container with smooth scrolling for user actions */}
+        <ScrollLayout>
+          {/* RouteScrollReset: instantly resets scroll to top on route change */}
+          <RouteScrollReset />
 
-          {/* Self Assessment */}
-          <Route path="/self-assessment" element={<SelfAssessment />} />
-          <Route
-            path="/self-assessment/questions"
-            element={<SelfAssessmentQuestions />}
-          />
-          <Route
-            path="/self-assessment/result"
-            element={<SelfAssessmentResult />}
-          />
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/oauth/google/callback" element={<OAuthCallback />} />
 
-          {/* Assessments */}
-          <Route path="/assessments/wellness" element={<Wellness />} />
-          <Route
-            path="/assessments/wellness/:assessmentType"
-            element={<AssessmentIntro />}
-          />
-          <Route
-            path="/assessments/wellness/:assessmentType/questions"
-            element={<AssessmentQuestions />}
-          />
-          <Route
-            path="/assessments/wellness/:assessmentType/result"
-            element={<AssessmentResult />}
-          />
-          <Route path="/assessments/education" element={<Education />} />
-          <Route
-            path="/assessments/education/:assessmentType"
-            element={<AssessmentIntro />}
-          />
-          <Route
-            path="/assessments/education/:assessmentType/questions"
-            element={<AssessmentQuestions />}
-          />
-          <Route
-            path="/assessments/education/:assessmentType/result"
-            element={<AssessmentResult />}
-          />
-          <Route path="/assessments/finance" element={<Finance />} />
-          <Route
-            path="/assessments/finance/:assessmentType"
-            element={<AssessmentIntro />}
-          />
-          <Route
-            path="/assessments/finance/:assessmentType/questions"
-            element={<AssessmentQuestions />}
-          />
-          <Route
-            path="/assessments/finance/:assessmentType/result"
-            element={<AssessmentResult />}
-          />
+            {/* Self Assessment */}
+            <Route path="/self-assessment" element={<SelfAssessment />} />
+            <Route
+              path="/self-assessment/questions"
+              element={<SelfAssessmentQuestions />}
+            />
+            <Route
+              path="/self-assessment/result"
+              element={<SelfAssessmentResult />}
+            />
 
-          {/* Wellness Experts */}
-          <Route path="/wellness-experts" element={<WellnessExpertsIntro />} />
-          <Route
-            path="/wellness-experts/:specialization"
-            element={<ExpertsListing />}
-          />
+            {/* Assessments */}
+            <Route path="/assessments/wellness" element={<Wellness />} />
+            <Route
+              path="/assessments/wellness/:assessmentType"
+              element={<AssessmentIntro />}
+            />
+            <Route
+              path="/assessments/wellness/:assessmentType/questions"
+              element={<AssessmentQuestions />}
+            />
+            <Route
+              path="/assessments/wellness/:assessmentType/result"
+              element={<AssessmentResult />}
+            />
+            <Route path="/assessments/education" element={<Education />} />
+            <Route
+              path="/assessments/education/:assessmentType"
+              element={<AssessmentIntro />}
+            />
+            <Route
+              path="/assessments/education/:assessmentType/questions"
+              element={<AssessmentQuestions />}
+            />
+            <Route
+              path="/assessments/education/:assessmentType/result"
+              element={<AssessmentResult />}
+            />
+            <Route path="/assessments/finance" element={<Finance />} />
+            <Route
+              path="/assessments/finance/:assessmentType"
+              element={<AssessmentIntro />}
+            />
+            <Route
+              path="/assessments/finance/:assessmentType/questions"
+              element={<AssessmentQuestions />}
+            />
+            <Route
+              path="/assessments/finance/:assessmentType/result"
+              element={<AssessmentResult />}
+            />
 
-          {/* Education Experts */}
-          <Route
-            path="/education-experts"
-            element={<EducationExpertsIntro />}
-          />
-          <Route
-            path="/education-experts/:specialization"
-            element={<ExpertsListing />}
-          />
+            {/* Wellness Experts */}
+            <Route path="/wellness-experts" element={<WellnessExpertsIntro />} />
+            <Route
+              path="/wellness-experts/:specialization"
+              element={<ExpertsListing />}
+            />
 
-          {/* Finance Experts */}
-          <Route path="/finance-experts" element={<FinanceExpertsIntro />} />
-          <Route
-            path="/finance-experts/:specialization"
-            element={<ExpertsListing />}
-          />
+            {/* Education Experts */}
+            <Route
+              path="/education-experts"
+              element={<EducationExpertsIntro />}
+            />
+            <Route
+              path="/education-experts/:specialization"
+              element={<ExpertsListing />}
+            />
 
-          {/* Find Counsellors */}
-          <Route path="/find-counsellors" element={<FindCounsellors />} />
+            {/* Finance Experts */}
+            <Route path="/finance-experts" element={<FinanceExpertsIntro />} />
+            <Route
+              path="/finance-experts/:specialization"
+              element={<ExpertsListing />}
+            />
 
-          {/* Expert Details */}
-          <Route path="/expert/:id" element={<ExpertDetails />} />
+            {/* Find Counsellors */}
+            <Route path="/find-counsellors" element={<FindCounsellors />} />
 
-          {/* Authenticated */}
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/dashboard/expert" element={<ExpertsDashboard />} />
+            {/* Expert Details */}
+            <Route path="/expert/:id" element={<ExpertDetails />} />
 
-          {/* Legal Pages */}
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
-          <Route path="/terms-of-use" element={<TermsOfUse />} />
-        </Routes>
+            {/* Authenticated */}
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/dashboard/expert" element={<ExpertsDashboard />} />
+
+            {/* Legal Pages */}
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+            <Route path="/terms-of-use" element={<TermsOfUse />} />
+          </Routes>
+        </ScrollLayout>
       </ExpertsProvider>
     </ScreenProvider>
   );
