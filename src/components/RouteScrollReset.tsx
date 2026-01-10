@@ -3,17 +3,17 @@ import { useLocation } from "react-router-dom";
 
 /**
  * RouteScrollReset Component
- * 
+ *
  * Listens to route changes and instantly scrolls to top without animation.
  * Works by temporarily disabling scroll-behavior: smooth during the reset.
- * 
+ *
  * Why this works:
  * 1. When route changes, we detect it via useLocation()
  * 2. We temporarily set scroll-behavior to "auto" (instant)
  * 3. We set scrollTop = 0 (instant jump, no animation)
  * 4. We restore scroll-behavior to "smooth" using requestAnimationFrame
  *    (ensures the DOM has updated before re-enabling smooth scroll)
- * 
+ *
  * Result:
  * - Route navigation: instant jump to top
  * - User scrolling within page: smooth scrolling preserved
@@ -59,4 +59,3 @@ export default function RouteScrollReset() {
   // This component renders nothing - it's just a scroll behavior controller
   return null;
 }
-

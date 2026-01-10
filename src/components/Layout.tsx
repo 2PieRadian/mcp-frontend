@@ -16,7 +16,7 @@ interface LayoutProps {
  * - Fixed navbar at the top (optional)
  * - Scrollable content area below
  * - Smooth scrolling for user-driven scroll (via CSS class)
- * 
+ *
  * Note: Route change scroll reset is handled by RouteScrollReset component
  */
 export default function Layout({
