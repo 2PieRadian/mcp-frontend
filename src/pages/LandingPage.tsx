@@ -55,7 +55,6 @@ export default function UserDashboard() {
         <HowDoesItWork />
         <WhyChooseUsSection />
       </div>
-
       <Footer />
     </>
   );

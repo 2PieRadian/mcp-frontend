@@ -25,6 +25,8 @@ import FindCounsellors from "./pages/FindCounsellors";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import TermsOfUse from "./pages/TermsOfUse";
+import ContactUs from "./pages/ContactUs";
+import FAQ from "./pages/FAQ";
 import { useGoogleAnalytics } from "./hooks/useGoogleAnalytics";
 import { ScrollLayout } from "./components/Layout";
 import RouteScrollReset from "./components/RouteScrollReset";
@@ -137,6 +139,10 @@ export default function App() {
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
             <Route path="/terms-of-use" element={<TermsOfUse />} />
+
+            {/* Contact & FAQ */}
+            <Route path="/contact" element={<ContactUs />} />
+            <Route path="/faq" element={<FAQ />} />
           </Routes>
         </ScrollLayout>
       </ExpertsProvider>
