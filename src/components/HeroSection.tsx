@@ -9,7 +9,7 @@ export default function HeroSection() {
   const showCardsBelow = screenWidth <= 1024;
 
   return (
-    <div className="relative w-full bg-white">
+    <div className="relative w-full bg-white h-[calc(100vh-89px))]">
       {/* Content Container */}
       <div className="max-w-[1350px] mx-auto py-[70px] md:py-[90px]">
         <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-[40px] lg:gap-[80px]">

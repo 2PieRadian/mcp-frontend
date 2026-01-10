@@ -47,7 +47,7 @@ export default function GuidanceQuotesSection() {
 
   return (
     <section className="relative w-full overflow-hidden bg-white mb-[70px]">
-      <div className="relative max-w-[1350px] mx-auto py-[42px] sm:py-[56px]">
+      <div className="relative max-w-[1350px] mx-auto">
         <div className="text-center px-[4px]">
           <h2 className="mt-2 text-[clamp(30px,3.4vw,36px)] font-bold text-primary leading-tight">
             Choose the right guidance for fruitful outcomes.
