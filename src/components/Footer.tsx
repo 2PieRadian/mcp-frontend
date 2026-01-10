@@ -162,9 +162,9 @@ export default function Footer() {
                   <li>
                     <Link
                       className="transition-colors duration-200 hover:text-white"
-                      to="/"
+                      to="/self-assessment"
                     >
-                      {t("home", { defaultValue: "Home" })}
+                      {t("selfAssessment", { defaultValue: "Self Assessment" })}
                     </Link>
                   </li>
                   <li>
@@ -172,23 +172,39 @@ export default function Footer() {
                       className="transition-colors duration-200 hover:text-white"
                       to="/assessments/wellness"
                     >
-                      {t("assessments", { defaultValue: "Assessments" })}
+                      {t("wellnessAssessments", {
+                        defaultValue: "Wellness Assessments",
+                      })}
                     </Link>
                   </li>
                   <li>
                     <Link
                       className="transition-colors duration-200 hover:text-white"
-                      to="/wellness-experts"
+                      to="/assessments/education"
                     >
-                      {t("experts", { defaultValue: "Experts" })}
+                      {t("educationAssessments", {
+                        defaultValue: "Education Assessments",
+                      })}
                     </Link>
                   </li>
                   <li>
                     <Link
                       className="transition-colors duration-200 hover:text-white"
-                      to="/about"
+                      to="/assessments/finance"
                     >
-                      {t("about", { defaultValue: "About" })}
+                      {t("financeAssessments", {
+                        defaultValue: "Finance Assessments",
+                      })}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className="transition-colors duration-200 hover:text-white"
+                      to="/find-counsellors"
+                    >
+                      {t("findCounsellors", {
+                        defaultValue: "Find Counsellors",
+                      })}
                     </Link>
                   </li>
                 </ul>

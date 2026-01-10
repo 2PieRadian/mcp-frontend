@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="https://mindcurepath.com/logo.png" />
+    <link rel="apple-touch-icon" href="https://mindcurepath.com/logo.png" />
+    <link rel="shortcut icon" href="https://mindcurepath.com/logo.png" type="image/png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MindCurePath – Expert‑Verified Wellness, Education &amp; Finance Assessments</title>
 
@@ -65,11 +67,52 @@
       {
         "@context": "https://schema.org",
         "@type": "Organization",
+        "@id": "https://mindcurepath.com/#organization",
         "name": "MindCurePath",
+        "legalName": "MindCurePath Consultancy Private Limited",
         "url": "https://mindcurepath.com",
-        "logo": "https://mindcurepath.com/logo.png"
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://mindcurepath.com/logo.png",
+          "width": "512",
+          "height": "512"
+        },
+        "image": "https://mindcurepath.com/logo.png",
+        "description": "MindCurePath offers expert-verified self-assessments and curated experts across wellness, education, and finance.",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Shamli",
+          "addressRegion": "Uttar Pradesh",
+          "postalCode": "247777",
+          "addressCountry": "IN"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+91-84475-37710",
+          "contactType": "customer support",
+          "email": "support@mindcurepath.com",
+          "availableLanguage": ["English", "Hindi"]
+        }
       }
-      </script>
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": "https://mindcurepath.com/#website",
+        "url": "https://mindcurepath.com",
+        "name": "MindCurePath",
+        "description": "Expert-Verified Wellness, Education & Finance Assessments",
+        "publisher": {
+          "@id": "https://mindcurepath.com/#organization"
+        },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://mindcurepath.com/help?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

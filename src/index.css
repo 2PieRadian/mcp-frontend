@@ -46,7 +46,7 @@ body {
   --color-experts-hero-hover-bg: hsl(173, 17%, 40%);
 
   /* Text Colors */
-  --color-logo-heading: hsl(189, 62%, 25%);
+  --color-logo-heading: #40555E;
   --color-light-text: hsl(190, 44%, 22%);
   --color-input-placeholder: hsl(170, 21%, 27%);
   --color-hero-heading: hsl(186, 46%, 22%);

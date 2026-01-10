@@ -9,11 +9,27 @@ export default function TermsOfUse() {
     <>
       <ScrollToTopButton />
       <Helmet>
-        <title>Terms of Use | MindCurePath</title>
+        <title>Terms of Use | MindCurePath Consultancy</title>
         <meta
           name="description"
-          content="Read MindCurePath's Terms of Use governing your access to and use of our platform and services."
+          content="Read MindCurePath's Terms of Use. Understand your rights and responsibilities when accessing our digital tools and wellness services."
         />
+        <meta name="keywords" content="terms of use, platform rules, MindCurePath usage, legal notice, digital platform agreement" />
+        <link rel="canonical" href="https://mindcurepath.com/terms-of-use" />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://mindcurepath.com/terms-of-use" />
+        <meta property="og:title" content="Terms of Use | MindCurePath Consultancy" />
+        <meta property="og:description" content="Official Terms of Use for the MindCurePath website and mobile platforms." />
+        <meta property="og:image" content="https://mindcurepath.com/og-image.jpg" />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="https://mindcurepath.com/terms-of-use" />
+        <meta name="twitter:title" content="Terms of Use | MindCurePath Consultancy" />
+        <meta name="twitter:description" content="Official Terms of Use for the MindCurePath website and mobile platforms." />
+        <meta name="twitter:image" content="https://mindcurepath.com/og-image.jpg" />
       </Helmet>
 
       <div className="px-[20px]">

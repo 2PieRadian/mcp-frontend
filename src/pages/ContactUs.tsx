@@ -7,11 +7,46 @@ export default function ContactUs() {
   return (
     <>
       <Helmet>
-        <title>Contact Us | MindCurePath</title>
+        <title>Contact Us | MindCurePath Consultancy - We're Here to Help</title>
         <meta
           name="description"
-          content="Get in touch with MindCurePath. We're here to help you 24/7 with any questions about our wellness, education, and finance assessment services."
+          content="Contact MindCurePath for support with mental wellness, education, and finance assessments. Reach our team 24/7 at support@mindcurepath.com."
         />
+        <meta name="keywords" content="contact MindCurePath, customer support, mental health help, education guidance contact, financial wellness support" />
+        <link rel="canonical" href="https://mindcurepath.com/contact" />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://mindcurepath.com/contact" />
+        <meta property="og:title" content="Contact Us | MindCurePath Consultancy" />
+        <meta property="og:description" content="Have questions? Reach out to MindCurePath today for assistance on your wellness journey." />
+        <meta property="og:image" content="https://mindcurepath.com/og-image.jpg" />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="https://mindcurepath.com/contact" />
+        <meta name="twitter:title" content="Contact Us | MindCurePath Consultancy" />
+        <meta name="twitter:description" content="Have questions? Reach out to MindCurePath today for assistance on your wellness journey." />
+        <meta name="twitter:image" content="https://mindcurepath.com/og-image.jpg" />
+
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "ContactPage",
+              "name": "Contact Us - MindCurePath",
+              "description": "Contact page for MindCurePath Consultancy Private Limited.",
+              "url": "https://mindcurepath.com/contact",
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "email": "support@mindcurepath.com",
+                "contactType": "customer support",
+                "availableLanguage": "English"
+              }
+            }
+          `}
+        </script>
       </Helmet>
 
       <div className="px-[20px]">

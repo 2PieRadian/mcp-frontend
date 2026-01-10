@@ -27,6 +27,7 @@ import TermsAndConditions from "./pages/TermsAndConditions";
 import TermsOfUse from "./pages/TermsOfUse";
 import ContactUs from "./pages/ContactUs";
 import FAQ from "./pages/FAQ";
+import HelpCenter from "./pages/HelpCenter";
 import { useGoogleAnalytics } from "./hooks/useGoogleAnalytics";
 import { ScrollLayout } from "./components/Layout";
 import RouteScrollReset from "./components/RouteScrollReset";
@@ -102,7 +103,10 @@ export default function App() {
             />
 
             {/* Wellness Experts */}
-            <Route path="/wellness-experts" element={<WellnessExpertsIntro />} />
+            <Route
+              path="/wellness-experts"
+              element={<WellnessExpertsIntro />}
+            />
             <Route
               path="/wellness-experts/:specialization"
               element={<ExpertsListing />}
@@ -137,12 +141,16 @@ export default function App() {
 
             {/* Legal Pages */}
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+            <Route
+              path="/terms-and-conditions"
+              element={<TermsAndConditions />}
+            />
             <Route path="/terms-of-use" element={<TermsOfUse />} />
 
-            {/* Contact & FAQ */}
+            {/* Contact, FAQ & Help */}
             <Route path="/contact" element={<ContactUs />} />
             <Route path="/faq" element={<FAQ />} />
+            <Route path="/help" element={<HelpCenter />} />
           </Routes>
         </ScrollLayout>
       </ExpertsProvider>

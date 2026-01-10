@@ -9,10 +9,56 @@ export default function TermsAndConditions() {
     <>
       <ScrollToTopButton />
       <Helmet>
-        <title>Terms and Conditions | MindCurePath</title>
+        <title>Terms and Conditions | MindCurePath Consultancy</title>
         <meta
           name="description"
-          content="Read MindCurePath's Terms and Conditions governing your use of our wellness, education, and finance assessment platform."
+          content="Review MindCurePath's Terms and Conditions. Understand the legal agreement governing your use of our mental wellness, education, and finance platform."
+        />
+        <meta
+          name="keywords"
+          content="terms and conditions, user agreement, legal terms, MindCurePath consultancy, wellness platform terms"
+        />
+        <link
+          rel="canonical"
+          href="https://mindcurepath.com/terms-and-conditions"
+        />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content="https://mindcurepath.com/terms-and-conditions"
+        />
+        <meta
+          property="og:title"
+          content="Terms and Conditions | MindCurePath Consultancy"
+        />
+        <meta
+          property="og:description"
+          content="Legal terms and conditions for using the MindCurePath platform and services."
+        />
+        <meta
+          property="og:image"
+          content="https://mindcurepath.com/og-image.jpg"
+        />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:url"
+          content="https://mindcurepath.com/terms-and-conditions"
+        />
+        <meta
+          name="twitter:title"
+          content="Terms and Conditions | MindCurePath Consultancy"
+        />
+        <meta
+          name="twitter:description"
+          content="Legal terms and conditions for using the MindCurePath platform and services."
+        />
+        <meta
+          name="twitter:image"
+          content="https://mindcurepath.com/og-image.jpg"
         />
       </Helmet>
 

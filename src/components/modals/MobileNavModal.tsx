@@ -163,7 +163,7 @@ export default function MobileNavModal({
           <h1 className="text-[22px] font-semibold text-logo-heading">
             {t("appName", { ns: "common" }) === "MindCurePath" ? (
               <>
-                Mind<span className="text-[#119c95]">Cure</span>Path
+                Mind<span className="text-[#62af9b]">Cure</span>Path
               </>
             ) : (
               t("appName", { ns: "common" })

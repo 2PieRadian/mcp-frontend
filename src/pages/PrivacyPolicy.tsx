@@ -16,10 +16,53 @@ export default function PrivacyPolicy() {
     <>
       <ScrollToTopButton />
       <Helmet>
-        <title>Privacy Policy | MindCurePath</title>
+        <title>Privacy Policy | MindCurePath Consultancy</title>
         <meta
           name="description"
-          content="Read MindCurePath's Privacy Policy to understand how we collect, use, and protect your personal information."
+          content="Read the MindCurePath Privacy Policy. Learn how we collect, process, and protect your personal data in compliance with Indian IT laws and DPDP Act 2023."
+        />
+        <meta
+          name="keywords"
+          content="privacy policy, data protection, MindCurePath, mental wellness privacy, Indian data laws, DPDP Act 2023"
+        />
+        <link rel="canonical" href="https://mindcurepath.com/privacy-policy" />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content="https://mindcurepath.com/privacy-policy"
+        />
+        <meta
+          property="og:title"
+          content="Privacy Policy | MindCurePath Consultancy"
+        />
+        <meta
+          property="og:description"
+          content="Your privacy matters. Understand how MindCurePath safeguards your personal and wellness information."
+        />
+        <meta
+          property="og:image"
+          content="https://mindcurepath.com/og-image.jpg"
+        />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:url"
+          content="https://mindcurepath.com/privacy-policy"
+        />
+        <meta
+          name="twitter:title"
+          content="Privacy Policy | MindCurePath Consultancy"
+        />
+        <meta
+          name="twitter:description"
+          content="Your privacy matters. Understand how MindCurePath safeguards your personal and wellness information."
+        />
+        <meta
+          name="twitter:image"
+          content="https://mindcurepath.com/og-image.jpg"
         />
       </Helmet>
 

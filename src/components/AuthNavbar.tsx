@@ -50,7 +50,7 @@ export default function AuthNavbar() {
         <h1 className="text-[20px] sm:text-[22px] font-semibold text-logo-heading truncate">
           {t("appName") === "MindCurePath" ? (
             <>
-              Mind<span className="text-[#119c95]">Cure</span>Path
+              Mind<span className="text-[#62af9b]">Cure</span>Path
             </>
           ) : (
             t("appName")

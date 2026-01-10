@@ -125,7 +125,7 @@ export default function Navbar() {
             >
               {t("appName") === "MindCurePath" ? (
                 <>
-                  Mind<span className="text-[#119c95]">Cure</span>Path
+                  Mind<span className="text-[#62af9b]">Cure</span>Path
                 </>
               ) : (
                 t("appName")

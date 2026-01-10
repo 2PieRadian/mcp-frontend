@@ -163,7 +163,7 @@ function FAQAccordionItem({
     <div
       className={`border rounded-xl overflow-hidden transition-all duration-300 ${
         isOpen
-          ? "border-primary/30 bg-primary/[0.02] shadow-sm"
+          ? "border-primary/30 bg-primary/2 shadow-sm"
           : "border-slate-200 bg-white hover:border-slate-300"
       }`}
     >
@@ -224,11 +224,45 @@ export default function FAQ() {
   return (
     <>
       <Helmet>
-        <title>Frequently Asked Questions | MindCurePath</title>
+        <title>Frequently Asked Questions | MindCurePath Consultancy</title>
         <meta
           name="description"
-          content="Find answers to commonly asked questions about MindCurePath's wellness, education, and personal growth assessment platform."
+          content="Get answers to your questions about MindCurePath's mental wellness, education, and finance assessments. Learn how we help you achieve clarity and growth."
         />
+        <meta name="keywords" content="FAQ, MindCurePath questions, assessment help, wellness platform FAQ, education guidance FAQ, finance wellness FAQ" />
+        <link rel="canonical" href="https://mindcurepath.com/faq" />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://mindcurepath.com/faq" />
+        <meta property="og:title" content="Frequently Asked Questions | MindCurePath Consultancy" />
+        <meta property="og:description" content="Common questions and answers about MindCurePath's services and platform." />
+        <meta property="og:image" content="https://mindcurepath.com/og-image.jpg" />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="https://mindcurepath.com/faq" />
+        <meta name="twitter:title" content="Frequently Asked Questions | MindCurePath Consultancy" />
+        <meta name="twitter:description" content="Common questions and answers about MindCurePath's services and platform." />
+        <meta name="twitter:image" content="https://mindcurepath.com/og-image.jpg" />
+
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              "mainEntity": ${JSON.stringify(faqData.map(item => ({
+                "@type": "Question",
+                "name": item.question,
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": Array.isArray(item.answer) ? item.answer.join(" ") : item.answer
+                }
+              })))}
+            }
+          `}
+        </script>
       </Helmet>
 
       <div className="px-[20px]">
