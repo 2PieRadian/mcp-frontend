@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import ScrollToTopButton from "../components/ScrollToTopButton";
 import {
   Check,
   XCircle,
@@ -13,6 +14,7 @@ import {
 export default function PrivacyPolicy() {
   return (
     <>
+      <ScrollToTopButton />
       <Helmet>
         <title>Privacy Policy | MindCurePath</title>
         <meta

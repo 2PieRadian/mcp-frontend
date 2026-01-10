@@ -1,11 +1,13 @@
 import { Helmet } from "react-helmet-async";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import ScrollToTopButton from "../components/ScrollToTopButton";
 import { Mail, AlertTriangle } from "lucide-react";
 
 export default function TermsOfUse() {
   return (
     <>
+      <ScrollToTopButton />
       <Helmet>
         <title>Terms of Use | MindCurePath</title>
         <meta
