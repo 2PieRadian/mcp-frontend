@@ -123,16 +123,17 @@ function ExpertCategoryCard({
         {/* CTA Button */}
         <button
           onClick={handleClick}
-          className="flex items-center justify-center gap-2 py-3 px-5 rounded-xl text-sm font-semibold transition-all duration-300 group-hover:gap-3"
+          className="wellness-card-button flex items-center justify-center gap-2 py-3 px-5 rounded-xl text-sm font-semibold group-hover:gap-3"
           style={{
             backgroundColor: `${accentColor}1F`,
             border: `1px solid ${accentColor}55`,
             color: "#13232A",
-          }}
+            "--accent-color": accentColor,
+          } as React.CSSProperties & { "--accent-color": string }}
         >
           <span>{exploreText}</span>
           <ArrowRight
-            className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+            className="w-4 h-4 transition-all duration-300 group-hover:translate-x-1"
             style={{ color: accentColor }}
           />
         </button>
@@ -198,6 +199,29 @@ export default function WellnessExpertsIntro() {
             opacity: 1;
             transform: translateY(0);
           }
+        }
+        @keyframes waveFlow {
+          0% {
+            stroke-dashoffset: 0;
+          }
+          100% {
+            stroke-dashoffset: 40;
+          }
+        }
+        .wave-underline path {
+          stroke-dasharray: 10 10;
+          animation: waveFlow 2s linear infinite;
+        }
+        .wellness-card-button {
+          transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+        .group:hover .wellness-card-button {
+          background-color: var(--accent-color) !important;
+          color: white !important;
+          border-color: var(--accent-color) !important;
+        }
+        .group:hover .wellness-card-button svg {
+          color: white !important;
         }
       `}</style>
 
@@ -322,7 +346,7 @@ export default function WellnessExpertsIntro() {
                     </span>
                     {/* Underline decoration */}
                     <svg
-                      className="absolute -bottom-2 left-0 w-full h-3 text-[#7C9A92]/20"
+                      className="absolute -bottom-2 left-0 w-full h-3 text-[#7C9A92]/20 wave-underline"
                       viewBox="0 0 200 12"
                       preserveAspectRatio="none"
                     >

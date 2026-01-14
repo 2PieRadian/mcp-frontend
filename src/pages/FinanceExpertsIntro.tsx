@@ -91,15 +91,15 @@ function ExpertCategoryCard({
           {/* Icon */}
           <div className="flex items-start justify-between mb-5">
             <div
-              className="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 group-hover:bg-white/20"
+              className="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 group-hover:bg-white/30 group-hover:scale-110"
               style={{ backgroundColor: `${accentColor}15` }}
             >
               <Icon
-                className="w-5 h-5 transition-colors duration-500 group-hover:text-white"
-                style={{ color: accentColor }}
+                className="w-5 h-5 relative z-20 transition-transform duration-500 group-hover:scale-125"
+                style={{ color: "white" }}
               />
             </div>
-            <ArrowRight className="w-5 h-5 text-stone-300 transition-all duration-500 group-hover:text-white group-hover:translate-x-1" />
+            <ArrowRight className="w-5 h-5 text-white transition-all duration-500 group-hover:translate-x-1 group-hover:scale-110 relative z-20" />
           </div>
 
           {/* Title */}
