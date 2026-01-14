@@ -88,12 +88,12 @@ export default function Footer() {
                 </div>
               </Link>
 
-              <p className="text-sm leading-relaxed text-slate-400 text-center lg:text-left sm:text-base max-w-[28ch]">
+              {/* <p className="text-sm leading-relaxed text-slate-400 text-center lg:text-left sm:text-base max-w-[28ch]">
                 {t("footerTagline", {
                   defaultValue:
                     "Mental wellness tools and expert-backed guidance.",
                 })}
-              </p>
+              </p> */}
 
               {/* Social Links */}
               <div
