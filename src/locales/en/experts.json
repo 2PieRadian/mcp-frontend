@@ -37,161 +37,93 @@
   "financialExpertDescription": "Navigate budgeting, savings, and insurance decisions effortlessly. Our advisors help you optimise cash flow and plan for milestones like education, housing, and retirement.",
   "gstTaxationExpertDescription": "Get expert guidance on GST compliance, tax planning, and filing. Our taxation experts help you navigate complex tax regulations, maximize deductions, and ensure timely compliance with all tax obligations.",
   "specializations": {
-    "anxiety-and-panic": {
+    "anxiety-and-panic-attack-counsellor": {
       "title": "Anxiety and Panic Attack Counsellor",
-      "description": "Get practical support to manage anxiety and panic attacks."
+      "description": "Anxiety and Panic Attack Counsellor offers professional support and coping strategies for anxiety and panic issues."
     },
-    "depression-support": {
+    "depression-counsellor": {
       "title": "Depression Counsellor",
-      "description": "Support and strategies to cope with low mood and depression."
+      "description": "Depression Counsellor offers professional counselling support for managing depression-related concerns and emotional well-being."
     },
-    "ocd-support": {
+    "ocd-counsellor": {
       "title": "OCD Counsellor",
-      "description": "Understand OCD patterns and learn steps to manage compulsions."
+      "description": "OCD Counsellor offers counselling support to help individuals cope with OCD-related challenges and improve emotional well-being."
     },
-    "adhd-support": {
+    "adhd-counsellor": {
       "title": "ADHD Counsellor",
-      "description": "Practical guidance to improve focus, routines, and attention."
+      "description": "ADHD Counsellor offers counselling support to manage ADHD-related challenges and build effective coping strategies."
     },
-    "relationship-issues": {
+    "couple-counsellor": {
       "title": "Couple Counsellor",
-      "description": "Work on communication, trust, and conflict in your relationship."
+      "description": "Couple Counsellor offers counselling support for relationship issues, communication challenges, and emotional understanding."
     },
-    "family-issues": {
+    "family-counsellor": {
       "title": "Family Counsellor",
-      "description": "Get support for family concerns, boundaries, and healthy dialogue."
+      "description": "Family Counsellor offers counselling support for family relationships, parenting concerns, and interpersonal issues."
     },
-    "breakup-recovery": {
+    "breakup-recovery-expert": {
       "title": "Breakup Recovery Expert",
-      "description": "Heal after a breakup and rebuild emotional stability."
+      "description": "Breakup Recovery Expert offers counselling support for emotional healing, self-growth, and recovery after relationship breakups."
     },
-    "loneliness-support": {
+    "loneliness-counsellor": {
       "title": "Loneliness Counsellor",
-      "description": "Reduce loneliness and build meaningful connections."
+      "description": "Loneliness Counsellor offers counselling support to address loneliness, improve social connection, and enhance emotional health."
     },
-    "stress-management": {
-      "title": "Stress / Overthinking Expert",
-      "description": "Learn practical tools to reduce stress and overthinking."
-    },
-    "sleep-problems": {
+    "divorce-separation-counsellor": {
       "title": "Divorce / Separation Counsellor",
-      "description": "Emotional support during divorce or separation and beyond."
+      "description": "Divorce / Separation Counsellor offers counselling support for emotional recovery, co-parenting concerns, and personal well-being during separation."
     },
-    "life-coaching": {
-      "title": "Life coaching",
-      "description": "Set goals and move forward with a clear plan."
+    "stress-overthinking-expert": {
+      "title": "Stress / Overthinking Expert",
+      "description": "Stress / Overthinking Expert offers counselling support to improve emotional balance, mental clarity, and stress management skills."
     },
-    "weight-management": {
-      "title": "Weight management",
-      "description": "Build healthy habits for weight in a sustainable way."
-    },
-    "nutrition-guidance": {
+    "dietician": {
       "title": "Dietician",
-      "description": "Personalised nutrition plans that fit your goals and lifestyle."
+      "description": "Dietician offers nutrition guidance for healthy eating, weight management, and lifestyle improvement."
     },
-    "yoga-therapy": {
+    "yoga-expert": {
       "title": "Yoga Expert",
-      "description": "Guided yoga practices to support flexibility, stress relief, and wellbeing."
+      "description": "Yoga Expert offers yoga-based guidance for stress management, posture improvement, and holistic wellness. Online yoga sessions are provided by independent yoga experts."
     },
-    "career-confusion": {
+    "career-path-finder": {
       "title": "Career Path Finder",
-      "description": "Find the right career direction based on your strengths and interests."
+      "description": "Career Path Finder provides expert career guidance to choose the right career path based on skills, interests, and future goals."
     },
-    "career-planning": {
-      "title": "Career planning",
-      "description": "Make a simple plan to grow in your career."
-    },
-    "career-change": {
-      "title": "Career change",
-      "description": "Plan your switch to a new job path smoothly."
-    },
-    "academic-guidance": {
+    "academic-counsellor": {
       "title": "Academic Counsellor",
-      "description": "Get guidance on study plans, subjects, and exam strategy."
+      "description": "Academic Counsellor provides expert guidance to help students choose the right courses, improve academic performance, and plan their education for a successful future."
     },
-    "exam-stress": {
+    "achievers": {
       "title": "Achievers",
-      "description": "Goal-focused guidance for high performers aiming to excel."
+      "description": "Achievers are individuals who have cleared competitive or professional examinations."
     },
-    "study-skills": {
+    "aspirants": {
       "title": "Aspirants",
-      "description": "Structured support for aspirants preparing for competitive goals."
+      "description": "Aspirants are individuals preparing for competitive or professional examinations."
     },
-    "time-management": {
-      "title": "Time management",
-      "description": "Plan your day better and avoid last-minute rush."
-    },
-    "communication-skills": {
-      "title": "Communication skills",
-      "description": "Speak clearly and confidently in daily life and work."
-    },
-    "resume-and-interviews": {
-      "title": "Resume & interviews",
-      "description": "Make a strong resume and prepare well for interviews."
-    },
-    "internship-guidance": {
-      "title": "Internship guidance",
-      "description": "Find the right internship and apply with confidence."
-    },
-    "higher-studies": {
+    "academic-scholars": {
       "title": "Academic Scholars",
-      "description": "Guidance for academic excellence, scholarships, and higher education."
+      "description": "Academic Scholars are students who have successfully cleared competitive academic examinations."
     },
-    "budgeting": {
-      "title": "Budgeting",
-      "description": "Track spending and create a budget that is easy to follow."
-    },
-    "income-planning": {
-      "title": "Business Finance Consultant",
-      "description": "Guidance on cash flow, budgeting, and day-to-day business finance decisions."
-    },
-    "emergency-fund": {
-      "title": "Emergency fund",
-      "description": "Build a safety fund for unexpected expenses."
-    },
-    "beginner-investing": {
-      "title": "Beginner investing",
-      "description": "Start investing with simple basics and clear steps."
-    },
-    "mutual-funds": {
-      "title": "Mutual funds",
-      "description": "Understand mutual funds and choose what suits you."
-    },
-    "investment-planning": {
+    "investment-expert": {
       "title": "Investment Expert",
-      "description": "Build an investment strategy aligned with your goals and risk profile."
+      "description": "Investment Expert offers guidance on investment planning, portfolio diversification, and wealth-building strategies."
     },
-    "loan-stress": {
-      "title": "Loan stress",
-      "description": "Handle EMIs better and reduce loan pressure."
-    },
-    "debt-repayment": {
-      "title": "Debt repayment",
-      "description": "Pay off debt step by step with a clear plan."
-    },
-    "credit-score": {
-      "title": "Credit score",
-      "description": "Understand and improve your credit score."
-    },
-    "tax-planning": {
-      "title": "Tax planning",
-      "description": "Save tax legally with simple planning."
-    },
-    "gst-guidance": {
+    "gst-and-tax-expert": {
       "title": "GST and Tax Expert",
-      "description": "Support for GST compliance, tax planning, and filing."
+      "description": "GST and Tax Expert offers guidance on GST registration, return filing, and tax planning services."
     },
-    "financial-planning": {
+    "financial-planner": {
       "title": "Financial Planner",
-      "description": "Plan savings, goals, and long-term financial stability."
+      "description": "Financial Planner offers personalized financial planning for budgeting, investments, and wealth growth."
     },
-    "insurance-planning": {
+    "insurance-expert": {
       "title": "Insurance Expert",
-      "description": "Get help choosing the right life/health insurance coverage."
+      "description": "Insurance Expert offers guidance on life, health, and general insurance planning based on individual needs."
     },
-    "retirement-planning": {
-      "title": "Retirement planning",
-      "description": "Build a simple plan for a secure retirement."
+    "business-finance-consultant": {
+      "title": "Business Finance Consultant",
+      "description": "Business Finance Consultant offers guidance on business budgeting, financial strategy, and growth planning."
     }
   }
 }
