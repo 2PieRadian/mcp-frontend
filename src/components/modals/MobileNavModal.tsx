@@ -9,6 +9,7 @@ import {
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useTranslation } from "react-i18next";
+import { gsap } from "gsap";
 
 interface MobileNavModalProps {
   isOpen: boolean;
@@ -49,6 +50,7 @@ export default function MobileNavModal({
   const [weHelpWithExpanded, setWeHelpWithExpanded] = useState(false);
   const [languageExpanded, setLanguageExpanded] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+  const expertCategoriesRef = useRef<HTMLDivElement | null>(null);
   const scrollLockRef = useRef<{
     scrollY: number;
     bodyOverflow: string;
@@ -139,6 +141,37 @@ export default function MobileNavModal({
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [isOpen, onClose]);
 
+  // GSAP animation for Expert Categories
+  useEffect(() => {
+    if (!expertCategoriesRef.current) return;
+
+    const element = expertCategoriesRef.current;
+
+    if (weHelpWithExpanded) {
+      // Measure the content height by temporarily setting to auto
+      const heightBefore = element.style.height;
+      element.style.height = "auto";
+      const targetHeight = element.scrollHeight;
+      element.style.height = heightBefore;
+      
+      // Animate from 0 to measured height
+      gsap.to(element, {
+        height: targetHeight,
+        opacity: 1,
+        duration: 0.3,
+        ease: "power2.inOut",
+      });
+    } else {
+      // Animate to 0
+      gsap.to(element, {
+        height: 0,
+        opacity: 0,
+        duration: 0.3,
+        ease: "power2.inOut",
+      });
+    }
+  }, [weHelpWithExpanded]);
+
   return (
     <div
       className={`fixed inset-0 z-50 ${isOpen ? "" : "pointer-events-none"}`}
@@ -203,13 +236,11 @@ export default function MobileNavModal({
                 />
               </div>
 
-              {/* Nested list with animation */}
+              {/* Nested list with GSAP animation */}
               <div
-                className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                  weHelpWithExpanded
-                    ? "max-h-96 opacity-100"
-                    : "max-h-0 opacity-0"
-                }`}
+                ref={expertCategoriesRef}
+                className="overflow-hidden"
+                style={{ height: 0, opacity: 0 }}
               >
                 <div className="mt-[10px] ml-[18px] pl-[14px] border-l border-gray-200 flex flex-col gap-[6px] pb-[2px]">
                   <Link
