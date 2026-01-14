@@ -1,5 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 import {
   ArrowRight,
   Calculator,
@@ -7,7 +12,6 @@ import {
   PieChart,
   Receipt,
   Shield,
-  Landmark,
   type LucideIcon,
 } from "lucide-react";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
@@ -63,8 +67,7 @@ function ExpertCategoryCard({
   return (
     <div
       onClick={handleClick}
-      style={{ animationDelay: `${index * 100}ms` }}
-      className="group relative cursor-pointer transition-all duration-500 animate-[fadeInUp_0.7s_ease-out_forwards] opacity-0 hover:-translate-y-1"
+      className="group relative cursor-pointer transition-all duration-500 hover:-translate-y-1"
     >
       {/* Card container */}
       <div
@@ -132,6 +135,14 @@ export default function FinanceExpertsIntro() {
   useScrollToTop();
   const { t } = useTranslation(["common", "experts"]);
 
+  // Animation refs
+  const heroRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const subtitleRef = useRef<HTMLParagraphElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
+  const sectionHeadingRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
+
   const categories = EXPERT_CATEGORIES.finance.map((spec) => ({
     title: t(`${spec.i18nKey}.title`, { ns: "experts" }),
     description:
@@ -142,6 +153,97 @@ export default function FinanceExpertsIntro() {
     icon: FINANCE_ICONS[spec.value] || TrendingUp,
     accentColor: FINANCE_COLORS[spec.value] || "#5B7B6A",
   }));
+
+  // GSAP animations on mount and scroll
+  useEffect(() => {
+    const tl = gsap.timeline();
+
+    // Initial load animations - fast, no dead time (small overlaps)
+    tl.fromTo(
+      heroRef.current,
+      { opacity: 0, y: 40 },
+      { opacity: 1, y: 0, duration: 1, ease: "power2.out" }
+    )
+      .fromTo(
+        headingRef.current,
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
+        "-=0.55"
+      )
+      .fromTo(
+        subtitleRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
+        "-=0.45"
+      )
+      .fromTo(
+        statsRef.current,
+        { opacity: 0, y: 15 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
+        "-=0.35"
+      )
+      .fromTo(
+        sectionHeadingRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
+        "-=0.25"
+      );
+
+    // Animate cards with stagger - AFTER section heading completes (quick gap)
+    if (cardsRef.current) {
+      tl.fromTo(
+        cardsRef.current.children,
+        { opacity: 0, y: 35, scale: 0.95 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.6,
+          ease: "power2.out",
+          stagger: 0.18,
+        },
+        "+=0.05"
+      );
+    }
+
+    // Scroll-triggered animations
+    gsap.fromTo(
+      ".section-heading",
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".section-heading",
+          start: "top 80%",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
+
+    gsap.fromTo(
+      ".meaningful-footer",
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".meaningful-footer",
+          start: "top 80%",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
+
+    // Cleanup
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -163,36 +265,111 @@ export default function FinanceExpertsIntro() {
       </div>
 
       <div className="max-w-6xl mx-auto px-[20px] pb-24">
-        {/* Hero Section - Clean & Professional */}
-        <div className="pt-16 pb-20">
-          <div className="max-w-3xl mx-auto text-center">
-            {/* Icon */}
+        {/* Hero Section - Elegant & Trustworthy */}
+        <div ref={heroRef} className="relative pt-20 pb-24 overflow-hidden">
+          {/* Subtle geometric patterns */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            {/* Growth chart line */}
+            <svg
+              className="absolute top-8 right-8 w-32 h-24 text-[#0EA5E9]/10"
+              viewBox="0 0 128 96"
+              fill="none"
+            >
+              <path
+                d="M10 86 L30 70 L50 75 L70 45 L90 50 L110 20"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <circle cx="10" cy="86" r="2" fill="currentColor" />
+              <circle cx="30" cy="70" r="2" fill="currentColor" />
+              <circle cx="50" cy="75" r="2" fill="currentColor" />
+              <circle cx="70" cy="45" r="2" fill="currentColor" />
+              <circle cx="90" cy="50" r="2" fill="currentColor" />
+              <circle cx="110" cy="20" r="2" fill="currentColor" />
+            </svg>
+
+            {/* Security shield pattern */}
+            <svg
+              className="absolute bottom-8 left-8 w-24 h-32 text-[#10B981]/10"
+              viewBox="0 0 96 128"
+              fill="none"
+            >
+              <path
+                d="M48 8 C35 8 25 18 25 30 L25 48 C25 68 35 78 48 88 C61 78 71 68 71 48 L71 30 C71 18 61 8 48 8 Z"
+                stroke="currentColor"
+                strokeWidth="2"
+                fill="none"
+              />
+              <path
+                d="M35 48 L45 58 L61 42"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+
+            {/* Floating dollar/pie chart elements */}
+            <div className="absolute top-1/4 left-1/4 w-3 h-3 rounded-full bg-[#F59E0B]/20 animate-pulse" />
+            <div
+              className="absolute bottom-1/3 right-1/3 w-4 h-4 rounded-full bg-[#8B5CF6]/15 animate-pulse"
+              style={{ animationDelay: "1s" }}
+            />
+            <div
+              className="absolute top-2/3 left-1/2 w-2 h-2 rounded-full bg-[#F43F5E]/20 animate-pulse"
+              style={{ animationDelay: "2s" }}
+            />
+          </div>
+
+          <div className="relative z-10 max-w-3xl mx-auto text-center">
+            {/* Decorative growth line above title */}
             <div className="flex justify-center mb-8">
-              <div className="w-16 h-16 rounded-2xl bg-white border border-stone-200 shadow-sm flex items-center justify-center">
-                <Landmark className="w-7 h-7 text-[#5B7B6A]" />
-              </div>
+              <svg width="120" height="8" viewBox="0 0 120 8" fill="none">
+                <path
+                  d="M4 4 Q30 1 60 4 T116 4"
+                  stroke="url(#gradient)"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+                <defs>
+                  <linearGradient
+                    id="gradient"
+                    x1="0%"
+                    y1="0%"
+                    x2="100%"
+                    y2="0%"
+                  >
+                    <stop offset="0%" stopColor="#0EA5E9" stopOpacity="0.6" />
+                    <stop offset="50%" stopColor="#10B981" stopOpacity="0.8" />
+                    <stop offset="100%" stopColor="#8B5CF6" stopOpacity="0.6" />
+                  </linearGradient>
+                </defs>
+              </svg>
             </div>
 
-            {/* Badge */}
-            {/* <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white border border-stone-200 mb-8">
-              <div className="w-1.5 h-1.5 rounded-full bg-[#5B7B6A]" />
-              <span className="text-xs font-semibold tracking-wide text-stone-600 uppercase">
-                {t("financeHeroBadge")}
-              </span>
-            </div> */}
-
             {/* Main heading */}
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-stone-800 mb-5 tracking-tight leading-tight">
+            <h1
+              ref={headingRef}
+              className="text-3xl md:text-4xl lg:text-5xl font-bold text-stone-800 mb-5 tracking-tight leading-tight"
+            >
               {t("financeHeroTitle")}
             </h1>
 
             {/* Subtitle */}
-            <p className="text-stone-500 text-base md:text-lg max-w-xl mx-auto leading-relaxed mb-10">
+            <p
+              ref={subtitleRef}
+              className="text-stone-500 text-base md:text-lg max-w-xl mx-auto leading-relaxed mb-10"
+            >
               {t("financeHeroSubtitle")}
             </p>
 
             {/* Stats row */}
-            <div className="flex items-center justify-center gap-8 md:gap-12 pt-6 border-t border-stone-200">
+            <div
+              ref={statsRef}
+              className="flex items-center justify-center gap-8 md:gap-12 pt-6 border-t border-stone-200"
+            >
               <div className="text-center">
                 <div className="text-2xl font-bold text-[#5B7B6A]">100%</div>
                 <div className="text-xs text-stone-500 mt-1">Verified</div>
@@ -212,17 +389,23 @@ export default function FinanceExpertsIntro() {
         </div>
 
         {/* Section heading */}
-        <div className="text-center mb-12">
+        <div
+          ref={sectionHeadingRef}
+          className="section-heading text-center mb-12"
+        >
           <h2 className="text-xl md:text-2xl font-semibold text-stone-800 mb-2">
-            {t("financeChooseHeading")}
+            {t("expertsChooseHeading")}
           </h2>
           <p className="text-stone-500 text-sm md:text-base">
-            {t("financeChooseSubheading")}
+            {t("expertsChooseSubheading")}
           </p>
         </div>
 
         {/* Categories Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div
+          ref={cardsRef}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
+        >
           {categories.map((category, index) => (
             <ExpertCategoryCard
               key={category.specializationSlug}
@@ -239,7 +422,7 @@ export default function FinanceExpertsIntro() {
         </div>
 
         {/* Meaningful footer */}
-        <div className="mt-20 pt-12 border-t border-stone-200">
+        <div className="meaningful-footer mt-20 pt-12 border-t border-stone-200">
           <div className="max-w-2xl mx-auto text-center">
             <blockquote className="text-lg md:text-xl text-stone-600 font-light italic leading-relaxed mb-4">
               "Financial peace isn't about being rich. It's about having a plan,

@@ -1,5 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 import {
   ArrowRight,
   Brain,
@@ -82,8 +87,7 @@ function ExpertCategoryCard({
   return (
     <div
       onClick={handleClick}
-      style={{ animationDelay: `${index * 50}ms` }}
-      className="group relative bg-white rounded-2xl cursor-pointer transition-all duration-500 hover:-translate-y-1 animate-[fadeInUp_0.6s_ease-out_forwards] opacity-0"
+      className="group relative bg-white rounded-2xl cursor-pointer transition-all duration-500 hover:-translate-y-1"
     >
       {/* Subtle border with accent color on hover */}
       <div
@@ -146,6 +150,14 @@ export default function WellnessExpertsIntro() {
   useScrollToTop();
   const { t } = useTranslation(["common", "experts"]);
 
+  // Animation refs
+  const heroRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const subtitleRef = useRef<HTMLParagraphElement>(null);
+  const sectionHeadingRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
+  const footerRef = useRef<HTMLDivElement>(null);
+
   const categories = EXPERT_CATEGORIES.wellness.map((spec) => ({
     title: t(`${spec.i18nKey}.title`, { ns: "experts" }),
     description:
@@ -156,6 +168,75 @@ export default function WellnessExpertsIntro() {
     icon: WELLNESS_ICONS[spec.value] || Heart,
     accentColor: WELLNESS_COLORS[spec.value] || "#7C9A92",
   }));
+
+  // GSAP animations on mount and scroll
+  useEffect(() => {
+    const tl = gsap.timeline();
+
+    // Initial load animations - fast, no dead time (small overlaps)
+    tl.fromTo(
+      heroRef.current,
+      { opacity: 0, y: 40 },
+      { opacity: 1, y: 0, duration: 1, ease: "power2.out" }
+    )
+      .fromTo(
+        headingRef.current,
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
+        "-=0.55"
+      )
+      .fromTo(
+        subtitleRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
+        "-=0.45"
+      )
+      .fromTo(
+        sectionHeadingRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
+        "-=0.35"
+      );
+
+    // Animate cards with stagger - AFTER section heading completes (quick gap)
+    if (cardsRef.current) {
+      tl.fromTo(
+        cardsRef.current.children,
+        { opacity: 0, y: 35, scale: 0.95 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.6,
+          ease: "power2.out",
+          stagger: 0.12,
+        },
+        "+=0.05"
+      );
+    }
+
+    // Scroll-triggered animations
+    gsap.fromTo(
+      footerRef.current,
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: footerRef.current,
+          start: "top 80%",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
+
+    // Cleanup
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-white">
@@ -178,7 +259,10 @@ export default function WellnessExpertsIntro() {
 
       <div className="max-w-6xl mx-auto px-[20px] pb-24">
         {/* Hero Section - Organic & Calming (no badge) */}
-        <div className="relative pt-16 pb-20 md:pt-20 md:pb-24 text-center overflow-hidden">
+        <div
+          ref={heroRef}
+          className="relative pt-16 pb-20 md:pt-20 md:pb-24 text-center overflow-hidden"
+        >
           {/* Decorative botanical line art */}
           <div className="absolute left-4 md:left-12 top-1/2 -translate-y-1/2 opacity-20 hidden lg:block">
             <svg width="60" height="180" viewBox="0 0 60 180" fill="none">
@@ -283,7 +367,10 @@ export default function WellnessExpertsIntro() {
                 ❋
               </span>
 
-              <h1 className="text-4xl md:text-4xl lg:text-5xl font-bold text-stone-800 mb-5 tracking-tight leading-tight">
+              <h1
+                ref={headingRef}
+                className="text-4xl md:text-4xl lg:text-5xl font-bold text-stone-800 mb-5 tracking-tight leading-tight"
+              >
                 {t("wellnessExpertsTitleLine1")}
                 <br />
                 <span className="relative">
@@ -308,14 +395,17 @@ export default function WellnessExpertsIntro() {
             </div>
 
             {/* Subtitle */}
-            <p className="text-stone-500 text-base md:text-lg max-w-2xl mx-auto leading-relaxed mt-4">
+            <p
+              ref={subtitleRef}
+              className="text-stone-500 text-base md:text-lg max-w-2xl mx-auto leading-relaxed mt-4"
+            >
               {t("wellnessExpertsSubtitle")}
             </p>
           </div>
         </div>
 
         {/* Section heading */}
-        <div className="text-center mb-10">
+        <div ref={sectionHeadingRef} className="text-center mb-10">
           <h2 className="text-xl md:text-2xl font-semibold text-stone-800 mb-2">
             {t("expertsChooseHeading")}
           </h2>
@@ -325,7 +415,10 @@ export default function WellnessExpertsIntro() {
         </div>
 
         {/* Categories Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5">
+        <div
+          ref={cardsRef}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5"
+        >
           {categories.map((category, index) => (
             <ExpertCategoryCard
               key={category.specializationSlug}
@@ -342,7 +435,10 @@ export default function WellnessExpertsIntro() {
         </div>
 
         {/* Bottom decorative text */}
-        <div className="text-center mt-16 pt-8 border-t border-stone-100">
+        <div
+          ref={footerRef}
+          className="text-center mt-16 pt-8 border-t border-stone-100"
+        >
           <p className="text-stone-400 text-sm">
             Your journey to wellness begins with a single step
           </p>
