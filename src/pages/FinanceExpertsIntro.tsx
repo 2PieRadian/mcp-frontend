@@ -3,11 +3,11 @@ import { useTranslation } from "react-i18next";
 import {
   ArrowRight,
   Calculator,
-  Shield,
-  ChartLine,
+  TrendingUp,
   PieChart,
   Receipt,
-  TrendingUp,
+  Shield,
+  Landmark,
   type LucideIcon,
 } from "lucide-react";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
@@ -17,10 +17,19 @@ import { EXPERT_CATEGORIES } from "../lib/constants/experts";
 // Icon mapping for finance specializations
 const FINANCE_ICONS: Record<string, LucideIcon> = {
   "Business Finance Consultant": Calculator,
-  "Investment Expert": ChartLine,
+  "Investment Expert": TrendingUp,
   "GST and Tax Expert": Receipt,
   "Financial Planner": PieChart,
   "Insurance Expert": Shield,
+};
+
+// Professional, trustworthy accent colors for finance
+const FINANCE_COLORS: Record<string, string> = {
+  "Investment Expert": "#5B7B6A",
+  "GST and Tax Expert": "#7B6A5B",
+  "Financial Planner": "#6A5B7B",
+  "Insurance Expert": "#5B6A7B",
+  "Business Finance Consultant": "#7B5B6A",
 };
 
 interface ExpertCategoryCardProps {
@@ -29,6 +38,8 @@ interface ExpertCategoryCardProps {
   specializationValue: string;
   specializationSlug: string;
   icon: LucideIcon;
+  accentColor: string;
+  index: number;
 }
 
 function ExpertCategoryCard({
@@ -38,6 +49,8 @@ function ExpertCategoryCard({
   specializationSlug,
   exploreText,
   icon: Icon,
+  accentColor,
+  index,
 }: ExpertCategoryCardProps & { exploreText: string }) {
   const navigate = useNavigate();
 
@@ -50,32 +63,67 @@ function ExpertCategoryCard({
   return (
     <div
       onClick={handleClick}
-      className="group relative flex flex-col justify-between bg-linear-to-br from-white to-[#f8fafb] hover:from-[#f0f7fa] hover:to-white border-2 border-[#e0e7eb] hover:border-[#44666C] rounded-2xl p-6 cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-xl shadow-md h-full"
+      style={{ animationDelay: `${index * 100}ms` }}
+      className="group relative cursor-pointer transition-all duration-500 animate-[fadeInUp_0.7s_ease-out_forwards] opacity-0 hover:-translate-y-1"
     >
-      {/* Decorative linear overlay on hover */}
-      <div className="absolute inset-0 bg-linear-to-br from-[#44666C]/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-      <div className="relative z-10">
-        {/* Icon */}
-        <div className="mb-4 flex items-center justify-center w-12 h-12 rounded-xl bg-linear-to-br from-[#44666C] to-[#365a62] group-hover:scale-110 transition-transform duration-300">
-          <Icon className="w-6 h-6 text-white" />
-        </div>
-
-        <h3 className="text-xl font-bold text-[#1a2e35] mb-3 group-hover:text-[#44666C] transition-colors duration-300">
-          {title}
-        </h3>
-        <p className="text-[15px] text-[#5a6c75] leading-relaxed mb-6 line-clamp-3">
-          {description}
-        </p>
-      </div>
-
-      <button
-        onClick={handleClick}
-        className="relative z-10 flex items-center justify-center gap-2 mt-auto bg-linear-to-r from-[#44666C] to-[#365a62] hover:from-[#365a62] hover:to-[#2d4d54] text-white font-semibold rounded-xl py-3 px-5 text-sm transition-all duration-300 shadow-md hover:shadow-lg group-hover:gap-3 cursor-pointer"
+      {/* Card container */}
+      <div
+        className="relative rounded-2xl h-full overflow-hidden transition-all duration-500"
+        style={{
+          border: `1px solid ${accentColor}30`,
+        }}
       >
-        <span>{exploreText}</span>
-        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-      </button>
+        {/* Background fill animation */}
+        <div
+          className="absolute inset-0 transition-all duration-500 ease-out origin-top scale-y-0 group-hover:scale-y-100"
+          style={{ backgroundColor: accentColor }}
+        />
+
+        {/* Accent line at top (visible by default) */}
+        <div
+          className="absolute top-0 left-0 right-0 h-1 z-10"
+          style={{ backgroundColor: accentColor }}
+        />
+
+        {/* White background (fades out on hover) */}
+        <div className="absolute inset-0 bg-white transition-opacity duration-500 group-hover:opacity-0" />
+
+        <div className="relative z-10 p-6 pt-8 h-full flex flex-col">
+          {/* Icon */}
+          <div className="flex items-start justify-between mb-5">
+            <div
+              className="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 group-hover:bg-white/20"
+              style={{ backgroundColor: `${accentColor}15` }}
+            >
+              <Icon
+                className="w-5 h-5 transition-colors duration-500 group-hover:text-white"
+                style={{ color: accentColor }}
+              />
+            </div>
+            <ArrowRight className="w-5 h-5 text-stone-300 transition-all duration-500 group-hover:text-white group-hover:translate-x-1" />
+          </div>
+
+          {/* Title */}
+          <h3 className="text-lg font-semibold text-stone-800 mb-3 leading-snug transition-colors duration-500 group-hover:text-white">
+            {title}
+          </h3>
+
+          {/* Description */}
+          <p className="text-sm text-stone-500 leading-relaxed mb-6 line-clamp-3 grow transition-colors duration-500 group-hover:text-white/80">
+            {description}
+          </p>
+
+          {/* CTA */}
+          <div className="text-sm font-medium transition-colors duration-500">
+            <span
+              className="transition-colors duration-500 group-hover:text-white"
+              style={{ color: accentColor }}
+            >
+              {exploreText} →
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -92,50 +140,88 @@ export default function FinanceExpertsIntro() {
     specializationValue: spec.value,
     specializationSlug: spec.slug,
     icon: FINANCE_ICONS[spec.value] || TrendingUp,
+    accentColor: FINANCE_COLORS[spec.value] || "#5B7B6A",
   }));
 
   return (
-    <div className="min-h-screen bg-white px-[20px]">
+    <div className="min-h-screen bg-stone-50">
+      <style>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(24px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
+
       <ResponsiveNavbar />
 
-      <div className="max-w-[1350px] mx-auto pb-[80px]">
-        {/* Hero Section */}
-        <div className="relative mt-[40px] mb-[60px]">
-          <div className="relative h-[240px] sm:h-[280px] md:h-[400px] rounded-3xl overflow-hidden shadow-2xl">
-            <img
-              src="/images/finance/finance.webp"
-              alt="Financial Planning"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-linear-to-r from-[#44666C]/90 via-[#44666C]/70 to-transparent" />
-            <div className="absolute inset-0 flex flex-col justify-center items-start px-4 sm:px-6 md:px-8 lg:px-12 text-white">
-              <div className="flex items-center gap-2 mb-3 sm:mb-4">
-                <span className="text-xs sm:text-sm md:text-base font-semibold uppercase tracking-wider opacity-90">
-                  {t("financeHeroBadge")}
-                </span>
+      <div className="max-w-6xl mx-auto px-5 pb-24">
+        {/* Hero Section - Clean & Professional */}
+        <div className="pt-16 pb-20">
+          <div className="max-w-3xl mx-auto text-center">
+            {/* Icon */}
+            <div className="flex justify-center mb-8">
+              <div className="w-16 h-16 rounded-2xl bg-white border border-stone-200 shadow-sm flex items-center justify-center">
+                <Landmark className="w-7 h-7 text-[#5B7B6A]" />
               </div>
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 sm:mb-4 leading-tight">
-                {t("financeHeroTitle")}
-              </h1>
-              <p className="text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl opacity-95 leading-relaxed">
-                {t("financeHeroSubtitle")}
-              </p>
+            </div>
+
+            {/* Badge */}
+            {/* <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white border border-stone-200 mb-8">
+              <div className="w-1.5 h-1.5 rounded-full bg-[#5B7B6A]" />
+              <span className="text-xs font-semibold tracking-wide text-stone-600 uppercase">
+                {t("financeHeroBadge")}
+              </span>
+            </div> */}
+
+            {/* Main heading */}
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-stone-800 mb-5 tracking-tight leading-tight">
+              {t("financeHeroTitle")}
+            </h1>
+
+            {/* Subtitle */}
+            <p className="text-stone-500 text-base md:text-lg max-w-xl mx-auto leading-relaxed mb-10">
+              {t("financeHeroSubtitle")}
+            </p>
+
+            {/* Stats row */}
+            <div className="flex items-center justify-center gap-8 md:gap-12 pt-6 border-t border-stone-200">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-[#5B7B6A]">100%</div>
+                <div className="text-xs text-stone-500 mt-1">Verified</div>
+              </div>
+              <div className="w-px h-8 bg-stone-200" />
+              <div className="text-center">
+                <div className="text-2xl font-bold text-[#5B7B6A]">24/7</div>
+                <div className="text-xs text-stone-500 mt-1">Support</div>
+              </div>
+              <div className="w-px h-8 bg-stone-200" />
+              <div className="text-center">
+                <div className="text-2xl font-bold text-[#5B7B6A]">Safe</div>
+                <div className="text-xs text-stone-500 mt-1">& Secure</div>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Categories Grid */}
-        <div className="mb-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#1a2e35] mb-2 text-center">
+        {/* Section heading */}
+        <div className="text-center mb-12">
+          <h2 className="text-xl md:text-2xl font-semibold text-stone-800 mb-2">
             {t("financeChooseHeading")}
           </h2>
-          <p className="text-center text-[#5a6c75] text-lg mb-10">
+          <p className="text-stone-500 text-sm md:text-base">
             {t("financeChooseSubheading")}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {categories.map((category) => (
+        {/* Categories Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {categories.map((category, index) => (
             <ExpertCategoryCard
               key={category.specializationSlug}
               title={category.title}
@@ -143,9 +229,25 @@ export default function FinanceExpertsIntro() {
               specializationValue={category.specializationValue}
               specializationSlug={category.specializationSlug}
               icon={category.icon}
+              accentColor={category.accentColor}
+              index={index}
               exploreText={t("explore", { ns: "common" })}
             />
           ))}
+        </div>
+
+        {/* Meaningful footer */}
+        <div className="mt-20 pt-12 border-t border-stone-200">
+          <div className="max-w-2xl mx-auto text-center">
+            <blockquote className="text-lg md:text-xl text-stone-600 font-light italic leading-relaxed mb-4">
+              "Financial peace isn't about being rich. It's about having a plan,
+              making informed decisions, and knowing you're not alone on this
+              journey."
+            </blockquote>
+            <p className="text-sm text-stone-400">
+              We connect you with verified experts who understand your needs.
+            </p>
+          </div>
         </div>
       </div>
     </div>
