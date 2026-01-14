@@ -23,13 +23,13 @@ const EDUCATION_ICONS: Record<string, LucideIcon> = {
   "Academic Scholars": GraduationCap,
 };
 
-// Warm, inspiring accent colors for education
+// Catchier accent colors for education
 const EDUCATION_COLORS: Record<string, string> = {
-  "Career Path Finder": "#6B8E7D",
-  "Academic Counsellor": "#7D8EAB",
-  Achievers: "#AB8E7D",
-  Aspirants: "#8E7DAB",
-  "Academic Scholars": "#7DAB8E",
+  "Career Path Finder": "#0EA5E9", // sky
+  "Academic Counsellor": "#6366F1", // indigo
+  Achievers: "#F59E0B", // amber
+  Aspirants: "#8B5CF6", // violet
+  "Academic Scholars": "#10B981", // emerald
 };
 
 interface ExpertCategoryCardProps {
@@ -82,7 +82,7 @@ function ExpertCategoryCard({
         {/* Icon container */}
         <div
           className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-all duration-300 group-hover:scale-110"
-          style={{ backgroundColor: `${accentColor}12` }}
+          style={{ backgroundColor: `${accentColor}22` }}
         >
           <Icon
             className="w-6 h-6 transition-colors duration-300"
@@ -105,8 +105,9 @@ function ExpertCategoryCard({
           onClick={handleClick}
           className="flex items-center justify-center gap-2 py-3 px-5 rounded-xl text-sm font-medium transition-all duration-300 group-hover:gap-3"
           style={{
-            backgroundColor: `${accentColor}10`,
+            backgroundColor: `${accentColor}1F`,
             color: accentColor,
+            border: `1px solid ${accentColor}55`,
           }}
         >
           <span>{exploreText}</span>

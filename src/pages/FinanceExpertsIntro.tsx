@@ -23,13 +23,13 @@ const FINANCE_ICONS: Record<string, LucideIcon> = {
   "Insurance Expert": Shield,
 };
 
-// Professional, trustworthy accent colors for finance
+// Catchier (still trustworthy) accent colors for finance
 const FINANCE_COLORS: Record<string, string> = {
-  "Investment Expert": "#5B7B6A",
-  "GST and Tax Expert": "#7B6A5B",
-  "Financial Planner": "#6A5B7B",
-  "Insurance Expert": "#5B6A7B",
-  "Business Finance Consultant": "#7B5B6A",
+  "Investment Expert": "#0EA5E9", // sky
+  "GST and Tax Expert": "#F59E0B", // amber
+  "Financial Planner": "#8B5CF6", // violet
+  "Insurance Expert": "#10B981", // emerald
+  "Business Finance Consultant": "#F43F5E", // rose
 };
 
 interface ExpertCategoryCardProps {

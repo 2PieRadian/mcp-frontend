@@ -35,20 +35,20 @@ const WELLNESS_ICONS: Record<string, LucideIcon> = {
   "Yoga Expert": Flower2,
 };
 
-// Soft, calming accent colors for each specialization
+// Catchy (but still wellness-friendly) accent colors for each specialization
 const WELLNESS_COLORS: Record<string, string> = {
-  "Anxiety and Panic Attack Counsellor": "#7C9A92",
-  "Depression Counsellor": "#9B8AA5",
-  "OCD Counsellor": "#8BA4B4",
-  "ADHD Counsellor": "#C4A77D",
-  "Couple Counsellor": "#D4A5A5",
-  "Family Counsellor": "#A5C4B8",
-  "Breakup Recovery Expert": "#B8A5B5",
-  "Loneliness Counsellor": "#A5B5C4",
-  "Divorce / Separation Counsellor": "#B5A5A5",
-  "Stress / Overthinking Expert": "#A5C4C4",
-  Dietician: "#B5C4A5",
-  "Yoga Expert": "#C4B5A5",
+  "Anxiety and Panic Attack Counsellor": "#0EA5E9", // sky
+  "Depression Counsellor": "#8B5CF6", // violet
+  "OCD Counsellor": "#6366F1", // indigo
+  "ADHD Counsellor": "#F59E0B", // amber
+  "Couple Counsellor": "#F43F5E", // rose
+  "Family Counsellor": "#10B981", // emerald
+  "Breakup Recovery Expert": "#EC4899", // pink
+  "Loneliness Counsellor": "#06B6D4", // cyan
+  "Divorce / Separation Counsellor": "#FB7185", // coral/rose
+  "Stress / Overthinking Expert": "#14B8A6", // teal
+  Dietician: "#84CC16", // lime
+  "Yoga Expert": "#A78BFA", // purple
 };
 
 interface ExpertCategoryCardProps {
@@ -95,7 +95,7 @@ function ExpertCategoryCard({
       <div
         className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         style={{
-          boxShadow: `0 8px 32px ${accentColor}20, 0 0 0 1px ${accentColor}40`,
+          boxShadow: `0 10px 36px ${accentColor}33, 0 0 0 1px ${accentColor}55`,
         }}
       />
 
@@ -103,7 +103,7 @@ function ExpertCategoryCard({
         {/* Icon with accent background */}
         <div
           className="w-11 h-11 rounded-xl flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-105"
-          style={{ backgroundColor: `${accentColor}15` }}
+          style={{ backgroundColor: `${accentColor}26` }}
         >
           <Icon
             className="w-5 h-5 transition-colors duration-300"
@@ -126,9 +126,9 @@ function ExpertCategoryCard({
           onClick={handleClick}
           className="flex items-center justify-center gap-2 py-3 px-5 rounded-xl text-sm font-semibold transition-all duration-300 group-hover:gap-3"
           style={{
-            backgroundColor: `${accentColor}10`,
-            border: `1px solid ${accentColor}30`,
-            color: "#1a2e35",
+            backgroundColor: `${accentColor}1F`,
+            border: `1px solid ${accentColor}55`,
+            color: "#13232A",
           }}
         >
           <span>{exploreText}</span>
