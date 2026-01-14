@@ -158,9 +158,11 @@ export default function FinanceExpertsIntro() {
         }
       `}</style>
 
-      <ResponsiveNavbar />
+      <div className="w-full bg-white px-[20px]">
+        <ResponsiveNavbar />
+      </div>
 
-      <div className="max-w-6xl mx-auto px-5 pb-24">
+      <div className="max-w-6xl mx-auto px-[20px] pb-24">
         {/* Hero Section - Clean & Professional */}
         <div className="pt-16 pb-20">
           <div className="max-w-3xl mx-auto text-center">

@@ -124,14 +124,18 @@ function ExpertCategoryCard({
         {/* CTA Button */}
         <button
           onClick={handleClick}
-          className="flex items-center justify-center gap-2 py-3 px-5 rounded-xl text-sm font-medium transition-all duration-300 group-hover:gap-3"
+          className="flex items-center justify-center gap-2 py-3 px-5 rounded-xl text-sm font-semibold transition-all duration-300 group-hover:gap-3"
           style={{
             backgroundColor: `${accentColor}10`,
-            color: accentColor,
+            border: `1px solid ${accentColor}30`,
+            color: "#1a2e35",
           }}
         >
           <span>{exploreText}</span>
-          <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+          <ArrowRight
+            className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+            style={{ color: accentColor }}
+          />
         </button>
       </div>
     </div>
@@ -168,9 +172,11 @@ export default function WellnessExpertsIntro() {
         }
       `}</style>
 
-      <ResponsiveNavbar />
+      <div className="w-full bg-white px-[20px]">
+        <ResponsiveNavbar />
+      </div>
 
-      <div className="max-w-6xl mx-auto px-5 pb-24">
+      <div className="max-w-6xl mx-auto px-[20px] pb-24">
         {/* Hero Section - Organic & Calming (no badge) */}
         <div className="relative pt-16 pb-20 md:pt-20 md:pb-24 text-center overflow-hidden">
           {/* Organic background shapes */}
