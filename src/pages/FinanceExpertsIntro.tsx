@@ -3,17 +3,11 @@ import { useTranslation } from "react-i18next";
 import {
   ArrowRight,
   Calculator,
-  TrendingUp,
   Shield,
   ChartLine,
   PieChart,
-  Target,
-  AlertCircle,
-  ArrowDown,
-  Star,
-  FileText,
   Receipt,
-  Calendar,
+  TrendingUp,
   type LucideIcon,
 } from "lucide-react";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
@@ -22,20 +16,11 @@ import { EXPERT_CATEGORIES } from "../lib/constants/experts";
 
 // Icon mapping for finance specializations
 const FINANCE_ICONS: Record<string, LucideIcon> = {
-  Budgeting: Calculator,
-  "Income Planning": TrendingUp,
-  "Emergency Fund": Shield,
-  "Beginner Investing": ChartLine,
-  "Mutual Funds": PieChart,
-  "Investment Planning": Target,
-  "Loan Stress": AlertCircle,
-  "Debt Repayment": ArrowDown,
-  "Credit Score": Star,
-  "Tax Planning": FileText,
-  "GST Guidance": Receipt,
-  "Financial Planning": Target,
-  "Insurance Planning": Shield,
-  "Retirement Planning": Calendar,
+  "Business Finance Consultant": Calculator,
+  "Investment Expert": ChartLine,
+  "GST and Tax Expert": Receipt,
+  "Financial Planner": PieChart,
+  "Insurance Expert": Shield,
 };
 
 interface ExpertCategoryCardProps {

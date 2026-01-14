@@ -10,8 +10,6 @@ import {
   Home,
   HeartOff,
   Wind,
-  Moon,
-  TrendingUp,
   Scale,
   Apple,
   Flower,
@@ -23,20 +21,18 @@ import { EXPERT_CATEGORIES } from "../lib/constants/experts";
 
 // Icon mapping for wellness specializations
 const WELLNESS_ICONS: Record<string, LucideIcon> = {
-  "Anxiety & Panic": Brain,
-  "Depression Support": Heart,
-  "OCD Support": Target,
-  "ADHD Support": Zap,
-  "Relationship Issues": Users,
-  "Family Issues": Home,
-  "Breakup Recovery": HeartOff,
-  "Loneliness Support": Users,
-  "Stress Management": Wind,
-  "Sleep Problems": Moon,
-  "Life Coaching": TrendingUp,
-  "Weight Management": Scale,
-  "Nutrition Guidance": Apple,
-  "Yoga Therapy": Flower,
+  "Anxiety and Panic Attack Counsellor": Brain,
+  "Depression Counsellor": Heart,
+  "OCD Counsellor": Target,
+  "ADHD Counsellor": Zap,
+  "Couple Counsellor": Users,
+  "Family Counsellor": Home,
+  "Breakup Recovery Expert": HeartOff,
+  "Loneliness Counsellor": Users,
+  "Divorce / Separation Counsellor": Scale,
+  "Stress / Overthinking Expert": Wind,
+  Dietician: Apple,
+  "Yoga Expert": Flower,
 };
 
 interface ExpertCategoryCardProps {

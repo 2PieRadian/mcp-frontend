@@ -4,13 +4,8 @@ import {
   ArrowRight,
   HelpCircle,
   Target,
-  RefreshCw,
   BookOpen,
   Brain,
-  Clock,
-  MessageSquare,
-  FileText,
-  Briefcase,
   GraduationCap,
   type LucideIcon,
 } from "lucide-react";
@@ -20,17 +15,11 @@ import { EXPERT_CATEGORIES } from "../lib/constants/experts";
 
 // Icon mapping for education specializations
 const EDUCATION_ICONS: Record<string, LucideIcon> = {
-  "Career Confusion": HelpCircle,
-  "Career Planning": Target,
-  "Career Change": RefreshCw,
-  "Academic Guidance": BookOpen,
-  "Exam Stress": Brain,
-  "Study Skills": BookOpen,
-  "Time Management": Clock,
-  "Communication Skills": MessageSquare,
-  "Resume & Interviews": FileText,
-  "Internship Guidance": Briefcase,
-  "Higher Studies": GraduationCap,
+  "Career Path Finder": HelpCircle,
+  "Academic Counsellor": BookOpen,
+  Achievers: Target,
+  Aspirants: Brain,
+  "Academic Scholars": GraduationCap,
 };
 
 interface ExpertCategoryCardProps {

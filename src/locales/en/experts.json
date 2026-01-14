@@ -38,44 +38,44 @@
   "gstTaxationExpertDescription": "Get expert guidance on GST compliance, tax planning, and filing. Our taxation experts help you navigate complex tax regulations, maximize deductions, and ensure timely compliance with all tax obligations.",
   "specializations": {
     "anxiety-and-panic": {
-      "title": "Anxiety & panic",
-      "description": "Calm anxiety and panic with simple, supportive guidance."
+      "title": "Anxiety and Panic Attack Counsellor",
+      "description": "Get practical support to manage anxiety and panic attacks."
     },
     "depression-support": {
-      "title": "Depression support",
-      "description": "Get help to feel better and handle low mood day by day."
+      "title": "Depression Counsellor",
+      "description": "Support and strategies to cope with low mood and depression."
     },
     "ocd-support": {
-      "title": "OCD support",
-      "description": "Understand OCD patterns and learn simple steps to manage them."
+      "title": "OCD Counsellor",
+      "description": "Understand OCD patterns and learn steps to manage compulsions."
     },
     "adhd-support": {
-      "title": "ADHD support",
-      "description": "Get practical ways to improve focus and handle distractions."
+      "title": "ADHD Counsellor",
+      "description": "Practical guidance to improve focus, routines, and attention."
     },
     "relationship-issues": {
-      "title": "Relationship issues",
-      "description": "Improve communication and reduce fights in relationships."
+      "title": "Couple Counsellor",
+      "description": "Work on communication, trust, and conflict in your relationship."
     },
     "family-issues": {
-      "title": "Family issues",
-      "description": "Handle family stress and talk better at home."
+      "title": "Family Counsellor",
+      "description": "Get support for family concerns, boundaries, and healthy dialogue."
     },
     "breakup-recovery": {
-      "title": "Breakup recovery",
-      "description": "Heal after a breakup and feel steady again."
+      "title": "Breakup Recovery Expert",
+      "description": "Heal after a breakup and rebuild emotional stability."
     },
     "loneliness-support": {
-      "title": "Loneliness",
-      "description": "Feel less alone and build better connections."
+      "title": "Loneliness Counsellor",
+      "description": "Reduce loneliness and build meaningful connections."
     },
     "stress-management": {
-      "title": "Stress management",
-      "description": "Learn simple ways to reduce stress and stay calm."
+      "title": "Stress / Overthinking Expert",
+      "description": "Learn practical tools to reduce stress and overthinking."
     },
     "sleep-problems": {
-      "title": "Sleep problems",
-      "description": "Fix sleep routines with easy daily changes."
+      "title": "Divorce / Separation Counsellor",
+      "description": "Emotional support during divorce or separation and beyond."
     },
     "life-coaching": {
       "title": "Life coaching",
@@ -86,16 +86,16 @@
       "description": "Build healthy habits for weight in a sustainable way."
     },
     "nutrition-guidance": {
-      "title": "Nutrition guidance",
-      "description": "Get simple food guidance that fits your routine."
+      "title": "Dietician",
+      "description": "Personalised nutrition plans that fit your goals and lifestyle."
     },
     "yoga-therapy": {
-      "title": "Yoga therapy",
-      "description": "Use gentle yoga to support mind and body."
+      "title": "Yoga Expert",
+      "description": "Guided yoga practices to support flexibility, stress relief, and wellbeing."
     },
     "career-confusion": {
-      "title": "Career confusion",
-      "description": "Get clarity on what to choose next in your career."
+      "title": "Career Path Finder",
+      "description": "Find the right career direction based on your strengths and interests."
     },
     "career-planning": {
       "title": "Career planning",
@@ -106,16 +106,16 @@
       "description": "Plan your switch to a new job path smoothly."
     },
     "academic-guidance": {
-      "title": "Academic guidance",
-      "description": "Improve study routine and perform better in exams."
+      "title": "Academic Counsellor",
+      "description": "Get guidance on study plans, subjects, and exam strategy."
     },
     "exam-stress": {
-      "title": "Exam stress",
-      "description": "Stay calm during exams and handle pressure better."
+      "title": "Achievers",
+      "description": "Goal-focused guidance for high performers aiming to excel."
     },
     "study-skills": {
-      "title": "Study skills",
-      "description": "Learn simple ways to study smarter and remember more."
+      "title": "Aspirants",
+      "description": "Structured support for aspirants preparing for competitive goals."
     },
     "time-management": {
       "title": "Time management",
@@ -134,16 +134,16 @@
       "description": "Find the right internship and apply with confidence."
     },
     "higher-studies": {
-      "title": "Higher studies",
-      "description": "Choose the right course and plan your next step."
+      "title": "Academic Scholars",
+      "description": "Guidance for academic excellence, scholarships, and higher education."
     },
     "budgeting": {
       "title": "Budgeting",
       "description": "Track spending and create a budget that is easy to follow."
     },
     "income-planning": {
-      "title": "Income planning",
-      "description": "Plan income and savings for monthly stability."
+      "title": "Business Finance Consultant",
+      "description": "Guidance on cash flow, budgeting, and day-to-day business finance decisions."
     },
     "emergency-fund": {
       "title": "Emergency fund",
@@ -158,8 +158,8 @@
       "description": "Understand mutual funds and choose what suits you."
     },
     "investment-planning": {
-      "title": "Investment planning",
-      "description": "Make an investment plan based on your goals."
+      "title": "Investment Expert",
+      "description": "Build an investment strategy aligned with your goals and risk profile."
     },
     "loan-stress": {
       "title": "Loan stress",
@@ -178,16 +178,16 @@
       "description": "Save tax legally with simple planning."
     },
     "gst-guidance": {
-      "title": "GST guidance",
-      "description": "Understand GST basics and avoid common mistakes."
+      "title": "GST and Tax Expert",
+      "description": "Support for GST compliance, tax planning, and filing."
     },
     "financial-planning": {
-      "title": "Financial planning",
-      "description": "Plan money for near-term and long-term needs."
+      "title": "Financial Planner",
+      "description": "Plan savings, goals, and long-term financial stability."
     },
     "insurance-planning": {
-      "title": "Insurance planning",
-      "description": "Choose the right insurance for your family and goals."
+      "title": "Insurance Expert",
+      "description": "Get help choosing the right life/health insurance coverage."
     },
     "retirement-planning": {
       "title": "Retirement planning",
