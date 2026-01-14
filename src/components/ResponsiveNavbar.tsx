@@ -32,13 +32,13 @@ export default function ResponsiveNavbar() {
               </Link>
               <Link to="/" className="flex flex-col min-w-0">
                 <span className="text-[20px] sm:text-[22px] font-semibold text-logo-heading cursor-pointer truncate">
-                {t("appName") === "MindCurePath" ? (
-                  <>
-                    Mind<span className="text-[#62af9b]">Cure</span>Path
-                  </>
-                ) : (
-                  t("appName")
-                )}
+                  {t("appName") === "MindCurePath" ? (
+                    <>
+                      Mind<span className="text-[#62af9b]">Cure</span>Path
+                    </>
+                  ) : (
+                    t("appName")
+                  )}
                 </span>
                 <span className="text-[10px] sm:text-[12px] text-slate-600 leading-tight mt-[-2px]">
                   Guided by experts, driven by care, healing every mind
@@ -47,7 +47,7 @@ export default function ResponsiveNavbar() {
             </div>
 
             {/* Right side controls */}
-            <div className="flex items-center gap-[12px] shrink-0">
+            <div className="flex items-center gap-[7px] shrink-0">
               {/* Profile/Login Button */}
               {user ? (
                 <Link
