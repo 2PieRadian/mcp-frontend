@@ -103,7 +103,7 @@ export default function ExpertsDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-light-100 px-[20px]">
+    <div className="min-h-screen bg-light-100 px-[16px] sm:px-[20px]">
       <ResponsiveNavbar />
       <div className="max-w-[1350px] mx-auto py-[30px] sm:py-[40px]">
         <div className="mb-[30px]">

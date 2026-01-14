@@ -295,7 +295,7 @@ export default function Footer() {
               psychological, or therapeutic advice or services and are not
               responsible for the outcomes of consultations or interactions
               between users and professionals. The platform is not intended for
-              emergencies—use is at your own discretion and risk.
+              emergencies, use is at your own discretion and risk.
             </p>
           </div>
 

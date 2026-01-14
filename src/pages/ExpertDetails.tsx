@@ -23,7 +23,7 @@ export default function ExpertDetails() {
 
   if (!expert) {
     return (
-      <div className="min-h-screen bg-gray-50 px-[20px]">
+      <div className="min-h-screen bg-gray-50 px-[16px] sm:px-[20px]">
         <ResponsiveNavbar />
         <div className="max-w-6xl mx-auto py-8">
           <button

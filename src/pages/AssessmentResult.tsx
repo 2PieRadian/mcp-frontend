@@ -604,7 +604,7 @@ export default function AssessmentResult() {
         />
       </Helmet>
 
-      <div className="min-h-screen bg-linear-to-b px-[20px] from-[#f8fafb] via-white to-[#f0f7fa]">
+      <div className="min-h-screen bg-linear-to-b px-[16px] sm:px-[20px] from-[#f8fafb] via-white to-[#f0f7fa]">
         <ResponsiveNavbar />
 
         <div className="max-w-[1350px] mx-auto py-[clamp(2rem,5vw,4rem)]">

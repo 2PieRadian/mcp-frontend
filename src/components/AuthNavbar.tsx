@@ -37,7 +37,7 @@ export default function AuthNavbar() {
   };
 
   return (
-    <div className="auth-navbar w-full max-w-[1350px] mx-auto flex justify-between items-center py-[20px] relative">
+    <div className="auth-navbar w-full max-w-[1350px] mx-auto flex justify-between items-center py-[16px] sm:py-[20px] relative">
       <Link
         to="/"
         className="flex items-center gap-[8px] sm:gap-[10px] min-w-0 flex-1 sm:flex-initial"

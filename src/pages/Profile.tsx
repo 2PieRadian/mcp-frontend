@@ -215,7 +215,7 @@ export default function Profile() {
   };
 
   return (
-    <div className="min-h-screen bg-light-100 px-[20px]">
+    <div className="min-h-screen bg-light-100 px-[16px] sm:px-[20px]">
       <ResponsiveNavbar />
 
       <main className="w-full py-[20px] sm:py-[30px] space-y-[16px] sm:space-y-[24px] [@media(min-width:950px)]:max-w-[900px] [@media(min-width:950px)]:mx-auto [@media(min-width:950px)]:px-[25px]">

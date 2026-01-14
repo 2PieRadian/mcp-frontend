@@ -225,11 +225,11 @@ export default function WellnessExpertsIntro() {
         }
       `}</style>
 
-      <div className="w-full bg-white px-[20px]">
+      <div className="w-full bg-white px-[16px] sm:px-[20px]">
         <ResponsiveNavbar />
       </div>
 
-      <div className="max-w-6xl mx-auto px-[20px] pb-24">
+      <div className="max-w-6xl mx-auto px-[16px] sm:px-[20px] pb-24">
         {/* Hero Section - Organic & Calming (no badge) */}
         <div ref={heroSectionRef}>
           <div className="relative pt-16 pb-20 md:pt-20 md:pb-24 text-center overflow-hidden">

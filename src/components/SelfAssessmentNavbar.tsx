@@ -9,7 +9,7 @@ export default function SelfAssessmentNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div className="auth-navbar max-w-[1350px] mx-auto flex gap-4 justify-between items-center py-[20px] relative">
+    <div className="auth-navbar max-w-[1350px] mx-auto flex gap-4 justify-between items-center py-[16px] sm:py-[20px] relative">
       <div className="flex items-center gap-4">
         <Link to="/">
           <h1 className="text-[clamp(14px,4vw,20px)] font-medium text-logo-heading">

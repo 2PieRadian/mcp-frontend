@@ -62,7 +62,7 @@ export default function TermsAndConditions() {
         />
       </Helmet>
 
-      <div className="px-[20px]">
+      <div className="px-[16px] sm:px-[20px]">
         <Navbar />
       </div>
 

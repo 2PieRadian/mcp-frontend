@@ -32,7 +32,7 @@ export default function TermsOfUse() {
         <meta name="twitter:image" content="https://mindcurepath.com/og-image.jpg" />
       </Helmet>
 
-      <div className="px-[20px]">
+      <div className="px-[16px] sm:px-[20px]">
         <Navbar />
       </div>
 

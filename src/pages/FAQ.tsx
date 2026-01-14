@@ -265,7 +265,7 @@ export default function FAQ() {
         </script>
       </Helmet>
 
-      <div className="px-[20px]">
+      <div className="px-[16px] sm:px-[20px]">
         <Navbar />
       </div>
 

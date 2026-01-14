@@ -187,11 +187,11 @@ export default function FinanceExpertsIntro() {
         }
       `}</style>
 
-      <div className="w-full bg-white px-[20px]">
+      <div className="w-full bg-white px-[16px] sm:px-[20px]">
         <ResponsiveNavbar />
       </div>
 
-      <div className="max-w-6xl mx-auto px-[20px] pb-24">
+      <div className="max-w-6xl mx-auto px-[16px] sm:px-[20px] pb-24">
         {/* Hero Section - Elegant & Trustworthy */}
         <div ref={heroSectionRef}>
           <div className="relative pt-20 pb-24 overflow-hidden">

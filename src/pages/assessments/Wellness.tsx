@@ -195,7 +195,7 @@ export default function Wellness() {
         />
       </Helmet>
 
-      <div className="min-h-screen bg-white px-[20px]">
+      <div className="min-h-screen bg-white px-[16px] sm:px-[20px]">
         <ResponsiveNavbar />
 
         <div className="max-w-[1000px] mx-auto py-[clamp(2rem,5vw,4rem)]">

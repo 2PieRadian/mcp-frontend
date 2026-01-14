@@ -46,7 +46,7 @@ export default function UserDashboard() {
         />
       </Helmet>
 
-      <div className="landing-page px-[20px] w-full max-w-full bg-white">
+      <div className="landing-page px-[16px] sm:px-[20px] w-full max-w-full bg-white">
         <ResponsiveNavbar />
         <HeroSection />
         <GuidanceQuotesSection />

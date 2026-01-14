@@ -182,11 +182,11 @@ export default function EducationExpertsIntro() {
         }
       `}</style>
 
-      <div className="w-full bg-white px-[20px]">
+      <div className="w-full bg-white px-[16px] sm:px-[20px]">
         <ResponsiveNavbar />
       </div>
 
-      <div className="max-w-5xl mx-auto px-[20px] pb-24">
+      <div className="max-w-5xl mx-auto px-[16px] sm:px-[20px] pb-24">
         {/* Hero Section */}
         <div ref={heroSectionRef}>
           <div className="pt-14 pb-20 text-center">

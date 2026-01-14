@@ -23,7 +23,7 @@ export default function Layout({
   children,
   showFooter = true,
   showNavbar = true,
-  navbarPadding = "px-[20px]",
+  navbarPadding = "px-[16px] sm:px-[20px]",
 }: LayoutProps) {
   return (
     <div className="h-screen flex flex-col overflow-hidden">

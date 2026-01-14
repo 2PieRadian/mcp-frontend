@@ -180,10 +180,10 @@ export default function FindCounsellors() {
     searchQuery !== "";
 
   return (
-    <div className="min-h-screen bg-white px-[20px]">
+    <div className="min-h-screen bg-white px-[16px] sm:px-[20px]">
       <ResponsiveNavbar />
 
-      <div className="max-w-[1400px] mx-auto px-[20px] md:px-[40px] py-[40px] md:py-[60px]">
+      <div className="max-w-[1400px] mx-auto px-[16px] sm:px-[20px] md:px-[40px] py-[40px] md:py-[60px]">
         {/* Header */}
         <div className="mb-[30px] md:mb-[40px]">
           <h1 className="text-[clamp(28px,5vw,36px)] font-bold text-primary mb-[8px]">

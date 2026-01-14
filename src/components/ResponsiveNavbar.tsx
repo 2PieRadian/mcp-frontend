@@ -21,8 +21,8 @@ export default function ResponsiveNavbar() {
       <>
         {/* Mobile Header */}
         <div className="w-full bg-white">
-          <div className="navbar max-w-[1350px] mx-auto flex justify-between items-center py-[20px] sm:py-[20px]">
-            <div className="flex items-start gap-[8px] sm:gap-[10px] min-w-0 flex-1 sm:flex-initial pt-[2px]">
+          <div className="navbar max-w-[1350px] mx-auto flex justify-between items-center py-[16px] sm:py-[20px]">
+            <div className="flex items-start gap-[3px] sm:gap-[10px] min-w-0 flex-1 sm:flex-initial pt-[2px]">
               <Link to="/" className="self-center">
                 <img
                   src="/images/navbar/logo.png"
