@@ -158,7 +158,7 @@ export default function WellnessExpertsIntro() {
   }));
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-stone-50 via-white to-stone-50/50">
+    <div className="min-h-screen bg-white">
       <style>{`
         @keyframes fadeInUp {
           from {
@@ -179,32 +179,6 @@ export default function WellnessExpertsIntro() {
       <div className="max-w-6xl mx-auto px-[20px] pb-24">
         {/* Hero Section - Organic & Calming (no badge) */}
         <div className="relative pt-16 pb-20 md:pt-20 md:pb-24 text-center overflow-hidden">
-          {/* Organic background shapes */}
-          <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            {/* Soft gradient blobs */}
-            <div
-              className="absolute -top-20 -left-20 w-72 h-72 rounded-full opacity-30 blur-3xl"
-              style={{
-                background:
-                  "radial-gradient(circle, #7C9A92 0%, transparent 70%)",
-              }}
-            />
-            <div
-              className="absolute -top-10 right-0 w-64 h-64 rounded-full opacity-20 blur-3xl"
-              style={{
-                background:
-                  "radial-gradient(circle, #9B8AA5 0%, transparent 70%)",
-              }}
-            />
-            <div
-              className="absolute bottom-0 left-1/3 w-56 h-56 rounded-full opacity-15 blur-3xl"
-              style={{
-                background:
-                  "radial-gradient(circle, #A5C4B8 0%, transparent 70%)",
-              }}
-            />
-          </div>
-
           {/* Decorative botanical line art */}
           <div className="absolute left-4 md:left-12 top-1/2 -translate-y-1/2 opacity-20 hidden lg:block">
             <svg width="60" height="180" viewBox="0 0 60 180" fill="none">
