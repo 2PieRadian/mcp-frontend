@@ -83,7 +83,7 @@ export default function Footer() {
                     MindCurePath
                   </h2>
                   <p className="text-sm text-slate-300 sm:text-base leading-tight">
-                    Guided by experts, driven by care
+                    Guided by experts, driven by care, healing every mind
                   </p>
                 </div>
               </Link>
@@ -286,8 +286,21 @@ export default function Footer() {
             </div>
           </div>
 
+          {/* Disclaimer */}
+          <div className="mt-10 border-t border-white/10 pt-6 sm:mt-12 sm:pt-8 w-full">
+            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed text-center sm:text-left w-full">
+              <span className="font-semibold text-slate-300">Disclaimer:</span>{" "}
+              MindCurePath is a technology-enabled platform that facilitates
+              access to independent professionals. We do not provide medical,
+              psychological, or therapeutic advice or services and are not
+              responsible for the outcomes of consultations or interactions
+              between users and professionals. The platform is not intended for
+              emergencies—use is at your own discretion and risk.
+            </p>
+          </div>
+
           {/* Bottom bar */}
-          <div className="mt-8 border-t border-white/10 pt-5 sm:mt-10 sm:pt-6 md:mt-12 md:pt-6">
+          <div className="mt-8 border-t border-white/10 pt-5 sm:pt-6">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <p className="text-sm text-slate-400 text-center sm:text-left sm:text-base">
                 © {new Date().getFullYear()} {t("appName")}.{" "}
