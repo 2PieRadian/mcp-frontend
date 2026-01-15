@@ -41,8 +41,8 @@ const WELLNESS_ICONS: Record<string, LucideIcon> = {
 const WELLNESS_COLORS: Record<string, string> = {
   // Bright colors with simple “color psychology” cues (calm, growth, energy, empathy)
   "Anxiety and Panic Attack Counsellor": "#14B8A6", // teal (calm / grounding)
-  "Depression Counsellor": "#A78BFA", // violet (support / reflection)
-  "OCD Counsellor": "#6366F1", // indigo (clarity / structure)
+  "Depression Counsellor": "#7f55fa", // violet (support / reflection)
+  "OCD Counsellor": "#2044e3", // indigo (clarity / structure)
   "ADHD Counsellor": "#F97316", // orange (energy / action)
   "Couple Counsellor": "#F43F5E", // rose (connection / love)
   "Family Counsellor": "#22C55E", // green (care / stability)
@@ -82,7 +82,7 @@ function ExpertCategoryCard({
   return (
     <div
       onClick={handleClick}
-      className="group relative cursor-pointer transition-all duration-500 hover:-translate-y-1"
+      className="group relative cursor-pointer transition-all duration-500 hover:-translate-y-1 hover:scale-[1.02] transform-gpu"
     >
       {/* Card container */}
       <div

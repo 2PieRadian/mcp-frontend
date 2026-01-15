@@ -64,7 +64,7 @@ function ExpertCategoryCard({
   return (
     <div
       onClick={handleClick}
-      className="group relative cursor-pointer transition-all duration-500 hover:-translate-y-1"
+      className="group relative cursor-pointer transition-all duration-500 hover:-translate-y-1 hover:scale-[1.02] transform-gpu"
     >
       {/* Card container */}
       <div
