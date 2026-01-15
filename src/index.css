@@ -552,6 +552,21 @@ body {
   inset: 0;
   z-index: 2;
   pointer-events: none;
+  /* Make the decorative math/grade chips smaller on mobile */
+  transform: scale(0.72);
+  transform-origin: 50% 50%;
+}
+
+@media (min-width: 640px) {
+  .mcp-thumb--education .mcp-edu-scene {
+    transform: scale(0.86);
+  }
+}
+
+@media (min-width: 768px) {
+  .mcp-thumb--education .mcp-edu-scene {
+    transform: scale(1);
+  }
 }
 
 /* Education orbit + chips (clean, premium, centered on icon) */
@@ -559,8 +574,8 @@ body {
   position: absolute;
   left: 50%;
   top: 52%;
-  width: 68%;
-  height: 68%;
+  width: 94%;
+  height: 94%;
   transform: translate(-50%, -50%);
   border-radius: 999px;
   border: 1px dashed rgba(255, 255, 255, 0.26);
@@ -572,8 +587,8 @@ body {
   position: absolute;
   left: 50%;
   top: 52%;
-  width: 72%;
-  height: 72%;
+  width: 104%;
+  height: 104%;
   transform: translate(-50%, -50%);
   border-radius: 999px;
   z-index: 3;
@@ -643,8 +658,8 @@ body {
 }
 
 .mcp-thumb--education .mcp-edu-badge-pi {
-  left: 72%;
-  top: 28%;
+  left: 84%;
+  top: 16%;
   animation: mcpEduFloatA 4.8s ease-in-out infinite;
 }
 .mcp-thumb--education .mcp-edu-badge-pi::before {
@@ -669,8 +684,8 @@ body {
     44% 24%
   );
   position: absolute;
-  left: 30%;
-  top: 72%;
+  left: 14%;
+  top: 86%;
   animation: mcpEduFloatA 6.6s ease-in-out infinite;
 }
 .mcp-thumb--education .mcp-edu-flask::before {
@@ -708,7 +723,7 @@ body {
   height: 10px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.55);
-  transform: translate(-50%, -50%) translateX(34%);
+  transform: translate(-50%, -50%) translateX(47%);
   box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.10);
   opacity: 0.9;
 }
@@ -736,8 +751,8 @@ body {
 }
 
 .mcp-thumb--education .mcp-edu-chip-a {
-  left: 18%;
-  top: 50%;
+  left: 4%;
+  top: 58%;
   animation-delay: 0.0s;
 }
 .mcp-thumb--education .mcp-edu-chip-a::before {
@@ -745,8 +760,8 @@ body {
 }
 
 .mcp-thumb--education .mcp-edu-chip-sigma {
-  left: 84%;
-  top: 46%;
+  left: 96%;
+  top: 42%;
   animation-delay: 0.8s;
 }
 .mcp-thumb--education .mcp-edu-chip-sigma::before {

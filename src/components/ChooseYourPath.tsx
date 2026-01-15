@@ -67,7 +67,7 @@ export default function ChooseYourPath() {
               <span className="mcp-edu-chip mcp-edu-chip-a" />
               <span className="mcp-edu-chip mcp-edu-chip-sigma" />
             </span>
-            <BookOpenText className="mcp-cat-icon w-8 h-8 sm:w-12 sm:h-12 md:w-[76px] md:h-[76px] text-white group-hover:scale-125 transition-transform duration-300" />
+            <BookOpenText className="mcp-cat-icon w-7 h-7 sm:w-10 sm:h-10 md:w-[60px] md:h-[60px] text-white group-hover:scale-125 transition-transform duration-300" />
           </div>
           <h3 className="font-bold text-primary text-[clamp(14px,2vw,18px)] mb-1">
             {t("education")}
