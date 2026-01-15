@@ -290,12 +290,12 @@ export default function Footer() {
           <div className="mt-10 border-t border-white/10 pt-6 sm:mt-12 sm:pt-8 w-full">
             <p className="text-xs sm:text-sm text-slate-400 leading-relaxed text-center sm:text-left w-full">
               <span className="font-semibold text-slate-300">Disclaimer:</span>{" "}
-              MindCurePath is a technology-enabled platform that facilitates
-              access to independent professionals. We do not provide medical,
-              psychological, or therapeutic advice or services and are not
-              responsible for the outcomes of consultations or interactions
-              between users and professionals. The platform is not intended for
-              emergencies, use is at your own discretion and risk.
+              MindCurePath is a technology-enabled platform that connects users
+              with independent professionals. We do not provide medical advice,
+              diagnosis, consultation, or prescriptions. This platform is not
+              for emergencies. In case of a mental health emergency, contact the
+              National Mental Health Helpline at 1800-599-0019 or local
+              emergency services.
             </p>
           </div>
 
