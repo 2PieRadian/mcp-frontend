@@ -40,6 +40,7 @@ body {
   --color-navbar-dropdown-right-outer-bg: hsl(200, 11%, 23%);
   --color-navbar-dropdown-right-inner-bg: hsl(198, 10%, 31%);
   --color-make-in-india-bg: hsl(194, 14%, 24%);
+  --color-cure-color: #62af9b;
 
   /* Experts */
   --color-experts-hero-bg: hsl(173, 17%, 28%);

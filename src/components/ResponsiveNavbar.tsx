@@ -34,13 +34,13 @@ export default function ResponsiveNavbar() {
                 <span className="text-[20px] sm:text-[22px] font-semibold text-logo-heading cursor-pointer leading-none truncate">
                   {t("appName") === "MindCurePath" ? (
                     <>
-                      Mind<span className="text-[#62af9b]">Cure</span>Path
+                      Mind<span className="text-cure-color">Cure</span>Path
                     </>
                   ) : (
                     t("appName")
                   )}
                 </span>
-                <span className="mt-1 text-[9px] sm:text-[12px] text-slate-500 leading-snug">
+                <span className="mt-1 text-[9px] sm:text-[12px] text-cure-color leading-snug">
                   Guided by experts, driven by care, healing every mind
                 </span>
               </Link>

@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
+import type { CSSProperties } from "react";
 import {
   ArrowRight,
   Calculator,
@@ -70,7 +71,8 @@ function ExpertCategoryCard({
         className="relative rounded-2xl h-full overflow-hidden transition-all duration-500"
         style={{
           border: `1px solid ${accentColor}30`,
-        }}
+          ["--accent" as any]: accentColor,
+        } as CSSProperties}
       >
         {/* Background fill animation */}
         <div
@@ -95,11 +97,10 @@ function ExpertCategoryCard({
               style={{ backgroundColor: `${accentColor}15` }}
             >
               <Icon
-                className="w-5 h-5 relative z-20 transition-transform duration-500 group-hover:scale-125"
-                style={{ color: "white" }}
+                className="w-5 h-5 relative z-20 transition-transform duration-500 group-hover:scale-125 text-[var(--accent)] group-hover:text-white"
               />
             </div>
-            <ArrowRight className="w-5 h-5 text-white transition-all duration-500 group-hover:translate-x-1 group-hover:scale-110 relative z-20" />
+            <ArrowRight className="w-5 h-5 text-[var(--accent)] group-hover:text-white transition-all duration-500 group-hover:translate-x-1 group-hover:scale-110 relative z-20" />
           </div>
 
           {/* Title */}

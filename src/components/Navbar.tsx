@@ -129,7 +129,7 @@ export default function Navbar() {
                   t("appName")
                 )}
               </span>
-              <span className="text-[10px] sm:text-[12px] text-slate-600 leading-tight mt-[-2px]">
+              <span className="text-[10px] sm:text-[12px] text-cure-color leading-tight mt-[-2px]">
                 Guided by experts, driven by care, healing every mind
               </span>
             </Link>

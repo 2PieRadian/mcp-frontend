@@ -153,7 +153,7 @@ export default function MobileNavModal({
       element.style.height = "auto";
       const targetHeight = element.scrollHeight;
       element.style.height = heightBefore;
-      
+
       // Animate from 0 to measured height
       gsap.to(element, {
         height: targetHeight,
