@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 import { gsap } from "gsap";
 import {
   ArrowRight,
@@ -39,18 +39,19 @@ const WELLNESS_ICONS: Record<string, LucideIcon> = {
 
 // Catchy (but still wellness-friendly) accent colors for each specialization
 const WELLNESS_COLORS: Record<string, string> = {
-  "Anxiety and Panic Attack Counsellor": "#0EA5E9", // sky
-  "Depression Counsellor": "#8B5CF6", // violet
-  "OCD Counsellor": "#6366F1", // indigo
-  "ADHD Counsellor": "#F59E0B", // amber
-  "Couple Counsellor": "#F43F5E", // rose
-  "Family Counsellor": "#10B981", // emerald
-  "Breakup Recovery Expert": "#EC4899", // pink
-  "Loneliness Counsellor": "#06B6D4", // cyan
-  "Divorce / Separation Counsellor": "#FB7185", // coral/rose
-  "Stress / Overthinking Expert": "#14B8A6", // teal
-  Dietician: "#84CC16", // lime
-  "Yoga Expert": "#A78BFA", // purple
+  // Bright colors with simple “color psychology” cues (calm, growth, energy, empathy)
+  "Anxiety and Panic Attack Counsellor": "#14B8A6", // teal (calm / grounding)
+  "Depression Counsellor": "#A78BFA", // violet (support / reflection)
+  "OCD Counsellor": "#6366F1", // indigo (clarity / structure)
+  "ADHD Counsellor": "#F97316", // orange (energy / action)
+  "Couple Counsellor": "#F43F5E", // rose (connection / love)
+  "Family Counsellor": "#22C55E", // green (care / stability)
+  "Breakup Recovery Expert": "#EC4899", // pink (healing / compassion)
+  "Loneliness Counsellor": "#06B6D4", // cyan (openness / connection)
+  "Divorce / Separation Counsellor": "#EF4444", // red (strength / courage)
+  "Stress / Overthinking Expert": "#F59E0B", // amber (warmth / relief)
+  Dietician: "#84CC16", // lime (fresh / health)
+  "Yoga Expert": "#8B5CF6", // purple (mind-body balance)
 };
 
 interface ExpertCategoryCardProps {
@@ -67,10 +68,9 @@ function ExpertCategoryCard({
   description,
   specializationValue,
   specializationSlug,
-  exploreText,
   icon: Icon,
   accentColor,
-}: ExpertCategoryCardProps & { exploreText: string }) {
+}: ExpertCategoryCardProps) {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -82,61 +82,46 @@ function ExpertCategoryCard({
   return (
     <div
       onClick={handleClick}
-      className="group relative bg-white rounded-2xl cursor-pointer transition-all duration-500 hover:-translate-y-1"
+      className="group relative cursor-pointer transition-all duration-500 hover:-translate-y-1"
     >
-      {/* Subtle border with accent color on hover */}
+      {/* Card container */}
       <div
-        className="absolute inset-0 rounded-2xl border border-stone-200 group-hover:border-transparent transition-colors duration-300"
-        style={{
-          boxShadow: `0 1px 3px rgba(0,0,0,0.04)`,
-        }}
-      />
-      <div
-        className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        style={{
-          boxShadow: `0 10px 36px ${accentColor}33, 0 0 0 1px ${accentColor}55`,
-        }}
-      />
-
-      <div className="relative p-6 h-full flex flex-col">
-        {/* Icon with accent background */}
+        className="relative rounded-2xl h-full overflow-hidden transition-all duration-500"
+        style={
+          {
+            border: `1px solid ${accentColor}30`,
+            ["--accent" as any]: accentColor,
+          } as CSSProperties
+        }
+      >
+        {/* Background fill animation */}
         <div
-          className="w-11 h-11 rounded-xl flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-105"
-          style={{ backgroundColor: `${accentColor}26` }}
-        >
-          <Icon
-            className="w-5 h-5 transition-colors duration-300"
-            style={{ color: accentColor }}
-          />
+          className="absolute inset-0 transition-all duration-500 ease-out origin-top scale-y-0 group-hover:scale-y-100"
+          style={{ backgroundColor: accentColor }}
+        />
+
+        {/* White background (fades out on hover) */}
+        <div className="absolute inset-0 bg-white transition-opacity duration-500 group-hover:opacity-0" />
+
+        <div className="relative z-10 p-6 h-full flex flex-col">
+          {/* Icon + Arrow */}
+          <div className="flex items-start justify-between mb-5">
+            <Icon className="w-7 h-7 relative z-20 transition-transform duration-500 group-hover:scale-110 text-(--accent) group-hover:text-white" />
+            <span className="relative z-20 inline-flex items-center justify-center rounded-[10px] p-1 transition-all duration-500 bg-transparent border border-transparent group-hover:bg-white group-hover:border-white/90 group-hover:translate-x-1 group-hover:scale-110">
+              <ArrowRight className="w-5 h-5 text-(--accent)" />
+            </span>
+          </div>
+
+          {/* Title */}
+          <h3 className="text-lg font-semibold text-stone-800 mb-3 leading-snug transition-colors duration-500 group-hover:text-white">
+            {title}
+          </h3>
+
+          {/* Description */}
+          <p className="text-sm text-stone-500 leading-relaxed mb-0 line-clamp-3 transition-colors duration-500 group-hover:text-white/80">
+            {description}
+          </p>
         </div>
-
-        {/* Title */}
-        <h3 className="text-lg font-semibold text-stone-800 mb-2 leading-snug tracking-tight">
-          {title}
-        </h3>
-
-        {/* Description */}
-        <p className="text-sm text-stone-500 leading-relaxed mb-6 line-clamp-3 grow">
-          {description}
-        </p>
-
-        {/* CTA Button */}
-        <button
-          onClick={handleClick}
-          className="wellness-card-button flex items-center justify-center gap-2 py-3 px-5 rounded-xl text-sm font-semibold group-hover:gap-3"
-          style={{
-            backgroundColor: `${accentColor}1F`,
-            border: `1px solid ${accentColor}55`,
-            color: "#13232A",
-            "--accent-color": accentColor,
-          } as React.CSSProperties & { "--accent-color": string }}
-        >
-          <span>{exploreText}</span>
-          <ArrowRight
-            className="w-4 h-4 transition-all duration-300 group-hover:translate-x-1"
-            style={{ color: accentColor }}
-          />
-        </button>
       </div>
     </div>
   );
@@ -211,17 +196,6 @@ export default function WellnessExpertsIntro() {
         .wave-underline path {
           stroke-dasharray: 10 10;
           animation: waveFlow 2s linear infinite;
-        }
-        .wellness-card-button {
-          transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-        }
-        .group:hover .wellness-card-button {
-          background-color: var(--accent-color) !important;
-          color: white !important;
-          border-color: var(--accent-color) !important;
-        }
-        .group:hover .wellness-card-button svg {
-          color: white !important;
         }
       `}</style>
 
@@ -391,7 +365,6 @@ export default function WellnessExpertsIntro() {
                 specializationSlug={category.specializationSlug}
                 icon={category.icon}
                 accentColor={category.accentColor}
-                exploreText={t("explore", { ns: "common" })}
               />
             ))}
           </div>

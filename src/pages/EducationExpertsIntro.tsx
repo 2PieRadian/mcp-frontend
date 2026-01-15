@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 import { gsap } from "gsap";
 import {
   ArrowRight,
@@ -27,11 +27,12 @@ const EDUCATION_ICONS: Record<string, LucideIcon> = {
 
 // Catchier accent colors for education
 const EDUCATION_COLORS: Record<string, string> = {
-  "Career Path Finder": "#0EA5E9", // sky
-  "Academic Counsellor": "#6366F1", // indigo
-  Achievers: "#F59E0B", // amber
-  Aspirants: "#8B5CF6", // violet
-  "Academic Scholars": "#10B981", // emerald
+  // Bright colors with cues (direction, focus, achievement, ambition, growth)
+  "Career Path Finder": "#14B8A6", // teal (direction / clarity)
+  "Academic Counsellor": "#6366F1", // indigo (focus / guidance)
+  Achievers: "#F59E0B", // gold/amber (achievement)
+  Aspirants: "#8B5CF6", // violet (ambition / potential)
+  "Academic Scholars": "#22C55E", // green (growth / mastery)
 };
 
 interface ExpertCategoryCardProps {
@@ -49,10 +50,9 @@ function ExpertCategoryCard({
   description,
   specializationValue,
   specializationSlug,
-  exploreText,
   icon: Icon,
   accentColor,
-}: ExpertCategoryCardProps & { exploreText: string }) {
+}: ExpertCategoryCardProps) {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -64,55 +64,46 @@ function ExpertCategoryCard({
   return (
     <div
       onClick={handleClick}
-      className="group relative bg-white rounded-3xl cursor-pointer transition-all duration-500 hover:-translate-y-2"
+      className="group relative cursor-pointer transition-all duration-500 hover:-translate-y-1"
     >
-      {/* Card background effects */}
+      {/* Card container */}
       <div
-        className="absolute inset-0 rounded-3xl border border-stone-100 group-hover:border-transparent transition-all duration-300"
-        style={{ boxShadow: `0 2px 8px rgba(0,0,0,0.03)` }}
-      />
-      <div
-        className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-all duration-300"
-        style={{
-          boxShadow: `0 12px 40px ${accentColor}18, 0 0 0 1px ${accentColor}30`,
-        }}
-      />
-
-      <div className="relative p-7 h-full flex flex-col">
-        {/* Icon container */}
+        className="relative rounded-2xl h-full overflow-hidden transition-all duration-500"
+        style={
+          {
+            border: `1px solid ${accentColor}30`,
+            ["--accent" as any]: accentColor,
+          } as CSSProperties
+        }
+      >
+        {/* Background fill animation */}
         <div
-          className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-all duration-300 group-hover:scale-110"
-          style={{ backgroundColor: `${accentColor}22` }}
-        >
-          <Icon
-            className="w-6 h-6 transition-colors duration-300"
-            style={{ color: accentColor }}
-          />
+          className="absolute inset-0 transition-all duration-500 ease-out origin-top scale-y-0 group-hover:scale-y-100"
+          style={{ backgroundColor: accentColor }}
+        />
+
+        {/* White background (fades out on hover) */}
+        <div className="absolute inset-0 bg-white transition-opacity duration-500 group-hover:opacity-0" />
+
+        <div className="relative z-10 p-6 h-full flex flex-col">
+          {/* Icon + Arrow */}
+          <div className="flex items-start justify-between mb-5">
+            <Icon className="w-7 h-7 relative z-20 transition-transform duration-500 group-hover:scale-110 text-(--accent) group-hover:text-white" />
+            <span className="relative z-20 inline-flex items-center justify-center rounded-[10px] p-1 transition-all duration-500 bg-transparent border border-transparent group-hover:bg-white group-hover:border-white/90 group-hover:translate-x-1 group-hover:scale-110">
+              <ArrowRight className="w-5 h-5 text-(--accent)" />
+            </span>
+          </div>
+
+          {/* Title */}
+          <h3 className="text-lg font-semibold text-stone-800 mb-3 leading-snug transition-colors duration-500 group-hover:text-white">
+            {title}
+          </h3>
+
+          {/* Description */}
+          <p className="text-sm text-stone-500 leading-relaxed mb-0 line-clamp-3 transition-colors duration-500 group-hover:text-white/80">
+            {description}
+          </p>
         </div>
-
-        {/* Title */}
-        <h3 className="text-xl font-semibold text-stone-800 mb-3 leading-tight tracking-tight">
-          {title}
-        </h3>
-
-        {/* Description */}
-        <p className="text-sm text-stone-500 leading-relaxed mb-8 line-clamp-3 grow">
-          {description}
-        </p>
-
-        {/* CTA Button */}
-        <button
-          onClick={handleClick}
-          className="flex items-center justify-center gap-2 py-3 px-5 rounded-xl text-sm font-medium transition-all duration-300 group-hover:gap-3"
-          style={{
-            backgroundColor: `${accentColor}1F`,
-            color: accentColor,
-            border: `1px solid ${accentColor}55`,
-          }}
-        >
-          <span>{exploreText}</span>
-          <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-        </button>
       </div>
     </div>
   );
@@ -254,7 +245,6 @@ export default function EducationExpertsIntro() {
                 icon={category.icon}
                 accentColor={category.accentColor}
                 index={index}
-                exploreText={t("explore", { ns: "common" })}
               />
             ))}
           </div>

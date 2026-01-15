@@ -25,13 +25,13 @@ const FINANCE_ICONS: Record<string, LucideIcon> = {
   "Insurance Expert": Shield,
 };
 
-// Catchier (still trustworthy) accent colors for finance
+// Bright + trustworthy finance palette (confidence, alertness, planning, safety, drive)
 const FINANCE_COLORS: Record<string, string> = {
-  "Investment Expert": "#0EA5E9", // sky
-  "GST and Tax Expert": "#F59E0B", // amber
-  "Financial Planner": "#8B5CF6", // violet
-  "Insurance Expert": "#10B981", // emerald
-  "Business Finance Consultant": "#F43F5E", // rose
+  "Investment Expert": "#0EA5E9", // sky (trust / growth)
+  "GST and Tax Expert": "#F59E0B", // amber (attention / clarity)
+  "Financial Planner": "#8B5CF6", // violet (strategy / planning)
+  "Insurance Expert": "#22C55E", // green (safety)
+  "Business Finance Consultant": "#F43F5E", // rose (drive)
 };
 
 interface ExpertCategoryCardProps {
@@ -49,10 +49,9 @@ function ExpertCategoryCard({
   description,
   specializationValue,
   specializationSlug,
-  exploreText,
   icon: Icon,
   accentColor,
-}: ExpertCategoryCardProps & { exploreText: string }) {
+}: ExpertCategoryCardProps) {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -69,10 +68,12 @@ function ExpertCategoryCard({
       {/* Card container */}
       <div
         className="relative rounded-2xl h-full overflow-hidden transition-all duration-500"
-        style={{
-          border: `1px solid ${accentColor}30`,
-          ["--accent" as any]: accentColor,
-        } as CSSProperties}
+        style={
+          {
+            border: `1px solid ${accentColor}30`,
+            ["--accent" as any]: accentColor,
+          } as CSSProperties
+        }
       >
         {/* Background fill animation */}
         <div
@@ -80,27 +81,16 @@ function ExpertCategoryCard({
           style={{ backgroundColor: accentColor }}
         />
 
-        {/* Accent line at top (visible by default) */}
-        <div
-          className="absolute top-0 left-0 right-0 h-1 z-10"
-          style={{ backgroundColor: accentColor }}
-        />
-
         {/* White background (fades out on hover) */}
         <div className="absolute inset-0 bg-white transition-opacity duration-500 group-hover:opacity-0" />
 
-        <div className="relative z-10 p-6 pt-8 h-full flex flex-col">
+        <div className="relative z-10 p-6 h-full flex flex-col">
           {/* Icon */}
           <div className="flex items-start justify-between mb-5">
-            <div
-              className="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 group-hover:bg-white/30 group-hover:scale-110"
-              style={{ backgroundColor: `${accentColor}15` }}
-            >
-              <Icon
-                className="w-5 h-5 relative z-20 transition-transform duration-500 group-hover:scale-125 text-[var(--accent)] group-hover:text-white"
-              />
-            </div>
-            <ArrowRight className="w-5 h-5 text-[var(--accent)] group-hover:text-white transition-all duration-500 group-hover:translate-x-1 group-hover:scale-110 relative z-20" />
+            <Icon className="w-7 h-7 relative z-20 transition-transform duration-500 group-hover:scale-110 text-(--accent) group-hover:text-white" />
+            <span className="relative z-20 inline-flex items-center justify-center rounded-[10px] p-1 transition-all duration-500 bg-transparent border border-transparent group-hover:bg-white group-hover:border-white/90 group-hover:translate-x-1 group-hover:scale-110">
+              <ArrowRight className="w-5 h-5 text-(--accent)" />
+            </span>
           </div>
 
           {/* Title */}
@@ -109,19 +99,9 @@ function ExpertCategoryCard({
           </h3>
 
           {/* Description */}
-          <p className="text-sm text-stone-500 leading-relaxed mb-6 line-clamp-3 grow transition-colors duration-500 group-hover:text-white/80">
+          <p className="text-sm text-stone-500 leading-relaxed mb-0 line-clamp-3 transition-colors duration-500 group-hover:text-white/80">
             {description}
           </p>
-
-          {/* CTA */}
-          <div className="text-sm font-medium transition-colors duration-500">
-            <span
-              className="transition-colors duration-500 group-hover:text-white"
-              style={{ color: accentColor }}
-            >
-              {exploreText} →
-            </span>
-          </div>
         </div>
       </div>
     </div>
@@ -343,7 +323,6 @@ export default function FinanceExpertsIntro() {
                 icon={category.icon}
                 accentColor={category.accentColor}
                 index={index}
-                exploreText={t("explore", { ns: "common" })}
               />
             ))}
           </div>
