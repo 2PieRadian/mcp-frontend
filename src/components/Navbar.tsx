@@ -1,11 +1,12 @@
 import { ChevronDown, UserCircle2, Menu } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import WeHelpWith from "./modals/WeHelpWith";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useAuth } from "../context/AuthContext";
 import MobileNavModal from "./modals/MobileNavModal";
+import SelfAssmentsModal from "./modals/SelfAssmentsModal";
 
 const textColor = "hsl(194,57%,17%)";
 
@@ -66,17 +67,25 @@ export default function Navbar() {
   const { t } = useTranslation("common");
   const { user } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
   const [weHelpWithModalOpen, setWeHelpWithModalOpen] = useState(false);
+  const [selfAssessmentsModalOpen, setSelfAssessmentsModalOpen] =
+    useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
   const navbarItemRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<number | null>(null);
+  const assessmentsModalRef = useRef<HTMLDivElement>(null);
+  const assessmentsItemRef = useRef<HTMLDivElement>(null);
+  const assessmentsTimeoutRef = useRef<number | null>(null);
 
   const handleMouseEnter = () => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
     }
+    // Only one dropdown at a time
+    setSelfAssessmentsModalOpen(false);
     setWeHelpWithModalOpen(true);
   };
 
@@ -98,10 +107,40 @@ export default function Navbar() {
     setWeHelpWithModalOpen(false);
   };
 
+  const handleAssessmentsMouseEnter = () => {
+    if (assessmentsTimeoutRef.current) {
+      clearTimeout(assessmentsTimeoutRef.current);
+      assessmentsTimeoutRef.current = null;
+    }
+    // Only one dropdown at a time
+    setWeHelpWithModalOpen(false);
+    setSelfAssessmentsModalOpen(true);
+  };
+
+  const handleAssessmentsMouseLeave = () => {
+    assessmentsTimeoutRef.current = setTimeout(() => {
+      setSelfAssessmentsModalOpen(false);
+    }, 100);
+  };
+
+  const handleAssessmentsModalMouseEnter = () => {
+    if (assessmentsTimeoutRef.current) {
+      clearTimeout(assessmentsTimeoutRef.current);
+      assessmentsTimeoutRef.current = null;
+    }
+  };
+
+  const handleAssessmentsModalMouseLeave = () => {
+    setSelfAssessmentsModalOpen(false);
+  };
+
   useEffect(() => {
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
+      }
+      if (assessmentsTimeoutRef.current) {
+        clearTimeout(assessmentsTimeoutRef.current);
       }
     };
   }, []);
@@ -141,6 +180,17 @@ export default function Navbar() {
               user?.role === "EXPERT" ? "gap-5" : "gap-[2px]"
             }`}
           >
+            {selfAssessmentsModalOpen && user?.role !== "EXPERT" && (
+              <div
+                onMouseEnter={handleAssessmentsModalMouseEnter}
+                onMouseLeave={handleAssessmentsModalMouseLeave}
+              >
+                <SelfAssmentsModal
+                  modalRef={assessmentsModalRef}
+                  navbarType="landing"
+                />
+              </div>
+            )}
             {weHelpWithModalOpen && user?.role !== "EXPERT" && (
               <div
                 onMouseEnter={handleModalMouseEnter}
@@ -169,7 +219,23 @@ export default function Navbar() {
               </div>
             )}
             {user?.role !== "EXPERT" && (
-              <NavbarItem textKey="selfAssessment" link="/self-assessment" />
+              <div ref={assessmentsItemRef}>
+                <NavbarItemIcon
+                  textKey="selfAssessment"
+                  icon={
+                    <ChevronDown
+                      size={15}
+                      className={`text-light-text transition-transform duration-200 ${
+                        selfAssessmentsModalOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                  }
+                  onClick={() => navigate("/self-assessment")}
+                  onMouseEnter={handleAssessmentsMouseEnter}
+                  onMouseLeave={handleAssessmentsMouseLeave}
+                  isActive={selfAssessmentsModalOpen}
+                />
+              </div>
             )}
             {user?.role === "EXPERT" && (
               <>
