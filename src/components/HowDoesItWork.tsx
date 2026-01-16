@@ -109,6 +109,13 @@ export default function HowDoesItWork() {
           <h1 className="text-[clamp(24px,6vw,34px)] md:text-3xl font-bold text-center">
             {t("howDoesItWork.title")}
           </h1>
+          <div className="mt-[40px] mb-4 flex justify-center">
+            <img
+              src="/images/how-does-it-work/how-does-it-work.png"
+              alt="How does it work"
+              className="max-w-xl w-full h-auto rounded-lg"
+            />
+          </div>
           <p className="text-[clamp(16px,2vw,17px)] mt-[10px] max-w-[800px] mx-auto text-center text-[#4F5B64]">
             {t("howDoesItWork.subtitle")}
           </p>
