@@ -1,33 +1,63 @@
 import { Helmet } from "react-helmet-async";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { Mail, Clock, MessageCircle, HelpCircle, Shield, Heart } from "lucide-react";
+import {
+  Mail,
+  Clock,
+  MessageCircle,
+  HelpCircle,
+  Shield,
+  Heart,
+} from "lucide-react";
 
 export default function ContactUs() {
   return (
     <>
       <Helmet>
-        <title>Contact Us | MindCurePath Consultancy - We're Here to Help</title>
+        <title>
+          Contact Us | MindCurePath Consultancy - We're Here to Help
+        </title>
         <meta
           name="description"
           content="Contact MindCurePath for support with mental wellness, education, and finance assessments. Reach our team 24/7 at support@mindcurepath.com."
         />
-        <meta name="keywords" content="contact MindCurePath, customer support, mental health help, education guidance contact, financial wellness support" />
+        <meta
+          name="keywords"
+          content="contact MindCurePath, customer support, mental health help, education guidance contact, financial wellness support"
+        />
         <link rel="canonical" href="https://mindcurepath.com/contact" />
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mindcurepath.com/contact" />
-        <meta property="og:title" content="Contact Us | MindCurePath Consultancy" />
-        <meta property="og:description" content="Have questions? Reach out to MindCurePath today for assistance on your wellness journey." />
-        <meta property="og:image" content="https://mindcurepath.com/og-image.jpg" />
+        <meta
+          property="og:title"
+          content="Contact Us | MindCurePath Consultancy"
+        />
+        <meta
+          property="og:description"
+          content="Have questions? Reach out to MindCurePath today for assistance on your wellness journey."
+        />
+        <meta
+          property="og:image"
+          content="https://mindcurepath.com/og-image.jpg"
+        />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://mindcurepath.com/contact" />
-        <meta name="twitter:title" content="Contact Us | MindCurePath Consultancy" />
-        <meta name="twitter:description" content="Have questions? Reach out to MindCurePath today for assistance on your wellness journey." />
-        <meta name="twitter:image" content="https://mindcurepath.com/og-image.jpg" />
+        <meta
+          name="twitter:title"
+          content="Contact Us | MindCurePath Consultancy"
+        />
+        <meta
+          name="twitter:description"
+          content="Have questions? Reach out to MindCurePath today for assistance on your wellness journey."
+        />
+        <meta
+          name="twitter:image"
+          content="https://mindcurepath.com/og-image.jpg"
+        />
 
         {/* Structured Data */}
         <script type="application/ld+json">
@@ -79,8 +109,9 @@ export default function ContactUs() {
                   Get in Touch
                 </h2>
                 <p className="text-slate-600 text-lg max-w-xl mx-auto mb-6">
-                  Have questions, feedback, or need assistance? We'd love to hear from you. 
-                  Our dedicated support team is available around the clock to help you.
+                  Have questions, feedback, or need assistance? We'd love to
+                  hear from you. Our dedicated support team is available around
+                  the clock to help you.
                 </p>
                 <a
                   href="mailto:support@mindcurepath.com"
@@ -104,8 +135,8 @@ export default function ContactUs() {
                       Available 24/7
                     </h3>
                     <p className="text-slate-600 text-sm leading-relaxed">
-                      Our inbox is always open. Whether it's day or night, feel free to 
-                      reach out whenever you need assistance.
+                      Our inbox is always open. Whether it's day or night, feel
+                      free to reach out whenever you need assistance.
                     </p>
                   </div>
                 </div>
@@ -121,8 +152,9 @@ export default function ContactUs() {
                       Quick Response
                     </h3>
                     <p className="text-slate-600 text-sm leading-relaxed">
-                      We typically respond within 24-48 hours. Our team works diligently 
-                      to address your queries as promptly as possible.
+                      We typically respond within 24-48 hours. Our team works
+                      diligently to address your queries as promptly as
+                      possible.
                     </p>
                   </div>
                 </div>
@@ -137,25 +169,34 @@ export default function ContactUs() {
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 <div className="bg-white rounded-xl p-5 border border-slate-200">
                   <HelpCircle className="w-6 h-6 text-primary mb-3" />
-                  <h3 className="font-semibold text-slate-800 mb-2">General Inquiries</h3>
+                  <h3 className="font-semibold text-slate-800 mb-2">
+                    General Inquiries
+                  </h3>
                   <p className="text-slate-600 text-sm">
-                    Questions about our platform, assessments, or how MindCurePath works.
+                    Questions about our platform, assessments, or how
+                    MindCurePath works.
                   </p>
                 </div>
 
                 <div className="bg-white rounded-xl p-5 border border-slate-200">
                   <Shield className="w-6 h-6 text-primary mb-3" />
-                  <h3 className="font-semibold text-slate-800 mb-2">Account & Privacy</h3>
+                  <h3 className="font-semibold text-slate-800 mb-2">
+                    Account & Privacy
+                  </h3>
                   <p className="text-slate-600 text-sm">
-                    Help with your account, data privacy concerns, or security-related queries.
+                    Help with your account, data privacy concerns, or
+                    security-related queries.
                   </p>
                 </div>
 
                 <div className="bg-white rounded-xl p-5 border border-slate-200">
                   <Heart className="w-6 h-6 text-primary mb-3" />
-                  <h3 className="font-semibold text-slate-800 mb-2">Expert Connections</h3>
+                  <h3 className="font-semibold text-slate-800 mb-2">
+                    Expert Connections
+                  </h3>
                   <p className="text-slate-600 text-sm">
-                    Assistance with finding the right expert or booking consultations.
+                    Assistance with finding the right expert or booking
+                    consultations.
                   </p>
                 </div>
               </div>
@@ -165,16 +206,17 @@ export default function ContactUs() {
             <div className="text-center space-y-6">
               <div className="bg-amber-50 rounded-xl p-6 border border-amber-200">
                 <p className="text-amber-800 text-sm sm:text-base">
-                  <strong>Please Note:</strong> For urgent mental health concerns or emergencies, 
-                  please contact your local emergency services or call the National Mental Health 
-                  Helpline at <strong>1800-599-0019</strong> (India).
+                  <strong>Please Note:</strong> For urgent mental health
+                  concerns or emergencies, please contact your local emergency
+                  services or call the National Mental Health Helpline at{" "}
+                  <strong>1800-599-0019</strong> (India).
                 </p>
               </div>
 
               <div className="space-y-3">
                 <p className="text-slate-600">
-                  We value every message we receive and are committed to providing you with 
-                  the best possible support experience.
+                  We value every message we receive and are committed to
+                  providing you with the best possible support experience.
                 </p>
                 <p className="text-slate-500 text-sm">
                   MindCurePath Consultancy Private Limited
@@ -189,4 +231,3 @@ export default function ContactUs() {
     </>
   );
 }
-

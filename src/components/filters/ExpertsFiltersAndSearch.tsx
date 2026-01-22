@@ -35,8 +35,8 @@ export default function ExpertsFiltersAndSearch({
       filters.minPrice !== undefined && filters.maxPrice !== undefined
         ? `₹${filters.minPrice}-${filters.maxPrice}`
         : filters.minPrice !== undefined
-        ? `${t("min", { ns: "common" })} ₹${filters.minPrice}`
-        : `${t("max", { ns: "common" })} ₹${filters.maxPrice}`;
+          ? `${t("min", { ns: "common" })} ₹${filters.minPrice}`
+          : `${t("max", { ns: "common" })} ₹${filters.maxPrice}`;
     activeFilters.push({ key: "minPrice", label: priceLabel });
   }
 

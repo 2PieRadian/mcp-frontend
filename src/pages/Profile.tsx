@@ -10,14 +10,14 @@ import { BACKEND_URL } from "../lib/api";
 const BasicInfoCard = lazy(() => import("../components/profile/BasicInfoCard"));
 const ContactCard = lazy(() => import("../components/profile/ContactCard"));
 const AccountActivityCard = lazy(
-  () => import("../components/profile/AccountActivityCard")
+  () => import("../components/profile/AccountActivityCard"),
 );
 const GenderCard = lazy(() => import("../components/profile/GenderCard"));
 const DateOfBirthCard = lazy(
-  () => import("../components/profile/DateOfBirthCard")
+  () => import("../components/profile/DateOfBirthCard"),
 );
 const ChangePasswordCard = lazy(
-  () => import("../components/profile/ChangePasswordCard")
+  () => import("../components/profile/ChangePasswordCard"),
 );
 const LanguagesCard = lazy(() => import("../components/profile/LanguagesCard"));
 
@@ -76,7 +76,7 @@ export default function Profile() {
   };
 
   const handleImageChange = async (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -91,7 +91,7 @@ export default function Profile() {
     if (file.size > 5 * 1024 * 1024) {
       showToast(
         "error",
-        "Image size should be less than 5MB. Please choose a smaller file."
+        "Image size should be less than 5MB. Please choose a smaller file.",
       );
       return;
     }
@@ -120,7 +120,7 @@ export default function Profile() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ userId: user.id, fileType: fileExtension }),
-        }
+        },
       );
 
       if (!presignedResponse.ok) {
@@ -134,7 +134,7 @@ export default function Profile() {
         showToast(
           "error",
           errorData.message ||
-            "Unable to prepare image upload. Please try again later."
+            "Unable to prepare image upload. Please try again later.",
         );
         return;
       }
@@ -160,7 +160,7 @@ export default function Profile() {
       if (!uploadResponse.ok) {
         showToast(
           "error",
-          "Failed to upload image. Please check your internet connection and try again."
+          "Failed to upload image. Please check your internet connection and try again.",
         );
         return;
       }
@@ -175,7 +175,7 @@ export default function Profile() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ fileURL: fileURL }),
-        }
+        },
       );
 
       if (!updateResponse.ok) {
@@ -189,7 +189,7 @@ export default function Profile() {
         showToast(
           "error",
           errorData.message ||
-            "Image uploaded but couldn't save to your profile. Please refresh and try again."
+            "Image uploaded but couldn't save to your profile. Please refresh and try again.",
         );
         return;
       }
@@ -203,7 +203,7 @@ export default function Profile() {
       console.error("Error uploading profile image:", error);
       showToast(
         "error",
-        "Unable to upload image. Please check your connection and try again."
+        "Unable to upload image. Please check your connection and try again.",
       );
     } finally {
       setIsUploadingImage(false);

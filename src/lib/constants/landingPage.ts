@@ -76,7 +76,8 @@ export const REVIEWS = [
 export const LANDING_PAGE_QUOTES = [
   {
     id: 1,
-    quote: "“Invest your hard money to upgrade your thinking skills by our experts.”",
+    quote:
+      "“Invest your hard money to upgrade your thinking skills by our experts.”",
   },
   {
     id: 2,

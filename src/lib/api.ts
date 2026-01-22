@@ -1,5 +1,5 @@
-// export const BACKEND_URL = "https://api.mindcurepath.com";
-export const BACKEND_URL = "http://localhost:3000";
+export const BACKEND_URL = "https://api.mindcurepath.com";
+// export const BACKEND_URL = "http://localhost:3000";
 
 /**
  * Constructs a full avatar URL from a backend avatar value.
@@ -8,7 +8,7 @@ export const BACKEND_URL = "http://localhost:3000";
  * @returns The full avatar URL or undefined if the avatar is invalid
  */
 export function getAvatarUrl(
-  avatar: string | null | undefined
+  avatar: string | null | undefined,
 ): string | undefined {
   if (!avatar || typeof avatar !== "string") return undefined;
   const trimmed = avatar.trim();

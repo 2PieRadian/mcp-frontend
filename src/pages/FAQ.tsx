@@ -229,22 +229,43 @@ export default function FAQ() {
           name="description"
           content="Get answers to your questions about MindCurePath's mental wellness, education, and finance assessments. Learn how we help you achieve clarity and growth."
         />
-        <meta name="keywords" content="FAQ, MindCurePath questions, assessment help, wellness platform FAQ, education guidance FAQ, finance wellness FAQ" />
+        <meta
+          name="keywords"
+          content="FAQ, MindCurePath questions, assessment help, wellness platform FAQ, education guidance FAQ, finance wellness FAQ"
+        />
         <link rel="canonical" href="https://mindcurepath.com/faq" />
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mindcurepath.com/faq" />
-        <meta property="og:title" content="Frequently Asked Questions | MindCurePath Consultancy" />
-        <meta property="og:description" content="Common questions and answers about MindCurePath's services and platform." />
-        <meta property="og:image" content="https://mindcurepath.com/og-image.jpg" />
+        <meta
+          property="og:title"
+          content="Frequently Asked Questions | MindCurePath Consultancy"
+        />
+        <meta
+          property="og:description"
+          content="Common questions and answers about MindCurePath's services and platform."
+        />
+        <meta
+          property="og:image"
+          content="https://mindcurepath.com/og-image.jpg"
+        />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://mindcurepath.com/faq" />
-        <meta name="twitter:title" content="Frequently Asked Questions | MindCurePath Consultancy" />
-        <meta name="twitter:description" content="Common questions and answers about MindCurePath's services and platform." />
-        <meta name="twitter:image" content="https://mindcurepath.com/og-image.jpg" />
+        <meta
+          name="twitter:title"
+          content="Frequently Asked Questions | MindCurePath Consultancy"
+        />
+        <meta
+          name="twitter:description"
+          content="Common questions and answers about MindCurePath's services and platform."
+        />
+        <meta
+          name="twitter:image"
+          content="https://mindcurepath.com/og-image.jpg"
+        />
 
         {/* Structured Data */}
         <script type="application/ld+json">
@@ -252,14 +273,18 @@ export default function FAQ() {
             {
               "@context": "https://schema.org",
               "@type": "FAQPage",
-              "mainEntity": ${JSON.stringify(faqData.map(item => ({
-                "@type": "Question",
-                "name": item.question,
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": Array.isArray(item.answer) ? item.answer.join(" ") : item.answer
-                }
-              })))}
+              "mainEntity": ${JSON.stringify(
+                faqData.map((item) => ({
+                  "@type": "Question",
+                  name: item.question,
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: Array.isArray(item.answer)
+                      ? item.answer.join(" ")
+                      : item.answer,
+                  },
+                })),
+              )}
             }
           `}
         </script>

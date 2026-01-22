@@ -121,7 +121,8 @@ export default function ExpertsFilterModal({
                 <DollarSign className="w-5 h-5 text-white" />
               </div>
               <label className="text-base font-semibold text-[#1a2e35]">
-                {t("price", { ns: "common" })} ({t("perHour", { ns: "common" })})
+                {t("price", { ns: "common" })} ({t("perHour", { ns: "common" })}
+                )
               </label>
             </div>
             <div className="flex items-center gap-3">
@@ -133,7 +134,7 @@ export default function ExpertsFilterModal({
                   onChange={(e) =>
                     updateFilter(
                       "minPrice",
-                      e.target.value ? Number(e.target.value) : undefined
+                      e.target.value ? Number(e.target.value) : undefined,
                     )
                   }
                   className="w-full px-4 py-3 border-2 border-[#e0e7eb] rounded-xl focus:outline-none focus:border-[#44666C] focus:ring-2 focus:ring-[#44666C]/20 transition-all text-sm font-medium"
@@ -148,7 +149,7 @@ export default function ExpertsFilterModal({
                   onChange={(e) =>
                     updateFilter(
                       "maxPrice",
-                      e.target.value ? Number(e.target.value) : undefined
+                      e.target.value ? Number(e.target.value) : undefined,
                     )
                   }
                   className="w-full px-4 py-3 border-2 border-[#e0e7eb] rounded-xl focus:outline-none focus:border-[#44666C] focus:ring-2 focus:ring-[#44666C]/20 transition-all text-sm font-medium"
@@ -164,7 +165,8 @@ export default function ExpertsFilterModal({
                 <Star className="w-5 h-5 text-white fill-white" />
               </div>
               <label className="text-base font-semibold text-[#1a2e35]">
-                {t("rating", { ns: "common" })} ({t("minimum", { ns: "common" })})
+                {t("rating", { ns: "common" })} (
+                {t("minimum", { ns: "common" })})
               </label>
             </div>
             <input
@@ -177,7 +179,7 @@ export default function ExpertsFilterModal({
               onChange={(e) =>
                 updateFilter(
                   "minRating",
-                  e.target.value ? Number(e.target.value) : undefined
+                  e.target.value ? Number(e.target.value) : undefined,
                 )
               }
               className="w-full px-4 py-3 border-2 border-[#e0e7eb] rounded-xl focus:outline-none focus:border-[#44666C] focus:ring-2 focus:ring-[#44666C]/20 transition-all text-sm font-medium"
@@ -191,7 +193,8 @@ export default function ExpertsFilterModal({
                 <Award className="w-5 h-5 text-white" />
               </div>
               <label className="text-base font-semibold text-[#1a2e35]">
-                {t("experience", { ns: "common" })} ({t("minimumYears", { ns: "common" })})
+                {t("experience", { ns: "common" })} (
+                {t("minimumYears", { ns: "common" })})
               </label>
             </div>
             <input
@@ -202,7 +205,7 @@ export default function ExpertsFilterModal({
               onChange={(e) =>
                 updateFilter(
                   "minExperience",
-                  e.target.value ? Number(e.target.value) : undefined
+                  e.target.value ? Number(e.target.value) : undefined,
                 )
               }
               className="w-full px-4 py-3 border-2 border-[#e0e7eb] rounded-xl focus:outline-none focus:border-[#44666C] focus:ring-2 focus:ring-[#44666C]/20 transition-all text-sm font-medium"

@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 /**
  * Custom hook that instantly scrolls to the top on route change.
  * Temporarily disables smooth scrolling to ensure instant jump.
- * 
+ *
  * NOTE: If using ScrollLayout + RouteScrollReset in App.tsx,
  * this hook is not needed. It's kept for backward compatibility
  * with pages that may still use it.
@@ -36,7 +36,11 @@ export default function useScrollToTop() {
       });
     } else {
       // Fallback: window scroll
-      window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "instant" as ScrollBehavior,
+      });
     }
   }, [pathname]);
 }
@@ -44,7 +48,7 @@ export default function useScrollToTop() {
 /**
  * Scrolls to a specific element with smooth animation.
  * Use this for in-page anchor navigation.
- * 
+ *
  * @param elementId - The ID of the element to scroll to
  * @param offset - Optional offset from the top (default: 0)
  */

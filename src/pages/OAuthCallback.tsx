@@ -12,7 +12,7 @@ export default function OAuthCallback() {
   const { login } = useAuth();
 
   const [status, setStatus] = useState<"loading" | "success" | "error">(
-    "loading"
+    "loading",
   );
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -26,7 +26,7 @@ export default function OAuthCallback() {
     if (!token || success !== "true") {
       setStatus("error");
       setErrorMessage(
-        "Authentication failed. Missing token or invalid response."
+        "Authentication failed. Missing token or invalid response.",
       );
       return;
     }
