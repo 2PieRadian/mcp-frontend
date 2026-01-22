@@ -9,12 +9,12 @@ type ExpertCardProps = {
   image: string;
   rating: number;
   ratingCount: number;
-  specialization: string;
   tags: string;
   languages: string;
   nextSlot: string;
   price: number;
   expertData?: ApiExpert; // Full expert data to pass to details page
+  professionalTitle: string;
 };
 
 export default function ExpertCard({
@@ -23,12 +23,12 @@ export default function ExpertCard({
   image,
   rating,
   ratingCount,
-  specialization,
   tags,
   languages,
   nextSlot,
   price,
   expertData,
+  professionalTitle,
 }: ExpertCardProps) {
   const { t } = useTranslation("common");
   const navigate = useNavigate();
@@ -64,17 +64,19 @@ export default function ExpertCard({
               {name}
             </h1>
 
+            {rating && (
             <div className="Rating-Container flex items-center gap-[5px]">
               <Star size={18} className="fill-yellow-400 text-yellow-400" />
               <span className="Rating-Value text-yellow-400">{rating}</span>
               <span className="Rating-Count text-gray-500 text-[11px] min-[800px]:text-xs">
-                ({ratingCount})
-              </span>
-            </div>
+                  ({ratingCount})
+                </span>
+              </div>
+            )}
           </div>
 
           <div className="Specialization-Container text-[#8F9EA0] text-[11px] min-[800px]:text-sm">
-            {specialization}
+            {professionalTitle}
           </div>
 
           <div className="Tags-Container text-[#516A6E] text-xs min-[800px]:text-sm mt-[8px]">

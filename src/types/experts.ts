@@ -1,5 +1,3 @@
-import type { Expert } from "../lib/constants/experts";
-
 export type ApiUser = {
   id: number;
   email: string;
@@ -44,7 +42,6 @@ export type ApiResponse = {
 
 // Cache entry for specialization + filter combination
 export type SpecializationCacheEntry = {
-  experts: Expert[];
   apiExperts: ApiExpert[];
   totalCount: number;
   totalPages: number;
@@ -89,7 +86,6 @@ export interface ExpertsContextType {
     specialization: string,
     filters?: ExpertFilters
   ) => {
-    experts: Expert[];
     apiExperts: ApiExpert[];
     totalCount: number;
     totalPages: number;

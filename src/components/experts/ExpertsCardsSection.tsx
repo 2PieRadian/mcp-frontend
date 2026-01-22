@@ -2,6 +2,7 @@ import { lazy, useEffect, useMemo, useRef } from "react";
 import ExpertCardSkeleton from "../ExpertCardSkeleton";
 import { useExperts } from "../../context/ExpertsContext";
 import { useTranslation } from "react-i18next";
+import type { ApiExpert } from "../../types/experts";
 
 const ExpertCard = lazy(() => import("../ExpertCard"));
 
@@ -31,6 +32,51 @@ export default function ExpertsCardsSection({
     useExperts();
   const { t } = useTranslation(["common", "experts"]);
 
+  const formatApiExpertForCard = (expert: ApiExpert) => {
+    const formattedName = expert.user.name
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+
+    const specializationName =
+      expert.expertSpecializations?.[0]?.specialization?.name ||
+      expert.professionalTitle ||
+      "General";
+
+    const professionalTitleLabel = `${
+      expert.professionalTitle || specializationName
+    } (${expert.yearsOfExperience}+ yrs of experience)`;
+
+    const tags = expert.expertSpecializations
+      ? expert.expertSpecializations
+          .map((esp) => esp.specialization.name)
+          .join(", ")
+      : expert.expertiseAreas
+      ? expert.expertiseAreas
+          .map((area) => area.charAt(0).toUpperCase() + area.slice(1))
+          .join(", ")
+      : "";
+
+    const languages = expert.user.languages
+      ? expert.user.languages
+          .map((lang) => lang.charAt(0).toUpperCase() + lang.slice(1))
+          .join(", ")
+      : "";
+
+    return {
+      id: expert.id,
+      name: formattedName,
+      image: expert.user.avatar || "/images/experts/expert_profile_img.png",
+      rating: expert.rating,
+      ratingCount: expert.totalReviews,
+      professionalTitle: professionalTitleLabel,
+      tags,
+      languages,
+      nextSlot: "Available soon",
+      price: expert.pricePerHour,
+    };
+  };
+
   // Get cached experts for current specialization + filter combination
   const cachedData = useMemo(
     () => getCachedExperts(specialization, filters),
@@ -58,7 +104,7 @@ export default function ExpertsCardsSection({
     const cacheEntry = getCachedExperts(specialization, filters);
     const hasPageCached =
       cacheEntry.hasCache &&
-      cacheEntry.experts.length >= currentPage * EXPERTS_PER_PAGE;
+      cacheEntry.apiExperts.length >= currentPage * EXPERTS_PER_PAGE;
 
     if (!hasPageCached) {
       fetchExpertsBySpecialization(specialization, currentPage, filters);
@@ -79,17 +125,14 @@ export default function ExpertsCardsSection({
     }
     const startIndex = (currentPage - 1) * EXPERTS_PER_PAGE;
     const endIndex = startIndex + EXPERTS_PER_PAGE;
-    const experts = cachedData.experts
+    const apiExperts = cachedData.apiExperts
       .slice(startIndex, endIndex)
       .filter(Boolean);
 
-    // Match each Expert with its corresponding ApiExpert
-    return experts.map((expert) => {
-      const apiExpert = cachedData.apiExperts.find(
-        (api) => api.id === expert.id
-      );
-      return { expert, apiExpert };
-    });
+    return apiExperts.map((apiExpert) => ({
+      expert: formatApiExpertForCard(apiExpert),
+      apiExpert,
+    }));
   }, [cachedData, currentPage]);
 
   const totalPages = cachedData.totalPages || 0;
@@ -103,7 +146,7 @@ export default function ExpertsCardsSection({
     const startIndex = (currentPage - 1) * EXPERTS_PER_PAGE;
     const endIndex = startIndex + EXPERTS_PER_PAGE;
     // Check if we have enough experts to fill this page
-    return cachedData.experts.length >= endIndex;
+    return cachedData.apiExperts.length >= endIndex;
   }, [cachedData, currentPage]);
 
   // Check if there's a next/previous page
@@ -163,7 +206,7 @@ export default function ExpertsCardsSection({
   if (
     !isLoading &&
     expertsForCurrentPage.length === 0 &&
-    cachedData.experts.length === 0
+    cachedData.apiExperts.length === 0
   ) {
     return (
       <div className="max-w-[1350px] mx-auto mt-[40px]">
@@ -187,7 +230,7 @@ export default function ExpertsCardsSection({
             image={expert.image}
             rating={expert.rating}
             ratingCount={expert.ratingCount}
-            specialization={expert.specialization}
+            professionalTitle={expert.professionalTitle}
             tags={expert.tags}
             languages={expert.languages}
             nextSlot={expert.nextSlot}

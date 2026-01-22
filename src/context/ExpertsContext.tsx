@@ -5,7 +5,6 @@ import {
   useCallback,
   type ReactNode,
 } from "react";
-import type { Expert } from "../lib/constants/experts";
 import type { FilterState } from "../types/filters";
 import { defaultFilters } from "../types/filters";
 import { BACKEND_URL } from "../lib/api";
@@ -30,55 +29,6 @@ export function ExpertsProvider({ children }: { children: ReactNode }) {
     Map<string, Map<string, SpecializationCacheEntry>>
   >(new Map());
 
-  const mapApiExpertToExpert = useCallback((expert: ApiExpert): Expert => {
-    const formattedName = expert.user.name
-      .split(" ")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(" ");
-
-    // Use specialization from expertSpecializations if available, otherwise use professionalTitle
-    const specializationName =
-      expert.expertSpecializations?.[0]?.specialization?.name ||
-      expert.professionalTitle ||
-      "General";
-
-    const specialization = `${
-      specializationName.charAt(0).toUpperCase() + specializationName.slice(1)
-    } (${expert.yearsOfExperience}+ yrs of experience)`;
-
-    const tags = expert.expertSpecializations
-      ? expert.expertSpecializations
-          .map((esp) => esp.specialization.name)
-          .join(", ")
-      : expert.expertiseAreas
-      ? expert.expertiseAreas
-          .map((area) => area.charAt(0).toUpperCase() + area.slice(1))
-          .join(", ")
-      : "";
-
-    const languages = expert.user.languages
-      ? expert.user.languages
-          .map((lang) => lang.charAt(0).toUpperCase() + lang.slice(1))
-          .join(", ")
-      : "";
-
-    return {
-      id: expert.id,
-      name: formattedName,
-      image: expert.user.avatar || "/images/experts/expert_profile_img.png",
-      rating: expert.rating,
-      ratingCount: expert.totalReviews,
-      specialization,
-      tags,
-      languages,
-      nextSlot: "Available soon",
-      price: expert.pricePerHour,
-      // Store raw data for filtering
-      yearsOfExperience: expert.yearsOfExperience,
-      rawLanguages: expert.user.languages || [],
-    } as Expert & { yearsOfExperience: number; rawLanguages: string[] };
-  }, []);
-
   const setFilters = useCallback((newFilters: FilterState) => {
     setFiltersState(newFilters);
   }, []);
@@ -92,7 +42,6 @@ export function ExpertsProvider({ children }: { children: ReactNode }) {
 
       if (cacheEntry) {
         return {
-          experts: cacheEntry.experts,
           apiExperts: cacheEntry.apiExperts,
           totalCount: cacheEntry.totalCount,
           totalPages: cacheEntry.totalPages,
@@ -101,7 +50,6 @@ export function ExpertsProvider({ children }: { children: ReactNode }) {
       }
 
       return {
-        experts: [],
         apiExperts: [],
         totalCount: 0,
         totalPages: 0,
@@ -169,9 +117,6 @@ export function ExpertsProvider({ children }: { children: ReactNode }) {
 
         const data: ApiResponse = await response.json();
 
-        // Map API response to Expert type
-        const newExperts = (data.experts || []).map(mapApiExpertToExpert);
-
         // Update cache
         setSpecializationCache((prev) => {
           const newCache = new Map(prev);
@@ -180,17 +125,16 @@ export function ExpertsProvider({ children }: { children: ReactNode }) {
 
           // Merge new experts with existing ones (avoid duplicates)
           const existingExpertIds = new Set<number>(
-            (existingEntry?.experts || []).map((e: Expert) => e.id)
+            (existingEntry?.apiExperts || []).map((e: ApiExpert) => e.id)
           );
-          const uniqueNewExperts = newExperts.filter(
-            (e: Expert) => !existingExpertIds.has(e.id)
+          const uniqueNewExperts = (data.experts || []).filter(
+            (e: ApiExpert) => !existingExpertIds.has(e.id)
           );
 
           const updatedEntry: SpecializationCacheEntry = {
-            experts: [...(existingEntry?.experts || []), ...uniqueNewExperts],
             apiExperts: [
               ...(existingEntry?.apiExperts || []),
-              ...(data.experts || []),
+              ...uniqueNewExperts,
             ],
             totalCount: data.totalCount || 0,
             totalPages: data.totalPages || 0,
@@ -210,7 +154,7 @@ export function ExpertsProvider({ children }: { children: ReactNode }) {
         setIsLoading(false);
       }
     },
-    [specializationCache, mapApiExpertToExpert]
+    [specializationCache]
   );
 
   // Get expert by ID from cache
