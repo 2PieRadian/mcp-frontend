@@ -1,6 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @import "tailwindcss";
 
+
+@import './styles/_variables.scss';
+@import './styles/_keyframe-animations.scss';
+
 * {
   font-family: "Google Sans";
   /* ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
@@ -78,51 +82,53 @@ body {
 
 .expert-hero-gradient {
   /* background: #cfdfe6; */
-  background: linear-gradient(
-    to bottom,
-    hsl(173, 17%, 28%),
-    hsl(172, 16%, 36%),
-    rgb(94, 121, 117) 100%
-  );
+  background: linear-gradient(to bottom,
+      hsl(173, 17%, 28%),
+      hsl(172, 16%, 36%),
+      rgb(94, 121, 117) 100%);
 }
 
 @media (min-width: 770px) {
   .expert-hero-gradient {
-    background: linear-gradient(
-      to right,
-      hsl(173, 17%, 28%),
-      hsl(172, 15%, 40%),
-      rgb(79, 106, 102) 100%
-    );
+    background: linear-gradient(to right,
+        hsl(173, 17%, 28%),
+        hsl(172, 15%, 40%),
+        rgb(79, 106, 102) 100%);
   }
 }
 
 /* Floating Animations */
 @keyframes float1 {
+
   0%,
   100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-10px);
   }
 }
 
 @keyframes float2 {
+
   0%,
   100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-15px);
   }
 }
 
 @keyframes float3 {
+
   0%,
   100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-8px);
   }
@@ -147,6 +153,7 @@ body {
 /* -------------------------------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
+
   .mcp-cat-thumb::before,
   .mcp-cat-thumb::after,
   .mcp-cat-layer,
@@ -180,12 +187,10 @@ body {
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.16),
-    rgba(0, 0, 0, 0) 55%,
-    rgba(255, 255, 255, 0.08)
-  );
+  background: linear-gradient(to top,
+      rgba(0, 0, 0, 0.16),
+      rgba(0, 0, 0, 0) 55%,
+      rgba(255, 255, 255, 0.08));
   opacity: 0.95;
 }
 
@@ -200,12 +205,10 @@ body {
   z-index: 2;
   pointer-events: none;
   opacity: 0;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.55),
-    transparent
-  );
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.55),
+      transparent);
 }
 
 .mcp-cat-card:hover .mcp-cat-thumb::after {
@@ -218,9 +221,11 @@ body {
     transform: translateX(0) rotate(18deg);
     opacity: 0;
   }
+
   15% {
     opacity: 1;
   }
+
   100% {
     transform: translateX(280%) rotate(18deg);
     opacity: 0;
@@ -237,38 +242,34 @@ body {
 .mcp-thumb--wellness .mcp-layer-1 {
   /* soft aurora base (very subtle) */
   background:
-    radial-gradient(
-      320px 320px at 20% 20%,
+    radial-gradient(320px 320px at 20% 20%,
       rgba(255, 255, 255, 0.26),
-      transparent 62%
-    ),
-    radial-gradient(
-      360px 360px at 85% 75%,
+      transparent 62%),
+    radial-gradient(360px 360px at 85% 75%,
       rgba(14, 165, 233, 0.26),
-      transparent 64%
-    );
+      transparent 64%);
   filter: blur(12px);
   opacity: 0.85;
   animation: mcpWellnessAura 7.4s ease-in-out infinite;
 }
 
 .mcp-thumb--wellness .mcp-layer-2 {
-  background: radial-gradient(
-    280px 280px at 55% 55%,
-    rgba(6, 182, 212, 0.28),
-    transparent 64%
-  );
+  background: radial-gradient(280px 280px at 55% 55%,
+      rgba(6, 182, 212, 0.28),
+      transparent 64%);
   filter: blur(16px);
   opacity: 0.75;
   animation: mcpWellnessDrift 8.6s ease-in-out infinite;
 }
 
 @keyframes mcpWellnessAura {
+
   0%,
   100% {
     transform: translate(-2%, -1%) scale(1);
     opacity: 0.78;
   }
+
   50% {
     transform: translate(2.5%, 1.5%) scale(1.06);
     opacity: 0.92;
@@ -276,10 +277,12 @@ body {
 }
 
 @keyframes mcpWellnessDrift {
+
   0%,
   100% {
     transform: translate(1.5%, 1%) scale(1.02);
   }
+
   50% {
     transform: translate(-2.5%, -2%) scale(1.1);
   }
@@ -287,22 +290,22 @@ body {
 
 .mcp-thumb--wellness .mcp-ring {
   inset: 0;
-  background: radial-gradient(
-    circle at 50% 50%,
-    rgba(255, 255, 255, 0) 40%,
-    rgba(255, 255, 255, 0.26) 52%,
-    rgba(255, 255, 255, 0) 66%
-  );
+  background: radial-gradient(circle at 50% 50%,
+      rgba(255, 255, 255, 0) 40%,
+      rgba(255, 255, 255, 0.26) 52%,
+      rgba(255, 255, 255, 0) 66%);
   opacity: 0.8;
   animation: mcpWellnessRing 3.6s ease-in-out infinite;
 }
 
 @keyframes mcpWellnessRing {
+
   0%,
   100% {
     transform: scale(0.96);
     opacity: 0.55;
   }
+
   50% {
     transform: scale(1.08);
     opacity: 0.92;
@@ -324,30 +327,26 @@ body {
   top: 62%;
   height: 10px;
   opacity: 0.75;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.55) 18%,
-    rgba(255, 255, 255, 0) 36%,
-    rgba(255, 255, 255, 0.55) 54%,
-    rgba(255, 255, 255, 0) 72%,
-    rgba(255, 255, 255, 0.55) 90%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  clip-path: polygon(
-    0 55%,
-    14% 55%,
-    18% 10%,
-    22% 85%,
-    27% 35%,
-    34% 55%,
-    46% 55%,
-    50% 20%,
-    54% 85%,
-    59% 45%,
-    68% 55%,
-    100% 55%
-  );
+  background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.55) 18%,
+      rgba(255, 255, 255, 0) 36%,
+      rgba(255, 255, 255, 0.55) 54%,
+      rgba(255, 255, 255, 0) 72%,
+      rgba(255, 255, 255, 0.55) 90%,
+      rgba(255, 255, 255, 0) 100%);
+  clip-path: polygon(0 55%,
+      14% 55%,
+      18% 10%,
+      22% 85%,
+      27% 35%,
+      34% 55%,
+      46% 55%,
+      50% 20%,
+      54% 85%,
+      59% 45%,
+      68% 55%,
+      100% 55%);
   filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.16));
 }
 
@@ -360,9 +359,11 @@ body {
     transform: translateX(-10%);
     opacity: 0.25;
   }
+
   40% {
     opacity: 0.75;
   }
+
   100% {
     transform: translateX(10%);
     opacity: 0.25;
@@ -388,12 +389,15 @@ body {
     transform: translate(-50%, -50%) scale(0.82);
     opacity: 0;
   }
+
   25% {
     opacity: 0.55;
   }
+
   70% {
     opacity: 0.25;
   }
+
   100% {
     transform: translate(-50%, -50%) scale(1.18);
     opacity: 0;
@@ -406,35 +410,29 @@ body {
   inset: 0;
   opacity: 0.6;
   background:
-    radial-gradient(
-      circle at 25% 35%,
+    radial-gradient(circle at 25% 35%,
       rgba(255, 255, 255, 0.32) 0 2px,
-      transparent 3px
-    ),
-    radial-gradient(
-      circle at 78% 30%,
+      transparent 3px),
+    radial-gradient(circle at 78% 30%,
       rgba(255, 255, 255, 0.22) 0 2px,
-      transparent 3px
-    ),
-    radial-gradient(
-      circle at 65% 75%,
+      transparent 3px),
+    radial-gradient(circle at 65% 75%,
       rgba(255, 255, 255, 0.26) 0 2px,
-      transparent 3px
-    ),
-    radial-gradient(
-      circle at 35% 78%,
+      transparent 3px),
+    radial-gradient(circle at 35% 78%,
       rgba(255, 255, 255, 0.18) 0 2px,
-      transparent 3px
-    );
+      transparent 3px);
   animation: mcpWellnessDots 6.8s ease-in-out infinite;
 }
 
 @keyframes mcpWellnessDots {
+
   0%,
   100% {
     transform: translate(0, 0);
     opacity: 0.35;
   }
+
   50% {
     transform: translate(-8px, -6px);
     opacity: 0.6;
@@ -450,22 +448,22 @@ body {
   height: 70%;
   transform: translate(-50%, -50%);
   border-radius: 999px;
-  background: radial-gradient(
-    circle at 50% 50%,
-    rgba(255, 255, 255, 0) 54%,
-    rgba(255, 255, 255, 0.16) 62%,
-    rgba(255, 255, 255, 0) 76%
-  );
+  background: radial-gradient(circle at 50% 50%,
+      rgba(255, 255, 255, 0) 54%,
+      rgba(255, 255, 255, 0.16) 62%,
+      rgba(255, 255, 255, 0) 76%);
   opacity: 0.55;
   animation: mcpWellnessBreathe 5.8s ease-in-out infinite;
 }
 
 @keyframes mcpWellnessBreathe {
+
   0%,
   100% {
     transform: translate(-50%, -50%) scale(0.94);
     opacity: 0.35;
   }
+
   50% {
     transform: translate(-50%, -50%) scale(1.08);
     opacity: 0.65;
@@ -482,26 +480,26 @@ body {
   opacity: 0.65;
   background: rgba(255, 255, 255, 0.38);
   border-radius: 999px;
-  clip-path: polygon(
-    0 50%,
-    25% 15%,
-    55% 6%,
-    86% 24%,
-    100% 50%,
-    86% 76%,
-    55% 94%,
-    25% 85%
-  );
+  clip-path: polygon(0 50%,
+      25% 15%,
+      55% 6%,
+      86% 24%,
+      100% 50%,
+      86% 76%,
+      55% 94%,
+      25% 85%);
   filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.14));
   animation: mcpWellnessLeaf 7.2s ease-in-out infinite;
 }
 
 @keyframes mcpWellnessLeaf {
+
   0%,
   100% {
     transform: translate(0, 0) rotate(-6deg);
     opacity: 0.45;
   }
+
   50% {
     transform: translate(10px, 8px) rotate(10deg);
     opacity: 0.75;
@@ -515,13 +513,16 @@ body {
 }
 
 @keyframes mcpWellnessHeart {
+
   0%,
   100% {
     transform: scale(1);
   }
+
   40% {
     transform: scale(1.08);
   }
+
   55% {
     transform: scale(1.02);
   }
@@ -539,11 +540,13 @@ body {
 }
 
 @keyframes mcpEduGrid {
+
   0%,
   100% {
     transform: translate(0, 0);
     opacity: 0.26;
   }
+
   50% {
     transform: translate(-10px, -8px);
     opacity: 0.36;
@@ -553,27 +556,25 @@ body {
 .mcp-thumb--education .mcp-layer-2 {
   /* soft spotlight bloom */
   background:
-    radial-gradient(
-      260px 260px at 78% 22%,
+    radial-gradient(260px 260px at 78% 22%,
       rgba(255, 255, 255, 0.22),
-      transparent 62%
-    ),
-    radial-gradient(
-      220px 220px at 20% 82%,
+      transparent 62%),
+    radial-gradient(220px 220px at 20% 82%,
       rgba(255, 255, 255, 0.14),
-      transparent 60%
-    );
+      transparent 60%);
   filter: blur(10px);
   opacity: 0.55;
   animation: mcpEduBloom 6.8s ease-in-out infinite;
 }
 
 @keyframes mcpEduBloom {
+
   0%,
   100% {
     transform: translate(1%, 0) scale(1);
     opacity: 0.45;
   }
+
   50% {
     transform: translate(-2%, -2%) scale(1.08);
     opacity: 0.8;
@@ -582,22 +583,22 @@ body {
 
 .mcp-thumb--education .mcp-fold {
   inset: 0;
-  background: conic-gradient(
-    from 210deg at 82% 22%,
-    rgba(255, 255, 255, 0) 0 295deg,
-    rgba(255, 255, 255, 0.26) 320deg,
-    rgba(255, 255, 255, 0) 360deg
-  );
+  background: conic-gradient(from 210deg at 82% 22%,
+      rgba(255, 255, 255, 0) 0 295deg,
+      rgba(255, 255, 255, 0.26) 320deg,
+      rgba(255, 255, 255, 0) 360deg);
   animation: mcpEduFold 4.6s ease-in-out infinite;
   opacity: 0.75;
 }
 
 @keyframes mcpEduFold {
+
   0%,
   100% {
     transform: translate(0, 0) skewX(0deg);
     opacity: 0.5;
   }
+
   50% {
     transform: translate(-1.2%, 1.2%) skewX(-2deg);
     opacity: 0.95;
@@ -654,11 +655,13 @@ body {
 }
 
 @keyframes mcpEduOrbitPulse {
+
   0%,
   100% {
     opacity: 0.55;
     transform: translate(-50%, -50%) scale(0.995);
   }
+
   50% {
     opacity: 0.78;
     transform: translate(-50%, -50%) scale(1.015);
@@ -674,28 +677,36 @@ body {
 }
 
 @keyframes mcpEduFloatA {
+
   0%,
   100% {
     transform: translate(-50%, -50%) translate(0, 0) rotate(0deg);
   }
+
   50% {
     transform: translate(-50%, -50%) translate(8px, -6px) rotate(-3deg);
   }
 }
+
 @keyframes mcpEduFloatB {
+
   0%,
   100% {
     transform: translate(-50%, -50%) translate(0, 0) rotate(0deg);
   }
+
   50% {
     transform: translate(-50%, -50%) translate(-7px, 6px) rotate(3deg);
   }
 }
+
 @keyframes mcpEduFloatC {
+
   0%,
   100% {
     transform: translate(-50%, -50%) translate(0, 0) rotate(0deg);
   }
+
   50% {
     transform: translate(-50%, -50%) translate(6px, 8px) rotate(-2deg);
   }
@@ -719,6 +730,7 @@ body {
   top: 16%;
   animation: mcpEduFloatA 4.8s ease-in-out infinite;
 }
+
 .mcp-thumb--education .mcp-edu-badge-pi::before {
   content: "π";
 }
@@ -730,21 +742,20 @@ body {
   opacity: 0.85;
   background: rgba(255, 255, 255, 0.28);
   /* triangular (Erlenmeyer) flask */
-  clip-path: polygon(
-    44% 0%,
-    56% 0%,
-    56% 24%,
-    72% 62%,
-    86% 100%,
-    14% 100%,
-    28% 62%,
-    44% 24%
-  );
+  clip-path: polygon(44% 0%,
+      56% 0%,
+      56% 24%,
+      72% 62%,
+      86% 100%,
+      14% 100%,
+      28% 62%,
+      44% 24%);
   position: absolute;
   left: 14%;
   top: 86%;
   animation: mcpEduFloatA 6.6s ease-in-out infinite;
 }
+
 .mcp-thumb--education .mcp-edu-flask::before {
   content: "";
   position: absolute;
@@ -812,6 +823,7 @@ body {
   top: 58%;
   animation-delay: 0s;
 }
+
 .mcp-thumb--education .mcp-edu-chip-a::before {
   content: "A+";
 }
@@ -821,18 +833,21 @@ body {
   top: 42%;
   animation-delay: 0.8s;
 }
+
 .mcp-thumb--education .mcp-edu-chip-sigma::before {
   content: "Σ";
   letter-spacing: 0.02em;
 }
 
 @keyframes mcpEduChipFloat {
+
   0%,
   100% {
     filter: brightness(1);
     transform: translate(-50%, -50%) translate(0, 0) scale(1);
     opacity: 0.75;
   }
+
   50% {
     filter: brightness(1.05);
     transform: translate(-50%, -50%) translate(7px, -5px) scale(1.02);
@@ -846,10 +861,12 @@ body {
 }
 
 @keyframes mcpEduIcon {
+
   0%,
   100% {
     transform: rotate(0deg) scale(1);
   }
+
   50% {
     transform: rotate(-6deg) scale(1.07);
   }
@@ -859,6 +876,7 @@ body {
 .mcp-cat-card:hover .mcp-thumb--education .mcp-edu-orbit {
   animation-duration: 4.6s;
 }
+
 .mcp-cat-card:hover .mcp-thumb--education .mcp-edu-chip {
   animation-duration: 4.8s;
 }
@@ -866,17 +884,13 @@ body {
 /* FINANCE: scanning sparkline + streaming bar graph */
 .mcp-thumb--finance .mcp-layer-1 {
   background:
-    linear-gradient(
-      90deg,
+    linear-gradient(90deg,
       rgba(255, 255, 255, 0) 0 35%,
       rgba(255, 255, 255, 0.35) 50%,
-      rgba(255, 255, 255, 0) 65% 100%
-    ),
-    radial-gradient(
-      260px 260px at 25% 75%,
+      rgba(255, 255, 255, 0) 65% 100%),
+    radial-gradient(260px 260px at 25% 75%,
       rgba(255, 255, 255, 0.22),
-      transparent 60%
-    );
+      transparent 60%);
   animation: mcpScan 2.9s ease-in-out infinite;
   opacity: 0.65;
 }
@@ -886,10 +900,12 @@ body {
     transform: translateX(-14%);
     opacity: 0.25;
   }
+
   50% {
     transform: translateX(14%);
     opacity: 0.75;
   }
+
   100% {
     transform: translateX(-14%);
     opacity: 0.25;
@@ -897,11 +913,9 @@ body {
 }
 
 .mcp-thumb--finance .mcp-layer-2 {
-  background: radial-gradient(
-    220px 220px at 70% 20%,
-    rgba(255, 255, 255, 0.18),
-    transparent 60%
-  );
+  background: radial-gradient(220px 220px at 70% 20%,
+      rgba(255, 255, 255, 0.18),
+      transparent 60%);
   filter: blur(10px);
   opacity: 0.55;
 }
@@ -926,11 +940,9 @@ body {
   height: var(--h, 55%);
   transform-origin: bottom center;
   border-radius: 999px;
-  background: linear-gradient(
-    to top,
-    rgba(255, 255, 255, 0.18),
-    rgba(255, 255, 255, 0.55)
-  );
+  background: linear-gradient(to top,
+      rgba(255, 255, 255, 0.18),
+      rgba(255, 255, 255, 0.55));
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
   will-change: left, transform, opacity;
   animation:
@@ -944,15 +956,19 @@ body {
     left: 112%;
     opacity: 0;
   }
+
   8% {
     opacity: 0.75;
   }
+
   20% {
     opacity: 0.95;
   }
+
   85% {
     opacity: 0.95;
   }
+
   100% {
     left: -14%;
     opacity: 0;
@@ -960,10 +976,12 @@ body {
 }
 
 @keyframes mcpBarBreath {
+
   0%,
   100% {
     transform: scaleY(0.55);
   }
+
   50% {
     transform: scaleY(1.15);
   }
@@ -975,10 +993,12 @@ body {
 }
 
 @keyframes mcpTrend {
+
   0%,
   100% {
     transform: translateY(0) scale(1);
   }
+
   50% {
     transform: translateY(-2px) scale(1.06);
   }
@@ -986,20 +1006,24 @@ body {
 
 /* Subtle Floating Animations */
 @keyframes float-subtle-1 {
+
   0%,
   100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-4px);
   }
 }
 
 @keyframes float-subtle-2 {
+
   0%,
   100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-5px);
   }
@@ -1016,10 +1040,12 @@ body {
 
 /* Enhanced floating animation for OAuth callback cards */
 @keyframes float-card {
+
   0%,
   100% {
     transform: translateY(0px) scale(1);
   }
+
   50% {
     transform: translateY(-30px) scale(1.3);
   }
@@ -1035,6 +1061,7 @@ body {
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -1045,6 +1072,7 @@ body {
   from {
     width: 0%;
   }
+
   to {
     width: 100%;
   }
@@ -1060,11 +1088,13 @@ body {
 
 /* Badge Pulse Animation */
 @keyframes badge-pulse {
+
   0%,
   100% {
     transform: scale(1);
     box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
   }
+
   50% {
     transform: scale(1.02);
     box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1);
@@ -1077,12 +1107,15 @@ body {
 
 /* Hide scrollbar but keep functionality */
 .scrollbar-hide {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 .scrollbar-hide::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  display: none;
+  /* Chrome, Safari, Opera */
 }
 
 /* Custom scrollbar (subtle, rounded, matches navbar colors) */
@@ -1123,16 +1156,20 @@ input[type="password"]::-ms-reveal {
 
 /* Flag wave animation */
 @keyframes flag-wave {
+
   0%,
   100% {
     transform: rotate(0deg) translateY(0);
   }
+
   25% {
     transform: rotate(-5deg) translateY(-2px);
   }
+
   50% {
     transform: rotate(0deg) translateY(0);
   }
+
   75% {
     transform: rotate(5deg) translateY(-2px);
   }
@@ -1145,12 +1182,14 @@ input[type="password"]::-ms-reveal {
 
 /* Badge glow animation - maintains color saturation */
 @keyframes badge-glow {
+
   0%,
   100% {
     box-shadow:
       0_4px_12px_rgba (17, 156, 149, 0.3),
       inset_0_1px_2px_rgba(255, 255, 255, 0.2);
   }
+
   50% {
     box-shadow:
       0_6px_16px_rgba (17, 156, 149, 0.5),
@@ -1167,6 +1206,7 @@ input[type="password"]::-ms-reveal {
   0% {
     transform: translateX(-100%);
   }
+
   100% {
     transform: translateX(100%);
   }

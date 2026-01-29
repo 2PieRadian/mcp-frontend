@@ -295,6 +295,8 @@ export default function MobileNavModal({
             </>
           )}
 
+          <MobileNavItem textKey="articles" to="/articles" onClick={onClose} />
+
           {/* Profile/Login */}
           {user ? (
             <Link

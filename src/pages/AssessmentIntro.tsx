@@ -246,8 +246,8 @@ export default function AssessmentIntro() {
   const domain = location.pathname.includes("/assessments/education/")
     ? "education"
     : location.pathname.includes("/assessments/finance/")
-    ? "finance"
-    : "wellness";
+      ? "finance"
+      : "wellness";
 
   if (!data) {
     return (

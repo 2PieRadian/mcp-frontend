@@ -28,6 +28,8 @@ import TermsOfUse from "./pages/TermsOfUse";
 import ContactUs from "./pages/ContactUs";
 import FAQ from "./pages/FAQ";
 import HelpCenter from "./pages/HelpCenter";
+import Articles from "./pages/Articles";
+import ArticleDetail from "./pages/ArticleDetail";
 import { useGoogleAnalytics } from "./hooks/useGoogleAnalytics";
 import { ScrollLayout } from "./components/Layout";
 import RouteScrollReset from "./components/RouteScrollReset";
@@ -151,6 +153,10 @@ export default function App() {
             <Route path="/contact" element={<ContactUs />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/help" element={<HelpCenter />} />
+
+            {/* Articles */}
+            <Route path="/articles" element={<Articles />} />
+            <Route path="/articles/:slug" element={<ArticleDetail />} />
           </Routes>
         </ScrollLayout>
       </ExpertsProvider>

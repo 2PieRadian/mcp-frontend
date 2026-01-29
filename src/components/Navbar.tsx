@@ -254,6 +254,7 @@ export default function Navbar() {
             {user?.role !== "EXPERT" && (
               <NavbarItem textKey="findCounsellors" link="/find-counsellors" />
             )}
+            <NavbarItem textKey="articles" link="/articles" />
           </div>
 
           {/* Right side controls */}
