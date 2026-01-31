@@ -52,20 +52,18 @@ export default function ResponsiveNavbar() {
               {user ? (
                 <Link
                   to="/profile"
-                  className={`group p-[6px] rounded-full border border-border-light transition-colors flex items-center justify-center shrink-0 ${
-                    location.pathname.startsWith("/profile")
-                      ? "bg-border-light text-white"
-                      : "hover:bg-border-light hover:text-white"
-                  }`}
+                  className={`group p-[6px] rounded-full border border-border-light transition-colors flex items-center justify-center shrink-0 ${location.pathname.startsWith("/profile")
+                    ? "bg-border-light text-white"
+                    : "hover:bg-border-light hover:text-white"
+                    }`}
                   aria-label="Profile"
                 >
                   <UserCircle2
                     size={22}
-                    className={`sm:w-[26px] sm:h-[26px] transition-colors ${
-                      location.pathname.startsWith("/profile")
-                        ? "text-white"
-                        : "text-logo-heading group-hover:text-white"
-                    }`}
+                    className={`sm:w-[26px] sm:h-[26px] transition-colors ${location.pathname.startsWith("/profile")
+                      ? "text-white"
+                      : "text-logo-heading group-hover:text-white"
+                      }`}
                   />
                 </Link>
               ) : (

@@ -23,9 +23,8 @@ function NavbarItem({
   return (
     <Link
       to={link}
-      className={`cursor-pointer text-light-text px-[15px] py-[5px] hover:bg-hover-bg rounded-full transition-colors duration-200 ${
-        isActive ? "bg-hover-bg" : ""
-      }`}
+      className={`cursor-pointer text-light-text px-[15px] py-[5px] hover:bg-hover-bg rounded-full transition-colors duration-200 ${isActive ? "bg-hover-bg" : ""
+        }`}
     >
       {t(textKey)}
     </Link>
@@ -50,9 +49,8 @@ function NavbarItemIcon({
   const { t } = useTranslation("navigation");
   return (
     <div
-      className={`px-[12px] py-[5px] flex items-center gap-[5px] rounded-full cursor-pointer hover:bg-hover-bg transition-colors duration-200 ${
-        isActive ? "bg-hover-bg" : ""
-      }`}
+      className={`px-[12px] py-[5px] flex items-center gap-[5px] rounded-full cursor-pointer hover:bg-hover-bg transition-colors duration-200 ${isActive ? "bg-hover-bg" : ""
+        }`}
       onClick={onClick}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
@@ -176,9 +174,8 @@ export default function Navbar() {
 
           {/* Desktop Navigation - Hidden on mobile */}
           <div
-            className={`hidden lg:flex items-center text-[13px] relative ${
-              user?.role === "EXPERT" ? "gap-5" : "gap-[2px]"
-            }`}
+            className={`hidden lg:flex items-center text-[13px] relative ${user?.role === "EXPERT" ? "gap-5" : "gap-[2px]"
+              }`}
           >
             {selfAssessmentsModalOpen && user?.role !== "EXPERT" && (
               <div
@@ -207,9 +204,8 @@ export default function Navbar() {
                   icon={
                     <ChevronDown
                       size={15}
-                      className={`text-light-text transition-transform duration-200 ${
-                        weHelpWithModalOpen ? "rotate-180" : ""
-                      }`}
+                      className={`text-light-text transition-transform duration-200 ${weHelpWithModalOpen ? "rotate-180" : ""
+                        }`}
                     />
                   }
                   onMouseEnter={handleMouseEnter}
@@ -225,9 +221,8 @@ export default function Navbar() {
                   icon={
                     <ChevronDown
                       size={15}
-                      className={`text-light-text transition-transform duration-200 ${
-                        selfAssessmentsModalOpen ? "rotate-180" : ""
-                      }`}
+                      className={`text-light-text transition-transform duration-200 ${selfAssessmentsModalOpen ? "rotate-180" : ""
+                        }`}
                     />
                   }
                   onClick={() => navigate("/self-assessment")}
@@ -268,20 +263,18 @@ export default function Navbar() {
             {user ? (
               <Link
                 to="/profile"
-                className={`group p-[6px] rounded-full border border-border-light transition-colors flex items-center justify-center shrink-0 ${
-                  location.pathname.startsWith("/profile")
-                    ? "bg-border-light text-white"
-                    : "hover:bg-border-light hover:text-white"
-                }`}
+                className={`group p-[6px] rounded-full border border-border-light transition-colors flex items-center justify-center shrink-0 ${location.pathname.startsWith("/profile")
+                  ? "bg-border-light text-white"
+                  : "hover:bg-border-light hover:text-white"
+                  }`}
                 aria-label="Profile"
               >
                 <UserCircle2
                   size={22}
-                  className={`sm:w-[26px] sm:h-[26px] transition-colors ${
-                    location.pathname.startsWith("/profile")
-                      ? "text-white"
-                      : "text-logo-heading group-hover:text-white"
-                  }`}
+                  className={`sm:w-[26px] sm:h-[26px] transition-colors ${location.pathname.startsWith("/profile")
+                    ? "text-white"
+                    : "text-logo-heading group-hover:text-white"
+                    }`}
                 />
               </Link>
             ) : (
