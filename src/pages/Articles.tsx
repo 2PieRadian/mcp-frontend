@@ -523,7 +523,7 @@ function ArticleCard({ article }: { article: Article }) {
     >
       {/* Cover Image */}
       {article.coverImage ? (
-        <div className="aspect-[16/9] overflow-hidden bg-gradient-to-br from-[#e8f4f3] to-[#d4e8e6]">
+        <div className="aspect-[16/9] overflow-hidden bg-gray-100">
           <img
             src={article.coverImage}
             alt={article.title}
@@ -531,7 +531,7 @@ function ArticleCard({ article }: { article: Article }) {
           />
         </div>
       ) : (
-        <div className="aspect-[16/9] bg-gradient-to-br from-[#44666C] via-[#5a8a8f] to-[#62af9b] flex items-center justify-center">
+        <div className="aspect-[16/9] bg-gray-100 flex items-center justify-center">
           <BookOpen className="w-16 h-16 text-white/30" />
         </div>
       )}
@@ -665,16 +665,13 @@ export default function Articles() {
   const isLoadingArticles = isLoading || isLoadingTagArticles;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#f8fafb] via-white to-[#f0f5f6]">
+    <div className="min-h-screen bg-white">
       <div className="px-4 sm:px-6 lg:px-8">
         <ResponsiveNavbar />
       </div>
 
       {/* Hero Section */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#44666C]/5 via-transparent to-[#62af9b]/5 pointer-events-none" />
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#44666C]/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-[#62af9b]/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#1a2e35] mb-6">
@@ -733,7 +730,7 @@ export default function Articles() {
           {/* Empty State */}
           {!isLoadingArticles && !error && displayedArticles.length === 0 && (
             <div className="text-center py-16">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-[#ecf4f6] rounded-full mb-4">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
                 <BookOpen className="w-8 h-8 text-[#44666C]" />
               </div>
               <h3 className="text-xl font-semibold text-[#1a2e35] mb-2">

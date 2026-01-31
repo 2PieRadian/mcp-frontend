@@ -134,7 +134,7 @@ export default function ExpertDetails() {
                   </h2>
                   <div className="flex flex-wrap gap-2">
                     {expert.expertSpecializations &&
-                    expert.expertSpecializations.length > 0 ? (
+                      expert.expertSpecializations.length > 0 ? (
                       expert.expertSpecializations.map((esp, index) => (
                         <span
                           key={index}
@@ -194,7 +194,6 @@ export default function ExpertDetails() {
                 {/* Price Card */}
                 <div className="bg-[#E0ECEE] rounded-lg p-6">
                   <div className="flex items-center gap-3 mb-4">
-                    <DollarSign size={24} className="text-[#44666C]" />
                     <h3 className="text-xl font-semibold text-[#304048]">
                       Pricing
                     </h3>
