@@ -209,8 +209,8 @@ export default function ArticleDetail() {
             </div>
 
             {/* Footer */}
-            <footer className="mt-12 pt-8 border-t border-gray-200">
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <footer className="mt-8 pt-10 border-t border-gray-200">
+              <div className="flex flex-row items-center justify-between gap-3 flex-wrap">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-gradient-to-br from-[#44666C] to-[#62af9b] rounded-full flex items-center justify-center">
                     <User className="w-6 h-6 text-white" />
