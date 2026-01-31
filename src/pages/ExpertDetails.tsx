@@ -3,7 +3,6 @@ import {
   Star,
   ArrowLeft,
   Calendar,
-  DollarSign,
   Award,
   Languages,
   FileText,
