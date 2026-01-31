@@ -53,7 +53,7 @@ export default function Layout({
  */
 export function ScrollLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="h-screen overflow-hidden">
+    <div className="h-screen overflow-x-hidden">
       <div
         id="main-scroll-container"
         className="h-full overflow-y-auto"
