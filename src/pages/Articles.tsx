@@ -355,9 +355,9 @@ function TagsSection({
   }
 
   return (
-    <div className="py-6 w-full">
+    <div className="py-3 w-full">
       {/* Search and Scroll Container */}
-      <div className="flex items-center gap-3 mb-4 w-full">
+      <div className="flex items-center gap-3 mb-2 w-full">
         {/* Tag Search */}
         <div ref={searchContainerRef} className="relative shrink-0">
           <div className="flex items-center bg-white/80 backdrop-blur-sm border border-[#44666C]/20 rounded-full px-4 py-2 gap-2 hover:border-[#44666C]/40 transition-colors">
@@ -498,7 +498,7 @@ function TagsSection({
 
       {/* Selected Tag Info */}
       {selectedTag && (
-        <div className="mt-4 flex items-center justify-center gap-2 text-sm text-[#5a6c75]">
+        <div className="mt-2 flex items-center justify-center gap-2 text-sm text-[#5a6c75]">
           <span>Showing articles tagged with</span>
           <span className="font-semibold text-[#44666C] bg-[#44666C]/10 px-3 py-1 rounded-full">
             #{selectedTag.name}
@@ -673,7 +673,7 @@ export default function Articles() {
       {/* Hero Section */}
       <div className="relative overflow-hidden">
 
-        <div className="relative max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 text-center">
+        <div className="relative max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 pt-16 md:pt-24 pb-6 md:pb-8 text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#1a2e35] mb-6">
             {t("articles", { ns: "navigation" })}
           </h1>
@@ -687,7 +687,7 @@ export default function Articles() {
           <ArticleSearchBar />
 
           {/* Tags Section */}
-          <div className="mt-10">
+          <div className="mt-6">
             <TagsSection
               tags={tags}
               isLoadingTags={isLoadingTags}
