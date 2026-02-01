@@ -27,6 +27,7 @@
   "status": {
     "nameUpdated": "పేరు అప్డేట్ అయింది",
     "dateUpdated": "తేదీ అప్డేట్ అయింది",
+    "ageUpdated": "వయస్సు అప్డేట్ అయింది",
     "genderUpdated": "లింగం అప్డేట్ అయింది",
     "languagesUpdated": "భాషలు అప్డేట్ అయ్యాయి",
     "passwordChanged": "పాస్‌వర్డ్ మారింది",
@@ -37,6 +38,7 @@
     "basicInfo": "మూల సమాచారం",
     "contact": "సంప్రదింపు",
     "gender": "లింగం",
+    "age": "వయస్సు",
     "dateOfBirth": "పుట్టిన తేదీ",
     "languages": "మీరు మాట్లాడే భాషలు",
     "password": "పాస్‌వర్డ్",
@@ -54,6 +56,7 @@
   "placeholders": {
     "fullName": "మీ పూర్తి పేరు రాయండి",
     "chooseDob": "పుట్టిన తేదీ ఎంచుకోండి",
+    "enterAge": "మీ వయస్సు నమోదు చేయండి (1–150)",
     "selectGender": "లింగం ఎంచుకోండి",
     "currentPassword": "ప్రస్తుత పాస్‌వర్డ్",
     "newPassword": "కొత్త పాస్‌వర్డ్",
@@ -90,6 +93,9 @@
   "validation": {
     "nameRequired": "పేరు కావాలి",
     "selectDate": "దయచేసి తేదీ ఎంచుకోండి",
+    "ageRequired": "దయచేసి సరైన వయస్సు నమోదు చేయండి",
+    "ageOutOfRange": "వయస్సు 1 మరియు 150 మధ్య ఉండాలి",
+    "failedUpdateAge": "వయస్సు అప్డేట్ కాలేదు",
     "selectGender": "దయచేసి లింగం ఎంచుకోండి",
     "selectAtLeastOneLanguage": "కనీసం ఒక భాష ఎంచుకోండి",
     "notAuthenticated": "మీరు లాగిన్ కాలేదు.",

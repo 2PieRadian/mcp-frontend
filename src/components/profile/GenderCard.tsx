@@ -70,6 +70,7 @@ export default function GenderCard() {
         phoneNumber: updatedUser.phoneNumber || undefined,
         role: updatedUser.role,
         dateOfBirth: updatedUser.dateOfBirth || undefined,
+        age: updatedUser.age != null ? Number(updatedUser.age) : user?.age,
         gender: updatedUser.gender || undefined,
         languages: updatedUser.languages,
         createdAt: updatedUser.createdAt,

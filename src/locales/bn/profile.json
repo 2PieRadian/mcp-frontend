@@ -27,6 +27,7 @@
   "status": {
     "nameUpdated": "নাম আপডেট হয়েছে",
     "dateUpdated": "তারিখ আপডেট হয়েছে",
+    "ageUpdated": "বয়স আপডেট হয়েছে",
     "genderUpdated": "লিঙ্গ আপডেট হয়েছে",
     "languagesUpdated": "ভাষা আপডেট হয়েছে",
     "passwordChanged": "পাসওয়ার্ড বদলেছে",
@@ -37,6 +38,7 @@
     "basicInfo": "মূল তথ্য",
     "contact": "যোগাযোগ",
     "gender": "লিঙ্গ",
+    "age": "বয়স",
     "dateOfBirth": "জন্মতারিখ",
     "languages": "আপনি কোন ভাষা বলেন",
     "password": "পাসওয়ার্ড",
@@ -54,6 +56,7 @@
   "placeholders": {
     "fullName": "আপনার পুরো নাম লিখুন",
     "chooseDob": "জন্মতারিখ বাছুন",
+    "enterAge": "আপনার বয়স লিখুন (১–১৫০)",
     "selectGender": "লিঙ্গ বাছুন",
     "currentPassword": "বর্তমান পাসওয়ার্ড",
     "newPassword": "নতুন পাসওয়ার্ড",
@@ -90,6 +93,9 @@
   "validation": {
     "nameRequired": "নাম দরকার",
     "selectDate": "অনুগ্রহ করে তারিখ বাছুন",
+    "ageRequired": "অনুগ্রহ করে সঠিক বয়স লিখুন",
+    "ageOutOfRange": "বয়স ১ থেকে ১৫০ এর মধ্যে হতে হবে",
+    "failedUpdateAge": "বয়স আপডেট হয়নি",
     "selectGender": "অনুগ্রহ করে লিঙ্গ বাছুন",
     "selectAtLeastOneLanguage": "কমপক্ষে একটি ভাষা বাছুন",
     "notAuthenticated": "আপনি লগ ইন নন।",

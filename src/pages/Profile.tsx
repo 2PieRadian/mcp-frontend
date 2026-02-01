@@ -13,9 +13,7 @@ const AccountActivityCard = lazy(
   () => import("../components/profile/AccountActivityCard"),
 );
 const GenderCard = lazy(() => import("../components/profile/GenderCard"));
-const DateOfBirthCard = lazy(
-  () => import("../components/profile/DateOfBirthCard"),
-);
+const AgeCard = lazy(() => import("../components/profile/AgeCard"));
 const ChangePasswordCard = lazy(
   () => import("../components/profile/ChangePasswordCard"),
 );
@@ -188,8 +186,7 @@ export default function Profile() {
         }
         showToast(
           "error",
-          errorData.message ||
-            t("profileImageUploadError", { ns: "common" }),
+          errorData.message || t("profileImageUploadError", { ns: "common" }),
         );
         return;
       }
@@ -300,7 +297,7 @@ export default function Profile() {
           <BasicInfoCard />
           <ContactCard />
           <GenderCard />
-          <DateOfBirthCard />
+          <AgeCard />
           <LanguagesCard />
           <ChangePasswordCard />
           <AccountActivityCard />

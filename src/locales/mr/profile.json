@@ -27,6 +27,7 @@
   "status": {
     "nameUpdated": "नाव अपडेट झाले",
     "dateUpdated": "तारीख अपडेट झाली",
+    "ageUpdated": "वय अपडेट झाले",
     "genderUpdated": "लिंग अपडेट झाले",
     "languagesUpdated": "भाषा अपडेट झाल्या",
     "passwordChanged": "पासवर्ड बदलला",
@@ -37,6 +38,7 @@
     "basicInfo": "मूळ माहिती",
     "contact": "संपर्क",
     "gender": "लिंग",
+    "age": "वय",
     "dateOfBirth": "जन्मतारीख",
     "languages": "तुम्ही कोणत्या भाषा बोलता",
     "password": "पासवर्ड",
@@ -54,6 +56,7 @@
   "placeholders": {
     "fullName": "तुमचे पूर्ण नाव लिहा",
     "chooseDob": "जन्मतारीख निवडा",
+    "enterAge": "तुमचे वय प्रविष्ट करा (1–150)",
     "selectGender": "लिंग निवडा",
     "currentPassword": "सध्याचा पासवर्ड",
     "newPassword": "नवा पासवर्ड",
@@ -90,6 +93,9 @@
   "validation": {
     "nameRequired": "नाव आवश्यक आहे",
     "selectDate": "कृपया तारीख निवडा",
+    "ageRequired": "कृपया वैध वय प्रविष्ट करा",
+    "ageOutOfRange": "वय 1 ते 150 दरम्यान असणे आवश्यक आहे",
+    "failedUpdateAge": "वय अपडेट झाले नाही",
     "selectGender": "कृपया लिंग निवडा",
     "selectAtLeastOneLanguage": "किमान एक भाषा निवडा",
     "notAuthenticated": "तुम्ही लॉग इन नाही.",
@@ -131,4 +137,3 @@
     "santali": "संताली"
   }
 }
-

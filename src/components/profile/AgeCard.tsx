@@ -4,36 +4,37 @@ import { BACKEND_URL, getAvatarUrl } from "../../lib/api";
 import ProfileButton from "./ProfileButton";
 import { useTranslation } from "react-i18next";
 
-export default function DateOfBirthCard() {
+const MIN_AGE = 1;
+const MAX_AGE = 150;
+
+export default function AgeCard() {
   const { user, login } = useAuth();
   const { t } = useTranslation("profile");
   const [isEditing, setIsEditing] = useState(false);
-  const [dateOfBirth, setDateOfBirth] = useState(() => {
-    if (user?.dateOfBirth) {
-      const date = new Date(user.dateOfBirth);
-      return date.toISOString().split("T")[0]; // Format as YYYY-MM-DD
-    }
-    return "";
-  });
+  const [ageInput, setAgeInput] = useState(() =>
+    user?.age != null ? String(user.age) : "",
+  );
   const [status, setStatus] = useState<"idle" | "saving" | "success" | "error">(
-    "idle"
+    "idle",
   );
   const [error, setError] = useState<string | null>(null);
 
-  const formatDateForDisplay = (iso?: string) => {
-    if (!iso) return t("values.notSetYet");
-    const date = new Date(iso);
-    if (Number.isNaN(date.getTime())) return t("values.notSetYet");
-    return date.toLocaleDateString(undefined, {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
-
   const handleSave = async () => {
-    if (!dateOfBirth) {
-      setError(t("validation.selectDate"));
+    const raw = ageInput.trim();
+    if (!raw) {
+      setError(t("validation.ageRequired"));
+      setStatus("error");
+      return;
+    }
+
+    const parsed = parseInt(raw, 10);
+    if (Number.isNaN(parsed)) {
+      setError(t("validation.ageRequired"));
+      setStatus("error");
+      return;
+    }
+    if (parsed < MIN_AGE || parsed > MAX_AGE) {
+      setError(t("validation.ageOutOfRange"));
       setStatus("error");
       return;
     }
@@ -50,15 +51,15 @@ export default function DateOfBirthCard() {
 
     try {
       const response = await fetch(
-        `${BACKEND_URL}/api/v1/profile/update-date-of-birth`,
+        `${BACKEND_URL}/api/v1/profile/update-age`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ dateOfBirth }),
-        }
+          body: JSON.stringify({ age: parsed }),
+        },
       );
 
       const contentType = response.headers.get("content-type") || "";
@@ -68,14 +69,16 @@ export default function DateOfBirthCard() {
 
       if (!response.ok) {
         throw new Error(
-          data?.message || text || t("validation.failedUpdateDob")
+          data?.message || text || t("validation.failedUpdateAge"),
         );
       }
 
       const updatedUser = data.user;
 
-      // Update auth context
       const avatarValue = updatedUser.avatar || updatedUser.avatarUrl;
+      const newAge =
+        updatedUser.age != null ? Number(updatedUser.age) : undefined;
+
       login({
         id: String(updatedUser.id),
         email: updatedUser.email,
@@ -84,6 +87,7 @@ export default function DateOfBirthCard() {
         phoneNumber: updatedUser.phoneNumber || undefined,
         role: updatedUser.role,
         dateOfBirth: updatedUser.dateOfBirth || undefined,
+        age: newAge,
         gender: updatedUser.gender || undefined,
         languages: updatedUser.languages,
         createdAt: updatedUser.createdAt,
@@ -91,42 +95,56 @@ export default function DateOfBirthCard() {
 
       setStatus("success");
       setIsEditing(false);
-    } catch (error: any) {
-      console.error(error);
-      setError(error?.message || t("validation.failedUpdateDob"));
+    } catch (err: unknown) {
+      const message =
+        err instanceof Error ? err.message : t("validation.failedUpdateAge");
+      setError(message);
       setStatus("error");
     }
   };
 
+  const displayAge =
+    user?.age != null && !Number.isNaN(user.age) ? String(user.age) : null;
+
   return (
     <div className="bg-[hsl(0,0%,97%)] shadow-m rounded-[12px] sm:rounded-[16px] p-[12px] sm:p-[18px]">
       <p className="text-[12px] sm:text-[13px] uppercase tracking-[0.16em] text-gray-500 mb-[6px]">
-        {t("sections.dateOfBirth")}
+        {t("sections.age")}
       </p>
       <div className="space-y-[6px] sm:space-y-[8px] text-[16px] sm:text-[17px] text-light-text">
         <div className="bg-white px-[12px] sm:px-4 py-[8px] sm:py-[10px] rounded-[16px] sm:rounded-[20px]">
           {isEditing ? (
             <div className="flex flex-col gap-[6px] mt-[6px]">
               <input
-                type="date"
-                value={dateOfBirth}
+                type="number"
+                min={MIN_AGE}
+                max={MAX_AGE}
+                value={ageInput}
                 onChange={(e) => {
-                  setDateOfBirth(e.target.value);
+                  setAgeInput(e.target.value);
                   if (status !== "idle") {
                     setStatus("idle");
                     setError(null);
                   }
                 }}
-                max={new Date().toISOString().split("T")[0]}
-                placeholder={t("placeholders.chooseDob")}
+                placeholder={t("placeholders.enterAge")}
                 className="border border-gray-300 rounded-[10px] px-[12px] py-[8px] sm:py-[6px] bg-white placeholder:text-input-placeholder outline-none focus:border-gray-400 focus:shadow-[0_2px_4px_rgba(0,0,0,0.1)] w-full transition-all"
                 style={{ fontSize: "16px" }}
+                aria-label={t("sections.age")}
               />
               <div className="flex items-center gap-[8px] sm:gap-[10px] flex-wrap">
                 <ProfileButton
                   type="button"
                   onClick={handleSave}
-                  disabled={status === "saving" || !dateOfBirth}
+                  disabled={
+                    status === "saving" ||
+                    !ageInput.trim() ||
+                    Number.isNaN(parseInt(ageInput.trim(), 10)) ||
+                    (() => {
+                      const n = parseInt(ageInput.trim(), 10);
+                      return n < MIN_AGE || n > MAX_AGE;
+                    })()
+                  }
                   variant="primary"
                   className="px-[12px] sm:px-[14px]"
                 >
@@ -137,12 +155,9 @@ export default function DateOfBirthCard() {
                 <ProfileButton
                   type="button"
                   onClick={() => {
-                    if (user?.dateOfBirth) {
-                      const date = new Date(user.dateOfBirth);
-                      setDateOfBirth(date.toISOString().split("T")[0]);
-                    } else {
-                      setDateOfBirth("");
-                    }
+                    setAgeInput(
+                      user?.age != null ? String(user.age) : "",
+                    );
                     setIsEditing(false);
                     setStatus("idle");
                     setError(null);
@@ -153,7 +168,7 @@ export default function DateOfBirthCard() {
                 </ProfileButton>
                 {status === "success" && (
                   <span className="text-[14px] text-green-600">
-                    {t("status.dateUpdated")}
+                    {t("status.ageUpdated")}
                   </span>
                 )}
                 {error && (
@@ -164,17 +179,14 @@ export default function DateOfBirthCard() {
           ) : (
             <div className="flex items-center justify-between gap-[8px] sm:gap-[10px] mt-[-2px]">
               <p className="font-medium">
-                {formatDateForDisplay(user?.dateOfBirth)}
+                {displayAge ?? t("values.notSetYet")}
               </p>
               <ProfileButton
                 type="button"
                 onClick={() => {
-                  if (user?.dateOfBirth) {
-                    const date = new Date(user.dateOfBirth);
-                    setDateOfBirth(date.toISOString().split("T")[0]);
-                  } else {
-                    setDateOfBirth("");
-                  }
+                  setAgeInput(
+                    user?.age != null ? String(user.age) : "",
+                  );
                   setIsEditing(true);
                   setStatus("idle");
                   setError(null);
@@ -182,7 +194,7 @@ export default function DateOfBirthCard() {
                 variant="secondary"
                 className="shrink-0"
               >
-                {user?.dateOfBirth ? t("buttons.edit") : t("buttons.set")}
+                {displayAge ? t("buttons.edit") : t("buttons.set")}
               </ProfileButton>
             </div>
           )}

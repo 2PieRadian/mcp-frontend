@@ -27,6 +27,7 @@
   "status": {
     "nameUpdated": "പേര് അപ്ഡേറ്റ് ചെയ്തു",
     "dateUpdated": "തീയതി അപ്ഡേറ്റ് ചെയ്തു",
+    "ageUpdated": "പ്രായം അപ്ഡേറ്റ് ചെയ്തു",
     "genderUpdated": "ലിംഗം അപ്ഡേറ്റ് ചെയ്തു",
     "languagesUpdated": "ഭാഷകൾ അപ്ഡേറ്റ് ചെയ്തു",
     "passwordChanged": "പാസ്‌വേഡ് മാറ്റി",
@@ -37,6 +38,7 @@
     "basicInfo": "അടിസ്ഥാന വിവരം",
     "contact": "ബന്ധപ്പെടുക",
     "gender": "ലിംഗം",
+    "age": "പ്രായം",
     "dateOfBirth": "ജനന തീയതി",
     "languages": "നിങ്ങൾ സംസാരിക്കുന്ന ഭാഷകൾ",
     "password": "പാസ്‌വേഡ്",
@@ -54,6 +56,7 @@
   "placeholders": {
     "fullName": "നിങ്ങളുടെ പൂർണ്ണ പേര് എഴുതുക",
     "chooseDob": "ജനന തീയതി തിരഞ്ഞെടുക്കുക",
+    "enterAge": "നിങ്ങളുടെ പ്രായം നൽകുക (1–150)",
     "selectGender": "ലിംഗം തിരഞ്ഞെടുക്കുക",
     "currentPassword": "നിലവിലെ പാസ്‌വേഡ്",
     "newPassword": "പുതിയ പാസ്‌വേഡ്",
@@ -90,6 +93,9 @@
   "validation": {
     "nameRequired": "പേര് വേണം",
     "selectDate": "ദയവായി തീയതി തിരഞ്ഞെടുക്കുക",
+    "ageRequired": "ദയവായി സാധുവായ പ്രായം നൽകുക",
+    "ageOutOfRange": "പ്രായം 1 മുതൽ 150 വരെ ആയിരിക്കണം",
+    "failedUpdateAge": "പ്രായം അപ്ഡേറ്റ് ചെയ്തില്ല",
     "selectGender": "ദയവായി ലിംഗം തിരഞ്ഞെടുക്കുക",
     "selectAtLeastOneLanguage": "കുറഞ്ഞത് ഒരു ഭാഷ തിരഞ്ഞെടുക്കുക",
     "notAuthenticated": "നിങ്ങൾ ലോഗിൻ ചെയ്തിട്ടില്ല.",

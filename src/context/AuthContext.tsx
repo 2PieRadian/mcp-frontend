@@ -15,6 +15,7 @@ export type AuthUser = {
   phoneNumber?: string;
   role?: "USER" | "EXPERT" | "ADMIN";
   dateOfBirth?: string;
+  age?: number;
   gender?: string;
   languages?: string[];
   createdAt?: string;
@@ -82,6 +83,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
               phoneNumber: u?.phoneNumber || undefined,
               role: u?.role || undefined,
               dateOfBirth: u?.dateOfBirth || undefined,
+              age: u?.age != null ? Number(u.age) : undefined,
               gender: u?.gender || undefined,
               languages: u?.languages || undefined,
               createdAt: u?.createdAt || undefined,

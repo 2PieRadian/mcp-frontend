@@ -27,6 +27,7 @@
   "status": {
     "nameUpdated": "নাম আপডেট হ'ল",
     "dateUpdated": "তাৰিখ আপডেট হ'ল",
+    "ageUpdated": "বয়স আপডেট হ'ল",
     "genderUpdated": "লিংগ আপডেট হ'ল",
     "languagesUpdated": "ভাষা আপডেট হ'ল",
     "passwordChanged": "পাছৱৰ্ড সলনি হ'ল",
@@ -37,6 +38,7 @@
     "basicInfo": "মৌলিক তথ্য",
     "contact": "যোগাযোগ",
     "gender": "লিংগ",
+    "age": "বয়স",
     "dateOfBirth": "জন্ম তাৰিখ",
     "languages": "আপুনি কোন ভাষা কথা কয়",
     "password": "পাছৱৰ্ড",
@@ -54,6 +56,7 @@
   "placeholders": {
     "fullName": "আপোনাৰ সম্পূৰ্ণ নাম লিখক",
     "chooseDob": "জন্ম তাৰিখ বাছক",
+    "enterAge": "আপোনাৰ বয়স লিখক (1–150)",
     "selectGender": "লিংগ বাছক",
     "currentPassword": "বৰ্তমান পাছৱৰ্ড",
     "newPassword": "নতুন পাছৱৰ্ড",
@@ -90,6 +93,9 @@
   "validation": {
     "nameRequired": "নাম লাগিব",
     "selectDate": "অনুগ্ৰহ কৰি তাৰিখ বাছক",
+    "ageRequired": "অনুগ্ৰহ কৰি বৈধ বয়স লিখক",
+    "ageOutOfRange": "বয়স 1ৰ পৰা 150ৰ ভিতৰত হ'ব লাগে",
+    "failedUpdateAge": "বয়স আপডেট হ'ল নহয়",
     "selectGender": "অনুগ্ৰহ কৰি লিংগ বাছক",
     "selectAtLeastOneLanguage": "কমেও এটা ভাষা বাছক",
     "notAuthenticated": "আপুনি লগ ইন নহয়।",
@@ -131,4 +137,3 @@
     "santali": "সাঁওতালি"
   }
 }
-

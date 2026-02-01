@@ -27,6 +27,7 @@
   "status": {
     "nameUpdated": "Name updated",
     "dateUpdated": "Date updated",
+    "ageUpdated": "Age updated",
     "genderUpdated": "Gender updated",
     "languagesUpdated": "Languages updated",
     "passwordChanged": "Password changed",
@@ -37,6 +38,7 @@
     "basicInfo": "Basic info",
     "contact": "Contact",
     "gender": "Gender",
+    "age": "Age",
     "dateOfBirth": "Date of Birth",
     "languages": "Languages you speak",
     "password": "Password",
@@ -54,6 +56,7 @@
   "placeholders": {
     "fullName": "Enter your full name",
     "chooseDob": "Choose your DOB",
+    "enterAge": "Enter your age (1–150)",
     "selectGender": "Select gender",
     "currentPassword": "Current password",
     "newPassword": "New password",
@@ -90,6 +93,9 @@
   "validation": {
     "nameRequired": "Name is required",
     "selectDate": "Please select a date",
+    "ageRequired": "Please enter a valid age",
+    "ageOutOfRange": "Age must be between 1 and 150",
+    "failedUpdateAge": "Failed to update age",
     "selectGender": "Please select a gender",
     "selectAtLeastOneLanguage": "Please select at least one language",
     "notAuthenticated": "You are not authenticated.",
@@ -131,4 +137,3 @@
     "santali": "Santali"
   }
 }
-
