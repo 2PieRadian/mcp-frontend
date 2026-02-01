@@ -75,7 +75,7 @@ export default function Footer() {
                 <img
                   src="/images/footer/company_logo.png"
                   alt={`${t("appName")} Logo`}
-                  className="h-12 w-auto sm:h-14 lg:h-16"
+                  className="h-24 w-auto lg:h-28"
                   loading="lazy"
                 />
                 <div className="space-y-1">

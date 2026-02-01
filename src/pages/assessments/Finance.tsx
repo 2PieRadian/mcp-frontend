@@ -180,7 +180,7 @@ export default function Finance() {
                 className="font-semibold uppercase tracking-widest text-[#44666C] bg-[#E0ECEE] px-[clamp(0.75rem,2vw,1rem)] py-[clamp(0.375rem,1vw,0.5rem)] rounded-full"
                 style={{ fontSize: "clamp(0.625rem, 1.5vw, 0.875rem)" }}
               >
-                {t("financeHeroBadge")}
+                {t("financeHeaderBadge")}
               </span>
             </div>
 

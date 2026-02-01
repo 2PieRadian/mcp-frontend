@@ -257,6 +257,7 @@
   "educationHeaderTitleLine2": "journey",
   "educationHeaderSubtitle": "Take a simple assessment to understand your learning needs and get clear, simple support.",
   "educationFooterNote": "All education assessments are private and only for your growth.",
+  "financeHeaderBadge": "Finance assessment",
   "financeAssessHeaderTitleLine1": "Discover your financial",
   "financeAssessHeaderTitleLine2": "journey",
   "financeAssessHeaderSubtitle": "Take a simple assessment to understand your money habits and get easy guidance.",
@@ -290,4 +291,3 @@
   "financeCardPlanningSubtitle": "Money & future",
   "financeCardPlanningDescription": "Look at how you save, spend, and plan money and find easy ways to build a safer future."
 }
-
