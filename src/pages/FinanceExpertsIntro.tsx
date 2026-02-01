@@ -335,9 +335,7 @@ export default function FinanceExpertsIntro() {
         >
           <div className="max-w-2xl mx-auto text-center">
             <blockquote className="text-lg md:text-xl text-stone-600 font-light italic leading-relaxed mb-4">
-              "Financial peace isn't about being rich. It's about having a plan,
-              making informed decisions, and knowing you're not alone on this
-              journey."
+              "{t("financeQuote")}"
             </blockquote>
             <p className="text-sm text-stone-400">
               We connect you with verified experts who understand your needs.

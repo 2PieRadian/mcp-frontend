@@ -1,0 +1,29 @@
+{
+  "pageTitle": "Articles",
+  "heroSubtitle": "Explore expert insights, practical guides, and evidence-based articles to support your wellness journey.",
+  "searchPlaceholder": "Search articles by title...",
+  "noResultsFor": "No articles found for \"{{query}}\"",
+  "toNavigate": "to navigate",
+  "toSelect": "to select",
+  "failedToLoad": "Failed to load articles",
+  "tryAgain": "Try again",
+  "noArticlesYet": "No articles yet",
+  "noArticlesTaggedWith": "No articles tagged with #{{tag}}",
+  "tryDifferentTag": "Try selecting a different tag.",
+  "checkBackSoon": "Check back soon for new content!",
+  "viewAllArticles": "View all articles",
+  "scrollLeftAria": "Scroll left",
+  "scrollRightAria": "Scroll right",
+  "allArticles": "All Articles",
+  "showingTaggedWith": "Showing articles tagged with",
+  "detail": {
+    "failedToLoad": "Failed to load article",
+    "notFound": "Article not found",
+    "notFoundDescription": "The article you're looking for doesn't exist or has been removed.",
+    "tryAgainLater": "Please try again later.",
+    "backToArticles": "Back to Articles",
+    "minRead": "min read",
+    "writtenBy": "Written by",
+    "moreArticles": "More Articles"
+  }
+}

@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import { useTranslation } from "react-i18next";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import {
@@ -11,71 +12,44 @@ import {
 } from "lucide-react";
 
 export default function ContactUs() {
+  const { t } = useTranslation("contact");
   return (
     <>
       <Helmet>
-        <title>
-          Contact Us | MindCurePath Consultancy - We're Here to Help
-        </title>
-        <meta
-          name="description"
-          content="Contact MindCurePath for support with mental wellness, education, and finance assessments. Reach our team 24/7 at support@mindcurepath.com."
-        />
-        <meta
-          name="keywords"
-          content="contact MindCurePath, customer support, mental health help, education guidance contact, financial wellness support"
-        />
+        <title>{t("meta.title")}</title>
+        <meta name="description" content={t("meta.description")} />
+        <meta name="keywords" content={t("meta.keywords")} />
         <link rel="canonical" href="https://mindcurepath.com/contact" />
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mindcurepath.com/contact" />
-        <meta
-          property="og:title"
-          content="Contact Us | MindCurePath Consultancy"
-        />
-        <meta
-          property="og:description"
-          content="Have questions? Reach out to MindCurePath today for assistance on your wellness journey."
-        />
-        <meta
-          property="og:image"
-          content="https://mindcurepath.com/og-image.jpg"
-        />
+        <meta property="og:title" content={t("meta.ogTitle")} />
+        <meta property="og:description" content={t("meta.ogDescription")} />
+        <meta property="og:image" content="https://mindcurepath.com/og-image.jpg" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://mindcurepath.com/contact" />
-        <meta
-          name="twitter:title"
-          content="Contact Us | MindCurePath Consultancy"
-        />
-        <meta
-          name="twitter:description"
-          content="Have questions? Reach out to MindCurePath today for assistance on your wellness journey."
-        />
-        <meta
-          name="twitter:image"
-          content="https://mindcurepath.com/og-image.jpg"
-        />
+        <meta name="twitter:title" content={t("meta.ogTitle")} />
+        <meta name="twitter:description" content={t("meta.ogDescription")} />
+        <meta name="twitter:image" content="https://mindcurepath.com/og-image.jpg" />
 
         {/* Structured Data */}
         <script type="application/ld+json">
-          {`
-            {
-              "@context": "https://schema.org",
-              "@type": "ContactPage",
-              "name": "Contact Us - MindCurePath",
-              "description": "Contact page for MindCurePath Consultancy Private Limited.",
-              "url": "https://mindcurepath.com/contact",
-              "contactPoint": {
-                "@type": "ContactPoint",
-                "email": "support@mindcurepath.com",
-                "contactType": "customer support",
-                "availableLanguage": "English"
-              }
-            }
-          `}
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            name: t("meta.schemaName"),
+            description: t("meta.schemaDescription"),
+            url: "https://mindcurepath.com/contact",
+            contactPoint: {
+              "@type": "ContactPoint",
+              email: "support@mindcurepath.com",
+              contactType: t("meta.contactType"),
+              availableLanguage: t("meta.availableLanguage"),
+            },
+          })}
         </script>
       </Helmet>
 
@@ -88,10 +62,10 @@ export default function ContactUs() {
         <section className="bg-linear-to-br from-[#0b1220] via-[#0f1d32] to-[#0a1528] py-16 sm:py-20 md:py-24">
           <div className="mx-auto max-w-4xl px-5 sm:px-6 lg:px-8 text-center">
             <h1 className="text-3xl font-bold text-white sm:text-4xl md:text-5xl tracking-tight">
-              Contact Us
+              {t("hero.title")}
             </h1>
             <p className="mt-4 text-base text-slate-300 sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-              We're here to help you on your journey
+              {t("hero.subtitle")}
             </p>
           </div>
         </section>
@@ -106,19 +80,17 @@ export default function ContactUs() {
                   <Mail className="w-8 h-8 text-primary" />
                 </div>
                 <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 mb-4">
-                  Get in Touch
+                  {t("getInTouch.title")}
                 </h2>
                 <p className="text-slate-600 text-lg max-w-xl mx-auto mb-6">
-                  Have questions, feedback, or need assistance? We'd love to
-                  hear from you. Our dedicated support team is available around
-                  the clock to help you.
+                  {t("getInTouch.description")}
                 </p>
                 <a
                   href="mailto:support@mindcurepath.com"
                   className="inline-flex items-center gap-3 bg-primary text-white px-8 py-4 rounded-full text-lg font-medium hover:bg-primary/90 hover:-translate-y-0.5 hover:shadow-lg transition-all duration-300"
                 >
                   <Mail className="w-5 h-5" />
-                  support@mindcurepath.com
+                  {t("getInTouch.emailLabel")}
                 </a>
               </div>
             </div>
@@ -132,11 +104,10 @@ export default function ContactUs() {
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-slate-800 mb-2">
-                      Available 24/7
+                      {t("available247.title")}
                     </h3>
                     <p className="text-slate-600 text-sm leading-relaxed">
-                      Our inbox is always open. Whether it's day or night, feel
-                      free to reach out whenever you need assistance.
+                      {t("available247.description")}
                     </p>
                   </div>
                 </div>
@@ -149,12 +120,10 @@ export default function ContactUs() {
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-slate-800 mb-2">
-                      Quick Response
+                      {t("quickResponse.title")}
                     </h3>
                     <p className="text-slate-600 text-sm leading-relaxed">
-                      We typically respond within 24-48 hours. Our team works
-                      diligently to address your queries as promptly as
-                      possible.
+                      {t("quickResponse.description")}
                     </p>
                   </div>
                 </div>
@@ -164,39 +133,36 @@ export default function ContactUs() {
             {/* What We Can Help With */}
             <div className="bg-slate-50 rounded-2xl p-8 sm:p-10 mb-12">
               <h2 className="text-xl sm:text-2xl font-bold text-slate-800 mb-6 text-center">
-                What Can We Help You With?
+                {t("whatCanWeHelp.title")}
               </h2>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 <div className="bg-white rounded-xl p-5 border border-slate-200">
                   <HelpCircle className="w-6 h-6 text-primary mb-3" />
                   <h3 className="font-semibold text-slate-800 mb-2">
-                    General Inquiries
+                    {t("whatCanWeHelp.generalInquiries.title")}
                   </h3>
                   <p className="text-slate-600 text-sm">
-                    Questions about our platform, assessments, or how
-                    MindCurePath works.
+                    {t("whatCanWeHelp.generalInquiries.description")}
                   </p>
                 </div>
 
                 <div className="bg-white rounded-xl p-5 border border-slate-200">
                   <Shield className="w-6 h-6 text-primary mb-3" />
                   <h3 className="font-semibold text-slate-800 mb-2">
-                    Account & Privacy
+                    {t("whatCanWeHelp.accountPrivacy.title")}
                   </h3>
                   <p className="text-slate-600 text-sm">
-                    Help with your account, data privacy concerns, or
-                    security-related queries.
+                    {t("whatCanWeHelp.accountPrivacy.description")}
                   </p>
                 </div>
 
                 <div className="bg-white rounded-xl p-5 border border-slate-200">
                   <Heart className="w-6 h-6 text-primary mb-3" />
                   <h3 className="font-semibold text-slate-800 mb-2">
-                    Expert Connections
+                    {t("whatCanWeHelp.expertConnections.title")}
                   </h3>
                   <p className="text-slate-600 text-sm">
-                    Assistance with finding the right expert or booking
-                    consultations.
+                    {t("whatCanWeHelp.expertConnections.description")}
                   </p>
                 </div>
               </div>
@@ -206,20 +172,16 @@ export default function ContactUs() {
             <div className="text-center space-y-6">
               <div className="bg-amber-50 rounded-xl p-6 border border-amber-200">
                 <p className="text-amber-800 text-sm sm:text-base">
-                  <strong>Please Note:</strong> For urgent mental health
-                  concerns or emergencies, please contact your local emergency
-                  services or call the National Mental Health Helpline at{" "}
-                  <strong>1800-599-0019</strong> (India).
+                  {t("pleaseNote")}
                 </p>
               </div>
 
               <div className="space-y-3">
                 <p className="text-slate-600">
-                  We value every message we receive and are committed to
-                  providing you with the best possible support experience.
+                  {t("weValueEveryMessage")}
                 </p>
                 <p className="text-slate-500 text-sm">
-                  MindCurePath Consultancy Private Limited
+                  {t("companyName")}
                 </p>
               </div>
             </div>

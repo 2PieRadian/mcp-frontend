@@ -1,7 +1,8 @@
 import { Helmet } from "react-helmet-async";
+import { useTranslation } from "react-i18next";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { ChevronDown, HelpCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -10,143 +11,27 @@ interface FAQItem {
   answer: string | string[];
 }
 
-const faqData: FAQItem[] = [
-  {
-    question: "What is MindCurePath?",
-    answer:
-      "MindCurePath is a structured guidance and self-assessment platform designed to help individuals make informed decisions related to wellness, education, mindset, and personal growth through expert-verified insights and digital tools.",
-  },
-  {
-    question: "What services are offered on MindCurePath?",
-    answer: [
-      "Self-assessment tools",
-      "One-on-one virtual consultation",
-      "Guided insights and learning resources",
-      "Expert-curated recommendations",
-      "Personal growth and wellness frameworks",
-    ],
-  },
-  {
-    question: "Who can use MindCurePath?",
-    answer: [
-      "Students and learners",
-      "Working professionals",
-      "Entrepreneurs",
-      "Individuals seeking structured self-improvement",
-    ],
-  },
-  {
-    question: "Are MindCurePath services free or paid?",
-    answer:
-      "Some content and assessments may be offered free of charge. Premium tools, reports, or expert-level guidance may require payment. Pricing details are clearly displayed where applicable.",
-  },
-  {
-    question: "How does expert guidance work?",
-    answer:
-      "Experts on MindCurePath are carefully selected based on their domain experience. Guidance is provided through structured assessments, expert insights, and one-on-one virtual consultations, depending on expert availability and session options.",
-  },
-  {
-    question: "Does MindCurePath offer one-on-one expert consultations?",
-    answer:
-      "Yes. MindCurePath offers one-on-one expert consultations across its key segments, including wellness, education, and personal growth. Consultations are conducted virtually through secure communication channels. Availability of one-on-one sessions depends on the expert's schedule, slot preferences, and availability at the time of booking.",
-  },
-  {
-    question:
-      "Can MindCurePath replace professional medical, financial, or legal advice?",
-    answer:
-      "No. MindCurePath provides informational and guidance-based support only. It does not replace certified medical, legal, or financial advice.",
-  },
-  {
-    question: "Is MindCurePath accessible on mobile devices?",
-    answer:
-      "Yes. The platform is web-based and accessible on smartphones, tablets, and desktops.",
-  },
-  {
-    question: "How is user data protected?",
-    answer:
-      "User data is handled securely and confidentially in accordance with the platform's Privacy Policy and Terms of Use. MindCurePath does not sell personal data to third parties.",
-  },
-  {
-    question: "How can users contact MindCurePath?",
-    answer:
-      "Users can submit queries through the Contact Us page available on the website. Responses are provided within a reasonable timeframe.",
-  },
-  {
-    question: "Is MindCurePath a legitimate and trustworthy platform?",
-    answer:
-      "Yes. MindCurePath follows a structured, transparent, and guidance-based approach. Content and insights are curated with a focus on clarity, ethics, and user well-being, ensuring a trustworthy user experience.",
-  },
-  {
-    question:
-      "How is MindCurePath different from other wellness or guidance platforms?",
-    answer:
-      "MindCurePath emphasizes self-assessment first, followed by expert-curated guidance, rather than generic advice. This structured approach helps users make informed and conscious decisions instead of relying on assumptions.",
-  },
-  {
-    question: "Does MindCurePath offer career and education guidance?",
-    answer:
-      "Yes. MindCurePath provides guidance related to education paths, learning decisions, and career clarity through structured insights and assessments where applicable.",
-  },
-  {
-    question: "Can MindCurePath help with mindset and personal development?",
-    answer:
-      "Yes. The platform includes tools and frameworks focused on mindset awareness, self-growth, and clarity-driven personal development.",
-  },
-  {
-    question:
-      "How long does it take to complete a self-assessment on MindCurePath?",
-    answer:
-      "Most self-assessments are designed to be user-friendly and can typically be completed within a short time, depending on the assessment type and user engagement.",
-  },
-  {
-    question: "Can MindCurePath be used by beginners with no prior knowledge?",
-    answer:
-      "Yes. MindCurePath is designed for beginners as well as experienced individuals. All content is presented in a clear and easy-to-understand manner.",
-  },
-  {
-    question: "Does MindCurePath provide personalized guidance?",
-    answer:
-      "Yes. Personalized insights may be generated based on user inputs and assessment results. However, outcomes may vary depending on individual participation and information provided.",
-  },
-  {
-    question:
-      "Will I receive a report or result after completing an assessment?",
-    answer:
-      "Yes. Users may receive structured insights or summaries based on their assessment responses, depending on the service selected.",
-  },
-  {
-    question: "Is registration mandatory to use MindCurePath?",
-    answer:
-      "Some features may be accessible without registration. However, creating an account may be required to access personalized insights, reports, or saved progress.",
-  },
-  {
-    question:
-      "Can MindCurePath help in decision-making during confusion or uncertainty?",
-    answer:
-      "MindCurePath is specifically designed to support clarity and awareness during decision-making by offering structured guidance and reflective assessments.",
-  },
-  {
-    question: "Is MindCurePath suitable for long-term personal growth?",
-    answer:
-      "Yes. The platform supports ongoing self-awareness and growth by encouraging informed decisions and continuous learning rather than quick fixes.",
-  },
-  {
-    question: "Does MindCurePath provide instant results?",
-    answer:
-      "Some insights may be available instantly after assessments. However, meaningful progress depends on user reflection, consistency, and application of guidance.",
-  },
-  {
-    question: "Is MindCurePath available internationally?",
-    answer:
-      "As a web-based platform, MindCurePath can be accessed from most locations with an internet connection, subject to applicable terms and policies.",
-  },
-  {
-    question:
-      "Can organizations or institutions collaborate with MindCurePath?",
-    answer:
-      "Collaboration opportunities may be available. Interested organizations can reach out through the official Contact Us page for partnership discussions.",
-  },
-];
+const FAQ_KEYS = ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10", "q11", "q12", "q13", "q14", "q15", "q16", "q17", "q18", "q19", "q20", "q21", "q22", "q23", "q24"];
+
+function useFaqData(): FAQItem[] {
+  const { t } = useTranslation("faq");
+  return useMemo(() => {
+    return FAQ_KEYS.map((key) => {
+      const question = t(`items.${key}.question`);
+      const answer = t(`items.${key}.answer`);
+      if (answer && !answer.startsWith("items.")) {
+        return { question, answer };
+      }
+      const list: string[] = [];
+      for (let i = 0; i < 10; i++) {
+        const part = t(`items.${key}.answer_${i}`);
+        if (part && !part.startsWith("items.")) list.push(part);
+        else break;
+      }
+      return { question, answer: list };
+    });
+  }, [t]);
+}
 
 function FAQAccordionItem({
   item,
@@ -209,6 +94,8 @@ function FAQAccordionItem({
 }
 
 export default function FAQ() {
+  const { t } = useTranslation("faq");
+  const faqData = useFaqData();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const handleToggle = (index: number) => {
@@ -224,69 +111,38 @@ export default function FAQ() {
   return (
     <>
       <Helmet>
-        <title>Frequently Asked Questions | MindCurePath Consultancy</title>
-        <meta
-          name="description"
-          content="Get answers to your questions about MindCurePath's mental wellness, education, and finance assessments. Learn how we help you achieve clarity and growth."
-        />
-        <meta
-          name="keywords"
-          content="FAQ, MindCurePath questions, assessment help, wellness platform FAQ, education guidance FAQ, finance wellness FAQ"
-        />
+        <title>{t("meta.title")}</title>
+        <meta name="description" content={t("meta.description")} />
+        <meta name="keywords" content={t("meta.keywords")} />
         <link rel="canonical" href="https://mindcurepath.com/faq" />
 
-        {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mindcurepath.com/faq" />
-        <meta
-          property="og:title"
-          content="Frequently Asked Questions | MindCurePath Consultancy"
-        />
-        <meta
-          property="og:description"
-          content="Common questions and answers about MindCurePath's services and platform."
-        />
-        <meta
-          property="og:image"
-          content="https://mindcurepath.com/og-image.jpg"
-        />
+        <meta property="og:title" content={t("meta.ogTitle")} />
+        <meta property="og:description" content={t("meta.ogDescription")} />
+        <meta property="og:image" content="https://mindcurepath.com/og-image.jpg" />
 
-        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://mindcurepath.com/faq" />
-        <meta
-          name="twitter:title"
-          content="Frequently Asked Questions | MindCurePath Consultancy"
-        />
-        <meta
-          name="twitter:description"
-          content="Common questions and answers about MindCurePath's services and platform."
-        />
-        <meta
-          name="twitter:image"
-          content="https://mindcurepath.com/og-image.jpg"
-        />
+        <meta name="twitter:title" content={t("meta.ogTitle")} />
+        <meta name="twitter:description" content={t("meta.ogDescription")} />
+        <meta name="twitter:image" content="https://mindcurepath.com/og-image.jpg" />
 
-        {/* Structured Data */}
         <script type="application/ld+json">
-          {`
-            {
-              "@context": "https://schema.org",
-              "@type": "FAQPage",
-              "mainEntity": ${JSON.stringify(
-                faqData.map((item) => ({
-                  "@type": "Question",
-                  name: item.question,
-                  acceptedAnswer: {
-                    "@type": "Answer",
-                    text: Array.isArray(item.answer)
-                      ? item.answer.join(" ")
-                      : item.answer,
-                  },
-                })),
-              )}
-            }
-          `}
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faqData.map((item) => ({
+              "@type": "Question",
+              name: item.question,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: Array.isArray(item.answer)
+                  ? item.answer.join(" ")
+                  : item.answer,
+              },
+            })),
+          })}
         </script>
       </Helmet>
 
@@ -302,10 +158,10 @@ export default function FAQ() {
               <HelpCircle className="w-8 h-8 text-white" />
             </div>
             <h1 className="text-3xl font-bold text-white sm:text-4xl md:text-5xl tracking-tight">
-              Frequently Asked Questions
+              {t("hero.title")}
             </h1>
             <p className="mt-4 text-base text-slate-300 sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-              Everything you need to know about MindCurePath
+              {t("hero.subtitle")}
             </p>
           </div>
         </section>
@@ -317,7 +173,7 @@ export default function FAQ() {
             <div className="mb-12">
               <h2 className="text-xl sm:text-2xl font-bold text-slate-800 mb-6 flex items-center gap-3">
                 <span className="w-1 h-6 bg-primary rounded-full"></span>
-                General Questions
+                {t("sections.general")}
               </h2>
               <div className="space-y-3">
                 {generalFAQs.map((item, index) => (
@@ -336,7 +192,7 @@ export default function FAQ() {
             <div className="mb-12">
               <h2 className="text-xl sm:text-2xl font-bold text-slate-800 mb-6 flex items-center gap-3">
                 <span className="w-1 h-6 bg-primary rounded-full"></span>
-                Services & Features
+                {t("sections.services")}
               </h2>
               <div className="space-y-3">
                 {serviceFAQs.map((item, index) => (
@@ -355,7 +211,7 @@ export default function FAQ() {
             <div className="mb-12">
               <h2 className="text-xl sm:text-2xl font-bold text-slate-800 mb-6 flex items-center gap-3">
                 <span className="w-1 h-6 bg-primary rounded-full"></span>
-                User Experience
+                {t("sections.userExperience")}
               </h2>
               <div className="space-y-3">
                 {userFAQs.map((item, index) => (
@@ -374,7 +230,7 @@ export default function FAQ() {
             <div className="mb-12">
               <h2 className="text-xl sm:text-2xl font-bold text-slate-800 mb-6 flex items-center gap-3">
                 <span className="w-1 h-6 bg-primary rounded-full"></span>
-                Additional Information
+                {t("sections.additional")}
               </h2>
               <div className="space-y-3">
                 {additionalFAQs.map((item, index) => (
@@ -392,17 +248,16 @@ export default function FAQ() {
             {/* Still Have Questions */}
             <div className="bg-linear-to-br from-primary/5 to-teal-50 rounded-2xl p-8 sm:p-10 text-center border border-primary/10">
               <h3 className="text-xl sm:text-2xl font-bold text-slate-800 mb-3">
-                Still Have Questions?
+                {t("stillHaveQuestions.title")}
               </h3>
               <p className="text-slate-600 mb-6 max-w-lg mx-auto">
-                Can't find what you're looking for? Our support team is here to
-                help you 24/7.
+                {t("stillHaveQuestions.description")}
               </p>
               <Link
                 to="/contact"
                 className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-full font-medium hover:bg-primary/90 hover:-translate-y-0.5 hover:shadow-lg transition-all duration-300"
               >
-                Contact Us
+                {t("stillHaveQuestions.contactUs")}
               </Link>
             </div>
           </div>

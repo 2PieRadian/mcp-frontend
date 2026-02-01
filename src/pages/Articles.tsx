@@ -34,6 +34,7 @@ function formatDate(dateString: string): string {
 }
 
 function ArticleSearchBar() {
+  const { t } = useTranslation("articles");
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<Article[]>([]);
@@ -155,7 +156,7 @@ function ArticleSearchBar() {
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
             onFocus={() => results.length > 0 && setIsOpen(true)}
-            placeholder="Search articles by title..."
+            placeholder={t("searchPlaceholder")}
             className="flex-1 py-4 pr-4 bg-transparent text-[#1a2e35] placeholder-[#8a9ba3] focus:outline-none text-base"
           />
           {query && (
@@ -226,13 +227,13 @@ function ArticleSearchBar() {
               <kbd className="px-1.5 py-0.5 bg-white rounded border border-gray-200 font-mono text-[10px]">
                 ↑↓
               </kbd>{" "}
-              to navigate
+              {t("toNavigate")}
             </span>
             <span>
               <kbd className="px-1.5 py-0.5 bg-white rounded border border-gray-200 font-mono text-[10px]">
                 Enter
               </kbd>{" "}
-              to select
+              {t("toSelect")}
             </span>
           </div>
         </div>
@@ -243,7 +244,7 @@ function ArticleSearchBar() {
         <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 text-center z-50">
           <BookOpen className="w-10 h-10 text-[#8a9ba3] mx-auto mb-2" />
           <p className="text-[#5a6c75] text-sm">
-            No articles found for "{query}"
+            {t("noResultsFor", { query })}
           </p>
         </div>
       )}
@@ -264,6 +265,7 @@ function TagsSection({
   selectedTag,
   onSelectTag,
 }: TagsSectionProps) {
+  const { t } = useTranslation("articles");
   const [tagSearch, setTagSearch] = useState("");
   const [filteredTags, setFilteredTags] = useState<Tag[]>(tags);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -430,7 +432,7 @@ function TagsSection({
             <button
               onClick={scrollLeft}
               className="shrink-0 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm border border-gray-200 shadow-md flex items-center justify-center text-[#44666C] hover:bg-[#44666C] hover:text-white transition-all duration-200 z-10"
-              aria-label="Scroll left"
+              aria-label={t("scrollLeftAria")}
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
@@ -488,7 +490,7 @@ function TagsSection({
             <button
               onClick={scrollRight}
               className="shrink-0 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm border border-gray-200 shadow-md flex items-center justify-center text-[#44666C] hover:bg-[#44666C] hover:text-white transition-all duration-200 z-10"
-              aria-label="Scroll right"
+              aria-label={t("scrollRightAria")}
             >
               <ChevronRight className="w-4 h-4" />
             </button>
@@ -499,7 +501,7 @@ function TagsSection({
       {/* Selected Tag Info */}
       {selectedTag && (
         <div className="mt-2 flex items-center justify-center gap-2 text-sm text-[#5a6c75]">
-          <span>Showing articles tagged with</span>
+          <span>{t("showingTaggedWith")}</span>
           <span className="font-semibold text-[#44666C] bg-[#44666C]/10 px-3 py-1 rounded-full">
             #{selectedTag.name}
           </span>
@@ -590,7 +592,7 @@ function ArticleCardSkeleton() {
 }
 
 export default function Articles() {
-  const { t } = useTranslation(["navigation", "common"]);
+  const { t } = useTranslation(["navigation", "common", "articles"]);
   const [allArticles, setAllArticles] = useState<Article[]>([]);
   const [displayedArticles, setDisplayedArticles] = useState<Article[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
@@ -679,8 +681,7 @@ export default function Articles() {
           </h1>
 
           <p className="text-lg md:text-xl text-[#5a6c75] max-w-2xl mx-auto leading-relaxed mb-10">
-            Explore expert insights, practical guides, and evidence-based
-            articles to support your wellness journey.
+            {t("heroSubtitle", { ns: "articles" })}
           </p>
 
           {/* Search Bar */}
@@ -715,14 +716,14 @@ export default function Articles() {
                 <BookOpen className="w-8 h-8 text-red-400" />
               </div>
               <h3 className="text-xl font-semibold text-[#1a2e35] mb-2">
-                Failed to load articles
+                {t("failedToLoad", { ns: "articles" })}
               </h3>
               <p className="text-[#5a6c75] mb-4">{error}</p>
               <button
                 onClick={() => window.location.reload()}
                 className="px-6 py-2.5 bg-[#44666C] text-white rounded-full font-medium hover:bg-[#365a62] transition-colors"
               >
-                Try again
+                {t("tryAgain", { ns: "articles" })}
               </button>
             </div>
           )}
@@ -734,17 +735,17 @@ export default function Articles() {
                 <BookOpen className="w-8 h-8 text-[#44666C]" />
               </div>
               <h3 className="text-xl font-semibold text-[#1a2e35] mb-2">
-                {selectedTag ? `No articles tagged with #${selectedTag.name}` : "No articles yet"}
+                {selectedTag ? t("noArticlesTaggedWith", { ns: "articles", tag: selectedTag.name }) : t("noArticlesYet", { ns: "articles" })}
               </h3>
               <p className="text-[#5a6c75]">
-                {selectedTag ? "Try selecting a different tag." : "Check back soon for new content!"}
+                {selectedTag ? t("tryDifferentTag", { ns: "articles" }) : t("checkBackSoon", { ns: "articles" })}
               </p>
               {selectedTag && (
                 <button
                   onClick={() => handleSelectTag(null)}
                   className="mt-4 px-6 py-2.5 bg-[#44666C] text-white rounded-full font-medium hover:bg-[#365a62] transition-colors"
                 >
-                  View all articles
+                  {t("viewAllArticles", { ns: "articles" })}
                 </button>
               )}
             </div>

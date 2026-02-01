@@ -53,7 +53,7 @@ function ArticleDetailSkeleton() {
 
 export default function ArticleDetail() {
   const { slug } = useParams<{ slug: string }>();
-  const { t } = useTranslation(["navigation", "common"]);
+  const { t } = useTranslation(["navigation", "common", "articles"]);
   const [article, setArticle] = useState<ArticleWithTags | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -127,20 +127,20 @@ export default function ArticleDetail() {
             </div>
             <h3 className="text-xl font-semibold text-[#1a2e35] mb-2">
               {error === "Article not found"
-                ? "Article not found"
-                : "Failed to load article"}
+                ? t("detail.notFound", { ns: "articles" })
+                : t("detail.failedToLoad", { ns: "articles" })}
             </h3>
             <p className="text-[#5a6c75] mb-6">
               {error === "Article not found"
-                ? "The article you're looking for doesn't exist or has been removed."
-                : "Please try again later."}
+                ? t("detail.notFoundDescription", { ns: "articles" })
+                : t("detail.tryAgainLater", { ns: "articles" })}
             </p>
             <Link
               to="/articles"
               className="inline-flex items-center gap-2 px-6 py-2.5 bg-[#44666C] text-white rounded-full font-medium hover:bg-[#365a62] transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
-              Back to Articles
+              {t("detail.backToArticles", { ns: "articles" })}
             </Link>
           </div>
         )}
@@ -181,7 +181,7 @@ export default function ArticleDetail() {
 
                 <div className="flex items-center gap-1.5">
                   <Clock className="w-4 h-4" />
-                  <span>{estimateReadTime(article.content)} min read</span>
+                  <span>{estimateReadTime(article.content)} {t("detail.minRead", { ns: "articles" })}</span>
                 </div>
 
                 <button
@@ -216,7 +216,7 @@ export default function ArticleDetail() {
                     <User className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <p className="text-sm text-[#8a9ba3]">Written by</p>
+                    <p className="text-sm text-[#8a9ba3]">{t("detail.writtenBy", { ns: "articles" })}</p>
                     <p className="font-semibold text-[#1a2e35]">
                       {article.authorName}
                     </p>
@@ -228,7 +228,7 @@ export default function ArticleDetail() {
                   className="inline-flex items-center gap-2 px-6 py-2.5 bg-[#44666C] text-white rounded-full font-medium hover:bg-[#365a62] transition-colors"
                 >
                   <ArrowLeft className="w-4 h-4" />
-                  More Articles
+                  {t("detail.moreArticles", { ns: "articles" })}
                 </Link>
               </div>
             </footer>

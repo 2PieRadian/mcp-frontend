@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "title": "Frequently Asked Questions | MindCurePath Consultancy",
+    "description": "Get answers to your questions about MindCurePath's mental wellness, education, and finance assessments. Learn how we help you achieve clarity and growth.",
+    "keywords": "FAQ, MindCurePath questions, assessment help, wellness platform FAQ, education guidance FAQ, finance wellness FAQ",
+    "ogTitle": "Frequently Asked Questions | MindCurePath Consultancy",
+    "ogDescription": "Common questions and answers about MindCurePath's services and platform."
+  },
+  "hero": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Everything you need to know about MindCurePath"
+  },
+  "sections": {
+    "general": "General Questions",
+    "services": "Services & Features",
+    "userExperience": "User Experience",
+    "additional": "Additional Information"
+  },
+  "stillHaveQuestions": {
+    "title": "Still Have Questions?",
+    "description": "Can't find what you're looking for? Our support team is here to help you 24/7.",
+    "contactUs": "Contact Us"
+  },
+  "items": {
+    "q1": {
+      "question": "What is MindCurePath?",
+      "answer": "MindCurePath is a structured guidance and self-assessment platform designed to help individuals make informed decisions related to wellness, education, mindset, and personal growth through expert-verified insights and digital tools."
+    },
+    "q2": {
+      "question": "What services are offered on MindCurePath?",
+      "answer_0": "Self-assessment tools",
+      "answer_1": "One-on-one virtual consultation",
+      "answer_2": "Guided insights and learning resources",
+      "answer_3": "Expert-curated recommendations",
+      "answer_4": "Personal growth and wellness frameworks"
+    },
+    "q3": {
+      "question": "Who can use MindCurePath?",
+      "answer_0": "Students and learners",
+      "answer_1": "Working professionals",
+      "answer_2": "Entrepreneurs",
+      "answer_3": "Individuals seeking structured self-improvement"
+    },
+    "q4": {
+      "question": "Are MindCurePath services free or paid?",
+      "answer": "Some content and assessments may be offered free of charge. Premium tools, reports, or expert-level guidance may require payment. Pricing details are clearly displayed where applicable."
+    },
+    "q5": {
+      "question": "How does expert guidance work?",
+      "answer": "Experts on MindCurePath are carefully selected based on their domain experience. Guidance is provided through structured assessments, expert insights, and one-on-one virtual consultations, depending on expert availability and session options."
+    },
+    "q6": {
+      "question": "Does MindCurePath offer one-on-one expert consultations?",
+      "answer": "Yes. MindCurePath offers one-on-one expert consultations across its key segments, including wellness, education, and personal growth. Consultations are conducted virtually through secure communication channels. Availability of one-on-one sessions depends on the expert's schedule, slot preferences, and availability at the time of booking."
+    },
+    "q7": {
+      "question": "Can MindCurePath replace professional medical, financial, or legal advice?",
+      "answer": "No. MindCurePath provides informational and guidance-based support only. It does not replace certified medical, legal, or financial advice."
+    },
+    "q8": {
+      "question": "Is MindCurePath accessible on mobile devices?",
+      "answer": "Yes. The platform is web-based and accessible on smartphones, tablets, and desktops."
+    },
+    "q9": {
+      "question": "How is user data protected?",
+      "answer": "User data is handled securely and confidentially in accordance with the platform's Privacy Policy and Terms of Use. MindCurePath does not sell personal data to third parties."
+    },
+    "q10": {
+      "question": "How can users contact MindCurePath?",
+      "answer": "Users can submit queries through the Contact Us page available on the website. Responses are provided within a reasonable timeframe."
+    },
+    "q11": {
+      "question": "Is MindCurePath a legitimate and trustworthy platform?",
+      "answer": "Yes. MindCurePath follows a structured, transparent, and guidance-based approach. Content and insights are curated with a focus on clarity, ethics, and user well-being, ensuring a trustworthy user experience."
+    },
+    "q12": {
+      "question": "How is MindCurePath different from other wellness or guidance platforms?",
+      "answer": "MindCurePath emphasizes self-assessment first, followed by expert-curated guidance, rather than generic advice. This structured approach helps users make informed and conscious decisions instead of relying on assumptions."
+    },
+    "q13": {
+      "question": "Does MindCurePath offer career and education guidance?",
+      "answer": "Yes. MindCurePath provides guidance related to education paths, learning decisions, and career clarity through structured insights and assessments where applicable."
+    },
+    "q14": {
+      "question": "Can MindCurePath help with mindset and personal development?",
+      "answer": "Yes. The platform includes tools and frameworks focused on mindset awareness, self-growth, and clarity-driven personal development."
+    },
+    "q15": {
+      "question": "How long does it take to complete a self-assessment on MindCurePath?",
+      "answer": "Most self-assessments are designed to be user-friendly and can typically be completed within a short time, depending on the assessment type and user engagement."
+    },
+    "q16": {
+      "question": "Can MindCurePath be used by beginners with no prior knowledge?",
+      "answer": "Yes. MindCurePath is designed for beginners as well as experienced individuals. All content is presented in a clear and easy-to-understand manner."
+    },
+    "q17": {
+      "question": "Does MindCurePath provide personalized guidance?",
+      "answer": "Yes. Personalized insights may be generated based on user inputs and assessment results. However, outcomes may vary depending on individual participation and information provided."
+    },
+    "q18": {
+      "question": "Will I receive a report or result after completing an assessment?",
+      "answer": "Yes. Users may receive structured insights or summaries based on their assessment responses, depending on the service selected."
+    },
+    "q19": {
+      "question": "Is registration mandatory to use MindCurePath?",
+      "answer": "Some features may be accessible without registration. However, creating an account may be required to access personalized insights, reports, or saved progress."
+    },
+    "q20": {
+      "question": "Can MindCurePath help in decision-making during confusion or uncertainty?",
+      "answer": "MindCurePath is specifically designed to support clarity and awareness during decision-making by offering structured guidance and reflective assessments."
+    },
+    "q21": {
+      "question": "Is MindCurePath suitable for long-term personal growth?",
+      "answer": "Yes. The platform supports ongoing self-awareness and growth by encouraging informed decisions and continuous learning rather than quick fixes."
+    },
+    "q22": {
+      "question": "Does MindCurePath provide instant results?",
+      "answer": "Some insights may be available instantly after assessments. However, meaningful progress depends on user reflection, consistency, and application of guidance."
+    },
+    "q23": {
+      "question": "Is MindCurePath available internationally?",
+      "answer": "As a web-based platform, MindCurePath can be accessed from most locations with an internet connection, subject to applicable terms and policies."
+    },
+    "q24": {
+      "question": "Can organizations or institutions collaborate with MindCurePath?",
+      "answer": "Collaboration opportunities may be available. Interested organizations can reach out through the official Contact Us page for partnership discussions."
+    }
+  }
+}

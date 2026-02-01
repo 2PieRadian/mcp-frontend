@@ -108,7 +108,7 @@ export default function FindCounsellors() {
       professionalTitle: professionalTitleLabel,
       tags,
       languages,
-      nextSlot: "Available soon",
+      nextSlot: t("nextSlot", { ns: "common" }),
       price: expert.pricePerHour,
     };
   };

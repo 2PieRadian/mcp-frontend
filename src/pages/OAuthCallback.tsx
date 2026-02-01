@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "../context/AuthContext";
 import { BACKEND_URL, getAvatarUrl } from "../lib/api";
 import useScrollToTop from "../hooks/useScrollToTop";
 
 export default function OAuthCallback() {
   useScrollToTop();
+  const { t } = useTranslation("common");
 
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -43,7 +45,7 @@ export default function OAuthCallback() {
 
         if (!response.ok) {
           const text = await response.text();
-          throw new Error(text || "Failed to fetch user data");
+          throw new Error(text || t("oauthFailedToFetchUser"));
         }
 
         const data = await response.json();

@@ -1,0 +1,130 @@
+{
+  "meta": {
+    "title": "Help Center | MindCurePath Consultancy - Knowledge Base & Support",
+    "description": "Find answers to your questions about MindCurePath assessments, expert consultations, billing, and data security in our comprehensive Help Center.",
+    "keywords": "help center, knowledge base, MindCurePath support, assessment guide, consultation help, billing questions",
+    "ogTitle": "Help Center | MindCurePath Consultancy",
+    "ogDescription": "Your complete guide to using the MindCurePath platform. Find articles on assessments, experts, and more."
+  },
+  "hero": {
+    "title": "How can we help you?",
+    "subtitle": "Find answers, guides, and support for your MindCurePath journey",
+    "searchPlaceholder": "Search for help articles..."
+  },
+  "browseTopics": "Browse Help Topics",
+  "backToCategory": "Back to {{category}}",
+  "articlesInCategory": "Articles in this category",
+  "goToArticle": "Go to {{title}}",
+  "noResultsFor": "No results found for \"{{query}}\"",
+  "clearSearch": "Clear search",
+  "stillNeedHelp": {
+    "title": "Still Need Help?",
+    "description": "Our support team is available 24/7 to assist you with any questions or concerns.",
+    "contactSupport": "Contact Support",
+    "browseFaq": "Browse FAQ"
+  },
+  "quickActions": "Quick Actions",
+  "quickAction1": { "title": "Contact Support", "description": "Get help from our team" },
+  "quickAction2": { "title": "Browse FAQ", "description": "Find quick answers" },
+  "quickAction3": { "title": "Take Assessment", "description": "Start your journey" },
+  "categories": {
+    "gettingStarted": {
+      "title": "Getting Started",
+      "description": "New to MindCurePath? Start here to learn the basics.",
+      "art0": {
+        "title": "What is MindCurePath?",
+        "content_0": "MindCurePath is a comprehensive mental wellness and personal growth platform. We provide a bridge between self-discovery through assessments and professional guidance from verified experts.",
+        "content_1": "Our mission is to make mental wellness, educational clarity, and financial peace of mind accessible to everyone through data-driven insights and human expertise."
+      },
+      "art1": {
+        "title": "Creating your first assessment",
+        "content_0": "To begin your journey, click on 'Take Assessment' or navigate to the 'Self Assessment' page from the navbar.",
+        "content_1": "Choose a category that interests you—Wellness, Education, or Finance. Each assessment is designed by experts to provide meaningful insights into your current state.",
+        "content_2": "Once completed, your results will be saved to your dashboard for future reference."
+      },
+      "art2": {
+        "title": "How to use the dashboard",
+        "content_0": "Your dashboard is your personal command center. Here you can view your latest assessment scores, track your progress over time, and manage your upcoming expert consultations.",
+        "content_1": "You can also find recommended resources based on your assessment results to help you take the next steps in your growth journey."
+      }
+    },
+    "assessments": {
+      "title": "Assessments",
+      "description": "Learn how to take and understand your assessments.",
+      "art0": {
+        "title": "How to take a self-assessment",
+        "link": "/self-assessment",
+        "content_0": "Select the 'Self Assessment' option from the main menu.",
+        "content_1": "Choose between Wellness, Education, or Finance assessments.",
+        "content_2": "Read each question carefully and select the response that most accurately reflects your situation.",
+        "content_3": "There are no right or wrong answers—honesty is key to getting the most accurate results."
+      },
+      "art1": {
+        "title": "Understanding your scores",
+        "content_0": "Our scoring system uses a proprietary algorithm developed with mental health professionals.",
+        "content_1": "A 'High' score typically indicates strong alignment or positive state in that area, while a 'Lower' score suggests opportunities for growth or areas where professional support might be beneficial.",
+        "content_2": "Detailed breakdowns for each sub-category are provided at the end of every assessment."
+      },
+      "art2": {
+        "title": "Sharing results with experts",
+        "content_0": "You can choose to share your assessment results with your chosen counsellor to provide them with better context before your first session.",
+        "content_1": "To do this, navigate to your assessment history and click 'Share with Expert' next to the relevant result. You can revoke this access at any time."
+      }
+    },
+    "expertConsultations": {
+      "title": "Expert Consultations",
+      "description": "Everything about connecting with our verified experts.",
+      "art0": {
+        "title": "Finding the right expert",
+        "link": "/find-counsellors",
+        "content_0": "Visit the 'Find Counsellors' page to browse our network of verified professionals.",
+        "content_1": "You can filter experts by their specialty (e.g., Anxiety, Career Guidance, Financial Stress), language, and availability.",
+        "content_2": "Read through their profiles and reviews from other community members to find someone who resonates with your needs."
+      },
+      "art1": {
+        "title": "Booking your first session",
+        "content_0": "Once you've found an expert, click 'Book Session' on their profile.",
+        "content_1": "Select a date and time that works for you from their calendar.",
+        "content_2": "Complete the payment process, and you'll receive a confirmation email with the session link and instructions."
+      },
+      "art2": {
+        "title": "Expert verification process",
+        "content_0": "Every expert on MindCurePath goes through a rigorous vetting process.",
+        "content_1": "We verify their professional qualifications, years of experience, and conduct a personal interview before they are allowed to join our platform.",
+        "content_2": "We also regularly monitor feedback to ensure the highest quality of care for our users."
+      }
+    },
+    "billingPayments": {
+      "title": "Billing & Payments",
+      "description": "Manage your payments, invoices, and subscriptions.",
+      "art0": {
+        "title": "Accepted payment methods",
+        "content_0": "We accept all major credit and debit cards (Visa, Mastercard, American Express).",
+        "content_1": "We also support popular digital wallets and UPI for a seamless transaction experience.",
+        "content_2": "All payments are processed through secure, encrypted gateways to ensure your financial data is always protected."
+      },
+      "art1": {
+        "title": "Refund Policy",
+        "content_0": "To maintain the highest quality of service and ensure our experts are fairly compensated for their dedicated time, MindCurePath maintains a strict no-refund policy.",
+        "content_1": "Once a session is booked, our experts commit their time and resources specifically to your consultation, often turning away other individuals who may need urgent support. This policy helps us sustain a network of top-tier professionals who are fully committed to your growth and wellness.",
+        "content_2": "While refunds are not possible, we understand that life happens. If you need to reschedule, you can do so free of charge up to 24 hours before your appointment to ensure your credits remain valid for a future session."
+      }
+    },
+    "accountSecurity": {
+      "title": "Account & Security",
+      "description": "Manage your account settings and data privacy.",
+      "art0": {
+        "title": "How we protect your data",
+        "content_0": "Your privacy is our top priority. All personal data and assessment results are encrypted using industry-standard SSL/TLS technology.",
+        "content_1": "We never sell your personal information to third parties. Your data is used solely to provide you with personalized insights and connect you with experts.",
+        "content_2": "For more details, please review our comprehensive Privacy Policy."
+      },
+      "art1": {
+        "title": "Deleting your account",
+        "content_0": "If you wish to delete your account, you can do so from the 'Account Settings' page.",
+        "content_1": "Please note that this action is permanent and will result in the deletion of all your assessment history and consultation records.",
+        "content_2": "If you have any active subscriptions or upcoming sessions, please cancel them before deleting your account."
+      }
+    }
+  }
+}

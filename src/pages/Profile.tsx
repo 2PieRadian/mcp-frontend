@@ -189,7 +189,7 @@ export default function Profile() {
         showToast(
           "error",
           errorData.message ||
-            "Image uploaded but couldn't save to your profile. Please refresh and try again.",
+            t("profileImageUploadError", { ns: "common" }),
         );
         return;
       }
@@ -254,7 +254,7 @@ export default function Profile() {
                 onClick={handleImageUploadClick}
                 disabled={isUploadingImage}
                 className="absolute inset-0 rounded-full bg-black/50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-200 cursor-pointer disabled:cursor-not-allowed"
-                aria-label="Upload profile image"
+                aria-label={t("uploadProfileImageAria", { ns: "common" })}
               >
                 <Camera className="text-white" size={24} />
               </button>

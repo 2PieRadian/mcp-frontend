@@ -1,0 +1,48 @@
+{
+  "meta": {
+    "title": "Contact Us | MindCurePath Consultancy - We're Here to Help",
+    "description": "Contact MindCurePath for support with mental wellness, education, and finance assessments. Reach our team 24/7 at support@mindcurepath.com.",
+    "keywords": "contact MindCurePath, customer support, mental health help, education guidance contact, financial wellness support",
+    "ogTitle": "Contact Us | MindCurePath Consultancy",
+    "ogDescription": "Have questions? Reach out to MindCurePath today for assistance on your wellness journey.",
+    "schemaName": "Contact Us - MindCurePath",
+    "schemaDescription": "Contact page for MindCurePath Consultancy Private Limited.",
+    "contactType": "customer support",
+    "availableLanguage": "English"
+  },
+  "hero": {
+    "title": "Contact Us",
+    "subtitle": "We're here to help you on your journey"
+  },
+  "getInTouch": {
+    "title": "Get in Touch",
+    "description": "Have questions, feedback, or need assistance? We'd love to hear from you. Our dedicated support team is available around the clock to help you.",
+    "emailLabel": "support@mindcurepath.com"
+  },
+  "available247": {
+    "title": "Available 24/7",
+    "description": "Our inbox is always open. Whether it's day or night, feel free to reach out whenever you need assistance."
+  },
+  "quickResponse": {
+    "title": "Quick Response",
+    "description": "We typically respond within 24-48 hours. Our team works diligently to address your queries as promptly as possible."
+  },
+  "whatCanWeHelp": {
+    "title": "What Can We Help You With?",
+    "generalInquiries": {
+      "title": "General Inquiries",
+      "description": "Questions about our platform, assessments, or how MindCurePath works."
+    },
+    "accountPrivacy": {
+      "title": "Account & Privacy",
+      "description": "Help with your account, data privacy concerns, or security-related queries."
+    },
+    "expertConnections": {
+      "title": "Expert Connections",
+      "description": "Assistance with finding the right expert or booking consultations."
+    }
+  },
+  "pleaseNote": "Please Note: For urgent mental health concerns or emergencies, please contact your local emergency services or call the National Mental Health Helpline at 1800-599-0019 (India).",
+  "weValueEveryMessage": "We value every message we receive and are committed to providing you with the best possible support experience.",
+  "companyName": "MindCurePath Consultancy Private Limited"
+}
