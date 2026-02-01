@@ -16,7 +16,11 @@ const availableLanguages = [
   { code: "te", name: "Telugu", nativeName: "తెలుగు" },
 ];
 
-export default function LanguageSwitcher() {
+type LanguageSwitcherProps = {
+  variant?: "default" | "footer";
+};
+
+export default function LanguageSwitcher({ variant = "default" }: LanguageSwitcherProps) {
   const { i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -49,27 +53,32 @@ export default function LanguageSwitcher() {
     setIsOpen(false);
   };
 
+  const isFooter = variant === "footer";
+
   return (
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="px-[12px] py-[6px] bg-[hsl(0,0%,98%)] border border-[#304048]/30 rounded-full cursor-pointer hover:bg-light-200 transition-colors flex items-center gap-[8px]"
+        className={`px-[12px] py-[6px] rounded-full cursor-pointer transition-colors flex items-center gap-[8px] ${
+          isFooter
+            ? "bg-white/5 border border-white/10 text-slate-200 hover:bg-white/10 hover:text-white"
+            : "bg-[hsl(0,0%,98%)] border border-[#304048]/30 hover:bg-light-200 text-[#304048]"
+        }`}
         aria-label="Change language"
       >
-        <LanguagesIcon size={20} className="text-[#304048]" />
-        <span className="text-sm font-medium text-[#304048]">
+        <LanguagesIcon size={20} className={isFooter ? "text-slate-200 shrink-0" : "text-[#304048] shrink-0"} />
+        <span className="text-sm font-medium">
           {currentLanguage.nativeName}
         </span>
         <ChevronDown
           size={14}
-          className={`text-[#304048] transition-transform ${
-            isOpen ? "rotate-180" : ""
-          }`}
+          className={`transition-transform ${isOpen ? "rotate-180" : ""} ${isFooter ? "text-slate-200" : "text-[#304048]"}`}
         />
       </button>
 
       <LanguageModal
         isOpen={isOpen}
+        variant={variant}
         availableLanguages={availableLanguages}
         currentLanguageCode={i18n.language}
         onLanguageChange={changeLanguage}

@@ -11,22 +11,22 @@ interface SelfAssmentsModalProps {
 
 const ASSESSMENTS: Record<
   AssessmentDomain,
-  { label: string; slug: string }[]
+  { labelKey: string; slug: string }[]
 > = {
   wellness: [
-    { label: "ADHD", slug: "adhd" },
-    { label: "Diet", slug: "diet" },
-    { label: "Relationship", slug: "relationship" },
-    { label: "Yoga", slug: "yoga" },
+    { labelKey: "wellnessCardAdhdTitle", slug: "adhd" },
+    { labelKey: "wellnessCardDietTitle", slug: "diet" },
+    { labelKey: "wellnessCardRelationshipTitle", slug: "relationship" },
+    { labelKey: "wellnessCardYogaTitle", slug: "yoga" },
   ],
   education: [
-    { label: "Path Finder", slug: "path-finder" },
-    { label: "Career planning", slug: "career-planning" },
-    { label: "Academic", slug: "academic" },
+    { labelKey: "educationCardPathFinderTitle", slug: "path-finder" },
+    { labelKey: "educationCardCareerPlanningTitle", slug: "career-planning" },
+    { labelKey: "educationCardAcademicTitle", slug: "academic" },
   ],
   finance: [
-    { label: "GST & taxation", slug: "gst-taxation" },
-    { label: "Financial planning", slug: "financial-planning" },
+    { labelKey: "financeCardGstTitle", slug: "gst-taxation" },
+    { labelKey: "financeCardPlanningTitle", slug: "financial-planning" },
   ],
 };
 
@@ -34,7 +34,7 @@ export default function SelfAssmentsModal({
   modalRef,
   navbarType = "experts",
 }: SelfAssmentsModalProps) {
-  const { t } = useTranslation(["navigation", "common"]);
+  const { t } = useTranslation(["navigation", "common", "quiz"]);
   const [hoveredDomain, setHoveredDomain] = useState<AssessmentDomain>(
     "wellness"
   );
@@ -63,7 +63,7 @@ export default function SelfAssmentsModal({
           }`}
           onMouseEnter={() => setHoveredDomain("wellness")}
         >
-          Wellness Assessments
+          {t("common:wellnessAssessments")}
         </Link>
         <Link
           to={getDomainRoute("education")}
@@ -74,7 +74,7 @@ export default function SelfAssmentsModal({
           }`}
           onMouseEnter={() => setHoveredDomain("education")}
         >
-          Education Assessments
+          {t("common:educationAssessments")}
         </Link>
         <Link
           to={getDomainRoute("finance")}
@@ -85,7 +85,7 @@ export default function SelfAssmentsModal({
           }`}
           onMouseEnter={() => setHoveredDomain("finance")}
         >
-          Finance Assessments
+          {t("common:financeAssessments")}
         </Link>
       </div>
 
@@ -100,16 +100,13 @@ export default function SelfAssmentsModal({
                 className="group bg-navbar-dropdown-bg rounded-[10px] p-[12px] flex items-center justify-center text-center hover:bg-white hover:text-navbar-dropdown-bg transition-all cursor-pointer"
               >
                 <span className="text-[14px] leading-tight inline-block group-hover:scale-[1.1] transition-all">
-                  {a.label}
+                  {t(`quiz:${a.labelKey}`)}
                 </span>
               </Link>
             ))}
           </div>
           <div className="text-xs text-white/60 text-center pt-2">
-            {t("selectAssessment", {
-              ns: "common",
-              defaultValue: "Select an assessment to start.",
-            })}
+            {t("common:selectAssessment")}
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import { Facebook, Instagram, Linkedin } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 function XIcon({
   size = 24,
@@ -80,10 +81,10 @@ export default function Footer() {
                 />
                 <div className="space-y-1">
                   <h2 className="text-xl font-bold text-white sm:text-2xl">
-                    MindCurePath
+                    {t("appName")}
                   </h2>
                   <p className="text-sm text-slate-300 sm:text-base leading-tight">
-                    Guided by experts, driven by care, healing every mind
+                    {t("footerTagline")}
                   </p>
                 </div>
               </Link>
@@ -105,7 +106,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105"
-                  aria-label="Instagram"
+                  aria-label={t("footerInstagram")}
                 >
                   <Instagram size={18} />
                 </a>
@@ -114,7 +115,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105"
-                  aria-label="LinkedIn"
+                  aria-label={t("footerLinkedIn")}
                 >
                   <Linkedin size={18} />
                 </a>
@@ -123,7 +124,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105"
-                  aria-label="X"
+                  aria-label={t("footerX")}
                 >
                   <XIcon size={18} />
                 </a>
@@ -132,7 +133,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105"
-                  aria-label="Facebook"
+                  aria-label={t("footerFacebook")}
                 >
                   <Facebook size={18} />
                 </a>
@@ -141,10 +142,18 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105"
-                  aria-label="Threads"
+                  aria-label={t("footerThreads")}
                 >
                   <ThreadsIcon size={18} />
                 </a>
+              </div>
+
+              {/* Language Switcher */}
+              <div className="flex flex-col items-center lg:items-start gap-2 mt-[10px]">
+                <span className="text-xs font-semibold tracking-wide text-slate-400 uppercase">
+                  {t("footerLanguage")}
+                </span>
+                <LanguageSwitcher variant="footer" />
               </div>
             </div>
 
@@ -152,11 +161,11 @@ export default function Footer() {
             <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 sm:gap-8 lg:flex lg:gap-12">
               {/* Quick Links */}
               <nav
-                aria-label={t("quickLinks", { defaultValue: "Quick links" })}
+                aria-label={t("quickLinks")}
                 className="space-y-4 sm:space-y-3"
               >
                 <h3 className="text-sm font-semibold tracking-wide text-white uppercase">
-                  {t("quickLinks", { defaultValue: "Quick links" })}
+                  {t("quickLinks")}
                 </h3>
                 <ul className="space-y-2 text-sm text-slate-300">
                   <li>
@@ -164,7 +173,7 @@ export default function Footer() {
                       className="transition-colors duration-200 hover:text-white"
                       to="/self-assessment"
                     >
-                      {t("selfAssessment", { defaultValue: "Self Assessment" })}
+                      {t("selfAssessment", { ns: "navigation" })}
                     </Link>
                   </li>
                   <li>
@@ -172,9 +181,7 @@ export default function Footer() {
                       className="transition-colors duration-200 hover:text-white"
                       to="/assessments/wellness"
                     >
-                      {t("wellnessAssessments", {
-                        defaultValue: "Wellness Assessments",
-                      })}
+                      {t("wellnessAssessments")}
                     </Link>
                   </li>
                   <li>
@@ -182,9 +189,7 @@ export default function Footer() {
                       className="transition-colors duration-200 hover:text-white"
                       to="/assessments/education"
                     >
-                      {t("educationAssessments", {
-                        defaultValue: "Education Assessments",
-                      })}
+                      {t("educationAssessments")}
                     </Link>
                   </li>
                   <li>
@@ -192,9 +197,7 @@ export default function Footer() {
                       className="transition-colors duration-200 hover:text-white"
                       to="/assessments/finance"
                     >
-                      {t("financeAssessments", {
-                        defaultValue: "Finance Assessments",
-                      })}
+                      {t("financeAssessments")}
                     </Link>
                   </li>
                   <li>
@@ -202,9 +205,7 @@ export default function Footer() {
                       className="transition-colors duration-200 hover:text-white"
                       to="/find-counsellors"
                     >
-                      {t("findCounsellors", {
-                        defaultValue: "Find Counsellors",
-                      })}
+                      {t("findCounsellors", { ns: "navigation" })}
                     </Link>
                   </li>
                 </ul>
@@ -212,11 +213,11 @@ export default function Footer() {
 
               {/* Support */}
               <nav
-                aria-label={t("support", { defaultValue: "Support" })}
+                aria-label={t("support")}
                 className="space-y-4 sm:space-y-3"
               >
                 <h3 className="text-sm font-semibold tracking-wide text-white uppercase">
-                  {t("support", { defaultValue: "Support" })}
+                  {t("support")}
                 </h3>
                 <ul className="space-y-2 text-sm text-slate-300">
                   <li>
@@ -224,7 +225,7 @@ export default function Footer() {
                       className="transition-colors duration-200 hover:text-white"
                       to="/contact"
                     >
-                      {t("contact", { defaultValue: "Contact" })}
+                      {t("contact")}
                     </Link>
                   </li>
                   <li>
@@ -232,7 +233,7 @@ export default function Footer() {
                       className="transition-colors duration-200 hover:text-white"
                       to="/faq"
                     >
-                      {t("faq", { defaultValue: "FAQ" })}
+                      {t("faq")}
                     </Link>
                   </li>
                   <li>
@@ -240,7 +241,7 @@ export default function Footer() {
                       className="transition-colors duration-200 hover:text-white"
                       to="/help"
                     >
-                      {t("helpCenter", { defaultValue: "Help Center" })}
+                      {t("helpCenter")}
                     </Link>
                   </li>
                 </ul>
@@ -248,11 +249,11 @@ export default function Footer() {
 
               {/* Legal */}
               <nav
-                aria-label={t("legal", { defaultValue: "Legal" })}
+                aria-label={t("legal")}
                 className="space-y-4 sm:space-y-3 col-span-2 sm:col-span-1"
               >
                 <h3 className="text-sm font-semibold tracking-wide text-white uppercase">
-                  {t("legal", { defaultValue: "Legal" })}
+                  {t("legal")}
                 </h3>
                 <ul className="space-y-2 text-sm text-slate-300">
                   <li>
@@ -260,7 +261,7 @@ export default function Footer() {
                       className="transition-colors duration-200 hover:text-white"
                       to="/privacy-policy"
                     >
-                      {t("privacyPolicy", { defaultValue: "Privacy Policy" })}
+                      {t("privacyPolicy")}
                     </Link>
                   </li>
                   <li>
@@ -268,9 +269,7 @@ export default function Footer() {
                       className="transition-colors duration-200 hover:text-white"
                       to="/terms-and-conditions"
                     >
-                      {t("termsAndConditions", {
-                        defaultValue: "Terms & Conditions",
-                      })}
+                      {t("termsAndConditions")}
                     </Link>
                   </li>
                   <li>
@@ -278,7 +277,7 @@ export default function Footer() {
                       className="transition-colors duration-200 hover:text-white"
                       to="/terms-of-use"
                     >
-                      {t("termsOfUse", { defaultValue: "Terms of Use" })}
+                      {t("termsOfUse")}
                     </Link>
                   </li>
                 </ul>
@@ -289,13 +288,8 @@ export default function Footer() {
           {/* Disclaimer */}
           <div className="mt-10 border-t border-white/10 pt-6 sm:mt-12 sm:pt-8 w-full">
             <p className="text-xs sm:text-sm text-slate-400 leading-relaxed text-center sm:text-left w-full">
-              <span className="font-semibold text-slate-300">Disclaimer:</span>{" "}
-              MindCurePath is a technology-enabled platform that connects users
-              with independent professionals. We do not provide medical advice,
-              diagnosis, consultation, or prescriptions. This platform is not
-              for emergencies. In case of a mental health emergency, contact the
-              National Mental Health Helpline at 1800-599-0019 or local
-              emergency services.
+              <span className="font-semibold text-slate-300">{t("footerDisclaimerLabel")}</span>{" "}
+              {t("footerDisclaimerText")}
             </p>
           </div>
 
@@ -304,30 +298,28 @@ export default function Footer() {
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <p className="text-sm text-slate-400 text-center sm:text-left sm:text-base">
                 © {new Date().getFullYear()} {t("appName")}.{" "}
-                {t("allRightsReserved", {
-                  defaultValue: "All rights reserved.",
-                })}
+                {t("allRightsReserved")}
               </p>
               <div className="flex flex-wrap justify-center gap-x-3 gap-y-2 text-sm text-slate-400 sm:justify-end sm:gap-x-5 sm:text-base">
                 <Link
                   className="transition-colors duration-200 hover:text-white"
                   to="/privacy-policy"
                 >
-                  {t("privacyPolicy", { defaultValue: "Privacy" })}
+                  {t("footerPrivacy")}
                 </Link>
                 <span className="text-slate-600">•</span>
                 <Link
                   className="transition-colors duration-200 hover:text-white"
                   to="/terms-and-conditions"
                 >
-                  {t("termsAndConditions", { defaultValue: "Terms" })}
+                  {t("footerTerms")}
                 </Link>
                 <span className="text-slate-600">•</span>
                 <Link
                   className="transition-colors duration-200 hover:text-white"
                   to="/terms-of-use"
                 >
-                  {t("termsOfUse", { defaultValue: "Use Policy" })}
+                  {t("footerUsePolicy")}
                 </Link>
               </div>
             </div>
