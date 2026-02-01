@@ -146,5 +146,15 @@
   "financeQuote": "Financial peace isn't about being rich. It's about having a plan, clarity, and the right support to get there.",
   "profileImageUploadError": "Image uploaded but couldn't save to your profile. Please refresh and try again.",
   "uploadProfileImageAria": "Upload profile image",
-  "oauthFailedToFetchUser": "Failed to fetch user data"
+  "oauthFailedToFetchUser": "Failed to fetch user data",
+  "guidanceQuotesHeading": "Choose the right guidance for fruitful outcomes.",
+  "guidanceQuotesSubtitle": "Before you invest your time and money, take 30 seconds to read these.",
+  "guidanceQuotesInsight": "INSIGHT {{number}}",
+  "guidanceQuotesWhatToDoNext": "What to do next",
+  "guidanceQuotesCardDescription": "Start with an expert‑verified assessment and get clear, actionable next steps.",
+  "guidanceQuotesStartFreeAssessment": "Start free assessment",
+  "guidanceQuotesMeetExperts": "Meet experts",
+  "guidanceQuotesQuote1": "Invest your hard money to upgrade your thinking skills by our experts.",
+  "guidanceQuotesQuote2": "Consult your problems with experienced experts; one wrong guidance can lead to failure.",
+  "guidanceQuotesQuote3": "Time is money; don't waste your time following wrong guidance."
 }

@@ -146,5 +146,15 @@
   "financeQuote": "નાણાકીય શાંતિ ધનવાન થવા વિશે નથી. તે યોજના, સ્પષ્ટતા અને ત્યાં પહોંચવા માટે સાચા સપોર્ટ વિશે છે.",
   "profileImageUploadError": "ઇમેજ અપલોડ થઈ પરંતુ તમારા પ્રોફાઇલમાં સાચવી શકાઈ નહીં. કૃપા કરીને રિફ્રેશ કરો અને ફરી પ્રયાસ કરો.",
   "uploadProfileImageAria": "પ્રોફાઇલ ઇમેજ અપલોડ કરો",
-  "oauthFailedToFetchUser": "વપરાશકર્તા ડેટા મેળવવામાં નિષ્ફળ"
+  "oauthFailedToFetchUser": "વપરાશકર્તા ડેટા મેળવવામાં નિષ્ફળ",
+  "guidanceQuotesHeading": "ફળદ્રુપ પરિણામો માટે સાચું માર્ગદર્શન પસંદ કરો.",
+  "guidanceQuotesSubtitle": "તમારો સમય અને પૈસો રોકાવતા પહેલા, આ વાંચવા માટે 30 સેકંડ લો.",
+  "guidanceQuotesInsight": "ઇન્સાઇટ {{number}}",
+  "guidanceQuotesWhatToDoNext": "આગળ શું કરવું",
+  "guidanceQuotesCardDescription": "એક નિષ્ણાત-સत्यાપિત અસેસમેન્ટથી શરૂઆત કરો અને સ્પષ્ટ, ક્રિયાશીલ પગલાં મેળવો.",
+  "guidanceQuotesStartFreeAssessment": "મફત અસેસમેન્ટ શરૂ કરો",
+  "guidanceQuotesMeetExperts": "નિષ્ણાતોને મળો",
+  "guidanceQuotesQuote1": "અમારા નિષ્ણાતો દ્વારા તમારી વિચાર કુશળતા સુધારવા માટે તમારા કઠણ પૈસાનું રોકાણ કરો.",
+  "guidanceQuotesQuote2": "અનુભવી નિષ્ણાતો સાથે તમારી સમસ્યાઓની સલાહ લો; એક ખોટું માર્ગદર્શન નિષ્ફળતા તરફ દોરી શકે છે.",
+  "guidanceQuotesQuote3": "સમય પૈસો છે; ખોટા માર્ગદર્શનને અનુસરવામાં તમારો સમય બરબાદ ન કરો."
 }

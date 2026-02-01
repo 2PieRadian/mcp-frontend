@@ -1,8 +1,10 @@
 import { ArrowRight, Quote } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { LANDING_PAGE_QUOTES } from "../lib/constants/landingPage";
 import { Link } from "react-router-dom";
 
 export default function GuidanceQuotesSection() {
+  const { t } = useTranslation("common");
   const accents = [
     {
       ring: "from-[#0ea5e9] to-[#06b6d4]",
@@ -50,11 +52,10 @@ export default function GuidanceQuotesSection() {
       <div className="relative max-w-[1350px] mx-auto">
         <div className="text-center px-[4px]">
           <h2 className="mt-2 text-[clamp(30px,3.4vw,36px)] font-bold text-primary leading-tight">
-            Choose the right guidance for fruitful outcomes.
+            {t("guidanceQuotesHeading")}
           </h2>
           <p className="mt-3 text-[#4F5B64] text-[14px] sm:text-[15px] leading-relaxed max-w-[860px] mx-auto">
-            Before you invest your time and money, take 30 seconds to read
-            these.
+            {t("guidanceQuotesSubtitle")}
           </p>
         </div>
 
@@ -86,7 +87,7 @@ export default function GuidanceQuotesSection() {
                           className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 ${accent.badge}`}
                         >
                           <span className="text-[11px] sm:text-[12px] font-semibold tracking-[0.18em]">
-                            INSIGHT {number}
+                            {t("guidanceQuotesInsight", { number })}
                           </span>
                         </div>
                         <div className="hidden sm:flex items-center gap-2 text-primary/70">
@@ -98,7 +99,7 @@ export default function GuidanceQuotesSection() {
                         <p
                           className={`text-[clamp(18px,2.2vw,24px)] font-semibold leading-snug ${accent.quoteText}`}
                         >
-                          {item.quote}
+                          "{t(`guidanceQuotesQuote${item.id}`)}"
                         </p>
                       </blockquote>
                     </div>
@@ -106,11 +107,10 @@ export default function GuidanceQuotesSection() {
                     <div className="md:w-[360px] lg:w-[420px] shrink-0">
                       <div className="h-full rounded-[20px] border border-gray-100 bg-white/80 p-[14px] sm:p-[16px] shadow-[0_3px_14px_rgba(0,0,0,0.06)]">
                         <p className="text-[12px] uppercase tracking-[0.22em] text-primary/70">
-                          What to do next
+                          {t("guidanceQuotesWhatToDoNext")}
                         </p>
                         <p className="mt-2 text-[13px] sm:text-[14px] text-[#4F5B64] leading-relaxed">
-                          Start with an expert‑verified assessment and get
-                          clear, actionable next steps.
+                          {t("guidanceQuotesCardDescription")}
                         </p>
 
                         <div className="mt-4 flex flex-col sm:flex-row gap-2">
@@ -118,14 +118,14 @@ export default function GuidanceQuotesSection() {
                             href={dest.assessmentHash}
                             className={`group inline-flex items-center justify-center gap-2 rounded-[14px] px-[14px] py-[10px] text-white text-[14px] font-medium transition-colors ${accent.ctaBg} ${accent.ctaHover}`}
                           >
-                            Start free assessment
+                            {t("guidanceQuotesStartFreeAssessment")}
                             <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
                           </a>
                           <Link
                             to={dest.expertsRoute}
                             className="inline-flex items-center justify-center rounded-[14px] border border-gray-200 bg-white px-[14px] py-[10px] text-[14px] font-medium text-primary hover:bg-[#ecf4f6] transition-colors"
                           >
-                            Meet experts
+                            {t("guidanceQuotesMeetExperts")}
                           </Link>
                         </div>
                       </div>
