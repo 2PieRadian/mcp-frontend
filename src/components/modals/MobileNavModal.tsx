@@ -40,17 +40,42 @@ function MobileNavItem({
   );
 }
 
+type AssessmentDomain = "wellness" | "education" | "finance";
+
+const MOBILE_ASSESSMENTS: Record<
+  AssessmentDomain,
+  { labelKey: string; slug: string }[]
+> = {
+  wellness: [
+    { labelKey: "wellnessCardAdhdTitle", slug: "adhd" },
+    { labelKey: "wellnessCardDietTitle", slug: "diet" },
+    { labelKey: "wellnessCardRelationshipTitle", slug: "relationship" },
+    { labelKey: "wellnessCardYogaTitle", slug: "yoga" },
+  ],
+  education: [
+    { labelKey: "educationCardPathFinderTitle", slug: "path-finder" },
+    { labelKey: "educationCardCareerPlanningTitle", slug: "career-planning" },
+    { labelKey: "educationCardAcademicTitle", slug: "academic" },
+  ],
+  finance: [
+    { labelKey: "financeCardGstTitle", slug: "gst-taxation" },
+    { labelKey: "financeCardPlanningTitle", slug: "financial-planning" },
+  ],
+};
+
 export default function MobileNavModal({
   isOpen,
   onClose,
 }: MobileNavModalProps) {
-  const { t, i18n } = useTranslation(["common", "navigation"]);
+  const { t, i18n } = useTranslation(["common", "navigation", "quiz"]);
   const { user } = useAuth();
   const location = useLocation();
   const [weHelpWithExpanded, setWeHelpWithExpanded] = useState(false);
+  const [selfAssessmentExpanded, setSelfAssessmentExpanded] = useState(false);
   const [languageExpanded, setLanguageExpanded] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
   const expertCategoriesRef = useRef<HTMLDivElement | null>(null);
+  const selfAssessmentRef = useRef<HTMLDivElement | null>(null);
   const scrollLockRef = useRef<{
     scrollY: number;
     bodyOverflow: string;
@@ -186,6 +211,34 @@ export default function MobileNavModal({
     }
   }, [weHelpWithExpanded]);
 
+  // GSAP animation for Self Assessment
+  useEffect(() => {
+    if (!selfAssessmentRef.current) return;
+
+    const element = selfAssessmentRef.current;
+
+    if (selfAssessmentExpanded) {
+      const heightBefore = element.style.height;
+      element.style.height = "auto";
+      const targetHeight = element.scrollHeight;
+      element.style.height = heightBefore;
+
+      gsap.to(element, {
+        height: targetHeight,
+        opacity: 1,
+        duration: 0.3,
+        ease: "power2.inOut",
+      });
+    } else {
+      gsap.to(element, {
+        height: 0,
+        opacity: 0,
+        duration: 0.3,
+        ease: "power2.inOut",
+      });
+    }
+  }, [selfAssessmentExpanded]);
+
   return (
     <div
       className={`fixed inset-0 z-50 ${isOpen ? "" : "pointer-events-none"}`}
@@ -234,7 +287,10 @@ export default function MobileNavModal({
                   ? "bg-gray-50 border-gray-200"
                   : "border-transparent hover:bg-hover-bg"
                   }`}
-                onClick={() => setWeHelpWithExpanded(!weHelpWithExpanded)}
+                onClick={() => {
+                  setWeHelpWithExpanded(!weHelpWithExpanded);
+                  setSelfAssessmentExpanded(false);
+                }}
               >
                 <span className="text-primary text-[16px]">
                   {t("expertCategories", { ns: "navigation" })}
@@ -289,7 +345,63 @@ export default function MobileNavModal({
           )}
 
           {user?.role !== "EXPERT" && (
-            <MobileNavItem textKey="selfAssessment" to="/self-assessment" />
+            <div>
+              <div
+                className={`flex items-center justify-between cursor-pointer px-[20px] py-[14px] rounded-[16px] transition-colors duration-200 border ${selfAssessmentExpanded
+                  ? "bg-gray-50 border-gray-200"
+                  : "border-transparent hover:bg-hover-bg"
+                  }`}
+                onClick={() => {
+                  setSelfAssessmentExpanded(!selfAssessmentExpanded);
+                  setWeHelpWithExpanded(false);
+                }}
+              >
+                <span className="text-primary text-[16px]">
+                  {t("selfAssessment", { ns: "navigation" })}
+                </span>
+                <ChevronDown
+                  size={15}
+                  className={`text-primary transition-transform duration-200 ${selfAssessmentExpanded ? "rotate-180" : ""
+                    }`}
+                />
+              </div>
+
+              <div
+                ref={selfAssessmentRef}
+                className="overflow-hidden"
+                style={{ height: 0, opacity: 0 }}
+              >
+                <div className="mt-[10px] ml-[18px] pl-[14px] border-l border-gray-200 flex flex-col gap-[6px] pb-[2px]">
+                  {(Object.keys(MOBILE_ASSESSMENTS) as AssessmentDomain[]).map(
+                    (domain) => (
+                      <div key={domain}>
+                        <div className="text-[13px] font-medium text-gray-500 mt-3 first:mt-1 px-[14px] py-[4px]">
+                          {t(`common:${domain === "wellness"
+                            ? "wellnessAssessments"
+                            : domain === "education"
+                              ? "educationAssessments"
+                              : "financeAssessments"
+                            }`)}
+                        </div>
+                        {MOBILE_ASSESSMENTS[domain].map((a) => (
+                          <Link
+                            key={`${domain}:${a.slug}`}
+                            to={`/assessments/${domain}/${a.slug}`}
+                            onClick={onClose}
+                            className="flex items-center justify-between px-[14px] py-[10px] text-[15px] text-[#304048] rounded-[12px] cursor-pointer hover:bg-gray-50 transition-colors duration-200"
+                          >
+                            <span className="font-medium">
+                              {t(`quiz:${a.labelKey}`)}
+                            </span>
+                            <ChevronRight size={16} className="text-gray-400" />
+                          </Link>
+                        ))}
+                      </div>
+                    )
+                  )}
+                </div>
+              </div>
+            </div>
           )}
           {user?.role !== "EXPERT" && (
             <MobileNavItem textKey="findCounsellors" to="/find-counsellors" />
