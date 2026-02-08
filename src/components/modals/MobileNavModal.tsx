@@ -82,6 +82,22 @@ export default function MobileNavModal({
     setLanguageExpanded(false);
   };
 
+  // Restore body/html so the page is never left stuck (e.g. after navigation with menu open)
+  const restoreScrollLock = () => {
+    const body = document.body;
+    const html = document.documentElement;
+    const prev = scrollLockRef.current;
+    html.style.overflow = prev?.htmlOverflow ?? "";
+    body.style.overflow = prev?.bodyOverflow ?? "";
+    body.style.position = prev?.bodyPosition ? prev.bodyPosition : "static";
+    body.style.top = prev?.bodyTop ?? "";
+    body.style.width = prev?.bodyWidth ?? "";
+    if (typeof prev?.scrollY === "number") {
+      window.scrollTo(0, prev.scrollY);
+    }
+    scrollLockRef.current = null;
+  };
+
   // Robust scroll lock for mobile (prevents background page scroll, including iOS)
   useEffect(() => {
     if (isOpen) {
@@ -105,19 +121,17 @@ export default function MobileNavModal({
       body.style.width = "100%";
 
       return () => {
-        const prev = scrollLockRef.current;
-        if (!prev) return;
-
-        html.style.overflow = prev.htmlOverflow;
-        body.style.overflow = prev.bodyOverflow;
-        body.style.position = prev.bodyPosition;
-        body.style.top = prev.bodyTop;
-        body.style.width = prev.bodyWidth;
-        window.scrollTo(0, prev.scrollY);
-        scrollLockRef.current = null;
+        restoreScrollLock();
       };
     }
   }, [isOpen]);
+
+  // Unmount safeguard: always restore body when modal is removed (e.g. route change, resize to desktop)
+  useEffect(() => {
+    return () => {
+      restoreScrollLock();
+    };
+  }, []);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -179,17 +193,15 @@ export default function MobileNavModal({
     >
       {/* Backdrop with blur effect */}
       <div
-        className={`absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ease-out ${
-          isOpen ? "opacity-100" : "opacity-0"
-        }`}
+        className={`absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ease-out ${isOpen ? "opacity-100" : "opacity-0"
+          }`}
         onClick={isOpen ? onClose : undefined}
       />
 
       {/* Drawer */}
       <div
-        className={`absolute inset-y-0 left-0 w-screen bg-white flex flex-col shadow-2xl transform-gpu transition-transform duration-300 ease-out will-change-transform ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        className={`absolute inset-y-0 left-0 w-screen bg-white flex flex-col shadow-2xl transform-gpu transition-transform duration-300 ease-out will-change-transform ${isOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
       >
         {/* Header with close button */}
         <div className="flex justify-between items-center px-[25px] py-[20px] border-b border-gray-200 shrink-0">
@@ -218,11 +230,10 @@ export default function MobileNavModal({
           {user?.role !== "EXPERT" && (
             <div>
               <div
-                className={`flex items-center justify-between cursor-pointer px-[20px] py-[14px] rounded-[16px] transition-colors duration-200 border ${
-                  weHelpWithExpanded
-                    ? "bg-gray-50 border-gray-200"
-                    : "border-transparent hover:bg-hover-bg"
-                }`}
+                className={`flex items-center justify-between cursor-pointer px-[20px] py-[14px] rounded-[16px] transition-colors duration-200 border ${weHelpWithExpanded
+                  ? "bg-gray-50 border-gray-200"
+                  : "border-transparent hover:bg-hover-bg"
+                  }`}
                 onClick={() => setWeHelpWithExpanded(!weHelpWithExpanded)}
               >
                 <span className="text-primary text-[16px]">
@@ -230,9 +241,8 @@ export default function MobileNavModal({
                 </span>
                 <ChevronDown
                   size={15}
-                  className={`text-primary transition-transform duration-200 ${
-                    weHelpWithExpanded ? "rotate-180" : ""
-                  }`}
+                  className={`text-primary transition-transform duration-200 ${weHelpWithExpanded ? "rotate-180" : ""
+                    }`}
                 />
               </div>
 
@@ -301,11 +311,10 @@ export default function MobileNavModal({
           {user ? (
             <Link
               to="/profile"
-              className={`group px-[25px] py-[12px] flex items-center gap-[12px] rounded-full transition-colors ${
-                location.pathname.startsWith("/profile")
-                  ? "bg-hover-bg"
-                  : "hover:bg-hover-bg"
-              }`}
+              className={`group px-[25px] py-[12px] flex items-center gap-[12px] rounded-full transition-colors ${location.pathname.startsWith("/profile")
+                ? "bg-hover-bg"
+                : "hover:bg-hover-bg"
+                }`}
               onClick={onClose}
             >
               <span className="text-light-text text-[16px]">
@@ -339,28 +348,25 @@ export default function MobileNavModal({
               </div>
               <ChevronDown
                 size={15}
-                className={`text-primary transition-transform duration-200 ${
-                  languageExpanded ? "rotate-180" : ""
-                }`}
+                className={`text-primary transition-transform duration-200 ${languageExpanded ? "rotate-180" : ""
+                  }`}
               />
             </div>
 
             {/* Language list with animation */}
             <div
-              className={`transition-all duration-300 ease-in-out scrollbar-hide ${
-                languageExpanded
-                  ? "max-h-[200px] opacity-100 overflow-y-auto"
-                  : "max-h-0 opacity-0 overflow-hidden"
-              }`}
+              className={`transition-all duration-300 ease-in-out scrollbar-hide ${languageExpanded
+                ? "max-h-[200px] opacity-100 overflow-y-auto"
+                : "max-h-0 opacity-0 overflow-hidden"
+                }`}
             >
               <div className="pl-[30px] pt-[8px] flex flex-col gap-[4px]">
                 {availableLanguages.map((lang) => (
                   <button
                     key={lang.code}
                     onClick={() => changeLanguage(lang.code)}
-                    className={`w-full text-left px-[15px] py-[8px] rounded-[8px] cursor-pointer hover:bg-gray-50 transition-colors flex items-center justify-between ${
-                      i18n.language === lang.code ? "bg-gray-100" : ""
-                    }`}
+                    className={`w-full text-left px-[15px] py-[8px] rounded-[8px] cursor-pointer hover:bg-gray-50 transition-colors flex items-center justify-between ${i18n.language === lang.code ? "bg-gray-100" : ""
+                      }`}
                   >
                     <div className="flex flex-col">
                       <span className="text-sm font-medium text-[#304048]">

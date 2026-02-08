@@ -29,6 +29,32 @@ body {
   min-height: 100vh;
 }
 
+/* Main scroll container: allow touch scroll and momentum on mobile (fixes scroll/refresh when navbar modal was used) */
+#main-scroll-container {
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  scrollbar-color: hsl(200, 12%, 32%) hsl(200, 10%, 92%);
+}
+
+#main-scroll-container::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+#main-scroll-container::-webkit-scrollbar-track {
+  background: hsl(200, 10%, 92%);
+  border-radius: 4px;
+}
+
+#main-scroll-container::-webkit-scrollbar-thumb {
+  background: hsl(200, 12%, 32%);
+  border-radius: 5px;
+}
+
+#main-scroll-container::-webkit-scrollbar-thumb:hover {
+  background: hsl(200, 12%, 24%);
+}
+
 /* Smooth scroll for the main content container (internal anchor links) */
 .scroll-smooth {
   scroll-behavior: smooth;
@@ -1126,6 +1152,7 @@ body {
 .scrollbar-custom::-webkit-scrollbar {
   appearance: none;
   width: 2rem;
+  scrollbar-color: hsl(200, 11%, 40%) hsl(200, 11%, 95%);
 }
 
 .scrollbar-custom::-webkit-scrollbar-track {
