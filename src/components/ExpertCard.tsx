@@ -1,7 +1,9 @@
-import { Star } from "lucide-react";
+import { Star, Loader2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import type { ApiExpert } from "../types/experts";
+import { BACKEND_URL } from "../lib/api";
 
 type ExpertCardProps = {
   id: number;
@@ -17,6 +19,15 @@ type ExpertCardProps = {
   professionalTitle: string;
 };
 
+type NextSlotResponse = {
+  message: string;
+  slot: {
+    availabilityId: number;
+    startTime: string;
+    endTime: string;
+  } | null;
+};
+
 export default function ExpertCard({
   id,
   name,
@@ -25,13 +36,90 @@ export default function ExpertCard({
   ratingCount,
   tags,
   languages,
-  nextSlot,
+  nextSlot: _nextSlot, // Keep prop for backward compatibility but don't use it
   price,
   expertData,
   professionalTitle,
 }: ExpertCardProps) {
   const { t } = useTranslation("common");
   const navigate = useNavigate();
+  const [nextSlotData, setNextSlotData] = useState<{
+    startTime: string;
+    endTime: string;
+  } | null>(null);
+  const [isLoadingNextSlot, setIsLoadingNextSlot] = useState(true);
+
+  useEffect(() => {
+    const fetchNextSlot = async () => {
+      setIsLoadingNextSlot(true);
+      try {
+        const response = await fetch(
+          `${BACKEND_URL}/api/v1/appointments/availability/${id}/next-slot`,
+          {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch next slot");
+        }
+
+        const data: NextSlotResponse = await response.json();
+
+        if (data.slot) {
+          setNextSlotData({
+            startTime: data.slot.startTime,
+            endTime: data.slot.endTime,
+          });
+        } else {
+          setNextSlotData(null);
+        }
+      } catch (error) {
+        console.error("Error fetching next slot:", error);
+        setNextSlotData(null);
+      } finally {
+        setIsLoadingNextSlot(false);
+      }
+    };
+
+    fetchNextSlot();
+  }, [id]);
+
+  const formatNextSlot = (): string => {
+    if (!nextSlotData) {
+      return t("nextSlot", { ns: "common" }) || "Available soon";
+    }
+
+    try {
+      const startDate = new Date(nextSlotData.startTime);
+      const endDate = new Date(nextSlotData.endTime);
+
+      // Format: "Feb 16, 2026 at 9:00 PM - 10:00 PM"
+      const options: Intl.DateTimeFormatOptions = {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+      };
+
+      const startFormatted = startDate.toLocaleString("en-US", options);
+      const endTime = endDate.toLocaleTimeString("en-US", {
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+      });
+
+      return `${startFormatted} - ${endTime}`;
+    } catch (error) {
+      console.error("Error formatting slot time:", error);
+      return t("nextSlot", { ns: "common" }) || "Available soon";
+    }
+  };
 
   const handleCardClick = () => {
     // Pass full expert data via navigation state
@@ -65,10 +153,10 @@ export default function ExpertCard({
             </h1>
 
             {rating && (
-            <div className="Rating-Container flex items-center gap-[5px]">
-              <Star size={18} className="fill-yellow-400 text-yellow-400" />
-              <span className="Rating-Value text-yellow-400">{rating}</span>
-              <span className="Rating-Count text-gray-500 text-[11px] min-[800px]:text-xs">
+              <div className="Rating-Container flex items-center gap-[5px]">
+                <Star size={18} className="fill-yellow-400 text-yellow-400" />
+                <span className="Rating-Value text-yellow-400">{rating}</span>
+                <span className="Rating-Count text-gray-500 text-[11px] min-[800px]:text-xs">
                   ({ratingCount})
                 </span>
               </div>
@@ -87,11 +175,17 @@ export default function ExpertCard({
             {languages}
           </div>
 
-          <div className="Next-Available-Slot mt-[8px] text-xs min-[800px]:text-sm">
+          <div className="Next-Available-Slot mt-[8px] text-xs min-[800px]:text-sm flex items-center gap-2">
             <span className="font-light text-[#8F9EA0]">
               {t("nextAvailableSlot")}
-            </span>{" "}
-            <span className="font-medium text-[#516A6E]">{nextSlot}</span>
+            </span>
+            {isLoadingNextSlot ? (
+              <Loader2 className="w-3 h-3 text-[#8F9EA0] animate-spin" />
+            ) : (
+              <span className="font-medium text-[#516A6E]">
+                {formatNextSlot()}
+              </span>
+            )}
           </div>
 
           <div className="Price-Container flex items-center gap-[8px] mt-[8px]">

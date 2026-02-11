@@ -9,6 +9,7 @@ import { BACKEND_URL, getAvatarUrl } from "../lib/api";
 
 export type AuthUser = {
   id?: string;
+  expertId?: number;
   email: string;
   name?: string;
   avatarUrl?: string;
@@ -77,6 +78,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
             const mapped: AuthUser = {
               id: u?.id != null ? String(u.id) : undefined,
+              expertId:
+                typeof u?.expert?.id === "number"
+                  ? u.expert.id
+                  : u?.expertId != null
+                    ? Number(u.expertId)
+                    : undefined,
               email: u?.email,
               name: u?.name || undefined,
               avatarUrl: getAvatarUrl(avatarValue),

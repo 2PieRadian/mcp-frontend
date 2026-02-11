@@ -61,7 +61,13 @@ export default function SignupForm() {
       const avatarValue = user.avatar || user.avatarUrl;
 
       login({
-        id: String(user.id),
+        id: user.id != null ? String(user.id) : undefined,
+        expertId:
+          typeof user.expert?.id === "number"
+            ? user.expert.id
+            : user.expertId != null
+              ? Number(user.expertId)
+              : undefined,
         email: user.email,
         name: fullName || user.name || undefined,
         avatarUrl: getAvatarUrl(avatarValue),

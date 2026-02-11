@@ -5,6 +5,7 @@ import { useAuth } from "../../context/AuthContext";
 import ResponsiveNavbar from "../../components/ResponsiveNavbar";
 import type { UpcomingSession, WeeklyAvailability, TabType } from "./types";
 import useScrollToTop from "../../hooks/useScrollToTop";
+import { BACKEND_URL } from "../../lib/api";
 
 const DashboardTabs = lazy(() => import("./components/DashboardTabs"));
 const UpcomingSessionsTab = lazy(
@@ -24,6 +25,12 @@ export default function ExpertsDashboard() {
     []
   );
   const [availability, setAvailability] = useState<WeeklyAvailability>({});
+  const [isAvailabilityLoading, setIsAvailabilityLoading] = useState(false);
+  const [availabilityError, setAvailabilityError] = useState<string | null>(
+    null
+  );
+  const [isEditingAvailability, setIsEditingAvailability] = useState(false);
+  const [isSavingAvailability, setIsSavingAvailability] = useState(false);
   const [totalEarnings, setTotalEarnings] = useState(0);
   const [monthlyEarnings, setMonthlyEarnings] = useState(0);
 
@@ -71,21 +78,99 @@ export default function ExpertsDashboard() {
       },
     ]);
 
-    setAvailability({
-      Monday: ["09:00-10:00", "14:00-15:00", "16:00-17:00"],
-      Tuesday: ["10:00-11:00", "15:00-16:00"],
-      Wednesday: ["09:00-10:00", "11:00-12:00", "14:00-15:00"],
-      Thursday: ["10:00-11:00", "13:00-14:00", "16:00-17:00"],
-      Friday: ["09:00-10:00", "15:00-16:00"],
-      Saturday: ["10:00-11:00", "14:00-15:00"],
-      Sunday: [],
-    });
-
     setTotalEarnings(125000);
     setMonthlyEarnings(25000);
   }, []);
 
+  useEffect(() => {
+    const fetchAvailability = async () => {
+      if (!user?.expertId || user.role !== "EXPERT") return;
+
+      const token = window.localStorage.getItem("auth:token");
+      if (!token) {
+        setAvailability({});
+        return;
+      }
+
+      setIsAvailabilityLoading(true);
+      setAvailabilityError(null);
+
+      try {
+        const response = await fetch(
+          `${BACKEND_URL}/api/v1/appointments/availability/${user.expertId}/weekly-slots`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(
+            errorData.message || "Failed to load weekly availability"
+          );
+        }
+
+        const data = await response.json();
+        const slots = Array.isArray(data?.slots) ? data.slots : [];
+
+        const dayMap: Record<string, string> = {
+          MONDAY: "Monday",
+          TUESDAY: "Tuesday",
+          WEDNESDAY: "Wednesday",
+          THURSDAY: "Thursday",
+          FRIDAY: "Friday",
+          SATURDAY: "Saturday",
+          SUNDAY: "Sunday",
+        };
+
+        const nextAvailability: WeeklyAvailability = {};
+
+        slots.forEach((slot: any) => {
+          if (!slot?.dayOfWeek || !slot?.startTime) return;
+
+          const apiDay = String(slot.dayOfWeek).toUpperCase();
+          const uiDay = dayMap[apiDay];
+          if (!uiDay) return;
+
+          if (!slot.isAvailable) return;
+
+          const startDate = new Date(slot.startTime);
+          const hour = startDate.getUTCHours();
+          if (Number.isNaN(hour) || hour < 0 || hour > 23) return;
+
+          const startHourStr = hour.toString().padStart(2, "0");
+          const endHourStr = (hour + 1).toString().padStart(2, "0");
+          const label = `${startHourStr}:00-${endHourStr}:00`;
+
+          if (!nextAvailability[uiDay]) {
+            nextAvailability[uiDay] = [];
+          }
+          if (!nextAvailability[uiDay].includes(label)) {
+            nextAvailability[uiDay].push(label);
+          }
+        });
+
+        setAvailability(nextAvailability);
+      } catch (error: any) {
+        console.error("Error fetching weekly availability:", error);
+        setAvailabilityError(
+          error?.message || "Unable to load weekly availability"
+        );
+      } finally {
+        setIsAvailabilityLoading(false);
+      }
+    };
+
+    fetchAvailability();
+  }, [user]);
+
   const toggleTimeSlot = (day: string, slot: string) => {
+    if (!isEditingAvailability) return;
+
     setAvailability((prev) => {
       const daySlots = prev[day] || [];
       const isSelected = daySlots.includes(slot);
@@ -96,6 +181,109 @@ export default function ExpertsDashboard() {
           : [...daySlots, slot],
       };
     });
+  };
+
+  const handleEditAvailability = () => {
+    setIsEditingAvailability(true);
+  };
+
+  const handleSaveAvailability = async () => {
+    if (!user?.expertId || user.role !== "EXPERT") return;
+
+    const token = window.localStorage.getItem("auth:token");
+    if (!token) {
+      setAvailabilityError("You must be logged in to update availability.");
+      return;
+    }
+
+    const dayMapReverse: Record<string, string> = {
+      Monday: "MONDAY",
+      Tuesday: "TUESDAY",
+      Wednesday: "WEDNESDAY",
+      Thursday: "THURSDAY",
+      Friday: "FRIDAY",
+      Saturday: "SATURDAY",
+      Sunday: "SUNDAY",
+    };
+
+    const bodySlots: Array<{
+      dayOfWeek: string;
+      startHour: number;
+      endHour: number;
+    }> = [];
+
+    Object.entries(availability).forEach(([day, slots]) => {
+      const apiDayOfWeek = dayMapReverse[day];
+      if (!apiDayOfWeek || !Array.isArray(slots) || slots.length === 0) {
+        return;
+      }
+
+      const hours = slots
+        .map((slot) => {
+          const [start] = slot.split("-");
+          const hour = parseInt(start.split(":")[0] || "", 10);
+          return Number.isNaN(hour) ? null : hour;
+        })
+        .filter((h): h is number => h !== null)
+        .sort((a, b) => a - b);
+
+      if (hours.length === 0) return;
+
+      let rangeStart = hours[0];
+      let prevHour = hours[0];
+
+      for (let i = 1; i < hours.length; i++) {
+        const current = hours[i];
+        if (current !== prevHour + 1) {
+          bodySlots.push({
+            dayOfWeek: apiDayOfWeek,
+            startHour: rangeStart,
+            endHour: prevHour + 1,
+          });
+          rangeStart = current;
+        }
+        prevHour = current;
+      }
+
+      bodySlots.push({
+        dayOfWeek: apiDayOfWeek,
+        startHour: rangeStart,
+        endHour: prevHour + 1,
+      });
+    });
+
+    setIsSavingAvailability(true);
+    setAvailabilityError(null);
+
+    try {
+      const response = await fetch(
+        `${BACKEND_URL}/api/v1/appointments/availability/${user.expertId}/weekly-slots`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ slots: bodySlots }),
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(
+          errorData.message || "Failed to update weekly availability"
+        );
+      }
+
+      setIsEditingAvailability(false);
+    } catch (error: any) {
+      console.error("Error updating weekly availability:", error);
+      setAvailabilityError(
+        error?.message || "Unable to update weekly availability"
+      );
+    } finally {
+      setIsSavingAvailability(false);
+    }
   };
 
   if (user?.role !== "EXPERT") {
@@ -128,6 +316,12 @@ export default function ExpertsDashboard() {
             {activeTab === "availability" && (
               <AvailabilityManagementTab
                 availability={availability}
+                isEditing={isEditingAvailability}
+                isLoading={isAvailabilityLoading}
+                isSaving={isSavingAvailability}
+                error={availabilityError}
+                onEdit={handleEditAvailability}
+                onSave={handleSaveAvailability}
                 onToggleSlot={toggleTimeSlot}
               />
             )}
