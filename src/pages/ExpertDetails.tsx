@@ -26,7 +26,7 @@ export default function ExpertDetails() {
 
   if (!expert) {
     return (
-      <div className="min-h-screen bg-gray-50 px-4 sm:px-5">
+      <div className="min-h-screen bg-white px-4 sm:px-5">
         <ResponsiveNavbar />
         <div className="max-w-6xl mx-auto py-6 sm:py-8">
           <button
@@ -62,7 +62,7 @@ export default function ExpertDetails() {
     .join(", ");
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 sm:px-5">
+    <div className="min-h-screen bg-white px-4 sm:px-5">
       <ResponsiveNavbar />
       <div className="max-w-6xl mx-auto py-6 sm:py-8">
         {/* Back Button */}
@@ -86,7 +86,7 @@ export default function ExpertDetails() {
                 backgroundSize: '40px 40px'
               }}></div>
             </div>
-            
+
             <div className="relative p-6 sm:p-8 md:p-10 text-white">
               <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-center md:items-start">
                 {/* Avatar */}
@@ -112,7 +112,7 @@ export default function ExpertDetails() {
                     </ImageViewer>
                   </div>
                 </div>
-                
+
                 {/* Profile Info */}
                 <div className="flex-1 text-center md:text-left w-full space-y-4">
                   {/* Name and Title */}
@@ -124,7 +124,7 @@ export default function ExpertDetails() {
                       {formattedTitle}
                     </p>
                   </div>
-                  
+
                   {/* Rating and Experience */}
                   <div className="flex flex-col sm:flex-row items-center sm:items-center gap-3 sm:gap-4 flex-wrap justify-center md:justify-start">
                     {/* Rating Badge */}
@@ -142,12 +142,12 @@ export default function ExpertDetails() {
                         </span>
                       </div>
                     </div>
-                    
+
                     {/* Experience Badge */}
                     <div className="flex items-center gap-2 bg-white/15 backdrop-blur-md px-4 py-2.5 rounded-xl border border-white/30 shadow-lg">
                       <Award size={18} className="shrink-0" />
                       <span style={{ fontSize: '16px' }}>
-                        {expert.yearsOfExperience}+ years
+                        {expert.yearsOfExperience}+ years of experience
                       </span>
                     </div>
                   </div>
@@ -230,7 +230,7 @@ export default function ExpertDetails() {
                       </h3>
                     </div>
                     <p className="text-gray-700 font-medium" style={{ fontSize: 'clamp(16px, 1rem, 20.8px)' }}>
-                      {expert.yearsOfExperience}+ years
+                      Experience {expert.yearsOfExperience}+ years of experience
                     </p>
                   </div>
                 </div>

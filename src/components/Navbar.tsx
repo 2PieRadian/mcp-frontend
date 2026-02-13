@@ -273,7 +273,7 @@ export default function Navbar() {
                   <img
                     src={user.avatarUrl}
                     alt={user.name || "Profile"}
-                    className="w-[22px] h-[22px] sm:w-[26px] sm:h-[26px] rounded-full object-cover transition-transform duration-200 hover:scale-110 cursor-pointer"
+                    className="w-[32px] h-[32px] sm:w-[40px] sm:h-[40px] rounded-full object-cover transition-transform duration-200 hover:scale-110 cursor-pointer"
                   />
                 </Link>
               ) : (
@@ -286,8 +286,8 @@ export default function Navbar() {
                   aria-label="Profile"
                 >
                   <UserCircle2
-                    size={22}
-                    className={`sm:w-[26px] sm:h-[26px] transition-colors ${location.pathname.startsWith("/profile")
+                    size={32}
+                    className={`sm:w-[40px] sm:h-[40px] transition-colors ${location.pathname.startsWith("/profile")
                       ? "text-white"
                       : "text-logo-heading group-hover:text-white"
                       }`}
