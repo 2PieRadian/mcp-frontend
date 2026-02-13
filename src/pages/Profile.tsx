@@ -1,9 +1,10 @@
 import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
+import ImageViewer from "../components/ImageViewer";
 import { lazy, useState, useRef } from "react";
 import useScrollToTop from "../hooks/useScrollToTop";
-import { AlertTriangle, X, Camera, CheckCircle2, XCircle } from "lucide-react";
+import { AlertTriangle, X, CheckCircle2, XCircle, Eye, Upload } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { BACKEND_URL } from "../lib/api";
 
@@ -26,6 +27,8 @@ export default function Profile() {
   const { t } = useTranslation("profile");
   const [imageError, setImageError] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [showProfileImageModal, setShowProfileImageModal] = useState(false);
+  const [showImageViewer, setShowImageViewer] = useState(false);
   const [isUploadingImage, setIsUploadingImage] = useState(false);
   const [toast, setToast] = useState<{
     show: boolean;
@@ -62,7 +65,17 @@ export default function Profile() {
     setImageError(true);
   };
 
-  const handleImageUploadClick = () => {
+  const handleImageClick = () => {
+    setShowProfileImageModal(true);
+  };
+
+  const handleViewProfilePicture = () => {
+    setShowProfileImageModal(false);
+    setShowImageViewer(true);
+  };
+
+  const handleUploadNewImage = () => {
+    setShowProfileImageModal(false);
     fileInputRef.current?.click();
   };
 
@@ -132,7 +145,7 @@ export default function Profile() {
         showToast(
           "error",
           errorData.message ||
-            "Unable to prepare image upload. Please try again later.",
+          "Unable to prepare image upload. Please try again later.",
         );
         return;
       }
@@ -233,7 +246,10 @@ export default function Profile() {
         <section className="bg-linear-to-r from-[hsl(194,27%,21%)] to-[hsl(187,73%,24%)] rounded-[16px] sm:rounded-[20px] p-[16px] sm:p-[28px] text-light-100 shadow-[inset_0px_1px_5px_hsla(0,0%,100%,0.4)] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-[16px] sm:gap-[20px]">
           <div className="flex items-center gap-[12px] sm:gap-[16px] shadow-m-profile rounded-[30px] sm:rounded-[25px] py-[12px] sm:py-[18px] px-[12px] sm:pr-[25px]">
             <div className="relative w-[56px] h-[56px] sm:w-[64px] sm:h-[64px] shrink-0">
-              <div className="w-full h-full rounded-full bg-light-100/10 border border-light-100/40 flex items-center justify-center text-[22px] sm:text-[26px] font-semibold overflow-hidden">
+              <div
+                onClick={handleImageClick}
+                className="w-full h-full rounded-full bg-light-100/10 border border-light-100/40 flex items-center justify-center text-[22px] sm:text-[26px] font-semibold overflow-hidden cursor-pointer transition-transform duration-200 hover:scale-105"
+              >
                 {user.avatarUrl && !imageError ? (
                   <img
                     src={user.avatarUrl}
@@ -245,18 +261,8 @@ export default function Profile() {
                   initial
                 )}
               </div>
-              {/* Upload button overlay */}
-              <button
-                type="button"
-                onClick={handleImageUploadClick}
-                disabled={isUploadingImage}
-                className="absolute inset-0 rounded-full bg-black/50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-200 cursor-pointer disabled:cursor-not-allowed"
-                aria-label={t("uploadProfileImageAria", { ns: "common" })}
-              >
-                <Camera className="text-white" size={24} />
-              </button>
               {isUploadingImage && (
-                <div className="absolute inset-0 rounded-full bg-black/70 flex items-center justify-center">
+                <div className="absolute inset-0 rounded-full bg-black/70 flex items-center justify-center z-10">
                   <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
                 </div>
               )}
@@ -306,13 +312,12 @@ export default function Profile() {
 
       {/* Toast Notification */}
       {toast.show && (
-        <div className="fixed top-4 right-4 z-[100] animate-in slide-in-from-top-2 duration-300">
+        <div className="fixed top-4 right-4 z-50 animate-in slide-in-from-top-2 duration-300">
           <div
-            className={`flex items-center gap-3 px-6 py-4 rounded-xl shadow-2xl backdrop-blur-sm border ${
-              toast.type === "success"
-                ? "bg-green-50/95 border-green-200 text-green-800"
-                : "bg-red-50/95 border-red-200 text-red-800"
-            } max-w-md`}
+            className={`flex items-center gap-3 px-6 py-4 rounded-xl shadow-2xl backdrop-blur-sm border ${toast.type === "success"
+              ? "bg-green-50/95 border-green-200 text-green-800"
+              : "bg-red-50/95 border-red-200 text-red-800"
+              } max-w-md`}
           >
             {toast.type === "success" ? (
               <CheckCircle2 className="text-green-600 shrink-0" size={24} />
@@ -324,11 +329,10 @@ export default function Profile() {
             </p>
             <button
               onClick={() => setToast({ ...toast, show: false })}
-              className={`ml-2 shrink-0 ${
-                toast.type === "success"
-                  ? "text-green-600 hover:text-green-800"
-                  : "text-red-600 hover:text-red-800"
-              } transition-colors`}
+              className={`ml-2 shrink-0 ${toast.type === "success"
+                ? "text-green-600 hover:text-green-800"
+                : "text-red-600 hover:text-red-800"
+                } transition-colors`}
             >
               <X size={18} />
             </button>
@@ -394,6 +398,65 @@ export default function Profile() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Profile Image Options Modal */}
+      {showProfileImageModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          onClick={() => setShowProfileImageModal(false)}
+        >
+          <div
+            className="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setShowProfileImageModal(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
+              aria-label="Close"
+            >
+              <X size={24} />
+            </button>
+
+            {/* Title */}
+            <h2 className="text-xl font-bold text-[#1a2e35] text-center mb-6">
+              Profile Picture
+            </h2>
+
+            {/* Options */}
+            <div className="flex flex-col gap-3">
+              <button
+                onClick={handleViewProfilePicture}
+                disabled={!user.avatarUrl || imageError}
+                className="flex items-center gap-3 px-4 py-3 rounded-[10px] border border-gray-300 text-[#1a2e35] font-medium hover:bg-gray-50 transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                style={{ fontSize: "16px" }}
+              >
+                <Eye size={20} />
+                <span>View profile picture</span>
+              </button>
+              <button
+                onClick={handleUploadNewImage}
+                disabled={isUploadingImage}
+                className="flex items-center gap-3 px-4 py-3 rounded-[10px] border border-gray-300 text-[#1a2e35] font-medium hover:bg-gray-50 transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                style={{ fontSize: "16px" }}
+              >
+                <Upload size={20} />
+                <span>Upload a new image</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Image Viewer */}
+      {showImageViewer && user.avatarUrl && !imageError && (
+        <ImageViewer
+          src={user.avatarUrl}
+          alt={displayName}
+          isOpen={showImageViewer}
+          onClose={() => setShowImageViewer(false)}
+        />
       )}
     </div>
   );

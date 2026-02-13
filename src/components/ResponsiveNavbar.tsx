@@ -50,22 +50,36 @@ export default function ResponsiveNavbar() {
             <div className="flex items-center gap-[7px] shrink-0">
               {/* Profile/Login Button */}
               {user ? (
-                <Link
-                  to="/profile"
-                  className={`group p-[6px] rounded-full border border-border-light transition-colors flex items-center justify-center shrink-0 ${location.pathname.startsWith("/profile")
-                    ? "bg-border-light text-white"
-                    : "hover:bg-border-light hover:text-white"
-                    }`}
-                  aria-label="Profile"
-                >
-                  <UserCircle2
-                    size={22}
-                    className={`sm:w-[26px] sm:h-[26px] transition-colors ${location.pathname.startsWith("/profile")
-                      ? "text-white"
-                      : "text-logo-heading group-hover:text-white"
+                user.avatarUrl ? (
+                  <Link
+                    to="/profile"
+                    className="group flex items-center justify-center shrink-0"
+                    aria-label="Profile"
+                  >
+                    <img
+                      src={user.avatarUrl}
+                      alt={user.name || "Profile"}
+                      className="w-[22px] h-[22px] sm:w-[26px] sm:h-[26px] rounded-full object-cover transition-transform duration-200 hover:scale-110 cursor-pointer"
+                    />
+                  </Link>
+                ) : (
+                  <Link
+                    to="/profile"
+                    className={`group p-[6px] rounded-full border border-border-light transition-colors flex items-center justify-center shrink-0 ${location.pathname.startsWith("/profile")
+                      ? "bg-border-light text-white"
+                      : "hover:bg-border-light hover:text-white"
                       }`}
-                  />
-                </Link>
+                    aria-label="Profile"
+                  >
+                    <UserCircle2
+                      size={22}
+                      className={`sm:w-[26px] sm:h-[26px] transition-colors ${location.pathname.startsWith("/profile")
+                        ? "text-white"
+                        : "text-logo-heading group-hover:text-white"
+                        }`}
+                    />
+                  </Link>
+                )
               ) : (
                 <Link
                   to="/login"
