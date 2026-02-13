@@ -248,7 +248,7 @@ export default function ExpertDetails() {
                   <div className="font-bold text-[#44666C] mb-2" style={{ fontSize: 'clamp(20.8px, 1.3rem, 27px)' }}>
                     ₹{expert.pricePerHour}
                   </div>
-                  <p className="text-gray-600" style={{ fontSize: '14px' }}>per hour consultation</p>
+                  <p className="text-gray-600" style={{ fontSize: '14px' }}>1 hour consultation</p>
                 </div>
 
                 {/* Book Appointment Button */}
