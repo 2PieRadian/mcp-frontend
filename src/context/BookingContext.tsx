@@ -40,14 +40,6 @@ const BookingContext = createContext<BookingContextValue | undefined>(
   undefined
 );
 
-// Helper function to convert DayWithSlots to ISO date string
-// Creates an ISO date string from year, month, date
-function createDateString(dayData: DayWithSlots): string {
-  // Create date in UTC to avoid timezone issues
-  const date = new Date(Date.UTC(dayData.year, dayData.month - 1, dayData.date));
-  return date.toISOString();
-}
-
 export function BookingProvider({ children }: { children: ReactNode }) {
   const [daysWithSlots, setDaysWithSlots] = useState<DayWithSlots[]>([]);
   const [isLoading, setIsLoading] = useState(false);
