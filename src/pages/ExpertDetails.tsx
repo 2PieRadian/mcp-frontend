@@ -88,7 +88,7 @@ export default function ExpertDetails() {
             </div>
 
             <div className="relative p-6 sm:p-8 md:p-10 text-white">
-              <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-center md:items-start">
+              <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-center md:items-center">
                 {/* Avatar */}
                 <div className="shrink-0">
                   <div className="relative">
@@ -242,7 +242,7 @@ export default function ExpertDetails() {
                 <div className="bg-[#E0ECEE] rounded-lg p-4 sm:p-6">
                   <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
                     <h3 className="font-semibold text-[#304048]" style={{ fontSize: 'clamp(16px, 1rem, 20.8px)' }}>
-                      Pricing
+                      Session Fee
                     </h3>
                   </div>
                   <div className="font-bold text-[#44666C] mb-2" style={{ fontSize: 'clamp(20.8px, 1.3rem, 27px)' }}>

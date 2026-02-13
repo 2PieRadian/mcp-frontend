@@ -19,7 +19,7 @@ export default function ImageViewer({
   onClose,
 }: ImageViewerProps) {
   const [internalIsFullscreen, setInternalIsFullscreen] = useState(false);
-  
+
   // Use controlled state if provided, otherwise use internal state
   const isFullscreen = controlledIsOpen !== undefined ? controlledIsOpen : internalIsFullscreen;
   const setIsFullscreen = (value: boolean) => {

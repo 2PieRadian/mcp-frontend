@@ -211,7 +211,7 @@ export default function BookingModal({
             </div>
             <button
               onClick={handleClose}
-              className="p-2.5 rounded-xl hover:bg-gray-100 transition-colors cursor-pointer shrink-0"
+              className="p-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 transition-colors cursor-pointer shrink-0"
               aria-label="Close"
             >
               <X size={22} className="text-gray-600" />
@@ -220,52 +220,52 @@ export default function BookingModal({
 
           {/* Content */}
           <div className="flex-1 px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-            {error ? (
-              <div className="text-center py-12">
-                <p className="text-red-600 mb-4 text-base">{error}</p>
-                <button
-                  onClick={() => fetchNext10Days(expertId)}
-                  className="px-6 py-2.5 bg-[#44666C] text-white rounded-xl hover:bg-[#365a62] transition-colors cursor-pointer font-medium"
-                >
-                  Try Again
-                </button>
-              </div>
-            ) : isLoading ? (
-              <div className="flex items-center justify-center py-16">
-                <Loader2 className="w-8 h-8 text-[#44666C] animate-spin" />
-                <span className="ml-3 text-gray-600">Loading availability...</span>
-              </div>
-            ) : daysWithSlots.length === 0 ? (
-              <div className="text-center py-16">
-                <Calendar className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-600 font-medium text-lg">No available dates</p>
-                <p className="text-gray-500 mt-1">This expert hasn't configured their availability yet.</p>
-              </div>
-            ) : (
-              <div className="max-w-4xl mx-auto space-y-8">
-                {/* What would you like help with? */}
-                <section>
-                  <h3 className="text-[#304048] font-semibold text-lg mb-1">
-                    What would you like help with?
-                  </h3>
-                  <p className="text-gray-500 text-sm mb-3">
-                    Share a few details so we can better understand your situation.
-                  </p>
-                  <textarea
-                    value={helpWith}
-                    onChange={(e) => setHelpWith(e.target.value)}
-                    placeholder="Describe your concern or what you'd like to work on..."
-                    className="w-full min-h-[120px] px-4 py-3 rounded-xl border border-gray-200 focus:border-[#44666C] focus:ring-2 focus:ring-[#44666C]/20 outline-none transition-all resize-y text-[#304048] placeholder-gray-400"
-                    rows={4}
-                  />
-                </section>
+            <div className="max-w-4xl mx-auto space-y-8">
+              {/* What would you like help with? */}
+              <section>
+                <h3 className="text-[#304048] font-semibold text-lg mb-1">
+                  What would you like help with?
+                </h3>
+                <p className="text-gray-500 text-sm mb-3">
+                  Share a few details so we can better understand your situation.
+                </p>
+                <textarea
+                  value={helpWith}
+                  onChange={(e) => setHelpWith(e.target.value)}
+                  placeholder="Describe your concern or what you'd like to work on..."
+                  className="w-full min-h-[120px] px-4 py-3 rounded-xl border border-gray-200 focus:border-[#44666C] focus:ring-2 focus:ring-[#44666C]/20 outline-none resize-y text-[#304048] placeholder-gray-400"
+                  rows={4}
+                />
+              </section>
 
-                {/* Select Date */}
-                <section>
-                  <h3 className="font-semibold text-[#304048] mb-4 flex items-center gap-2">
-                    <Calendar className="w-5 h-5 text-[#44666C]" />
-                    Select Date
-                  </h3>
+              {/* Select Date */}
+              <section>
+                <h3 className="font-semibold text-[#304048] mb-4 flex items-center gap-2">
+                  <Calendar className="w-5 h-5 text-[#44666C]" />
+                  Select Date
+                </h3>
+                {isLoading ? (
+                  <div className="flex items-center justify-center py-12 border-2 border-dashed border-gray-200 rounded-xl">
+                    <Loader2 className="w-8 h-8 text-[#44666C] animate-spin" />
+                    <span className="ml-3 text-gray-600">Loading dates...</span>
+                  </div>
+                ) : error ? (
+                  <div className="text-center py-12 border-2 border-dashed border-gray-200 rounded-xl">
+                    <p className="text-red-600 mb-4 text-base">{error}</p>
+                    <button
+                      onClick={() => fetchNext10Days(expertId)}
+                      className="px-6 py-2.5 bg-[#44666C] text-white rounded-xl hover:bg-[#365a62] transition-colors cursor-pointer font-medium"
+                    >
+                      Try Again
+                    </button>
+                  </div>
+                ) : daysWithSlots.length === 0 ? (
+                  <div className="text-center py-12 border-2 border-dashed border-gray-200 rounded-xl">
+                    <Calendar className="w-12 h-12 text-gray-400 mx-auto mb-3" />
+                    <p className="text-gray-600 font-medium">No available dates</p>
+                    <p className="text-gray-500 text-sm mt-1">This expert hasn't configured their availability yet.</p>
+                  </div>
+                ) : (
                   <div className="overflow-x-auto pb-2 -mx-1 px-1">
                     <div className="flex gap-3 min-w-max">
                       {daysWithSlots.map((dayData, index) => {
@@ -301,94 +301,99 @@ export default function BookingModal({
                       })}
                     </div>
                   </div>
-                </section>
+                )}
+              </section>
 
-                {/* Select Time */}
-                <section>
-                  <h3 className="font-semibold text-[#304048] mb-4 flex items-center gap-2">
-                    <Clock className="w-5 h-5 text-[#44666C]" />
-                    Select Time
-                  </h3>
-                  {selectedDateIndex === null ? (
-                    <div className="text-center py-12 border-2 border-dashed border-gray-200 rounded-xl">
-                      <Clock className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-                      <p className="text-gray-600">Select a date to see available times</p>
-                    </div>
-                  ) : !selectedDayData || selectedDayData.slots.length === 0 ? (
-                    <div className="text-center py-12 border-2 border-dashed border-gray-200 rounded-xl">
-                      <p className="text-gray-600">No available slots for this date</p>
-                    </div>
-                  ) : (
-                    <div className="overflow-x-auto pb-2 -mx-1 px-1">
-                      <div className="flex gap-3 min-w-max">
-                        {selectedDayData.slots.map((slot) => {
-                          const isSelected = selectedSlot === slot.availabilityId;
-                          return (
-                            <button
-                              key={slot.availabilityId}
-                              onClick={() => setSelectedSlot(slot.availabilityId)}
-                              className={`relative shrink-0 min-w-[160px] sm:min-w-[180px] text-left p-4 pr-10 rounded-xl border-2 transition-all cursor-pointer ${isSelected
-                                ? "border-[#44666C] bg-[#E0ECEE] shadow-md"
-                                : "border-gray-200 hover:border-[#44666C]/50 hover:bg-gray-50"
-                                }`}
-                            >
-                              {isSelected && (
-                                <div className="absolute top-2 right-2 bg-[#44666C] rounded-full p-1 pointer-events-none">
-                                  <Check className="w-3 h-3 text-white" strokeWidth={3} />
-                                </div>
-                              )}
-                              <p className="font-semibold text-[#304048] text-base leading-tight">
-                                {formatTime(slot.startTime, selectedDayData)}
-                                <span className="font-normal text-gray-500 mx-1.5">to</span>
-                                {formatTime(slot.endTime, selectedDayData)}
-                              </p>
-                              <p className="text-gray-500 text-sm mt-2">1 hr session</p>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
-                </section>
-
-                {/* How would you like to connect? */}
-                <section className="pb-8 sm:pb-10">
-                  <h3 className="font-semibold text-[#304048] mb-4">
-                    How would you like to connect?
-                  </h3>
-                  <div className="grid grid-cols-3 gap-3">
-                    {(
-                      [
-                        { id: "call" as ConnectionType, label: "Call", icon: Phone },
-                        { id: "video" as ConnectionType, label: "Video", icon: Video },
-                        { id: "chat" as ConnectionType, label: "Chat", icon: MessageCircle },
-                      ] as const
-                    ).map(({ id, label, icon: Icon }) => {
-                      const isSelected = connectionType === id;
-                      return (
-                        <button
-                          key={id}
-                          onClick={() => setConnectionType(id)}
-                          className={`flex flex-col items-center justify-center gap-2 p-4 sm:p-5 rounded-xl border-2 transition-all cursor-pointer ${isSelected
-                            ? "border-[#44666C] bg-[#E0ECEE] shadow-md"
-                            : "border-gray-200 hover:border-[#44666C]/50 hover:bg-gray-50"
-                            }`}
-                        >
-                          <div
-                            className={`p-2.5 rounded-xl ${isSelected ? "bg-[#44666C] text-white" : "bg-gray-100 text-gray-600"}`}
-                          >
-                            <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
-                          </div>
-                          <span className={`font-medium text-sm sm:text-base ${isSelected ? "text-[#44666C]" : "text-gray-700"}`}>
-                            {label}
-                          </span>
-                        </button>
-                      );
-                    })}
+              {/* Select Time */}
+              <section>
+                <h3 className="font-semibold text-[#304048] mb-4 flex items-center gap-2">
+                  <Clock className="w-5 h-5 text-[#44666C]" />
+                  Select Time
+                </h3>
+                {isLoading ? (
+                  <div className="flex items-center justify-center py-12 border-2 border-dashed border-gray-200 rounded-xl">
+                    <Loader2 className="w-8 h-8 text-[#44666C] animate-spin" />
+                    <span className="ml-3 text-gray-600">Loading times...</span>
                   </div>
-                </section>
-              </div>
-            )}
+                ) : selectedDateIndex === null ? (
+                  <div className="text-center py-12 border-2 border-dashed border-gray-200 rounded-xl">
+                    <Clock className="w-12 h-12 text-gray-400 mx-auto mb-3" />
+                    <p className="text-gray-600">Select a date to see available times</p>
+                  </div>
+                ) : !selectedDayData || selectedDayData.slots.length === 0 ? (
+                  <div className="text-center py-12 border-2 border-dashed border-gray-200 rounded-xl">
+                    <p className="text-gray-600">No available slots for this date</p>
+                  </div>
+                ) : (
+                  <div className="overflow-x-auto pb-2 -mx-1 px-1">
+                    <div className="flex gap-3 min-w-max">
+                      {selectedDayData.slots.map((slot) => {
+                        const isSelected = selectedSlot === slot.availabilityId;
+                        return (
+                          <button
+                            key={slot.availabilityId}
+                            onClick={() => setSelectedSlot(slot.availabilityId)}
+                            className={`relative shrink-0 min-w-[160px] sm:min-w-[180px] text-left p-4 pr-10 rounded-xl border-2 transition-all cursor-pointer ${isSelected
+                              ? "border-[#44666C] bg-[#E0ECEE] shadow-md"
+                              : "border-gray-200 hover:border-[#44666C]/50 hover:bg-gray-50"
+                              }`}
+                          >
+                            {isSelected && (
+                              <div className="absolute top-2 right-2 bg-[#44666C] rounded-full p-1 pointer-events-none">
+                                <Check className="w-3 h-3 text-white" strokeWidth={3} />
+                              </div>
+                            )}
+                            <p className="font-semibold text-[#304048] text-base leading-tight">
+                              {formatTime(slot.startTime, selectedDayData)}
+                              <span className="font-normal text-gray-500 mx-1.5">to</span>
+                              {formatTime(slot.endTime, selectedDayData)}
+                            </p>
+                            <p className="text-gray-500 text-sm mt-2">1 hr session</p>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </section>
+
+              {/* How would you like to connect? */}
+              <section className="pb-8 sm:pb-10">
+                <h3 className="font-semibold text-[#304048] mb-4">
+                  How would you like to connect?
+                </h3>
+                <div className="grid grid-cols-3 gap-3">
+                  {(
+                    [
+                      { id: "call" as ConnectionType, label: "Call", icon: Phone },
+                      { id: "video" as ConnectionType, label: "Video", icon: Video },
+                      { id: "chat" as ConnectionType, label: "Chat", icon: MessageCircle },
+                    ] as const
+                  ).map(({ id, label, icon: Icon }) => {
+                    const isSelected = connectionType === id;
+                    return (
+                      <button
+                        key={id}
+                        onClick={() => setConnectionType(id)}
+                        className={`flex flex-col items-center justify-center gap-2 p-4 sm:p-5 rounded-xl border-2 transition-all cursor-pointer ${isSelected
+                          ? "border-[#44666C] bg-[#E0ECEE] shadow-md"
+                          : "border-gray-200 hover:border-[#44666C]/50 hover:bg-gray-50"
+                          }`}
+                      >
+                        <div
+                          className={`p-2.5 rounded-xl ${isSelected ? "bg-[#44666C] text-white" : "bg-gray-100 text-gray-600"}`}
+                        >
+                          <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
+                        </div>
+                        <span className={`font-medium text-sm sm:text-base ${isSelected ? "text-[#44666C]" : "text-gray-700"}`}>
+                          {label}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </section>
+            </div>
           </div>
 
           {/* Footer - pricing and booking */}
