@@ -35,8 +35,7 @@ export default function ExpertsDashboard() {
     useState<WeeklyAvailability>(availability);
   const [isEditingAvailability, setIsEditingAvailability] = useState(false);
   const [isSavingAvailability, setIsSavingAvailability] = useState(false);
-  const [totalEarnings, setTotalEarnings] = useState(0);
-  const [monthlyEarnings, setMonthlyEarnings] = useState(0);
+  const [expertEarnings, setExpertEarnings] = useState<number | undefined>(undefined);
 
   // Sync local availability with context availability when it changes
   useEffect(() => {
@@ -49,6 +48,43 @@ export default function ExpertsDashboard() {
       navigate("/");
     }
   }, [user, navigate]);
+
+  // Fetch expert data to get earnings
+  useEffect(() => {
+    const fetchExpertData = async () => {
+      if (!user?.expertId) return;
+
+      try {
+        const token = window.localStorage.getItem("auth:token");
+        if (!token) return;
+
+        const response = await fetch(
+          `${BACKEND_URL}/api/v1/expert/get-expert/${user.expertId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          console.error("Failed to fetch expert data");
+          return;
+        }
+
+        const data = await response.json();
+        const expert = data?.expert || data;
+
+        if (expert?.earnings !== undefined) {
+          setExpertEarnings(expert.earnings);
+        }
+      } catch (error) {
+        console.error("Error fetching expert data:", error);
+      }
+    };
+
+    fetchExpertData();
+  }, [user?.expertId]);
 
   // Mock data - replace with actual API calls
   useEffect(() => {
@@ -86,9 +122,6 @@ export default function ExpertsDashboard() {
         amountPaid: 2000,
       },
     ]);
-
-    setTotalEarnings(125000);
-    setMonthlyEarnings(25000);
   }, []);
 
   const toggleTimeSlot = (day: string, slot: string) => {
@@ -248,8 +281,7 @@ export default function ExpertsDashboard() {
 
             {activeTab === "earnings" && (
               <EarningsTab
-                totalEarnings={totalEarnings}
-                monthlyEarnings={monthlyEarnings}
+                totalEarnings={expertEarnings ?? 0}
               />
             )}
           </div>

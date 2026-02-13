@@ -19,6 +19,7 @@ export type ApiExpert = {
   pricePerHour: number;
   rating: number;
   totalReviews: number;
+  earnings?: number;
   user: ApiUser;
   expertSpecializations?: Array<{
     specialization: {
