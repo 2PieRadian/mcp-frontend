@@ -8,6 +8,7 @@ import PrimaryButton from "./PrimaryButton";
 import ErrorMessage from "./ErrorMessage";
 import FormFooterLink from "./FormFooterLink";
 import AuthImage from "./AuthImage";
+import ForgotPasswordModal from "./ForgotPasswordModal";
 import { BACKEND_URL, getAvatarUrl } from "../lib/api";
 
 export default function LoginForm() {
@@ -18,6 +19,7 @@ export default function LoginForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
 
   const handleLogin = async (event?: React.FormEvent<HTMLFormElement>) => {
     if (event) {
@@ -119,9 +121,13 @@ export default function LoginForm() {
               />
             </div>
 
-            <p className="text-[clamp(13px,2vw,15px)] font-semibold text-light-text text-right mt-[10px]">
+            <button
+              type="button"
+              onClick={() => setShowForgotPassword(true)}
+              className="text-[clamp(13px,2vw,15px)] font-semibold text-light-text text-right mt-[10px] block ml-auto hover:text-[#44666C] transition-colors cursor-pointer"
+            >
               {t("forgotPassword")}
-            </p>
+            </button>
 
             <ErrorMessage message={error} />
 
@@ -145,6 +151,12 @@ export default function LoginForm() {
       </div>
 
       <AuthImage altTextKey="login" objectPosition="0% 50%" />
+
+      {/* Forgot Password Modal */}
+      <ForgotPasswordModal
+        isOpen={showForgotPassword}
+        onClose={() => setShowForgotPassword(false)}
+      />
     </div>
   );
 }
