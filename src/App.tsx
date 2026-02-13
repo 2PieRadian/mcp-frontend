@@ -4,6 +4,8 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import { ScreenProvider } from "./context/ScreenContext";
 import { ExpertsProvider } from "./context/ExpertsContext";
+import { AvailabilityProvider } from "./context/AvailabilityContext";
+import { BookingProvider } from "./context/BookingContext";
 import SelfAssessment from "./pages/SelfAssessment";
 import SelfAssessmentQuestions from "./pages/SelfAssessmentQuestions";
 import SelfAssessmentResult from "./pages/SelfAssessmentResult";
@@ -41,8 +43,10 @@ export default function App() {
   return (
     <ScreenProvider>
       <ExpertsProvider>
-        {/* ScrollLayout: provides scroll container with smooth scrolling for user actions */}
-        <ScrollLayout>
+        <AvailabilityProvider>
+          <BookingProvider>
+            {/* ScrollLayout: provides scroll container with smooth scrolling for user actions */}
+            <ScrollLayout>
           {/* RouteScrollReset: instantly resets scroll to top on route change */}
           <RouteScrollReset />
 
@@ -159,6 +163,8 @@ export default function App() {
             <Route path="/articles/:slug" element={<ArticleDetail />} />
           </Routes>
         </ScrollLayout>
+          </BookingProvider>
+        </AvailabilityProvider>
       </ExpertsProvider>
     </ScreenProvider>
   );

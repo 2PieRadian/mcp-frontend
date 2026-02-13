@@ -19,14 +19,16 @@ type ExpertCardProps = {
   professionalTitle: string;
 };
 
-type NextSlotResponse = {
-  message: string;
-  slot: {
-    availabilityId: number;
-    startTime: string;
-    endTime: string;
-  } | null;
-};
+type NextSlotResponse =
+  | {
+      day: string; // "MONDAY", "TUESDAY", etc.
+      date: number; // Day of month (1-31)
+      month: number; // Month number (1-12)
+      year: number; // Full year (e.g., 2026)
+      startTime: string; // "HH:mm" format (e.g., "09:00", "21:00")
+      endTime: string; // "HH:mm" format (e.g., "10:00", "22:00")
+    }
+  | null; // null when no slot is found
 
 export default function ExpertCard({
   id,
@@ -43,10 +45,7 @@ export default function ExpertCard({
 }: ExpertCardProps) {
   const { t } = useTranslation("common");
   const navigate = useNavigate();
-  const [nextSlotData, setNextSlotData] = useState<{
-    startTime: string;
-    endTime: string;
-  } | null>(null);
+  const [nextSlotData, setNextSlotData] = useState<NextSlotResponse>(null);
   const [isLoadingNextSlot, setIsLoadingNextSlot] = useState(true);
 
   useEffect(() => {
@@ -64,19 +63,16 @@ export default function ExpertCard({
         );
 
         if (!response.ok) {
-          throw new Error("Failed to fetch next slot");
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(
+            errorData.message || "Failed to fetch next slot"
+          );
         }
 
         const data: NextSlotResponse = await response.json();
 
-        if (data.slot) {
-          setNextSlotData({
-            startTime: data.slot.startTime,
-            endTime: data.slot.endTime,
-          });
-        } else {
-          setNextSlotData(null);
-        }
+        // API returns null when no slot is found, or an object when a slot exists
+        setNextSlotData(data);
       } catch (error) {
         console.error("Error fetching next slot:", error);
         setNextSlotData(null);
@@ -94,8 +90,20 @@ export default function ExpertCard({
     }
 
     try {
-      const startDate = new Date(nextSlotData.startTime);
-      const endDate = new Date(nextSlotData.endTime);
+      // Construct Date objects from the API response fields
+      // month is 1-12, but Date constructor expects 0-11, so subtract 1
+      const startDate = new Date(
+        nextSlotData.year,
+        nextSlotData.month - 1,
+        nextSlotData.date,
+        ...nextSlotData.startTime.split(":").map(Number)
+      );
+      const endDate = new Date(
+        nextSlotData.year,
+        nextSlotData.month - 1,
+        nextSlotData.date,
+        ...nextSlotData.endTime.split(":").map(Number)
+      );
 
       // Format: "Feb 16, 2026 at 9:00 PM - 10:00 PM"
       const options: Intl.DateTimeFormatOptions = {

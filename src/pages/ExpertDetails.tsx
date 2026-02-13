@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   Star,
@@ -8,6 +9,7 @@ import {
   FileText,
 } from "lucide-react";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
+import BookingModal from "../components/BookingModal";
 import type { ApiExpert } from "../types/experts";
 import { getAvatarUrl } from "../lib/api";
 import useScrollToTop from "../hooks/useScrollToTop";
@@ -16,6 +18,7 @@ export default function ExpertDetails() {
   useScrollToTop();
   const location = useLocation();
   const navigate = useNavigate();
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
 
   // Get expert data from navigation state (passed via props)
   const expert = location.state?.expert as ApiExpert | undefined;
@@ -72,9 +75,9 @@ export default function ExpertDetails() {
         {/* Main Content */}
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           {/* Header Section */}
-          <div className="bg-gradient-to-r from-[#44666C] to-[#365a62] p-8 text-white">
+          <div className="bg-linear-to-r from-[#44666C] to-[#365a62] p-8 text-white">
             <div className="flex flex-col md:flex-row gap-6 items-start">
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 <img
                   src={
                     getAvatarUrl(expert.user.avatar) ||
@@ -205,10 +208,7 @@ export default function ExpertDetails() {
 
                 {/* Book Appointment Button */}
                 <button
-                  onClick={() => {
-                    // TODO: Implement booking functionality
-                    alert("Booking functionality coming soon!");
-                  }}
+                  onClick={() => setIsBookingModalOpen(true)}
                   className="w-full bg-[#44666C] hover:bg-[#365a62] text-white font-semibold py-4 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transform hover:-translate-y-1 cursor-pointer"
                 >
                   <Calendar size={20} />
@@ -219,6 +219,17 @@ export default function ExpertDetails() {
           </div>
         </div>
       </div>
+
+      {/* Booking Modal */}
+      {expert && (
+        <BookingModal
+          isOpen={isBookingModalOpen}
+          onClose={() => setIsBookingModalOpen(false)}
+          expertId={expert.id}
+          expertName={formattedName}
+          expertPrice={expert.pricePerHour}
+        />
+      )}
     </div>
   );
 }
