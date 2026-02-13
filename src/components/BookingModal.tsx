@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import { X, Calendar, Clock, Loader2, Check } from "lucide-react";
+import { X, Calendar, Clock, Loader2, Check, Phone, Video, MessageCircle } from "lucide-react";
 import { useBooking } from "../context/BookingContext";
+import gsap from "gsap";
+
+type ConnectionType = "call" | "video" | "chat";
 
 type BookingModalProps = {
   isOpen: boolean;
@@ -28,7 +31,54 @@ export default function BookingModal({
 
   const [selectedDateIndex, setSelectedDateIndex] = useState<number | null>(null);
   const [selectedSlot, setSelectedSlot] = useState<number | null>(null);
-  const modalRef = useRef<HTMLDivElement>(null);
+  const [helpWith, setHelpWith] = useState("");
+  const [connectionType, setConnectionType] = useState<ConnectionType | null>(null);
+  const backdropRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const [isClosing, setIsClosing] = useState(false);
+  const isVisible = isOpen || isClosing;
+
+  // GSAP open animation when isOpen becomes true
+  useEffect(() => {
+    if (!isOpen || !backdropRef.current || !panelRef.current) return;
+    setIsClosing(false);
+    document.body.style.overflow = "hidden";
+    gsap.set(backdropRef.current, { opacity: 0 });
+    gsap.set(panelRef.current, { opacity: 0, y: 24, scale: 0.98 });
+    gsap.to(backdropRef.current, {
+      opacity: 1,
+      duration: 0.25,
+      ease: "power2.out",
+    });
+    gsap.to(panelRef.current, {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      duration: 0.35,
+      ease: "power2.out",
+      overwrite: true,
+    });
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isClosing || !backdropRef.current || !panelRef.current) return;
+    gsap.to(backdropRef.current, {
+      opacity: 0,
+      duration: 0.2,
+      ease: "power2.in",
+    });
+    gsap.to(panelRef.current, {
+      opacity: 0,
+      y: 24,
+      scale: 0.98,
+      duration: 0.25,
+      ease: "power2.in",
+      onComplete: () => {
+        setIsClosing(false);
+        document.body.style.overflow = "unset";
+      },
+    });
+  }, [isClosing]);
 
   // Fetch all days with slots when modal opens
   useEffect(() => {
@@ -38,63 +88,35 @@ export default function BookingModal({
     }
   }, [isOpen, expertId, currentExpertId, fetchNext10Days, setCurrentExpertId]);
 
-  // Close modal on outside click
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        modalRef.current &&
-        !modalRef.current.contains(event.target as Node)
-      ) {
-        onClose();
-      }
-    }
+  const handleClose = () => {
+    setIsClosing(true);
+    onClose();
+  };
 
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-      document.body.style.overflow = "hidden"; // Prevent background scroll
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      document.body.style.overflow = "unset";
-    };
-  }, [isOpen, onClose]);
+  // Close modal on outside click (click on backdrop)
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) handleClose();
+  };
 
   // Close on Escape key
   useEffect(() => {
     function handleEscape(event: KeyboardEvent) {
-      if (event.key === "Escape" && isOpen) {
-        onClose();
-      }
+      if (event.key === "Escape" && isOpen) handleClose();
     }
-
     document.addEventListener("keydown", handleEscape);
     return () => document.removeEventListener("keydown", handleEscape);
-  }, [isOpen, onClose]);
-
-  if (!isOpen) return null;
+  }, [isOpen]);
 
   const getDayName = (dayData: { year: number; month: number; date: number }): string => {
-    // Create a date object from year, month, date
     const date = new Date(dayData.year, dayData.month - 1, dayData.date);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
-
-    // Compare dates (using local timezone for user-friendly display)
     const dateOnly = new Date(date);
     dateOnly.setHours(0, 0, 0, 0);
-
-    if (dateOnly.getTime() === today.getTime()) {
-      return "Today";
-    }
-
-    if (dateOnly.getTime() === tomorrow.getTime()) {
-      return "Tomorrow";
-    }
-
-    // Return day of week
+    if (dateOnly.getTime() === today.getTime()) return "Today";
+    if (dateOnly.getTime() === tomorrow.getTime()) return "Tomorrow";
     const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     return weekdays[date.getDay()];
   };
@@ -110,36 +132,22 @@ export default function BookingModal({
     timeString: string,
     dayData?: { year: number; month: number; date: number }
   ): string => {
-    // timeString is in HH:mm format (e.g., "09:00")
     const [hours, minutes] = timeString.split(":").map(Number);
-
-    // If dayData is provided, combine them for display
     if (dayData) {
       const dateTime = new Date(dayData.year, dayData.month - 1, dayData.date, hours, minutes);
-      return dateTime.toLocaleTimeString("en-US", {
-        hour: "numeric",
-        minute: "2-digit",
-        hour12: true,
-      });
+      return dateTime.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true });
     }
-
-    // Just format the time string (HH:mm -> 12-hour format)
     const date = new Date();
     date.setHours(hours, minutes, 0, 0);
-    return date.toLocaleTimeString("en-US", {
-      hour: "numeric",
-      minute: "2-digit",
-      hour12: true,
-    });
+    return date.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true });
   };
 
   const formatDateForDisplay = (dayData: { year: number; month: number; date: number }): string => {
     const months = [
       "January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"
+      "July", "August", "September", "October", "November", "December",
     ];
-    const monthName = months[dayData.month - 1];
-    return `${monthName} ${dayData.date}, ${dayData.year}`;
+    return `${months[dayData.month - 1]} ${dayData.date}, ${dayData.year}`;
   };
 
   const selectedDayData =
@@ -147,272 +155,289 @@ export default function BookingModal({
 
   const handleDateSelect = (index: number) => {
     setSelectedDateIndex(index);
-    setSelectedSlot(null); // Reset slot selection when date changes
+    setSelectedSlot(null);
   };
 
   const handleBook = () => {
     if (selectedDateIndex === null || selectedSlot === null || !selectedDayData) return;
-
-    const slot = selectedDayData.slots.find(
-      (s) => s.availabilityId === selectedSlot
-    );
-
+    const slot = selectedDayData.slots.find((s) => s.availabilityId === selectedSlot);
     if (slot) {
-      // TODO: Implement actual booking logic
-      console.log("Booking slot:", {
+      console.log("Booking:", {
         expertId,
+        helpWith,
+        connectionType,
         dayData: selectedDayData,
         slot,
       });
       alert(
-        `Booking functionality coming soon!\n\nSelected: ${formatDateForDisplay(selectedDayData)} at ${formatTime(slot.startTime, selectedDayData)} - ${formatTime(slot.endTime, selectedDayData)}`
+        `Booking functionality coming soon!\n\nSelected: ${formatDateForDisplay(selectedDayData)} at ${formatTime(slot.startTime, selectedDayData)} - ${formatTime(slot.endTime, selectedDayData)}\nConnect via: ${connectionType || "—"}\nConcern: ${helpWith || "—"}`
       );
-      // onClose();
     }
   };
 
+  const canBook = selectedDateIndex !== null && selectedSlot !== null && connectionType !== null;
+
+  if (!isVisible) return null;
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center" aria-modal="true">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
-        onClick={onClose}
+        ref={backdropRef}
+        className="absolute inset-0 bg-black/50 backdrop-blur-sm cursor-pointer"
+        onClick={handleBackdropClick}
+        aria-hidden="true"
       />
 
-      {/* Modal */}
+      {/* Full-screen modal panel */}
       <div
-        ref={modalRef}
-        className="relative bg-white rounded-xl sm:rounded-2xl shadow-2xl max-w-4xl w-full max-h-[95vh] sm:max-h-[90vh] flex flex-col overflow-hidden transform transition-all"
+        ref={panelRef}
+        className="absolute inset-0 sm:inset-2 md:inset-4 lg:inset-6 bg-white rounded-none sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden cursor-default"
+        onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
-        <div className="bg-linear-to-r from-[#44666C] to-[#365a62] px-4 sm:px-6 py-4 sm:py-5 flex justify-between items-center shrink-0">
-          <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
-            <div className="p-1.5 sm:p-2 bg-white/20 rounded-lg shrink-0">
-              <Calendar className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+        {/* Header - no green */}
+        <div className="border-b border-gray-200 px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center shrink-0 bg-white">
+          <div className="flex items-center gap-3 min-w-0 flex-1">
+            <div className="p-2 bg-gray-100 rounded-xl shrink-0">
+              <Calendar className="w-5 h-5 sm:w-6 sm:h-6 text-[#44666C]" />
             </div>
             <div className="min-w-0">
-              <h2 className="text-base sm:text-xl font-bold text-white truncate" style={{ fontSize: 'clamp(16px, 1rem, 20px)' }}>Book Appointment</h2>
-              <p className="text-sm text-white/80 truncate" style={{ fontSize: '14px' }}>{expertName}</p>
+              <h2 className="text-lg sm:text-xl font-bold text-[#304048] truncate">
+                Schedule Your Session
+              </h2>
+              <p className="text-sm text-gray-500 truncate">{expertName}</p>
             </div>
           </div>
           <button
-            onClick={onClose}
-            className="p-2 hover:bg-white/20 rounded-lg transition-colors cursor-pointer shrink-0 ml-2"
+            onClick={handleClose}
+            className="p-2.5 rounded-xl hover:bg-gray-100 transition-colors cursor-pointer shrink-0"
             aria-label="Close"
           >
-            <X size={20} className="sm:w-6 sm:h-6 text-white" />
+            <X size={22} className="text-gray-600" />
           </button>
         </div>
 
-        {/* Content */}
-        <div className="overflow-y-auto flex-1 px-4 sm:px-6 py-4 sm:py-6">
+        {/* Scrollable content */}
+        <div className="overflow-y-auto flex-1 px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
           {error ? (
-            <div className="text-center py-6 sm:py-8">
-              <p className="text-red-600 mb-4 px-2" style={{ fontSize: '16px' }}>{error}</p>
+            <div className="text-center py-12">
+              <p className="text-red-600 mb-4 text-base">{error}</p>
               <button
                 onClick={() => fetchNext10Days(expertId)}
-                className="px-4 sm:px-6 py-2.5 sm:py-2 bg-[#44666C] text-white rounded-lg hover:bg-[#365a62] transition-colors cursor-pointer font-medium"
-                style={{ fontSize: '16px' }}
+                className="px-6 py-2.5 bg-[#44666C] text-white rounded-xl hover:bg-[#365a62] transition-colors cursor-pointer font-medium"
               >
                 Try Again
               </button>
             </div>
           ) : isLoading ? (
-            <div className="flex items-center justify-center py-8 sm:py-12">
-              <Loader2 className="w-6 h-6 sm:w-8 sm:h-8 text-[#44666C] animate-spin" />
-              <span className="ml-3 text-gray-600" style={{ fontSize: '16px' }}>Loading availability...</span>
+            <div className="flex items-center justify-center py-16">
+              <Loader2 className="w-8 h-8 text-[#44666C] animate-spin" />
+              <span className="ml-3 text-gray-600">Loading availability...</span>
             </div>
           ) : daysWithSlots.length === 0 ? (
-            <div className="text-center py-8 sm:py-12">
-              <Calendar className="w-12 h-12 sm:w-16 sm:h-16 text-gray-400 mx-auto mb-3 sm:mb-4" />
-              <p className="text-gray-600 mb-2 font-medium" style={{ fontSize: 'clamp(16px, 1rem, 20.8px)' }}>
-                No available dates
-              </p>
-              <p className="text-gray-500 px-4" style={{ fontSize: '16px' }}>
-                This expert hasn't configured their availability yet.
-              </p>
+            <div className="text-center py-16">
+              <Calendar className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+              <p className="text-gray-600 font-medium text-lg">No available dates</p>
+              <p className="text-gray-500 mt-1">This expert hasn't configured their availability yet.</p>
             </div>
           ) : (
-            <div className="space-y-5 sm:space-y-6">
-              {/* Date Selection - Horizontal Scrollable */}
-              <div>
-                <h3 className="font-semibold text-[#304048] mb-3 sm:mb-4 flex items-center gap-2" style={{ fontSize: 'clamp(16px, 1rem, 20.8px)' }}>
-                  <Calendar className="w-4 h-4 sm:w-5 sm:h-5" />
+            <div className="max-w-3xl mx-auto space-y-8">
+              {/* What would you like help with? */}
+              <section>
+                <h3 className="text-[#304048] font-semibold text-lg mb-1">
+                  What would you like help with?
+                </h3>
+                <p className="text-gray-500 text-sm mb-3">
+                  Share a few details so we can better understand your situation.
+                </p>
+                <textarea
+                  value={helpWith}
+                  onChange={(e) => setHelpWith(e.target.value)}
+                  placeholder="Describe your concern or what you'd like to work on..."
+                  className="w-full min-h-[120px] px-4 py-3 rounded-xl border border-gray-200 focus:border-[#44666C] focus:ring-2 focus:ring-[#44666C]/20 outline-none transition-all resize-y text-[#304048] placeholder-gray-400"
+                  rows={4}
+                />
+              </section>
+
+              {/* Select Date */}
+              <section>
+                <h3 className="font-semibold text-[#304048] mb-4 flex items-center gap-2">
+                  <Calendar className="w-5 h-5 text-[#44666C]" />
                   Select Date
                 </h3>
-                <div className="overflow-x-auto pb-2 -mx-1 sm:-mx-2 px-1 sm:px-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
-                  <div className="flex gap-2.5 sm:gap-3 min-w-max">
+                <div className="overflow-x-auto pb-2 -mx-1 px-1">
+                  <div className="flex gap-3 min-w-max">
                     {daysWithSlots.map((dayData, index) => {
                       const isSelected = selectedDateIndex === index;
                       return (
                         <button
                           key={`${dayData.year}-${dayData.month}-${dayData.date}`}
                           onClick={() => handleDateSelect(index)}
-                          className={`relative shrink-0 w-[140px] sm:w-[160px] text-center p-4 sm:p-5 rounded-xl border-2 transition-all cursor-pointer ${isSelected
+                          className={`relative shrink-0 w-[140px] sm:w-[160px] text-center p-5 rounded-xl border-2 transition-all cursor-pointer ${isSelected
                             ? "border-[#44666C] bg-[#E0ECEE] shadow-lg ring-2 ring-[#44666C]/20"
-                            : "border-gray-200 hover:border-[#44666C]/50 hover:bg-gray-50 active:bg-gray-100"
+                            : "border-gray-200 hover:border-[#44666C]/50 hover:bg-gray-50"
                             }`}
                         >
-                          {/* Checkmark in top-right corner */}
                           {isSelected && (
-                            <div className="absolute top-2 right-2 bg-[#44666C] rounded-full p-1 shadow-sm">
-                              <Check className="w-3 h-3 text-white shrink-0" strokeWidth={3} />
+                            <div className="absolute top-2 right-2 bg-[#44666C] rounded-full p-1">
+                              <Check className="w-3 h-3 text-white" strokeWidth={3} />
                             </div>
                           )}
-
-                          <div className="flex flex-col items-center">
-                            {/* Day of week */}
-                            <p className={`uppercase tracking-wider mb-3 ${isSelected ? 'text-[#44666C]' : 'text-gray-500'}`} style={{ fontSize: '14px', fontWeight: '600' }}>
-                              {getDayName(dayData)}
+                          <p className={`uppercase tracking-wider mb-2 font-semibold text-sm ${isSelected ? "text-[#44666C]" : "text-gray-500"}`}>
+                            {getDayName(dayData)}
+                          </p>
+                          <p className={`text-xl font-bold mb-2 ${isSelected ? "text-[#44666C]" : "text-[#304048]"}`}>
+                            {dayData.date}
+                          </p>
+                          <div className="border-t border-gray-200 pt-2 space-y-0.5">
+                            <p className={`text-sm font-medium ${isSelected ? "text-[#44666C]" : "text-gray-600"}`}>
+                              {getMonthName(dayData.month, true)}
                             </p>
-
-                            {/* Date number - prominent */}
-                            <div className="mb-3">
-                              <span className={`font-bold ${isSelected ? 'text-[#44666C]' : 'text-[#304048]'}`} style={{ fontSize: 'clamp(16px, 1rem, 20.8px)' }}>
-                                {dayData.date}
-                              </span>
-                            </div>
-
-                            {/* Month and year separator */}
-                            <div className="border-t border-gray-200 pt-3 w-full space-y-1">
-                              <p className={`font-medium ${isSelected ? 'text-[#44666C]' : 'text-gray-600'}`} style={{ fontSize: '14px' }}>
-                                {getMonthName(dayData.month, true)}
-                              </p>
-                              <p className="text-gray-500" style={{ fontSize: '14px' }}>
-                                {dayData.year}
-                              </p>
-                            </div>
+                            <p className="text-gray-500 text-sm">{dayData.year}</p>
                           </div>
                         </button>
                       );
                     })}
                   </div>
                 </div>
-              </div>
+              </section>
 
-              {/* Time Slots - Horizontal Scrollable */}
-              <div>
-                <h3 className="font-semibold text-[#304048] mb-3 sm:mb-4 flex items-center gap-2" style={{ fontSize: 'clamp(16px, 1rem, 20.8px)' }}>
-                  <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
+              {/* Select Time */}
+              <section>
+                <h3 className="font-semibold text-[#304048] mb-4 flex items-center gap-2">
+                  <Clock className="w-5 h-5 text-[#44666C]" />
                   Select Time
                 </h3>
                 {selectedDateIndex === null ? (
-                  <div className="text-center py-8 sm:py-12 border-2 border-dashed border-gray-200 rounded-lg">
-                    <Clock className="w-10 h-10 sm:w-12 sm:h-12 text-gray-400 mx-auto mb-2 sm:mb-3" />
-                    <p className="text-gray-600 px-4" style={{ fontSize: '16px' }}>Select a date to see available times</p>
+                  <div className="text-center py-12 border-2 border-dashed border-gray-200 rounded-xl">
+                    <Clock className="w-12 h-12 text-gray-400 mx-auto mb-3" />
+                    <p className="text-gray-600">Select a date to see available times</p>
                   </div>
                 ) : !selectedDayData || selectedDayData.slots.length === 0 ? (
-                  <div className="text-center py-8 sm:py-12 border-2 border-dashed border-gray-200 rounded-lg">
-                    <Clock className="w-10 h-10 sm:w-12 sm:h-12 text-gray-400 mx-auto mb-2 sm:mb-3" />
-                    <p className="text-gray-600 px-4" style={{ fontSize: '16px' }}>No available slots for this date</p>
+                  <div className="text-center py-12 border-2 border-dashed border-gray-200 rounded-xl">
+                    <p className="text-gray-600">No available slots for this date</p>
                   </div>
                 ) : (
-                  <div className="overflow-x-auto pb-2 -mx-1 sm:-mx-2 px-1 sm:px-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
-                    <div className="flex gap-2.5 sm:gap-3 min-w-max">
+                  <div className="overflow-x-auto pb-2 -mx-1 px-1">
+                    <div className="flex gap-3 min-w-max">
                       {selectedDayData.slots.map((slot) => {
                         const isSelected = selectedSlot === slot.availabilityId;
                         return (
                           <button
                             key={slot.availabilityId}
                             onClick={() => setSelectedSlot(slot.availabilityId)}
-                            className={`relative shrink-0 w-[140px] sm:w-[160px] text-left p-3 sm:p-4 rounded-lg border-2 transition-all cursor-pointer ${isSelected
+                            className={`relative shrink-0 min-w-[160px] sm:min-w-[180px] text-left p-4 pr-10 rounded-xl border-2 transition-all cursor-pointer ${isSelected
                               ? "border-[#44666C] bg-[#E0ECEE] shadow-md"
-                              : "border-gray-200 hover:border-[#44666C]/50 hover:bg-gray-50 active:bg-gray-100"
+                              : "border-gray-200 hover:border-[#44666C]/50 hover:bg-gray-50"
                               }`}
                           >
-                            {/* Checkmark in top-right corner */}
                             {isSelected && (
-                              <div className="absolute top-2 right-2 bg-[#44666C] rounded-full p-1 shadow-sm">
-                                <Check className="w-3 h-3 text-white shrink-0" strokeWidth={3} />
+                              <div className="absolute top-2 right-2 bg-[#44666C] rounded-full p-1 pointer-events-none">
+                                <Check className="w-3 h-3 text-white" strokeWidth={3} />
                               </div>
                             )}
-
-                            <div className="flex flex-col pr-6">
-                              <p className="font-semibold text-[#304048] mb-1" style={{ fontSize: '16px' }}>
-                                {formatTime(slot.startTime, selectedDayData)}
-                              </p>
-                              <p className="text-gray-600 leading-tight" style={{ fontSize: '14px' }}>
-                                {formatTime(slot.endTime, selectedDayData)}
-                              </p>
-                              <p className="text-gray-500 mt-1" style={{ fontSize: '14px' }}>
-                                1 hour
-                              </p>
-                            </div>
+                            <p className="font-semibold text-[#304048] text-base leading-tight">
+                              {formatTime(slot.startTime, selectedDayData)}
+                              <span className="font-normal text-gray-500 mx-1.5">to</span>
+                              {formatTime(slot.endTime, selectedDayData)}
+                            </p>
+                            <p className="text-gray-500 text-sm mt-2">1 hr session</p>
                           </button>
                         );
                       })}
                     </div>
                   </div>
                 )}
-              </div>
+              </section>
+
+              {/* How would you like to connect? */}
+              <section>
+                <h3 className="font-semibold text-[#304048] mb-4">
+                  How would you like to connect?
+                </h3>
+                <div className="grid grid-cols-3 gap-3">
+                  {(
+                    [
+                      { id: "call" as ConnectionType, label: "Call", icon: Phone },
+                      { id: "video" as ConnectionType, label: "Video", icon: Video },
+                      { id: "chat" as ConnectionType, label: "Chat", icon: MessageCircle },
+                    ] as const
+                  ).map(({ id, label, icon: Icon }) => {
+                    const isSelected = connectionType === id;
+                    return (
+                      <button
+                        key={id}
+                        onClick={() => setConnectionType(id)}
+                        className={`flex flex-col items-center justify-center gap-2 p-4 sm:p-5 rounded-xl border-2 transition-all cursor-pointer ${isSelected
+                          ? "border-[#44666C] bg-[#E0ECEE] shadow-md"
+                          : "border-gray-200 hover:border-[#44666C]/50 hover:bg-gray-50"
+                          }`}
+                      >
+                        <div
+                          className={`p-2.5 rounded-xl ${isSelected ? "bg-[#44666C] text-white" : "bg-gray-100 text-gray-600"}`}
+                        >
+                          <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
+                        </div>
+                        <span className={`font-medium text-sm sm:text-base ${isSelected ? "text-[#44666C]" : "text-gray-700"}`}>
+                          {label}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </section>
             </div>
           )}
         </div>
 
-        {/* Footer */}
-        <div className="border-t border-gray-200 px-4 sm:px-6 py-4 bg-gray-50 shrink-0">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div className="min-w-0 flex-1">
+        {/* Footer - pricing and booking */}
+        <div className="border-t border-gray-200 px-4 sm:px-6 lg:px-8 py-4 sm:py-5 bg-gray-50 shrink-0">
+          <div className="max-w-3xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="min-w-0 flex-1 flex items-center justify-between gap-4">
               {selectedDateIndex !== null && selectedSlot !== null && selectedDayData && (
-                <div className="space-y-2">
-                  {/* Date */}
-                  <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4 text-[#44666C] shrink-0" />
-                    <p className="font-semibold text-[#304048]" style={{ fontSize: '16px' }}>
+                <>
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm sm:text-base min-w-0">
+                    <span className="font-semibold text-[#304048]">
                       {formatDateForDisplay(selectedDayData)}
-                    </p>
-                  </div>
-
-                  {/* Time */}
-                  {selectedDayData.slots.find(
-                    (s) => s.availabilityId === selectedSlot
-                  ) && (
-                      <div className="flex items-center gap-2">
-                        <Clock className="w-4 h-4 text-[#44666C] shrink-0" />
-                        <p className="text-gray-700" style={{ fontSize: '16px' }}>
+                    </span>
+                    {selectedDayData.slots.find((s) => s.availabilityId === selectedSlot) && (
+                      <>
+                        <span className="text-gray-400 shrink-0">·</span>
+                        <span className="text-gray-700">
                           {formatTime(
-                            selectedDayData.slots.find(
-                              (s) => s.availabilityId === selectedSlot
-                            )!.startTime,
+                            selectedDayData.slots.find((s) => s.availabilityId === selectedSlot)!.startTime,
                             selectedDayData
                           )}{" "}
-                          <span className="text-gray-400 mx-1">-</span>{" "}
+                          –{" "}
                           {formatTime(
-                            selectedDayData.slots.find(
-                              (s) => s.availabilityId === selectedSlot
-                            )!.endTime,
+                            selectedDayData.slots.find((s) => s.availabilityId === selectedSlot)!.endTime,
                             selectedDayData
                           )}
-                        </p>
-                      </div>
+                        </span>
+                      </>
                     )}
-
-                  {/* Price */}
-                  <div className="flex items-center gap-2 pt-1">
-                    <span className="text-gray-500" style={{ fontSize: '14px' }}>Price:</span>
-                    <p className="text-[#44666C] font-bold" style={{ fontSize: 'clamp(20.8px, 1.3rem, 27px)' }}>
-                      ₹{expertPrice}
-                    </p>
                   </div>
-                </div>
+                  <div className="shrink-0 text-right">
+                    <span className="text-gray-500 text-sm sm:text-base">Price: </span>
+                    <span className="text-[#44666C] font-bold text-xl sm:text-2xl">₹{expertPrice}</span>
+                  </div>
+                </>
               )}
             </div>
-            <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 w-full sm:w-auto">
+            <div className="flex flex-col-reverse sm:flex-row gap-3 w-full sm:w-auto">
               <button
-                onClick={onClose}
-                className="w-full sm:w-auto px-5 sm:px-6 py-2.5 sm:py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 active:bg-gray-200 transition-colors cursor-pointer font-medium"
-                style={{ fontSize: '16px' }}
+                onClick={handleClose}
+                className="w-full sm:w-auto px-6 py-2.5 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-100 font-medium transition-colors cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 onClick={handleBook}
-                disabled={selectedDateIndex === null || selectedSlot === null}
-                className="w-full sm:w-auto px-5 sm:px-6 py-2.5 sm:py-2 bg-[#44666C] text-white rounded-lg hover:bg-[#365a62] active:bg-[#2d4d54] disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors cursor-pointer font-medium flex items-center justify-center gap-2"
-                style={{ fontSize: '16px' }}
+                disabled={!canBook}
+                className="w-full sm:w-auto px-6 py-2.5 bg-[#44666C] text-white rounded-xl hover:bg-[#365a62] disabled:bg-gray-300 disabled:cursor-not-allowed font-medium flex items-center justify-center gap-2 transition-colors cursor-pointer"
               >
                 <Calendar className="w-4 h-4 shrink-0" />
-                <span>Book Appointment</span>
+                Book Appointment
               </button>
             </div>
           </div>
