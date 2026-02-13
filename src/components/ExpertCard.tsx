@@ -21,13 +21,13 @@ type ExpertCardProps = {
 
 type NextSlotResponse =
   | {
-      day: string; // "MONDAY", "TUESDAY", etc.
-      date: number; // Day of month (1-31)
-      month: number; // Month number (1-12)
-      year: number; // Full year (e.g., 2026)
-      startTime: string; // "HH:mm" format (e.g., "09:00", "21:00")
-      endTime: string; // "HH:mm" format (e.g., "10:00", "22:00")
-    }
+    day: string; // "MONDAY", "TUESDAY", etc.
+    date: number; // Day of month (1-31)
+    month: number; // Month number (1-12)
+    year: number; // Full year (e.g., 2026)
+    startTime: string; // "HH:mm" format (e.g., "09:00", "21:00")
+    endTime: string; // "HH:mm" format (e.g., "10:00", "22:00")
+  }
   | null; // null when no slot is found
 
 export default function ExpertCard({
@@ -160,7 +160,7 @@ export default function ExpertCard({
               {name}
             </h1>
 
-            {rating && (
+            {rating > 0 && (
               <div className="Rating-Container flex items-center gap-[5px]">
                 <Star size={18} className="fill-yellow-400 text-yellow-400" />
                 <span className="Rating-Value text-yellow-400">{rating}</span>
