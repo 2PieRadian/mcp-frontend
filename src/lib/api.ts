@@ -62,3 +62,187 @@ export async function updatePhone(phoneNumber: string): Promise<{
 
   return data as { message: string; user: Record<string, unknown> };
 }
+
+function getAuthHeaders(): HeadersInit {
+  const token =
+    window.localStorage.getItem("auth:token") ||
+    window.localStorage.getItem("token");
+  if (!token) throw new Error("Unauthorized");
+  return {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: `Bearer ${token}`,
+  };
+}
+
+/** Communication medium for booking (must match backend enum). */
+export type CommunicationMedium = "CALL" | "VIDEO" | "CHAT";
+
+/** Initiate: FREE → appointment created; PAID → Razorpay order created. */
+export type InitiateResponseFree = {
+  type: "FREE";
+  appointmentId: number;
+  meetLink: string | null;
+};
+
+export type InitiateResponsePaid = {
+  type: "PAID";
+  orderId: string;
+  amount: number; // paise
+  keyId: string;
+  currency: string;
+};
+
+export type InitiateResponse = InitiateResponseFree | InitiateResponsePaid;
+
+/**
+ * Initiate booking. Returns FREE (appointment created) or PAID (open Razorpay with orderId, amount, keyId).
+ */
+export async function initiateAppointment(
+  expertId: number,
+  startAt: string,
+  endAt: string,
+  communicationMedium: CommunicationMedium
+): Promise<InitiateResponse> {
+  const res = await fetch(`${BACKEND_URL}/api/v1/appointments/initiate`, {
+    method: "POST",
+    headers: getAuthHeaders(),
+    body: JSON.stringify({
+      expertId,
+      startAt,
+      endAt,
+      communicationMedium,
+    }),
+  });
+
+  const data = await res.json().catch(() => ({}));
+
+  if (!res.ok) {
+    throw new Error(
+      (data?.message as string) ||
+      (res.status === 401 ? "Unauthorized" : "Failed to initiate booking")
+    );
+  }
+
+  return data as InitiateResponse;
+}
+
+/**
+ * Verify Razorpay payment and create appointment. Call from Razorpay handler.
+ */
+export async function verifyPayment(
+  razorpay_order_id: string,
+  razorpay_payment_id: string,
+  razorpay_signature: string
+): Promise<{ appointmentId: number; meetLink?: string | null }> {
+  const res = await fetch(`${BACKEND_URL}/api/v1/appointments/verify`, {
+    method: "POST",
+    headers: getAuthHeaders(),
+    body: JSON.stringify({
+      razorpay_order_id,
+      razorpay_payment_id,
+      razorpay_signature,
+    }),
+  });
+
+  const data = await res.json().catch(() => ({}));
+
+  if (!res.ok) {
+    throw new Error(
+      (data?.message as string) ||
+      (res.status === 400 ? "Payment verification failed" : "Failed to verify payment")
+    );
+  }
+
+  return data as { appointmentId: number; meetLink?: string | null };
+}
+
+/**
+ * Update appointment status (ONGOING | COMPLETED).
+ */
+export async function updateAppointmentStatus(
+  appointmentId: number,
+  status: "ONGOING" | "COMPLETED"
+): Promise<{ message: string; earnings?: number }> {
+  const res = await fetch(
+    `${BACKEND_URL}/api/v1/appointments/${appointmentId}/status`,
+    {
+      method: "PATCH",
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ status }),
+    }
+  );
+
+  const data = await res.json().catch(() => ({}));
+
+  if (!res.ok) {
+    throw new Error(
+      (data?.message as string) || "Failed to update appointment status"
+    );
+  }
+
+  return data as { message: string; earnings?: number };
+}
+
+/** Appointment status. */
+export type AppointmentStatus = "SCHEDULED" | "ONGOING" | "COMPLETED";
+
+/** Expert user (no password). */
+export type ExpertUser = {
+  id: number;
+  name: string | null;
+  email: string;
+  [key: string]: unknown;
+};
+
+/** Expert nested in appointment. */
+export type AppointmentExpert = {
+  id: number;
+  user: ExpertUser;
+  [key: string]: unknown;
+};
+
+/** Single appointment from my-appointments. */
+export type MyAppointment = {
+  id: number;
+  startAt: string;
+  endAt: string;
+  status: AppointmentStatus;
+  meetLink: string | null;
+  amount: number;
+  appointmentType?: string;
+  communicationMedium: string;
+  expert: AppointmentExpert;
+};
+
+export type MyAppointmentsResponse = {
+  message: string;
+  count: number;
+  appointments: MyAppointment[];
+};
+
+/**
+ * Get all appointments for the current user. Optional status filter.
+ */
+export async function getMyAppointments(
+  status?: "SCHEDULED" | "ONGOING" | "COMPLETED"
+): Promise<MyAppointmentsResponse> {
+  const url = new URL(`${BACKEND_URL}/api/v1/appointments/my-appointments`);
+  if (status) url.searchParams.set("status", status);
+
+  const res = await fetch(url.toString(), {
+    method: "GET",
+    headers: getAuthHeaders(),
+  });
+
+  const data = await res.json().catch(() => ({}));
+
+  if (!res.ok) {
+    throw new Error(
+      (data?.message as string) ||
+      (res.status === 401 ? "Unauthorized" : "Failed to load appointments")
+    );
+  }
+
+  return data as MyAppointmentsResponse;
+}

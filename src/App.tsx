@@ -16,6 +16,7 @@ import ExpertsListing from "./pages/ExpertsListing";
 import Profile from "./pages/Profile";
 import OAuthCallback from "./pages/OAuthCallback";
 import ExpertsDashboard from "./pages/dashboards/ExpertsDashboard";
+import Dashboard from "./pages/Dashboard";
 import ExpertDetails from "./pages/ExpertDetails";
 import Wellness from "./pages/assessments/Wellness";
 import Finance from "./pages/assessments/Finance";
@@ -140,6 +141,7 @@ export default function App() {
 
             {/* Authenticated */}
             <Route path="/profile" element={<Profile />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/dashboard/expert" element={<ExpertsDashboard />} />
 
             {/* Legal Pages */}

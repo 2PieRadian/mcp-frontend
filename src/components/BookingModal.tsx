@@ -1,9 +1,32 @@
 import { useState, useEffect, useRef } from "react";
-import { X, Calendar, Clock, Loader2, Check, Phone, Video, MessageCircle } from "lucide-react";
+import { X, Calendar, Clock, Loader2, Check, Phone, Video, MessageCircle, Copy, ExternalLink } from "lucide-react";
 import { useBooking } from "../context/BookingContext";
 import gsap from "gsap";
+import {
+  initiateAppointment,
+  verifyPayment,
+  type CommunicationMedium,
+} from "../lib/api";
+import { openRazorpayCheckout } from "../lib/razorpay";
+import type { TimeSlot } from "../context/BookingContext";
 
 type ConnectionType = "call" | "video" | "chat";
+
+function toCommunicationMedium(c: ConnectionType): CommunicationMedium {
+  return c === "call" ? "CALL" : c === "video" ? "VIDEO" : "CHAT";
+}
+
+/** Build ISO start/end from day (year, month 1-12, date) and slot (startTime/endTime "HH:mm"). */
+function slotToISO(
+  day: { year: number; month: number; date: number },
+  slot: TimeSlot
+): { startAt: string; endAt: string } {
+  const [sh, sm] = slot.startTime.split(":").map(Number);
+  const [eh, em] = slot.endTime.split(":").map(Number);
+  const start = new Date(day.year, day.month - 1, day.date, sh, sm, 0, 0);
+  const end = new Date(day.year, day.month - 1, day.date, eh, em, 0, 0);
+  return { startAt: start.toISOString(), endAt: end.toISOString() };
+}
 
 type BookingModalProps = {
   isOpen: boolean;
@@ -40,6 +63,21 @@ export default function BookingModal({
   const panelRef = useRef<HTMLDivElement>(null);
   const [isClosing, setIsClosing] = useState(false);
   const isVisible = isOpen || isClosing;
+
+  const [bookingInProgress, setBookingInProgress] = useState(false);
+  const [bookingError, setBookingError] = useState<string | null>(null);
+  const [successResult, setSuccessResult] = useState<{
+    appointmentId: number;
+    meetLink: string | null;
+  } | null>(null);
+
+  // Clear booking state when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      setSuccessResult(null);
+      setBookingError(null);
+    }
+  }, [isOpen]);
 
   // GSAP open animation when isOpen becomes true
   useEffect(() => {
@@ -161,20 +199,74 @@ export default function BookingModal({
     setSelectedSlot(null);
   };
 
-  const handleBook = () => {
-    if (selectedDateIndex === null || selectedSlot === null || !selectedDayData) return;
-    const slot = selectedDayData.slots.find((s) => s.availabilityId === selectedSlot);
-    if (slot) {
-      console.log("Booking:", {
+  const handleBook = async () => {
+    if (
+      selectedDateIndex === null ||
+      selectedSlot === null ||
+      !selectedDayData ||
+      !connectionType
+    )
+      return;
+    const slot = selectedDayData.slots.find(
+      (s) => s.availabilityId === selectedSlot
+    );
+    if (!slot) return;
+
+    setBookingError(null);
+    setBookingInProgress(true);
+
+    try {
+      const { startAt, endAt } = slotToISO(selectedDayData, slot);
+      const medium = toCommunicationMedium(connectionType);
+      const response = await initiateAppointment(
         expertId,
-        helpWith,
-        connectionType,
-        dayData: selectedDayData,
-        slot,
-      });
-      alert(
-        `Booking functionality coming soon!\n\nSelected: ${formatDateForDisplay(selectedDayData)} at ${formatTime(slot.startTime, selectedDayData)} - ${formatTime(slot.endTime, selectedDayData)}\nConnect via: ${connectionType || "—"}\nConcern: ${helpWith || "—"}`
+        startAt,
+        endAt,
+        medium
       );
+
+      if (response.type === "FREE") {
+        setSuccessResult({
+          appointmentId: response.appointmentId,
+          meetLink: response.meetLink ?? null,
+        });
+        setBookingInProgress(false);
+      } else {
+        openRazorpayCheckout({
+          key: response.keyId,
+          amount: response.amount,
+          currency: response.currency,
+          order_id: response.orderId,
+          name: "MindCurePath",
+          modal: {
+            ondismiss: () => setBookingInProgress(false),
+          },
+          handler: async (res) => {
+            try {
+              const verified = await verifyPayment(
+                res.razorpay_order_id,
+                res.razorpay_payment_id,
+                res.razorpay_signature
+              );
+              setSuccessResult({
+                appointmentId: verified.appointmentId,
+                meetLink: verified.meetLink ?? null,
+              });
+            } catch (err: unknown) {
+              setBookingError(
+                err instanceof Error ? err.message : "Payment verification failed"
+              );
+            } finally {
+              setBookingInProgress(false);
+            }
+          },
+        });
+      }
+    } catch (err: unknown) {
+      setBookingError(
+        err instanceof Error ? err.message : "Failed to initiate booking"
+      );
+      setBookingInProgress(false);
     }
   };
 
@@ -223,7 +315,69 @@ export default function BookingModal({
 
           {/* Content */}
           <div className="flex-1 px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+            {successResult ? (
+              <div className="max-w-4xl mx-auto">
+                <div className="text-center py-8 sm:py-12">
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 text-green-600 mb-6">
+                    <Check className="w-8 h-8" strokeWidth={2.5} />
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-bold text-[#304048] mb-2">
+                    Booking confirmed
+                  </h3>
+                  <p className="text-gray-600 mb-6">
+                    Your session with {expertName} is scheduled. Appointment #{successResult.appointmentId}.
+                  </p>
+                  {successResult.meetLink ? (
+                    <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 sm:p-5 text-left max-w-lg mx-auto">
+                      <p className="text-sm font-medium text-gray-700 mb-2">Meeting link</p>
+                      <div className="flex flex-col sm:flex-row gap-2">
+                        <a
+                          href={successResult.meetLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 truncate text-[#44666C] hover:underline font-medium"
+                        >
+                          {successResult.meetLink}
+                        </a>
+                        <div className="flex gap-2 shrink-0">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              navigator.clipboard.writeText(successResult!.meetLink!);
+                            }}
+                            className="px-3 py-2 rounded-lg border border-gray-300 hover:bg-gray-100 text-gray-700 flex items-center gap-2"
+                          >
+                            <Copy className="w-4 h-4" /> Copy
+                          </button>
+                          <a
+                            href={successResult.meetLink!}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="px-3 py-2 rounded-lg bg-[#44666C] text-white hover:bg-[#365a62] flex items-center gap-2"
+                          >
+                            <ExternalLink className="w-4 h-4" /> Open
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <p className="text-gray-500 text-sm">Your expert will share the meeting link before the session.</p>
+                  )}
+                  <button
+                    onClick={handleClose}
+                    className="mt-8 px-6 py-2.5 bg-[#44666C] text-white rounded-xl hover:bg-[#365a62] font-medium"
+                  >
+                    Done
+                  </button>
+                </div>
+              </div>
+            ) : (
             <div className="max-w-4xl mx-auto space-y-8">
+              {bookingError && (
+                <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-red-800 text-sm">
+                  {bookingError}
+                </div>
+              )}
               {/* What would you like help with? */}
               <section>
                 <h3 className="text-[#304048] font-semibold text-lg mb-1">
@@ -405,9 +559,11 @@ export default function BookingModal({
                 </div>
               </section>
             </div>
+            )}
           </div>
 
-          {/* Footer - pricing and booking */}
+          {/* Footer - pricing and booking (hidden when success) */}
+          {!successResult && (
           <div className="border-t border-gray-200 px-4 sm:px-6 lg:px-8 py-4 sm:py-5 bg-gray-50 shrink-0 mt-auto">
             <div className="max-w-4xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div className="min-w-0 flex-1 flex items-center justify-between gap-4">
@@ -450,15 +606,20 @@ export default function BookingModal({
                 </button>
                 <button
                   onClick={handleBook}
-                  disabled={!canBook}
+                  disabled={!canBook || bookingInProgress}
                   className="w-full sm:w-auto px-6 py-2.5 bg-[#44666C] text-white rounded-xl hover:bg-[#365a62] disabled:bg-gray-300 disabled:cursor-not-allowed font-medium flex items-center justify-center gap-2 transition-colors cursor-pointer"
                 >
-                  <Calendar className="w-4 h-4 shrink-0" />
-                  {isFreeSessionAvailable ? "Book Free Appointment" : "Book Appointment"}
+                  {bookingInProgress ? (
+                    <Loader2 className="w-4 h-4 shrink-0 animate-spin" />
+                  ) : (
+                    <Calendar className="w-4 h-4 shrink-0" />
+                  )}
+                  {bookingInProgress ? "Booking…" : isFreeSessionAvailable ? "Book Free Appointment" : "Book Appointment"}
                 </button>
               </div>
             </div>
           </div>
+          )}
         </div>
       </div>
     </div>

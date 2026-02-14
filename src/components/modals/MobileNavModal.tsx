@@ -455,6 +455,13 @@ export default function MobileNavModal({
           {user?.role !== "EXPERT" && (
             <MobileNavItem textKey="findCounsellors" to="/find-counsellors" />
           )}
+          {user?.role !== "EXPERT" && user && (
+            <MobileNavItem
+              textKey="dashboard"
+              to="/dashboard"
+              onClick={onClose}
+            />
+          )}
           {user?.role === "EXPERT" && (
             <>
               <MobileNavItem textKey="Home" to="/" onClick={onClose} />
