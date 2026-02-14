@@ -176,7 +176,7 @@ export default function ExpertsContent() {
   );
 
   return (
-    <div className="px-[16px] sm:px-[20px] mb-[80px]">
+    <div className="px-[16px] sm:px-[20px] pb-[80px] sm:pb-[100px]">
       <ResponsiveNavbar />
 
       <ExpertsHeroSection
