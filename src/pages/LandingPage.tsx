@@ -33,21 +33,20 @@ export default function UserDashboard() {
     <>
       {showProfileToast && user && !user.phoneNumber?.trim() && (
         <div
-          className="fixed top-4 left-1/2 z-50 flex items-center gap-4 px-5 py-3 rounded-xl shadow-2xl text-[16px] font-medium max-w-[calc(100vw-2rem)] w-fit bg-[#1a2e35]/80 backdrop-blur-md text-white border border-white/10"
+          className="fixed bottom-4 left-4 right-4 sm:left-1/2 sm:right-auto sm:w-auto z-50 flex flex-row items-center justify-between gap-3 px-4 py-3 rounded-xl shadow-2xl text-[15px] sm:text-[16px] font-medium bg-[#1a2e35]/60 backdrop-blur-sm text-white border border-white/15"
           style={{
             animation: "toast-slide-in 0.4s ease-out forwards",
-            transform: "translateX(-50%) translateY(-20px)",
             opacity: 0,
           }}
         >
-          <span>Please Complete Your Profile</span>
+          <span className="whitespace-nowrap">Please Complete Your Profile</span>
           <button
             type="button"
             onClick={() => {
               setShowProfileToast(false);
               navigate("/profile");
             }}
-            className="shrink-0 bg-white/90 text-[#1a2e35] rounded-lg px-4 py-1.5 font-medium hover:bg-white transition-colors cursor-pointer backdrop-blur-sm"
+            className="shrink-0 bg-white/90 text-[#1a2e35] rounded-lg px-3 sm:px-4 py-1.5 text-[14px] sm:text-[15px] font-medium hover:bg-white transition-colors cursor-pointer backdrop-blur-sm"
           >
             Profile
           </button>
@@ -57,12 +56,24 @@ export default function UserDashboard() {
       <style>{`
         @keyframes toast-slide-in {
           from {
-            transform: translateX(-50%) translateY(-20px);
+            transform: translateY(20px);
             opacity: 0;
           }
           to {
-            transform: translateX(-50%) translateY(0);
+            transform: translateY(0);
             opacity: 1;
+          }
+        }
+        @media (min-width: 640px) {
+          @keyframes toast-slide-in {
+            from {
+              transform: translateX(-50%) translateY(20px);
+              opacity: 0;
+            }
+            to {
+              transform: translateX(-50%) translateY(0);
+              opacity: 1;
+            }
           }
         }
       `}</style>

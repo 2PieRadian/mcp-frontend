@@ -1,5 +1,5 @@
-export const BACKEND_URL = "https://api.mindcurepath.com";
-// export const BACKEND_URL = "http://localhost:3000";
+// export const BACKEND_URL = "https://api.mindcurepath.com";
+export const BACKEND_URL = "http://localhost:3000";
 
 /**
  * Constructs a full avatar URL from a backend avatar value.
@@ -56,7 +56,7 @@ export async function updatePhone(phoneNumber: string): Promise<{
   if (!res.ok) {
     throw new Error(
       (data?.message as string) ||
-        (res.status === 401 ? "Unauthorized" : "Failed to update phone number"),
+      (res.status === 401 ? "Unauthorized" : "Failed to update phone number"),
     );
   }
 
