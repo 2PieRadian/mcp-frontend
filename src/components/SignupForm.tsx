@@ -275,6 +275,11 @@ export default function SignupForm() {
     event.preventDefault();
     setError(null);
 
+    if (!fullName.trim()) {
+      setError("Full name is required");
+      return;
+    }
+
     if (!password || password.length < 6) {
       setError("Password must be at least 6 characters");
       return;
@@ -288,14 +293,14 @@ export default function SignupForm() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${BACKEND_URL}/api/v1/auth/signup`, {
+      const response = await fetch(`${BACKEND_URL}/api/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          name: fullName.trim(),
           email,
           password,
           phoneNumber: fullPhoneNumber,
-          name: fullName || undefined,
         }),
       });
 
@@ -440,7 +445,7 @@ export default function SignupForm() {
           {/* Success Toast */}
           {successMessage && (
             <div
-              className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-green-500 text-white px-5 py-3 rounded-xl shadow-lg text-[16px] font-medium flex items-center gap-3 transition-all duration-300 ${showSuccessToast ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"
+              className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-green-500 text-white px-5 py-3 rounded-xl shadow-lg text-[16px] font-medium flex items-center gap-3 transition-all duration-300 w-fit max-w-[calc(100vw-2rem)] ${showSuccessToast ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"
                 }`}
             >
               <div className="bg-white/20 rounded-full p-1">
@@ -462,7 +467,7 @@ export default function SignupForm() {
           {/* Error Toast */}
           {error && (
             <div
-              className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-red-500 text-white px-5 py-3 rounded-xl shadow-lg text-[16px] font-medium flex items-center gap-3 transition-all duration-300 ${showErrorToast ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"
+              className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-red-500 text-white px-5 py-3 rounded-xl shadow-lg text-[16px] font-medium flex items-center gap-3 transition-all duration-300 w-fit max-w-[calc(100vw-2rem)] ${showErrorToast ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"
                 }`}
             >
               <div className="bg-white/20 rounded-full p-1">
@@ -685,6 +690,7 @@ export default function SignupForm() {
                 variant="with-border"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
+                required
               />
               <FloatingLabelInput
                 type="password"

@@ -6,7 +6,9 @@
   },
   "hero": {
     "accountLabel": "અકાઉન્ટ",
-    "logout": "લૉગઆઉટ"
+    "logout": "લૉગઆઉટ",
+    "googleConnected": "જોડાયેલું",
+    "connectGoogle": "Google સાથે જોડો"
   },
   "logoutModal": {
     "closeAria": "બંધ કરો",

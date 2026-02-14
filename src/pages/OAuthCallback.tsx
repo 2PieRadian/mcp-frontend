@@ -53,7 +53,7 @@ export default function OAuthCallback() {
 
         const avatarValue = user.userUploadedAvatar || user.avatar || "";
 
-        login({
+        const mapped = {
           id: String(user.id),
           email: user.email,
           name: user.name || undefined,
@@ -65,8 +65,11 @@ export default function OAuthCallback() {
           languages: user.languages || undefined,
           createdAt: user.createdAt || undefined,
           hasPassword: user.hasPassword ?? false,
-        });
-
+          expertId: typeof user.expert?.id === "number" ? user.expert.id : user.expertId != null ? Number(user.expertId) : undefined,
+          age: user.age != null ? Number(user.age) : undefined,
+          googleId: user.googleId || undefined,
+        };
+        login(mapped);
         setStatus("success");
       } catch (error: any) {
         console.error("OAuth verification failed:", error);

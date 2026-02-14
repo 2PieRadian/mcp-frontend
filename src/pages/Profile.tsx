@@ -5,6 +5,7 @@ import ImageViewer from "../components/ImageViewer";
 import { lazy, useState, useRef } from "react";
 import useScrollToTop from "../hooks/useScrollToTop";
 import { AlertTriangle, X, CheckCircle2, XCircle, Eye, Upload } from "lucide-react";
+import googleIcon from "../assets/google.svg";
 import { useTranslation } from "react-i18next";
 import { BACKEND_URL } from "../lib/api";
 
@@ -288,14 +289,41 @@ export default function Profile() {
             </div>
           </div>
 
-          <button
-            type="button"
-            onClick={handleLogoutClick}
-            className="self-start shadow-m-profile sm:self-auto w-full sm:w-auto cursor-pointer border border-light-100/10 text-light-100 rounded-full px-[18px] py-[10px] sm:py-[8px] font-medium hover:bg-light-100 hover:text-primary transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)]"
-            style={{ fontSize: "16px" }}
-          >
-            {t("hero.logout")}
-          </button>
+          <div className="flex flex-col gap-[10px] self-start sm:self-auto w-full sm:w-auto">
+            {/* Google Connection Status */}
+            {user.googleId ? (
+              <button
+                type="button"
+                disabled
+                className="flex items-center justify-center gap-[8px] border border-light-100/10 text-light-100/70 rounded-full px-[18px] py-[10px] sm:py-[8px] text-[16px] font-medium shadow-m-profile cursor-default opacity-80"
+              >
+                <img src={googleIcon} alt="Google" className="w-[20px]" />
+                {t("hero.googleConnected")}
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => {
+                  window.location.href = `${BACKEND_URL}/oauth/google?linkTo=${user.id}`;
+                }}
+                className="flex items-center justify-center gap-[8px] cursor-pointer border border-light-100/10 text-light-100 rounded-full px-[18px] py-[10px] sm:py-[8px] font-medium hover:bg-light-100 hover:text-primary transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)] shadow-m-profile"
+                style={{ fontSize: "16px" }}
+              >
+                <img src={googleIcon} alt="Google" className="w-[20px]" />
+                {t("hero.connectGoogle")}
+              </button>
+            )}
+
+            {/* Logout Button */}
+            <button
+              type="button"
+              onClick={handleLogoutClick}
+              className="w-full cursor-pointer border border-light-100/10 text-light-100 rounded-full px-[18px] py-[10px] sm:py-[8px] font-medium hover:bg-light-100 hover:text-primary transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)] shadow-m-profile"
+              style={{ fontSize: "16px" }}
+            >
+              {t("hero.logout")}
+            </button>
+          </div>
         </section>
 
         {/* Info sections */}

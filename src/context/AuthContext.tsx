@@ -21,7 +21,36 @@ export type AuthUser = {
   languages?: string[];
   createdAt?: string;
   hasPassword?: boolean;
+  googleId?: string;
 };
+
+function mapApiUserToAuthUser(u: Record<string, unknown> | null | undefined): AuthUser | null {
+  if (!u || typeof u.email !== "string") return null;
+  const avatarValue =
+    (u.userUploadedAvatar as string) || (u.avatar as string) || (u.avatarUrl as string);
+  const mapped: AuthUser = {
+    id: u.id != null ? String(u.id) : undefined,
+    expertId:
+      typeof (u as { expert?: { id: number } }).expert?.id === "number"
+        ? (u as { expert: { id: number } }).expert.id
+        : u.expertId != null
+          ? Number(u.expertId)
+          : undefined,
+    email: u.email as string,
+    name: (u.name as string) || undefined,
+    avatarUrl: getAvatarUrl(avatarValue),
+    phoneNumber: (u.phoneNumber as string) || undefined,
+    role: u.role as AuthUser["role"],
+    dateOfBirth: u.dateOfBirth as string | undefined,
+    age: u.age != null ? Number(u.age) : undefined,
+    gender: (u.gender as string) || undefined,
+    languages: u.languages as string[] | undefined,
+    createdAt: u.createdAt as string | undefined,
+    hasPassword: u.hasPassword as boolean | undefined,
+    googleId: (u.googleId as string) || undefined,
+  };
+  return mapped;
+}
 
 type AuthContextValue = {
   user: AuthUser | null;
@@ -29,6 +58,8 @@ type AuthContextValue = {
   login: (user: AuthUser) => void;
   logout: () => void;
   updateUserAvatar: (avatarUrl: string) => void;
+  /** Apply user from API (e.g. update-phone response) to context. */
+  updateUserFromApi: (apiUser: Record<string, unknown>) => void;
 };
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
@@ -72,32 +103,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
             const data = await response.json();
             const u = data?.user ?? data;
+            const mapped = mapApiUserToAuthUser(u);
 
-            const avatarValue =
-              u?.userUploadedAvatar || u?.avatar || u?.avatarUrl;
-
-            const mapped: AuthUser = {
-              id: u?.id != null ? String(u.id) : undefined,
-              expertId:
-                typeof u?.expert?.id === "number"
-                  ? u.expert.id
-                  : u?.expertId != null
-                    ? Number(u.expertId)
-                    : undefined,
-              email: u?.email,
-              name: u?.name || undefined,
-              avatarUrl: getAvatarUrl(avatarValue),
-              phoneNumber: u?.phoneNumber || undefined,
-              role: u?.role || undefined,
-              dateOfBirth: u?.dateOfBirth || undefined,
-              age: u?.age != null ? Number(u.age) : undefined,
-              gender: u?.gender || undefined,
-              languages: u?.languages || undefined,
-              createdAt: u?.createdAt || undefined,
-              hasPassword: u?.hasPassword ?? undefined,
-            };
-
-            if (!mapped.email) {
+            if (!mapped) {
               throw new Error("Invalid /me response: missing email");
             }
 
@@ -143,12 +151,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     window.localStorage.setItem("auth:user", JSON.stringify(updatedUser));
   };
 
+  const updateUserFromApi = (apiUser: Record<string, unknown>) => {
+    const mapped = mapApiUserToAuthUser(apiUser);
+    if (!mapped) return;
+    setUser(mapped);
+    window.localStorage.setItem("auth:user", JSON.stringify(mapped));
+  };
+
   const value: AuthContextValue = {
     user,
     isLoading,
     login,
     logout,
     updateUserAvatar,
+    updateUserFromApi,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

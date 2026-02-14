@@ -27,3 +27,38 @@ export function getAvatarUrl(
   // Otherwise, assume it's a relative path and prefix with BACKEND_URL/
   return `${BACKEND_URL}/${trimmed}`;
 }
+
+/**
+ * Update the current user's phone number.
+ * Requires auth token in localStorage.
+ * @returns Response with message and updated user
+ */
+export async function updatePhone(phoneNumber: string): Promise<{
+  message: string;
+  user: Record<string, unknown>;
+}> {
+  const token =
+    window.localStorage.getItem("auth:token") ||
+    window.localStorage.getItem("token");
+  if (!token) throw new Error("Unauthorized");
+
+  const res = await fetch(`${BACKEND_URL}/api/v1/profile/update-phone`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ phoneNumber: phoneNumber.trim() }),
+  });
+
+  const data = await res.json().catch(() => ({}));
+
+  if (!res.ok) {
+    throw new Error(
+      (data?.message as string) ||
+        (res.status === 401 ? "Unauthorized" : "Failed to update phone number"),
+    );
+  }
+
+  return data as { message: string; user: Record<string, unknown> };
+}

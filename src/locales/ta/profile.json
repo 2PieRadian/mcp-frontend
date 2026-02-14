@@ -6,7 +6,9 @@
   },
   "hero": {
     "accountLabel": "கணக்கு",
-    "logout": "வெளியேறு"
+    "logout": "வெளியேறு",
+    "googleConnected": "இணைக்கப்பட்டது",
+    "connectGoogle": "Google உடன் இணைக்கவும்"
   },
   "logoutModal": {
     "closeAria": "மூடு",

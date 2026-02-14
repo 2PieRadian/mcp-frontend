@@ -6,7 +6,9 @@
   },
   "hero": {
     "accountLabel": "Account",
-    "logout": "Logout"
+    "logout": "Logout",
+    "googleConnected": "Connected",
+    "connectGoogle": "Connect with Google"
   },
   "logoutModal": {
     "closeAria": "Close",

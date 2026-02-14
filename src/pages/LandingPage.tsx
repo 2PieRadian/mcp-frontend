@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import HeroSection from "../components/HeroSection";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import WhyChooseUsSection from "../components/WhyChooseUsSection";
@@ -8,11 +10,63 @@ import MakeInIndia from "../components/MakeInIndia";
 import GuidanceQuotesSection from "../components/GuidanceQuotesSection";
 import { Helmet } from "react-helmet-async";
 import useScrollToTop from "../hooks/useScrollToTop";
+import { useAuth } from "../context/AuthContext";
+
+const TOAST_DURATION_MS = 10_000;
 
 export default function UserDashboard() {
   useScrollToTop();
+  const navigate = useNavigate();
+  const { user, isLoading } = useAuth();
+  const [showProfileToast, setShowProfileToast] = useState(false);
+
+  useEffect(() => {
+    if (isLoading || !user) return;
+    if (!user.phoneNumber?.trim()) {
+      setShowProfileToast(true);
+      const t = setTimeout(() => setShowProfileToast(false), TOAST_DURATION_MS);
+      return () => clearTimeout(t);
+    }
+  }, [user, isLoading]);
+
   return (
     <>
+      {showProfileToast && user && !user.phoneNumber?.trim() && (
+        <div
+          className="fixed top-4 left-1/2 z-50 flex items-center gap-4 px-5 py-3 rounded-xl shadow-2xl text-[16px] font-medium max-w-[calc(100vw-2rem)] w-fit bg-[#1a2e35]/80 backdrop-blur-md text-white border border-white/10"
+          style={{
+            animation: "toast-slide-in 0.4s ease-out forwards",
+            transform: "translateX(-50%) translateY(-20px)",
+            opacity: 0,
+          }}
+        >
+          <span>Please Complete Your Profile</span>
+          <button
+            type="button"
+            onClick={() => {
+              setShowProfileToast(false);
+              navigate("/profile");
+            }}
+            className="shrink-0 bg-white/90 text-[#1a2e35] rounded-lg px-4 py-1.5 font-medium hover:bg-white transition-colors cursor-pointer backdrop-blur-sm"
+          >
+            Profile
+          </button>
+        </div>
+      )}
+
+      <style>{`
+        @keyframes toast-slide-in {
+          from {
+            transform: translateX(-50%) translateY(-20px);
+            opacity: 0;
+          }
+          to {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+          }
+        }
+      `}</style>
+
       <Helmet>
         <title>
           MindCurePath | Expert‑Verified Wellness, Education &amp; Finance

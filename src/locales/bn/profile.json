@@ -6,7 +6,9 @@
   },
   "hero": {
     "accountLabel": "অ্যাকাউন্ট",
-    "logout": "লগ আউট"
+    "logout": "লগ আউট",
+    "googleConnected": "সংযুক্ত",
+    "connectGoogle": "Google-এ সংযুক্ত করুন"
   },
   "logoutModal": {
     "closeAria": "বন্ধ করুন",
