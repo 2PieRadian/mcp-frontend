@@ -12,21 +12,25 @@
 }
 
 html {
-  /* Smooth scrolling only for anchor links inside scroll container */
   overflow-x: hidden;
+  overflow-y: scroll; /* Always show scrollbar to prevent layout shift */
   background-color: white;
+  height: 100%;
 }
 
 body {
   overflow-x: hidden;
+  overflow-y: visible;
   width: 100%;
   max-width: 100vw;
-  min-height: 100vh;
+  min-height: 100%;
   background-color: white;
+  /* Critical for mobile pull-to-refresh */
+  overscroll-behavior-y: auto;
 }
 
 #root {
-  min-height: 100vh;
+  min-height: 100%;
 }
 
 /* Custom scrollbar styling for desktop */
@@ -58,14 +62,22 @@ body {
 html,
 body {
   /* These are the "unlocked" defaults - MobileNavModal may temporarily override */
-  touch-action: manipulation;
+  /* touch-action: auto allows all touch behaviors including pull-to-refresh */
+  touch-action: auto;
   -webkit-overflow-scrolling: touch;
 }
 
 /* Safety reset: when body has no fixed position, ensure scrolling works */
 body:not([style*="position: fixed"]) {
-  overflow-y: auto !important;
+  overflow-y: visible !important;
   position: static !important;
+}
+
+/* Ensure proper bottom padding for iOS safe area */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  body {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 }
 
 @theme {

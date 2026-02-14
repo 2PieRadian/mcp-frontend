@@ -62,7 +62,7 @@ export default function Footer() {
   const threadsURL = "https://www.threads.net/@mindcurepath";
 
   return (
-    <footer className="mt-10 w-full bg-linear-to-b from-[#0b1220] via-[#0a1528] to-[#08101f] text-slate-200 pb-[30px] pt-[10px]">
+    <footer className="mt-10 w-full bg-linear-to-b from-[#0b1220] via-[#0a1528] to-[#08101f] text-slate-200 pb-[40px] sm:pb-[30px] pt-[10px]">
       <div>
         <div className="mx-auto max-w-7xl py-10 sm:py-12 md:py-14 lg:py-16 px-5 sm:px-6 lg:px-8">
           {/* Main Footer Content - Single row on desktop */}
