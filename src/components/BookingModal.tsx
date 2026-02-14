@@ -395,6 +395,14 @@ export default function BookingModal({
                     );
                   })}
                 </div>
+
+                {/* Payment Policy Notice */}
+                <div className="mt-[30px] p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                  <p className="text-[13px] text-amber-800">
+                    <span className="font-semibold">Payment Policy:</span> All payments are non-refundable.
+                    By booking, you agree to our cancellation and refund policy. Please ensure your availability before confirming.
+                  </p>
+                </div>
               </section>
             </div>
           </div>

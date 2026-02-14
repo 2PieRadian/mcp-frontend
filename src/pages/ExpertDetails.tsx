@@ -263,7 +263,7 @@ export default function ExpertDetails() {
                         </span>
                       </div>
                       <p className="text-gray-400 mt-2" style={{ fontSize: '13px' }}>
-                        Paid appointments are 1 hour long
+                        Only paid appointments are 1 hour long
                       </p>
                     </div>
                   ) : (

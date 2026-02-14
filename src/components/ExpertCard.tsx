@@ -203,7 +203,7 @@ export default function ExpertCard({
                   <p className="text-[13px] text-gray-500">· 30 min</p>
                 </div>
                 <p className="text-[12px] text-gray-400">
-                  Paid appointments are 1 hour long
+                  Only paid appointments are 1 hour long
                 </p>
               </div>
             ) : (
@@ -289,7 +289,7 @@ export default function ExpertCard({
                   <p className="text-[14px] text-gray-500">· 30 min free consultation</p>
                 </div>
                 <p className="text-[13px] text-gray-400">
-                  Paid appointments are 1 hour long
+                  Only paid appointments are 1 hour long
                 </p>
               </div>
             ) : (
