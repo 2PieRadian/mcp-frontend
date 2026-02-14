@@ -18,10 +18,10 @@ export default function SignupForm() {
   const { t } = useTranslation("common");
   const navigate = useNavigate();
   const { login } = useAuth();
-  
+
   // Step management
   const [currentStep, setCurrentStep] = useState<SignupStep>("email");
-  
+
   // Form fields
   const [email, setEmail] = useState("");
   const [emailOtp, setEmailOtp] = useState("");
@@ -29,16 +29,16 @@ export default function SignupForm() {
   const [phoneOtp, setPhoneOtp] = useState("");
   const [fullName, setFullName] = useState("");
   const [password, setPassword] = useState("");
-  
+
   // Verification status
   const [emailVerified, setEmailVerified] = useState(false);
   const [phoneVerified, setPhoneVerified] = useState(false);
-  
+
   // Loading and error states
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  
+
   // Toast visibility states
   const [showSuccessToast, setShowSuccessToast] = useState(false);
   const [showErrorToast, setShowErrorToast] = useState(false);
@@ -80,12 +80,12 @@ export default function SignupForm() {
   // Step 1: Send Email OTP
   const handleSendEmailOtp = async () => {
     setError(null);
-    
+
     if (!email || !email.includes("@")) {
       setError("Please enter a valid email address");
       return;
     }
-    
+
     setIsLoading(true);
     try {
       // First check if email already exists
@@ -94,32 +94,32 @@ export default function SignupForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
-      
+
       const checkData = await checkResponse.json();
-      
+
       if (!checkResponse.ok) {
         throw new Error(checkData?.message || "Failed to check email");
       }
-      
+
       if (checkData.exists) {
         setError("Email is already registered, please login");
         setIsLoading(false);
         return;
       }
-      
+
       // Email doesn't exist, proceed to send OTP
       const response = await fetch(`${BACKEND_URL}/api/v1/email/send-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
-      
+
       const data = await response.json();
-      
+
       if (!response.ok) {
         throw new Error(data?.message || "Failed to send OTP");
       }
-      
+
       setSuccessMessage("OTP sent to your email");
       setCurrentStep("emailOtp");
     } catch (err: any) {
@@ -132,12 +132,12 @@ export default function SignupForm() {
   // Step 2: Verify Email OTP
   const handleVerifyEmailOtp = async () => {
     setError(null);
-    
+
     if (!emailOtp || emailOtp.length !== 6) {
       setError("Please enter a valid 6-digit OTP");
       return;
     }
-    
+
     setIsLoading(true);
     try {
       const response = await fetch(`${BACKEND_URL}/api/v1/email/verify-otp`, {
@@ -145,13 +145,13 @@ export default function SignupForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp: emailOtp }),
       });
-      
+
       const data = await response.json();
-      
+
       if (!response.ok) {
         throw new Error(data?.message || "Invalid OTP");
       }
-      
+
       setEmailVerified(true);
       setSuccessMessage("Email verified successfully!");
       setCurrentStep("phone");
@@ -165,14 +165,14 @@ export default function SignupForm() {
   // Step 3: Send Phone OTP
   const handleSendPhoneOtp = async () => {
     setError(null);
-    
+
     // Basic E.164 validation
     const phoneRegex = /^\+[1-9]\d{6,14}$/;
     if (!phoneNumber || !phoneRegex.test(phoneNumber)) {
       setError("Please enter a valid phone number in E.164 format (e.g., +919876543210)");
       return;
     }
-    
+
     setIsLoading(true);
     try {
       // First check if phone already exists
@@ -181,32 +181,32 @@ export default function SignupForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ phoneNumber }),
       });
-      
+
       const checkData = await checkResponse.json();
-      
+
       if (!checkResponse.ok) {
         throw new Error(checkData?.message || "Failed to check phone number");
       }
-      
+
       if (checkData.exists) {
         setError("Phone number is already registered, please login");
         setIsLoading(false);
         return;
       }
-      
+
       // Phone doesn't exist, proceed to send OTP
       const response = await fetch(`${BACKEND_URL}/api/v1/sms/send-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ phoneNumber }),
       });
-      
+
       const data = await response.json();
-      
+
       if (!response.ok) {
         throw new Error(data?.message || "Failed to send OTP");
       }
-      
+
       setSuccessMessage("OTP sent to your phone");
       setCurrentStep("phoneOtp");
     } catch (err: any) {
@@ -219,12 +219,12 @@ export default function SignupForm() {
   // Step 4: Verify Phone OTP
   const handleVerifyPhoneOtp = async () => {
     setError(null);
-    
+
     if (!phoneOtp || phoneOtp.length !== 6) {
       setError("Please enter a valid 6-digit OTP");
       return;
     }
-    
+
     setIsLoading(true);
     try {
       const response = await fetch(`${BACKEND_URL}/api/v1/sms/verify-otp`, {
@@ -232,13 +232,13 @@ export default function SignupForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ phoneNumber, otp: phoneOtp }),
       });
-      
+
       const data = await response.json();
-      
+
       if (!response.ok) {
         throw new Error(data?.message || "Invalid OTP");
       }
-      
+
       setPhoneVerified(true);
       setSuccessMessage("Phone verified successfully!");
       setCurrentStep("details");
@@ -342,21 +342,19 @@ export default function SignupForm() {
         return (
           <div key={step} className="flex items-center">
             <div
-              className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${
-                isCompleted
-                  ? "bg-green-500 text-white"
-                  : isCurrent
+              className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${isCompleted
+                ? "bg-green-500 text-white"
+                : isCurrent
                   ? "bg-[#44666C] text-white"
                   : "bg-gray-200 text-gray-500"
-              }`}
+                }`}
             >
               {isCompleted ? <Check className="w-4 h-4" /> : index + 1}
             </div>
             {index < STEPS.length - 1 && (
               <div
-                className={`w-6 sm:w-10 h-1 mx-1 rounded ${
-                  isCompleted ? "bg-green-500" : "bg-gray-200"
-                }`}
+                className={`w-6 sm:w-10 h-1 mx-1 rounded ${isCompleted ? "bg-green-500" : "bg-gray-200"
+                  }`}
               />
             )}
           </div>
@@ -388,7 +386,7 @@ export default function SignupForm() {
     <div className="login-form flex justify-between items-start gap-[20px] [@media(max-width:959px)]:mt-0 [@media(min-width:960px)]:mt-[20px] rounded-lg flex-1 [@media(max-width:959px)]:items-center">
       <div className="flex-1 rounded-lg border border-gray-200 shadow-[0_2px_8px_rgba(0,0,0,0.08)] flex items-center justify-center [@media(max-width:959px)]:min-h-[400px]">
         <div className="rounded-lg w-full max-w-[500px] px-[24px] py-[32px] [@media(min-width:960px)]:px-[clamp(1.5rem,4vw,3rem)] [@media(min-width:960px)]:py-[clamp(1.5rem,4vw,3rem)]">
-          
+
           {/* Back button for non-first steps */}
           {currentStep !== "email" && (
             <button
@@ -404,7 +402,7 @@ export default function SignupForm() {
           <StepIndicator />
 
           {/* Step Header */}
-          <div className="text-center mb-6">
+          <div className="text-center mb-6 mt-[44px]">
             <div className="w-16 h-16 mx-auto mb-4 bg-[#E0ECEE] rounded-full flex items-center justify-center">
               <StepIcon className="w-8 h-8 text-[#44666C]" />
             </div>
@@ -418,10 +416,9 @@ export default function SignupForm() {
 
           {/* Success Toast */}
           {successMessage && (
-            <div 
-              className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-green-500 text-white px-5 py-3 rounded-xl shadow-lg text-sm font-medium flex items-center gap-3 transition-all duration-300 ${
-                showSuccessToast ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"
-              }`}
+            <div
+              className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-green-500 text-white px-5 py-3 rounded-xl shadow-lg text-sm font-medium flex items-center gap-3 transition-all duration-300 ${showSuccessToast ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"
+                }`}
             >
               <div className="bg-white/20 rounded-full p-1">
                 <Check className="w-4 h-4" />
@@ -441,10 +438,9 @@ export default function SignupForm() {
 
           {/* Error Toast */}
           {error && (
-            <div 
-              className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-red-500 text-white px-5 py-3 rounded-xl shadow-lg text-sm font-medium flex items-center gap-3 transition-all duration-300 ${
-                showErrorToast ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"
-              }`}
+            <div
+              className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-red-500 text-white px-5 py-3 rounded-xl shadow-lg text-sm font-medium flex items-center gap-3 transition-all duration-300 ${showErrorToast ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"
+                }`}
             >
               <div className="bg-white/20 rounded-full p-1">
                 <AlertCircle className="w-4 h-4" />
@@ -464,7 +460,7 @@ export default function SignupForm() {
 
           {/* Step 1: Email Input */}
           {currentStep === "email" && (
-            <div className="space-y-4">
+            <div>
               <FloatingLabelInput
                 type="email"
                 label={t("email")}
@@ -480,7 +476,7 @@ export default function SignupForm() {
               >
                 Send Verification Code
               </PrimaryButton>
-              
+
               <div className="relative my-6">
                 <div className="absolute inset-0 flex items-center">
                   <div className="w-full border-t border-gray-200" />
@@ -642,7 +638,7 @@ export default function SignupForm() {
                   Phone verified: {phoneNumber}
                 </div>
               </div>
-              
+
               <FloatingLabelInput
                 type="text"
                 label={t("fullName")}
@@ -658,7 +654,7 @@ export default function SignupForm() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
-              
+
               <PrimaryButton isLoading={isLoading} loadingText="Creating Account...">
                 {t("createAccount")}
               </PrimaryButton>
