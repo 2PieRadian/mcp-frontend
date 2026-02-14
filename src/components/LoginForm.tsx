@@ -92,7 +92,7 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="login-form flex justify-between gap-[20px] mt-[20px] [@media(max-width:959px)]:mt-[16px] rounded-lg flex-1">
+    <div className="login-form flex justify-between items-stretch gap-[20px] mt-[20px] mb-[80px] [@media(max-width:959px)]:mt-[16px] [@media(max-width:959px)]:mb-[60px] rounded-lg [@media(max-width:959px)]:flex-1 [@media(max-width:959px)]:items-center">
       <div className="flex-1 rounded-lg border border-gray-200 shadow-[0_2px_8px_rgba(0,0,0,0.08)] flex items-center justify-center [@media(max-width:959px)]:min-h-[400px]">
         <div className="rounded-lg w-full max-w-[500px] px-[24px] py-[32px] [@media(min-width:960px)]:px-[clamp(1.5rem,4vw,3rem)] [@media(min-width:960px)]:py-[clamp(1.5rem,4vw,3rem)]">
           <h2 className="text-[clamp(28px,5vw,30px)] font-bold text-logo-heading">
