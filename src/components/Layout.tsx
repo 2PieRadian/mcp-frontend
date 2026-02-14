@@ -15,7 +15,7 @@ interface LayoutProps {
  * Layout component with:
  * - Fixed navbar at the top (optional)
  * - Scrollable content area below
- * - Smooth scrolling for user-driven scroll (via CSS class)
+ * - Mobile-friendly: uses min-h-screen instead of h-screen to allow native pull-to-refresh
  *
  * Note: Route change scroll reset is handled by RouteScrollReset component
  */
@@ -26,23 +26,22 @@ export default function Layout({
   navbarPadding = "px-[16px] sm:px-[20px]",
 }: LayoutProps) {
   return (
-    <div className="h-screen flex flex-col overflow-hidden">
+    <div className="min-h-screen flex flex-col">
       {/* Fixed Navbar */}
       {showNavbar && (
-        <header className={`shrink-0 ${navbarPadding}`}>
+        <header className={`shrink-0 sticky top-0 z-40 bg-primary ${navbarPadding}`}>
           <Navbar />
         </header>
       )}
 
-      {/* Scrollable Content Area - smooth scroll for user-driven scrolling */}
-      <div
+      {/* Main Content Area - allows native scroll and pull-to-refresh on mobile */}
+      <main
         id="main-scroll-container"
-        className="flex-1 overflow-y-auto"
-        style={{ scrollBehavior: "smooth" }}
+        className="flex-1"
       >
         {children}
         {showFooter && <Footer />}
-      </div>
+      </main>
     </div>
   );
 }
@@ -50,17 +49,15 @@ export default function Layout({
 /**
  * Minimal layout that only provides the scroll container - no navbar/footer
  * Use this for pages that have their own custom navbar/footer
+ * Mobile-friendly: uses min-h-screen to allow native scroll and pull-to-refresh
  */
 export function ScrollLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="h-screen overflow-x-hidden">
-      <div
-        id="main-scroll-container"
-        className="h-full overflow-y-auto"
-        style={{ scrollBehavior: "smooth" }}
-      >
-        {children}
-      </div>
+    <div
+      id="main-scroll-container"
+      className="min-h-screen overflow-x-hidden"
+    >
+      {children}
     </div>
   );
 }

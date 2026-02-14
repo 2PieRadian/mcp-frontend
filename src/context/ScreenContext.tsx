@@ -3,6 +3,7 @@ import {
   useContext,
   useState,
   useEffect,
+  useLayoutEffect,
   type ReactNode,
 } from "react";
 
@@ -16,12 +17,27 @@ interface ScreenProviderProps {
   children: ReactNode;
 }
 
+// Safe getter for window.innerWidth (returns reasonable default if window unavailable)
+function getWindowWidth(): number {
+  if (typeof window !== "undefined" && window.innerWidth) {
+    return window.innerWidth;
+  }
+  // Default to desktop width so navbar renders correctly on SSR/initial load
+  return 1200;
+}
+
 export function ScreenProvider({ children }: ScreenProviderProps) {
-  const [screenWidth, setScreenWidth] = useState<number>(window.innerWidth);
+  const [screenWidth, setScreenWidth] = useState<number>(getWindowWidth);
+
+  // Use useLayoutEffect to measure before paint (avoids flash of wrong navbar)
+  useLayoutEffect(() => {
+    // Immediately set correct width on mount
+    setScreenWidth(getWindowWidth());
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
-      setScreenWidth(window.innerWidth);
+      setScreenWidth(getWindowWidth());
     };
 
     window.addEventListener("resize", handleResize);

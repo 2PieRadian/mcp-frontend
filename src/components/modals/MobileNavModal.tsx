@@ -112,15 +112,38 @@ export default function MobileNavModal({
     const body = document.body;
     const html = document.documentElement;
     const prev = scrollLockRef.current;
+
+    // Always reset these styles regardless of whether we have saved values
+    // This ensures we never leave the page in a stuck state
     html.style.overflow = prev?.htmlOverflow ?? "";
     body.style.overflow = prev?.bodyOverflow ?? "";
-    body.style.position = prev?.bodyPosition ? prev.bodyPosition : "static";
+    body.style.position = prev?.bodyPosition || "";
     body.style.top = prev?.bodyTop ?? "";
     body.style.width = prev?.bodyWidth ?? "";
+
+    // Restore scroll position
     if (typeof prev?.scrollY === "number") {
       window.scrollTo(0, prev.scrollY);
     }
+
     scrollLockRef.current = null;
+  };
+
+  // Force unlock body styles - used as a safety fallback
+  const forceUnlockBody = () => {
+    const body = document.body;
+    const html = document.documentElement;
+
+    // If body is in fixed position (locked state), force unlock
+    if (body.style.position === "fixed") {
+      const scrollY = Math.abs(parseInt(body.style.top || "0", 10));
+      html.style.overflow = "";
+      body.style.overflow = "";
+      body.style.position = "";
+      body.style.top = "";
+      body.style.width = "";
+      window.scrollTo(0, scrollY);
+    }
   };
 
   // Robust scroll lock for mobile (prevents background page scroll, including iOS)
@@ -155,8 +178,34 @@ export default function MobileNavModal({
   useEffect(() => {
     return () => {
       restoreScrollLock();
+      // Extra safety: force unlock if body is still stuck
+      forceUnlockBody();
     };
   }, []);
+
+  // Handle page refresh/navigation - ensure body is unlocked when page becomes visible again
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible" && !isOpen) {
+        forceUnlockBody();
+      }
+    };
+
+    const handlePageShow = (e: PageTransitionEvent) => {
+      // bfcache restoration (back/forward navigation)
+      if (e.persisted && !isOpen) {
+        forceUnlockBody();
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("pageshow", handlePageShow);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("pageshow", handlePageShow);
+    };
+  }, [isOpen]);
 
   useEffect(() => {
     if (!isOpen) return;
