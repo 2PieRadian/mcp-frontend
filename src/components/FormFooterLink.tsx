@@ -15,7 +15,7 @@ export default function FormFooterLink({
   const { t } = useTranslation("common");
 
   return (
-    <p className="text-[clamp(13px,2vw,15px)] text-light-text text-center mt-[25px]">
+    <p className="text-[16px] text-light-text text-center mt-[25px]">
       {t(questionKey)}{" "}
       <Link to={linkTo} className="font-bold cursor-pointer underline">
         {t(linkTextKey)}

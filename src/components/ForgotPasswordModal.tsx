@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { BACKEND_URL } from "../lib/api";
 import { X, Mail, Phone, Shield, Lock, Check, AlertCircle, Pencil } from "lucide-react";
 import FloatingLabelInput from "./FloatingLabelInput";
+import PhoneInput from "./PhoneInput";
 import PrimaryButton from "./PrimaryButton";
 
 type ForgotPasswordStep = "method" | "otp" | "newPassword" | "success";
@@ -15,15 +16,16 @@ interface ForgotPasswordModalProps {
 export default function ForgotPasswordModal({ isOpen, onClose }: ForgotPasswordModalProps) {
   const [currentStep, setCurrentStep] = useState<ForgotPasswordStep>("method");
   const [resetMethod, setResetMethod] = useState<ResetMethod>("email");
-  
+
   // Form fields
   const [email, setEmail] = useState("");
+  const [countryCode, setCountryCode] = useState("+91");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [otp, setOtp] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [resetToken, setResetToken] = useState("");
-  
+
   // Loading and message states
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -37,6 +39,7 @@ export default function ForgotPasswordModal({ isOpen, onClose }: ForgotPasswordM
       setCurrentStep("method");
       setResetMethod("email");
       setEmail("");
+      setCountryCode("+91");
       setPhoneNumber("");
       setOtp("");
       setNewPassword("");
@@ -83,39 +86,46 @@ export default function ForgotPasswordModal({ isOpen, onClose }: ForgotPasswordM
     };
   }, [isOpen]);
 
+  // Build full E.164 phone number
+  const fullPhoneNumber = `${countryCode}${phoneNumber}`;
+
   // Step 1: Request Password Reset (Send OTP)
   const handleSendOtp = async () => {
     setError(null);
-    
+
     if (resetMethod === "email") {
       if (!email || !email.includes("@")) {
         setError("Please enter a valid email address");
         return;
       }
     } else {
+      if (!phoneNumber || phoneNumber.length < 6) {
+        setError("Please enter a valid phone number");
+        return;
+      }
       const phoneRegex = /^\+[1-9]\d{6,14}$/;
-      if (!phoneNumber || !phoneRegex.test(phoneNumber)) {
-        setError("Please enter a valid phone number in E.164 format (e.g., +919876543210)");
+      if (!phoneRegex.test(fullPhoneNumber)) {
+        setError("Please enter a valid phone number");
         return;
       }
     }
-    
+
     setIsLoading(true);
     try {
-      const body = resetMethod === "email" ? { email } : { phoneNumber };
-      
+      const body = resetMethod === "email" ? { email } : { phoneNumber: fullPhoneNumber };
+
       const response = await fetch(`${BACKEND_URL}/api/v1/forgot-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      
+
       const data = await response.json();
-      
+
       if (!response.ok) {
         throw new Error(data?.message || "Failed to send OTP");
       }
-      
+
       setSuccessMessage(data.message || "OTP sent successfully");
       setCurrentStep("otp");
     } catch (err: any) {
@@ -128,30 +138,30 @@ export default function ForgotPasswordModal({ isOpen, onClose }: ForgotPasswordM
   // Step 2: Verify OTP
   const handleVerifyOtp = async () => {
     setError(null);
-    
+
     if (!otp || otp.length !== 6) {
       setError("Please enter a valid 6-digit OTP");
       return;
     }
-    
+
     setIsLoading(true);
     try {
-      const body = resetMethod === "email" 
-        ? { email, otp } 
-        : { phoneNumber, otp };
-      
+      const body = resetMethod === "email"
+        ? { email, otp }
+        : { phoneNumber: fullPhoneNumber, otp };
+
       const response = await fetch(`${BACKEND_URL}/api/v1/verify-forgot-password-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      
+
       const data = await response.json();
-      
+
       if (!response.ok) {
         throw new Error(data?.message || "Invalid OTP");
       }
-      
+
       setResetToken(data.resetToken);
       setSuccessMessage("OTP verified successfully");
       setCurrentStep("newPassword");
@@ -165,17 +175,17 @@ export default function ForgotPasswordModal({ isOpen, onClose }: ForgotPasswordM
   // Step 3: Reset Password
   const handleResetPassword = async () => {
     setError(null);
-    
+
     if (!newPassword || newPassword.length < 6) {
       setError("Password must be at least 6 characters");
       return;
     }
-    
+
     if (newPassword !== confirmPassword) {
       setError("Passwords do not match");
       return;
     }
-    
+
     setIsLoading(true);
     try {
       const response = await fetch(`${BACKEND_URL}/api/v1/reset-password`, {
@@ -183,13 +193,13 @@ export default function ForgotPasswordModal({ isOpen, onClose }: ForgotPasswordM
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ resetToken, newPassword }),
       });
-      
+
       const data = await response.json();
-      
+
       if (!response.ok) {
         throw new Error(data?.message || "Failed to reset password");
       }
-      
+
       setCurrentStep("success");
     } catch (err: any) {
       setError(err?.message || "Failed to reset password");
@@ -214,24 +224,24 @@ export default function ForgotPasswordModal({ isOpen, onClose }: ForgotPasswordM
   const getStepInfo = () => {
     switch (currentStep) {
       case "method":
-        return { 
-          title: "Reset Password", 
-          subtitle: "Enter your email or phone number to receive a verification code" 
+        return {
+          title: "Reset Password",
+          subtitle: "Enter your email or phone number to receive a verification code"
         };
       case "otp":
-        return { 
-          title: "Enter Verification Code", 
-          subtitle: `Enter the 6-digit code sent to ${resetMethod === "email" ? email : phoneNumber}` 
+        return {
+          title: "Enter Verification Code",
+          subtitle: ""
         };
       case "newPassword":
-        return { 
-          title: "Create New Password", 
-          subtitle: "Enter your new password below" 
+        return {
+          title: "Create New Password",
+          subtitle: "Enter your new password below"
         };
       case "success":
-        return { 
-          title: "Password Reset Successfully", 
-          subtitle: "You can now login with your new password" 
+        return {
+          title: "Password Reset Successfully",
+          subtitle: "You can now login with your new password"
         };
     }
   };
@@ -241,15 +251,14 @@ export default function ForgotPasswordModal({ isOpen, onClose }: ForgotPasswordM
   if (!isOpen) return null;
 
   return (
-    <div 
+    <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
     >
       {/* Success Toast */}
       {successMessage && (
-        <div 
-          className={`fixed top-6 left-1/2 -translate-x-1/2 z-[60] bg-green-500 text-white px-5 py-3 rounded-xl shadow-lg text-sm font-medium flex items-center gap-3 transition-all duration-300 ${
-            showSuccessToast ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"
-          }`}
+        <div
+          className={`fixed top-6 left-1/2 -translate-x-1/2 z-[60] bg-green-500 text-white px-5 py-3 rounded-xl shadow-lg text-sm font-medium flex items-center gap-3 transition-all duration-300 ${showSuccessToast ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"
+            }`}
         >
           <div className="bg-white/20 rounded-full p-1">
             <Check className="w-4 h-4" />
@@ -269,10 +278,9 @@ export default function ForgotPasswordModal({ isOpen, onClose }: ForgotPasswordM
 
       {/* Error Toast */}
       {error && (
-        <div 
-          className={`fixed top-6 left-1/2 -translate-x-1/2 z-[60] bg-red-500 text-white px-5 py-3 rounded-xl shadow-lg text-sm font-medium flex items-center gap-3 transition-all duration-300 ${
-            showErrorToast ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"
-          }`}
+        <div
+          className={`fixed top-6 left-1/2 -translate-x-1/2 z-[60] bg-red-500 text-white px-5 py-3 rounded-xl shadow-lg text-sm font-medium flex items-center gap-3 transition-all duration-300 ${showErrorToast ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"
+            }`}
         >
           <div className="bg-white/20 rounded-full p-1">
             <AlertCircle className="w-4 h-4" />
@@ -291,7 +299,7 @@ export default function ForgotPasswordModal({ isOpen, onClose }: ForgotPasswordM
       )}
 
       {/* Modal */}
-      <div 
+      <div
         className="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden"
       >
         {/* Header */}
@@ -307,7 +315,9 @@ export default function ForgotPasswordModal({ isOpen, onClose }: ForgotPasswordM
 
         {/* Content */}
         <div className="p-6">
-          <p className="text-gray-500 text-sm mb-6">{stepInfo.subtitle}</p>
+          {stepInfo.subtitle && (
+            <p className="text-gray-500 text-sm mb-6">{stepInfo.subtitle}</p>
+          )}
 
           {/* Step 1: Choose method and enter email/phone */}
           {currentStep === "method" && (
@@ -316,22 +326,20 @@ export default function ForgotPasswordModal({ isOpen, onClose }: ForgotPasswordM
               <div className="flex gap-2 p-1 bg-gray-100 rounded-xl">
                 <button
                   onClick={() => setResetMethod("email")}
-                  className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-medium transition-all cursor-pointer ${
-                    resetMethod === "email"
-                      ? "bg-white text-[#44666C] shadow-sm"
-                      : "text-gray-500 hover:text-gray-700"
-                  }`}
+                  className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-medium transition-all cursor-pointer ${resetMethod === "email"
+                    ? "bg-white text-[#44666C] shadow-sm"
+                    : "text-gray-500 hover:text-gray-700"
+                    }`}
                 >
                   <Mail className="w-4 h-4" />
                   Email
                 </button>
                 <button
                   onClick={() => setResetMethod("phone")}
-                  className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-medium transition-all cursor-pointer ${
-                    resetMethod === "phone"
-                      ? "bg-white text-[#44666C] shadow-sm"
-                      : "text-gray-500 hover:text-gray-700"
-                  }`}
+                  className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-medium transition-all cursor-pointer ${resetMethod === "phone"
+                    ? "bg-white text-[#44666C] shadow-sm"
+                    : "text-gray-500 hover:text-gray-700"
+                    }`}
                 >
                   <Phone className="w-4 h-4" />
                   Phone
@@ -349,12 +357,11 @@ export default function ForgotPasswordModal({ isOpen, onClose }: ForgotPasswordM
                   required
                 />
               ) : (
-                <FloatingLabelInput
-                  type="tel"
-                  label="Phone Number (e.g., +919876543210)"
-                  variant="with-border"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
+                <PhoneInput
+                  countryCode={countryCode}
+                  phoneNumber={phoneNumber}
+                  onCountryCodeChange={setCountryCode}
+                  onPhoneNumberChange={setPhoneNumber}
                   required
                 />
               )}
@@ -377,7 +384,7 @@ export default function ForgotPasswordModal({ isOpen, onClose }: ForgotPasswordM
                 <span>
                   OTP sent to{" "}
                   <span className="font-medium text-gray-800">
-                    {resetMethod === "email" ? email : phoneNumber}
+                    {resetMethod === "email" ? email : fullPhoneNumber}
                   </span>
                 </span>
                 <button

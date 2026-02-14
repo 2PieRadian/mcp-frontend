@@ -24,7 +24,7 @@ export default function FloatingLabelInput({
   const inputType = isPassword && showPassword ? "text" : type;
 
   const baseClasses =
-    "rounded-[10px] px-[clamp(15px,3vw,20px)] text-[clamp(14px,2vw,16px)] text-[#5a6c75] bg-white placeholder:text-transparent w-full outline-none focus:ring-2 focus:ring-primary/30 transition-all duration-200 shadow-[0_1px_3px_rgba(0,0,0,0.08)]";
+    "rounded-[10px] px-[clamp(15px,3vw,20px)] text-[16px] text-[#5a6c75] bg-white placeholder:text-transparent w-full outline-none focus:ring-2 focus:ring-primary/30 shadow-[0_1px_3px_rgba(0,0,0,0.08)]";
 
   const variantClasses =
     variant === "with-border"
@@ -33,8 +33,8 @@ export default function FloatingLabelInput({
 
   const labelClasses = `absolute left-[clamp(15px,3vw,20px)] pointer-events-none transition-all duration-200 ${
     isFloating
-      ? "top-[8px] text-[11px] text-primary"
-      : "top-[50%] translate-y-[-50%] text-[clamp(14px,2vw,16px)] text-gray-500"
+      ? "top-[8px] text-[12px] text-primary"
+      : "top-[50%] translate-y-[-50%] text-[16px] text-gray-500"
   }`;
 
   const paddingRight = isPassword ? "pr-[45px]" : "";
@@ -43,11 +43,12 @@ export default function FloatingLabelInput({
     <div className="relative w-full">
       <input
         type={inputType}
-        className={`${variantClasses} ${baseClasses} ${className} ${paddingRight} ${
-          isFloating ? "pt-[24px] pb-[10px]" : "py-[clamp(10px,2vw,12px)]"
-        }`}
+        className={`${variantClasses} ${baseClasses} ${className} ${paddingRight}`}
         style={{
           lineHeight: "normal",
+          paddingTop: isFloating ? "28px" : "12px",
+          paddingBottom: isFloating ? "8px" : "12px",
+          transition: "padding 200ms ease, box-shadow 200ms ease, border-color 200ms ease",
         }}
         value={value}
         placeholder={label}

@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "../context/AuthContext";
 import GoogleButton from "./GoogleButton";
 import FloatingLabelInput from "./FloatingLabelInput";
+import PhoneInput from "./PhoneInput";
 import PrimaryButton from "./PrimaryButton";
 import FormFooterLink from "./FormFooterLink";
 import AuthImage from "./AuthImage";
@@ -25,6 +26,7 @@ export default function SignupForm() {
   // Form fields
   const [email, setEmail] = useState("");
   const [emailOtp, setEmailOtp] = useState("");
+  const [countryCode, setCountryCode] = useState("+91");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [phoneOtp, setPhoneOtp] = useState("");
   const [fullName, setFullName] = useState("");
@@ -33,6 +35,10 @@ export default function SignupForm() {
   // Verification status
   const [emailVerified, setEmailVerified] = useState(false);
   const [phoneVerified, setPhoneVerified] = useState(false);
+
+  // Track if OTP was sent (to allow navigating back to OTP screen)
+  const [emailOtpSent, setEmailOtpSent] = useState(false);
+  const [phoneOtpSent, setPhoneOtpSent] = useState(false);
 
   // Loading and error states
   const [isLoading, setIsLoading] = useState(false);
@@ -71,11 +77,16 @@ export default function SignupForm() {
 
   const goBack = () => {
     setError(null);
-    if (currentStep === "emailOtp") setCurrentStep("email");
-    else if (currentStep === "phone") setCurrentStep("emailOtp");
-    else if (currentStep === "phoneOtp") setCurrentStep("phone");
-    else if (currentStep === "details") setCurrentStep("phoneOtp");
+    // Only allow going back before email is verified
+    if (currentStep === "emailOtp" && !emailVerified) setCurrentStep("email");
+    // After email is verified, only allow going back within phone verification steps
+    else if (currentStep === "phoneOtp" && !phoneVerified) setCurrentStep("phone");
   };
+
+  // Determine if back button should be shown
+  const showBackButton =
+    (currentStep === "emailOtp" && !emailVerified) ||
+    (currentStep === "phoneOtp" && !phoneVerified);
 
   // Step 1: Send Email OTP
   const handleSendEmailOtp = async () => {
@@ -121,6 +132,7 @@ export default function SignupForm() {
       }
 
       setSuccessMessage("OTP sent to your email");
+      setEmailOtpSent(true);
       setCurrentStep("emailOtp");
     } catch (err: any) {
       setError(err?.message || "Failed to send OTP");
@@ -162,14 +174,22 @@ export default function SignupForm() {
     }
   };
 
+  // Build full E.164 phone number
+  const fullPhoneNumber = `${countryCode}${phoneNumber}`;
+
   // Step 3: Send Phone OTP
   const handleSendPhoneOtp = async () => {
     setError(null);
 
-    // Basic E.164 validation
+    if (!phoneNumber || phoneNumber.length < 6) {
+      setError("Please enter a valid phone number");
+      return;
+    }
+
+    // Validate combined E.164 format
     const phoneRegex = /^\+[1-9]\d{6,14}$/;
-    if (!phoneNumber || !phoneRegex.test(phoneNumber)) {
-      setError("Please enter a valid phone number in E.164 format (e.g., +919876543210)");
+    if (!phoneRegex.test(fullPhoneNumber)) {
+      setError("Please enter a valid phone number");
       return;
     }
 
@@ -179,7 +199,7 @@ export default function SignupForm() {
       const checkResponse = await fetch(`${BACKEND_URL}/api/v1/check-phone`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phoneNumber }),
+        body: JSON.stringify({ phoneNumber: fullPhoneNumber }),
       });
 
       const checkData = await checkResponse.json();
@@ -198,7 +218,7 @@ export default function SignupForm() {
       const response = await fetch(`${BACKEND_URL}/api/v1/sms/send-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phoneNumber }),
+        body: JSON.stringify({ phoneNumber: fullPhoneNumber }),
       });
 
       const data = await response.json();
@@ -208,6 +228,7 @@ export default function SignupForm() {
       }
 
       setSuccessMessage("OTP sent to your phone");
+      setPhoneOtpSent(true);
       setCurrentStep("phoneOtp");
     } catch (err: any) {
       setError(err?.message || "Failed to send OTP");
@@ -230,7 +251,7 @@ export default function SignupForm() {
       const response = await fetch(`${BACKEND_URL}/api/v1/sms/verify-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phoneNumber, otp: phoneOtp }),
+        body: JSON.stringify({ phoneNumber: fullPhoneNumber, otp: phoneOtp }),
       });
 
       const data = await response.json();
@@ -273,7 +294,7 @@ export default function SignupForm() {
         body: JSON.stringify({
           email,
           password,
-          phoneNumber,
+          phoneNumber: fullPhoneNumber,
           name: fullName || undefined,
         }),
       });
@@ -342,7 +363,7 @@ export default function SignupForm() {
         return (
           <div key={step} className="flex items-center">
             <div
-              className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${isCompleted
+              className={`w-8 h-8 rounded-full flex items-center justify-center text-[14px] font-medium transition-all ${isCompleted
                 ? "bg-green-500 text-white"
                 : isCurrent
                   ? "bg-[#44666C] text-white"
@@ -369,11 +390,11 @@ export default function SignupForm() {
       case "email":
         return { title: "Verify Your Email", icon: Mail, subtitle: "We'll send you a verification code" };
       case "emailOtp":
-        return { title: "Enter Email OTP", icon: Shield, subtitle: `Enter the 6-digit code sent to ${email}` };
+        return { title: "Enter Email OTP", icon: Shield, subtitle: "" };
       case "phone":
         return { title: "Verify Your Phone", icon: Phone, subtitle: "We'll send you an SMS verification code" };
       case "phoneOtp":
-        return { title: "Enter Phone OTP", icon: Shield, subtitle: `Enter the 6-digit code sent to ${phoneNumber}` };
+        return { title: "Enter Phone OTP", icon: Shield, subtitle: "" };
       case "details":
         return { title: "Complete Your Profile", icon: User, subtitle: "Almost there! Set up your account" };
     }
@@ -387,14 +408,14 @@ export default function SignupForm() {
       <div className="flex-1 rounded-lg border border-gray-200 shadow-[0_2px_8px_rgba(0,0,0,0.08)] flex items-center justify-center [@media(max-width:959px)]:min-h-[400px]">
         <div className="rounded-lg w-full max-w-[500px] px-[24px] py-[32px] [@media(min-width:960px)]:px-[clamp(1.5rem,4vw,3rem)] [@media(min-width:960px)]:py-[clamp(1.5rem,4vw,3rem)]">
 
-          {/* Back button for non-first steps */}
-          {currentStep !== "email" && (
+          {/* Back button - only show before verification is complete */}
+          {showBackButton && (
             <button
               onClick={goBack}
               className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 transition-colors cursor-pointer"
             >
               <ArrowLeft className="w-4 h-4" />
-              <span className="text-sm">Back</span>
+              <span className="text-[16px]">Back</span>
             </button>
           )}
 
@@ -406,18 +427,20 @@ export default function SignupForm() {
             <div className="w-16 h-16 mx-auto mb-4 bg-[#E0ECEE] rounded-full flex items-center justify-center">
               <StepIcon className="w-8 h-8 text-[#44666C]" />
             </div>
-            <h2 className="text-[clamp(22px,4vw,26px)] font-bold text-logo-heading">
+            <h2 className="text-[27px] font-bold text-logo-heading">
               {stepInfo.title}
             </h2>
-            <p className="text-[14px] font-light text-light-text mt-2">
-              {stepInfo.subtitle}
-            </p>
+            {stepInfo.subtitle && (
+              <p className="text-[16px] font-light text-light-text mt-2">
+                {stepInfo.subtitle}
+              </p>
+            )}
           </div>
 
           {/* Success Toast */}
           {successMessage && (
             <div
-              className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-green-500 text-white px-5 py-3 rounded-xl shadow-lg text-sm font-medium flex items-center gap-3 transition-all duration-300 ${showSuccessToast ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"
+              className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-green-500 text-white px-5 py-3 rounded-xl shadow-lg text-[16px] font-medium flex items-center gap-3 transition-all duration-300 ${showSuccessToast ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"
                 }`}
             >
               <div className="bg-white/20 rounded-full p-1">
@@ -439,7 +462,7 @@ export default function SignupForm() {
           {/* Error Toast */}
           {error && (
             <div
-              className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-red-500 text-white px-5 py-3 rounded-xl shadow-lg text-sm font-medium flex items-center gap-3 transition-all duration-300 ${showErrorToast ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"
+              className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-red-500 text-white px-5 py-3 rounded-xl shadow-lg text-[16px] font-medium flex items-center gap-3 transition-all duration-300 ${showErrorToast ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"
                 }`}
             >
               <div className="bg-white/20 rounded-full p-1">
@@ -474,14 +497,25 @@ export default function SignupForm() {
                 isLoading={isLoading}
                 loadingText="Sending OTP..."
               >
-                Send Verification Code
+                {emailOtpSent ? "Resend Verification Code" : "Send Verification Code"}
               </PrimaryButton>
+
+              {/* Show option to continue to OTP screen if OTP was already sent */}
+              {emailOtpSent && (
+                <button
+                  type="button"
+                  onClick={() => setCurrentStep("emailOtp")}
+                  className="w-full mt-3 text-[16px] text-[#44666C] font-medium hover:underline cursor-pointer"
+                >
+                  Already have a code? Enter OTP
+                </button>
+              )}
 
               <div className="relative my-6">
                 <div className="absolute inset-0 flex items-center">
                   <div className="w-full border-t border-gray-200" />
                 </div>
-                <div className="relative flex justify-center text-sm">
+                <div className="relative flex justify-center text-[16px]">
                   <span className="px-2 bg-white text-gray-500">or</span>
                 </div>
               </div>
@@ -504,7 +538,7 @@ export default function SignupForm() {
           {currentStep === "emailOtp" && (
             <div className="space-y-4">
               {/* Email display with edit option */}
-              <div className="flex items-center justify-center gap-2 text-sm text-gray-600 mb-2">
+              <div className="flex items-center justify-center gap-2 text-[16px] text-gray-600 mb-2">
                 <span>OTP sent to <span className="font-medium text-gray-800">{email}</span></span>
                 <button
                   onClick={() => {
@@ -514,7 +548,7 @@ export default function SignupForm() {
                   }}
                   className="flex items-center gap-1 text-[#44666C] hover:underline cursor-pointer"
                 >
-                  <Pencil className="w-3 h-3" />
+                  <Pencil className="w-4 h-4" />
                   Edit
                 </button>
               </div>
@@ -537,7 +571,7 @@ export default function SignupForm() {
               >
                 Verify Email
               </PrimaryButton>
-              <p className="text-center text-sm text-gray-500">
+              <p className="text-center text-[16px] text-gray-500">
                 Didn't receive the code?{" "}
                 <button
                   onClick={handleResendEmailOtp}
@@ -553,16 +587,11 @@ export default function SignupForm() {
           {/* Step 3: Phone Input */}
           {currentStep === "phone" && (
             <div className="space-y-4">
-              <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-4 text-sm flex items-center gap-2">
-                <Check className="w-4 h-4" />
-                Email verified: {email}
-              </div>
-              <FloatingLabelInput
-                type="tel"
-                label="Phone Number (e.g., +919876543210)"
-                variant="with-border"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
+              <PhoneInput
+                countryCode={countryCode}
+                phoneNumber={phoneNumber}
+                onCountryCodeChange={setCountryCode}
+                onPhoneNumberChange={setPhoneNumber}
                 required
               />
               <PrimaryButton
@@ -570,8 +599,19 @@ export default function SignupForm() {
                 isLoading={isLoading}
                 loadingText="Sending OTP..."
               >
-                Send Verification Code
+                {phoneOtpSent ? "Resend Verification Code" : "Send Verification Code"}
               </PrimaryButton>
+
+              {/* Show option to continue to OTP screen if OTP was already sent */}
+              {phoneOtpSent && (
+                <button
+                  type="button"
+                  onClick={() => setCurrentStep("phoneOtp")}
+                  className="w-full mt-3 text-[16px] text-[#44666C] font-medium hover:underline cursor-pointer"
+                >
+                  Already have a code? Enter OTP
+                </button>
+              )}
             </div>
           )}
 
@@ -579,8 +619,8 @@ export default function SignupForm() {
           {currentStep === "phoneOtp" && (
             <div className="space-y-4">
               {/* Phone number display with edit option */}
-              <div className="flex items-center justify-center gap-2 text-sm text-gray-600 mb-2">
-                <span>OTP sent to <span className="font-medium text-gray-800">{phoneNumber}</span></span>
+              <div className="flex items-center justify-center gap-2 text-[16px] text-gray-600 mb-2">
+                <span>OTP sent to <span className="font-medium text-gray-800">{fullPhoneNumber}</span></span>
                 <button
                   onClick={() => {
                     setPhoneOtp("");
@@ -589,7 +629,7 @@ export default function SignupForm() {
                   }}
                   className="flex items-center gap-1 text-[#44666C] hover:underline cursor-pointer"
                 >
-                  <Pencil className="w-3 h-3" />
+                  <Pencil className="w-4 h-4" />
                   Edit
                 </button>
               </div>
@@ -612,7 +652,7 @@ export default function SignupForm() {
               >
                 Verify Phone
               </PrimaryButton>
-              <p className="text-center text-sm text-gray-500">
+              <p className="text-center text-[16px] text-gray-500">
                 Didn't receive the code?{" "}
                 <button
                   onClick={handleResendPhoneOtp}
@@ -629,13 +669,13 @@ export default function SignupForm() {
           {currentStep === "details" && (
             <form onSubmit={handleCreateAccount} className="space-y-4">
               <div className="space-y-2 mb-4">
-                <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-2 rounded-lg text-sm flex items-center gap-2">
+                <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-2 rounded-lg text-[14px] flex items-center gap-2">
                   <Check className="w-4 h-4" />
                   Email verified: {email}
                 </div>
-                <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-2 rounded-lg text-sm flex items-center gap-2">
+                <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-2 rounded-lg text-[14px] flex items-center gap-2">
                   <Check className="w-4 h-4" />
-                  Phone verified: {phoneNumber}
+                  Phone verified: {fullPhoneNumber}
                 </div>
               </div>
 
