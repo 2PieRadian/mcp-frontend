@@ -404,6 +404,8 @@ export default function ForgotPasswordModal({ isOpen, onClose }: ForgotPasswordM
 
               <FloatingLabelInput
                 type="text"
+                inputMode="numeric"
+                pattern="[0-9]*"
                 label="6-Digit OTP"
                 variant="with-border"
                 value={otp}
