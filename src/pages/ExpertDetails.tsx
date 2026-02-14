@@ -245,10 +245,37 @@ export default function ExpertDetails() {
                       Session Fee
                     </h3>
                   </div>
-                  <div className="font-bold text-[#44666C] mb-2" style={{ fontSize: 'clamp(20.8px, 1.3rem, 27px)' }}>
-                    ₹{expert.pricePerHour}
-                  </div>
-                  <p className="text-gray-600" style={{ fontSize: '14px' }}>1 hour consultation</p>
+                  {expert.isFreeSessionAvailable ? (
+                    <div className="space-y-[6px]">
+                      <div className="font-bold flex items-center gap-1 flex-wrap" style={{ fontSize: 'clamp(20.8px, 1.3rem, 27px)' }}>
+                        <span
+                          className="text-gray-400"
+                          style={{ fontSize: 'clamp(16px, 1rem, 20px)', textDecoration: 'line-through' }}
+                        >
+                          ₹{expert.pricePerHour}
+                        </span>
+                        <span className="text-green-600" style={{ fontSize: 'clamp(24px, 1.5rem, 30px)' }}>₹0</span>
+                        <span className="text-green-600 font-bold" style={{ fontSize: '14px' }}>
+                          for first time
+                        </span>
+                        <span className="text-gray-600" style={{ fontSize: '14px', fontWeight: 'normal' }}>
+                          30 min free consultation
+                        </span>
+                      </div>
+                      <p className="text-gray-400 mt-2" style={{ fontSize: '13px' }}>
+                        Paid appointments are 1 hour long
+                      </p>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="font-bold text-[#44666C] mb-2" style={{ fontSize: 'clamp(20.8px, 1.3rem, 27px)' }}>
+                        ₹{expert.pricePerHour}
+                      </div>
+                      <p className="text-gray-600" style={{ fontSize: '14px' }}>
+                        1 hour consultation
+                      </p>
+                    </>
+                  )}
                 </div>
 
                 {/* Book Appointment Button */}
@@ -258,7 +285,7 @@ export default function ExpertDetails() {
                   style={{ fontSize: '16px' }}
                 >
                   <Calendar size={18} className="sm:w-5 sm:h-5" />
-                  <span>Book an Appointment</span>
+                  <span>{expert.isFreeSessionAvailable !== false ? "Book Free Appointment" : "Book Appointment"}</span>
                 </button>
               </div>
             </div>
@@ -273,7 +300,8 @@ export default function ExpertDetails() {
           onClose={() => setIsBookingModalOpen(false)}
           expertId={expert.id}
           expertName={formattedName}
-          expertPrice={expert.pricePerHour}
+          expertPrice={expert.isFreeSessionAvailable ? 0 : expert.pricePerHour}
+          isFreeSessionAvailable={expert.isFreeSessionAvailable}
         />
       )}
     </div>

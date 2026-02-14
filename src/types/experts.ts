@@ -29,6 +29,8 @@ export type ApiExpert = {
       };
     };
   }>;
+  /** When true, show "Book Free Appointment"; when false, show "Book Appointment". Personalized when user is logged in. */
+  isFreeSessionAvailable?: boolean;
 };
 
 export type ApiResponse = {

@@ -148,7 +148,7 @@ export default function ExpertCard({
               e.stopPropagation(); // Prevent card click when button is clicked
               handleCardClick();
             }}
-            className="w-full border border-[#44666C] hover:bg-[#44666C] hover:text-white transition-colors duration-200 text-[#44666C] text-center cursor-pointer text-xs sm:text-sm font-medium rounded-[20px] py-[4px] mt-[8px]"
+            className="w-full border border-[#44666C] hover:bg-[#44666C] hover:text-white transition-colors duration-200 text-[#44666C] text-center cursor-pointer text-[14px] font-medium rounded-[20px] py-[4px] mt-[8px]"
           >
             {t("viewProfile")}
           </button>
@@ -156,53 +156,80 @@ export default function ExpertCard({
 
         <div className="Profile-Details flex flex-col flex-2">
           <div className="Name-Container flex items-center justify-between">
-            <h1 className="Name text-[16px] min-[800px]:text-[18px] font-medium">
+            <h1 className="Name text-[16px] min-[800px]:text-[21px] font-medium">
               {name}
             </h1>
 
             {rating > 0 && (
               <div className="Rating-Container flex items-center gap-[5px]">
                 <Star size={18} className="fill-yellow-400 text-yellow-400" />
-                <span className="Rating-Value text-yellow-400">{rating}</span>
-                <span className="Rating-Count text-gray-500 text-[11px] min-[800px]:text-xs">
+                <span className="Rating-Value text-yellow-400 text-[16px]">{rating}</span>
+                <span className="Rating-Count text-gray-500 text-[14px]">
                   ({ratingCount})
                 </span>
               </div>
             )}
           </div>
 
-          <div className="Specialization-Container text-[#8F9EA0] text-[11px] min-[800px]:text-sm">
+          <div className="Specialization-Container text-[#8F9EA0] text-[14px]">
             {professionalTitle}
           </div>
 
-          <div className="Tags-Container text-[#516A6E] text-xs min-[800px]:text-sm mt-[8px]">
+          <div className="Tags-Container text-[#516A6E] text-[14px] mt-[8px]">
             {tags}
           </div>
 
-          <div className="Languages-Container text-[#516A6E] mt-[8px] text-xs min-[800px]:text-sm">
+          <div className="Languages-Container text-[#516A6E] mt-[8px] text-[14px]">
             {languages}
           </div>
 
-          <div className="Next-Available-Slot mt-[8px] text-xs min-[800px]:text-sm flex items-center gap-2">
-            <span className="font-light text-[#8F9EA0]">
-              {t("nextAvailableSlot")}
+          <div className="Next-Available-Slot mt-[8px] text-[14px] flex items-center gap-2 flex-wrap">
+            <span className="font-light text-[#8F9EA0] whitespace-nowrap">
+              {t("nextAvailableSlot")}{" "}
             </span>
             {isLoadingNextSlot ? (
-              <Loader2 className="w-3 h-3 text-[#8F9EA0] animate-spin" />
+              <Loader2 className="w-3 h-3 text-[#8F9EA0] animate-spin shrink-0" />
             ) : (
-              <span className="font-medium text-[#516A6E]">
+              <span className="font-medium text-[#516A6E] min-w-0 text-[16px]">
                 {formatNextSlot()}
               </span>
             )}
           </div>
 
-          <div className="Price-Container flex items-center gap-[8px] mt-[8px]">
-            <p className="text-xl min-[800px]:text-[24px] font-medium">
-              ₹ {price}
-            </p>
-            <p className="text-[11px] min-[800px]:text-sm text-gray-500">
-              {t("for60MinConsultation")}
-            </p>
+          <div className="Price-Container mt-[8px]">
+            {expertData?.isFreeSessionAvailable ? (
+              <div className="space-y-[6px]">
+                <div className="flex items-center gap-[4px] flex-wrap">
+                  <p
+                    className="text-[16px] font-medium text-gray-400"
+                    style={{ textDecoration: "line-through" }}
+                  >
+                    ₹ {price}
+                  </p>
+                  <p className="text-[24px] font-bold text-green-600">
+                    ₹0
+                  </p>
+                  <p className="text-[14px] text-green-600">
+                    for first time
+                  </p>
+                  <p className="text-[14px] text-gray-500">
+                    30 min free consultation
+                  </p>
+                </div>
+                <p className="text-[13px] text-gray-400">
+                  Paid appointments are 1 hour long
+                </p>
+              </div>
+            ) : (
+              <div className="flex items-center gap-[8px]">
+                <p className="text-[21px] font-medium">
+                  ₹ {price}
+                </p>
+                <p className="text-[14px] text-gray-500">
+                  {t("for60MinConsultation")}
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -210,11 +237,13 @@ export default function ExpertCard({
       <div
         onClick={(e) => {
           e.stopPropagation(); // Prevent card click when button is clicked
-          // TODO: Implement booking functionality
+          handleCardClick();
         }}
-        className="mt-[16px] bg-[#44666C] text-white text-center cursor-pointer text-sm min-[800px]:text-base font-medium rounded-[20px] py-[8px]"
+        className="mt-[16px] bg-[#44666C] text-white text-center cursor-pointer text-[16px] font-medium rounded-[20px] py-[8px]"
       >
-        {t("bookASession")}
+        {expertData?.isFreeSessionAvailable !== false
+          ? "Book Free Appointment"
+          : "Book Appointment"}
       </div>
     </div>
   );

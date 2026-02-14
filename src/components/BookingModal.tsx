@@ -11,6 +11,8 @@ type BookingModalProps = {
   expertId: number;
   expertName: string;
   expertPrice: number;
+  /** When true, show "Book Free Appointment"; when false, show "Book Appointment". */
+  isFreeSessionAvailable?: boolean;
 };
 
 export default function BookingModal({
@@ -19,6 +21,7 @@ export default function BookingModal({
   expertId,
   expertName,
   expertPrice,
+  isFreeSessionAvailable = true,
 }: BookingModalProps) {
   const {
     daysWithSlots,
@@ -443,7 +446,7 @@ export default function BookingModal({
                   className="w-full sm:w-auto px-6 py-2.5 bg-[#44666C] text-white rounded-xl hover:bg-[#365a62] disabled:bg-gray-300 disabled:cursor-not-allowed font-medium flex items-center justify-center gap-2 transition-colors cursor-pointer"
                 >
                   <Calendar className="w-4 h-4 shrink-0" />
-                  Book Appointment
+                  {isFreeSessionAvailable ? "Book Free Appointment" : "Book Appointment"}
                 </button>
               </div>
             </div>

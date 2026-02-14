@@ -75,22 +75,27 @@ export function ExpertsProvider({ children }: { children: ReactNode }) {
       setError(null);
 
       try {
-        const token = window.localStorage.getItem("auth:token");
+        const token =
+          window.localStorage.getItem("auth:token") ||
+          window.localStorage.getItem("token");
         const headers: HeadersInit = {
-          "Content-Type": "application/json",
           ...(token && { Authorization: `Bearer ${token}` }),
         };
 
-        // Build query parameters with filters
+        // Build query parameters (API: page, minPrice, maxPrice, minRating, minExperience, language, specialization, domain, professionalTitle, name)
         const params = new URLSearchParams({
           page: page.toString(),
           specialization: specialization,
-          ...(filters?.minPrice && { minPrice: filters.minPrice.toString() }),
-          ...(filters?.maxPrice && { maxPrice: filters.maxPrice.toString() }),
-          ...(filters?.minRating && {
+          ...(filters?.minPrice != null && {
+            minPrice: filters.minPrice.toString(),
+          }),
+          ...(filters?.maxPrice != null && {
+            maxPrice: filters.maxPrice.toString(),
+          }),
+          ...(filters?.minRating != null && {
             minRating: filters.minRating.toString(),
           }),
-          ...(filters?.minExperience && {
+          ...(filters?.minExperience != null && {
             minExperience: filters.minExperience.toString(),
           }),
           ...(filters?.language && {
