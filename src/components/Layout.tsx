@@ -29,7 +29,7 @@ export default function Layout({
     <div className="min-h-screen flex flex-col">
       {/* Fixed Navbar */}
       {showNavbar && (
-        <header className={`shrink-0 sticky top-0 z-40 bg-primary ${navbarPadding}`}>
+        <header className={`shrink-0 sticky top-0 z-40 w-full bg-white ${navbarPadding}`}>
           <Navbar />
         </header>
       )}

@@ -7,6 +7,7 @@ import {
   Award,
   Languages,
   FileText,
+  LogIn,
 } from "lucide-react";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import BookingModal from "../components/BookingModal";
@@ -14,12 +15,15 @@ import ImageViewer from "../components/ImageViewer";
 import type { ApiExpert } from "../types/experts";
 import { getAvatarUrl } from "../lib/api";
 import useScrollToTop from "../hooks/useScrollToTop";
+import { useAuth } from "../context/AuthContext";
 
 export default function ExpertDetails() {
   useScrollToTop();
   const location = useLocation();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+  const [showLoginPrompt, setShowLoginPrompt] = useState(false);
 
   // Get expert data from navigation state (passed via props)
   const expert = location.state?.expert as ApiExpert | undefined;
@@ -280,7 +284,13 @@ export default function ExpertDetails() {
 
                 {/* Book Appointment Button */}
                 <button
-                  onClick={() => setIsBookingModalOpen(true)}
+                  onClick={() => {
+                    if (!user) {
+                      setShowLoginPrompt(true);
+                    } else {
+                      setIsBookingModalOpen(true);
+                    }
+                  }}
                   className="w-full bg-[#44666C] hover:bg-[#365a62] active:bg-[#2d4d54] text-white font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 sm:hover:-translate-y-1 cursor-pointer"
                   style={{ fontSize: '16px' }}
                 >
@@ -292,6 +302,45 @@ export default function ExpertDetails() {
           </div>
         </div>
       </div>
+
+      {/* Login required prompt */}
+      {showLoginPrompt && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
+          aria-modal="true"
+          onClick={() => setShowLoginPrompt(false)}
+        >
+          <div
+            className="bg-white rounded-2xl shadow-xl max-w-sm w-full p-6 text-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="mx-auto w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mb-4">
+              <LogIn className="w-6 h-6 text-amber-700" />
+            </div>
+            <h3 className="text-lg font-semibold text-[#304048] mb-2">Login required</h3>
+            <p className="text-gray-600 text-sm mb-6">
+              Please log in to book a session with {formattedName}.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <button
+                onClick={() => {
+                  setShowLoginPrompt(false);
+                  navigate(`/login?redirect=${encodeURIComponent(location.pathname)}`);
+                }}
+                className="flex-1 px-4 py-2.5 bg-[#44666C] text-white rounded-xl font-medium hover:bg-[#365a62] flex items-center justify-center gap-2"
+              >
+                <LogIn className="w-4 h-4" /> Log in
+              </button>
+              <button
+                onClick={() => setShowLoginPrompt(false)}
+                className="flex-1 px-4 py-2.5 border border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Booking Modal */}
       {expert && (

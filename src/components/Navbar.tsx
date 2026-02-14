@@ -197,6 +197,13 @@ export default function Navbar() {
               </div>
             )}
 
+            {user?.role !== "EXPERT" && user && (
+              <NavbarItem
+                textKey="dashboard"
+                link="/dashboard"
+                isActive={location.pathname === "/dashboard"}
+              />
+            )}
             {user?.role !== "EXPERT" && (
               <div ref={navbarItemRef}>
                 <NavbarItemIcon
@@ -248,13 +255,6 @@ export default function Navbar() {
             )}
             {user?.role !== "EXPERT" && (
               <NavbarItem textKey="findCounsellors" link="/find-counsellors" />
-            )}
-            {user?.role !== "EXPERT" && user && (
-              <NavbarItem
-                textKey="dashboard"
-                link="/dashboard"
-                isActive={location.pathname === "/dashboard"}
-              />
             )}
             <NavbarItem textKey="articles" link="/articles" />
           </div>

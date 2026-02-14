@@ -328,6 +328,14 @@ export default function MobileNavModal({
 
         {/* Navigation items */}
         <div className="p-[20px] flex flex-col gap-[10px] overflow-y-auto flex-1">
+          {/* Dashboard - first for logged-in non-expert users */}
+          {user?.role !== "EXPERT" && user && (
+            <MobileNavItem
+              textKey="dashboard"
+              to="/dashboard"
+              onClick={onClose}
+            />
+          )}
           {/* We Help With - Expandable */}
           {user?.role !== "EXPERT" && (
             <div>
@@ -454,13 +462,6 @@ export default function MobileNavModal({
           )}
           {user?.role !== "EXPERT" && (
             <MobileNavItem textKey="findCounsellors" to="/find-counsellors" />
-          )}
-          {user?.role !== "EXPERT" && user && (
-            <MobileNavItem
-              textKey="dashboard"
-              to="/dashboard"
-              onClick={onClose}
-            />
           )}
           {user?.role === "EXPERT" && (
             <>
