@@ -47,17 +47,10 @@ export default function Layout({
 }
 
 /**
- * Minimal layout that only provides the scroll container - no navbar/footer
+ * Minimal layout wrapper - no navbar/footer
  * Use this for pages that have their own custom navbar/footer
- * Mobile-friendly: uses min-h-screen to allow native scroll and pull-to-refresh
+ * Uses native document scroll for mobile pull-to-refresh compatibility
  */
 export function ScrollLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <div
-      id="main-scroll-container"
-      className="min-h-screen overflow-x-hidden"
-    >
-      {children}
-    </div>
-  );
+  return <>{children}</>;
 }

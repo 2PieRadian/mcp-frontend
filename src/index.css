@@ -29,47 +29,43 @@ body {
   min-height: 100vh;
 }
 
-/* Main scroll container: allow touch scroll and momentum on mobile (fixes scroll/refresh when navbar modal was used) */
-#main-scroll-container {
-  scrollbar-color: hsl(200, 12%, 32%) hsl(200, 10%, 92%);
-  /* Enable momentum scrolling on iOS */
-  -webkit-overflow-scrolling: touch;
+/* Custom scrollbar styling for desktop */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
 }
 
-/* Ensure html/body never get stuck in a non-scrollable state */
+::-webkit-scrollbar-track {
+  background: hsl(200, 10%, 92%);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(200, 12%, 32%);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(200, 12%, 24%);
+}
+
+/* Smooth scroll for anchor links */
+.scroll-smooth {
+  scroll-behavior: smooth;
+}
+
+/* Ensure html/body support native scroll and pull-to-refresh on mobile */
 html,
 body {
   /* These are the "unlocked" defaults - MobileNavModal may temporarily override */
-  touch-action: auto;
+  touch-action: manipulation;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Safety reset: when body has no fixed position, ensure scrolling works */
 body:not([style*="position: fixed"]) {
   overflow-y: auto !important;
-}
-
-#main-scroll-container::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-#main-scroll-container::-webkit-scrollbar-track {
-  background: hsl(200, 10%, 92%);
-  border-radius: 4px;
-}
-
-#main-scroll-container::-webkit-scrollbar-thumb {
-  background: hsl(200, 12%, 32%);
-  border-radius: 5px;
-}
-
-#main-scroll-container::-webkit-scrollbar-thumb:hover {
-  background: hsl(200, 12%, 24%);
-}
-
-/* Smooth scroll for the main content container (internal anchor links) */
-.scroll-smooth {
-  scroll-behavior: smooth;
+  position: static !important;
 }
 
 @theme {

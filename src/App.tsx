@@ -33,7 +33,6 @@ import HelpCenter from "./pages/HelpCenter";
 import Articles from "./pages/Articles";
 import ArticleDetail from "./pages/ArticleDetail";
 import { useGoogleAnalytics } from "./hooks/useGoogleAnalytics";
-import { ScrollLayout } from "./components/Layout";
 import RouteScrollReset from "./components/RouteScrollReset";
 
 export default function App() {
@@ -45,10 +44,8 @@ export default function App() {
       <ExpertsProvider>
         <AvailabilityProvider>
           <BookingProvider>
-            {/* ScrollLayout: provides scroll container with smooth scrolling for user actions */}
-            <ScrollLayout>
-          {/* RouteScrollReset: instantly resets scroll to top on route change */}
-          <RouteScrollReset />
+            {/* RouteScrollReset: instantly resets scroll to top on route change */}
+            <RouteScrollReset />
 
           <Routes>
             <Route path="/" element={<LandingPage />} />
@@ -161,8 +158,7 @@ export default function App() {
             {/* Articles */}
             <Route path="/articles" element={<Articles />} />
             <Route path="/articles/:slug" element={<ArticleDetail />} />
-          </Routes>
-        </ScrollLayout>
+            </Routes>
           </BookingProvider>
         </AvailabilityProvider>
       </ExpertsProvider>

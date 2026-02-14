@@ -3,34 +3,26 @@ import { ChevronUp } from "lucide-react";
 
 /**
  * A minimalistic scroll-to-top button that appears when user scrolls down.
- * Works with the main-scroll-container from Layout.
+ * Uses native window scroll for mobile compatibility.
  */
 export default function ScrollToTopButton() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const scrollContainer = document.getElementById("main-scroll-container");
-
-    if (!scrollContainer) return;
-
     const handleScroll = () => {
       // Show button when scrolled more than 400px
-      setIsVisible(scrollContainer.scrollTop > 400);
+      setIsVisible(window.scrollY > 400);
     };
 
-    scrollContainer.addEventListener("scroll", handleScroll);
-    return () => scrollContainer.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollToTop = () => {
-    const scrollContainer = document.getElementById("main-scroll-container");
-
-    if (scrollContainer) {
-      scrollContainer.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    }
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   return (
