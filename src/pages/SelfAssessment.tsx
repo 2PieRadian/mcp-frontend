@@ -11,7 +11,7 @@ export default function SelfAssessment() {
     <div className="self-assessment-page max-w-[1350px] mx-auto px-[25px]">
       <SelfAssessmentNavbar />
 
-      <div className="self-assessment-intro h-[calc(100svh-76px)] flex flex-col items-center justify-center">
+      <div className="self-assessment-intro min-h-[calc(100svh-76px)] flex flex-col items-center justify-center">
         <div className="text-center max-w-[700px] mx-auto">
           <h1 className="text-[clamp(30px,6vw,48px)] font-semibold">
             {t("selfAssessment.title")}
