@@ -1,9 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { Calendar, Clock, ExternalLink, User } from "lucide-react";
+import { Calendar, Clock, ExternalLink, User, Loader2 } from "lucide-react";
 import type { UpcomingSession } from "../types";
 
 type UpcomingSessionsTabProps = {
   sessions: UpcomingSession[];
+  isLoading?: boolean;
+  error?: string | null;
+  onRefetch?: () => void;
 };
 
 const formatTimeLeft = (startTime: string): string => {
@@ -35,6 +38,9 @@ const formatDateTime = (dateString: string): string => {
 
 export default function UpcomingSessionsTab({
   sessions,
+  isLoading = false,
+  error = null,
+  onRefetch,
 }: UpcomingSessionsTabProps) {
   const navigate = useNavigate();
 
@@ -47,7 +53,24 @@ export default function UpcomingSessionsTab({
         </h2>
       </div>
 
-      {sessions.length === 0 ? (
+      {isLoading ? (
+        <div className="flex items-center justify-center py-[40px]">
+          <Loader2 className="w-8 h-8 text-primary animate-spin" />
+        </div>
+      ) : error ? (
+        <div className="text-center py-[40px]">
+          <p className="text-red-600 mb-3">{error}</p>
+          {onRefetch && (
+            <button
+              type="button"
+              onClick={onRefetch}
+              className="px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:opacity-90"
+            >
+              Try again
+            </button>
+          )}
+        </div>
+      ) : sessions.length === 0 ? (
         <p className="text-light-text text-center py-[40px]">
           No upcoming sessions
         </p>
@@ -142,15 +165,19 @@ export default function UpcomingSessionsTab({
                   </div>
 
                   {/* Meet Link */}
-                  <a
-                    href={session.meetLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-[8px] bg-primary text-white px-[16px] py-[10px] rounded-full text-[14px] font-medium hover:bg-primary/90 transition-colors"
-                  >
-                    <ExternalLink className="w-4 h-4" />
-                    Join Meeting
-                  </a>
+                  {session.meetLink ? (
+                    <a
+                      href={session.meetLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-[8px] bg-primary text-white px-[16px] py-[10px] rounded-full text-[14px] font-medium hover:bg-primary/90 transition-colors"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      Join Meeting
+                    </a>
+                  ) : (
+                    <span className="text-gray-500 text-sm">Meeting link not yet set</span>
+                  )}
                 </div>
               </div>
             </div>

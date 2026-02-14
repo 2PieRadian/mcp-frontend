@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense } from "react";
+import { useState, useEffect, useCallback, lazy, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "../../context/AuthContext";
@@ -6,7 +6,7 @@ import { useAvailability } from "../../context/AvailabilityContext";
 import ResponsiveNavbar from "../../components/ResponsiveNavbar";
 import type { UpcomingSession, WeeklyAvailability, TabType } from "./types";
 import useScrollToTop from "../../hooks/useScrollToTop";
-import { BACKEND_URL } from "../../lib/api";
+import { BACKEND_URL, getExpertUpcomingSessions, getExpertEarnings } from "../../lib/api";
 
 const DashboardTabs = lazy(() => import("./components/DashboardTabs"));
 const UpcomingSessionsTab = lazy(
@@ -36,6 +36,10 @@ export default function ExpertsDashboard() {
   const [isEditingAvailability, setIsEditingAvailability] = useState(false);
   const [isSavingAvailability, setIsSavingAvailability] = useState(false);
   const [expertEarnings, setExpertEarnings] = useState<number | undefined>(undefined);
+  const [upcomingSessionsLoading, setUpcomingSessionsLoading] = useState(false);
+  const [upcomingSessionsError, setUpcomingSessionsError] = useState<string | null>(null);
+  const [earningsLoading, setEarningsLoading] = useState(false);
+  const [earningsError, setEarningsError] = useState<string | null>(null);
 
   // Sync local availability with context availability when it changes
   useEffect(() => {
@@ -49,80 +53,63 @@ export default function ExpertsDashboard() {
     }
   }, [user, navigate]);
 
-  // Fetch expert data to get earnings
+  const fetchUpcomingSessions = useCallback(async () => {
+    if (user?.role !== "EXPERT") return;
+    setUpcomingSessionsLoading(true);
+    setUpcomingSessionsError(null);
+    try {
+      const res = await getExpertUpcomingSessions();
+      const mapped: UpcomingSession[] = res.sessions.map((s) => {
+        const start = new Date(s.startAt).getTime();
+        const end = new Date(s.endAt).getTime();
+        const durationMinutes = Math.round((end - start) / (60 * 1000));
+        return {
+          id: String(s.id),
+          meetLink: s.meetLink ?? "",
+          duration: durationMinutes,
+          startTime: s.startAt,
+          endTime: s.endAt,
+          userReason: "",
+          user: {
+            id: String(s.user.id),
+            name: s.user.name ?? "",
+            email: s.user.email,
+            avatarUrl: undefined,
+          },
+          amountPaid: s.amount,
+        };
+      });
+      setUpcomingSessions(mapped);
+    } catch (e) {
+      setUpcomingSessionsError(e instanceof Error ? e.message : "Failed to load sessions");
+      setUpcomingSessions([]);
+    } finally {
+      setUpcomingSessionsLoading(false);
+    }
+  }, [user?.role]);
+
+  const fetchEarnings = useCallback(async () => {
+    if (user?.role !== "EXPERT") return;
+    setEarningsLoading(true);
+    setEarningsError(null);
+    try {
+      const res = await getExpertEarnings();
+      setExpertEarnings(res.earnings);
+    } catch (e) {
+      setEarningsError(e instanceof Error ? e.message : "Failed to load earnings");
+      setExpertEarnings(undefined);
+    } finally {
+      setEarningsLoading(false);
+    }
+  }, [user?.role]);
+
   useEffect(() => {
-    const fetchExpertData = async () => {
-      if (!user?.expertId) return;
+    fetchUpcomingSessions();
+  }, [fetchUpcomingSessions]);
 
-      try {
-        const token = window.localStorage.getItem("auth:token");
-        if (!token) return;
-
-        const response = await fetch(
-          `${BACKEND_URL}/api/v1/expert/get-expert/${user.expertId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        if (!response.ok) {
-          console.error("Failed to fetch expert data");
-          return;
-        }
-
-        const data = await response.json();
-        const expert = data?.expert || data;
-
-        if (expert?.earnings !== undefined) {
-          setExpertEarnings(expert.earnings);
-        }
-      } catch (error) {
-        console.error("Error fetching expert data:", error);
-      }
-    };
-
-    fetchExpertData();
-  }, [user?.expertId]);
-
-  // Mock data - replace with actual API calls
   useEffect(() => {
-    setUpcomingSessions([
-      {
-        id: "1",
-        meetLink: "https://meet.google.com/abc-defg-hij",
-        duration: 60,
-        startTime: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(),
-        endTime: new Date(Date.now() + 3 * 60 * 60 * 1000).toISOString(),
-        userReason: "Need guidance on career transition and skill development",
-        user: {
-          id: "user1",
-          name: "John Doe",
-          email: "john@example.com",
-          avatarUrl: undefined,
-        },
-        amountPaid: 1500,
-      },
-      {
-        id: "2",
-        meetLink: "https://meet.google.com/xyz-uvwx-rst",
-        duration: 45,
-        startTime: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
-        endTime: new Date(
-          Date.now() + 24 * 60 * 60 * 1000 + 45 * 60 * 1000
-        ).toISOString(),
-        userReason: "Financial planning for retirement",
-        user: {
-          id: "user2",
-          name: "Jane Smith",
-          email: "jane@example.com",
-          avatarUrl: undefined,
-        },
-        amountPaid: 2000,
-      },
-    ]);
-  }, []);
+    fetchEarnings();
+  }, [fetchEarnings]);
 
   const toggleTimeSlot = (day: string, slot: string) => {
     if (!isEditingAvailability) return;
@@ -263,7 +250,12 @@ export default function ExpertsDashboard() {
         <Suspense fallback={<div className="text-center py-8">Loading...</div>}>
           <div>
             {activeTab === "sessions" && (
-              <UpcomingSessionsTab sessions={upcomingSessions} />
+              <UpcomingSessionsTab
+                sessions={upcomingSessions}
+                isLoading={upcomingSessionsLoading}
+                error={upcomingSessionsError}
+                onRefetch={fetchUpcomingSessions}
+              />
             )}
 
             {activeTab === "availability" && (
@@ -282,6 +274,9 @@ export default function ExpertsDashboard() {
             {activeTab === "earnings" && (
               <EarningsTab
                 totalEarnings={expertEarnings ?? 0}
+                isLoading={earningsLoading}
+                error={earningsError}
+                onRefetch={fetchEarnings}
               />
             )}
           </div>

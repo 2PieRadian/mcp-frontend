@@ -47,8 +47,8 @@ function formatTime(iso: string): string {
   });
 }
 
-function formatAmount(paise: number): string {
-  return `₹${(paise / 100).toLocaleString("en-IN")}`;
+function formatAmount(amount: number): string {
+  return `₹${amount.toLocaleString("en-IN")}`;
 }
 
 function getExpertInitial(name: string | null, email: string): string {
@@ -270,11 +270,10 @@ export default function Dashboard() {
             <button
               key={opt.value || "all"}
               onClick={() => setStatusFilter(opt.value)}
-              className={`px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${
-                statusFilter === opt.value
+              className={`px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${statusFilter === opt.value
                   ? "bg-[#44666C] text-white shadow-sm"
                   : "bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-800"
-              }`}
+                }`}
             >
               {opt.label}
             </button>

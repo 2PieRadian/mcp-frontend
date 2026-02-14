@@ -246,3 +246,77 @@ export async function getMyAppointments(
 
   return data as MyAppointmentsResponse;
 }
+
+/** Client user in expert upcoming session (no password). */
+export type ExpertSessionUser = {
+  id: number;
+  name: string | null;
+  email: string;
+  [key: string]: unknown;
+};
+
+/** Single session from expert upcoming-sessions. */
+export type ExpertUpcomingSession = {
+  id: number;
+  userId: number;
+  expertId: number;
+  amount: number;
+  startAt: string;
+  endAt: string;
+  status: string;
+  meetLink: string | null;
+  user: ExpertSessionUser;
+};
+
+export type ExpertUpcomingSessionsResponse = {
+  message: string;
+  count: number;
+  sessions: ExpertUpcomingSession[];
+};
+
+/**
+ * Get upcoming sessions for the logged-in expert (SCHEDULED, ONGOING, startAt >= now).
+ */
+export async function getExpertUpcomingSessions(): Promise<ExpertUpcomingSessionsResponse> {
+  const res = await fetch(
+    `${BACKEND_URL}/api/v1/appointments/expert/upcoming-sessions`,
+    { method: "GET", headers: getAuthHeaders() }
+  );
+
+  const data = await res.json().catch(() => ({}));
+
+  if (!res.ok) {
+    throw new Error(
+      (data?.message as string) ||
+      (res.status === 403 ? "Forbidden" : res.status === 401 ? "Unauthorized" : "Failed to load upcoming sessions")
+    );
+  }
+
+  return data as ExpertUpcomingSessionsResponse;
+}
+
+export type ExpertEarningsResponse = {
+  message: string;
+  earnings: number;
+};
+
+/**
+ * Get earnings for the logged-in expert.
+ */
+export async function getExpertEarnings(): Promise<ExpertEarningsResponse> {
+  const res = await fetch(
+    `${BACKEND_URL}/api/v1/appointments/expert/earnings`,
+    { method: "GET", headers: getAuthHeaders() }
+  );
+
+  const data = await res.json().catch(() => ({}));
+
+  if (!res.ok) {
+    throw new Error(
+      (data?.message as string) ||
+      (res.status === 403 ? "Forbidden" : res.status === 401 ? "Unauthorized" : "Failed to load earnings")
+    );
+  }
+
+  return data as ExpertEarningsResponse;
+}
