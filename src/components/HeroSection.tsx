@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { BadgeCheck, TrendingUp, BookOpenText, HeartPulse } from "lucide-react";
+import { TrendingUp, BookOpenText, HeartPulse } from "lucide-react";
 import { useScreen } from "../context/ScreenContext";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
