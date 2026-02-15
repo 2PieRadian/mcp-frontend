@@ -1,48 +1,48 @@
 {
   "meta": {
-    "title": "Contact Us | MindCurePath Consultancy - We're Here to Help",
-    "description": "Contact MindCurePath for support with mental wellness, education, and finance assessments. Reach our team 24/7 at support@mindcurepath.com.",
-    "keywords": "contact MindCurePath, customer support, mental health help, education guidance contact, financial wellness support",
-    "ogTitle": "Contact Us | MindCurePath Consultancy",
-    "ogDescription": "Have questions? Reach out to MindCurePath today for assistance on your wellness journey.",
-    "schemaName": "Contact Us - MindCurePath",
-    "schemaDescription": "Contact page for MindCurePath Consultancy Private Limited.",
-    "contactType": "customer support",
-    "availableLanguage": "English"
+    "title": "संपर्क करें | MindCurePath - हम आपकी मदद के लिए यहां हैं",
+    "description": "मानसिक स्वास्थ्य, शिक्षा और वित्त से जुड़े सवालों के लिए MindCurePath से संपर्क करें। हमारी टीम 24/7 उपलब्ध है: support@mindcurepath.com",
+    "keywords": "MindCurePath संपर्क, ग्राहक सहायता, मानसिक स्वास्थ्य मदद, शिक्षा मार्गदर्शन संपर्क, वित्त सहायता",
+    "ogTitle": "संपर्क करें | MindCurePath",
+    "ogDescription": "कोई सवाल है? अपनी वेलनेस यात्रा के लिए आज ही MindCurePath से संपर्क करें।",
+    "schemaName": "संपर्क करें - MindCurePath",
+    "schemaDescription": "MindCurePath Consultancy Private Limited का संपर्क पेज",
+    "contactType": "ग्राहक सहायता",
+    "availableLanguage": "हिंदी"
   },
   "hero": {
-    "title": "Contact Us",
-    "subtitle": "We're here to help you on your journey"
+    "title": "संपर्क करें",
+    "subtitle": "आपकी यात्रा में हम आपके साथ हैं"
   },
   "getInTouch": {
-    "title": "Get in Touch",
-    "description": "Have questions, feedback, or need assistance? We'd love to hear from you. Our dedicated support team is available around the clock to help you.",
+    "title": "हमसे जुड़ें",
+    "description": "कोई सवाल, सुझाव या मदद चाहिए? हमें लिखें। हमारी सहायता टीम हर समय आपकी मदद के लिए तैयार है।",
     "emailLabel": "support@mindcurepath.com"
   },
   "available247": {
-    "title": "Available 24/7",
-    "description": "Our inbox is always open. Whether it's day or night, feel free to reach out whenever you need assistance."
+    "title": "24/7 उपलब्ध",
+    "description": "हमारा ईमेल हमेशा खुला है। दिन हो या रात, जब भी जरूरत हो हमसे संपर्क करें।"
   },
   "quickResponse": {
-    "title": "Quick Response",
-    "description": "We typically respond within 24-48 hours. Our team works diligently to address your queries as promptly as possible."
+    "title": "जल्दी जवाब",
+    "description": "हम आमतौर पर 24-48 घंटे में जवाब देते हैं। हमारी टीम आपके सवालों का जल्द से जल्द समाधान करती है।"
   },
   "whatCanWeHelp": {
-    "title": "What Can We Help You With?",
+    "title": "हम किसमें मदद कर सकते हैं?",
     "generalInquiries": {
-      "title": "General Inquiries",
-      "description": "Questions about our platform, assessments, or how MindCurePath works."
+      "title": "सामान्य सवाल",
+      "description": "हमारे प्लेटफॉर्म, टेस्ट या MindCurePath कैसे काम करता है — इनसे जुड़े सवाल।"
     },
     "accountPrivacy": {
-      "title": "Account & Privacy",
-      "description": "Help with your account, data privacy concerns, or security-related queries."
+      "title": "खाता और गोपनीयता",
+      "description": "आपके अकाउंट, डेटा सुरक्षा या गोपनीयता से जुड़े सवाल।"
     },
     "expertConnections": {
-      "title": "Expert Connections",
-      "description": "Assistance with finding the right expert or booking consultations."
+      "title": "विशेषज्ञ से जुड़ना",
+      "description": "सही विशेषज्ञ ढूंढने या सेशन बुक करने में मदद।"
     }
   },
-  "pleaseNote": "Please Note: For urgent mental health concerns or emergencies, please contact your local emergency services or call the National Mental Health Helpline at 1800-599-0019 (India).",
-  "weValueEveryMessage": "We value every message we receive and are committed to providing you with the best possible support experience.",
+  "pleaseNote": "जरूरी सूचना: मानसिक स्वास्थ्य आपात स्थिति में अपने नजदीकी आपात सेवा से संपर्क करें या राष्ट्रीय मानसिक स्वास्थ्य हेल्पलाइन 1800-599-0019 (भारत) पर कॉल करें।",
+  "weValueEveryMessage": "आपका हर संदेश हमारे लिए महत्वपूर्ण है। हम आपको बेहतर सहायता देने के लिए पूरी कोशिश करते हैं।",
   "companyName": "MindCurePath Consultancy Private Limited"
 }

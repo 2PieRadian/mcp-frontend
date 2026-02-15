@@ -1,129 +1,129 @@
 {
   "meta": {
-    "title": "Frequently Asked Questions | MindCurePath Consultancy",
-    "description": "Get answers to your questions about MindCurePath's mental wellness, education, and finance assessments. Learn how we help you achieve clarity and growth.",
-    "keywords": "FAQ, MindCurePath questions, assessment help, wellness platform FAQ, education guidance FAQ, finance wellness FAQ",
-    "ogTitle": "Frequently Asked Questions | MindCurePath Consultancy",
-    "ogDescription": "Common questions and answers about MindCurePath's services and platform."
+    "title": "अक्सर पूछे जाने वाले सवाल | MindCurePath",
+    "description": "MindCurePath के मानसिक स्वास्थ्य, शिक्षा और वित्त से जुड़े सवालों के जवाब यहां पाएं। जानें हम आपकी स्पष्टता और विकास में कैसे मदद करते हैं।",
+    "keywords": "FAQ, MindCurePath सवाल, टेस्ट मदद, वेलनेस FAQ, शिक्षा मार्गदर्शन FAQ, वित्त FAQ",
+    "ogTitle": "अक्सर पूछे जाने वाले सवाल | MindCurePath",
+    "ogDescription": "MindCurePath की सेवाओं और प्लेटफॉर्म से जुड़े आम सवाल और जवाब।"
   },
   "hero": {
-    "title": "Frequently Asked Questions",
-    "subtitle": "Everything you need to know about MindCurePath"
+    "title": "अक्सर पूछे जाने वाले सवाल",
+    "subtitle": "MindCurePath के बारे में जानने लायक सब कुछ"
   },
   "sections": {
-    "general": "General Questions",
-    "services": "Services & Features",
-    "userExperience": "User Experience",
-    "additional": "Additional Information"
+    "general": "सामान्य सवाल",
+    "services": "सेवाएं और सुविधाएं",
+    "userExperience": "उपयोग का अनुभव",
+    "additional": "अतिरिक्त जानकारी"
   },
   "stillHaveQuestions": {
-    "title": "Still Have Questions?",
-    "description": "Can't find what you're looking for? Our support team is here to help you 24/7.",
-    "contactUs": "Contact Us"
+    "title": "अभी भी सवाल हैं?",
+    "description": "जो आप ढूंढ रहे हैं वो नहीं मिला? हमारी सहायता टीम 24/7 आपकी मदद के लिए है।",
+    "contactUs": "संपर्क करें"
   },
   "items": {
     "q1": {
-      "question": "What is MindCurePath?",
-      "answer": "MindCurePath is a structured guidance and self-assessment platform designed to help individuals make informed decisions related to wellness, education, mindset, and personal growth through expert-verified insights and digital tools."
+      "question": "MindCurePath क्या है?",
+      "answer": "MindCurePath एक मार्गदर्शन और सेल्फ-टेस्ट प्लेटफॉर्म है जो आपको मानसिक स्वास्थ्य, शिक्षा और व्यक्तिगत विकास से जुड़े सही फैसले लेने में मदद करता है।"
     },
     "q2": {
-      "question": "What services are offered on MindCurePath?",
-      "answer_0": "Self-assessment tools",
-      "answer_1": "One-on-one virtual consultation",
-      "answer_2": "Guided insights and learning resources",
-      "answer_3": "Expert-curated recommendations",
-      "answer_4": "Personal growth and wellness frameworks"
+      "question": "MindCurePath पर कौन-कौन सी सेवाएं मिलती हैं?",
+      "answer_0": "सेल्फ-टेस्ट टूल्स",
+      "answer_1": "एक-से-एक ऑनलाइन सलाह",
+      "answer_2": "मार्गदर्शन और सीखने की सामग्री",
+      "answer_3": "विशेषज्ञ द्वारा सुझाए गए सुझाव",
+      "answer_4": "व्यक्तिगत विकास के ढांचे"
     },
     "q3": {
-      "question": "Who can use MindCurePath?",
-      "answer_0": "Students and learners",
-      "answer_1": "Working professionals",
-      "answer_2": "Entrepreneurs",
-      "answer_3": "Individuals seeking structured self-improvement"
+      "question": "कौन MindCurePath का उपयोग कर सकता है?",
+      "answer_0": "छात्र",
+      "answer_1": "नौकरी करने वाले लोग",
+      "answer_2": "उद्यमी",
+      "answer_3": "जो खुद को बेहतर बनाना चाहते हैं"
     },
     "q4": {
-      "question": "Are MindCurePath services free or paid?",
-      "answer": "Some content and assessments may be offered free of charge. Premium tools, reports, or expert-level guidance may require payment. Pricing details are clearly displayed where applicable."
+      "question": "क्या MindCurePath मुफ्त है या पेड?",
+      "answer": "कुछ टेस्ट और सामग्री मुफ्त हो सकते हैं। प्रीमियम टूल्स या विशेषज्ञ सलाह के लिए भुगतान करना पड़ सकता है। जहां जरूरी होगा, वहां कीमत साफ दिखाई जाएगी।"
     },
     "q5": {
-      "question": "How does expert guidance work?",
-      "answer": "Experts on MindCurePath are carefully selected based on their domain experience. Guidance is provided through structured assessments, expert insights, and one-on-one virtual consultations, depending on expert availability and session options."
+      "question": "विशेषज्ञ मार्गदर्शन कैसे काम करता है?",
+      "answer": "विशेषज्ञ अपने अनुभव के आधार पर चुने जाते हैं। मार्गदर्शन टेस्ट, सुझाव और एक-से-एक ऑनलाइन सेशन के जरिए दिया जाता है।"
     },
     "q6": {
-      "question": "Does MindCurePath offer one-on-one expert consultations?",
-      "answer": "Yes. MindCurePath offers one-on-one expert consultations across its key segments, including wellness, education, and personal growth. Consultations are conducted virtually through secure communication channels. Availability of one-on-one sessions depends on the expert's schedule, slot preferences, and availability at the time of booking."
+      "question": "क्या यहां एक-से-एक विशेषज्ञ से बात कर सकते हैं?",
+      "answer": "हाँ। वेलनेस, शिक्षा और व्यक्तिगत विकास से जुड़े विशेषज्ञों से ऑनलाइन सेशन बुक कर सकते हैं। समय विशेषज्ञ की उपलब्धता पर निर्भर करता है।"
     },
     "q7": {
-      "question": "Can MindCurePath replace professional medical, financial, or legal advice?",
-      "answer": "No. MindCurePath provides informational and guidance-based support only. It does not replace certified medical, legal, or financial advice."
+      "question": "क्या यह मेडिकल, कानूनी या वित्त सलाह की जगह ले सकता है?",
+      "answer": "नहीं। MindCurePath केवल जानकारी और मार्गदर्शन देता है। यह पेशेवर मेडिकल, कानूनी या वित्त सलाह का विकल्प नहीं है।"
     },
     "q8": {
-      "question": "Is MindCurePath accessible on mobile devices?",
-      "answer": "Yes. The platform is web-based and accessible on smartphones, tablets, and desktops."
+      "question": "क्या मोबाइल पर इस्तेमाल कर सकते हैं?",
+      "answer": "हाँ। यह वेबसाइट मोबाइल, टैबलेट और कंप्यूटर पर चलती है।"
     },
     "q9": {
-      "question": "How is user data protected?",
-      "answer": "User data is handled securely and confidentially in accordance with the platform's Privacy Policy and Terms of Use. MindCurePath does not sell personal data to third parties."
+      "question": "यूजर डेटा कैसे सुरक्षित रहता है?",
+      "answer": "आपकी जानकारी सुरक्षित और गोपनीय रखी जाती है। हम आपका डेटा किसी तीसरे व्यक्ति को नहीं बेचते।"
     },
     "q10": {
-      "question": "How can users contact MindCurePath?",
-      "answer": "Users can submit queries through the Contact Us page available on the website. Responses are provided within a reasonable timeframe."
+      "question": "संपर्क कैसे करें?",
+      "answer": "आप वेबसाइट के Contact Us पेज से हमसे संपर्क कर सकते हैं। हम उचित समय में जवाब देते हैं।"
     },
     "q11": {
-      "question": "Is MindCurePath a legitimate and trustworthy platform?",
-      "answer": "Yes. MindCurePath follows a structured, transparent, and guidance-based approach. Content and insights are curated with a focus on clarity, ethics, and user well-being, ensuring a trustworthy user experience."
+      "question": "क्या MindCurePath भरोसेमंद है?",
+      "answer": "हाँ। यह साफ और व्यवस्थित तरीके से काम करता है और यूजर की भलाई पर ध्यान देता है।"
     },
     "q12": {
-      "question": "How is MindCurePath different from other wellness or guidance platforms?",
-      "answer": "MindCurePath emphasizes self-assessment first, followed by expert-curated guidance, rather than generic advice. This structured approach helps users make informed and conscious decisions instead of relying on assumptions."
+      "question": "यह दूसरे प्लेटफॉर्म से अलग कैसे है?",
+      "answer": "यह पहले सेल्फ-टेस्ट पर जोर देता है और फिर विशेषज्ञ सलाह देता है, ताकि आप सोच-समझकर फैसला लें।"
     },
     "q13": {
-      "question": "Does MindCurePath offer career and education guidance?",
-      "answer": "Yes. MindCurePath provides guidance related to education paths, learning decisions, and career clarity through structured insights and assessments where applicable."
+      "question": "क्या यहां करियर और शिक्षा मार्गदर्शन मिलता है?",
+      "answer": "हाँ। शिक्षा और करियर से जुड़े फैसलों के लिए टेस्ट और सलाह मिलती है।"
     },
     "q14": {
-      "question": "Can MindCurePath help with mindset and personal development?",
-      "answer": "Yes. The platform includes tools and frameworks focused on mindset awareness, self-growth, and clarity-driven personal development."
+      "question": "क्या यह मानसिकता और व्यक्तिगत विकास में मदद करता है?",
+      "answer": "हाँ। यहां ऐसे टूल्स हैं जो आपको खुद को समझने और आगे बढ़ने में मदद करते हैं।"
     },
     "q15": {
-      "question": "How long does it take to complete a self-assessment on MindCurePath?",
-      "answer": "Most self-assessments are designed to be user-friendly and can typically be completed within a short time, depending on the assessment type and user engagement."
+      "question": "एक टेस्ट पूरा करने में कितना समय लगता है?",
+      "answer": "ज्यादातर टेस्ट कम समय में पूरे हो जाते हैं। समय टेस्ट के प्रकार पर निर्भर करता है।"
     },
     "q16": {
-      "question": "Can MindCurePath be used by beginners with no prior knowledge?",
-      "answer": "Yes. MindCurePath is designed for beginners as well as experienced individuals. All content is presented in a clear and easy-to-understand manner."
+      "question": "क्या नए लोग भी इस्तेमाल कर सकते हैं?",
+      "answer": "हाँ। यह शुरुआती और अनुभवी दोनों के लिए आसान है।"
     },
     "q17": {
-      "question": "Does MindCurePath provide personalized guidance?",
-      "answer": "Yes. Personalized insights may be generated based on user inputs and assessment results. However, outcomes may vary depending on individual participation and information provided."
+      "question": "क्या व्यक्तिगत मार्गदर्शन मिलता है?",
+      "answer": "हाँ। आपके जवाब के आधार पर व्यक्तिगत सुझाव मिल सकते हैं।"
     },
     "q18": {
-      "question": "Will I receive a report or result after completing an assessment?",
-      "answer": "Yes. Users may receive structured insights or summaries based on their assessment responses, depending on the service selected."
+      "question": "क्या टेस्ट के बाद रिपोर्ट मिलती है?",
+      "answer": "हाँ। टेस्ट के बाद आपको सारांश या परिणाम मिल सकता है।"
     },
     "q19": {
-      "question": "Is registration mandatory to use MindCurePath?",
-      "answer": "Some features may be accessible without registration. However, creating an account may be required to access personalized insights, reports, or saved progress."
+      "question": "क्या रजिस्ट्रेशन जरूरी है?",
+      "answer": "कुछ सुविधाएं बिना रजिस्ट्रेशन के मिल सकती हैं। लेकिन व्यक्तिगत रिपोर्ट के लिए अकाउंट बनाना जरूरी हो सकता है।"
     },
     "q20": {
-      "question": "Can MindCurePath help in decision-making during confusion or uncertainty?",
-      "answer": "MindCurePath is specifically designed to support clarity and awareness during decision-making by offering structured guidance and reflective assessments."
+      "question": "क्या यह उलझन के समय मदद करता है?",
+      "answer": "हाँ। यह साफ सोच और सही फैसला लेने में मदद करता है।"
     },
     "q21": {
-      "question": "Is MindCurePath suitable for long-term personal growth?",
-      "answer": "Yes. The platform supports ongoing self-awareness and growth by encouraging informed decisions and continuous learning rather than quick fixes."
+      "question": "क्या यह लंबे समय के विकास के लिए सही है?",
+      "answer": "हाँ। यह लगातार सीखने और सुधार पर जोर देता है।"
     },
     "q22": {
-      "question": "Does MindCurePath provide instant results?",
-      "answer": "Some insights may be available instantly after assessments. However, meaningful progress depends on user reflection, consistency, and application of guidance."
+      "question": "क्या तुरंत परिणाम मिलते हैं?",
+      "answer": "कुछ परिणाम तुरंत मिल सकते हैं, लेकिन असली बदलाव आपके प्रयास पर निर्भर करता है।"
     },
     "q23": {
-      "question": "Is MindCurePath available internationally?",
-      "answer": "As a web-based platform, MindCurePath can be accessed from most locations with an internet connection, subject to applicable terms and policies."
+      "question": "क्या यह भारत के बाहर भी उपलब्ध है?",
+      "answer": "हाँ। इंटरनेट होने पर इसे कहीं से भी इस्तेमाल किया जा सकता है।"
     },
     "q24": {
-      "question": "Can organizations or institutions collaborate with MindCurePath?",
-      "answer": "Collaboration opportunities may be available. Interested organizations can reach out through the official Contact Us page for partnership discussions."
+      "question": "क्या संस्थान सहयोग कर सकते हैं?",
+      "answer": "हाँ। सहयोग के लिए Contact Us पेज से संपर्क करें।"
     }
   }
 }

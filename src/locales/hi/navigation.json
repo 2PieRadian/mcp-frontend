@@ -1,13 +1,13 @@
 {
-  "weHelpWith": "हम सहायता करते हैं",
-  "selfAssessment": "स्व-मूल्यांकन",
+  "weHelpWith": "हम इन चीज़ों में मदद करते हैं",
+  "selfAssessment": "स्व-आकलन",
   "findCounsellors": "सलाहकार खोजें",
   "articles": "लेख",
-  "wellnessExperts": "स्वास्थ्य जानकार",
-  "educationExperts": "शिक्षा जानकार",
-  "financeExperts": "वित्त जानकार",
+  "wellnessExperts": "मानसिक स्वास्थ्य विशेषज्ञ",
+  "educationExperts": "शिक्षा विशेषज्ञ",
+  "financeExperts": "वित्त विशेषज्ञ",
   "dashboard": "डैशबोर्ड",
-  "expertCategories": "जानकार श्रेणियां",
+  "expertCategories": "विशेषज्ञ श्रेणियाँ",
   "profile": "प्रोफ़ाइल",
   "viewMore": "और देखें"
 }

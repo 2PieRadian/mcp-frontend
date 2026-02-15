@@ -2,7 +2,7 @@
   "page": {
     "kicker": "आपकी जगह",
     "title": "आपकी प्रोफ़ाइल",
-    "subtitle": "अपनी जानकारी संभालें और अकाउंट को अपडेट रखें।"
+    "subtitle": "अपनी जानकारी संभालें और अपने अकाउंट को अपडेट रखें।"
   },
   "hero": {
     "accountLabel": "अकाउंट",
@@ -12,33 +12,33 @@
   },
   "logoutModal": {
     "closeAria": "बंद करें",
-    "title": "लॉग आउट पुष्टि",
-    "description": "क्या आप लॉग आउट करना चाहते हैं? अपने अकाउंट तक पहुँचने के लिए आपको फिर से साइन इन करना होगा।",
-    "cancel": "रद्द",
+    "title": "लॉग आउट की पुष्टि",
+    "description": "क्या आप लॉग आउट करना चाहते हैं? दोबारा अकाउंट तक पहुंचने के लिए आपको फिर से साइन इन करना होगा।",
+    "cancel": "रद्द करें",
     "confirm": "लॉग आउट"
   },
   "buttons": {
-    "save": "सेव",
+    "save": "सेव करें",
     "saving": "सेव हो रहा है...",
-    "cancel": "रद्द",
-    "edit": "बदलें",
-    "set": "सेट",
+    "cancel": "रद्द करें",
+    "edit": "संपादित करें",
+    "set": "सेट करें",
     "change": "बदलें",
     "add": "जोड़ें"
   },
   "status": {
-    "nameUpdated": "नाम अपडेट हुआ",
-    "dateUpdated": "तारीख अपडेट हुई",
-    "ageUpdated": "उम्र अपडेट हुई",
-    "genderUpdated": "लिंग अपडेट हुआ",
-    "languagesUpdated": "भाषाएँ अपडेट हुईं",
-    "passwordChanged": "पासवर्ड बदला",
-    "passwordSet": "पासवर्ड सेट हुआ",
+    "nameUpdated": "नाम अपडेट हो गया",
+    "dateUpdated": "तारीख अपडेट हो गई",
+    "ageUpdated": "उम्र अपडेट हो गई",
+    "genderUpdated": "लिंग अपडेट हो गया",
+    "languagesUpdated": "भाषाएँ अपडेट हो गईं",
+    "passwordChanged": "पासवर्ड बदल गया",
+    "passwordSet": "पासवर्ड सेट हो गया",
     "passwordChangedSuccess": "पासवर्ड सफलतापूर्वक बदल गया"
   },
   "sections": {
     "basicInfo": "बुनियादी जानकारी",
-    "contact": "संपर्क",
+    "contact": "संपर्क जानकारी",
     "gender": "लिंग",
     "age": "उम्र",
     "dateOfBirth": "जन्म तिथि",
@@ -51,7 +51,7 @@
     "role": "भूमिका",
     "email": "ईमेल",
     "phone": "फ़ोन",
-    "memberSince": "कब से सदस्य",
+    "memberSince": "सदस्य कब से",
     "lastUpdated": "आख़िरी अपडेट",
     "selectedLanguages": "चुनी हुई भाषाएँ:"
   },
@@ -60,22 +60,22 @@
     "chooseDob": "जन्म तिथि चुनें",
     "enterAge": "अपनी उम्र लिखें (1–150)",
     "selectGender": "लिंग चुनें",
-    "currentPassword": "वर्तमान पासवर्ड",
+    "currentPassword": "मौजूदा पासवर्ड",
     "newPassword": "नया पासवर्ड",
     "password": "पासवर्ड",
-    "confirmNewPassword": "नया पासवर्ड फिर से",
-    "confirmPassword": "पासवर्ड फिर से",
+    "confirmNewPassword": "नया पासवर्ड दोबारा लिखें",
+    "confirmPassword": "पासवर्ड दोबारा लिखें",
     "customLanguage": "अपनी भाषा जोड़ें"
   },
   "values": {
-    "notSetYet": "अभी सेट नहीं है",
-    "notSet": "सेट नहीं है",
+    "notSetYet": "अभी सेट नहीं किया गया",
+    "notSet": "सेट नहीं किया गया",
     "notAdded": "जोड़ा नहीं गया",
     "maskedPassword": "••••••••"
   },
   "roles": {
     "USER": "यूज़र",
-    "EXPERT": "जानकार"
+    "EXPERT": "विशेषज्ञ"
   },
   "genderOptions": {
     "male": "पुरुष",
@@ -84,35 +84,35 @@
     "prefer-not-to-say": "कहना नहीं चाहते"
   },
   "password": {
-    "hideAria": "पासवर्ड छिपाएं",
-    "showAria": "पासवर्ड दिखाएं",
+    "hideAria": "पासवर्ड छिपाएँ",
+    "showAria": "पासवर्ड दिखाएँ",
     "setPassword": "पासवर्ड सेट करें",
     "setAPassword": "पासवर्ड सेट करें"
   },
   "languages": {
-    "removeAria": "{{language}} हटाएं"
+    "removeAria": "{{language}} हटाएँ"
   },
   "validation": {
-    "nameRequired": "नाम जरूरी है",
+    "nameRequired": "नाम आवश्यक है",
     "selectDate": "कृपया तारीख चुनें",
-    "ageRequired": "कृपया सही उम्र लिखें",
+    "ageRequired": "कृपया सही उम्र दर्ज करें",
     "ageOutOfRange": "उम्र 1 से 150 के बीच होनी चाहिए",
-    "failedUpdateAge": "उम्र अपडेट नहीं हुई",
+    "failedUpdateAge": "उम्र अपडेट नहीं हो सकी",
     "selectGender": "कृपया लिंग चुनें",
     "selectAtLeastOneLanguage": "कम से कम एक भाषा चुनें",
-    "notAuthenticated": "आप लॉग इन नहीं हैं।",
-    "failedUpdateName": "नाम अपडेट नहीं हुआ",
-    "failedUpdateDob": "जन्म तिथि अपडेट नहीं हुई",
-    "failedUpdateGender": "लिंग अपडेट नहीं हुआ",
-    "failedUpdateLanguages": "भाषाएँ अपडेट नहीं हुईं",
-    "passwordRequired": "पासवर्ड जरूरी है",
-    "passwordsDoNotMatch": "पासवर्ड मैच नहीं कर रहे",
+    "notAuthenticated": "आप लॉग इन नहीं हैं",
+    "failedUpdateName": "नाम अपडेट नहीं हो सका",
+    "failedUpdateDob": "जन्म तिथि अपडेट नहीं हो सकी",
+    "failedUpdateGender": "लिंग अपडेट नहीं हो सका",
+    "failedUpdateLanguages": "भाषाएँ अपडेट नहीं हो सकीं",
+    "passwordRequired": "पासवर्ड आवश्यक है",
+    "passwordsDoNotMatch": "पासवर्ड मेल नहीं खाते",
     "passwordMinLength": "पासवर्ड कम से कम 6 अक्षरों का होना चाहिए",
-    "allFieldsRequired": "सभी फ़ील्ड भरें",
-    "newPasswordsDoNotMatch": "नए पासवर्ड मैच नहीं कर रहे",
+    "allFieldsRequired": "सभी फ़ील्ड भरना आवश्यक है",
+    "newPasswordsDoNotMatch": "नए पासवर्ड मेल नहीं खाते",
     "newPasswordMinLength": "नया पासवर्ड कम से कम 6 अक्षरों का होना चाहिए",
-    "failedSetPassword": "पासवर्ड सेट नहीं हुआ",
-    "failedChangePassword": "पासवर्ड बदल नहीं पाया"
+    "failedSetPassword": "पासवर्ड सेट नहीं हो सका",
+    "failedChangePassword": "पासवर्ड बदला नहीं जा सका"
   },
   "languageLabels": {
     "english": "अंग्रेज़ी",

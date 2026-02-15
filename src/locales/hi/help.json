@@ -1,130 +1,139 @@
 {
   "meta": {
-    "title": "Help Center | MindCurePath Consultancy - Knowledge Base & Support",
-    "description": "Find answers to your questions about MindCurePath assessments, expert consultations, billing, and data security in our comprehensive Help Center.",
-    "keywords": "help center, knowledge base, MindCurePath support, assessment guide, consultation help, billing questions",
-    "ogTitle": "Help Center | MindCurePath Consultancy",
-    "ogDescription": "Your complete guide to using the MindCurePath platform. Find articles on assessments, experts, and more."
+    "title": "सहायता केंद्र | MindCurePath कंसल्टेंसी - जानकारी और सपोर्ट",
+    "description": "MindCurePath पर आकलन, एक्सपर्ट से सलाह, बिलिंग और डेटा सुरक्षा से जुड़े सवालों के जवाब यहाँ पाएं।",
+    "keywords": "सहायता केंद्र, जानकारी, MindCurePath सपोर्ट, आकलन गाइड, सलाह मदद, बिलिंग सवाल",
+    "ogTitle": "सहायता केंद्र | MindCurePath कंसल्टेंसी",
+    "ogDescription": "MindCurePath प्लेटफॉर्म इस्तेमाल करने की पूरी जानकारी। आकलन, एक्सपर्ट और अन्य विषयों पर लेख पढ़ें।"
   },
   "hero": {
-    "title": "How can we help you?",
-    "subtitle": "Find answers, guides, and support for your MindCurePath journey",
-    "searchPlaceholder": "Search for help articles..."
+    "title": "हम आपकी कैसे मदद कर सकते हैं?",
+    "subtitle": "MindCurePath से जुड़ी जानकारी और मदद यहाँ पाएं",
+    "searchPlaceholder": "मदद के लेख खोजें..."
   },
-  "browseTopics": "Browse Help Topics",
-  "backToCategory": "Back to {{category}}",
-  "articlesInCategory": "Articles in this category",
-  "goToArticle": "Go to {{title}}",
-  "noResultsFor": "No results found for \"{{query}}\"",
-  "clearSearch": "Clear search",
+  "browseTopics": "मदद के विषय देखें",
+  "backToCategory": "{{category}} पर वापस जाएं",
+  "articlesInCategory": "इस विषय के लेख",
+  "goToArticle": "{{title}} पर जाएं",
+  "noResultsFor": "\"{{query}}\" के लिए कोई परिणाम नहीं मिला",
+  "clearSearch": "खोज साफ करें",
   "stillNeedHelp": {
-    "title": "Still Need Help?",
-    "description": "Our support team is available 24/7 to assist you with any questions or concerns.",
-    "contactSupport": "Contact Support",
-    "browseFaq": "Browse FAQ"
+    "title": "क्या अभी भी मदद चाहिए?",
+    "description": "हमारी सपोर्ट टीम 24/7 आपकी मदद के लिए उपलब्ध है।",
+    "contactSupport": "सपोर्ट से संपर्क करें",
+    "browseFaq": "FAQ देखें"
   },
-  "quickActions": "Quick Actions",
-  "quickAction1": { "title": "Contact Support", "description": "Get help from our team" },
-  "quickAction2": { "title": "Browse FAQ", "description": "Find quick answers" },
-  "quickAction3": { "title": "Take Assessment", "description": "Start your journey" },
+  "quickActions": "जल्दी वाले विकल्प",
+  "quickAction1": {
+    "title": "सपोर्ट से संपर्क करें",
+    "description": "हमारी टीम से मदद लें"
+  },
+  "quickAction2": {
+    "title": "FAQ देखें",
+    "description": "जल्दी जवाब पाएं"
+  },
+  "quickAction3": {
+    "title": "आकलन शुरू करें",
+    "description": "अपनी यात्रा शुरू करें"
+  },
   "categories": {
     "gettingStarted": {
-      "title": "Getting Started",
-      "description": "New to MindCurePath? Start here to learn the basics.",
+      "title": "शुरुआत कैसे करें",
+      "description": "MindCurePath पर नए हैं? यहाँ से शुरुआत करें।",
       "art0": {
-        "title": "What is MindCurePath?",
-        "content_0": "MindCurePath is a comprehensive mental wellness and personal growth platform. We provide a bridge between self-discovery through assessments and professional guidance from verified experts.",
-        "content_1": "Our mission is to make mental wellness, educational clarity, and financial peace of mind accessible to everyone through data-driven insights and human expertise."
+        "title": "MindCurePath क्या है?",
+        "content_0": "MindCurePath एक मानसिक स्वास्थ्य और व्यक्तिगत विकास का प्लेटफॉर्म है। यहाँ आप आकलन कर सकते हैं और प्रमाणित एक्सपर्ट से सलाह ले सकते हैं।",
+        "content_1": "हमारा लक्ष्य है कि मानसिक स्वास्थ्य, पढ़ाई से जुड़ी स्पष्टता और वित्तीय शांति हर किसी तक आसानी से पहुँचे।"
       },
       "art1": {
-        "title": "Creating your first assessment",
-        "content_0": "To begin your journey, click on 'Take Assessment' or navigate to the 'Self Assessment' page from the navbar.",
-        "content_1": "Choose a category that interests you—Wellness, Education, or Finance. Each assessment is designed by experts to provide meaningful insights into your current state.",
-        "content_2": "Once completed, your results will be saved to your dashboard for future reference."
+        "title": "अपना पहला आकलन कैसे करें",
+        "content_0": "शुरुआत करने के लिए 'आकलन शुरू करें' पर क्लिक करें या ऊपर मेनू से 'Self Assessment' पेज पर जाएं।",
+        "content_1": "Wellness, Education या Finance में से कोई एक विषय चुनें। हर आकलन एक्सपर्ट द्वारा बनाया गया है ताकि आपको सही जानकारी मिले।",
+        "content_2": "आकलन पूरा करने के बाद, आपके परिणाम डैशबोर्ड में सेव हो जाएंगे।"
       },
       "art2": {
-        "title": "How to use the dashboard",
-        "content_0": "Your dashboard is your personal command center. Here you can view your latest assessment scores, track your progress over time, and manage your upcoming expert consultations.",
-        "content_1": "You can also find recommended resources based on your assessment results to help you take the next steps in your growth journey."
+        "title": "डैशबोर्ड का उपयोग कैसे करें",
+        "content_0": "डैशबोर्ड आपका पर्सनल कंट्रोल सेंटर है। यहाँ आप अपने आकलन के स्कोर देख सकते हैं, प्रगति ट्रैक कर सकते हैं और अपनी आने वाली काउंसलिंग बुकिंग मैनेज कर सकते हैं।",
+        "content_1": "आपको अपने परिणाम के आधार पर सुझाव और संसाधन भी मिलेंगे, जो आपकी आगे की यात्रा में मदद करेंगे।"
       }
     },
     "assessments": {
-      "title": "Assessments",
-      "description": "Learn how to take and understand your assessments.",
+      "title": "आकलन",
+      "description": "आकलन कैसे करें और अपने परिणाम कैसे समझें।",
       "art0": {
-        "title": "How to take a self-assessment",
+        "title": "सेल्फ-आकलन कैसे करें",
         "link": "/self-assessment",
-        "content_0": "Select the 'Self Assessment' option from the main menu.",
-        "content_1": "Choose between Wellness, Education, or Finance assessments.",
-        "content_2": "Read each question carefully and select the response that most accurately reflects your situation.",
-        "content_3": "There are no right or wrong answers—honesty is key to getting the most accurate results."
+        "content_0": "मुख्य मेनू से 'Self Assessment' चुनें।",
+        "content_1": "Wellness, Education या Finance में से एक आकलन चुनें।",
+        "content_2": "हर सवाल ध्यान से पढ़ें और वही जवाब चुनें जो आपकी स्थिति को सही दर्शाता हो।",
+        "content_3": "कोई सही या गलत जवाब नहीं है — ईमानदारी से जवाब देना सबसे जरूरी है।"
       },
       "art1": {
-        "title": "Understanding your scores",
-        "content_0": "Our scoring system uses a proprietary algorithm developed with mental health professionals.",
-        "content_1": "A 'High' score typically indicates strong alignment or positive state in that area, while a 'Lower' score suggests opportunities for growth or areas where professional support might be beneficial.",
-        "content_2": "Detailed breakdowns for each sub-category are provided at the end of every assessment."
+        "title": "अपने स्कोर को समझें",
+        "content_0": "हमारा स्कोर सिस्टम एक्सपर्ट द्वारा बनाया गया है।",
+        "content_1": "'High' स्कोर का मतलब है उस क्षेत्र में आपकी स्थिति अच्छी है, जबकि 'Low' स्कोर का मतलब है कि वहाँ सुधार की जरूरत हो सकती है।",
+        "content_2": "हर आकलन के अंत में आपको हर भाग का पूरा विवरण दिया जाएगा।"
       },
       "art2": {
-        "title": "Sharing results with experts",
-        "content_0": "You can choose to share your assessment results with your chosen counsellor to provide them with better context before your first session.",
-        "content_1": "To do this, navigate to your assessment history and click 'Share with Expert' next to the relevant result. You can revoke this access at any time."
+        "title": "परिणाम एक्सपर्ट के साथ शेयर करना",
+        "content_0": "आप चाहें तो अपने आकलन के परिणाम अपने काउंसलर के साथ शेयर कर सकते हैं ताकि उन्हें आपकी स्थिति समझने में मदद मिले।",
+        "content_1": "इसके लिए अपने आकलन इतिहास में जाएं और संबंधित परिणाम के पास 'Share with Expert' पर क्लिक करें। आप कभी भी यह अनुमति हटा सकते हैं।"
       }
+    }
+  },
+  "expertConsultations": {
+    "title": "एक्सपर्ट कंसल्टेशन",
+    "description": "हमारे प्रमाणित एक्सपर्ट से जुड़ने की पूरी जानकारी।",
+    "art0": {
+      "title": "सही एक्सपर्ट कैसे चुनें",
+      "link": "/find-counsellors",
+      "content_0": "'Find Counsellors' पेज पर जाएं और हमारे प्रमाणित एक्सपर्ट देखें।",
+      "content_1": "आप एक्सपर्ट को उनकी विशेषज्ञता (जैसे Anxiety, Career Guidance, Financial Stress), भाषा और उपलब्ध समय के अनुसार फिल्टर कर सकते हैं।",
+      "content_2": "उनकी प्रोफाइल और रिव्यू पढ़ें और अपनी जरूरत के अनुसार सही व्यक्ति चुनें।"
     },
-    "expertConsultations": {
-      "title": "Expert Consultations",
-      "description": "Everything about connecting with our verified experts.",
-      "art0": {
-        "title": "Finding the right expert",
-        "link": "/find-counsellors",
-        "content_0": "Visit the 'Find Counsellors' page to browse our network of verified professionals.",
-        "content_1": "You can filter experts by their specialty (e.g., Anxiety, Career Guidance, Financial Stress), language, and availability.",
-        "content_2": "Read through their profiles and reviews from other community members to find someone who resonates with your needs."
-      },
-      "art1": {
-        "title": "Booking your first session",
-        "content_0": "Once you've found an expert, click 'Book Session' on their profile.",
-        "content_1": "Select a date and time that works for you from their calendar.",
-        "content_2": "Complete the payment process, and you'll receive a confirmation email with the session link and instructions."
-      },
-      "art2": {
-        "title": "Expert verification process",
-        "content_0": "Every expert on MindCurePath goes through a rigorous vetting process.",
-        "content_1": "We verify their professional qualifications, years of experience, and conduct a personal interview before they are allowed to join our platform.",
-        "content_2": "We also regularly monitor feedback to ensure the highest quality of care for our users."
-      }
+    "art1": {
+      "title": "पहली सेशन बुक कैसे करें",
+      "content_0": "जब आपको एक्सपर्ट मिल जाए, उनकी प्रोफाइल पर 'Book Session' पर क्लिक करें।",
+      "content_1": "उनके कैलेंडर से अपनी सुविधा के अनुसार तारीख और समय चुनें।",
+      "content_2": "पेमेंट पूरा करें। इसके बाद आपको ईमेल में कन्फर्मेशन और सेशन लिंक मिल जाएगा।"
     },
-    "billingPayments": {
-      "title": "Billing & Payments",
-      "description": "Manage your payments, invoices, and subscriptions.",
-      "art0": {
-        "title": "Accepted payment methods",
-        "content_0": "We accept all major credit and debit cards (Visa, Mastercard, American Express).",
-        "content_1": "We also support popular digital wallets and UPI for a seamless transaction experience.",
-        "content_2": "All payments are processed through secure, encrypted gateways to ensure your financial data is always protected."
-      },
-      "art1": {
-        "title": "Refund Policy",
-        "content_0": "To maintain the highest quality of service and ensure our experts are fairly compensated for their dedicated time, MindCurePath maintains a strict no-refund policy.",
-        "content_1": "Once a session is booked, our experts commit their time and resources specifically to your consultation, often turning away other individuals who may need urgent support. This policy helps us sustain a network of top-tier professionals who are fully committed to your growth and wellness.",
-        "content_2": "While refunds are not possible, we understand that life happens. If you need to reschedule, you can do so free of charge up to 24 hours before your appointment to ensure your credits remain valid for a future session."
-      }
+    "art2": {
+      "title": "एक्सपर्ट की जांच प्रक्रिया",
+      "content_0": "MindCurePath पर हर एक्सपर्ट को पूरी जांच प्रक्रिया से गुजरना पड़ता है।",
+      "content_1": "हम उनकी योग्यता, अनुभव और इंटरव्यू के बाद ही उन्हें प्लेटफॉर्म पर जोड़ते हैं।",
+      "content_2": "हम समय-समय पर फीडबैक भी जांचते हैं ताकि अच्छी सेवा मिलती रहे।"
+    }
+  },
+  "billingPayments": {
+    "title": "बिलिंग और पेमेंट",
+    "description": "अपने पेमेंट, इनवॉइस और सब्सक्रिप्शन मैनेज करें।",
+    "art0": {
+      "title": "स्वीकार्य पेमेंट तरीके",
+      "content_0": "हम सभी प्रमुख क्रेडिट और डेबिट कार्ड (Visa, Mastercard, American Express) स्वीकार करते हैं।",
+      "content_1": "हम डिजिटल वॉलेट और UPI भी सपोर्ट करते हैं।",
+      "content_2": "सभी पेमेंट सुरक्षित और एन्क्रिप्टेड सिस्टम के माध्यम से की जाती हैं।"
     },
-    "accountSecurity": {
-      "title": "Account & Security",
-      "description": "Manage your account settings and data privacy.",
-      "art0": {
-        "title": "How we protect your data",
-        "content_0": "Your privacy is our top priority. All personal data and assessment results are encrypted using industry-standard SSL/TLS technology.",
-        "content_1": "We never sell your personal information to third parties. Your data is used solely to provide you with personalized insights and connect you with experts.",
-        "content_2": "For more details, please review our comprehensive Privacy Policy."
-      },
-      "art1": {
-        "title": "Deleting your account",
-        "content_0": "If you wish to delete your account, you can do so from the 'Account Settings' page.",
-        "content_1": "Please note that this action is permanent and will result in the deletion of all your assessment history and consultation records.",
-        "content_2": "If you have any active subscriptions or upcoming sessions, please cancel them before deleting your account."
-      }
+    "art1": {
+      "title": "रिफंड नीति",
+      "content_0": "उच्च गुणवत्ता की सेवा बनाए रखने और एक्सपर्ट के समय का सम्मान करने के लिए MindCurePath में रिफंड नहीं दिया जाता।",
+      "content_1": "जब सेशन बुक हो जाता है, एक्सपर्ट अपना समय आपके लिए निर्धारित कर लेते हैं।",
+      "content_2": "अगर आपको समय बदलना हो, तो आप सेशन से 24 घंटे पहले मुफ्त में रीशेड्यूल कर सकते हैं।"
+    }
+  },
+  "accountSecurity": {
+    "title": "अकाउंट और सुरक्षा",
+    "description": "अपने अकाउंट और डेटा सुरक्षा से जुड़ी जानकारी।",
+    "art0": {
+      "title": "हम आपका डेटा कैसे सुरक्षित रखते हैं",
+      "content_0": "आपकी प्राइवेसी हमारी पहली प्राथमिकता है। आपका डेटा सुरक्षित SSL/TLS तकनीक से एन्क्रिप्ट किया जाता है।",
+      "content_1": "हम आपकी जानकारी किसी तीसरे पक्ष को नहीं बेचते।",
+      "content_2": "अधिक जानकारी के लिए हमारी Privacy Policy पढ़ें।"
+    },
+    "art1": {
+      "title": "अकाउंट कैसे हटाएं",
+      "content_0": "अगर आप अपना अकाउंट हटाना चाहते हैं, तो 'Account Settings' पेज से यह कर सकते हैं।",
+      "content_1": "ध्यान दें, यह प्रक्रिया स्थायी है और आपका सारा डेटा हट जाएगा।",
+      "content_2": "अगर आपके कोई एक्टिव सब्सक्रिप्शन या आने वाले सेशन हैं, तो पहले उन्हें कैंसल कर दें।"
     }
   }
 }
