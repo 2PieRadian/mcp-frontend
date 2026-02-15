@@ -3,7 +3,6 @@ import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import ResponsiveNavbar from "../../components/ResponsiveNavbar";
-import useScrollToTop from "../../hooks/useScrollToTop";
 
 interface FinanceCardProps {
   title: string;
@@ -115,7 +114,6 @@ function FinanceCard({
 }
 
 export default function Finance() {
-  useScrollToTop();
   const { t } = useTranslation("quiz");
   const financeCards = [
     {

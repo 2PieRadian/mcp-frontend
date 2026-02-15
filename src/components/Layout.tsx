@@ -17,7 +17,7 @@ interface LayoutProps {
  * - Scrollable content area below
  * - Mobile-friendly: uses min-h-screen instead of h-screen to allow native pull-to-refresh
  *
- * Note: Route change scroll reset is handled by RouteScrollReset component
+ * Scroll to top on route change is handled in App
  */
 export default function Layout({
   children,

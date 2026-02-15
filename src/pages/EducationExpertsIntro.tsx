@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useEffect, useRef, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { gsap } from "gsap";
 import {
   ArrowRight,
@@ -13,7 +13,6 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
-import useScrollToTop from "../hooks/useScrollToTop";
 import { EXPERT_CATEGORIES } from "../lib/constants/experts";
 
 // Icon mapping for education specializations
@@ -54,8 +53,27 @@ function ExpertCategoryCard({
   accentColor,
 }: ExpertCategoryCardProps) {
   const navigate = useNavigate();
+  const [isTapped, setIsTapped] = useState(false);
 
   const handleClick = () => {
+    if (isTapped) return;
+
+    const isMobileLike =
+      typeof window !== "undefined" &&
+      !!window.matchMedia &&
+      (window.matchMedia("(hover: none)").matches ||
+        window.matchMedia("(pointer: coarse)").matches);
+
+    if (isMobileLike) {
+      setIsTapped(true);
+      window.setTimeout(() => {
+        navigate(`/education-experts/${specializationSlug}`, {
+          state: { specialization: specializationValue },
+        });
+      }, 350);
+      return;
+    }
+
     navigate(`/education-experts/${specializationSlug}`, {
       state: { specialization: specializationValue },
     });
@@ -64,7 +82,13 @@ function ExpertCategoryCard({
   return (
     <div
       onClick={handleClick}
-      className="group relative cursor-pointer transition-all duration-500 hover:-translate-y-1 hover:scale-[1.02] transform-gpu"
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") handleClick();
+      }}
+      className={`group relative cursor-pointer transition-all duration-500 transform-gpu md:hover:-translate-y-1 md:hover:scale-[1.02] ${isTapped ? "scale-[1.02] -translate-y-0.5" : ""
+        }`}
     >
       {/* Card container */}
       <div
@@ -78,29 +102,45 @@ function ExpertCategoryCard({
       >
         {/* Background fill animation */}
         <div
-          className="absolute inset-0 transition-all duration-500 ease-out origin-top scale-y-0 group-hover:scale-y-100"
+          className={`absolute inset-0 transition-all duration-500 ease-out origin-top ${isTapped ? "scale-y-100" : "scale-y-0"
+            } md:scale-y-0 md:group-hover:scale-y-100`}
           style={{ backgroundColor: accentColor }}
         />
 
         {/* White background (fades out on hover) */}
-        <div className="absolute inset-0 bg-white transition-opacity duration-500 group-hover:opacity-0" />
+        <div
+          className={`absolute inset-0 bg-white transition-opacity duration-500 ${isTapped ? "opacity-0" : "opacity-100"
+            } md:opacity-100 md:group-hover:opacity-0`}
+        />
 
         <div className="relative z-10 p-6 h-full flex flex-col">
           {/* Icon + Arrow */}
           <div className="flex items-start justify-between mb-5">
-            <Icon className="w-7 h-7 relative z-20 transition-transform duration-500 group-hover:scale-110 text-(--accent) group-hover:text-white" />
-            <span className="relative z-20 inline-flex items-center justify-center rounded-[10px] p-1 transition-all duration-500 bg-transparent border border-transparent group-hover:bg-white group-hover:border-white/90 group-hover:translate-x-1 group-hover:scale-110">
+            <Icon
+              className={`w-7 h-7 relative z-20 transition-transform duration-500 ${isTapped ? "scale-110 text-white" : "text-(--accent)"
+                } md:text-(--accent) md:group-hover:scale-110 md:group-hover:text-white`}
+            />
+            <span
+              className={`relative z-20 inline-flex items-center justify-center rounded-[10px] p-1 transition-all duration-500 bg-transparent border border-transparent ${isTapped ? "bg-white border-white/90 translate-x-1 scale-110" : ""
+                } md:group-hover:bg-white md:group-hover:border-white/90 md:group-hover:translate-x-1 md:group-hover:scale-110`}
+            >
               <ArrowRight className="w-5 h-5 text-(--accent)" />
             </span>
           </div>
 
           {/* Title */}
-          <h3 className="text-lg font-semibold text-stone-800 mb-3 leading-snug transition-colors duration-500 group-hover:text-white">
+          <h3
+            className={`text-lg font-semibold mb-3 leading-snug transition-colors duration-500 ${isTapped ? "text-white" : "text-stone-800"
+              } md:text-stone-800 md:group-hover:text-white`}
+          >
             {title}
           </h3>
 
           {/* Description */}
-          <p className="text-sm text-stone-500 leading-relaxed mb-0 line-clamp-3 transition-colors duration-500 group-hover:text-white/80">
+          <p
+            className={`text-sm leading-relaxed mb-0 line-clamp-3 transition-colors duration-500 ${isTapped ? "text-white/80" : "text-stone-500"
+              } md:text-stone-500 md:group-hover:text-white/80`}
+          >
             {description}
           </p>
         </div>
@@ -110,7 +150,6 @@ function ExpertCategoryCard({
 }
 
 export default function EducationExpertsIntro() {
-  useScrollToTop();
   const { t } = useTranslation(["common", "experts"]);
 
   // Section refs for stagger animation

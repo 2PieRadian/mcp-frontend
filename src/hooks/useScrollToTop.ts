@@ -2,8 +2,8 @@ import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 
 /**
- * Custom hook that instantly scrolls to the top on route change.
- * Uses native window scroll for mobile pull-to-refresh compatibility.
+ * Custom hook that smoothly scrolls to the top when the route/pathname changes.
+ * Used by individual pages that need to scroll to top on mount (e.g. after navigation).
  */
 export default function useScrollToTop() {
   const { pathname } = useLocation();
@@ -16,11 +16,10 @@ export default function useScrollToTop() {
       return;
     }
 
-    // Use native window scroll
     window.scrollTo({
       top: 0,
       left: 0,
-      behavior: "instant" as ScrollBehavior,
+      behavior: "smooth",
     });
   }, [pathname]);
 }

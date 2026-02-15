@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Calendar, Clock, ExternalLink, User, Loader2 } from "lucide-react";
 import type { UpcomingSession } from "../types";
 
@@ -9,12 +10,12 @@ type UpcomingSessionsTabProps = {
   onRefetch?: () => void;
 };
 
-const formatTimeLeft = (startTime: string): string => {
+const formatTimeLeft = (startTime: string, t: (key: string) => string): string => {
   const now = new Date();
   const start = new Date(startTime);
   const diff = start.getTime() - now.getTime();
 
-  if (diff <= 0) return "Session started";
+  if (diff <= 0) return t("dashboardSessionStarted");
 
   const hours = Math.floor(diff / (1000 * 60 * 60));
   const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
@@ -43,13 +44,14 @@ export default function UpcomingSessionsTab({
   onRefetch,
 }: UpcomingSessionsTabProps) {
   const navigate = useNavigate();
+  const { t } = useTranslation("common");
 
   return (
     <section className="bg-[hsl(0,0%,97%)] shadow-m rounded-[16px] sm:rounded-[20px] p-[16px] sm:p-[24px]">
       <div className="flex items-center gap-[10px] mb-[20px]">
         <Calendar className="text-primary w-6 h-6" />
         <h2 className="text-[20px] sm:text-[24px] font-semibold text-logo-heading">
-          Upcoming Sessions
+          {t("tabUpcomingSessions")}
         </h2>
       </div>
 
@@ -66,13 +68,13 @@ export default function UpcomingSessionsTab({
               onClick={onRefetch}
               className="px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:opacity-90"
             >
-              Try again
+              {t("dashboardTryAgain")}
             </button>
           )}
         </div>
       ) : sessions.length === 0 ? (
         <p className="text-light-text text-center py-[40px]">
-          No upcoming sessions
+          {t("noUpcomingSessions")}
         </p>
       ) : (
         <div className="space-y-[16px]">
@@ -126,26 +128,26 @@ export default function UpcomingSessionsTab({
                     <div className="flex items-center gap-[8px]">
                       <Clock className="w-4 h-4 text-primary" />
                       <div>
-                        <p className="text-[12px] text-gray-500">Duration</p>
+                        <p className="text-[12px] text-gray-500">{t("dashboardDuration")}</p>
                         <p className="text-[14px] font-medium">
                           {session.duration} minutes
                         </p>
                       </div>
                     </div>
                     <div>
-                      <p className="text-[12px] text-gray-500">Starts From</p>
+                      <p className="text-[12px] text-gray-500">{t("dashboardStartsFrom")}</p>
                       <p className="text-[14px] font-medium">
                         {formatDateTime(session.startTime)}
                       </p>
                     </div>
                     <div>
-                      <p className="text-[12px] text-gray-500">Ends At</p>
+                      <p className="text-[12px] text-gray-500">{t("dashboardEndsAt")}</p>
                       <p className="text-[14px] font-medium">
                         {formatDateTime(session.endTime)}
                       </p>
                     </div>
                     <div>
-                      <p className="text-[12px] text-gray-500">Amount Paid</p>
+                      <p className="text-[12px] text-gray-500">{t("dashboardAmountPaid")}</p>
                       <p className="text-[14px] font-semibold text-green-600">
                         ₹{session.amountPaid.toLocaleString()}
                       </p>
@@ -160,7 +162,7 @@ export default function UpcomingSessionsTab({
                       Time Until Session
                     </p>
                     <p className="text-[16px] font-bold text-primary">
-                      {formatTimeLeft(session.startTime)}
+                      {formatTimeLeft(session.startTime, t)}
                     </p>
                   </div>
 
@@ -173,10 +175,10 @@ export default function UpcomingSessionsTab({
                       className="flex items-center gap-[8px] bg-primary text-white px-[16px] py-[10px] rounded-full text-[14px] font-medium hover:bg-primary/90 transition-colors"
                     >
                       <ExternalLink className="w-4 h-4" />
-                      Join Meeting
+                      {t("dashboardJoinSession")}
                     </a>
                   ) : (
-                    <span className="text-gray-500 text-sm">Meeting link not yet set</span>
+                    <span className="text-gray-500 text-sm">{t("dashboardMeetingLinkNotSet")}</span>
                   )}
                 </div>
               </div>

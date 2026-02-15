@@ -3,7 +3,6 @@ import { useAuth } from "../context/AuthContext";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import ImageViewer from "../components/ImageViewer";
 import { lazy, useState, useRef } from "react";
-import useScrollToTop from "../hooks/useScrollToTop";
 import { AlertTriangle, X, CheckCircle2, XCircle, Eye, Upload } from "lucide-react";
 import googleIcon from "../assets/google.svg";
 import { useTranslation } from "react-i18next";
@@ -22,7 +21,6 @@ const ChangePasswordCard = lazy(
 const LanguagesCard = lazy(() => import("../components/profile/LanguagesCard"));
 
 export default function Profile() {
-  useScrollToTop();
   const { user, isLoading, logout, updateUserAvatar } = useAuth();
   const navigate = useNavigate();
   const { t } = useTranslation("profile");

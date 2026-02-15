@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   Star,
   ArrowLeft,
@@ -14,13 +15,12 @@ import BookingModal from "../components/BookingModal";
 import ImageViewer from "../components/ImageViewer";
 import type { ApiExpert } from "../types/experts";
 import { getAvatarUrl } from "../lib/api";
-import useScrollToTop from "../hooks/useScrollToTop";
 import { useAuth } from "../context/AuthContext";
 
 export default function ExpertDetails() {
-  useScrollToTop();
   const location = useLocation();
   const navigate = useNavigate();
+  const { t } = useTranslation(["common", "experts"]);
   const { user } = useAuth();
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
@@ -219,7 +219,7 @@ export default function ExpertDetails() {
                     <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
                       <Languages size={20} className="sm:w-6 sm:h-6 text-[#44666C]" />
                       <h3 className="font-semibold text-[#304048]" style={{ fontSize: 'clamp(16px, 1rem, 20.8px)' }}>
-                        Languages
+                        {t("experts:languagesLabel")}
                       </h3>
                     </div>
                     <p className="text-gray-700" style={{ fontSize: '16px' }}>{formattedLanguages}</p>
@@ -230,11 +230,11 @@ export default function ExpertDetails() {
                     <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
                       <Award size={20} className="sm:w-6 sm:h-6 text-[#44666C]" />
                       <h3 className="font-semibold text-[#304048]" style={{ fontSize: 'clamp(16px, 1rem, 20.8px)' }}>
-                        Experience
+                        {t("common:experience")}
                       </h3>
                     </div>
                     <p className="text-gray-700 font-medium" style={{ fontSize: 'clamp(16px, 1rem, 20.8px)' }}>
-                      Experience {expert.yearsOfExperience}+ years of experience
+                      {t("experts:experienceYears", { count: expert.yearsOfExperience })}
                     </p>
                   </div>
                 </div>

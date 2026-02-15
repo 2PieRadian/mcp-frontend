@@ -5,7 +5,6 @@ import SelfAssessmentNavbar from "../components/SelfAssessmentNavbar";
 import { SELF_ASSESSMENT_QUIZ } from "../lib/constants/selfAssessment";
 import type { QuizOption } from "../lib/interfaces";
 import { useScreen } from "../context/ScreenContext";
-import useScrollToTop from "../hooks/useScrollToTop";
 
 function OptionItem({
   option,
@@ -46,7 +45,6 @@ function OptionItem({
 }
 
 export default function SelfAssessmentQuestions() {
-  useScrollToTop();
   const { t } = useTranslation(["common", "quiz"]);
   const navigate = useNavigate();
   const [answers, setAnswers] = useState<Record<number, QuizOption>>({});

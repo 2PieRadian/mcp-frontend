@@ -2,10 +2,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import SelfAssessmentNavbar from "../components/SelfAssessmentNavbar";
 import { SELF_ASSESSMENT_QUIZ } from "../lib/constants/selfAssessment";
-import useScrollToTop from "../hooks/useScrollToTop";
-
 export default function SelfAssessmentResult() {
-  useScrollToTop();
   const { t } = useTranslation("common");
   // Get score from URL params or state (for now, using mock data)
   const params = new URLSearchParams(window.location.search);

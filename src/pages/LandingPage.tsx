@@ -9,13 +9,11 @@ import ExpertVerifiedAssessmentsSection from "../components/ExpertVerifiedAssess
 import MakeInIndia from "../components/MakeInIndia";
 import GuidanceQuotesSection from "../components/GuidanceQuotesSection";
 import { Helmet } from "react-helmet-async";
-import useScrollToTop from "../hooks/useScrollToTop";
 import { useAuth } from "../context/AuthContext";
 
 const TOAST_DURATION_MS = 10_000;
 
 export default function UserDashboard() {
-  useScrollToTop();
   const navigate = useNavigate();
   const { user, isLoading } = useAuth();
   const [showProfileToast, setShowProfileToast] = useState(false);

@@ -17,7 +17,6 @@ import {
   Wallet,
   ArrowLeft,
 } from "lucide-react";
-import useScrollToTop from "../hooks/useScrollToTop";
 
 interface AssessmentInfo {
   titleKey: string;
@@ -234,7 +233,6 @@ const assessmentData: Record<string, AssessmentInfo> = {
 };
 
 export default function AssessmentIntro() {
-  useScrollToTop();
   const location = useLocation();
   const { assessmentType } = useParams<{ assessmentType: string }>();
   const { t } = useTranslation("quiz");

@@ -153,7 +153,7 @@ export default function Navbar() {
               <img
                 src="/images/navbar/logo.png"
                 alt={t("appName") + " Logo"}
-                className="w-[55px] sm:w-[75px] shrink-0"
+                className="w-[40px] sm:w-[52px] shrink-0"
               />
             </Link>
             <Link to="/" className="flex flex-col min-w-0">

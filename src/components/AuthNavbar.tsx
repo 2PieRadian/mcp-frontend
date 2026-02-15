@@ -45,7 +45,7 @@ export default function AuthNavbar() {
         <img
           src="/images/navbar/logo.png"
           alt={t("appName") + " Logo"}
-          className="w-[45px] sm:w-[60px] shrink-0"
+          className="w-[40px] sm:w-[52px] shrink-0"
         />
         <h1 className="text-[20px] sm:text-[22px] font-semibold text-logo-heading truncate">
           {t("appName") === "MindCurePath" ? (

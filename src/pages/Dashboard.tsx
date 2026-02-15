@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { Navigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "../context/AuthContext";
 import Layout from "../components/Layout";
 import {
@@ -21,12 +22,8 @@ import {
   Radio,
 } from "lucide-react";
 
-const STATUS_OPTIONS: { value: "" | AppointmentStatus; label: string }[] = [
-  { value: "", label: "All" },
-  { value: "SCHEDULED", label: "Scheduled" },
-  { value: "ONGOING", label: "Ongoing" },
-  { value: "COMPLETED", label: "Completed" },
-];
+const STATUS_VALUES: ("" | AppointmentStatus)[] = ["", "SCHEDULED", "ONGOING", "COMPLETED"];
+const STATUS_KEYS = ["dashboardFilterAll", "dashboardFilterScheduled", "dashboardFilterOngoing", "dashboardFilterCompleted"] as const;
 
 function formatDate(iso: string): string {
   const d = new Date(iso);
@@ -58,8 +55,9 @@ function getExpertInitial(name: string | null, email: string): string {
 }
 
 function CommunicationChip({ medium }: { medium: string }) {
+  const { t } = useTranslation("common");
   const m = medium?.toUpperCase() || "";
-  const labels: Record<string, string> = { VIDEO: "Video", CALL: "Call", CHAT: "Chat" };
+  const labels: Record<string, string> = { VIDEO: t("dashboardModeVideo"), CALL: t("dashboardModeCall"), CHAT: t("dashboardModeChat") };
   const label = labels[m] || medium;
   const iconClass = "w-4 h-4 shrink-0";
   return (
@@ -72,32 +70,21 @@ function CommunicationChip({ medium }: { medium: string }) {
   );
 }
 
-const STATUS_CONFIG: Record<
-  AppointmentStatus,
-  { label: string; icon: React.ReactNode; badge: string; dot: string }
-> = {
-  SCHEDULED: {
-    label: "Scheduled",
-    icon: <CalendarClock className="w-3.5 h-3.5" />,
-    badge: "bg-amber-50 text-amber-800 border border-amber-200",
-    dot: "bg-amber-500",
-  },
-  ONGOING: {
-    label: "Ongoing",
-    icon: <Radio className="w-3.5 h-3.5" />,
-    badge: "bg-blue-50 text-blue-800 border border-blue-200",
-    dot: "bg-blue-500",
-  },
-  COMPLETED: {
-    label: "Completed",
-    icon: <CheckCircle2 className="w-3.5 h-3.5" />,
-    badge: "bg-emerald-50 text-emerald-800 border border-emerald-200",
-    dot: "bg-emerald-500",
-  },
+const STATUS_CONFIG_KEYS: Record<AppointmentStatus, "dashboardFilterScheduled" | "dashboardFilterOngoing" | "dashboardFilterCompleted"> = {
+  SCHEDULED: "dashboardFilterScheduled",
+  ONGOING: "dashboardFilterOngoing",
+  COMPLETED: "dashboardFilterCompleted",
 };
 
 function StatusBadge({ status }: { status: AppointmentStatus }) {
-  const config = STATUS_CONFIG[status] ?? STATUS_CONFIG.COMPLETED;
+  const { t } = useTranslation("common");
+  const key = STATUS_CONFIG_KEYS[status] ?? "dashboardFilterCompleted";
+  const config = {
+    label: t(key),
+    icon: status === "SCHEDULED" ? <CalendarClock className="w-3.5 h-3.5" /> : status === "ONGOING" ? <Radio className="w-3.5 h-3.5" /> : <CheckCircle2 className="w-3.5 h-3.5" />,
+    badge: status === "SCHEDULED" ? "bg-amber-50 text-amber-800 border border-amber-200" : status === "ONGOING" ? "bg-blue-50 text-blue-800 border border-blue-200" : "bg-emerald-50 text-emerald-800 border border-emerald-200",
+    dot: status === "SCHEDULED" ? "bg-amber-500" : status === "ONGOING" ? "bg-blue-500" : "bg-emerald-500",
+  };
   return (
     <span
       className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${config.badge}`}
@@ -110,7 +97,8 @@ function StatusBadge({ status }: { status: AppointmentStatus }) {
 }
 
 function AppointmentCard({ apt }: { apt: MyAppointment }) {
-  const expertName = apt.expert?.user?.name || apt.expert?.user?.email || "Expert";
+  const { t } = useTranslation("common");
+  const expertName = apt.expert?.user?.name || apt.expert?.user?.email || t("expertFallbackName");
   const initial = getExpertInitial(
     apt.expert?.user?.name ?? null,
     apt.expert?.user?.email ?? ""
@@ -209,6 +197,7 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<"" | AppointmentStatus>("");
+  const { t } = useTranslation("common");
 
   const fetchAppointments = useCallback(async () => {
     setLoading(true);
@@ -220,13 +209,13 @@ export default function Dashboard() {
       setAppointments(res.appointments);
       setCount(res.count);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Failed to load appointments");
+      setError(t("dashboardFailedToLoadAppointments"));
       setAppointments([]);
       setCount(0);
     } finally {
       setLoading(false);
     }
-  }, [statusFilter]);
+  }, [statusFilter, t]);
 
   useEffect(() => {
     if (user?.role === "EXPERT") return;
@@ -257,25 +246,25 @@ export default function Dashboard() {
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
         <div className="mb-8">
           <h1 className="text-2xl sm:text-3xl font-bold text-[#304048] tracking-tight">
-            My appointments
+            {t("myAppointments")}
           </h1>
           <p className="text-gray-600 mt-1.5 sm:mt-2">
-            View and manage your booked sessions. Sorted by most recent first.
+            {t("myAppointmentsSubtitle")}
           </p>
         </div>
 
         {/* Status filter */}
         <div className="flex flex-wrap gap-2 mb-6">
-          {STATUS_OPTIONS.map((opt) => (
+          {STATUS_VALUES.map((value, i) => (
             <button
-              key={opt.value || "all"}
-              onClick={() => setStatusFilter(opt.value)}
-              className={`px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${statusFilter === opt.value
+              key={value || "all"}
+              onClick={() => setStatusFilter(value)}
+              className={`px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${statusFilter === value
                   ? "bg-[#44666C] text-white shadow-sm"
                   : "bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-800"
                 }`}
             >
-              {opt.label}
+              {t(STATUS_KEYS[i])}
             </button>
           ))}
         </div>
@@ -291,7 +280,7 @@ export default function Dashboard() {
               onClick={fetchAppointments}
               className="mt-3 px-4 py-2 bg-red-100 hover:bg-red-200 rounded-lg text-sm font-medium"
             >
-              Try again
+              {t("dashboardTryAgain")}
             </button>
           </div>
         ) : appointments.length === 0 ? (
@@ -299,11 +288,11 @@ export default function Dashboard() {
             <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center mx-auto mb-5">
               <Calendar className="w-8 h-8 text-gray-500" />
             </div>
-            <h3 className="text-lg font-semibold text-[#304048] mb-2">No appointments yet</h3>
+            <h3 className="text-lg font-semibold text-[#304048] mb-2">{t("dashboardNoAppointmentsYet")}</h3>
             <p className="text-gray-500 text-sm max-w-sm mx-auto">
               {statusFilter
-                ? "No appointments match this filter. Try another or clear the filter."
-                : "Book a session with an expert from Find Counsellors to see your appointments here."}
+                ? t("dashboardNoAppointmentsFilter")
+                : t("dashboardBookSessionHint")}
             </p>
           </div>
         ) : (
@@ -318,7 +307,7 @@ export default function Dashboard() {
 
         {!loading && !error && count > 0 && (
           <p className="mt-6 text-sm text-gray-500 text-center">
-            {count} appointment{count !== 1 ? "s" : ""} shown
+            {t("dashboardAppointmentCount", { count })}
           </p>
         )}
       </div>

@@ -7,7 +7,6 @@ import {
   getSpecializationBySlug,
   getSpecializationByValue,
 } from "../lib/constants/experts";
-import useScrollToTop from "../hooks/useScrollToTop";
 import { useTranslation } from "react-i18next";
 
 const ExpertsHeroSection = lazy(
@@ -35,7 +34,6 @@ const slugToSpecialization = (slug: string): string => {
 };
 
 export default function ExpertsContent() {
-  useScrollToTop();
   const location = useLocation();
   const { filters, setFilters } = useExperts();
   const { t } = useTranslation(["common", "experts"]);

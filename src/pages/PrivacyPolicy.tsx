@@ -1,4 +1,6 @@
+import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
+import { useTranslation } from "react-i18next";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ScrollToTopButton from "../components/ScrollToTopButton";
@@ -12,19 +14,26 @@ import {
 } from "lucide-react";
 
 export default function PrivacyPolicy() {
+  const { i18n } = useTranslation();
+  const [lang, setLang] = useState(i18n.language);
+
+  useEffect(() => {
+    setLang(i18n.language);
+    const handle = () => setLang(i18n.language);
+    i18n.on("languageChanged", handle);
+    return () => i18n.off("languageChanged", handle);
+  }, [i18n]);
+
+  const t = (key: string, options?: Record<string, unknown>) =>
+    i18n.t(key, { ns: "privacy", lng: lang, ...options });
+
   return (
-    <>
+    <div key={lang}>
       <ScrollToTopButton />
       <Helmet>
-        <title>Privacy Policy | MindCurePath Consultancy</title>
-        <meta
-          name="description"
-          content="Read the MindCurePath Privacy Policy. Learn how we collect, process, and protect your personal data in compliance with Indian IT laws and DPDP Act 2023."
-        />
-        <meta
-          name="keywords"
-          content="privacy policy, data protection, MindCurePath, mental wellness privacy, Indian data laws, DPDP Act 2023"
-        />
+        <title>{t("metaTitle")}</title>
+        <meta name="description" content={t("metaDescription")} />
+        <meta name="keywords" content={t("metaKeywords")} />
         <link rel="canonical" href="https://mindcurepath.com/privacy-policy" />
 
         {/* Open Graph / Facebook */}
@@ -33,14 +42,8 @@ export default function PrivacyPolicy() {
           property="og:url"
           content="https://mindcurepath.com/privacy-policy"
         />
-        <meta
-          property="og:title"
-          content="Privacy Policy | MindCurePath Consultancy"
-        />
-        <meta
-          property="og:description"
-          content="Your privacy matters. Understand how MindCurePath safeguards your personal and wellness information."
-        />
+        <meta property="og:title" content={t("metaTitle")} />
+        <meta property="og:description" content={t("ogDescription")} />
         <meta
           property="og:image"
           content="https://mindcurepath.com/og-image.jpg"
@@ -52,14 +55,8 @@ export default function PrivacyPolicy() {
           name="twitter:url"
           content="https://mindcurepath.com/privacy-policy"
         />
-        <meta
-          name="twitter:title"
-          content="Privacy Policy | MindCurePath Consultancy"
-        />
-        <meta
-          name="twitter:description"
-          content="Your privacy matters. Understand how MindCurePath safeguards your personal and wellness information."
-        />
+        <meta name="twitter:title" content={t("metaTitle")} />
+        <meta name="twitter:description" content={t("ogDescription")} />
         <meta
           name="twitter:image"
           content="https://mindcurepath.com/og-image.jpg"
@@ -75,13 +72,13 @@ export default function PrivacyPolicy() {
         <section className="bg-linear-to-br from-[#0b1220] via-[#0f1d32] to-[#0a1528] py-16 sm:py-20 md:py-24">
           <div className="mx-auto max-w-4xl px-5 sm:px-6 lg:px-8 text-center">
             <h1 className="text-3xl font-bold text-white sm:text-4xl md:text-5xl tracking-tight">
-              Privacy Policy
+              {t("heroTitle")}
             </h1>
             <p className="mt-4 text-base text-slate-300 sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-              MindCurePath Consultancy Private Limited
+              {t("heroSubtitle")}
             </p>
             <p className="mt-2 text-sm text-slate-400">
-              CIN: U62090UP2025PTC239472
+              {t("heroCin")}
             </p>
           </div>
         </section>
@@ -92,197 +89,135 @@ export default function PrivacyPolicy() {
             {/* Introduction */}
             <div className="mb-12 p-6 bg-slate-50 rounded-2xl border border-slate-200">
               <p className="text-slate-700 leading-relaxed text-base sm:text-lg">
-                MindCurePath Consultancy Private Limited (collectively referred
-                to as "MindCurePath", "we", "our", or "us", including our
-                affiliates). MindCurePath values your privacy and is committed
-                to safeguarding your personal data. This Privacy Policy explains
-                how we collect, use, store, share, and protect personal
-                information of users accessing or using the MindCurePath
-                Platform.
+                {t("intro1")}
               </p>
               <p className="text-slate-700 leading-relaxed text-base sm:text-lg mt-4">
-                MindCurePath owns and operates the website www.mindcurepath.com,
-                along with its mobile applications (upcoming), mobile website,
-                digital tools, online platforms, products, and services
-                (collectively referred to as the "MindCurePath Platform").
+                {t("intro2")}
               </p>
               <p className="text-slate-700 leading-relaxed text-base sm:text-lg mt-4 font-medium">
-                By accessing or using the MindCurePath Platform, you agree to
-                this Privacy Policy and the applicable Terms & Conditions.
+                {t("intro3")}
               </p>
             </div>
 
             {/* Section 1 */}
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl mb-6 pb-3 border-b-2 border-slate-200">
-                1. Purpose of This Privacy Policy
+                {t("s1Title")}
               </h2>
 
               <div className="space-y-6">
                 <div>
                   <h3 className="text-lg font-semibold text-slate-800 sm:text-xl mb-3">
-                    1.1 Legal Compliance Statement
+                    {t("s1_1Title")}
                   </h3>
                   <p className="text-slate-600 leading-relaxed mb-4">
-                    This Privacy Policy has been prepared in accordance with
-                    applicable laws of India and reflects MindCurePath's
-                    commitment to lawful, fair, and transparent collection, use,
-                    processing, and protection of personal data.
+                    {t("s1_1p1")}
                   </p>
                   <p className="text-slate-600 leading-relaxed mb-4">
-                    This Privacy Policy is designed to align with the following
-                    Indian laws and rules:
+                    {t("s1_1p2")}
                   </p>
                   <ul className="space-y-2 text-slate-600">
                     <li className="flex items-start gap-3">
                       <span className="mt-2 h-1.5 w-1.5 rounded-full bg-slate-400 shrink-0"></span>
-                      <span>
-                        Section 43A of the Information Technology Act, 2000
-                      </span>
+                      <span>{t("s1_1li1")}</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="mt-2 h-1.5 w-1.5 rounded-full bg-slate-400 shrink-0"></span>
-                      <span>
-                        Information Technology (Reasonable Security Practices
-                        and Procedures and Sensitive Personal Data or
-                        Information) Rules, 2011
-                      </span>
+                      <span>{t("s1_1li2")}</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="mt-2 h-1.5 w-1.5 rounded-full bg-slate-400 shrink-0"></span>
-                      <span>
-                        Information Technology (Intermediary Guidelines) Rules,
-                        2011
-                      </span>
+                      <span>{t("s1_1li3")}</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="mt-2 h-1.5 w-1.5 rounded-full bg-slate-400 shrink-0"></span>
-                      <span>Digital Personal Data Protection Act, 2023</span>
+                      <span>{t("s1_1li4")}</span>
                     </li>
                   </ul>
                   <p className="text-slate-600 leading-relaxed mt-4">
-                    MindCurePath does not claim any certification, registration,
-                    or governmental approval unless expressly required and
-                    obtained. References to these laws are made solely for
-                    transparency and compliance intent.
+                    {t("s1_1p3")}
                   </p>
                   <p className="text-slate-600 leading-relaxed mt-4">
-                    This Policy explains:
+                    {t("s1_1p4")}
                   </p>
                   <ul className="space-y-2 text-slate-600 mt-2">
                     <li className="flex items-start gap-3">
                       <span className="mt-2 h-1.5 w-1.5 rounded-full bg-slate-400 shrink-0"></span>
-                      <span>Types of personal data collected</span>
+                      <span>{t("s1_1li5")}</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="mt-2 h-1.5 w-1.5 rounded-full bg-slate-400 shrink-0"></span>
-                      <span>
-                        Purpose and methods of data collection and processing
-                      </span>
+                      <span>{t("s1_1li6")}</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="mt-2 h-1.5 w-1.5 rounded-full bg-slate-400 shrink-0"></span>
-                      <span>
-                        Data storage, retention, and deletion practices
-                      </span>
+                      <span>{t("s1_1li7")}</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="mt-2 h-1.5 w-1.5 rounded-full bg-slate-400 shrink-0"></span>
-                      <span>
-                        Circumstances under which data may be disclosed
-                      </span>
+                      <span>{t("s1_1li8")}</span>
                     </li>
                   </ul>
                 </div>
 
                 <div>
                   <h3 className="text-lg font-semibold text-slate-800 sm:text-xl mb-3">
-                    1.2 Force Majeure
+                    {t("s1_2Title")}
                   </h3>
                   <p className="text-slate-600 leading-relaxed">
-                    Force Majeure means any event or circumstance beyond the
-                    reasonable control of MindCurePath or the User, which
-                    prevents, delays, or interrupts the performance of
-                    obligations under these Terms, including but not limited to
-                    natural disasters, acts of government, system failures,
-                    cyber incidents, or disruptions in communication networks.
+                    {t("s1_2p1")}
                   </p>
                 </div>
 
                 <div>
                   <h3 className="text-lg font-semibold text-slate-800 sm:text-xl mb-3">
-                    1.3 Registration
+                    {t("s1_3Title")}
                   </h3>
                   <p className="text-slate-600 leading-relaxed">
-                    Registration refers to the process by which a User enrolls
-                    with MindCurePath by providing required information to
-                    create an account for accessing the Platform and its
-                    services.
+                    {t("s1_3p1")}
                   </p>
                 </div>
 
                 <div>
                   <h3 className="text-lg font-semibold text-slate-800 sm:text-xl mb-3">
-                    1.4 Platform
+                    {t("s1_4Title")}
                   </h3>
                   <p className="text-slate-600 leading-relaxed">
-                    Platform means the digital infrastructure operated by
-                    MindCurePath, including its website, applications (present
-                    or future), tools, and services made available to Users for
-                    accessing guidance, consultations, or related offerings.
+                    {t("s1_4p1")}
                   </p>
                 </div>
 
                 <div>
                   <h3 className="text-lg font-semibold text-slate-800 sm:text-xl mb-3">
-                    1.5 Site
+                    {t("s1_5Title")}
                   </h3>
                   <p className="text-slate-600 leading-relaxed">
-                    Site refers to the official website of MindCurePath through
-                    which Users may obtain information, register, and connect
-                    with practitioners, consultants, or service providers.
+                    {t("s1_5p1")}
                   </p>
                 </div>
 
                 <div>
                   <h3 className="text-lg font-semibold text-slate-800 sm:text-xl mb-3">
-                    1.6 Consent & Acceptance
+                    {t("s1_6Title")}
                   </h3>
                   <p className="text-slate-600 leading-relaxed mb-4">
-                    By accessing or using the MindCurePath Platform, submitting
-                    your personal information, using any features of the
-                    website, or completing a payment, you expressly agree to the
-                    collection, storage, processing, use, sharing, and transfer
-                    of your personal information in accordance with this Privacy
-                    Policy.
+                    {t("s1_6p1")}
                   </p>
                   <p className="text-slate-600 leading-relaxed mb-4">
-                    By voluntarily providing your information and accepting this
-                    Privacy Policy, you authorize MindCurePath to contact you
-                    through calls, messages, emails, or other communication
-                    modes for service-related communication, appointment
-                    coordination, support assistance, and to help you understand
-                    or access the services available on the Platform.
+                    {t("s1_6p2")}
                   </p>
                   <p className="text-slate-600 leading-relaxed mb-4">
-                    You confirm that all personal information shared by you is
-                    provided willingly and without coercion. You may choose not
-                    to provide certain information; however, such choice may
-                    limit your access to specific features or services.
+                    {t("s1_6p3")}
                   </p>
                   <p className="text-slate-600 leading-relaxed">
-                    You also have the right to withdraw your consent at any time
-                    by notifying MindCurePath in writing at{" "}
+                    {t("s1_6p4Before")}
                     <a
                       href="mailto:support@mindcurepath.com"
                       className="text-teal-600 hover:text-teal-700 underline"
                     >
                       support@mindcurepath.com
                     </a>
-                    . Upon withdrawal of consent, MindCurePath may be unable to
-                    continue providing certain services and may restrict or
-                    discontinue your access to the Platform, to the extent
-                    permitted by law.
+                    {t("s1_6p4After")}
                   </p>
                 </div>
               </div>
@@ -291,63 +226,57 @@ export default function PrivacyPolicy() {
             {/* Section 2 */}
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl mb-6 pb-3 border-b-2 border-slate-200">
-                2. Collection of Personal Information
+                {t("s2Title")}
               </h2>
 
               <div className="space-y-6">
                 <div>
                   <h3 className="text-lg font-semibold text-slate-800 sm:text-xl mb-3">
-                    2.1 General
+                    {t("s2_1Title")}
                   </h3>
                   <p className="text-slate-600 leading-relaxed mb-4">
-                    Certain features of the Platform require collection of
-                    information that identifies or may reasonably identify a
-                    User. Information may be collected during registration,
-                    service usage, communication with us, or interaction through
-                    emails, calls, or forms.
+                    {t("s2_1p1")}
                   </p>
                   <p className="text-slate-600 leading-relaxed">
-                    By using the Platform, you voluntarily consent to such
-                    collection.
+                    {t("s2_1p2")}
                   </p>
                 </div>
 
                 <div>
                   <h3 className="text-lg font-semibold text-slate-800 sm:text-xl mb-3">
-                    2.2 Categories of Information Collected
+                    {t("s2_2Title")}
                   </h3>
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
                       <h4 className="font-semibold text-slate-800 mb-2">
-                        a) Contact Information
+                        {t("s2_2aTitle")}
                       </h4>
                       <p className="text-slate-600 text-sm">
-                        Name, email address, phone number.
+                        {t("s2_2aDesc")}
                       </p>
                     </div>
                     <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
                       <h4 className="font-semibold text-slate-800 mb-2">
-                        b) Demographic Information
+                        {t("s2_2bTitle")}
                       </h4>
                       <p className="text-slate-600 text-sm">
-                        Age, gender, and similar non-sensitive details.
+                        {t("s2_2bDesc")}
                       </p>
                     </div>
                     <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
                       <h4 className="font-semibold text-slate-800 mb-2">
-                        c) Platform Usage Data
+                        {t("s2_2cTitle")}
                       </h4>
                       <p className="text-slate-600 text-sm">
-                        Appointment history, interactions, and activity logs.
+                        {t("s2_2cDesc")}
                       </p>
                     </div>
                     <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
                       <h4 className="font-semibold text-slate-800 mb-2">
-                        d) Voluntarily Shared Information
+                        {t("s2_2dTitle")}
                       </h4>
                       <p className="text-slate-600 text-sm">
-                        Information shared via uploads, feedback, forms, emails,
-                        or correspondence.
+                        {t("s2_2dDesc")}
                       </p>
                     </div>
                   </div>
@@ -358,54 +287,46 @@ export default function PrivacyPolicy() {
             {/* Section 3 */}
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl mb-6 pb-3 border-b-2 border-slate-200">
-                3. Personal Information & Sensitive Personal Data
+                {t("s3Title")}
               </h2>
 
               <div className="space-y-6">
                 <div>
                   <h3 className="text-lg font-semibold text-slate-800 sm:text-xl mb-3">
-                    3.1 Personal Information
+                    {t("s3_1Title")}
                   </h3>
                   <p className="text-slate-600 leading-relaxed">
-                    Any information that directly or indirectly identifies an
-                    individual.
+                    {t("s3_1p1")}
                   </p>
                 </div>
 
                 <div>
                   <h3 className="text-lg font-semibold text-slate-800 sm:text-xl mb-3">
-                    3.2 Sensitive / Wellness-Related Information
+                    {t("s3_2Title")}
                   </h3>
                   <p className="text-slate-600 leading-relaxed mb-4">
-                    MindCurePath may collect limited wellness or health-related
-                    information voluntarily shared by users strictly for
-                    providing personalized guidance, assessments, or
-                    consultations.
+                    {t("s3_2p1")}
                   </p>
 
                   <div className="grid gap-4 sm:grid-cols-2 mb-4">
                     <div className="p-4 bg-green-50 rounded-xl border border-green-200">
                       <p className="font-semibold text-green-800 mb-2 flex items-center gap-2">
-                        <Check className="w-5 h-5 text-green-600" /> We Do
+                        <Check className="w-5 h-5 text-green-600" /> {t("s3_2WeDo")}
                       </p>
                       <ul className="space-y-2 text-green-700 text-sm">
-                        <li>Access is restricted on a need-to-know basis</li>
-                        <li>Shared only with authorized professionals</li>
-                        <li>
-                          Not disclosed without consent, except where legally
-                          required
-                        </li>
+                        <li>{t("s3_2WeDoLi1")}</li>
+                        <li>{t("s3_2WeDoLi2")}</li>
+                        <li>{t("s3_2WeDoLi3")}</li>
                       </ul>
                     </div>
                     <div className="p-4 bg-red-50 rounded-xl border border-red-200">
                       <p className="font-semibold text-red-800 mb-2 flex items-center gap-2">
-                        <XCircle className="w-5 h-5 text-red-600" /> We Don't
-                        Require
+                        <XCircle className="w-5 h-5 text-red-600" /> {t("s3_2WeDont")}
                       </p>
                       <ul className="space-y-2 text-red-700 text-sm">
-                        <li>Aadhaar, PAN, passport, or government ID</li>
-                        <li>Religion, caste, political opinion, or race</li>
-                        <li>Unnecessary personal or sensitive details</li>
+                        <li>{t("s3_2WeDontLi1")}</li>
+                        <li>{t("s3_2WeDontLi2")}</li>
+                        <li>{t("s3_2WeDontLi3")}</li>
                       </ul>
                     </div>
                   </div>
@@ -416,104 +337,62 @@ export default function PrivacyPolicy() {
             {/* Section 4 */}
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl mb-6 pb-3 border-b-2 border-slate-200">
-                4. Publicly Available Information
+                {t("s4Title")}
               </h2>
               <p className="text-slate-600 leading-relaxed mb-4">
-                MindCurePath may collect, access, or use information that is
-                lawfully available in the public domain or made publicly
-                accessible by the User, without requiring additional or separate
-                consent. Such information may include content that the User has
-                voluntarily shared on publicly accessible platforms,
-                directories, professional profiles, social media platforms, or
-                other open sources, where such access is permitted by applicable
-                law.
+                {t("s4p1")}
               </p>
               <p className="text-slate-600 leading-relaxed mb-4">
-                Publicly available information may be used by MindCurePath
-                solely for legitimate business purposes, including platform
-                functionality, verification of publicly listed professional
-                details, communication, service improvement, analytics,
-                research, and compliance with legal obligations. MindCurePath
-                does not combine publicly available information with sensitive
-                personal data in a manner that violates applicable data
-                protection laws.
+                {t("s4p2")}
               </p>
               <p className="text-slate-600 leading-relaxed mb-4">
-                Any use of publicly available information shall be carried out
-                in a lawful, fair, and transparent manner, and MindCurePath
-                shall not be responsible for the accuracy, completeness, or
-                reliability of such information obtained from public sources.
+                {t("s4p3")}
               </p>
               <p className="text-slate-600 leading-relaxed">
-                Nothing contained in this section permits MindCurePath to access
-                or use private, restricted, or confidential information that is
-                not lawfully available in the public domain.
+                {t("s4p4")}
               </p>
             </section>
 
             {/* Section 5 */}
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl mb-6 pb-3 border-b-2 border-slate-200">
-                5. Nature of Data Processing
+                {t("s5Title")}
               </h2>
               <p className="text-slate-600 leading-relaxed mb-6">
-                MindCurePath follows a structured and lawful approach to the
-                collection, handling, and processing of personal data in order
-                to ensure transparency, data security, and user trust. The
-                nature of data processing carried out by MindCurePath includes
-                the following:
+                {t("s5pIntro")}
               </p>
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="p-5 bg-slate-50 rounded-xl border border-slate-200">
                   <h3 className="text-lg font-semibold text-slate-800 mb-3">
-                    5.1 Collection
+                    {t("s5_1Title")}
                   </h3>
                   <p className="text-slate-600 text-sm leading-relaxed">
-                    Personal information is collected through secure digital
-                    channels such as registration forms, service inquiries,
-                    appointment bookings, assessments, and direct communication
-                    during sessions or interactions on the Platform. Data is
-                    collected only to the extent necessary for providing
-                    services and complying with legal obligations.
+                    {t("s5_1p1")}
                   </p>
                 </div>
                 <div className="p-5 bg-slate-50 rounded-xl border border-slate-200">
                   <h3 className="text-lg font-semibold text-slate-800 mb-3">
-                    5.2 Usage
+                    {t("s5_2Title")}
                   </h3>
                   <p className="text-slate-600 text-sm leading-relaxed">
-                    Collected data is used for legitimate purposes, including
-                    service delivery, appointment coordination, communication
-                    with Users, customer support, internal analysis, and
-                    platform improvement. Usage of data is limited to purposes
-                    that are relevant, lawful, and clearly communicated to
-                    Users.
+                    {t("s5_2p1")}
                   </p>
                 </div>
                 <div className="p-5 bg-slate-50 rounded-xl border border-slate-200">
                   <h3 className="text-lg font-semibold text-slate-800 mb-3">
-                    5.3 Storage
+                    {t("s5_3Title")}
                   </h3>
                   <p className="text-slate-600 text-sm leading-relaxed">
-                    All personal information is stored using secure, encrypted,
-                    and access-controlled systems. MindCurePath implements
-                    reasonable technical and organizational measures to prevent
-                    unauthorized access, alteration, loss, or misuse of data.
-                    Access to stored data is restricted to authorized personnel
-                    on a need-to-know basis.
+                    {t("s5_3p1")}
                   </p>
                 </div>
                 <div className="p-5 bg-slate-50 rounded-xl border border-slate-200">
                   <h3 className="text-lg font-semibold text-slate-800 mb-3">
-                    5.4 Sharing
+                    {t("s5_4Title")}
                   </h3>
                   <p className="text-slate-600 text-sm leading-relaxed">
-                    Personal data is shared only with authorized personnel,
-                    practitioners. Data may also be disclosed where required by
-                    law, regulation, court order, or government authority.
-                    MindCurePath does not share personal information without
-                    user consent except in legally mandated circumstances.
+                    {t("s5_4p1")}
                   </p>
                 </div>
               </div>
@@ -522,91 +401,60 @@ export default function PrivacyPolicy() {
             {/* Section 6 */}
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl mb-6 pb-3 border-b-2 border-slate-200">
-                6. User Consent & Purpose of Use
+                {t("s6Title")}
               </h2>
               <p className="text-slate-600 leading-relaxed mb-4">
-                By accessing, registering on, or using the MindCurePath
-                Platform, and by voluntarily providing personal information,
-                Users provide their free, informed, and explicit consent to the
-                collection, processing, storage, and use of such information in
-                accordance with this Privacy Policy and applicable laws.
+                {t("s6p1")}
               </p>
               <p className="text-slate-600 leading-relaxed mb-4">
-                Personal information collected by MindCurePath may be used for
-                the following purposes:
+                {t("s6p2")}
               </p>
               <ul className="space-y-3 text-slate-600 mb-6">
                 <li className="flex items-start gap-3">
                   <span className="mt-2 h-1.5 w-1.5 rounded-full bg-teal-500 shrink-0"></span>
-                  <span>
-                    To enable secure access to the Platform and deliver services
-                    efficiently;
-                  </span>
+                  <span>{t("s6li1")}</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-2 h-1.5 w-1.5 rounded-full bg-teal-500 shrink-0"></span>
-                  <span>
-                    To facilitate appointment scheduling, confirmations,
-                    rescheduling, and related communications;
-                  </span>
+                  <span>{t("s6li2")}</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-2 h-1.5 w-1.5 rounded-full bg-teal-500 shrink-0"></span>
-                  <span>
-                    To provide customer support, respond to inquiries, and
-                    resolve service-related issues;
-                  </span>
+                  <span>{t("s6li3")}</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-2 h-1.5 w-1.5 rounded-full bg-teal-500 shrink-0"></span>
-                  <span>
-                    To process payments and complete lawful transactions;
-                  </span>
+                  <span>{t("s6li4")}</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-2 h-1.5 w-1.5 rounded-full bg-teal-500 shrink-0"></span>
-                  <span>
-                    To share important service-related updates, notifications,
-                    or information, where the User has provided consent;
-                  </span>
+                  <span>{t("s6li5")}</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-2 h-1.5 w-1.5 rounded-full bg-teal-500 shrink-0"></span>
-                  <span>
-                    To improve platform functionality, user experience, and
-                    service quality through lawful analytics and feedback.
-                  </span>
+                  <span>{t("s6li6")}</span>
                 </li>
               </ul>
               <p className="text-slate-600 leading-relaxed mb-6">
-                MindCurePath processes personal data strictly for legitimate,
-                specified, and transparent purposes and does not use such data
-                in a manner inconsistent with this Privacy Policy.
+                {t("s6p3")}
               </p>
 
               <div>
                 <h3 className="text-lg font-semibold text-slate-800 sm:text-xl mb-3">
-                  6.1 Communication Consent
+                  {t("s6_1Title")}
                 </h3>
                 <p className="text-slate-600 leading-relaxed mb-4">
-                  By providing contact details, Users consent to being contacted
-                  by MindCurePath through calls, SMS, emails, or messaging
-                  platforms for purposes including service delivery, appointment
-                  coordination, support assistance, and essential
-                  platform-related communications.
+                  {t("s6_1p1")}
                 </p>
                 <p className="text-slate-600 leading-relaxed">
-                  Users may withdraw their communication consent at any time by
-                  writing to{" "}
+                  {t("s6_1p2Before")}
                   <a
                     href="mailto:support@mindcurepath.com"
                     className="text-teal-600 hover:text-teal-700 underline"
                   >
                     support@mindcurepath.com
                   </a>
-                  . Please note that withdrawal of consent may limit or restrict
-                  access to certain services that require communication for
-                  effective delivery.
+                  {t("s6_1p2After")}
                 </p>
               </div>
             </section>
@@ -614,422 +462,256 @@ export default function PrivacyPolicy() {
             {/* Section 7 */}
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl mb-6 pb-3 border-b-2 border-slate-200">
-                7. Use, Disclosure & Sharing of Information
+                {t("s7Title")}
               </h2>
               <p className="text-slate-600 leading-relaxed mb-4">
-                MindCurePath uses, discloses, and shares personal information
-                only in a lawful, fair, and transparent manner and strictly in
-                accordance with this Privacy Policy and applicable data
-                protection laws. Information is shared only to the extent
-                necessary for providing services, operating the Platform, or
-                meeting legal obligations.
+                {t("s7p1")}
               </p>
               <p className="text-slate-600 leading-relaxed mb-4">
-                Personal information may be shared in the following
-                circumstances:
+                {t("s7p2")}
               </p>
               <ul className="space-y-4 text-slate-600">
                 <li className="flex items-start gap-3">
                   <span className="mt-2 h-1.5 w-1.5 rounded-full bg-slate-400 shrink-0"></span>
                   <span>
-                    <strong className="text-slate-800">
-                      With Internal Teams and Professionals:
-                    </strong>{" "}
-                    Information may be accessed by MindCurePath employees,
-                    practitioners, consultants, or authorized professionals on a
-                    need-to-know basis for service delivery, consultation
-                    support, administration, and quality improvement.
+                    <strong className="text-slate-800">{t("s7li1Strong")}</strong>{" "}
+                    {t("s7li1Text")}
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-2 h-1.5 w-1.5 rounded-full bg-slate-400 shrink-0"></span>
                   <span>
-                    <strong className="text-slate-800">
-                      Legal and Regulatory Disclosures:
-                    </strong>{" "}
-                    Information may be disclosed where required by applicable
-                    law, regulation, court order, governmental authority, or
-                    lawful request, or where necessary to enforce platform
-                    policies or protect legal rights, safety, or security.
+                    <strong className="text-slate-800">{t("s7li2Strong")}</strong>{" "}
+                    {t("s7li2Text")}
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-2 h-1.5 w-1.5 rounded-full bg-slate-400 shrink-0"></span>
                   <span>
-                    <strong className="text-slate-800">
-                      Business Transfers or Restructuring:
-                    </strong>{" "}
-                    In the event of a merger, acquisition, restructuring, or
-                    transfer of business assets, user information may be
-                    transferred to the relevant entity, subject to continued
-                    protection under this Privacy Policy.
+                    <strong className="text-slate-800">{t("s7li3Strong")}</strong>{" "}
+                    {t("s7li3Text")}
                   </span>
                 </li>
               </ul>
               <p className="text-slate-600 leading-relaxed mt-4">
-                All third parties with whom information is shared are
-                contractually obligated to maintain strict confidentiality,
-                implement appropriate security safeguards, and use the
-                information only for the purposes authorized by MindCurePath.
+                {t("s7p3")}
               </p>
             </section>
 
             {/* Section 8 */}
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl mb-6 pb-3 border-b-2 border-slate-200">
-                8. Payment Information
+                {t("s8Title")}
               </h2>
               <p className="text-slate-600 leading-relaxed mb-4">
-                MindCurePath facilitates payments through secure and reputable
-                third-party payment gateway service providers to ensure safe and
-                efficient transaction processing. All online payments made on
-                the Platform are subject to the terms, conditions, and privacy
-                policies of the respective payment gateway providers.
+                {t("s8p1")}
               </p>
               <p className="text-slate-600 leading-relaxed mb-4">
-                MindCurePath does not store, process, or retain Users' debit
-                card, credit card, UPI, or net banking details on its servers,
-                except where such storage is required to comply with applicable
-                laws or regulatory obligations. Sensitive payment information is
-                handled directly by the authorized payment gateways using
-                industry-standard security protocols and encryption measures.
+                {t("s8p2")}
               </p>
               <p className="text-slate-600 leading-relaxed">
-                MindCurePath may receive limited transaction-related
-                information, such as payment confirmation, transaction
-                identifiers, and billing status, solely for record-keeping,
-                reconciliation, customer support, and legal compliance purposes.
-                Users are advised to exercise caution while making online
-                payments and ensure that they use secure devices and networks.
+                {t("s8p3")}
               </p>
             </section>
 
             {/* Section 9 */}
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl mb-6 pb-3 border-b-2 border-slate-200">
-                9. Automatically Collected Information
+                {t("s9Title")}
               </h2>
               <p className="text-slate-600 leading-relaxed mb-4">
-                IP address, browser type, device information, timestamps, and
-                usage data may be collected for analytics, security, and system
-                improvement. Whenever you access or use the MindCurePath
-                Platform, certain information may be automatically collected by
-                our systems or by authorized third-party service providers. This
-                information may include details such as your device type, IP
-                address, browser information, operating system, referral pages,
-                pages visited on the Platform, time spent on such pages, search
-                queries, date and time of access, and similar usage-related
-                data.
+                {t("s9p1")}
               </p>
               <p className="text-slate-600 leading-relaxed">
-                Such information is collected for purposes including system
-                security, performance monitoring, statistical analysis,
-                understanding user behavior, improving platform functionality,
-                enhancing user experience, and administering the services
-                effectively. The data is generally analyzed in an aggregated or
-                anonymized manner and is not used to personally identify Users
-                unless required for security, legal, or operational reasons.
+                {t("s9p2")}
               </p>
             </section>
 
             {/* Section 10 */}
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl mb-6 pb-3 border-b-2 border-slate-200">
-                10. Cookies Policy
+                {t("s10Title")}
               </h2>
               <p className="text-slate-600 leading-relaxed mb-4">
-                MindCurePath uses cookies and similar tracking technologies to
-                collect limited information for functional and analytical
-                purposes. Cookies are small text files stored on your device
-                that help the Platform recognize your browser and improve your
-                overall experience.
+                {t("s10p1")}
               </p>
               <p className="text-slate-600 leading-relaxed mb-4">
-                We may use persistent cookies to remember login preferences and
-                enhance convenience during future visits. We may also use
-                session-based cookies to enable core website functions,
-                understand user interaction patterns, monitor traffic flow, and
-                improve Platform performance. Session cookies are automatically
-                deleted once you log out and close your browser.
+                {t("s10p2")}
               </p>
               <p className="text-slate-600 leading-relaxed mb-4">
-                MindCurePath may engage trusted third-party service providers
-                that place or access cookies on your device to support
-                analytics, performance optimization, or service enhancement. Use
-                of such third-party services is governed by their respective
-                privacy policies and terms, and MindCurePath shall not be
-                responsible for the practices of such third parties.
+                {t("s10p3")}
               </p>
               <p className="text-slate-600 leading-relaxed">
-                You may control or disable cookies through your browser
-                settings. Please note that restricting cookies may affect the
-                availability or functionality of certain features of the
-                Platform.
+                {t("s10p4")}
               </p>
             </section>
 
             {/* Section 11 */}
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl mb-6 pb-3 border-b-2 border-slate-200">
-                11. Third-Party Links & User Content
+                {t("s11Title")}
               </h2>
               <p className="text-slate-600 leading-relaxed mb-4">
-                MindCurePath is not responsible for privacy practices of
-                external websites. Publicly shared user content is accessed at
-                user discretion. The MindCurePath Platform may include links to
-                third-party websites or resources for informational or
-                convenience purposes. Such external websites are not owned,
-                managed, or controlled by MindCurePath.
+                {t("s11p1")}
               </p>
               <p className="text-slate-600 leading-relaxed mb-4">
-                MindCurePath does not assume responsibility for the content,
-                accuracy, availability, updates, or practices of any third-party
-                website, including any information, links, or materials provided
-                on such websites. The presence of external links on the Platform
-                does not imply endorsement, sponsorship, or association with the
-                operators or owners of those websites.
+                {t("s11p2")}
               </p>
               <p className="text-slate-600 leading-relaxed mb-4">
-                When you choose to access any third-party website through a link
-                on the Platform, you do so at your own discretion and risk. Your
-                use of such websites will be governed by their respective terms
-                of use, privacy policies, and other applicable policies.
+                {t("s11p3")}
               </p>
               <p className="text-slate-600 leading-relaxed">
-                MindCurePath shall not be liable, directly or indirectly, for
-                any loss, damage, or harm arising from or in connection with
-                your access to or reliance on any content, services,
-                advertisements, products, communications, or materials available
-                on or through such external websites, including but not limited
-                to offensive, misleading, defamatory, or unlawful content.
+                {t("s11p4")}
               </p>
             </section>
 
             {/* Section 12 */}
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl mb-6 pb-3 border-b-2 border-slate-200">
-                12. Data Security
+                {t("s12Title")}
               </h2>
               <p className="text-slate-600 leading-relaxed mb-4">
-                MindCurePath implements reasonable administrative, technical,
-                and physical safeguards to protect personal information under
-                its control against unauthorized access, misuse, alteration, or
-                disclosure. Personal data is handled through systems and
-                procedures designed in accordance with generally accepted
-                industry standards for data privacy and information security.
+                {t("s12p1")}
               </p>
               <p className="text-slate-600 leading-relaxed mb-4">
-                MindCurePath does not record online video-based sessions
-                conducted through the Platform, unless expressly communicated
-                and consented to by the User.
+                {t("s12p2")}
               </p>
               <p className="text-slate-600 leading-relaxed">
-                Despite the security measures in place, Users are advised to
-                exercise caution and avoid sharing personal or sensitive
-                information in public areas of the Platform, including
-                discussion forums, comment sections, or any other publicly
-                accessible spaces, as such information may be visible to others.
+                {t("s12p3")}
               </p>
             </section>
 
             {/* Section 13 */}
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl mb-6 pb-3 border-b-2 border-slate-200">
-                13. Confidentiality & Exceptions
+                {t("s13Title")}
               </h2>
               <p className="text-slate-600 leading-relaxed mb-4">
-                MindCurePath is committed to maintaining the confidentiality and
-                privacy of all information shared by Users during consultations,
-                assessments, or interactions on the Platform. Any personal or
-                wellness-related information disclosed during a consultation is
-                treated as confidential and is protected in accordance with
-                applicable laws and this Privacy Policy.
+                {t("s13p1")}
               </p>
               <p className="text-slate-600 leading-relaxed mb-4">
-                Confidentiality may be limited or information may be disclosed
-                only under the following circumstances:
+                {t("s13p2")}
               </p>
               <ul className="space-y-3 text-slate-600 mb-4">
                 <li className="flex items-start gap-3">
                   <span className="mt-2 h-1.5 w-1.5 rounded-full bg-slate-400 shrink-0"></span>
-                  <span>
-                    Where a MindCurePath practitioner or the platform reasonably
-                    believes that there is a serious, real, or imminent risk to
-                    the health, safety, or life of the User or any other
-                    individual, or to public safety;
-                  </span>
+                  <span>{t("s13li1")}</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-2 h-1.5 w-1.5 rounded-full bg-slate-400 shrink-0"></span>
-                  <span>
-                    Where disclosure is required under applicable law,
-                    regulation, court order, or direction of a lawful authority;
-                  </span>
+                  <span>{t("s13li2")}</span>
                 </li>
               </ul>
               <p className="text-slate-600 leading-relaxed mb-4">
-                Except in the situations stated above, personal information
-                shared on MindCurePath shall not be disclosed to any third party
-                without the prior consent of the User, which may be provided
-                verbally or through written or electronic communication.
+                {t("s13p3")}
               </p>
               <p className="text-slate-600 leading-relaxed">
-                All employees, practitioners, consultants, trainees, and
-                authorized third-party service providers engaged by MindCurePath
-                are contractually obligated to adhere to strict confidentiality
-                and data protection standards while handling User information.
+                {t("s13p4")}
               </p>
             </section>
 
             {/* Section 14 */}
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl mb-6 pb-3 border-b-2 border-slate-200">
-                14. Third-Party Disclosure
+                {t("s14Title")}
               </h2>
               <p className="text-slate-600 leading-relaxed mb-4">
-                MindCurePath does not sell, rent, or trade Users' personal
-                information, including sensitive or wellness-related data, to
-                third parties for commercial purposes. Any sharing of personal
-                information is carried out strictly in accordance with this
-                Privacy Policy and applicable data protection laws.
+                {t("s14p1")}
               </p>
               <p className="text-slate-600 leading-relaxed mb-4">
-                Personal information may be shared with trusted third-party
-                service providers, such as website hosting partners, technology
-                vendors, payment processors, and operational support providers,
-                solely for the purpose of operating the Platform, delivering
-                services, and improving user experience. All such parties are
-                contractually bound to maintain confidentiality and implement
-                appropriate data security measures.
+                {t("s14p2")}
               </p>
               <p className="text-slate-600 leading-relaxed mb-4">
-                MindCurePath may also disclose personal information where such
-                disclosure is required to:
+                {t("s14p3")}
               </p>
               <ul className="space-y-3 text-slate-600 mb-4">
                 <li className="flex items-start gap-3">
                   <span className="mt-2 h-1.5 w-1.5 rounded-full bg-slate-400 shrink-0"></span>
-                  <span>
-                    Comply with applicable laws, regulations, or legal
-                    processes;
-                  </span>
+                  <span>{t("s14li1")}</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-2 h-1.5 w-1.5 rounded-full bg-slate-400 shrink-0"></span>
-                  <span>Enforce Platform policies or contractual terms;</span>
+                  <span>{t("s14li2")}</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-2 h-1.5 w-1.5 rounded-full bg-slate-400 shrink-0"></span>
-                  <span>
-                    Protect the rights, property, or safety of MindCurePath, its
-                    Users, or the public.
-                  </span>
+                  <span>{t("s14li3")}</span>
                 </li>
               </ul>
               <p className="text-slate-600 leading-relaxed">
-                Information that does not personally identify Users, and which
-                is aggregated or anonymized, may be used or shared for
-                analytics, research, marketing insights, or statistical
-                purposes.
+                {t("s14p4")}
               </p>
             </section>
 
             {/* Section 15 */}
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl mb-6 pb-3 border-b-2 border-slate-200">
-                15. Account Deactivation & Data Retention
+                {t("s15Title")}
               </h2>
               <p className="text-slate-600 leading-relaxed mb-4">
-                Users may request account deletion by contacting{" "}
+                {t("s15p1Before")}
                 <a
                   href="mailto:support@mindcurepath.com"
                   className="text-teal-600 hover:text-teal-700 underline"
                 >
                   support@mindcurepath.com
                 </a>
-                .
+                {t("s15p1After")}
               </p>
               <p className="text-slate-600 leading-relaxed mb-4">
-                Data is retained only:
+                {t("s15p2")}
               </p>
               <ul className="space-y-3 text-slate-600 mb-4">
                 <li className="flex items-start gap-3">
                   <span className="mt-2 h-1.5 w-1.5 rounded-full bg-slate-400 shrink-0"></span>
-                  <span>As long as necessary for service delivery</span>
+                  <span>{t("s15li1")}</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-2 h-1.5 w-1.5 rounded-full bg-slate-400 shrink-0"></span>
-                  <span>As required under applicable law</span>
+                  <span>{t("s15li2")}</span>
                 </li>
               </ul>
               <p className="text-slate-600 leading-relaxed">
-                Session and scheduling data is ordinarily deleted or anonymized
-                within a reasonable period unless legally required.
+                {t("s15p3")}
               </p>
             </section>
 
             {/* Section 16 */}
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl mb-6 pb-3 border-b-2 border-slate-200">
-                16. Practitioners & End-Users
+                {t("s16Title")}
               </h2>
 
               <div className="space-y-6">
                 <div>
                   <h3 className="text-lg font-semibold text-slate-800 sm:text-xl mb-3">
-                    16.1 Practitioner Information
+                    {t("s16_1Title")}
                   </h3>
                   <p className="text-slate-600 leading-relaxed">
-                    Information provided by practitioners, including
-                    professional details, qualifications, experience, and
-                    service offerings, is collected and used solely for the
-                    purpose of creating and displaying practitioner profiles on
-                    the MindCurePath Platform. This information helps users
-                    understand available services, make informed choices, and
-                    enables smooth delivery of consultations, guidance, and
-                    related professional services. Practitioner data may also be
-                    used for verification, quality control, administrative
-                    communication, and platform operations, in accordance with
-                    applicable laws and this Privacy Policy.
+                    {t("s16_1p1")}
                   </p>
                 </div>
 
                 <div>
                   <h3 className="text-lg font-semibold text-slate-800 sm:text-xl mb-3">
-                    16.2 End-User Information
+                    {t("s16_2Title")}
                   </h3>
                   <p className="text-slate-600 leading-relaxed">
-                    Information collected from end-users is used to facilitate
-                    access to the Platform, manage appointments, deliver
-                    services, provide customer support, and enhance overall user
-                    experience. End-user data may also be analyzed internally to
-                    improve platform functionality, optimize service delivery,
-                    resolve technical issues, and ensure effective operation of
-                    MindCurePath's digital services.
+                    {t("s16_2p1")}
                   </p>
                 </div>
 
                 <div>
                   <h3 className="text-lg font-semibold text-slate-800 sm:text-xl mb-3">
-                    16.3 Anonymized and Aggregated Data
+                    {t("s16_3Title")}
                   </h3>
                   <p className="text-slate-600 leading-relaxed">
-                    MindCurePath may use anonymized or aggregated data derived
-                    from practitioner and end-user information for research,
-                    analytics, service improvement, performance evaluation, and
-                    business insights. Such data does not identify any
-                    individual user or practitioner and is used strictly for
-                    lawful purposes, including improving platform quality,
-                    understanding usage trends, and enhancing service
-                    effectiveness.
+                    {t("s16_3p1")}
                   </p>
                 </div>
 
                 <p className="text-slate-600 leading-relaxed">
-                  All practitioner and end-user data is handled in accordance
-                  with this Privacy Policy, applicable data protection laws, and
-                  reasonable security practices to ensure confidentiality,
-                  integrity, and responsible use of information.
+                  {t("s16p2")}
                 </p>
               </div>
             </section>
@@ -1037,109 +719,68 @@ export default function PrivacyPolicy() {
             {/* Section 17 */}
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl mb-6 pb-3 border-b-2 border-slate-200">
-                17. Children, Minors, and Legal Guardianship
+                {t("s17Title")}
               </h2>
               <p className="text-slate-600 leading-relaxed mb-4">
-                The MindCurePath Platform is generally accessible to users of
-                all age groups. However, use of the Platform and its services by
-                individuals below the age of eighteen (18) years requires the
-                discretion, supervision, and prior consent of a parent or legal
-                guardian.
+                {t("s17p1")}
               </p>
               <p className="text-slate-600 leading-relaxed mb-4">
-                By allowing a minor or any individual who is legally incapable
-                of providing valid consent (including persons of unsound mind)
-                to access or use the MindCurePath Platform, it shall be deemed
-                and represented that the parent or legal guardian has reviewed,
-                approved, and consented to such access and use, and that
-                appropriate parental or guardian supervision is being exercised
-                at all times.
+                {t("s17p2")}
               </p>
               <p className="text-slate-600 leading-relaxed mb-4">
-                MindCurePath shall not be responsible or liable for any
-                accident, injury, loss, harm, damage, or adverse consequence of
-                any nature, including loss of life, arising from or related to
-                the access or use of the Platform or its services by a minor or
-                legally incapacitated person, to the maximum extent permitted
-                under applicable law.
+                {t("s17p3")}
               </p>
               <p className="text-slate-600 leading-relaxed">
-                If MindCurePath becomes aware that personal information of a
-                minor has been collected without valid parental or guardian
-                consent, such information shall be deleted or anonymized within
-                a reasonable period, unless retention of such information is
-                required under applicable law, regulation, or legal obligation.
+                {t("s17p4")}
               </p>
             </section>
 
             {/* Section 18 */}
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl mb-6 pb-3 border-b-2 border-slate-200">
-                18. Changes to This Privacy Policy
+                {t("s18Title")}
               </h2>
               <p className="text-slate-600 leading-relaxed mb-4">
-                MindCurePath reserves the right to modify, update, or revise
-                this Privacy Policy at any time in order to reflect changes in
-                legal requirements, business practices, or the manner in which
-                personal information is processed.
+                {t("s18p1")}
               </p>
               <p className="text-slate-600 leading-relaxed mb-4">
-                If any material changes are made to this Privacy Policy,
-                particularly those affecting how Users' personal data is
-                collected, used, or shared, MindCurePath will provide reasonable
-                notice by displaying an update on the Platform or by
-                communicating the changes through email or other appropriate
-                means. Users are encouraged to review the updated Privacy Policy
-                before continuing to use the Platform.
+                {t("s18p2")}
               </p>
               <p className="text-slate-600 leading-relaxed mb-4">
-                If a User does not agree with any revised terms of this Privacy
-                Policy, the User may choose to discontinue use of the Platform
-                and may request account deactivation by contacting{" "}
+                {t("s18p3Before")}
                 <a
                   href="mailto:support@mindcurepath.com"
                   className="text-teal-600 hover:text-teal-700 underline"
                 >
                   support@mindcurepath.com
                 </a>
-                .
+                {t("s18p3After")}
               </p>
               <p className="text-slate-600 leading-relaxed">
-                Unless otherwise stated, the revised Privacy Policy shall apply
-                to all personal information held by MindCurePath at the time of
-                the update. Continued access to or use of the Platform after the
-                revised Privacy Policy has been published or notified shall be
-                deemed acceptance of the updated terms.
+                {t("s18p4")}
               </p>
             </section>
 
             {/* Section 19 */}
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl mb-6 pb-3 border-b-2 border-slate-200">
-                19. Grievance Redressal / Data Protection Contact
+                {t("s19Title")}
               </h2>
               <p className="text-slate-600 leading-relaxed mb-4">
                 <strong className="text-slate-800">
-                  Grievance Redressal Mechanism
+                  {t("s19p1Strong")}
                 </strong>
               </p>
               <p className="text-slate-600 leading-relaxed mb-4">
-                In compliance with the provisions of the Information Technology
-                Act, 2000 and the rules framed thereunder, MindCurePath has
-                established a structured grievance redressal mechanism to
-                address concerns or complaints raised by Users regarding the
-                Platform or its services.
+                {t("s19p2")}
               </p>
               <p className="text-slate-600 leading-relaxed mb-4">
-                If you have any complaints, concerns, or dissatisfaction related
-                to the services, data handling, or user experience on
-                MindCurePath, you may contact our designated Grievance Redressal
-                Contact at:
+                {t("s19p3")}
               </p>
               <div className="p-4 bg-teal-50 rounded-xl border border-teal-200 mb-4">
                 <p className="text-teal-800 flex items-center gap-2">
                   <Mail className="w-5 h-5" />
-                  <span className="font-medium">Email:</span>
+                  <span className="font-medium">{t("s19EmailLabel")}</span>
                   <a
                     href="mailto:support@mindcurepath.com"
                     className="text-teal-700 hover:text-teal-800 underline"
@@ -1149,149 +790,101 @@ export default function PrivacyPolicy() {
                 </p>
               </div>
               <p className="text-slate-600 leading-relaxed">
-                MindCurePath is committed to acknowledging and resolving user
-                grievances in a fair and timely manner. We aim to respond to all
-                valid complaints within a reasonable period, not exceeding
-                thirty (30) days from the date of receipt of the grievance.
+                {t("s19p4")}
               </p>
             </section>
 
             {/* Section 20 */}
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl mb-6 pb-3 border-b-2 border-slate-200">
-                20. Jurisdiction & Governing Law
+                {t("s20Title")}
               </h2>
               <p className="text-slate-600 leading-relaxed">
-                This Privacy Policy shall be governed by and interpreted in
-                accordance with the laws of India. All rights, obligations, and
-                disputes arising out of or in connection with this Policy,
-                including its interpretation, validity, or enforcement, shall be
-                subject to the exclusive jurisdiction of the competent courts
-                located at Shamli, Uttar Pradesh, India.
+                {t("s20p1")}
               </p>
             </section>
 
             {/* Section 21 */}
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl mb-6 pb-3 border-b-2 border-slate-200">
-                21. Medical Disclaimer
+                {t("s21Title")}
               </h2>
               <div className="p-4 bg-amber-50 rounded-xl border border-amber-200 mb-4">
                 <p className="text-amber-800 font-medium flex items-center gap-2">
                   <AlertTriangle className="w-5 h-5" />
-                  Important Medical Disclaimer
+                  {t("s21DisclaimerLabel")}
                 </p>
               </div>
               <p className="text-slate-600 leading-relaxed mb-4">
-                This Privacy Policy is intended solely to explain how personal
-                data is collected, used, processed, and protected on the
-                MindCurePath Platform. Nothing contained in this Privacy Policy
-                shall be construed as medical advice, diagnosis, treatment,
-                emergency care, or healthcare guidance of any kind.
+                {t("s21p1")}
               </p>
               <p className="text-slate-600 leading-relaxed mb-4">
-                MindCurePath does not provide medical, clinical, or therapeutic
-                services and does not practice medicine, psychology, or
-                healthcare. The platform functions solely as a
-                technology-enabled interface to facilitate access to independent
-                professionals. Any interaction, consultation, advice, or
-                services provided by such professionals are rendered
-                independently and are not supervised, controlled, or guaranteed
-                by MindCurePath.
+                {t("s21p2")}
               </p>
               <p className="text-slate-600 leading-relaxed mb-4">
-                To the maximum extent permitted under applicable law,
-                MindCurePath, its directors, officers, employees, agents, and
-                affiliates shall not be responsible or liable for any physical
-                injury, emotional distress, disability, loss, harm, or death
-                that may arise, directly or indirectly, from the use of the
-                Platform or from reliance on any services, advice, or
-                interactions with independent professionals.
+                {t("s21p3")}
               </p>
               <p className="text-slate-600 leading-relaxed">
-                Further, MindCurePath shall not be liable for any costs,
-                damages, losses, expenses, claims, or consequences, including
-                any medical expenses or incidental or consequential losses,
-                arising from unforeseen circumstances, professional
-                interactions, or user decisions. Any consideration, fees, or
-                payments made on the Platform shall be governed strictly by the
-                applicable rescheduling policies, where applicable and as
-                permitted under law.
+                {t("s21p4")}
               </p>
             </section>
 
             {/* Section 22 */}
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl mb-6 pb-3 border-b-2 border-slate-200">
-                22. Emergency and Crisis Disclaimer
+                {t("s22Title")}
               </h2>
               <div className="p-4 bg-red-50 rounded-xl border border-red-200 mb-4">
                 <p className="text-red-800 font-medium flex items-center gap-2">
                   <AlertCircle className="w-5 h-5" />
-                  Emergency Notice
+                  {t("s22NoticeLabel")}
                 </p>
               </div>
               <p className="text-slate-600 leading-relaxed mb-4">
-                MindCurePath is not designed to provide emergency services or
-                immediate medical, psychological, or crisis intervention. The
-                Platform should not be used in situations requiring urgent
-                medical attention, mental health emergencies, or
-                life-threatening circumstances.
+                {t("s22p1")}
               </p>
               <p className="text-slate-600 leading-relaxed mb-4">
-                If you are experiencing a medical emergency, severe
-                psychological distress, thoughts of self-harm, harm to others,
-                or any situation that requires immediate assistance, you should
-                immediately contact local emergency services, a qualified
-                medical professional, or a recognized emergency helpline.
+                {t("s22p2")}
               </p>
               <div className="p-4 bg-slate-100 rounded-xl border border-slate-200 mb-4">
                 <p className="text-slate-800 font-medium mb-2">
-                  For immediate assistance in India:
+                  {t("s22IndiaLabel")}
                 </p>
                 <p className="text-slate-700 text-lg font-semibold">
-                  National Mental Health Helpline: 1800-599-0019
+                  {t("s22Helpline")}
                 </p>
               </div>
               <p className="text-slate-600 leading-relaxed mb-4">
-                You should not rely on the MindCurePath Platform, its content,
-                or any professionals accessed through the Platform for emergency
-                or crisis support.
+                {t("s22p3")}
               </p>
               <p className="text-slate-600 leading-relaxed">
-                MindCurePath shall not be responsible or liable for any delay,
-                inability to access services, or outcomes arising from reliance
-                on the Platform or its professionals in emergency or crisis
-                situations. Use of the Platform does not replace or substitute
-                professional emergency care, diagnosis, or treatment.
+                {t("s22p4")}
               </p>
             </section>
 
             {/* Section 23 */}
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl mb-6 pb-3 border-b-2 border-slate-200">
-                23. Contact Information
+                {t("s23Title")}
               </h2>
               <p className="text-slate-600 leading-relaxed mb-6">
-                For any queries, support requests, or concerns related to this
-                Privacy Policy or the MindCurePath Platform, you may contact us
-                using the details provided below:
+                {t("s23p1")}
               </p>
 
               <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200">
                 <h3 className="text-lg font-semibold text-slate-800 mb-4">
-                  Registered Office Address:
+                  {t("s23AddressLabel")}
                 </h3>
                 <div className="space-y-3 text-slate-700">
                   <p className="font-medium text-slate-900">
-                    MindCurePath Consultancy Private Limited
+                    {t("s23CompanyName")}
                   </p>
-                  <p>Thanabhawan, Shamli,</p>
-                  <p>Uttar Pradesh, India – 247777</p>
+                  <p>{t("s23Address1")}</p>
+                  <p>{t("s23Address2")}</p>
                   <div className="pt-3 mt-3 border-t border-slate-200">
                     <p className="flex items-center gap-2">
                       <Phone className="w-4 h-4" />
-                      <span className="font-medium">Phone:</span>
+                      <span className="font-medium">{t("s23PhoneLabel")}</span>
                       <a
                         href="tel:+918447537710"
                         className="text-teal-600 hover:text-teal-700"
@@ -1301,7 +894,7 @@ export default function PrivacyPolicy() {
                     </p>
                     <p className="flex items-center gap-2 mt-2">
                       <Mail className="w-4 h-4" />
-                      <span className="font-medium">Email:</span>
+                      <span className="font-medium">{t("s23EmailLabel")}</span>
                       <a
                         href="mailto:support@mindcurepath.com"
                         className="text-teal-600 hover:text-teal-700"
@@ -1314,8 +907,7 @@ export default function PrivacyPolicy() {
               </div>
 
               <p className="text-slate-600 leading-relaxed mt-6">
-                MindCurePath endeavors to respond to all legitimate
-                communications within a reasonable timeframe.
+                {t("s23p2")}
               </p>
             </section>
           </div>
@@ -1323,6 +915,6 @@ export default function PrivacyPolicy() {
       </main>
 
       <Footer />
-    </>
+    </div>
   );
 }

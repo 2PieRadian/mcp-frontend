@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { RefreshCw } from "lucide-react";
 
 type EarningsTabProps = {
@@ -13,6 +14,7 @@ export default function EarningsTab({
   error = null,
   onRefetch,
 }: EarningsTabProps) {
+  const { t } = useTranslation("common");
   return (
     <div className="relative bg-linear-to-br from-green-500 via-green-600 to-emerald-600 rounded-[16px] sm:rounded-[20px] p-[32px] sm:p-[40px] shadow-lg overflow-hidden">
       {/* Decorative Background Elements */}
@@ -25,16 +27,16 @@ export default function EarningsTab({
         <div className="flex-1 min-w-0">
           <div className="mb-[24px]">
             <h2 className="text-white text-[20px] sm:text-[24px] font-semibold">
-              Earnings
+              {t("tabEarnings")}
             </h2>
             <p className="text-white/70 text-[13px] sm:text-[14px] mt-[2px]">
-              Your total earnings from all sessions
+              {t("earningsSubtitle")}
             </p>
           </div>
 
           <div className="mt-[20px] pt-[20px] border-t border-white/20">
             <p className="text-white/70 text-[12px] sm:text-[13px]">
-              All time earnings from completed sessions
+              {t("earningsAllTimeDescription")}
             </p>
           </div>
           {error && (
@@ -52,12 +54,12 @@ export default function EarningsTab({
               className="flex items-center gap-2 mb-4 px-3 py-2 rounded-lg bg-white/20 text-white text-sm font-medium hover:bg-white/30 disabled:opacity-60 transition-colors"
             >
               <RefreshCw className={`w-4 h-4 ${isLoading ? "animate-spin" : ""}`} />
-              {isLoading ? "Refreshing…" : "Refetch"}
+              {isLoading ? t("dashboardRefreshing") : t("dashboardRefetch")}
             </button>
           )}
           <div className="flex items-center gap-[12px] mb-[16px]">
             <p className="text-white/90 text-[14px] sm:text-[16px] font-medium">
-              Total Earnings
+              {t("dashboardTotalEarnings")}
             </p>
           </div>
 

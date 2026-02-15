@@ -3,10 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context/AuthContext";
 import { BACKEND_URL, getAvatarUrl } from "../lib/api";
-import useScrollToTop from "../hooks/useScrollToTop";
-
 export default function OAuthCallback() {
-  useScrollToTop();
   const { t } = useTranslation("common");
 
   const [searchParams] = useSearchParams();

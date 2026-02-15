@@ -1,11 +1,9 @@
 import { Navigate } from "react-router-dom";
 import LoginForm from "../components/LoginForm";
 import AuthNavbar from "../components/AuthNavbar";
-import useScrollToTop from "../hooks/useScrollToTop";
 import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
-  useScrollToTop();
   const { user, isLoading } = useAuth();
 
   if (!isLoading && user) {

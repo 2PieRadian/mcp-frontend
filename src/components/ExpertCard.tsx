@@ -185,7 +185,7 @@ export default function ExpertCard({
           </div>
 
           <div className="Languages-Container text-[#516A6E] mt-[6px] text-[13px]">
-            <span className="text-[#8F9EA0]">Speaks: </span>{languages}
+            <span className="text-[#8F9EA0]">{t("speaks")}</span>{languages}
           </div>
 
           <div className="Price-Container mt-[10px]">
@@ -199,11 +199,11 @@ export default function ExpertCard({
                     ₹ {price}
                   </p>
                   <p className="text-[20px] font-bold text-green-600">₹0</p>
-                  <p className="text-[13px] text-green-600">for first time</p>
+                  <p className="text-[13px] text-green-600">{t("forFirstTime")}</p>
                   <p className="text-[13px] text-gray-500">· 30 min</p>
                 </div>
                 <p className="text-[12px] text-gray-400">
-                  Only paid appointments are 1 hour long
+                  {t("onlyPaidAppointmentsOneHour")}
                 </p>
               </div>
             ) : (
@@ -258,7 +258,7 @@ export default function ExpertCard({
           </div>
 
           <div className="Languages-Container text-[#516A6E] mt-[8px] text-[14px]">
-            <span className="text-[#8F9EA0]">Speaks: </span>{languages}
+            <span className="text-[#8F9EA0]">{t("speaks")}</span>{languages}
           </div>
 
           <div className="Next-Available-Slot mt-[8px] text-[14px] flex items-center gap-2 flex-wrap">

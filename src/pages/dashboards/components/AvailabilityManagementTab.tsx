@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Calendar, Check } from "lucide-react";
 import type { WeeklyAvailability } from "../types";
 
@@ -39,13 +40,14 @@ export default function AvailabilityManagementTab({
   onSave,
   onToggleSlot,
 }: AvailabilityManagementTabProps) {
+  const { t } = useTranslation("common");
   return (
     <section className="bg-[hsl(0,0%,97%)] shadow-m rounded-[16px] sm:rounded-[20px] p-[16px] sm:p-[24px]">
       <div className="flex items-center justify-between gap-[10px] mb-[16px]">
         <div className="flex items-center gap-[10px]">
           <Calendar className="text-primary w-6 h-6" />
           <h2 className="text-[20px] sm:text-[24px] font-semibold text-logo-heading">
-            Availability Management
+            {t("dashboardAvailabilityManagement")}
           </h2>
         </div>
         <div className="flex items-center gap-2">
@@ -56,7 +58,7 @@ export default function AvailabilityManagementTab({
               disabled={isLoading}
               className="px-[14px] py-[8px] rounded-full text-[13px] sm:text-[14px] font-medium bg-primary text-white shadow-sm hover:bg-primary/90 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer transition-all duration-200"
             >
-              Edit Availability
+              {t("dashboardEditAvailability")}
             </button>
           ) : (
             <button
@@ -65,14 +67,14 @@ export default function AvailabilityManagementTab({
               disabled={isSaving || isLoading}
               className="px-[14px] py-[8px] rounded-full text-[13px] sm:text-[14px] font-medium bg-primary text-white shadow-sm hover:bg-primary/90 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer transition-all duration-200"
             >
-              {isSaving ? "Saving..." : "Save Changes"}
+              {isSaving ? t("dashboardSavingChanges") : t("dashboardSaveChanges")}
             </button>
           )}
         </div>
       </div>
 
       <p className="text-[13px] sm:text-[14px] text-light-text mb-[20px]">
-        Select your available 1-hour time slots for each day of the week
+        {t("dashboardSelectSlotsDescription")}
       </p>
 
       {error && (

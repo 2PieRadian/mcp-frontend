@@ -8,7 +8,6 @@ import {
   BookOpen,
   ArrowRight,
 } from "lucide-react";
-import useScrollToTop from "../hooks/useScrollToTop";
 
 const assessmentData: Record<
   string,
@@ -453,7 +452,6 @@ const assessmentData: Record<
 };
 
 export default function AssessmentResult() {
-  useScrollToTop();
   const location = useLocation();
   const { assessmentType } = useParams<{ assessmentType: string }>();
   const params = new URLSearchParams(window.location.search);

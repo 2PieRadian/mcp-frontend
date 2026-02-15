@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback, lazy, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { useAuth } from "../../context/AuthContext";
 import { useAvailability } from "../../context/AvailabilityContext";
 import ResponsiveNavbar from "../../components/ResponsiveNavbar";
 import type { UpcomingSession, WeeklyAvailability, TabType } from "./types";
-import useScrollToTop from "../../hooks/useScrollToTop";
 import { BACKEND_URL, getExpertUpcomingSessions, getExpertEarnings } from "../../lib/api";
 
 const DashboardTabs = lazy(() => import("./components/DashboardTabs"));
@@ -18,7 +18,7 @@ const AvailabilityManagementTab = lazy(
 const EarningsTab = lazy(() => import("./components/EarningsTab"));
 
 export default function ExpertsDashboard() {
-  useScrollToTop();
+  const { t } = useTranslation("common");
   const { user } = useAuth();
   const {
     availability,
@@ -81,12 +81,12 @@ export default function ExpertsDashboard() {
       });
       setUpcomingSessions(mapped);
     } catch (e) {
-      setUpcomingSessionsError(e instanceof Error ? e.message : "Failed to load sessions");
+      setUpcomingSessionsError(t("dashboardFailedToLoadSessions"));
       setUpcomingSessions([]);
     } finally {
       setUpcomingSessionsLoading(false);
     }
-  }, [user?.role]);
+  }, [user?.role, t]);
 
   const fetchEarnings = useCallback(async () => {
     if (user?.role !== "EXPERT") return;
@@ -96,12 +96,12 @@ export default function ExpertsDashboard() {
       const res = await getExpertEarnings();
       setExpertEarnings(res.earnings);
     } catch (e) {
-      setEarningsError(e instanceof Error ? e.message : "Failed to load earnings");
+      setEarningsError(t("dashboardFailedToLoadEarnings"));
       setExpertEarnings(undefined);
     } finally {
       setEarningsLoading(false);
     }
-  }, [user?.role]);
+  }, [user?.role, t]);
 
   useEffect(() => {
     fetchUpcomingSessions();
@@ -212,7 +212,7 @@ export default function ExpertsDashboard() {
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(
-          errorData.message || "Failed to update weekly availability"
+          errorData.message || t("dashboardFailedToUpdateAvailability")
         );
       }
 
@@ -236,14 +236,14 @@ export default function ExpertsDashboard() {
       <div className="max-w-[1350px] mx-auto py-[30px] sm:py-[40px]">
         <div className="mb-[30px]">
           <h1 className="text-[clamp(24px,5vw,32px)] font-bold text-logo-heading">
-            Expert Dashboard
+            {t("expertDashboardTitle")}
           </h1>
           <p className="text-[14px] sm:text-[16px] text-light-text mt-[8px]">
-            Manage your sessions, availability, and earnings
+            {t("expertDashboardSubtitle")}
           </p>
         </div>
 
-        <Suspense fallback={<div className="text-center py-8">Loading...</div>}>
+        <Suspense fallback={<div className="text-center py-8">{t("dashboardLoading")}</div>}>
           <DashboardTabs activeTab={activeTab} onTabChange={setActiveTab} />
         </Suspense>
 

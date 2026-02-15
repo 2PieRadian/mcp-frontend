@@ -1,13 +1,65 @@
-import { BadgeCheck, TrendingUp, BookOpenText } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { BadgeCheck, TrendingUp, BookOpenText, HeartPulse } from "lucide-react";
 import { useScreen } from "../context/ScreenContext";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import ChooseYourPath from "./ChooseYourPath";
 
+function smoothScrollToHash(e: React.MouseEvent<HTMLAnchorElement>, hash: string) {
+  e.preventDefault();
+  const el = document.getElementById(hash.replace("#", ""));
+  if (el) {
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  } else {
+    window.location.hash = hash;
+  }
+}
+
 export default function HeroSection() {
   const { t } = useTranslation("common");
   const { screenWidth } = useScreen();
   const showCardsBelow = screenWidth < 1024;
+  const [hoveredCardIndex, setHoveredCardIndex] = useState<number | null>(null);
+  const [autoHoverIndex, setAutoHoverIndex] = useState<number | null>(null);
+  const autoHoverIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const descriptionVisibleForCard = (index: number) =>
+    hoveredCardIndex === index || (hoveredCardIndex === null && autoHoverIndex === index);
+
+  const stopAutoHover = () => {
+    if (autoHoverIntervalRef.current) {
+      clearInterval(autoHoverIntervalRef.current);
+      autoHoverIntervalRef.current = null;
+    }
+    setAutoHoverIndex(null);
+  };
+
+  const handleChooseYourPathClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    smoothScrollToHash(e, "#choose-your-path");
+    if (!showCardsBelow) {
+      stopAutoHover();
+      setHoveredCardIndex(null);
+      setAutoHoverIndex(0);
+      autoHoverIntervalRef.current = setInterval(() => {
+        setAutoHoverIndex((prev) => (prev === null ? 0 : (prev + 1) % 3));
+      }, 2000);
+    }
+  };
+
+  const handleCardMouseEnter = (index: number) => {
+    stopAutoHover();
+    setHoveredCardIndex(index);
+  };
+
+  const handleCardMouseLeave = () => {
+    setHoveredCardIndex(null);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (autoHoverIntervalRef.current) clearInterval(autoHoverIntervalRef.current);
+    };
+  }, []);
 
   return (
     <div className="relative w-full bg-white">
@@ -16,18 +68,10 @@ export default function HeroSection() {
         <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-[40px] lg:gap-[80px]">
           {/* Left Content */}
           <div className="flex-1 text-center lg:text-left space-y-6">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-1.5 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-[#ecf4f6] rounded-full border border-primary/20 animate-badge-pulse">
-              <BadgeCheck className="w-3 h-3 md:w-4 md:h-4 text-primary" />
-              <span className="text-xs md:text-sm font-medium text-primary">
-                {t("expertVerifiedAssessmentsBadge")}
-              </span>
-            </div>
-
             {/* Main Heading */}
-            <h1 className="text-[clamp(45px,5vw,55px)] font-bold leading-[1.1] text-primary tracking-tight">
+            <h1 className="text-[clamp(45px,5vw,55px)] font-bold leading-[1.1] text-[hsl(187,55%,28%)] tracking-tight">
               {t("discoverYourPath")}
-              <span className="block mt-2 text-[hsl(190,40%,29%)]">
+              <span className="block mt-2 text-[hsl(190,35%,36%)]">
                 {t("betterLiving")}
               </span>
             </h1>
@@ -60,13 +104,15 @@ export default function HeroSection() {
             <div className="flex flex-col sm:flex-row gap-[10px] justify-center lg:justify-start pt-[30px]">
               <a
                 href="#choose-your-path"
-                className="group inline-flex items-center whitespace-nowrap justify-center gap-2 px-[25px] py-[12px] bg-primary text-white rounded-[16px] font-medium text-[16px] hover:bg-[hsl(187,73%,18%)] transition-all duration-300 hover:scale-[1.02] shadow-[0_2px_8px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)]"
+                onClick={handleChooseYourPathClick}
+                className="group inline-flex items-center whitespace-nowrap justify-center gap-2 px-[25px] py-[12px] bg-[hsl(187,55%,28%)] text-white rounded-[16px] font-medium text-[16px] hover:bg-[hsl(187,55%,22%)] transition-all duration-300 hover:scale-[1.02] shadow-[0_2px_8px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)]"
               >
-                Choose Your Path
+                {t("findYourExpert")}
               </a>
 
               <a
                 href="#expert-verified-assessments"
+                onClick={(e) => smoothScrollToHash(e, "#expert-verified-assessments")}
                 className="inline-flex items-center whitespace-nowrap justify-center px-[25px] py-[12px] bg-transparent text-primary rounded-[16px] font-medium text-[16px] border border-gray-300 hover:bg-[#ecf4f6] transition-all duration-300 hover:scale-[1.02] shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.12)]"
               >
                 {t("startFreeAssessment")}
@@ -76,62 +122,101 @@ export default function HeroSection() {
 
           {/* Right Content - Visual Elements */}
           {!showCardsBelow && (
-            <div className="flex-1 relative w-full max-w-[500px] lg:max-w-[600px]">
-              {/* Floating Cards Preview */}
-              <div className="relative h-[400px] lg:h-[500px]">
-                {/* Card 1 - Wellness */}
-                <Link
-                  to="/wellness-experts"
-                  className="group absolute top-0 right-0 w-[200px] lg:w-[240px] bg-white/95 backdrop-blur-md rounded-[20px] p-6 shadow-lg animate-float-1 border border-gray-100 hover:border-primary/30 hover:scale-[1.05] hover:shadow-xl transition-all duration-300 cursor-pointer block text-center overflow-hidden"
+            <div className="flex-1 relative w-full max-w-[440px] lg:max-w-[480px] min-h-[420px] lg:min-h-[460px]">
+              {/* Floating cards – row 1: Wellness + Education; row 2: Finance centered */}
+              <div className="relative w-full h-full" aria-hidden>
+                {/* Card 1 – Wellness (wrapper has float; Link has scale/rotate transition) */}
+                <div
+                  className={`group hero-card-float-1 absolute left-0 lg:left-0 top-0 z-10 w-[200px] h-[200px] lg:w-[220px] lg:h-[220px] group-hover:z-40 ${descriptionVisibleForCard(0) ? "hero-card-wrapper-active" : ""}`}
+                  onMouseEnter={() => handleCardMouseEnter(0)}
+                  onMouseLeave={handleCardMouseLeave}
                 >
-                  <div className="w-12 h-12 bg-linear-to-br from-[#0ea5e9] to-[#06b6d4] rounded-[12px] flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
-                    <img
-                      src="/images/health/yoga.png"
-                      alt="Wellness"
-                      className="w-8 h-8 object-contain"
-                      loading="lazy"
-                      decoding="async"
+                  <Link
+                    to="/wellness-experts"
+                    className="hero-card-link group w-full h-full rounded-full px-5 pt-5 pb-7 lg:px-6 lg:pt-6 lg:pb-9 flex flex-col items-center justify-center text-center shadow-[0_10px_30px_rgba(0,0,0,0.08)] hover:shadow-[0_16px_48px_rgba(0,0,0,0.12)] hover:z-40 cursor-pointer overflow-hidden bg-white/55 backdrop-blur-md border-2 border-[#0ea5e9]/35"
+                  >
+                    <div className="pointer-events-none absolute inset-0 rounded-full bg-linear-to-br from-[#0ea5e9]/28 via-[#06b6d4]/18 to-[#06b6d4]/12" />
+                    <div
+                      className={`hero-card-fill pointer-events-none absolute inset-0 rounded-full bg-[#0ea5e9] origin-center transition-transform duration-500 ease-in-out group-hover:scale-150 ${descriptionVisibleForCard(0) ? "scale-150" : "scale-0"}`}
                     />
-                  </div>
-                  <h3 className="font-bold text-primary text-lg mb-2 group-hover:text-[#0ea5e9] transition-colors duration-300">
-                    {t("wellness")}
-                  </h3>
-                  <p className="text-[#4F5B64] text-sm leading-relaxed mb-0">
-                    {t("assessMentalHealth")}
-                  </p>
-                </Link>
+                    <div className="hero-card-content relative z-10 flex flex-col items-center justify-center text-center transition-colors duration-500 ease-in-out group-hover:text-white">
+                      <HeartPulse className="w-10 h-10 lg:w-12 lg:h-12 text-[#083a57] group-hover:text-white mb-3 lg:mb-4 shrink-0 transition-colors duration-500 ease-in-out" />
+                      <h3 className="font-bold text-[#083a57] group-hover:text-white text-base lg:text-lg mb-1 leading-tight transition-colors duration-500 ease-in-out">
+                        {t("wellness")}
+                      </h3>
+                      <div
+                        className={`overflow-hidden transition-all duration-500 ease-in-out ${descriptionVisibleForCard(0) ? "max-h-20 opacity-100" : "max-h-0 opacity-0"
+                          }`}
+                      >
+                        <p className="text-[#083a57]/90 group-hover:text-white/95 text-xs lg:text-sm leading-snug transition-colors duration-500 ease-in-out">
+                          {t("assessMentalHealth")}
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+                </div>
 
-                {/* Card 2 - Education */}
-                <Link
-                  to="/education-experts"
-                  className="group absolute top-[120px] left-0 w-[200px] lg:w-[240px] bg-white/95 backdrop-blur-md rounded-[20px] p-6 shadow-lg animate-float-2 border border-gray-100 hover:border-primary/30 hover:scale-[1.05] hover:shadow-xl transition-all duration-300 cursor-pointer block text-center overflow-hidden"
+                {/* Card 2 – Education */}
+                <div
+                  className={`group hero-card-float-2 absolute left-[220px] lg:left-[240px] top-0 z-20 w-[200px] h-[200px] lg:w-[220px] lg:h-[220px] group-hover:z-40 ${descriptionVisibleForCard(1) ? "hero-card-wrapper-active" : ""}`}
+                  onMouseEnter={() => handleCardMouseEnter(1)}
+                  onMouseLeave={handleCardMouseLeave}
                 >
-                  <div className="w-12 h-12 bg-linear-to-br from-[#10b981] to-[#059669] rounded-[12px] flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
-                    <BookOpenText className="w-7 h-7 text-white" />
-                  </div>
-                  <h3 className="font-bold text-primary text-lg mb-2 group-hover:text-[#10b981] transition-colors duration-300">
-                    {t("education")}
-                  </h3>
-                  <p className="text-[#4F5B64] text-sm leading-relaxed mb-0">
-                    {t("planCareerEducational")}
-                  </p>
-                </Link>
+                  <Link
+                    to="/education-experts"
+                    className="hero-card-link group w-full h-full rounded-full px-5 pt-5 pb-7 lg:px-6 lg:pt-6 lg:pb-9 flex flex-col items-center justify-center text-center shadow-[0_10px_30px_rgba(0,0,0,0.08)] hover:shadow-[0_16px_48px_rgba(0,0,0,0.12)] hover:z-40 cursor-pointer overflow-hidden bg-white/55 backdrop-blur-md border-2 border-[#10b981]/35"
+                  >
+                    <div className="pointer-events-none absolute inset-0 rounded-full bg-linear-to-br from-[#10b981]/28 via-[#059669]/18 to-[#059669]/12" />
+                    <div
+                      className={`hero-card-fill pointer-events-none absolute inset-0 rounded-full bg-[#10b981] origin-center transition-transform duration-500 ease-in-out group-hover:scale-150 ${descriptionVisibleForCard(1) ? "scale-150" : "scale-0"}`}
+                    />
+                    <div className="hero-card-content relative z-10 flex flex-col items-center justify-center text-center transition-colors duration-500 ease-in-out group-hover:text-white">
+                      <BookOpenText className="w-10 h-10 lg:w-12 lg:h-12 text-[#064a36] group-hover:text-white mb-3 lg:mb-4 shrink-0 transition-colors duration-500 ease-in-out" />
+                      <h3 className="font-bold text-[#064a36] group-hover:text-white text-base lg:text-lg mb-1 leading-tight transition-colors duration-500 ease-in-out">
+                        {t("education")}
+                      </h3>
+                      <div
+                        className={`overflow-hidden transition-all duration-500 ease-in-out ${descriptionVisibleForCard(1) ? "max-h-20 opacity-100" : "max-h-0 opacity-0"
+                          }`}
+                      >
+                        <p className="text-[#064a36]/90 group-hover:text-white/95 text-xs lg:text-sm leading-snug transition-colors duration-500 ease-in-out">
+                          {t("planCareerEducational")}
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+                </div>
 
-                {/* Card 3 - Finance */}
-                <Link
-                  to="/finance-experts"
-                  className="group absolute top-[240px] right-[40px] w-[200px] lg:w-[240px] bg-white/95 backdrop-blur-md rounded-[20px] p-6 shadow-lg animate-float-3 border border-gray-100 hover:border-primary/30 hover:scale-[1.05] hover:shadow-xl transition-all duration-300 cursor-pointer block text-center overflow-hidden"
+                {/* Card 3 – Finance (below, centered between card 1 and 2) */}
+                <div
+                  className={`group hero-card-float-3 absolute left-[110px] lg:left-[120px] top-[200px] lg:top-[210px] z-30 w-[200px] h-[200px] lg:w-[220px] lg:h-[220px] group-hover:z-40 ${descriptionVisibleForCard(2) ? "hero-card-wrapper-active" : ""}`}
+                  onMouseEnter={() => handleCardMouseEnter(2)}
+                  onMouseLeave={handleCardMouseLeave}
                 >
-                  <div className="w-12 h-12 bg-linear-to-br from-[#f59e0b] to-[#d97706] rounded-[12px] flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
-                    <TrendingUp className="w-7 h-7 text-white" />
-                  </div>
-                  <h3 className="font-bold text-primary text-lg mb-2 group-hover:text-[#f59e0b] transition-colors duration-300">
-                    {t("finance")}
-                  </h3>
-                  <p className="text-[#4F5B64] text-sm leading-relaxed mb-0">
-                    {t("buildFinancialFoundation")}
-                  </p>
-                </Link>
+                  <Link
+                    to="/finance-experts"
+                    className="hero-card-link group w-full h-full rounded-full px-5 pt-5 pb-7 lg:px-6 lg:pt-6 lg:pb-9 flex flex-col items-center justify-center text-center shadow-[0_10px_30px_rgba(0,0,0,0.08)] hover:shadow-[0_16px_48px_rgba(0,0,0,0.12)] hover:z-40 cursor-pointer overflow-hidden bg-white/55 backdrop-blur-md border-2 border-[#f59e0b]/40"
+                  >
+                    <div className="pointer-events-none absolute inset-0 rounded-full bg-linear-to-br from-[#f59e0b]/28 via-[#d97706]/18 to-[#d97706]/12" />
+                    <div
+                      className={`hero-card-fill pointer-events-none absolute inset-0 rounded-full bg-[#f59e0b] origin-center transition-transform duration-500 ease-in-out group-hover:scale-150 ${descriptionVisibleForCard(2) ? "scale-150" : "scale-0"}`}
+                    />
+                    <div className="hero-card-content relative z-10 flex flex-col items-center justify-center text-center transition-colors duration-500 ease-in-out group-hover:text-white">
+                      <TrendingUp className="w-10 h-10 lg:w-12 lg:h-12 text-[#6a3e06] group-hover:text-white mb-3 lg:mb-4 shrink-0 transition-colors duration-500 ease-in-out" />
+                      <h3 className="font-bold text-[#6a3e06] group-hover:text-white text-base lg:text-lg mb-1 leading-tight transition-colors duration-500 ease-in-out">
+                        {t("finance")}
+                      </h3>
+                      <div
+                        className={`overflow-hidden transition-all duration-500 ease-in-out ${descriptionVisibleForCard(2) ? "max-h-20 opacity-100" : "max-h-0 opacity-0"
+                          }`}
+                      >
+                        <p className="text-[#6a3e06]/90 group-hover:text-white/95 text-xs lg:text-sm leading-snug transition-colors duration-500 ease-in-out">
+                          {t("buildFinancialFoundation")}
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+                </div>
               </div>
             </div>
           )}

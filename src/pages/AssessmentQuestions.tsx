@@ -16,7 +16,6 @@ import {
   FINANCIAL_PLANNING_QUESTIONS,
 } from "../lib/constants/assessments";
 import type { QuizOption } from "../lib/interfaces";
-import useScrollToTop from "../hooks/useScrollToTop";
 
 function OptionItem({
   option,
@@ -44,7 +43,6 @@ function OptionItem({
 }
 
 export default function AssessmentQuestions() {
-  useScrollToTop();
   const { t } = useTranslation("common");
   const navigate = useNavigate();
   const location = useLocation();
@@ -145,7 +143,7 @@ export default function AssessmentQuestions() {
   };
 
   return (
-    <div className="self-assessment-questions-page max-w-[1350px] mx-auto px-[25px]">
+    <div className="self-assessment-questions-page max-w-[1350px] mx-auto px-[25px] pb-[70px] sm:pb-[90px]">
       <ResponsiveNavbar />
       <button
         onClick={handleBackClick}

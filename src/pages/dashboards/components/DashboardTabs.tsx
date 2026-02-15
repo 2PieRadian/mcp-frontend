@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import type { TabType } from "../types";
 
 type DashboardTabsProps = {
@@ -9,6 +10,7 @@ export default function DashboardTabs({
   activeTab,
   onTabChange,
 }: DashboardTabsProps) {
+  const { t } = useTranslation("common");
   return (
     <div className="flex justify-center mb-[30px]">
       <div className="bg-white rounded-full p-[6px] shadow-m inline-flex gap-[4px]">
@@ -20,7 +22,7 @@ export default function DashboardTabs({
               : "text-light-text hover:bg-primary/10"
           }`}
         >
-          Upcoming Sessions
+          {t("tabUpcomingSessions")}
         </button>
         <button
           onClick={() => onTabChange("availability")}
@@ -30,7 +32,7 @@ export default function DashboardTabs({
               : "text-light-text hover:bg-primary/10"
           }`}
         >
-          Availability Management
+          {t("tabAvailabilityManagement")}
         </button>
         <button
           onClick={() => onTabChange("earnings")}
@@ -40,7 +42,7 @@ export default function DashboardTabs({
               : "text-light-text hover:bg-primary/10"
           }`}
         >
-          Earnings
+          {t("tabEarnings")}
         </button>
       </div>
     </div>

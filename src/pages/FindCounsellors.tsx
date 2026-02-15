@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
-import useScrollToTop from "../hooks/useScrollToTop";
 import { useExperts } from "../context/ExpertsContext";
 import ExpertCard from "../components/ExpertCard";
 import ExpertCardSkeleton from "../components/ExpertCardSkeleton";
@@ -33,7 +32,6 @@ const AVAILABLE_LANGUAGES = [
 ];
 
 export default function FindCounsellors() {
-  useScrollToTop();
   const { t } = useTranslation(["common", "navigation", "experts"]);
   const { fetchExpertsBySpecialization, getCachedExperts, isLoading, error } =
     useExperts();
