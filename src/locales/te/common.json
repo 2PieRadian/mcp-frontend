@@ -239,5 +239,10 @@
   "myAppointmentsSubtitle": "బుక్ చేసిన సెషన్లను వీక్షించండి మరియు నిర్వహించండి. ఇటీవలి మొదటి క్రమంలో.",
   "noUpcomingSessions": "రాబోయే సెషన్లు లేవు",
   "earningsSubtitle": "అన్ని సెషన్ల నుండి మీ మొత్తం సంపాదన",
-  "earningsAllTimeDescription": "పూర్తయిన సెషన్ల నుండి అన్ని కాలాల సంపాదన"
+  "earningsAllTimeDescription": "పూర్తయిన సెషన్ల నుండి అన్ని కాలాల సంపాదన",
+  "chooseExpertCategoryBadge": "నిపుణుల మార్గదర్శకత్వం మీ కోసం వేచి ఉంది",
+  "chooseExpertCategoryTitle": "మీకు ఏ రంగంలో మార్గదర్శకత్వం కావాలి?",
+  "chooseExpertCategorySubtitle": "మీ దృష్టి కేంద్రాన్ని ఎంచుకోండి మరియు మీ లక్ష్యాలను సాధించడంలో సహాయపడగల ధృవీకరించబడిన నిపుణులతో కనెక్ట్ అవ్వండి.",
+  "chooseExpertCategoryFooter": "పరివర్తన వైపు మీ ప్రయాణం ఇక్కడ ప్రారంభమవుతుంది",
+  "exploreExperts": "నిపుణులను అన్వేషించండి"
 }

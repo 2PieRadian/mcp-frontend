@@ -239,5 +239,10 @@
   "myAppointmentsSubtitle": "বুক করা সেশন দেখুন এবং পরিচালনা করুন। সর্বশেষ প্রথম সাজানো।",
   "noUpcomingSessions": "কোনো আসন্ন সেশন নেই",
   "earningsSubtitle": "সমস্ত সেশন থেকে আপনার মোট আয়",
-  "earningsAllTimeDescription": "সম্পূর্ণ সেশন থেকে সার্বিক আয়"
+  "earningsAllTimeDescription": "সম্পূর্ণ সেশন থেকে সার্বিক আয়",
+  "chooseExpertCategoryBadge": "বিশেষজ্ঞ নির্দেশনা আপনার জন্য অপেক্ষা করছে",
+  "chooseExpertCategoryTitle": "আপনি কোন ক্ষেত্রে নির্দেশনা চান?",
+  "chooseExpertCategorySubtitle": "আপনার ফোকাস ক্ষেত্র বেছে নিন এবং যাচাইকৃত পেশাদারদের সাথে যোগাযোগ করুন যারা আপনার লক্ষ্য অর্জনে সাহায্য করতে পারে।",
+  "chooseExpertCategoryFooter": "রূপান্তরের দিকে আপনার যাত্রা এখান থেকে শুরু",
+  "exploreExperts": "বিশেষজ্ঞদের দেখুন"
 }

@@ -26,6 +26,7 @@ import AssessmentIntro from "./pages/AssessmentIntro";
 import AssessmentQuestions from "./pages/AssessmentQuestions";
 import AssessmentResult from "./pages/AssessmentResult";
 import FindCounsellors from "./pages/FindCounsellors";
+import ChooseExpertCategory from "./pages/ChooseExpertCategory";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import TermsOfUse from "./pages/TermsOfUse";
@@ -160,6 +161,9 @@ export default function App() {
                 path="/finance-experts/:specialization"
                 element={<ExpertsListing />}
               />
+
+              {/* Choose Expert Category */}
+              <Route path="/choose-experts" element={<ChooseExpertCategory />} />
 
               {/* Find Counsellors */}
               <Route path="/find-counsellors" element={<FindCounsellors />} />

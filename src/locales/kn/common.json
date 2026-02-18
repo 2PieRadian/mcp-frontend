@@ -239,5 +239,10 @@
   "myAppointmentsSubtitle": "ಬುಕ್ ಮಾಡಿದ ಸೆಷನ್‌ಗಳನ್ನು ವೀಕ್ಷಿಸಿ ಮತ್ತು ನಿರ್ವಹಿಸಿ. ಇತ್ತೀಚಿನದರಿಂದ ಕ್ರಮಬದ್ಧವಾಗಿ.",
   "noUpcomingSessions": "ಮುಂಬರುವ ಸೆಷನ್‌ಗಳಿಲ್ಲ",
   "earningsSubtitle": "ಎಲ್ಲಾ ಸೆಷನ್‌ಗಳಿಂದ ನಿಮ್ಮ ಒಟ್ಟು ಗಳಿಕೆ",
-  "earningsAllTimeDescription": "ಪೂರ್ಣಗೊಂಡ ಸೆಷನ್‌ಗಳಿಂದ ಶಾಶ್ವತ ಗಳಿಕೆ"
+  "earningsAllTimeDescription": "ಪೂರ್ಣಗೊಂಡ ಸೆಷನ್‌ಗಳಿಂದ ಶಾಶ್ವತ ಗಳಿಕೆ",
+  "chooseExpertCategoryBadge": "ತಜ್ಞರ ಮಾರ್ಗದರ್ಶನ ನಿಮಗಾಗಿ ಕಾಯುತ್ತಿದೆ",
+  "chooseExpertCategoryTitle": "ನಿಮಗೆ ಯಾವ ಕ್ಷೇತ್ರದಲ್ಲಿ ಮಾರ್ಗದರ್ಶನ ಬೇಕು?",
+  "chooseExpertCategorySubtitle": "ನಿಮ್ಮ ಗಮನದ ಕ್ಷೇತ್ರವನ್ನು ಆಯ್ಕೆಮಾಡಿ ಮತ್ತು ನಿಮ್ಮ ಗುರಿಗಳನ್ನು ಸಾಧಿಸಲು ಸಹಾಯ ಮಾಡಬಲ್ಲ ಪರಿಶೀಲಿತ ತಜ್ಞರೊಂದಿಗೆ ಸಂಪರ್ಕಿಸಿ.",
+  "chooseExpertCategoryFooter": "ಪರಿವರ್ತನೆಯ ಕಡೆಗೆ ನಿಮ್ಮ ಪ್ರಯಾಣ ಇಲ್ಲಿ ಪ್ರಾರಂಭವಾಗುತ್ತದೆ",
+  "exploreExperts": "ತಜ್ಞರನ್ನು ಅನ್ವೇಷಿಸಿ"
 }

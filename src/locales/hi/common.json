@@ -239,5 +239,10 @@
   "myAppointmentsSubtitle": "अपने बुक किए गए सेशन देखें और संभालें। नए से पुराने क्रम में।",
   "noUpcomingSessions": "कोई आने वाला सेशन नहीं",
   "earningsSubtitle": "सभी सेशन से आपकी कुल कमाई",
-  "earningsAllTimeDescription": "पूरा हुए सेशन से अब तक की कमाई"
+  "earningsAllTimeDescription": "पूरा हुए सेशन से अब तक की कमाई",
+  "chooseExpertCategoryBadge": "विशेषज्ञ मार्गदर्शन आपका इंतज़ार कर रहा है",
+  "chooseExpertCategoryTitle": "आप किस क्षेत्र में मार्गदर्शन चाहते हैं?",
+  "chooseExpertCategorySubtitle": "अपना फोकस क्षेत्र चुनें और सत्यापित पेशेवरों से जुड़ें जो आपके लक्ष्यों को प्राप्त करने में मदद कर सकते हैं।",
+  "chooseExpertCategoryFooter": "परिवर्तन की आपकी यात्रा यहीं से शुरू होती है",
+  "exploreExperts": "विशेषज्ञों को देखें"
 }

@@ -239,5 +239,10 @@
   "myAppointmentsSubtitle": "તમારી બુક કરેલી સત્રો જુઓ અને સંચાલિત કરો. નવીનતમ પ્રથમ સોર્ટ કરેલી.",
   "noUpcomingSessions": "કોઈ આગામી સત્રો નથી",
   "earningsSubtitle": "બધા સત્રોમાંથી તમારી કુલ કમાણી",
-  "earningsAllTimeDescription": "પૂર્ણ સત્રોમાંથી સર્વકાલીન કમાણી"
+  "earningsAllTimeDescription": "પૂર્ણ સત્રોમાંથી સર્વકાલીન કમાણી",
+  "chooseExpertCategoryBadge": "નિષ્ણાત માર્ગદર્શન તમારી રાહ જુએ છે",
+  "chooseExpertCategoryTitle": "તમને કયા ક્ષેત્રમાં માર્ગદર્શન જોઈએ છે?",
+  "chooseExpertCategorySubtitle": "તમારું ફોકસ ક્ષેત્ર પસંદ કરો અને તમારા લક્ષ્યો હાંસલ કરવામાં મદદ કરી શકે તેવા ચકાસાયેલા નિષ્ણાતો સાથે જોડાઓ.",
+  "chooseExpertCategoryFooter": "પરિવર્તન તરફ તમારી યાત્રા અહીંથી શરૂ થાય છે",
+  "exploreExperts": "નિષ્ણાતો જુઓ"
 }

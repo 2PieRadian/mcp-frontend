@@ -239,5 +239,10 @@
   "myAppointmentsSubtitle": "View and manage your booked sessions. Sorted by most recent first.",
   "noUpcomingSessions": "No upcoming sessions",
   "earningsSubtitle": "Your total earnings from all sessions",
-  "earningsAllTimeDescription": "All time earnings from completed sessions"
+  "earningsAllTimeDescription": "All time earnings from completed sessions",
+  "chooseExpertCategoryBadge": "Expert Guidance Awaits",
+  "chooseExpertCategoryTitle": "What area would you like guidance in?",
+  "chooseExpertCategorySubtitle": "Choose your focus area and connect with verified professionals who can help you achieve your goals.",
+  "chooseExpertCategoryFooter": "Your journey to transformation starts here",
+  "exploreExperts": "Explore Experts"
 }

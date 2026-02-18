@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { TrendingUp, BookOpenText, HeartPulse } from "lucide-react";
 import { useScreen } from "../context/ScreenContext";
 import { Link } from "react-router-dom";
@@ -20,46 +20,16 @@ export default function HeroSection() {
   const { screenWidth } = useScreen();
   const showCardsBelow = screenWidth < 1024;
   const [hoveredCardIndex, setHoveredCardIndex] = useState<number | null>(null);
-  const [autoHoverIndex, setAutoHoverIndex] = useState<number | null>(null);
-  const autoHoverIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const descriptionVisibleForCard = (index: number) =>
-    hoveredCardIndex === index || (hoveredCardIndex === null && autoHoverIndex === index);
-
-  const stopAutoHover = () => {
-    if (autoHoverIntervalRef.current) {
-      clearInterval(autoHoverIntervalRef.current);
-      autoHoverIntervalRef.current = null;
-    }
-    setAutoHoverIndex(null);
-  };
-
-  const handleChooseYourPathClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    smoothScrollToHash(e, "#choose-your-path");
-    if (!showCardsBelow) {
-      stopAutoHover();
-      setHoveredCardIndex(null);
-      setAutoHoverIndex(0);
-      autoHoverIntervalRef.current = setInterval(() => {
-        setAutoHoverIndex((prev) => (prev === null ? 0 : (prev + 1) % 3));
-      }, 2000);
-    }
-  };
+  const descriptionVisibleForCard = (index: number) => hoveredCardIndex === index;
 
   const handleCardMouseEnter = (index: number) => {
-    stopAutoHover();
     setHoveredCardIndex(index);
   };
 
   const handleCardMouseLeave = () => {
     setHoveredCardIndex(null);
   };
-
-  useEffect(() => {
-    return () => {
-      if (autoHoverIntervalRef.current) clearInterval(autoHoverIntervalRef.current);
-    };
-  }, []);
 
   return (
     <div className="relative w-full bg-white">
@@ -102,13 +72,12 @@ export default function HeroSection() {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-[10px] justify-center lg:justify-start pt-[30px]">
-              <a
-                href="#choose-your-path"
-                onClick={handleChooseYourPathClick}
+              <Link
+                to="/choose-experts"
                 className="group inline-flex items-center whitespace-nowrap justify-center gap-2 px-[25px] py-[12px] bg-[hsl(187,55%,28%)] text-white rounded-[16px] font-medium text-[16px] hover:bg-[hsl(187,55%,22%)] transition-all duration-300 hover:scale-[1.02] shadow-[0_2px_8px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)]"
               >
                 {t("findYourExpert")}
-              </a>
+              </Link>
 
               <a
                 href="#expert-verified-assessments"

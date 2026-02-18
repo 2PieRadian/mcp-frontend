@@ -239,5 +239,10 @@
   "myAppointmentsSubtitle": "বুক কৰা ছেচনবোৰ চাওক আৰু পৰিচালনা কৰক। আটাইতকৈ অলপীয়াকৈ সজোৱা।",
   "noUpcomingSessions": "কোনো আগতীয়া ছেচন নাই",
   "earningsSubtitle": "সকলো ছেচনৰ পৰা আপোনাৰ মুঠ উপাৰ্জন",
-  "earningsAllTimeDescription": "সম্পূৰ্ণ ছেচনবোৰৰ পৰা সৰ্বকালীন উপাৰ্জন"
+  "earningsAllTimeDescription": "সম্পূৰ্ণ ছেচনবোৰৰ পৰা সৰ্বকালীন উপাৰ্জন",
+  "chooseExpertCategoryBadge": "বিশেষজ্ঞ নিৰ্দেশনা আপোনাৰ বাবে অপেক্ষা কৰি আছে",
+  "chooseExpertCategoryTitle": "আপুনি কোন ক্ষেত্ৰত নিৰ্দেশনা বিচাৰে?",
+  "chooseExpertCategorySubtitle": "আপোনাৰ মনোযোগৰ ক্ষেত্ৰ বাছক আৰু আপোনাৰ লক্ষ্য অৰ্জনত সহায় কৰিব পৰা প্ৰমাণিত বিশেষজ্ঞসকলৰ সৈতে সংযোগ কৰক।",
+  "chooseExpertCategoryFooter": "পৰিৱৰ্তনৰ দিশত আপোনাৰ যাত্ৰা ইয়াতেই আৰম্ভ হয়",
+  "exploreExperts": "বিশেষজ্ঞসকলক চাওক"
 }

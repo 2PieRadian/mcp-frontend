@@ -239,5 +239,10 @@
   "myAppointmentsSubtitle": "तुमची बुक केलेली सत्रे पहा आणि व्यवस्थापित करा. नवीनतम प्रथम क्रमवारी.",
   "noUpcomingSessions": "आगामी सत्रे नाहीत",
   "earningsSubtitle": "सर्व सत्रांमधून तुमची एकूण कमाई",
-  "earningsAllTimeDescription": "पूर्ण झालेल्या सत्रांमधून कायमची कमाई"
+  "earningsAllTimeDescription": "पूर्ण झालेल्या सत्रांमधून कायमची कमाई",
+  "chooseExpertCategoryBadge": "तज्ञ मार्गदर्शन तुमची वाट पाहत आहे",
+  "chooseExpertCategoryTitle": "तुम्हाला कोणत्या क्षेत्रात मार्गदर्शन हवे आहे?",
+  "chooseExpertCategorySubtitle": "तुमचे फोकस क्षेत्र निवडा आणि तुमची उद्दिष्टे साध्य करण्यास मदत करू शकणाऱ्या सत्यापित व्यावसायिकांशी संपर्क साधा.",
+  "chooseExpertCategoryFooter": "बदलाच्या दिशेने तुमचा प्रवास येथून सुरू होतो",
+  "exploreExperts": "तज्ञ शोधा"
 }
