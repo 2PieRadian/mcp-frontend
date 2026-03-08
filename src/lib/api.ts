@@ -1,4 +1,4 @@
-export const BACKEND_URL = "https://api.mindcurepath.com";
+export const BACKEND_URL = "https://mcp-backend-hpdhexhtaafxfxeg.centralindia-01.azurewebsites.net";
 // export const BACKEND_URL = "http://localhost:3000";
 
 /**
