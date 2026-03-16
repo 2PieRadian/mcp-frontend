@@ -1,4 +1,4 @@
-export const BACKEND_URL = "https://mcp-backend-hpdhexhtaafxfxeg.centralindia-01.azurewebsites.net";
+export const BACKEND_URL = "https://api.mindcurepath.com/";
 // export const BACKEND_URL = "http://localhost:3000";
 
 /**
@@ -56,7 +56,7 @@ export async function updatePhone(phoneNumber: string): Promise<{
   if (!res.ok) {
     throw new Error(
       (data?.message as string) ||
-      (res.status === 401 ? "Unauthorized" : "Failed to update phone number"),
+        (res.status === 401 ? "Unauthorized" : "Failed to update phone number"),
     );
   }
 
@@ -102,7 +102,7 @@ export async function initiateAppointment(
   expertId: number,
   startAt: string,
   endAt: string,
-  communicationMedium: CommunicationMedium
+  communicationMedium: CommunicationMedium,
 ): Promise<InitiateResponse> {
   const res = await fetch(`${BACKEND_URL}/api/v1/appointments/initiate`, {
     method: "POST",
@@ -120,7 +120,7 @@ export async function initiateAppointment(
   if (!res.ok) {
     throw new Error(
       (data?.message as string) ||
-      (res.status === 401 ? "Unauthorized" : "Failed to initiate booking")
+        (res.status === 401 ? "Unauthorized" : "Failed to initiate booking"),
     );
   }
 
@@ -133,7 +133,7 @@ export async function initiateAppointment(
 export async function verifyPayment(
   razorpay_order_id: string,
   razorpay_payment_id: string,
-  razorpay_signature: string
+  razorpay_signature: string,
 ): Promise<{ appointmentId: number; meetLink?: string | null }> {
   const res = await fetch(`${BACKEND_URL}/api/v1/appointments/verify`, {
     method: "POST",
@@ -150,7 +150,9 @@ export async function verifyPayment(
   if (!res.ok) {
     throw new Error(
       (data?.message as string) ||
-      (res.status === 400 ? "Payment verification failed" : "Failed to verify payment")
+        (res.status === 400
+          ? "Payment verification failed"
+          : "Failed to verify payment"),
     );
   }
 
@@ -162,7 +164,7 @@ export async function verifyPayment(
  */
 export async function updateAppointmentStatus(
   appointmentId: number,
-  status: "ONGOING" | "COMPLETED"
+  status: "ONGOING" | "COMPLETED",
 ): Promise<{ message: string; earnings?: number }> {
   const res = await fetch(
     `${BACKEND_URL}/api/v1/appointments/${appointmentId}/status`,
@@ -170,14 +172,14 @@ export async function updateAppointmentStatus(
       method: "PATCH",
       headers: getAuthHeaders(),
       body: JSON.stringify({ status }),
-    }
+    },
   );
 
   const data = await res.json().catch(() => ({}));
 
   if (!res.ok) {
     throw new Error(
-      (data?.message as string) || "Failed to update appointment status"
+      (data?.message as string) || "Failed to update appointment status",
     );
   }
 
@@ -225,7 +227,7 @@ export type MyAppointmentsResponse = {
  * Get all appointments for the current user. Optional status filter.
  */
 export async function getMyAppointments(
-  status?: "SCHEDULED" | "ONGOING" | "COMPLETED"
+  status?: "SCHEDULED" | "ONGOING" | "COMPLETED",
 ): Promise<MyAppointmentsResponse> {
   const url = new URL(`${BACKEND_URL}/api/v1/appointments/my-appointments`);
   if (status) url.searchParams.set("status", status);
@@ -240,7 +242,7 @@ export async function getMyAppointments(
   if (!res.ok) {
     throw new Error(
       (data?.message as string) ||
-      (res.status === 401 ? "Unauthorized" : "Failed to load appointments")
+        (res.status === 401 ? "Unauthorized" : "Failed to load appointments"),
     );
   }
 
@@ -280,7 +282,7 @@ export type ExpertUpcomingSessionsResponse = {
 export async function getExpertUpcomingSessions(): Promise<ExpertUpcomingSessionsResponse> {
   const res = await fetch(
     `${BACKEND_URL}/api/v1/appointments/expert/upcoming-sessions`,
-    { method: "GET", headers: getAuthHeaders() }
+    { method: "GET", headers: getAuthHeaders() },
   );
 
   const data = await res.json().catch(() => ({}));
@@ -288,7 +290,11 @@ export async function getExpertUpcomingSessions(): Promise<ExpertUpcomingSession
   if (!res.ok) {
     throw new Error(
       (data?.message as string) ||
-      (res.status === 403 ? "Forbidden" : res.status === 401 ? "Unauthorized" : "Failed to load upcoming sessions")
+        (res.status === 403
+          ? "Forbidden"
+          : res.status === 401
+            ? "Unauthorized"
+            : "Failed to load upcoming sessions"),
     );
   }
 
@@ -306,7 +312,7 @@ export type ExpertEarningsResponse = {
 export async function getExpertEarnings(): Promise<ExpertEarningsResponse> {
   const res = await fetch(
     `${BACKEND_URL}/api/v1/appointments/expert/earnings`,
-    { method: "GET", headers: getAuthHeaders() }
+    { method: "GET", headers: getAuthHeaders() },
   );
 
   const data = await res.json().catch(() => ({}));
@@ -314,7 +320,11 @@ export async function getExpertEarnings(): Promise<ExpertEarningsResponse> {
   if (!res.ok) {
     throw new Error(
       (data?.message as string) ||
-      (res.status === 403 ? "Forbidden" : res.status === 401 ? "Unauthorized" : "Failed to load earnings")
+        (res.status === 403
+          ? "Forbidden"
+          : res.status === 401
+            ? "Unauthorized"
+            : "Failed to load earnings"),
     );
   }
 
