@@ -3,11 +3,14 @@ import { useAuth } from "../../context/AuthContext";
 import { BACKEND_URL } from "../../lib/api";
 import { Eye, EyeOff } from "lucide-react";
 import ProfileButton from "./ProfileButton";
+import ForgotPasswordModal from "../ForgotPasswordModal";
 import { useTranslation } from "react-i18next";
 
 export default function ChangePasswordCard() {
   const { user, login } = useAuth();
   const { t } = useTranslation("profile");
+  const { t: tCommon } = useTranslation("common");
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
   const hasPassword = user?.hasPassword !== false; // Default to true if not specified
   const [isEditing, setIsEditing] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
@@ -17,7 +20,7 @@ export default function ChangePasswordCard() {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [status, setStatus] = useState<"idle" | "saving" | "success" | "error">(
-    "idle"
+    "idle",
   );
   const [error, setError] = useState<string | null>(null);
 
@@ -62,7 +65,7 @@ export default function ChangePasswordCard() {
           body: JSON.stringify({
             password: newPassword,
           }),
-        }
+        },
       );
 
       const contentType = response.headers.get("content-type") || "";
@@ -72,7 +75,7 @@ export default function ChangePasswordCard() {
 
       if (!response.ok) {
         throw new Error(
-          data?.message || text || t("validation.failedSetPassword")
+          data?.message || text || t("validation.failedSetPassword"),
         );
       }
 
@@ -141,7 +144,7 @@ export default function ChangePasswordCard() {
             currentPassword,
             newPassword,
           }),
-        }
+        },
       );
 
       const contentType = response.headers.get("content-type") || "";
@@ -151,7 +154,7 @@ export default function ChangePasswordCard() {
 
       if (!response.ok) {
         throw new Error(
-          data?.message || text || t("validation.failedChangePassword")
+          data?.message || text || t("validation.failedChangePassword"),
         );
       }
 
@@ -220,6 +223,15 @@ export default function ChangePasswordCard() {
                     )}
                   </button>
                 </div>
+              )}
+              {hasPassword && (
+                <button
+                  type="button"
+                  onClick={() => setShowForgotPassword(true)}
+                  className="text-[13px] font-medium text-light-text underline underline-offset-2 decoration-light-text/70 hover:text-[#44666C] hover:decoration-[#44666C] transition-colors cursor-pointer text-left self-start -mt-1"
+                >
+                  {tCommon("forgotPassword")}
+                </button>
               )}
               <div className="relative">
                 <input
@@ -307,8 +319,8 @@ export default function ChangePasswordCard() {
                   {status === "saving"
                     ? t("buttons.saving")
                     : hasPassword
-                    ? t("buttons.save")
-                    : t("password.setPassword")}
+                      ? t("buttons.save")
+                      : t("password.setPassword")}
                 </ProfileButton>
                 <ProfileButton
                   type="button"
@@ -360,6 +372,10 @@ export default function ChangePasswordCard() {
           )}
         </div>
       </div>
+      <ForgotPasswordModal
+        isOpen={showForgotPassword}
+        onClose={() => setShowForgotPassword(false)}
+      />
     </div>
   );
 }

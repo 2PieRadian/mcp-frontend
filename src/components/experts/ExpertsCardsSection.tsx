@@ -52,10 +52,10 @@ export default function ExpertsCardsSection({
           .map((esp) => esp.specialization.name)
           .join(", ")
       : expert.expertiseAreas
-      ? expert.expertiseAreas
-          .map((area) => area.charAt(0).toUpperCase() + area.slice(1))
-          .join(", ")
-      : "";
+        ? expert.expertiseAreas
+            .map((area) => area.charAt(0).toUpperCase() + area.slice(1))
+            .join(", ")
+        : "";
 
     const languages = expert.user.languages
       ? expert.user.languages
@@ -80,7 +80,7 @@ export default function ExpertsCardsSection({
   // Get cached experts for current specialization + filter combination
   const cachedData = useMemo(
     () => getCachedExperts(specialization, filters),
-    [getCachedExperts, specialization, filters]
+    [getCachedExperts, specialization, filters],
   );
 
   // Track previous specialization to detect changes
@@ -258,7 +258,8 @@ export default function ExpertsCardsSection({
           <div className="flex items-center gap-[8px]">
             <span className="text-gray-600 text-sm">
               {t("pageLabel", { ns: "experts" })}{" "}
-              <span className="font-medium">{currentPage}</span> {t("of", { ns: "common" })}{" "}
+              <span className="font-medium">{currentPage}</span>{" "}
+              {t("of", { ns: "common" })}{" "}
               <span className="font-medium">{totalPages}</span>
               {totalCount > 0 && (
                 <span className="text-gray-400 ml-2">
