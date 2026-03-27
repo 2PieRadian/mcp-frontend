@@ -66,7 +66,7 @@ export default function ExpertsCardsSection({
     return {
       id: expert.id,
       name: formattedName,
-      image: expert.user.avatar || "/images/experts/expert_profile_img.png",
+      image: expert.user.avatar?.trim() ?? "",
       rating: expert.rating,
       ratingCount: expert.totalReviews,
       professionalTitle: professionalTitleLabel,

@@ -5,6 +5,52 @@ import { useState, useEffect } from "react";
 import type { ApiExpert } from "../types/experts";
 import { BACKEND_URL } from "../lib/api";
 
+function nameInitial(displayName: string): string {
+  const t = displayName.trim();
+  if (!t) return "?";
+  return t.charAt(0).toUpperCase();
+}
+
+function ExpertAvatar({
+  name,
+  image,
+  className,
+}: {
+  name: string;
+  image: string;
+  className?: string;
+}) {
+  const [loadFailed, setLoadFailed] = useState(false);
+  const trimmed = image?.trim() ?? "";
+  const showImage = Boolean(trimmed) && !loadFailed;
+
+  useEffect(() => {
+    setLoadFailed(false);
+  }, [trimmed]);
+
+  const initial = nameInitial(name);
+  const boxClass =
+    "rounded-lg bg-[#44666C]/15 text-[#44666C] flex items-center justify-center font-semibold select-none " +
+    (className ?? "");
+
+  if (showImage) {
+    return (
+      <img
+        src={trimmed}
+        alt=""
+        className={className}
+        onError={() => setLoadFailed(true)}
+      />
+    );
+  }
+
+  return (
+    <div className={boxClass} aria-hidden>
+      {initial}
+    </div>
+  );
+}
+
 type ExpertCardProps = {
   id: number;
   name: string;
@@ -19,16 +65,14 @@ type ExpertCardProps = {
   professionalTitle: string;
 };
 
-type NextSlotResponse =
-  | {
-    day: string; // "MONDAY", "TUESDAY", etc.
-    date: number; // Day of month (1-31)
-    month: number; // Month number (1-12)
-    year: number; // Full year (e.g., 2026)
-    startTime: string; // "HH:mm" format (e.g., "09:00", "21:00")
-    endTime: string; // "HH:mm" format (e.g., "10:00", "22:00")
-  }
-  | null; // null when no slot is found
+type NextSlotResponse = {
+  day: string; // "MONDAY", "TUESDAY", etc.
+  date: number; // Day of month (1-31)
+  month: number; // Month number (1-12)
+  year: number; // Full year (e.g., 2026)
+  startTime: string; // "HH:mm" format (e.g., "09:00", "21:00")
+  endTime: string; // "HH:mm" format (e.g., "10:00", "22:00")
+} | null; // null when no slot is found
 
 export default function ExpertCard({
   id,
@@ -59,14 +103,12 @@ export default function ExpertCard({
             headers: {
               Accept: "application/json",
             },
-          }
+          },
         );
 
         if (!response.ok) {
           const errorData = await response.json().catch(() => ({}));
-          throw new Error(
-            errorData.message || "Failed to fetch next slot"
-          );
+          throw new Error(errorData.message || "Failed to fetch next slot");
         }
 
         const data: NextSlotResponse = await response.json();
@@ -96,13 +138,13 @@ export default function ExpertCard({
         nextSlotData.year,
         nextSlotData.month - 1,
         nextSlotData.date,
-        ...nextSlotData.startTime.split(":").map(Number)
+        ...nextSlotData.startTime.split(":").map(Number),
       );
       const endDate = new Date(
         nextSlotData.year,
         nextSlotData.month - 1,
         nextSlotData.date,
-        ...nextSlotData.endTime.split(":").map(Number)
+        ...nextSlotData.endTime.split(":").map(Number),
       );
 
       // Format: "Feb 16, 2026 at 9:00 PM - 10:00 PM"
@@ -134,6 +176,8 @@ export default function ExpertCard({
     navigate(`/expert/${id}`, { state: { expert: expertData } });
   };
 
+  const hasLanguages = Boolean(languages?.trim());
+
   return (
     <div
       onClick={handleCardClick}
@@ -141,40 +185,43 @@ export default function ExpertCard({
     >
       {/* Mobile Layout: Stacked */}
       <div className="flex flex-col min-[600px]:hidden">
-        {/* Top Section: Image + Name + Next Slot */}
-        <div className="flex items-stretch gap-[12px]">
-          <div className="Profile-Image flex flex-col shrink-0 w-[100px]">
-            <img src={image} alt={`${name} Image`} className="w-full rounded-lg" />
-          </div>
+        <div className="Profile-Image w-full">
+          <ExpertAvatar
+            name={name}
+            image={image}
+            className="w-full aspect-square rounded-lg object-cover text-[clamp(36px,18vw,56px)]"
+          />
+        </div>
 
-          <div className="flex flex-col justify-between flex-1 min-w-0 py-[2px]">
-            <div>
-              <div className="Name-Container flex items-center justify-between gap-2">
-                <h1 className="Name text-[16px] font-medium truncate">{name}</h1>
-                {rating > 0 && (
-                  <div className="Rating-Container flex items-center gap-[4px] shrink-0">
-                    <Star size={14} className="fill-yellow-400 text-yellow-400" />
-                    <span className="Rating-Value text-yellow-400 text-[14px]">{rating}</span>
-                  </div>
-                )}
-              </div>
-              <div className="Specialization-Container text-[#8F9EA0] text-[13px] mt-[2px]">
-                {professionalTitle}
-              </div>
-            </div>
-
-            <div className="Next-Available-Slot text-[13px] flex flex-col gap-[2px]">
-              <span className="font-light text-[#8F9EA0]">
-                {t("nextAvailableSlot")}
-              </span>
-              {isLoadingNextSlot ? (
-                <Loader2 className="w-3 h-3 text-[#8F9EA0] animate-spin" />
-              ) : (
-                <span className="font-medium text-[#516A6E] text-[14px]">
-                  {formatNextSlot()}
-                </span>
+        <div className="flex flex-col justify-between flex-1 min-w-0 py-[10px] mt-[2px]">
+          <div>
+            <div className="Name-Container flex items-center justify-between gap-2">
+              <h1 className="Name text-[16px] font-medium truncate">{name}</h1>
+              {rating > 0 && (
+                <div className="Rating-Container flex items-center gap-[4px] shrink-0">
+                  <Star size={14} className="fill-yellow-400 text-yellow-400" />
+                  <span className="Rating-Value text-yellow-400 text-[14px]">
+                    {rating}
+                  </span>
+                </div>
               )}
             </div>
+            <div className="Specialization-Container text-[#8F9EA0] text-[13px] mt-[2px]">
+              {professionalTitle}
+            </div>
+          </div>
+
+          <div className="Next-Available-Slot text-[13px] flex flex-col gap-[2px] mt-[10px]">
+            <span className="font-light text-[#8F9EA0]">
+              {t("nextAvailableSlot")}
+            </span>
+            {isLoadingNextSlot ? (
+              <Loader2 className="w-3 h-3 text-[#8F9EA0] animate-spin" />
+            ) : (
+              <span className="font-medium text-[#516A6E] text-[14px]">
+                {formatNextSlot()}
+              </span>
+            )}
           </div>
         </div>
 
@@ -184,9 +231,12 @@ export default function ExpertCard({
             {tags}
           </div>
 
-          <div className="Languages-Container text-[#516A6E] mt-[6px] text-[13px]">
-            <span className="text-[#8F9EA0]">{t("speaks")}</span>{languages}
-          </div>
+          {hasLanguages && (
+            <div className="Languages-Container text-[#516A6E] mt-[6px] text-[13px]">
+              <span className="text-[#8F9EA0]">{t("speaks")}</span>
+              {languages}
+            </div>
+          )}
 
           <div className="Price-Container mt-[10px]">
             {expertData?.isFreeSessionAvailable ? (
@@ -199,7 +249,9 @@ export default function ExpertCard({
                     ₹ {price}
                   </p>
                   <p className="text-[20px] font-bold text-green-600">₹0</p>
-                  <p className="text-[13px] text-green-600">{t("forFirstTime")}</p>
+                  <p className="text-[13px] text-green-600">
+                    {t("forFirstTime")}
+                  </p>
                   <p className="text-[13px] text-gray-500">· 30 min</p>
                 </div>
                 <p className="text-[12px] text-gray-400">
@@ -209,7 +261,9 @@ export default function ExpertCard({
             ) : (
               <div className="flex items-center gap-[6px]">
                 <p className="text-[18px] font-medium">₹ {price}</p>
-                <p className="text-[13px] text-gray-500">{t("for60MinConsultation")}</p>
+                <p className="text-[13px] text-gray-500">
+                  {t("for60MinConsultation")}
+                </p>
               </div>
             )}
           </div>
@@ -218,8 +272,12 @@ export default function ExpertCard({
 
       {/* Desktop Layout: Side by side */}
       <div className="hidden min-[600px]:flex items-start justify-between gap-[16px] min-[800px]:gap-[20px]">
-        <div className="Profile-Image flex flex-col flex-1">
-          <img src={image} alt={`${name} Image`} className="self-start" />
+        <div className="Profile-Image flex flex-col flex-1 min-w-0 w-full">
+          <ExpertAvatar
+            name={name}
+            image={image}
+            className="w-full aspect-square rounded-lg object-cover text-[clamp(32px,6vw,52px)]"
+          />
 
           <button
             onClick={(e) => {
@@ -241,7 +299,9 @@ export default function ExpertCard({
             {rating > 0 && (
               <div className="Rating-Container flex items-center gap-[5px]">
                 <Star size={18} className="fill-yellow-400 text-yellow-400" />
-                <span className="Rating-Value text-yellow-400 text-[16px]">{rating}</span>
+                <span className="Rating-Value text-yellow-400 text-[16px]">
+                  {rating}
+                </span>
                 <span className="Rating-Count text-gray-500 text-[14px]">
                   ({ratingCount})
                 </span>
@@ -257,9 +317,12 @@ export default function ExpertCard({
             {tags}
           </div>
 
-          <div className="Languages-Container text-[#516A6E] mt-[8px] text-[14px]">
-            <span className="text-[#8F9EA0]">{t("speaks")}</span>{languages}
-          </div>
+          {hasLanguages && (
+            <div className="Languages-Container text-[#516A6E] mt-[8px] text-[14px]">
+              <span className="text-[#8F9EA0]">{t("speaks")} </span>
+              {languages}
+            </div>
+          )}
 
           <div className="Next-Available-Slot mt-[8px] text-[14px] flex items-center gap-2 flex-wrap">
             <span className="font-light text-[#8F9EA0] whitespace-nowrap">
@@ -286,7 +349,9 @@ export default function ExpertCard({
                   </p>
                   <p className="text-[24px] font-bold text-green-600">₹0</p>
                   <p className="text-[14px] text-green-600">for first time</p>
-                  <p className="text-[14px] text-gray-500">· 30 min free consultation</p>
+                  <p className="text-[14px] text-gray-500">
+                    · 30 min free consultation
+                  </p>
                 </div>
                 <p className="text-[13px] text-gray-400">
                   Only paid appointments are 1 hour long
@@ -295,7 +360,9 @@ export default function ExpertCard({
             ) : (
               <div className="flex items-center gap-[8px]">
                 <p className="text-[21px] font-medium">₹ {price}</p>
-                <p className="text-[14px] text-gray-500">{t("for60MinConsultation")}</p>
+                <p className="text-[14px] text-gray-500">
+                  {t("for60MinConsultation")}
+                </p>
               </div>
             )}
           </div>

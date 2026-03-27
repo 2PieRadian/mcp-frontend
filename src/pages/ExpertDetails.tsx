@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
@@ -16,6 +16,52 @@ import ImageViewer from "../components/ImageViewer";
 import type { ApiExpert } from "../types/experts";
 import { getAvatarUrl } from "../lib/api";
 import { useAuth } from "../context/AuthContext";
+
+function nameInitial(displayName: string): string {
+  const t = displayName.trim();
+  if (!t) return "?";
+  return t.charAt(0).toUpperCase();
+}
+
+function ExpertProfileAvatar({
+  displayName,
+  avatarUrl,
+}: {
+  displayName: string;
+  avatarUrl: string | undefined;
+}) {
+  const [loadFailed, setLoadFailed] = useState(false);
+  useEffect(() => {
+    setLoadFailed(false);
+  }, [avatarUrl]);
+
+  const showImage = Boolean(avatarUrl) && !loadFailed;
+  const initial = nameInitial(displayName);
+  const sizeClass = "w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36";
+
+  if (showImage && avatarUrl) {
+    return (
+      <ImageViewer src={avatarUrl} alt={displayName} className="relative">
+        <img
+          src={avatarUrl}
+          alt={displayName}
+          className={`relative ${sizeClass} rounded-full border-4 border-white object-cover shadow-2xl`}
+          onError={() => setLoadFailed(true)}
+        />
+      </ImageViewer>
+    );
+  }
+
+  return (
+    <div
+      className={`relative ${sizeClass} rounded-full border-4 border-white shadow-2xl flex items-center justify-center bg-white/25 text-white font-bold shrink-0`}
+      style={{ fontSize: "clamp(2rem, 10vw, 3.25rem)" }}
+      aria-hidden
+    >
+      {initial}
+    </div>
+  );
+}
 
 export default function ExpertDetails() {
   const location = useLocation();
@@ -36,14 +82,19 @@ export default function ExpertDetails() {
           <button
             onClick={() => navigate(-1)}
             className="flex items-center gap-2 text-[#44666C] hover:text-[#365a62] mb-6 transition-colors cursor-pointer"
-            style={{ fontSize: '16px' }}
+            style={{ fontSize: "16px" }}
           >
             <ArrowLeft size={18} className="sm:w-5 sm:h-5" />
             <span>Go Back</span>
           </button>
           <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 text-center">
-            <p className="text-red-600 mb-2" style={{ fontSize: 'clamp(16px, 1rem, 20.8px)' }}>Expert not found</p>
-            <p className="text-gray-600" style={{ fontSize: '16px' }}>
+            <p
+              className="text-red-600 mb-2"
+              style={{ fontSize: "clamp(16px, 1rem, 20.8px)" }}
+            >
+              Expert not found
+            </p>
+            <p className="text-gray-600" style={{ fontSize: "16px" }}>
               Please navigate from an expert card to view their profile.
             </p>
           </div>
@@ -61,9 +112,13 @@ export default function ExpertDetails() {
     expert.professionalTitle.charAt(0).toUpperCase() +
     expert.professionalTitle.slice(1);
 
-  const formattedLanguages = expert.user.languages
+  const languagesList = expert.user.languages ?? [];
+  const formattedLanguages = languagesList
     .map((lang) => lang.charAt(0).toUpperCase() + lang.slice(1))
     .join(", ");
+  const hasLanguages = languagesList.length > 0;
+
+  const avatarUrl = getAvatarUrl(expert.user.avatar);
 
   return (
     <div className="min-h-screen bg-white px-4 sm:px-5">
@@ -73,7 +128,7 @@ export default function ExpertDetails() {
         <button
           onClick={() => navigate(-1)}
           className="flex items-center gap-2 text-[#44666C] hover:text-[#365a62] mb-4 sm:mb-6 transition-colors cursor-pointer"
-          style={{ fontSize: '16px' }}
+          style={{ fontSize: "16px" }}
         >
           <ArrowLeft size={18} className="sm:w-5 sm:h-5" />
           <span>Go Back</span>
@@ -85,10 +140,14 @@ export default function ExpertDetails() {
           <div className="bg-linear-to-r from-[#44666C] to-[#365a62] relative overflow-hidden">
             {/* Background Pattern */}
             <div className="absolute inset-0 opacity-10">
-              <div className="absolute inset-0" style={{
-                backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)',
-                backgroundSize: '40px 40px'
-              }}></div>
+              <div
+                className="absolute inset-0"
+                style={{
+                  backgroundImage:
+                    "radial-gradient(circle at 2px 2px, white 1px, transparent 0)",
+                  backgroundSize: "40px 40px",
+                }}
+              ></div>
             </div>
 
             <div className="relative p-6 sm:p-8 md:p-10 text-white">
@@ -97,23 +156,12 @@ export default function ExpertDetails() {
                 <div className="shrink-0">
                   <div className="relative">
                     <div className="absolute inset-0 bg-white/20 rounded-full blur-xl"></div>
-                    <ImageViewer
-                      src={
-                        getAvatarUrl(expert.user.avatar) ||
-                        "/images/experts/expert_profile_img.png"
-                      }
-                      alt={formattedName}
-                      className="relative"
-                    >
-                      <img
-                        src={
-                          getAvatarUrl(expert.user.avatar) ||
-                          "/images/experts/expert_profile_img.png"
-                        }
-                        alt={formattedName}
-                        className="relative w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full border-4 border-white object-cover shadow-2xl"
+                    <div className="relative">
+                      <ExpertProfileAvatar
+                        displayName={formattedName}
+                        avatarUrl={avatarUrl}
                       />
-                    </ImageViewer>
+                    </div>
                   </div>
                 </div>
 
@@ -121,10 +169,16 @@ export default function ExpertDetails() {
                 <div className="flex-1 text-center md:text-left w-full space-y-4">
                   {/* Name and Title */}
                   <div className="space-y-2">
-                    <h1 className="font-bold leading-tight drop-shadow-sm" style={{ fontSize: 'clamp(20.8px, 1.3rem, 27px)' }}>
+                    <h1
+                      className="font-bold leading-tight drop-shadow-sm"
+                      style={{ fontSize: "clamp(20.8px, 1.3rem, 27px)" }}
+                    >
                       {formattedName}
                     </h1>
-                    <p className="opacity-95 font-medium" style={{ fontSize: 'clamp(16px, 1rem, 20.8px)' }}>
+                    <p
+                      className="opacity-95 font-medium"
+                      style={{ fontSize: "clamp(16px, 1rem, 20.8px)" }}
+                    >
                       {formattedTitle}
                     </p>
                   </div>
@@ -138,11 +192,18 @@ export default function ExpertDetails() {
                         className="fill-yellow-400 text-yellow-400 shrink-0"
                       />
                       <div className="flex items-baseline gap-1.5">
-                        <span className="font-bold" style={{ fontSize: '16px' }}>
+                        <span
+                          className="font-bold"
+                          style={{ fontSize: "16px" }}
+                        >
                           {expert.rating}
                         </span>
-                        <span className="opacity-90" style={{ fontSize: '14px' }}>
-                          ({expert.totalReviews} {expert.totalReviews === 1 ? "review" : "reviews"})
+                        <span
+                          className="opacity-90"
+                          style={{ fontSize: "14px" }}
+                        >
+                          ({expert.totalReviews}{" "}
+                          {expert.totalReviews === 1 ? "review" : "reviews"})
                         </span>
                       </div>
                     </div>
@@ -150,7 +211,7 @@ export default function ExpertDetails() {
                     {/* Experience Badge */}
                     <div className="flex items-center gap-2 bg-white/15 backdrop-blur-md px-4 py-2.5 rounded-xl border border-white/30 shadow-lg">
                       <Award size={18} className="shrink-0" />
-                      <span style={{ fontSize: '16px' }}>
+                      <span style={{ fontSize: "16px" }}>
                         {expert.yearsOfExperience}+ years of experience
                       </span>
                     </div>
@@ -167,28 +228,37 @@ export default function ExpertDetails() {
               <div className="lg:col-span-2 space-y-5 sm:space-y-6 order-2 lg:order-1">
                 {/* Bio */}
                 <div>
-                  <h2 className="font-semibold text-[#304048] mb-3 sm:mb-4 flex items-center gap-2" style={{ fontSize: 'clamp(16px, 1rem, 20.8px)' }}>
+                  <h2
+                    className="font-semibold text-[#304048] mb-3 sm:mb-4 flex items-center gap-2"
+                    style={{ fontSize: "clamp(16px, 1rem, 20.8px)" }}
+                  >
                     <FileText size={20} className="sm:w-6 sm:h-6" />
                     About
                   </h2>
-                  <p className="text-gray-700 leading-relaxed whitespace-pre-wrap" style={{ fontSize: '16px' }}>
+                  <p
+                    className="text-gray-700 leading-relaxed whitespace-pre-wrap"
+                    style={{ fontSize: "16px" }}
+                  >
                     {expert.bio || "No bio available."}
                   </p>
                 </div>
 
                 {/* Expertise Areas / Specializations */}
                 <div>
-                  <h2 className="font-semibold text-[#304048] mb-3 sm:mb-4" style={{ fontSize: 'clamp(16px, 1rem, 20.8px)' }}>
+                  <h2
+                    className="font-semibold text-[#304048] mb-3 sm:mb-4"
+                    style={{ fontSize: "clamp(16px, 1rem, 20.8px)" }}
+                  >
                     Areas of Expertise
                   </h2>
                   <div className="flex flex-wrap gap-2">
                     {expert.expertSpecializations &&
-                      expert.expertSpecializations.length > 0 ? (
+                    expert.expertSpecializations.length > 0 ? (
                       expert.expertSpecializations.map((esp, index) => (
                         <span
                           key={index}
                           className="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#E0ECEE] text-[#133945] rounded-full font-medium"
-                          style={{ fontSize: '14px' }}
+                          style={{ fontSize: "14px" }}
                         >
                           {esp.specialization.name}
                         </span>
@@ -199,13 +269,16 @@ export default function ExpertDetails() {
                         <span
                           key={index}
                           className="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#E0ECEE] text-[#133945] rounded-full font-medium"
-                          style={{ fontSize: '14px' }}
+                          style={{ fontSize: "14px" }}
                         >
                           {area.charAt(0).toUpperCase() + area.slice(1)}
                         </span>
                       ))
                     ) : (
-                      <span className="text-gray-500" style={{ fontSize: '16px' }}>
+                      <span
+                        className="text-gray-500"
+                        style={{ fontSize: "16px" }}
+                      >
                         No specializations listed
                       </span>
                     )}
@@ -213,28 +286,50 @@ export default function ExpertDetails() {
                 </div>
 
                 {/* Languages and Experience - Side by Side */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                  {/* Languages Card */}
-                  <div className="bg-white border border-gray-200 rounded-lg p-4 sm:p-6">
-                    <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                      <Languages size={20} className="sm:w-6 sm:h-6 text-[#44666C]" />
-                      <h3 className="font-semibold text-[#304048]" style={{ fontSize: 'clamp(16px, 1rem, 20.8px)' }}>
-                        {t("experts:languagesLabel")}
-                      </h3>
+                <div
+                  className={`grid gap-4 sm:gap-6 ${hasLanguages ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1"}`}
+                >
+                  {hasLanguages && (
+                    <div className="bg-white border border-gray-200 rounded-lg p-4 sm:p-6">
+                      <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                        <Languages
+                          size={20}
+                          className="sm:w-6 sm:h-6 text-[#44666C]"
+                        />
+                        <h3
+                          className="font-semibold text-[#304048]"
+                          style={{ fontSize: "clamp(16px, 1rem, 20.8px)" }}
+                        >
+                          {t("experts:languagesLabel")}
+                        </h3>
+                      </div>
+                      <p className="text-gray-700" style={{ fontSize: "16px" }}>
+                        {formattedLanguages}
+                      </p>
                     </div>
-                    <p className="text-gray-700" style={{ fontSize: '16px' }}>{formattedLanguages}</p>
-                  </div>
+                  )}
 
                   {/* Experience Card */}
                   <div className="bg-white border border-gray-200 rounded-lg p-4 sm:p-6">
                     <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                      <Award size={20} className="sm:w-6 sm:h-6 text-[#44666C]" />
-                      <h3 className="font-semibold text-[#304048]" style={{ fontSize: 'clamp(16px, 1rem, 20.8px)' }}>
+                      <Award
+                        size={20}
+                        className="sm:w-6 sm:h-6 text-[#44666C]"
+                      />
+                      <h3
+                        className="font-semibold text-[#304048]"
+                        style={{ fontSize: "clamp(16px, 1rem, 20.8px)" }}
+                      >
                         {t("common:experience")}
                       </h3>
                     </div>
-                    <p className="text-gray-700 font-medium" style={{ fontSize: 'clamp(16px, 1rem, 20.8px)' }}>
-                      {t("experts:experienceYears", { count: expert.yearsOfExperience })}
+                    <p
+                      className="text-gray-700 font-medium"
+                      style={{ fontSize: "clamp(16px, 1rem, 20.8px)" }}
+                    >
+                      {t("experts:experienceYears", {
+                        count: expert.yearsOfExperience,
+                      })}
                     </p>
                   </div>
                 </div>
@@ -245,37 +340,63 @@ export default function ExpertDetails() {
                 {/* Price Card */}
                 <div className="bg-[#E0ECEE] rounded-lg p-4 sm:p-6">
                   <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                    <h3 className="font-semibold text-[#304048]" style={{ fontSize: 'clamp(16px, 1rem, 20.8px)' }}>
+                    <h3
+                      className="font-semibold text-[#304048]"
+                      style={{ fontSize: "clamp(16px, 1rem, 20.8px)" }}
+                    >
                       Session Fee
                     </h3>
                   </div>
                   {expert.isFreeSessionAvailable ? (
                     <div className="space-y-[6px]">
-                      <div className="font-bold flex items-center gap-1 flex-wrap" style={{ fontSize: 'clamp(20.8px, 1.3rem, 27px)' }}>
+                      <div
+                        className="font-bold flex items-center gap-1 flex-wrap"
+                        style={{ fontSize: "clamp(20.8px, 1.3rem, 27px)" }}
+                      >
                         <span
                           className="text-gray-400"
-                          style={{ fontSize: 'clamp(16px, 1rem, 20px)', textDecoration: 'line-through' }}
+                          style={{
+                            fontSize: "clamp(16px, 1rem, 20px)",
+                            textDecoration: "line-through",
+                          }}
                         >
                           ₹{expert.pricePerHour}
                         </span>
-                        <span className="text-green-600" style={{ fontSize: 'clamp(24px, 1.5rem, 30px)' }}>₹0</span>
-                        <span className="text-green-600 font-bold" style={{ fontSize: '14px' }}>
+                        <span
+                          className="text-green-600"
+                          style={{ fontSize: "clamp(24px, 1.5rem, 30px)" }}
+                        >
+                          ₹0
+                        </span>
+                        <span
+                          className="text-green-600 font-bold"
+                          style={{ fontSize: "14px" }}
+                        >
                           for first time
                         </span>
-                        <span className="text-gray-600" style={{ fontSize: '14px', fontWeight: 'normal' }}>
+                        <span
+                          className="text-gray-600"
+                          style={{ fontSize: "14px", fontWeight: "normal" }}
+                        >
                           30 min free consultation
                         </span>
                       </div>
-                      <p className="text-gray-400 mt-2" style={{ fontSize: '13px' }}>
+                      <p
+                        className="text-gray-400 mt-2"
+                        style={{ fontSize: "13px" }}
+                      >
                         Only paid appointments are 1 hour long
                       </p>
                     </div>
                   ) : (
                     <>
-                      <div className="font-bold text-[#44666C] mb-2" style={{ fontSize: 'clamp(20.8px, 1.3rem, 27px)' }}>
+                      <div
+                        className="font-bold text-[#44666C] mb-2"
+                        style={{ fontSize: "clamp(20.8px, 1.3rem, 27px)" }}
+                      >
                         ₹{expert.pricePerHour}
                       </div>
-                      <p className="text-gray-600" style={{ fontSize: '14px' }}>
+                      <p className="text-gray-600" style={{ fontSize: "14px" }}>
                         1 hour consultation
                       </p>
                     </>
@@ -292,10 +413,14 @@ export default function ExpertDetails() {
                     }
                   }}
                   className="w-full bg-[#44666C] hover:bg-[#365a62] active:bg-[#2d4d54] text-white font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 sm:hover:-translate-y-1 cursor-pointer"
-                  style={{ fontSize: '16px' }}
+                  style={{ fontSize: "16px" }}
                 >
                   <Calendar size={18} className="sm:w-5 sm:h-5" />
-                  <span>{expert.isFreeSessionAvailable !== false ? "Book Free Appointment" : "Book Appointment"}</span>
+                  <span>
+                    {expert.isFreeSessionAvailable !== false
+                      ? "Book Free Appointment"
+                      : "Book Appointment"}
+                  </span>
                 </button>
               </div>
             </div>
@@ -317,7 +442,9 @@ export default function ExpertDetails() {
             <div className="mx-auto w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mb-4">
               <LogIn className="w-6 h-6 text-amber-700" />
             </div>
-            <h3 className="text-lg font-semibold text-[#304048] mb-2">Login required</h3>
+            <h3 className="text-lg font-semibold text-[#304048] mb-2">
+              Login required
+            </h3>
             <p className="text-gray-600 text-sm mb-6">
               Please log in to book a session with {formattedName}.
             </p>
@@ -325,7 +452,9 @@ export default function ExpertDetails() {
               <button
                 onClick={() => {
                   setShowLoginPrompt(false);
-                  navigate(`/login?redirect=${encodeURIComponent(location.pathname)}`);
+                  navigate(
+                    `/login?redirect=${encodeURIComponent(location.pathname)}`,
+                  );
                 }}
                 className="flex-1 px-4 py-2.5 bg-[#44666C] text-white rounded-xl font-medium hover:bg-[#365a62] flex items-center justify-center gap-2"
               >
