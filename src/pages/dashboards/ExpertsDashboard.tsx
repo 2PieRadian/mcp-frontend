@@ -5,12 +5,18 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "../../context/AuthContext";
 import { useAvailability } from "../../context/AvailabilityContext";
 import ResponsiveNavbar from "../../components/ResponsiveNavbar";
-import type { UpcomingSession, WeeklyAvailability, TabType } from "./types";
-import { BACKEND_URL, getExpertUpcomingSessions, getExpertEarnings } from "../../lib/api";
+import type { WeeklyAvailability, TabType } from "./types";
+import {
+  BACKEND_URL,
+  getExpertAppointments,
+  getExpertEarnings,
+  type AppointmentStatus,
+  type ExpertAppointment,
+} from "../../lib/api";
 
 const DashboardTabs = lazy(() => import("./components/DashboardTabs"));
-const UpcomingSessionsTab = lazy(
-  () => import("./components/UpcomingSessionsTab")
+const ExpertAppointmentsTab = lazy(
+  () => import("./components/ExpertAppointmentsTab"),
 );
 const AvailabilityManagementTab = lazy(
   () => import("./components/AvailabilityManagementTab")
@@ -28,16 +34,23 @@ export default function ExpertsDashboard() {
   } = useAvailability();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<TabType>("sessions");
-  const [upcomingSessions, setUpcomingSessions] = useState<UpcomingSession[]>(
-    []
-  );
+  const [expertAppointments, setExpertAppointments] = useState<
+    ExpertAppointment[]
+  >([]);
+  const [expertAppointmentsCount, setExpertAppointmentsCount] = useState(0);
+  const [appointmentStatusFilter, setAppointmentStatusFilter] = useState<
+    "" | AppointmentStatus
+  >("");
   const [localAvailability, setLocalAvailability] =
     useState<WeeklyAvailability>(availability);
   const [isEditingAvailability, setIsEditingAvailability] = useState(false);
   const [isSavingAvailability, setIsSavingAvailability] = useState(false);
   const [expertEarnings, setExpertEarnings] = useState<number | undefined>(undefined);
-  const [upcomingSessionsLoading, setUpcomingSessionsLoading] = useState(false);
-  const [upcomingSessionsError, setUpcomingSessionsError] = useState<string | null>(null);
+  const [expertAppointmentsLoading, setExpertAppointmentsLoading] =
+    useState(false);
+  const [expertAppointmentsError, setExpertAppointmentsError] = useState<
+    string | null
+  >(null);
   const [earningsLoading, setEarningsLoading] = useState(false);
   const [earningsError, setEarningsError] = useState<string | null>(null);
 
@@ -53,40 +66,24 @@ export default function ExpertsDashboard() {
     }
   }, [user, navigate]);
 
-  const fetchUpcomingSessions = useCallback(async () => {
+  const fetchExpertAppointments = useCallback(async () => {
     if (user?.role !== "EXPERT") return;
-    setUpcomingSessionsLoading(true);
-    setUpcomingSessionsError(null);
+    setExpertAppointmentsLoading(true);
+    setExpertAppointmentsError(null);
     try {
-      const res = await getExpertUpcomingSessions();
-      const mapped: UpcomingSession[] = res.sessions.map((s) => {
-        const start = new Date(s.startAt).getTime();
-        const end = new Date(s.endAt).getTime();
-        const durationMinutes = Math.round((end - start) / (60 * 1000));
-        return {
-          id: String(s.id),
-          meetLink: s.meetLink ?? "",
-          duration: durationMinutes,
-          startTime: s.startAt,
-          endTime: s.endAt,
-          userReason: "",
-          user: {
-            id: String(s.user.id),
-            name: s.user.name ?? "",
-            email: s.user.email,
-            avatarUrl: undefined,
-          },
-          amountPaid: s.amount,
-        };
-      });
-      setUpcomingSessions(mapped);
-    } catch (e) {
-      setUpcomingSessionsError(t("dashboardFailedToLoadSessions"));
-      setUpcomingSessions([]);
+      const res = await getExpertAppointments(
+        appointmentStatusFilter || undefined,
+      );
+      setExpertAppointments(res.appointments);
+      setExpertAppointmentsCount(res.count);
+    } catch {
+      setExpertAppointmentsError(t("dashboardFailedToLoadAppointments"));
+      setExpertAppointments([]);
+      setExpertAppointmentsCount(0);
     } finally {
-      setUpcomingSessionsLoading(false);
+      setExpertAppointmentsLoading(false);
     }
-  }, [user?.role, t]);
+  }, [user?.role, appointmentStatusFilter, t]);
 
   const fetchEarnings = useCallback(async () => {
     if (user?.role !== "EXPERT") return;
@@ -104,8 +101,8 @@ export default function ExpertsDashboard() {
   }, [user?.role, t]);
 
   useEffect(() => {
-    fetchUpcomingSessions();
-  }, [fetchUpcomingSessions]);
+    fetchExpertAppointments();
+  }, [fetchExpertAppointments]);
 
   useEffect(() => {
     fetchEarnings();
@@ -250,11 +247,14 @@ export default function ExpertsDashboard() {
         <Suspense fallback={<div className="text-center py-8">Loading...</div>}>
           <div>
             {activeTab === "sessions" && (
-              <UpcomingSessionsTab
-                sessions={upcomingSessions}
-                isLoading={upcomingSessionsLoading}
-                error={upcomingSessionsError}
-                onRefetch={fetchUpcomingSessions}
+              <ExpertAppointmentsTab
+                appointments={expertAppointments}
+                count={expertAppointmentsCount}
+                statusFilter={appointmentStatusFilter}
+                onStatusFilterChange={setAppointmentStatusFilter}
+                isLoading={expertAppointmentsLoading}
+                error={expertAppointmentsError}
+                onRefetch={fetchExpertAppointments}
               />
             )}
 

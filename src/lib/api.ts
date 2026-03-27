@@ -1,5 +1,5 @@
-export const BACKEND_URL = "https://api.mindcurepath.com";
-// export const BACKEND_URL = "http://localhost:3000";
+// export const BACKEND_URL = "https://api.mindcurepath.com";
+export const BACKEND_URL = "http://localhost:3000";
 
 /**
  * Constructs a full avatar URL from a backend avatar value.
@@ -56,7 +56,7 @@ export async function updatePhone(phoneNumber: string): Promise<{
   if (!res.ok) {
     throw new Error(
       (data?.message as string) ||
-        (res.status === 401 ? "Unauthorized" : "Failed to update phone number"),
+      (res.status === 401 ? "Unauthorized" : "Failed to update phone number"),
     );
   }
 
@@ -120,7 +120,7 @@ export async function initiateAppointment(
   if (!res.ok) {
     throw new Error(
       (data?.message as string) ||
-        (res.status === 401 ? "Unauthorized" : "Failed to initiate booking"),
+      (res.status === 401 ? "Unauthorized" : "Failed to initiate booking"),
     );
   }
 
@@ -150,9 +150,9 @@ export async function verifyPayment(
   if (!res.ok) {
     throw new Error(
       (data?.message as string) ||
-        (res.status === 400
-          ? "Payment verification failed"
-          : "Failed to verify payment"),
+      (res.status === 400
+        ? "Payment verification failed"
+        : "Failed to verify payment"),
     );
   }
 
@@ -217,6 +217,31 @@ export type MyAppointment = {
   expert: AppointmentExpert;
 };
 
+/** Client (booker) on expert’s appointment list when API includes nested user. */
+export type AppointmentClientUser = {
+  id: number;
+  name: string | null;
+  email: string;
+  avatarUrl?: string | null;
+};
+
+/**
+ * Row from GET /appointments/expert/appointments — same core fields as my-appointments;
+ * may include `user` (client) and/or `expert`.
+ */
+export type ExpertAppointment = {
+  id: number;
+  startAt: string;
+  endAt: string;
+  status: AppointmentStatus;
+  meetLink: string | null;
+  amount: number;
+  appointmentType?: string;
+  communicationMedium: string;
+  expert?: AppointmentExpert;
+  user?: AppointmentClientUser;
+};
+
 export type MyAppointmentsResponse = {
   message: string;
   count: number;
@@ -242,11 +267,49 @@ export async function getMyAppointments(
   if (!res.ok) {
     throw new Error(
       (data?.message as string) ||
-        (res.status === 401 ? "Unauthorized" : "Failed to load appointments"),
+      (res.status === 401 ? "Unauthorized" : "Failed to load appointments"),
     );
   }
 
   return data as MyAppointmentsResponse;
+}
+
+export type ExpertAppointmentsResponse = {
+  message: string;
+  count: number;
+  appointments: ExpertAppointment[];
+};
+
+/**
+ * Get all appointments for the logged-in expert. Optional status filter.
+ */
+export async function getExpertAppointments(
+  status?: AppointmentStatus,
+): Promise<ExpertAppointmentsResponse> {
+  const url = new URL(
+    `${BACKEND_URL}/api/v1/appointments/expert/appointments`,
+  );
+  if (status) url.searchParams.set("status", status);
+
+  const res = await fetch(url.toString(), {
+    method: "GET",
+    headers: getAuthHeaders(),
+  });
+
+  const data = await res.json().catch(() => ({}));
+
+  if (!res.ok) {
+    throw new Error(
+      (data?.message as string) ||
+      (res.status === 403
+        ? "Forbidden"
+        : res.status === 401
+          ? "Unauthorized"
+          : "Failed to load appointments"),
+    );
+  }
+
+  return data as ExpertAppointmentsResponse;
 }
 
 /** Client user in expert upcoming session (no password). */
@@ -290,11 +353,11 @@ export async function getExpertUpcomingSessions(): Promise<ExpertUpcomingSession
   if (!res.ok) {
     throw new Error(
       (data?.message as string) ||
-        (res.status === 403
-          ? "Forbidden"
-          : res.status === 401
-            ? "Unauthorized"
-            : "Failed to load upcoming sessions"),
+      (res.status === 403
+        ? "Forbidden"
+        : res.status === 401
+          ? "Unauthorized"
+          : "Failed to load upcoming sessions"),
     );
   }
 
@@ -320,11 +383,11 @@ export async function getExpertEarnings(): Promise<ExpertEarningsResponse> {
   if (!res.ok) {
     throw new Error(
       (data?.message as string) ||
-        (res.status === 403
-          ? "Forbidden"
-          : res.status === 401
-            ? "Unauthorized"
-            : "Failed to load earnings"),
+      (res.status === 403
+        ? "Forbidden"
+        : res.status === 401
+          ? "Unauthorized"
+          : "Failed to load earnings"),
     );
   }
 
