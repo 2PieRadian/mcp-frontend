@@ -108,6 +108,10 @@
       "title": "Academic Scholars",
       "description": "Academic Scholars are students who have successfully cleared competitive academic examinations."
     },
+    "educator": {
+      "title": "Educator",
+      "description": "Connect with experienced educators for guidance on teaching practice, learner engagement, assessment strategies, and professional growth—ideal for teachers, tutors, trainers, and parents who want structured support around how people learn."
+    },
     "investment-expert": {
       "title": "Investment Expert",
       "description": "Investment Expert offers guidance on investment planning, portfolio diversification, and wealth-building strategies."
@@ -130,4 +134,3 @@
     }
   }
 }
-

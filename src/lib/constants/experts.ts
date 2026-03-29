@@ -98,6 +98,11 @@ export const EXPERT_CATEGORIES: Record<ExpertDomain, ExpertSpecialization[]> = {
       value: "Academic Scholars",
       i18nKey: "specializations.academic-scholars",
     },
+    {
+      slug: "educator",
+      value: "Educator",
+      i18nKey: "specializations.educator",
+    },
   ],
   finance: [
     {

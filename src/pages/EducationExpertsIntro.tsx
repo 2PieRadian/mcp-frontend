@@ -10,6 +10,7 @@ import {
   Brain,
   GraduationCap,
   Lightbulb,
+  School,
   type LucideIcon,
 } from "lucide-react";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
@@ -22,6 +23,7 @@ const EDUCATION_ICONS: Record<string, LucideIcon> = {
   Achievers: Target,
   Aspirants: Brain,
   "Academic Scholars": GraduationCap,
+  Educator: School,
 };
 
 // Catchier accent colors for education
@@ -32,6 +34,7 @@ const EDUCATION_COLORS: Record<string, string> = {
   Achievers: "#F59E0B", // gold/amber (achievement)
   Aspirants: "#8B5CF6", // violet (ambition / potential)
   "Academic Scholars": "#22C55E", // green (growth / mastery)
+  Educator: "#0EA5E9", // sky (teaching / clarity in the classroom)
 };
 
 interface ExpertCategoryCardProps {
