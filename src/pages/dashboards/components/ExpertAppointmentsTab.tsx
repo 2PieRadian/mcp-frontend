@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
   Calendar,
@@ -13,13 +14,20 @@ import {
   CalendarClock,
   Radio,
   User,
+  XCircle,
+  UserX,
+  Ban,
 } from "lucide-react";
-import type { ExpertAppointment, AppointmentStatus } from "../../../lib/api";
+import {
+  isTerminalAppointmentStatus,
+  type ExpertAppointment,
+  type AppointmentStatus,
+} from "../../../lib/api";
 
 const STATUS_VALUES: ("" | AppointmentStatus)[] = [
   "",
   "SCHEDULED",
-  "ONGOING",
+  "IN_PROGRESS",
   "COMPLETED",
 ];
 const STATUS_KEYS = [
@@ -86,50 +94,64 @@ function CommunicationChip({ medium }: { medium: string }) {
   );
 }
 
-const STATUS_CONFIG_KEYS: Record<
-  AppointmentStatus,
-  | "dashboardFilterScheduled"
-  | "dashboardFilterOngoing"
-  | "dashboardFilterCompleted"
-> = {
-  SCHEDULED: "dashboardFilterScheduled",
-  ONGOING: "dashboardFilterOngoing",
-  COMPLETED: "dashboardFilterCompleted",
-};
-
 function StatusBadge({ status }: { status: AppointmentStatus }) {
   const { t } = useTranslation("common");
-  const key = STATUS_CONFIG_KEYS[status] ?? "dashboardFilterCompleted";
-  const config = {
-    label: t(key),
-    icon:
-      status === "SCHEDULED" ? (
-        <CalendarClock className="w-3.5 h-3.5" />
-      ) : status === "ONGOING" ? (
-        <Radio className="w-3.5 h-3.5" />
-      ) : (
-        <CheckCircle2 className="w-3.5 h-3.5" />
-      ),
-    badge:
-      status === "SCHEDULED"
-        ? "bg-amber-50 text-amber-800 border border-amber-200"
-        : status === "ONGOING"
-          ? "bg-blue-50 text-blue-800 border border-blue-200"
-          : "bg-emerald-50 text-emerald-800 border border-emerald-200",
-    dot:
-      status === "SCHEDULED"
-        ? "bg-amber-500"
-        : status === "ONGOING"
-          ? "bg-blue-500"
-          : "bg-emerald-500",
-  };
+  let label: string;
+  let icon: ReactNode;
+  let badge: string;
+  let dot: string;
+
+  switch (status) {
+    case "SCHEDULED":
+      label = t("dashboardFilterScheduled");
+      icon = <CalendarClock className="w-3.5 h-3.5" />;
+      badge = "bg-amber-50 text-amber-800 border border-amber-200";
+      dot = "bg-amber-500";
+      break;
+    case "IN_PROGRESS":
+      label = t("dashboardFilterOngoing");
+      icon = <Radio className="w-3.5 h-3.5" />;
+      badge = "bg-blue-50 text-blue-800 border border-blue-200";
+      dot = "bg-blue-500";
+      break;
+    case "COMPLETED":
+      label = t("dashboardFilterCompleted");
+      icon = <CheckCircle2 className="w-3.5 h-3.5" />;
+      badge = "bg-emerald-50 text-emerald-800 border border-emerald-200";
+      dot = "bg-emerald-500";
+      break;
+    case "FAILED":
+      label = t("dashboardFilterFailed");
+      icon = <XCircle className="w-3.5 h-3.5" />;
+      badge = "bg-red-50 text-red-800 border border-red-200";
+      dot = "bg-red-500";
+      break;
+    case "NO_SHOW":
+      label = t("dashboardFilterNoShow");
+      icon = <UserX className="w-3.5 h-3.5" />;
+      badge = "bg-orange-50 text-orange-900 border border-orange-200";
+      dot = "bg-orange-500";
+      break;
+    case "CANCELLED":
+      label = t("dashboardFilterCancelled");
+      icon = <Ban className="w-3.5 h-3.5" />;
+      badge = "bg-gray-100 text-gray-700 border border-gray-200";
+      dot = "bg-gray-400";
+      break;
+    default:
+      label = String(status);
+      icon = <CheckCircle2 className="w-3.5 h-3.5" />;
+      badge = "bg-gray-100 text-gray-700 border border-gray-200";
+      dot = "bg-gray-400";
+  }
+
   return (
     <span
-      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${config.badge}`}
+      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${badge}`}
     >
-      <span className={`w-1.5 h-1.5 rounded-full ${config.dot}`} />
-      {config.icon}
-      {config.label}
+      <span className={`w-1.5 h-1.5 rounded-full ${dot}`} />
+      {icon}
+      {label}
     </span>
   );
 }
@@ -155,6 +177,10 @@ function ExpertAppointmentCard({ apt }: { apt: ExpertAppointment }) {
   };
 
   const mins = durationMinutes(apt.startAt, apt.endAt);
+  const showMeetActions =
+    !!apt.meetLink && !isTerminalAppointmentStatus(apt.status);
+  const isVideoSession =
+    apt.communicationMedium?.toUpperCase() === "VIDEO";
 
   return (
     <article className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-200 border border-gray-100">
@@ -220,16 +246,35 @@ function ExpertAppointmentCard({ apt }: { apt: ExpertAppointment }) {
           )}
         </div>
 
-        {apt.meetLink && apt.status !== "COMPLETED" && (
+        {showMeetActions && (
           <div className="mt-5 pt-4 border-t border-gray-100 flex flex-wrap items-center gap-3">
+            {isVideoSession ? (
+              <Link
+                to={`/appointments/${apt.id}/video`}
+                className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#44666C] text-white rounded-xl font-semibold text-sm hover:bg-[#365a62] transition-colors shadow-sm"
+              >
+                <Video className="w-4 h-4" />
+                {t("dashboardJoinVideoTracked")}
+              </Link>
+            ) : (
+              <a
+                href={apt.meetLink!}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#44666C] text-white rounded-xl font-semibold text-sm hover:bg-[#365a62] transition-colors shadow-sm"
+              >
+                <ExternalLink className="w-4 h-4" />
+                {t("dashboardJoinSession")}
+              </a>
+            )}
             <a
-              href={apt.meetLink}
+              href={apt.meetLink!}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#44666C] text-white rounded-xl font-semibold text-sm hover:bg-[#365a62] transition-colors shadow-sm"
+              className="inline-flex items-center gap-2 px-4 py-2.5 border border-gray-200 text-gray-700 rounded-xl font-medium text-sm hover:bg-gray-50 transition-colors"
             >
               <ExternalLink className="w-4 h-4" />
-              {t("dashboardJoinSession")}
+              {t("dashboardOpenMeetingTab")}
             </a>
             <button
               type="button"

@@ -18,6 +18,7 @@ import Profile from "./pages/Profile";
 import OAuthCallback from "./pages/OAuthCallback";
 import ExpertsDashboard from "./pages/dashboards/ExpertsDashboard";
 import Dashboard from "./pages/Dashboard";
+import AppointmentVideoSession from "./pages/AppointmentVideoSession";
 import ExpertDetails from "./pages/ExpertDetails";
 import Wellness from "./pages/assessments/Wellness";
 import Finance from "./pages/assessments/Finance";
@@ -175,6 +176,10 @@ export default function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/dashboard/expert" element={<ExpertsDashboard />} />
+              <Route
+                path="/appointments/:appointmentId/video"
+                element={<AppointmentVideoSession />}
+              />
 
               {/* Legal Pages */}
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />

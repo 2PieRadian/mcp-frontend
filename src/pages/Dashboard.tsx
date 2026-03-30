@@ -1,10 +1,17 @@
-import { useState, useEffect, useCallback } from "react";
-import { Navigate } from "react-router-dom";
+import {
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+  type ReactNode,
+} from "react";
+import { Link, Navigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context/AuthContext";
 import Layout from "../components/Layout";
 import {
   getMyAppointments,
+  isTerminalAppointmentStatus,
   type MyAppointment,
   type AppointmentStatus,
 } from "../lib/api";
@@ -20,10 +27,23 @@ import {
   CheckCircle2,
   CalendarClock,
   Radio,
+  XCircle,
+  UserX,
+  Ban,
 } from "lucide-react";
 
-const STATUS_VALUES: ("" | AppointmentStatus)[] = ["", "SCHEDULED", "ONGOING", "COMPLETED"];
-const STATUS_KEYS = ["dashboardFilterAll", "dashboardFilterScheduled", "dashboardFilterOngoing", "dashboardFilterCompleted"] as const;
+const STATUS_VALUES: ("" | AppointmentStatus)[] = [
+  "",
+  "SCHEDULED",
+  "IN_PROGRESS",
+  "COMPLETED",
+];
+const STATUS_KEYS = [
+  "dashboardFilterAll",
+  "dashboardFilterScheduled",
+  "dashboardFilterOngoing",
+  "dashboardFilterCompleted",
+] as const;
 
 function formatDate(iso: string): string {
   const d = new Date(iso);
@@ -57,51 +77,96 @@ function getExpertInitial(name: string | null, email: string): string {
 function CommunicationChip({ medium }: { medium: string }) {
   const { t } = useTranslation("common");
   const m = medium?.toUpperCase() || "";
-  const labels: Record<string, string> = { VIDEO: t("dashboardModeVideo"), CALL: t("dashboardModeCall"), CHAT: t("dashboardModeChat") };
+  const labels: Record<string, string> = {
+    VIDEO: t("dashboardModeVideo"),
+    CALL: t("dashboardModeCall"),
+    CHAT: t("dashboardModeChat"),
+  };
   const label = labels[m] || medium;
   const iconClass = "w-4 h-4 shrink-0";
   return (
     <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-gray-100 text-gray-700 text-sm font-medium">
       {m === "VIDEO" && <Video className={iconClass} />}
       {m === "CALL" && <Phone className={iconClass} />}
-      {(m === "CHAT" || !["VIDEO", "CALL"].includes(m)) && <MessageCircle className={iconClass} />}
+      {(m === "CHAT" || !["VIDEO", "CALL"].includes(m)) && (
+        <MessageCircle className={iconClass} />
+      )}
       {label}
     </span>
   );
 }
 
-const STATUS_CONFIG_KEYS: Record<AppointmentStatus, "dashboardFilterScheduled" | "dashboardFilterOngoing" | "dashboardFilterCompleted"> = {
-  SCHEDULED: "dashboardFilterScheduled",
-  ONGOING: "dashboardFilterOngoing",
-  COMPLETED: "dashboardFilterCompleted",
-};
-
 function StatusBadge({ status }: { status: AppointmentStatus }) {
   const { t } = useTranslation("common");
-  const key = STATUS_CONFIG_KEYS[status] ?? "dashboardFilterCompleted";
-  const config = {
-    label: t(key),
-    icon: status === "SCHEDULED" ? <CalendarClock className="w-3.5 h-3.5" /> : status === "ONGOING" ? <Radio className="w-3.5 h-3.5" /> : <CheckCircle2 className="w-3.5 h-3.5" />,
-    badge: status === "SCHEDULED" ? "bg-amber-50 text-amber-800 border border-amber-200" : status === "ONGOING" ? "bg-blue-50 text-blue-800 border border-blue-200" : "bg-emerald-50 text-emerald-800 border border-emerald-200",
-    dot: status === "SCHEDULED" ? "bg-amber-500" : status === "ONGOING" ? "bg-blue-500" : "bg-emerald-500",
-  };
+  let label: string;
+  let icon: ReactNode;
+  let badge: string;
+  let dot: string;
+
+  switch (status) {
+    case "SCHEDULED":
+      label = t("dashboardFilterScheduled");
+      icon = <CalendarClock className="w-3.5 h-3.5" />;
+      badge = "bg-amber-50 text-amber-800 border border-amber-200";
+      dot = "bg-amber-500";
+      break;
+    case "IN_PROGRESS":
+      label = t("dashboardFilterOngoing");
+      icon = <Radio className="w-3.5 h-3.5" />;
+      badge = "bg-blue-50 text-blue-800 border border-blue-200";
+      dot = "bg-blue-500";
+      break;
+    case "COMPLETED":
+      label = t("dashboardFilterCompleted");
+      icon = <CheckCircle2 className="w-3.5 h-3.5" />;
+      badge = "bg-emerald-50 text-emerald-800 border border-emerald-200";
+      dot = "bg-emerald-500";
+      break;
+    case "FAILED":
+      label = t("dashboardFilterFailed");
+      icon = <XCircle className="w-3.5 h-3.5" />;
+      badge = "bg-red-50 text-red-800 border border-red-200";
+      dot = "bg-red-500";
+      break;
+    case "NO_SHOW":
+      label = t("dashboardFilterNoShow");
+      icon = <UserX className="w-3.5 h-3.5" />;
+      badge = "bg-orange-50 text-orange-900 border border-orange-200";
+      dot = "bg-orange-500";
+      break;
+    case "CANCELLED":
+      label = t("dashboardFilterCancelled");
+      icon = <Ban className="w-3.5 h-3.5" />;
+      badge = "bg-gray-100 text-gray-700 border border-gray-200";
+      dot = "bg-gray-400";
+      break;
+    default:
+      label = String(status);
+      icon = <CheckCircle2 className="w-3.5 h-3.5" />;
+      badge = "bg-gray-100 text-gray-700 border border-gray-200";
+      dot = "bg-gray-400";
+  }
+
   return (
     <span
-      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${config.badge}`}
+      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${badge}`}
     >
-      <span className={`w-1.5 h-1.5 rounded-full ${config.dot}`} />
-      {config.icon}
-      {config.label}
+      <span className={`w-1.5 h-1.5 rounded-full ${dot}`} />
+      {icon}
+      {label}
     </span>
   );
 }
 
 function AppointmentCard({ apt }: { apt: MyAppointment }) {
   const { t } = useTranslation("common");
-  const expertName = apt.expert?.user?.name || apt.expert?.user?.email || t("expertFallbackName");
+  const expertName =
+    apt.expert?.user?.name ||
+    apt.expert?.user?.email ||
+    t("expertFallbackName");
   const initial = getExpertInitial(
     apt.expert?.user?.name ?? null,
-    apt.expert?.user?.email ?? ""
+    apt.expert?.user?.email ?? "",
   );
   const [copied, setCopied] = useState(false);
 
@@ -113,10 +178,12 @@ function AppointmentCard({ apt }: { apt: MyAppointment }) {
     }
   };
 
+  const showMeetActions =
+    !!apt.meetLink && !isTerminalAppointmentStatus(apt.status);
+  const isVideoSession = apt.communicationMedium?.toUpperCase() === "VIDEO";
+
   return (
-    <article
-      className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-200 border border-gray-100"
-    >
+    <article className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-200 border border-gray-100">
       <div className="p-5 sm:p-6">
         {/* Top row: Expert + Status */}
         <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
@@ -125,8 +192,12 @@ function AppointmentCard({ apt }: { apt: MyAppointment }) {
               {initial}
             </div>
             <div className="min-w-0">
-              <h3 className="text-lg font-bold text-[#304048] truncate">{expertName}</h3>
-              <p className="text-sm text-gray-500 mt-0.5">Appointment #{apt.id}</p>
+              <h3 className="text-lg font-bold text-[#304048] truncate">
+                {expertName}
+              </h3>
+              <p className="text-sm text-gray-500 mt-0.5">
+                Appointment #{apt.id}
+              </p>
             </div>
           </div>
           <StatusBadge status={apt.status} />
@@ -154,17 +225,36 @@ function AppointmentCard({ apt }: { apt: MyAppointment }) {
           )}
         </div>
 
-        {/* Meeting link CTA */}
-        {apt.meetLink && apt.status !== "COMPLETED" && (
+        {/* Meeting link CTA — tracked video uses in-app Jitsi + session APIs */}
+        {showMeetActions && (
           <div className="mt-5 pt-4 border-t border-gray-100 flex flex-wrap items-center gap-3">
+            {isVideoSession ? (
+              <Link
+                to={`/appointments/${apt.id}/video`}
+                className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#44666C] text-white rounded-xl font-semibold text-sm hover:bg-[#365a62] transition-colors shadow-sm"
+              >
+                <Video className="w-4 h-4" />
+                {t("dashboardJoinVideoTracked")}
+              </Link>
+            ) : (
+              <a
+                href={apt.meetLink!}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#44666C] text-white rounded-xl font-semibold text-sm hover:bg-[#365a62] transition-colors shadow-sm"
+              >
+                <ExternalLink className="w-4 h-4" />
+                {t("dashboardJoinSession")}
+              </a>
+            )}
             <a
-              href={apt.meetLink}
+              href={apt.meetLink!}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#44666C] text-white rounded-xl font-semibold text-sm hover:bg-[#365a62] transition-colors shadow-sm"
+              className="inline-flex items-center gap-2 px-4 py-2.5 border border-gray-200 text-gray-700 rounded-xl font-medium text-sm hover:bg-gray-50 transition-colors"
             >
               <ExternalLink className="w-4 h-4" />
-              Join meeting
+              {t("dashboardOpenMeetingTab")}
             </a>
             <button
               type="button"
@@ -191,21 +281,20 @@ function AppointmentCard({ apt }: { apt: MyAppointment }) {
 }
 
 export default function Dashboard() {
-  const { user, isLoading } = useAuth();
+  const { user, isLoading, refreshUserFromServer } = useAuth();
   const [appointments, setAppointments] = useState<MyAppointment[]>([]);
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<"" | AppointmentStatus>("");
   const { t } = useTranslation("common");
+  const dashboardSessionSynced = useRef(false);
 
   const fetchAppointments = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await getMyAppointments(
-        statusFilter || undefined
-      );
+      const res = await getMyAppointments(statusFilter || undefined);
       setAppointments(res.appointments);
       setCount(res.count);
     } catch (e) {
@@ -220,8 +309,12 @@ export default function Dashboard() {
   useEffect(() => {
     if (user?.role === "EXPERT") return;
     if (!user) return;
-    fetchAppointments();
-  }, [user, fetchAppointments]);
+    if (!dashboardSessionSynced.current) {
+      dashboardSessionSynced.current = true;
+      void refreshUserFromServer();
+    }
+    void fetchAppointments();
+  }, [user, fetchAppointments, refreshUserFromServer]);
 
   if (!isLoading && !user) {
     return <Navigate to="/login" replace />;
@@ -259,10 +352,11 @@ export default function Dashboard() {
             <button
               key={value || "all"}
               onClick={() => setStatusFilter(value)}
-              className={`px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${statusFilter === value
+              className={`px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${
+                statusFilter === value
                   ? "bg-[#44666C] text-white shadow-sm"
                   : "bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-800"
-                }`}
+              }`}
             >
               {t(STATUS_KEYS[i])}
             </button>
@@ -288,7 +382,9 @@ export default function Dashboard() {
             <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center mx-auto mb-5">
               <Calendar className="w-8 h-8 text-gray-500" />
             </div>
-            <h3 className="text-lg font-semibold text-[#304048] mb-2">{t("dashboardNoAppointmentsYet")}</h3>
+            <h3 className="text-lg font-semibold text-[#304048] mb-2">
+              {t("dashboardNoAppointmentsYet")}
+            </h3>
             <p className="text-gray-500 text-sm max-w-sm mx-auto">
               {statusFilter
                 ? t("dashboardNoAppointmentsFilter")

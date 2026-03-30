@@ -2,7 +2,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import ImageViewer from "../components/ImageViewer";
-import { lazy, useState, useRef } from "react";
+import { lazy, useState, useRef, useEffect } from "react";
 import { AlertTriangle, X, CheckCircle2, XCircle, Eye, Upload } from "lucide-react";
 import googleIcon from "../assets/google.svg";
 import { useTranslation } from "react-i18next";
@@ -21,7 +21,8 @@ const ChangePasswordCard = lazy(
 const LanguagesCard = lazy(() => import("../components/profile/LanguagesCard"));
 
 export default function Profile() {
-  const { user, isLoading, logout, updateUserAvatar } = useAuth();
+  const { user, isLoading, logout, updateUserAvatar, refreshUserFromServer } =
+    useAuth();
   const navigate = useNavigate();
   const { t } = useTranslation("profile");
   const [imageError, setImageError] = useState(false);
@@ -35,6 +36,10 @@ export default function Profile() {
     message: string;
   }>({ show: false, type: "success", message: "" });
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    void refreshUserFromServer();
+  }, [refreshUserFromServer]);
 
   const displayName = user?.name || user?.email || "";
   const initial = displayName?.charAt(0)?.toUpperCase() ?? "?";

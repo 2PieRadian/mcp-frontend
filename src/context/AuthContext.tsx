@@ -2,10 +2,11 @@ import {
   createContext,
   useContext,
   useState,
-  useEffect,
+  useCallback,
   type ReactNode,
 } from "react";
 import { BACKEND_URL, getAvatarUrl } from "../lib/api";
+import { isJwtExpired, readInitialSessionUser } from "../lib/authSession";
 
 export type AuthUser = {
   id?: string;
@@ -54,82 +55,83 @@ function mapApiUserToAuthUser(u: Record<string, unknown> | null | undefined): Au
 
 type AuthContextValue = {
   user: AuthUser | null;
+  /** False after first paint: session is hydrated from cache/JWT without /me. */
   isLoading: boolean;
   login: (user: AuthUser) => void;
   logout: () => void;
   updateUserAvatar: (avatarUrl: string) => void;
   /** Apply user from API (e.g. update-phone response) to context. */
   updateUserFromApi: (apiUser: Record<string, unknown>) => void;
+  /** Fetch current user from /me (profile, dashboard, booking, etc.). */
+  refreshUserFromServer: () => Promise<boolean>;
 };
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<AuthUser | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState<AuthUser | null>(() => {
+    if (typeof window === "undefined") return null;
+    return readInitialSessionUser() as AuthUser | null;
+  });
+  const [isLoading] = useState(false);
 
-  // On first load, validate token by calling /me and only then set the user.
-  useEffect(() => {
+  const refreshUserFromServer = useCallback(async (): Promise<boolean> => {
     const token = window.localStorage.getItem("auth:token");
-
     if (!token) {
-      // No token -> not logged in
       setUser(null);
-      setIsLoading(false);
-      return;
+      return false;
+    }
+    if (isJwtExpired(token)) {
+      setUser(null);
+      window.localStorage.removeItem("auth:user");
+      window.localStorage.removeItem("auth:token");
+      return false;
     }
 
-    const fetchMe = async () => {
-      try {
-        const endpoints = [
-          `${BACKEND_URL}/api/v1/auth/me`,
-          `${BACKEND_URL}/api/v1/me`,
-        ];
+    try {
+      const endpoints = [
+        `${BACKEND_URL}/api/v1/auth/me`,
+        `${BACKEND_URL}/api/v1/me`,
+      ];
+      let lastError: unknown = null;
 
-        let lastError: unknown = null;
+      for (const url of endpoints) {
+        try {
+          const response = await fetch(url, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
 
-        for (const url of endpoints) {
-          try {
-            const response = await fetch(url, {
-              headers: { Authorization: `Bearer ${token}` },
-            });
-
-            if (!response.ok) {
-              lastError = new Error(
-                `Failed to fetch current user (${response.status})`
-              );
-              continue;
-            }
-
-            const data = await response.json();
-            const u = data?.user ?? data;
-            const mapped = mapApiUserToAuthUser(u);
-
-            if (!mapped) {
-              throw new Error("Invalid /me response: missing email");
-            }
-
-            setUser(mapped);
-            window.localStorage.setItem("auth:user", JSON.stringify(mapped));
-            return;
-          } catch (err) {
-            lastError = err;
+          if (!response.ok) {
+            lastError = new Error(
+              `Failed to fetch current user (${response.status})`,
+            );
+            continue;
           }
+
+          const data = await response.json();
+          const u = data?.user ?? data;
+          const mapped = mapApiUserToAuthUser(u);
+
+          if (!mapped) {
+            throw new Error("Invalid /me response: missing email");
+          }
+
+          setUser(mapped);
+          window.localStorage.setItem("auth:user", JSON.stringify(mapped));
+          return true;
+        } catch (err) {
+          lastError = err;
         }
-
-        throw lastError ?? new Error("Failed to fetch current user");
-      } catch (error) {
-        // Token is missing/invalid/expired or user doesn't exist -> treat as logged out
-        console.warn("Auth /me validation failed; logging out.", error);
-        setUser(null);
-        window.localStorage.removeItem("auth:user");
-        window.localStorage.removeItem("auth:token");
-      } finally {
-        setIsLoading(false);
       }
-    };
 
-    fetchMe();
+      throw lastError ?? new Error("Failed to fetch current user");
+    } catch (error) {
+      console.warn("Auth /me refresh failed; logging out.", error);
+      setUser(null);
+      window.localStorage.removeItem("auth:user");
+      window.localStorage.removeItem("auth:token");
+      return false;
+    }
   }, []);
 
   const login = (user: AuthUser) => {
@@ -165,6 +167,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     logout,
     updateUserAvatar,
     updateUserFromApi,
+    refreshUserFromServer,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

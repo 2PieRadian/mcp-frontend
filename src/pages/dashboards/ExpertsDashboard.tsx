@@ -19,13 +19,13 @@ const ExpertAppointmentsTab = lazy(
   () => import("./components/ExpertAppointmentsTab"),
 );
 const AvailabilityManagementTab = lazy(
-  () => import("./components/AvailabilityManagementTab")
+  () => import("./components/AvailabilityManagementTab"),
 );
 const EarningsTab = lazy(() => import("./components/EarningsTab"));
 
 export default function ExpertsDashboard() {
   const { t } = useTranslation("common");
-  const { user } = useAuth();
+  const { user, refreshUserFromServer } = useAuth();
   const {
     availability,
     isLoading: isAvailabilityLoading,
@@ -45,7 +45,9 @@ export default function ExpertsDashboard() {
     useState<WeeklyAvailability>(availability);
   const [isEditingAvailability, setIsEditingAvailability] = useState(false);
   const [isSavingAvailability, setIsSavingAvailability] = useState(false);
-  const [expertEarnings, setExpertEarnings] = useState<number | undefined>(undefined);
+  const [expertEarnings, setExpertEarnings] = useState<number | undefined>(
+    undefined,
+  );
   const [expertAppointmentsLoading, setExpertAppointmentsLoading] =
     useState(false);
   const [expertAppointmentsError, setExpertAppointmentsError] = useState<
@@ -65,6 +67,16 @@ export default function ExpertsDashboard() {
       navigate("/");
     }
   }, [user, navigate]);
+
+  useEffect(() => {
+    if (user?.role !== "EXPERT") return;
+    void refreshUserFromServer();
+  }, [user?.role, refreshUserFromServer]);
+
+  useEffect(() => {
+    if (user?.role !== "EXPERT" || user.expertId == null) return;
+    void refreshAvailability();
+  }, [user?.role, user?.expertId, refreshAvailability]);
 
   const fetchExpertAppointments = useCallback(async () => {
     if (user?.role !== "EXPERT") return;
@@ -203,13 +215,13 @@ export default function ExpertsDashboard() {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({ slots: bodySlots }),
-        }
+        },
       );
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(
-          errorData.message || t("dashboardFailedToUpdateAvailability")
+          errorData.message || t("dashboardFailedToUpdateAvailability"),
         );
       }
 
@@ -240,7 +252,11 @@ export default function ExpertsDashboard() {
           </p>
         </div>
 
-        <Suspense fallback={<div className="text-center py-8">{t("dashboardLoading")}</div>}>
+        <Suspense
+          fallback={
+            <div className="text-center py-8">{t("dashboardLoading")}</div>
+          }
+        >
           <DashboardTabs activeTab={activeTab} onTabChange={setActiveTab} />
         </Suspense>
 

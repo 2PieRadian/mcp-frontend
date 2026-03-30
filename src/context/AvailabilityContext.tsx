@@ -2,7 +2,6 @@ import {
   createContext,
   useContext,
   useState,
-  useEffect,
   useCallback,
   type ReactNode,
 } from "react";
@@ -120,11 +119,6 @@ export function AvailabilityProvider({ children }: { children: ReactNode }) {
 
   const refreshAvailability = useCallback(async () => {
     await fetchAvailability();
-  }, [fetchAvailability]);
-
-  // Fetch availability when user changes or when component mounts
-  useEffect(() => {
-    fetchAvailability();
   }, [fetchAvailability]);
 
   const value: AvailabilityContextValue = {

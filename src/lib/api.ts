@@ -1,5 +1,5 @@
-export const BACKEND_URL = "https://api.mindcurepath.com";
-// export const BACKEND_URL = "http://localhost:3000";
+// export const BACKEND_URL = "https://api.mindcurepath.com";
+export const BACKEND_URL = "http://localhost:3000";
 
 /**
  * Constructs a full avatar URL from a backend avatar value.
@@ -160,11 +160,11 @@ export async function verifyPayment(
 }
 
 /**
- * Update appointment status (ONGOING | COMPLETED).
+ * Manual lifecycle (optional). Allowed: SCHEDULED → IN_PROGRESS → COMPLETED.
  */
 export async function updateAppointmentStatus(
   appointmentId: number,
-  status: "ONGOING" | "COMPLETED",
+  status: "IN_PROGRESS" | "COMPLETED",
 ): Promise<{ message: string; earnings?: number }> {
   const res = await fetch(
     `${BACKEND_URL}/api/v1/appointments/${appointmentId}/status`,
@@ -186,8 +186,144 @@ export async function updateAppointmentStatus(
   return data as { message: string; earnings?: number };
 }
 
-/** Appointment status. */
-export type AppointmentStatus = "SCHEDULED" | "ONGOING" | "COMPLETED";
+/** Appointment status (API). Legacy ONGOING is normalized to IN_PROGRESS. */
+export type AppointmentStatus =
+  | "SCHEDULED"
+  | "IN_PROGRESS"
+  | "COMPLETED"
+  | "FAILED"
+  | "NO_SHOW"
+  | "CANCELLED";
+
+export function normalizeAppointmentStatus(raw: string): AppointmentStatus {
+  if (raw === "ONGOING") return "IN_PROGRESS";
+  if (
+    raw === "SCHEDULED" ||
+    raw === "IN_PROGRESS" ||
+    raw === "COMPLETED" ||
+    raw === "FAILED" ||
+    raw === "NO_SHOW" ||
+    raw === "CANCELLED"
+  ) {
+    return raw;
+  }
+  return raw as AppointmentStatus;
+}
+
+export function isTerminalAppointmentStatus(
+  status: AppointmentStatus,
+): boolean {
+  return (
+    status === "COMPLETED" ||
+    status === "FAILED" ||
+    status === "NO_SHOW" ||
+    status === "CANCELLED"
+  );
+}
+
+export type AppointmentSessionParticipantBody = {
+  participantId: number | string;
+  role: "USER" | "EXPERT";
+};
+
+export type AppointmentSessionActionResponse = {
+  message?: string;
+  unchanged?: boolean;
+  appointment?: {
+    id?: number;
+    status?: AppointmentStatus;
+    [key: string]: unknown;
+  };
+};
+
+async function postAppointmentSessionAction(
+  appointmentId: number,
+  pathSegment: "join" | "heartbeat" | "leave",
+  body: AppointmentSessionParticipantBody,
+): Promise<AppointmentSessionActionResponse> {
+  const res = await fetch(
+    `${BACKEND_URL}/api/v1/appointments/${appointmentId}/${pathSegment}`,
+    {
+      method: "POST",
+      headers: getAuthHeaders(),
+      body: JSON.stringify(body),
+    },
+  );
+
+  const data = (await res.json().catch(() => ({}))) as
+    AppointmentSessionActionResponse & { message?: string };
+
+  if (!res.ok) {
+    throw new Error(
+      (data?.message as string) ||
+      (res.status === 401
+        ? "Unauthorized"
+        : res.status === 403
+          ? "Forbidden"
+          : res.status === 404
+            ? "Appointment not found"
+            : "Session request failed"),
+    );
+  }
+
+  if (data.appointment?.status) {
+    data.appointment = {
+      ...data.appointment,
+      status: normalizeAppointmentStatus(String(data.appointment.status)),
+    };
+  }
+
+  return data;
+}
+
+/** User or expert entered the Jitsi conference (idempotent on server). */
+export function postAppointmentJoin(
+  appointmentId: number,
+  body: AppointmentSessionParticipantBody,
+): Promise<AppointmentSessionActionResponse> {
+  return postAppointmentSessionAction(appointmentId, "join", body);
+}
+
+export function postAppointmentHeartbeat(
+  appointmentId: number,
+  body: AppointmentSessionParticipantBody,
+): Promise<AppointmentSessionActionResponse> {
+  return postAppointmentSessionAction(appointmentId, "heartbeat", body);
+}
+
+export function postAppointmentLeave(
+  appointmentId: number,
+  body: AppointmentSessionParticipantBody,
+): Promise<AppointmentSessionActionResponse> {
+  return postAppointmentSessionAction(appointmentId, "leave", body);
+}
+
+/** Best-effort leave when the tab is closing (no await). */
+export function leaveAppointmentSessionKeepalive(
+  appointmentId: number,
+  body: AppointmentSessionParticipantBody,
+): void {
+  const token =
+    window.localStorage.getItem("auth:token") ||
+    window.localStorage.getItem("token");
+  if (!token) return;
+  try {
+    void fetch(
+      `${BACKEND_URL}/api/v1/appointments/${appointmentId}/leave`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(body),
+        keepalive: true,
+      },
+    ).catch(() => { });
+  } catch {
+    /* ignore */
+  }
+}
 
 /** Expert user (no password). */
 export type ExpertUser = {
@@ -252,7 +388,7 @@ export type MyAppointmentsResponse = {
  * Get all appointments for the current user. Optional status filter.
  */
 export async function getMyAppointments(
-  status?: "SCHEDULED" | "ONGOING" | "COMPLETED",
+  status?: AppointmentStatus,
 ): Promise<MyAppointmentsResponse> {
   const url = new URL(`${BACKEND_URL}/api/v1/appointments/my-appointments`);
   if (status) url.searchParams.set("status", status);
@@ -271,7 +407,14 @@ export async function getMyAppointments(
     );
   }
 
-  return data as MyAppointmentsResponse;
+  const raw = data as MyAppointmentsResponse;
+  return {
+    ...raw,
+    appointments: (raw.appointments || []).map((a) => ({
+      ...a,
+      status: normalizeAppointmentStatus(String(a.status)),
+    })),
+  };
 }
 
 export type ExpertAppointmentsResponse = {
@@ -309,7 +452,14 @@ export async function getExpertAppointments(
     );
   }
 
-  return data as ExpertAppointmentsResponse;
+  const raw = data as ExpertAppointmentsResponse;
+  return {
+    ...raw,
+    appointments: (raw.appointments || []).map((a) => ({
+      ...a,
+      status: normalizeAppointmentStatus(String(a.status)),
+    })),
+  };
 }
 
 /** Client user in expert upcoming session (no password). */
@@ -328,7 +478,7 @@ export type ExpertUpcomingSession = {
   amount: number;
   startAt: string;
   endAt: string;
-  status: string;
+  status: AppointmentStatus;
   meetLink: string | null;
   user: ExpertSessionUser;
 };
@@ -340,7 +490,7 @@ export type ExpertUpcomingSessionsResponse = {
 };
 
 /**
- * Get upcoming sessions for the logged-in expert (SCHEDULED, ONGOING, startAt >= now).
+ * Get upcoming sessions for the logged-in expert (SCHEDULED, IN_PROGRESS, startAt >= now).
  */
 export async function getExpertUpcomingSessions(): Promise<ExpertUpcomingSessionsResponse> {
   const res = await fetch(
@@ -361,7 +511,14 @@ export async function getExpertUpcomingSessions(): Promise<ExpertUpcomingSession
     );
   }
 
-  return data as ExpertUpcomingSessionsResponse;
+  const raw = data as ExpertUpcomingSessionsResponse;
+  return {
+    ...raw,
+    sessions: (raw.sessions || []).map((s) => ({
+      ...s,
+      status: normalizeAppointmentStatus(String(s.status)),
+    })),
+  };
 }
 
 export type ExpertEarningsResponse = {
