@@ -3,10 +3,15 @@ import {
   useContext,
   useState,
   useCallback,
+  useRef,
   type ReactNode,
 } from "react";
 import { BACKEND_URL, getAvatarUrl } from "../lib/api";
 import { isJwtExpired, readInitialSessionUser } from "../lib/authSession";
+import {
+  clearAllAuthPersistence,
+  clearAuthTokensAndUserCache,
+} from "../lib/authStorage";
 
 export type AuthUser = {
   id?: string;
@@ -64,27 +69,42 @@ type AuthContextValue = {
   updateUserFromApi: (apiUser: Record<string, unknown>) => void;
   /** Fetch current user from /me (profile, dashboard, booking, etc.). */
   refreshUserFromServer: () => Promise<boolean>;
+  /** Re-read JWT + cached user from storage (e.g. home mount) without calling /me. */
+  syncSessionFromStorage: () => void;
 };
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
+  const refreshAbortRef = useRef<AbortController | null>(null);
+
   const [user, setUser] = useState<AuthUser | null>(() => {
     if (typeof window === "undefined") return null;
     return readInitialSessionUser() as AuthUser | null;
   });
   const [isLoading] = useState(false);
 
+  const abortInFlightRefresh = useCallback(() => {
+    refreshAbortRef.current?.abort();
+    refreshAbortRef.current = null;
+  }, []);
+
   const refreshUserFromServer = useCallback(async (): Promise<boolean> => {
+    abortInFlightRefresh();
+    const ac = new AbortController();
+    refreshAbortRef.current = ac;
+    const { signal } = ac;
+
     const token = window.localStorage.getItem("auth:token");
     if (!token) {
-      setUser(null);
+      if (!signal.aborted) setUser(null);
       return false;
     }
     if (isJwtExpired(token)) {
-      setUser(null);
-      window.localStorage.removeItem("auth:user");
-      window.localStorage.removeItem("auth:token");
+      if (!signal.aborted) {
+        setUser(null);
+        clearAuthTokensAndUserCache();
+      }
       return false;
     }
 
@@ -99,6 +119,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         try {
           const response = await fetch(url, {
             headers: { Authorization: `Bearer ${token}` },
+            signal,
           });
 
           if (!response.ok) {
@@ -109,6 +130,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           }
 
           const data = await response.json();
+          if (signal.aborted) return false;
+
           const u = data?.user ?? data;
           const mapped = mapApiUserToAuthUser(u);
 
@@ -120,30 +143,42 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           window.localStorage.setItem("auth:user", JSON.stringify(mapped));
           return true;
         } catch (err) {
+          if (err instanceof DOMException && err.name === "AbortError") {
+            return false;
+          }
           lastError = err;
         }
       }
 
       throw lastError ?? new Error("Failed to fetch current user");
     } catch (error) {
+      if (error instanceof DOMException && error.name === "AbortError") {
+        return false;
+      }
       console.warn("Auth /me refresh failed; logging out.", error);
-      setUser(null);
-      window.localStorage.removeItem("auth:user");
-      window.localStorage.removeItem("auth:token");
+      if (!signal.aborted) {
+        setUser(null);
+        clearAuthTokensAndUserCache();
+      }
       return false;
     }
+  }, [abortInFlightRefresh]);
+
+  const syncSessionFromStorage = useCallback(() => {
+    setUser(readInitialSessionUser() as AuthUser | null);
   }, []);
 
-  const login = (user: AuthUser) => {
-    setUser(user);
-    window.localStorage.setItem("auth:user", JSON.stringify(user));
-  };
+  const login = useCallback((nextUser: AuthUser) => {
+    abortInFlightRefresh();
+    setUser(nextUser);
+    window.localStorage.setItem("auth:user", JSON.stringify(nextUser));
+  }, [abortInFlightRefresh]);
 
-  const logout = () => {
+  const logout = useCallback(() => {
+    abortInFlightRefresh();
     setUser(null);
-    window.localStorage.removeItem("auth:user");
-    window.localStorage.removeItem("auth:token");
-  };
+    clearAllAuthPersistence();
+  }, [abortInFlightRefresh]);
 
   const updateUserAvatar = (url: string) => {
     if (!user) return;
@@ -168,6 +203,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     updateUserAvatar,
     updateUserFromApi,
     refreshUserFromServer,
+    syncSessionFromStorage,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

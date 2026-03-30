@@ -37,6 +37,7 @@ import HelpCenter from "./pages/HelpCenter";
 import Articles from "./pages/Articles";
 import ArticleDetail from "./pages/ArticleDetail";
 import { useGoogleAnalytics } from "./hooks/useGoogleAnalytics";
+import LoginSuccessToast from "./components/LoginSuccessToast";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -78,6 +79,7 @@ export default function App() {
       <ExpertsProvider>
         <AvailabilityProvider>
           <BookingProvider>
+            <LoginSuccessToast />
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/login" element={<Login />} />

@@ -11,6 +11,7 @@ import AuthImage from "./AuthImage";
 import ForgotPasswordModal from "./ForgotPasswordModal";
 import { BACKEND_URL, getAvatarUrl } from "../lib/api";
 import { rememberRedirectForOAuth } from "../lib/loginRedirect";
+import { queueLoginSuccessToast } from "../lib/loginSuccessToast";
 
 type LoginFormProps = {
   /** Where to send the user after successful login (from ?redirect= or location.state). */
@@ -88,6 +89,7 @@ export default function LoginForm({ returnTo = "/" }: LoginFormProps) {
         hasPassword: true, // Regular login users have passwords
       });
 
+      queueLoginSuccessToast();
       navigate(returnTo, { replace: true });
     } catch (error: any) {
       console.error(error);

@@ -1,6 +1,7 @@
 {
   "appName": "MindCurePath",
   "login": "Login",
+  "loggedInSuccessfully": "Logged in successfully",
   "signup": "Signup",
   "home": "Home",
   "search": "Search",

@@ -15,8 +15,12 @@ const TOAST_DURATION_MS = 10_000;
 
 export default function UserDashboard() {
   const navigate = useNavigate();
-  const { user, isLoading } = useAuth();
+  const { user, isLoading, syncSessionFromStorage } = useAuth();
   const [showProfileToast, setShowProfileToast] = useState(false);
+
+  useEffect(() => {
+    syncSessionFromStorage();
+  }, [syncSessionFromStorage]);
 
   useEffect(() => {
     if (isLoading || !user) return;
@@ -37,7 +41,9 @@ export default function UserDashboard() {
             opacity: 0,
           }}
         >
-          <span className="whitespace-nowrap">Please Complete Your Profile</span>
+          <span className="whitespace-nowrap">
+            Please Complete Your Profile
+          </span>
           <button
             type="button"
             onClick={() => {
