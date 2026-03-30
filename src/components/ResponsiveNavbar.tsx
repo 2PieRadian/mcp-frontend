@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Menu, UserCircle2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import Navbar from "./Navbar";
@@ -6,6 +6,7 @@ import MobileNavModal from "./modals/MobileNavModal";
 import { useScreen } from "../context/ScreenContext";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { loginPathWithRedirect } from "../lib/loginRedirect";
 
 const textColor = "hsl(194,57%,17%)";
 
@@ -14,6 +15,7 @@ export default function ResponsiveNavbar() {
   const { user } = useAuth();
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const mobileMenuTriggerRef = useRef<HTMLButtonElement>(null);
   const { screenWidth } = useScreen();
 
   if (screenWidth <= 1140) {
@@ -65,24 +67,26 @@ export default function ResponsiveNavbar() {
                 ) : (
                   <Link
                     to="/profile"
-                    className={`group p-[6px] rounded-full border border-border-light transition-colors flex items-center justify-center shrink-0 ${location.pathname.startsWith("/profile")
-                      ? "bg-border-light text-white"
-                      : "hover:bg-border-light hover:text-white"
-                      }`}
+                    className={`group p-[6px] rounded-full border border-border-light transition-colors flex items-center justify-center shrink-0 ${
+                      location.pathname.startsWith("/profile")
+                        ? "bg-border-light text-white"
+                        : "hover:bg-border-light hover:text-white"
+                    }`}
                     aria-label="Profile"
                   >
                     <UserCircle2
                       size={32}
-                      className={`sm:w-[40px] sm:h-[40px] transition-colors ${location.pathname.startsWith("/profile")
-                        ? "text-white"
-                        : "text-logo-heading group-hover:text-white"
-                        }`}
+                      className={`sm:w-[40px] sm:h-[40px] transition-colors ${
+                        location.pathname.startsWith("/profile")
+                          ? "text-white"
+                          : "text-logo-heading group-hover:text-white"
+                      }`}
                     />
                   </Link>
                 )
               ) : (
                 <Link
-                  to="/login"
+                  to={loginPathWithRedirect(location.pathname, location.search)}
                   className={`border border-border-light text-[${textColor}] transition-all duration-200 cursor-pointer rounded-full px-[14px] sm:px-[20px] py-[6px] text-[13px] sm:text-[15px] bg-primary text-white hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)]`}
                 >
                   {t("login")}
@@ -91,6 +95,7 @@ export default function ResponsiveNavbar() {
 
               {/* Mobile Menu Button */}
               <button
+                ref={mobileMenuTriggerRef}
                 onClick={() => setIsMobileMenuOpen(true)}
                 className="rounded-full cursor-pointer"
                 aria-label="Open menu"
@@ -105,6 +110,7 @@ export default function ResponsiveNavbar() {
         <MobileNavModal
           isOpen={isMobileMenuOpen}
           onClose={() => setIsMobileMenuOpen(false)}
+          menuTriggerRef={mobileMenuTriggerRef}
         />
       </>
     );

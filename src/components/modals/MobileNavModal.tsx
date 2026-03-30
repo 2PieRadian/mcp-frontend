@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
   ChevronDown,
   ChevronRight,
@@ -7,6 +7,7 @@ import {
   Check,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { loginPathWithRedirect } from "../../lib/loginRedirect";
 import { useAuth } from "../../context/AuthContext";
 import { useTranslation } from "react-i18next";
 import { gsap } from "gsap";
@@ -14,6 +15,8 @@ import { gsap } from "gsap";
 interface MobileNavModalProps {
   isOpen: boolean;
   onClose: () => void;
+  /** Focus returns here when the drawer closes (avoids focus inside aria-hidden). */
+  menuTriggerRef?: React.RefObject<HTMLElement | null>;
 }
 
 function MobileNavItem({
@@ -66,6 +69,7 @@ const MOBILE_ASSESSMENTS: Record<
 export default function MobileNavModal({
   isOpen,
   onClose,
+  menuTriggerRef,
 }: MobileNavModalProps) {
   const { t, i18n } = useTranslation(["common", "navigation", "quiz"]);
   const { user } = useAuth();
@@ -73,6 +77,7 @@ export default function MobileNavModal({
   const [weHelpWithExpanded, setWeHelpWithExpanded] = useState(false);
   const [selfAssessmentExpanded, setSelfAssessmentExpanded] = useState(false);
   const [languageExpanded, setLanguageExpanded] = useState(false);
+  const rootRef = useRef<HTMLDivElement | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
   const expertCategoriesRef = useRef<HTMLDivElement | null>(null);
   const selfAssessmentRef = useRef<HTMLDivElement | null>(null);
@@ -218,6 +223,21 @@ export default function MobileNavModal({
     return () => window.clearTimeout(id);
   }, [isOpen]);
 
+  // When closed, nothing inside the aria-hidden wrapper may retain focus (browser a11y warning).
+  useLayoutEffect(() => {
+    if (isOpen) return;
+    const root = rootRef.current;
+    const active = document.activeElement;
+    if (!root || !active || !root.contains(active)) return;
+    if (active instanceof HTMLElement) {
+      if (menuTriggerRef?.current) {
+        menuTriggerRef.current.focus();
+      } else {
+        active.blur();
+      }
+    }
+  }, [isOpen, menuTriggerRef]);
+
   useEffect(() => {
     if (!isOpen) return;
 
@@ -290,20 +310,23 @@ export default function MobileNavModal({
 
   return (
     <div
+      ref={rootRef}
       className={`fixed inset-0 z-50 ${isOpen ? "" : "pointer-events-none"}`}
       aria-hidden={!isOpen}
     >
       {/* Backdrop with blur effect */}
       <div
-        className={`absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ease-out ${isOpen ? "opacity-100" : "opacity-0"
-          }`}
+        className={`absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ease-out ${
+          isOpen ? "opacity-100" : "opacity-0"
+        }`}
         onClick={isOpen ? onClose : undefined}
       />
 
       {/* Drawer */}
       <div
-        className={`absolute inset-y-0 left-0 w-screen bg-white flex flex-col shadow-2xl transform-gpu transition-transform duration-300 ease-out will-change-transform ${isOpen ? "translate-x-0" : "-translate-x-full"
-          }`}
+        className={`absolute inset-y-0 left-0 w-screen bg-white flex flex-col shadow-2xl transform-gpu transition-transform duration-300 ease-out will-change-transform ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
       >
         {/* Header with close button */}
         <div className="flex justify-between items-center px-[25px] py-[20px] border-b border-gray-200 shrink-0">
@@ -340,10 +363,11 @@ export default function MobileNavModal({
           {user?.role !== "EXPERT" && (
             <div>
               <div
-                className={`flex items-center justify-between cursor-pointer px-[20px] py-[14px] rounded-[16px] transition-colors duration-200 border ${weHelpWithExpanded
-                  ? "bg-gray-50 border-gray-200"
-                  : "border-transparent hover:bg-hover-bg"
-                  }`}
+                className={`flex items-center justify-between cursor-pointer px-[20px] py-[14px] rounded-[16px] transition-colors duration-200 border ${
+                  weHelpWithExpanded
+                    ? "bg-gray-50 border-gray-200"
+                    : "border-transparent hover:bg-hover-bg"
+                }`}
                 onClick={() => {
                   setWeHelpWithExpanded(!weHelpWithExpanded);
                   setSelfAssessmentExpanded(false);
@@ -354,8 +378,9 @@ export default function MobileNavModal({
                 </span>
                 <ChevronDown
                   size={15}
-                  className={`text-primary transition-transform duration-200 ${weHelpWithExpanded ? "rotate-180" : ""
-                    }`}
+                  className={`text-primary transition-transform duration-200 ${
+                    weHelpWithExpanded ? "rotate-180" : ""
+                  }`}
                 />
               </div>
 
@@ -404,10 +429,11 @@ export default function MobileNavModal({
           {user?.role !== "EXPERT" && (
             <div>
               <div
-                className={`flex items-center justify-between cursor-pointer px-[20px] py-[14px] rounded-[16px] transition-colors duration-200 border ${selfAssessmentExpanded
-                  ? "bg-gray-50 border-gray-200"
-                  : "border-transparent hover:bg-hover-bg"
-                  }`}
+                className={`flex items-center justify-between cursor-pointer px-[20px] py-[14px] rounded-[16px] transition-colors duration-200 border ${
+                  selfAssessmentExpanded
+                    ? "bg-gray-50 border-gray-200"
+                    : "border-transparent hover:bg-hover-bg"
+                }`}
                 onClick={() => {
                   setSelfAssessmentExpanded(!selfAssessmentExpanded);
                   setWeHelpWithExpanded(false);
@@ -418,8 +444,9 @@ export default function MobileNavModal({
                 </span>
                 <ChevronDown
                   size={15}
-                  className={`text-primary transition-transform duration-200 ${selfAssessmentExpanded ? "rotate-180" : ""
-                    }`}
+                  className={`text-primary transition-transform duration-200 ${
+                    selfAssessmentExpanded ? "rotate-180" : ""
+                  }`}
                 />
               </div>
 
@@ -433,12 +460,15 @@ export default function MobileNavModal({
                     (domain) => (
                       <div key={domain}>
                         <div className="text-[13px] font-medium text-gray-500 mt-3 first:mt-1 px-[14px] py-[4px]">
-                          {t(`common:${domain === "wellness"
-                            ? "wellnessAssessments"
-                            : domain === "education"
-                              ? "educationAssessments"
-                              : "financeAssessments"
-                            }`)}
+                          {t(
+                            `common:${
+                              domain === "wellness"
+                                ? "wellnessAssessments"
+                                : domain === "education"
+                                  ? "educationAssessments"
+                                  : "financeAssessments"
+                            }`,
+                          )}
                         </div>
                         {MOBILE_ASSESSMENTS[domain].map((a) => (
                           <Link
@@ -454,7 +484,7 @@ export default function MobileNavModal({
                           </Link>
                         ))}
                       </div>
-                    )
+                    ),
                   )}
                 </div>
               </div>
@@ -480,10 +510,11 @@ export default function MobileNavModal({
           {user ? (
             <Link
               to="/profile"
-              className={`group px-[25px] py-[12px] flex items-center gap-[12px] rounded-full transition-colors ${location.pathname.startsWith("/profile")
-                ? "bg-hover-bg"
-                : "hover:bg-hover-bg"
-                }`}
+              className={`group px-[25px] py-[12px] flex items-center gap-[12px] rounded-full transition-colors ${
+                location.pathname.startsWith("/profile")
+                  ? "bg-hover-bg"
+                  : "hover:bg-hover-bg"
+              }`}
               onClick={onClose}
             >
               <span className="text-light-text text-[16px]">
@@ -492,7 +523,7 @@ export default function MobileNavModal({
             </Link>
           ) : (
             <Link
-              to="/login"
+              to={loginPathWithRedirect(location.pathname, location.search)}
               className="px-[25px] py-[12px] text-primary transition-all duration-200 cursor-pointer rounded-full text-[16px] hover:bg-hover-bg"
               onClick={onClose}
             >
@@ -517,25 +548,28 @@ export default function MobileNavModal({
               </div>
               <ChevronDown
                 size={15}
-                className={`text-primary transition-transform duration-200 ${languageExpanded ? "rotate-180" : ""
-                  }`}
+                className={`text-primary transition-transform duration-200 ${
+                  languageExpanded ? "rotate-180" : ""
+                }`}
               />
             </div>
 
             {/* Language list with animation */}
             <div
-              className={`transition-all duration-300 ease-in-out scrollbar-hide ${languageExpanded
-                ? "max-h-[200px] opacity-100 overflow-y-auto"
-                : "max-h-0 opacity-0 overflow-hidden"
-                }`}
+              className={`transition-all duration-300 ease-in-out scrollbar-hide ${
+                languageExpanded
+                  ? "max-h-[200px] opacity-100 overflow-y-auto"
+                  : "max-h-0 opacity-0 overflow-hidden"
+              }`}
             >
               <div className="pl-[30px] pt-[8px] flex flex-col gap-[4px]">
                 {availableLanguages.map((lang) => (
                   <button
                     key={lang.code}
                     onClick={() => changeLanguage(lang.code)}
-                    className={`w-full text-left px-[15px] py-[8px] rounded-[8px] cursor-pointer hover:bg-gray-50 transition-colors flex items-center justify-between ${i18n.language === lang.code ? "bg-gray-100" : ""
-                      }`}
+                    className={`w-full text-left px-[15px] py-[8px] rounded-[8px] cursor-pointer hover:bg-gray-50 transition-colors flex items-center justify-between ${
+                      i18n.language === lang.code ? "bg-gray-100" : ""
+                    }`}
                   >
                     <div className="flex flex-col">
                       <span className="text-sm font-medium text-[#304048]">

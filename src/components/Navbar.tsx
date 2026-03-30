@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import WeHelpWith from "./modals/WeHelpWith";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useAuth } from "../context/AuthContext";
+import { loginPathWithRedirect } from "../lib/loginRedirect";
 import MobileNavModal from "./modals/MobileNavModal";
 import SelfAssmentsModal from "./modals/SelfAssmentsModal";
 
@@ -70,6 +71,7 @@ export default function Navbar() {
   const [selfAssessmentsModalOpen, setSelfAssessmentsModalOpen] =
     useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const mobileMenuTriggerRef = useRef<HTMLButtonElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
   const navbarItemRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<number | null>(null);
@@ -303,7 +305,10 @@ export default function Navbar() {
               )
             ) : (
               <Link
-                to="/login"
+                to={loginPathWithRedirect(
+                  location.pathname,
+                  location.search,
+                )}
                 className={`border border-border-light text-[${textColor}] transition-all duration-200 cursor-pointer rounded-full px-[14px] sm:px-[20px] py-[6px] text-[13px] sm:text-[15px] bg-primary text-white hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)]`}
               >
                 {t("login")}
@@ -312,6 +317,7 @@ export default function Navbar() {
 
             {/* Mobile Menu Button */}
             <button
+              ref={mobileMenuTriggerRef}
               onClick={() => setIsMobileMenuOpen(true)}
               className="sm:hidden rounded-full cursor-pointer"
               aria-label="Open menu"
@@ -326,6 +332,7 @@ export default function Navbar() {
       <MobileNavModal
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}
+        menuTriggerRef={mobileMenuTriggerRef}
       />
     </>
   );

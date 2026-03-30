@@ -10,8 +10,14 @@ import FormFooterLink from "./FormFooterLink";
 import AuthImage from "./AuthImage";
 import ForgotPasswordModal from "./ForgotPasswordModal";
 import { BACKEND_URL, getAvatarUrl } from "../lib/api";
+import { rememberRedirectForOAuth } from "../lib/loginRedirect";
 
-export default function LoginForm() {
+type LoginFormProps = {
+  /** Where to send the user after successful login (from ?redirect= or location.state). */
+  returnTo?: string;
+};
+
+export default function LoginForm({ returnTo = "/" }: LoginFormProps) {
   const { t } = useTranslation("common");
   const navigate = useNavigate();
   const { login } = useAuth();
@@ -82,7 +88,7 @@ export default function LoginForm() {
         hasPassword: true, // Regular login users have passwords
       });
 
-      navigate("/");
+      navigate(returnTo, { replace: true });
     } catch (error: any) {
       console.error(error);
       setError(error?.message || "Failed to login");
@@ -137,6 +143,7 @@ export default function LoginForm() {
 
             <GoogleButton
               onClick={() => {
+                rememberRedirectForOAuth(returnTo);
                 window.location.href = `${BACKEND_URL}/oauth/google`;
               }}
             />

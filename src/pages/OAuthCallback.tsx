@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context/AuthContext";
 import { BACKEND_URL, getAvatarUrl } from "../lib/api";
+import { consumeStoredOAuthRedirect } from "../lib/loginRedirect";
 export default function OAuthCallback() {
   const { t } = useTranslation("common");
 
@@ -86,7 +87,7 @@ export default function OAuthCallback() {
   useEffect(() => {
     if (status === "success") {
       const t = setTimeout(() => {
-        navigate("/", { replace: true });
+        navigate(consumeStoredOAuthRedirect("/"), { replace: true });
       }, 1500);
 
       return () => clearTimeout(t);

@@ -1,9 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import SelfAssessmentNavbar from "../components/SelfAssessmentNavbar";
 import { SELF_ASSESSMENT_QUIZ } from "../lib/constants/selfAssessment";
+import { loginPathWithRedirect } from "../lib/loginRedirect";
+
 export default function SelfAssessmentResult() {
   const { t } = useTranslation("common");
+  const location = useLocation();
   // Get score from URL params or state (for now, using mock data)
   const params = new URLSearchParams(window.location.search);
   const totalScore = parseInt(params.get("score") || "0");
@@ -108,7 +111,7 @@ export default function SelfAssessmentResult() {
             {/* Save Result Button */}
             <div className="mt-[40px] flex justify-center">
               <Link
-                to="/login"
+                to={loginPathWithRedirect(location.pathname, location.search)}
                 className="px-[40px] py-[12px] bg-[#44666C] text-white rounded-[30px] text-[18px] font-medium hover:bg-[#365a62] transition-colors duration-200 inline-block"
               >
                 {t("saveAssessmentResult")}
