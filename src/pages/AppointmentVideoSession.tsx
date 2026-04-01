@@ -1,4 +1,8 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import {
   ArrowLeft,
@@ -6,52 +10,27 @@ import {
   ExternalLink,
   Video,
   Shield,
-  Sparkles,
+  MessageSquareText,
 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
+import { useTranslation } from "react-i18next";
 import {
   getExpertAppointments,
   getMyAppointments,
-  postAppointmentHeartbeat,
-  postAppointmentJoin,
-  postAppointmentLeave,
-  leaveAppointmentSessionKeepalive,
   isTerminalAppointmentStatus,
-  normalizeAppointmentStatus,
-  type AppointmentSessionParticipantBody,
+  isScheduledAwaitingJoinInBookedWindow,
+  expertAuthUserOwnsAppointment,
   type AppointmentStatus,
   type ExpertAppointment,
   type MyAppointment,
 } from "../lib/api";
-import {
-  jitsiExternalApiScriptUrl,
-  parseJitsiMeetLink,
-} from "../lib/jitsiMeetLink";
-import type { JitsiExternalApiInstance } from "../types/jitsi-external-api";
-
-const HEARTBEAT_MS = 30_000;
-
-function loadScriptOnce(src: string): Promise<void> {
-  return new Promise((resolve, reject) => {
-    const existing = document.querySelector(`script[src="${src}"]`);
-    if (existing) {
-      resolve();
-      return;
-    }
-    const s = document.createElement("script");
-    s.src = src;
-    s.async = true;
-    s.onload = () => resolve();
-    s.onerror = () => reject(new Error("Failed to load meeting SDK"));
-    document.body.appendChild(s);
-  });
-}
 
 export default function AppointmentVideoSession() {
   const { appointmentId: appointmentIdParam } = useParams<{
     appointmentId: string;
   }>();
   const navigate = useNavigate();
+  const { t } = useTranslation("common");
   const { user, isLoading: authLoading } = useAuth();
 
   const appointmentNumericId = Number(appointmentIdParam);
@@ -63,67 +42,12 @@ export default function AppointmentVideoSession() {
   >(null);
   const [resolveError, setResolveError] = useState<string | null>(null);
   const [resolving, setResolving] = useState(true);
-
-  const [sdkError, setSdkError] = useState<string | null>(null);
-  const [terminalBanner, setTerminalBanner] = useState<AppointmentStatus | null>(
-    null,
-  );
-
-  const containerRef = useRef<HTMLDivElement>(null);
-  const jitsiApiRef = useRef<JitsiExternalApiInstance | null>(null);
-  const heartbeatRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const leaveSentRef = useRef(false);
-  const joinPostedRef = useRef(false);
-  const sessionBodyRef = useRef<AppointmentSessionParticipantBody | null>(null);
-  const appointmentIdRef = useRef(0);
+  const [terminalBanner] = useState<AppointmentStatus | null>(null);
 
   const dashboardPath =
     user?.role === "EXPERT" ? "/dashboard/expert" : "/dashboard";
 
-  const sessionBody = useMemo<AppointmentSessionParticipantBody | null>(() => {
-    if (!user?.id || !sessionRole) return null;
-    return { participantId: Number(user.id), role: sessionRole };
-  }, [user?.id, sessionRole]);
-
-  useEffect(() => {
-    sessionBodyRef.current = sessionBody;
-    appointmentIdRef.current = appointmentNumericId;
-  }, [sessionBody, appointmentNumericId]);
-
-  const stopHeartbeat = useCallback(() => {
-    if (heartbeatRef.current) {
-      clearInterval(heartbeatRef.current);
-      heartbeatRef.current = null;
-    }
-  }, []);
-
-  const doLeave = useCallback(async () => {
-    if (leaveSentRef.current) return;
-    leaveSentRef.current = true;
-    stopHeartbeat();
-    const api = jitsiApiRef.current;
-    jitsiApiRef.current = null;
-    if (api) {
-      try {
-        api.dispose();
-      } catch {
-        /* ignore */
-      }
-    }
-    const body = sessionBodyRef.current;
-    const aid = appointmentIdRef.current;
-    if (!body || !aid) return;
-    try {
-      const res = await postAppointmentLeave(aid, body);
-      const st = res.appointment?.status;
-      if (st) {
-        const n = normalizeAppointmentStatus(String(st));
-        if (isTerminalAppointmentStatus(n)) setTerminalBanner(n);
-      }
-    } catch {
-      leaveAppointmentSessionKeepalive(aid, body);
-    }
-  }, [stopHeartbeat]);
+  const meetLink = appointment?.meetLink ?? null;
 
   useEffect(() => {
     if (
@@ -143,11 +67,10 @@ export default function AppointmentVideoSession() {
       try {
         if (user.role === "EXPERT") {
           const res = await getExpertAppointments();
-          const apt = res.appointments.find((a) => a.id === appointmentNumericId);
-          if (
-            !apt ||
-            apt.expert?.user?.id !== Number(user.id)
-          ) {
+          const apt = res.appointments.find(
+            (a) => a.id === appointmentNumericId,
+          );
+          if (!apt || !expertAuthUserOwnsAppointment(apt, user)) {
             if (!cancelled) {
               setResolveError(
                 "This appointment was not found or you do not have access.",
@@ -163,7 +86,9 @@ export default function AppointmentVideoSession() {
           }
         } else {
           const res = await getMyAppointments();
-          const apt = res.appointments.find((a) => a.id === appointmentNumericId);
+          const apt = res.appointments.find(
+            (a) => a.id === appointmentNumericId,
+          );
           if (!apt) {
             if (!cancelled) {
               setResolveError("Appointment not found.");
@@ -198,177 +123,31 @@ export default function AppointmentVideoSession() {
     : false;
   const isVideo =
     (appointment?.communicationMedium || "").toUpperCase() === "VIDEO";
-  const meetLink = appointment?.meetLink ?? null;
+  const hasMeetLink = !!meetLink && typeof meetLink === "string";
+  const shouldAutoOpen =
+    !resolving && !!appointment && !isTerminal && hasMeetLink && isVideo;
 
+  // Auto-open the backend meeting URL once on this route.
+  const autoOpenedRef = useRef(false);
   useEffect(() => {
-    const parsedMeet = meetLink ? parseJitsiMeetLink(meetLink) : null;
-    if (
-      resolving ||
-      !appointment ||
-      !sessionBody ||
-      !parsedMeet ||
-      !containerRef.current ||
-      isTerminal ||
-      !isVideo ||
-      terminalBanner
-    ) {
-      return;
+    if (!shouldAutoOpen) return;
+    if (autoOpenedRef.current) return;
+    autoOpenedRef.current = true;
+    try {
+      window.open(meetLink!, "_blank", "noopener,noreferrer");
+    } catch {
+      /* ignore */
     }
-
-    leaveSentRef.current = false;
-    joinPostedRef.current = false;
-    const { domain, roomName } = parsedMeet;
-    const container = containerRef.current;
-    const aptId = appointment.id;
-
-    let disposed = false;
-
-    const onPageHide = () => {
-      const body = sessionBodyRef.current;
-      const id = appointmentIdRef.current;
-      if (body && id && !leaveSentRef.current) {
-        leaveAppointmentSessionKeepalive(id, body);
-      }
-    };
-    window.addEventListener("pagehide", onPageHide);
-
-    (async () => {
-      try {
-        await loadScriptOnce(jitsiExternalApiScriptUrl(domain));
-        if (disposed || !window.JitsiMeetExternalAPI) {
-          setSdkError("Meeting could not be initialized.");
-          return;
-        }
-
-        const displayName =
-          user?.name?.trim() ||
-          user?.email ||
-          (sessionRole === "EXPERT" ? "Expert" : "Guest");
-
-        const api = new window.JitsiMeetExternalAPI(domain, {
-          roomName,
-          parentNode: container,
-          width: "100%",
-          height: "100%",
-          userInfo: { displayName },
-          configOverwrite: {
-            startWithVideoMuted: false,
-            prejoinPageEnabled: false,
-            disableDeepLinking: true,
-            defaultLanguage: "en",
-          },
-          interfaceConfigOverwrite: {
-            TOOLBAR_BUTTONS: [
-              "microphone",
-              "camera",
-              "hangup",
-              "settings",
-              "tileview",
-            ],
-            SHOW_JITSI_WATERMARK: false,
-            SHOW_WATERMARK_FOR_GUESTS: false,
-            MOBILE_APP_PROMO: false,
-            FILM_STRIP_MAX_HEIGHT: 120,
-          },
-        });
-
-        jitsiApiRef.current = api;
-
-        const startHeartbeat = () => {
-          stopHeartbeat();
-          heartbeatRef.current = setInterval(() => {
-            const body = sessionBodyRef.current;
-            if (!body || leaveSentRef.current) return;
-            void postAppointmentHeartbeat(aptId, body)
-              .then((res) => {
-                const st = res.appointment?.status;
-                if (!st) return;
-                const n = normalizeAppointmentStatus(String(st));
-                if (isTerminalAppointmentStatus(n)) {
-                  setTerminalBanner(n);
-                  stopHeartbeat();
-                  void doLeave();
-                }
-              })
-              .catch(() => {});
-          }, HEARTBEAT_MS);
-        };
-
-        const onJoined = () => {
-          if (joinPostedRef.current || leaveSentRef.current) return;
-          joinPostedRef.current = true;
-          const body = sessionBodyRef.current;
-          if (!body) {
-            joinPostedRef.current = false;
-            return;
-          }
-          void postAppointmentJoin(aptId, body)
-            .then((res) => {
-              const st = res.appointment?.status;
-              if (st) {
-                const n = normalizeAppointmentStatus(String(st));
-                if (isTerminalAppointmentStatus(n)) {
-                  setTerminalBanner(n);
-                  void doLeave();
-                  return;
-                }
-              }
-              startHeartbeat();
-            })
-            .catch(() => {
-              joinPostedRef.current = false;
-            });
-        };
-
-        const onLeft = () => {
-          void doLeave();
-        };
-
-        api.addEventListener("videoConferenceJoined", onJoined);
-        api.addEventListener("videoConferenceLeft", onLeft);
-        api.addEventListener("readyToClose", onLeft);
-      } catch {
-        if (!disposed) setSdkError("Failed to load the video meeting.");
-      }
-    })();
-
-    return () => {
-      disposed = true;
-      window.removeEventListener("pagehide", onPageHide);
-      stopHeartbeat();
-      const api = jitsiApiRef.current;
-      jitsiApiRef.current = null;
-      if (api) {
-        try {
-          api.dispose();
-        } catch {
-          /* ignore */
-        }
-      }
-      if (!leaveSentRef.current && sessionBodyRef.current) {
-        leaveAppointmentSessionKeepalive(
-          appointmentIdRef.current,
-          sessionBodyRef.current,
-        );
-      }
-      if (container) container.textContent = "";
-    };
-  }, [
-    resolving,
-    appointment,
-    sessionBody,
-    meetLink,
-    isTerminal,
-    isVideo,
-    terminalBanner,
-    user?.name,
-    user?.email,
-    stopHeartbeat,
-    doLeave,
-  ]);
+  }, [shouldAutoOpen, meetLink]);
 
   if (!authLoading && !user) {
-    return <Navigate to="/login" replace state={{ from: `/appointments/${appointmentIdParam}/video` }} />;
+    return (
+      <Navigate
+        to="/login"
+        replace
+        state={{ from: `/appointments/${appointmentIdParam}/video` }}
+      />
+    );
   }
 
   if (authLoading || !user) {
@@ -379,7 +158,9 @@ export default function AppointmentVideoSession() {
             <div className="absolute inset-0 rounded-full bg-[#44666C]/30 blur-xl animate-pulse" />
             <Loader2 className="relative w-12 h-12 text-[#7eb8aa] animate-spin" />
           </div>
-          <p className="text-sm text-stone-400 tracking-wide">Signing you in…</p>
+          <p className="text-sm text-stone-400 tracking-wide">
+            Signing you in…
+          </p>
         </div>
       </div>
     );
@@ -391,11 +172,9 @@ export default function AppointmentVideoSession() {
 
   const counterpartyLabel =
     sessionRole === "EXPERT"
-      ? (appointment && "user" in appointment
-          ? appointment.user?.name?.trim() ||
-            appointment.user?.email ||
-            "Client"
-          : "Client session")
+      ? appointment && "user" in appointment
+        ? appointment.user?.name?.trim() || appointment.user?.email || "Client"
+        : "Client session"
       : appointment && "expert" in appointment && appointment.expert
         ? appointment.expert.user?.name?.trim() ||
           appointment.expert.user?.email ||
@@ -406,10 +185,17 @@ export default function AppointmentVideoSession() {
     appointment &&
     isVideo &&
     meetLink &&
-    parseJitsiMeetLink(meetLink) &&
     !isTerminal &&
     !terminalBanner &&
-    !sdkError;
+    true;
+
+  const showScheduledJoinHint =
+    appointment &&
+    isScheduledAwaitingJoinInBookedWindow(
+      appointment.status,
+      appointment.startAt,
+      appointment.endAt,
+    );
 
   return (
     <div className="fixed inset-0 z-250 flex flex-col overflow-hidden bg-[#070a0f] text-white">
@@ -427,7 +213,7 @@ export default function AppointmentVideoSession() {
           <button
             type="button"
             onClick={() => {
-              void doLeave().finally(() => navigate(dashboardPath));
+              navigate(dashboardPath);
             }}
             className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm font-medium text-stone-200 transition hover:bg-white/10 hover:border-white/15"
           >
@@ -457,8 +243,22 @@ export default function AppointmentVideoSession() {
                 </div>
                 <p className="truncate text-xs text-stone-500">
                   Appointment #{appointmentNumericId}
-                  {sessionRole === "EXPERT" ? " · Expert view" : " · Your booking"}
+                  {sessionRole === "EXPERT"
+                    ? " · Expert view"
+                    : " · Your booking"}
                 </p>
+                {appointment?.userConcern?.trim() ? (
+                  <p className="mt-1 line-clamp-2 text-[11px] leading-snug text-stone-400 sm:line-clamp-none sm:max-w-xl">
+                    <span className="font-medium text-stone-500">
+                      <MessageSquareText className="mr-1 inline size-3 align-text-bottom opacity-80" />
+                      {sessionRole === "EXPERT"
+                        ? t("appointmentConcernFromClient")
+                        : t("appointmentConcernYouShared")}
+                      :{" "}
+                    </span>
+                    {appointment.userConcern.trim()}
+                  </p>
+                ) : null}
               </div>
             </div>
           </div>
@@ -476,17 +276,35 @@ export default function AppointmentVideoSession() {
               className="inline-flex shrink-0 items-center gap-1.5 rounded-xl border border-white/10 bg-white/5 px-2.5 py-2 text-xs font-medium text-[#a8d4c4] transition hover:bg-white/10 sm:px-3"
             >
               <ExternalLink className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline">New tab</span>
+              <span className="hidden sm:inline">
+                New tab
+              </span>
             </a>
           ) : null}
         </div>
       </header>
 
+      {showScheduledJoinHint && !terminalBanner ? (
+        <div
+          className="relative z-10 mx-3 mt-3 rounded-2xl border border-sky-500/25 bg-sky-950/40 px-4 py-3 text-sm text-sky-100 shadow-xl backdrop-blur-md sm:mx-4"
+          role="status"
+        >
+          <p className="font-semibold text-sky-50">
+            {t("sessionNotStartedYet")}
+          </p>
+          <p className="mt-1 text-sky-100/90 leading-snug">
+            {t("sessionWaitingForBothParticipants")}
+          </p>
+        </div>
+      ) : null}
+
       {terminalBanner ? (
         <div className="relative z-10 mx-3 mt-3 rounded-2xl border border-white/10 bg-[#121a24]/90 px-4 py-3 text-sm shadow-xl backdrop-blur-md sm:mx-4">
           <p className="text-stone-300">
             Session ended — status{" "}
-            <span className="font-semibold text-[#7eb8aa]">{terminalBanner}</span>
+            <span className="font-semibold text-[#7eb8aa]">
+              {terminalBanner}
+            </span>
           </p>
           <Link
             to={dashboardPath}
@@ -554,37 +372,34 @@ export default function AppointmentVideoSession() {
               </a>
             ) : null}
           </div>
-        ) : !appointment.meetLink ||
-          !parseJitsiMeetLink(appointment.meetLink) ? (
+        ) : !appointment.meetLink ? (
           <div className="flex flex-1 items-center justify-center p-8 text-center text-stone-400">
             No meeting link is available for this appointment yet.
           </div>
-        ) : sdkError ? (
-          <div className="flex flex-1 flex-col items-center justify-center gap-6 p-8 text-center">
-            <p className="text-red-300/90">{sdkError}</p>
-            <a
-              href={appointment.meetLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/10 px-5 py-2.5 text-sm font-medium text-white hover:bg-white/15"
-            >
-              Open meeting in new tab
-            </a>
-          </div>
         ) : (
-          <div className="flex min-h-0 flex-1 flex-col p-2 sm:p-3 md:p-4">
-            <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl border border-white/12 bg-black shadow-[0_0_0_1px_rgba(0,0,0,0.5),0_25px_50px_-12px_rgba(0,0,0,0.7)] ring-1 ring-black/40">
-              <div
-                ref={containerRef}
-                className="relative min-h-0 w-full flex-1 [&_iframe]:h-full! [&_iframe]:min-h-0! [&_iframe]:w-full!"
-              />
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-black/60 to-transparent" />
+          <div className="flex flex-1 flex-col items-center justify-center gap-6 p-8 text-center">
+            <div className="rounded-2xl border border-white/10 bg-white/4 p-8 max-w-md">
+              <p className="text-stone-300">
+                We’ll open your meeting in a new tab.
+              </p>
+              <div className="mt-5 flex flex-col gap-3">
+                <a
+                  href={appointment.meetLink!}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#44666C] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#365a62]"
+                >
+                  <ExternalLink className="h-4 w-4" />
+                  Open meeting
+                </a>
+                <Link
+                  to={dashboardPath}
+                  className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/10 px-5 py-2.5 text-sm font-medium text-white hover:bg-white/15"
+                >
+                  Back to dashboard
+                </Link>
+              </div>
             </div>
-            <p className="mt-2 flex items-center justify-center gap-1.5 text-center text-[11px] text-stone-500 sm:text-xs">
-              <Sparkles className="h-3 w-3 text-[#44666C]/80" />
-              Hang up in the meeting controls below when you are done — we will
-              sync your session automatically.
-            </p>
           </div>
         )}
       </main>

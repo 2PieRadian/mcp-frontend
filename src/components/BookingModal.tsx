@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   X,
   Calendar,
@@ -18,27 +18,17 @@ import gsap from "gsap";
 import {
   initiateAppointment,
   verifyPayment,
+  USER_CONCERN_MAX_LENGTH,
+  ApiHttpError,
   type CommunicationMedium,
 } from "../lib/api";
 import { openRazorpayCheckout } from "../lib/razorpay";
-import type { TimeSlot } from "../context/BookingContext";
+import { slotToISO } from "../lib/bookingSlotIso";
 
 type ConnectionType = "call" | "video" | "chat";
 
 function toCommunicationMedium(c: ConnectionType): CommunicationMedium {
   return c === "call" ? "CALL" : c === "video" ? "VIDEO" : "CHAT";
-}
-
-/** Build ISO start/end from day (year, month 1-12, date) and slot (startTime/endTime "HH:mm"). */
-function slotToISO(
-  day: { year: number; month: number; date: number },
-  slot: TimeSlot,
-): { startAt: string; endAt: string } {
-  const [sh, sm] = slot.startTime.split(":").map(Number);
-  const [eh, em] = slot.endTime.split(":").map(Number);
-  const start = new Date(day.year, day.month - 1, day.date, sh, sm, 0, 0);
-  const end = new Date(day.year, day.month - 1, day.date, eh, em, 0, 0);
-  return { startAt: start.toISOString(), endAt: end.toISOString() };
 }
 
 type BookingModalProps = {
@@ -59,6 +49,7 @@ export default function BookingModal({
   expertPrice,
   isFreeSessionAvailable = true,
 }: BookingModalProps) {
+  const { t } = useTranslation("common");
   const {
     daysWithSlots,
     isLoading,
@@ -305,6 +296,7 @@ export default function BookingModal({
         startAt,
         endAt,
         medium,
+        helpWith,
       );
 
       if (response.type === "FREE") {
@@ -315,8 +307,16 @@ export default function BookingModal({
         });
         setBookingInProgress(false);
       } else {
+        const razorpayKey =
+          response.keyId ||
+          (import.meta.env.VITE_RAZORPAY_KEY_ID as string | undefined);
+        if (!razorpayKey) {
+          setBookingError(t("bookingRazorpayKeyMissing"));
+          setBookingInProgress(false);
+          return;
+        }
         openRazorpayCheckout({
-          key: response.keyId,
+          key: razorpayKey,
           amount: response.amount,
           currency: response.currency,
           order_id: response.orderId,
@@ -331,17 +331,21 @@ export default function BookingModal({
                 res.razorpay_payment_id,
                 res.razorpay_signature,
               );
+              const ap = verified.appointment;
               setSuccessResult({
-                appointmentId: verified.appointmentId,
-                meetLink: verified.meetLink ?? null,
+                appointmentId: ap.id,
+                meetLink: ap.meetLink ?? null,
                 medium,
               });
             } catch (err: unknown) {
-              setBookingError(
+              let msg =
                 err instanceof Error
                   ? err.message
-                  : "Payment verification failed",
-              );
+                  : "Payment verification failed";
+              if (err instanceof ApiHttpError && err.status === 409) {
+                msg = `${msg}\n\n${t("paymentVerifySlotConflictSupport")}`;
+              }
+              setBookingError(msg);
             } finally {
               setBookingInProgress(false);
             }
@@ -349,6 +353,10 @@ export default function BookingModal({
         });
       }
     } catch (err: unknown) {
+      if (err instanceof ApiHttpError && err.status === 409) {
+        setSelectedSlot(null);
+        void fetchNext10Days(expertId);
+      }
       setBookingError(
         err instanceof Error ? err.message : "Failed to initiate booking",
       );
@@ -425,15 +433,6 @@ export default function BookingModal({
                       <p className="text-sm font-medium text-gray-700">
                         Meeting link
                       </p>
-                      {successResult.medium === "VIDEO" ? (
-                        <Link
-                          to={`/appointments/${successResult.appointmentId}/video`}
-                          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#44666C] text-white hover:bg-[#365a62] font-semibold text-sm w-full sm:w-auto justify-center"
-                        >
-                          <Video className="w-4 h-4" />
-                          Join video (tracked)
-                        </Link>
-                      ) : null}
                       <div className="flex flex-col sm:flex-row gap-2">
                         <a
                           href={successResult.meetLink}
@@ -447,7 +446,7 @@ export default function BookingModal({
                           <button
                             type="button"
                             onClick={() => {
-                              navigator.clipboard.writeText(
+                              void navigator.clipboard.writeText(
                                 successResult!.meetLink!,
                               );
                             }}
@@ -500,9 +499,13 @@ export default function BookingModal({
                     value={helpWith}
                     onChange={(e) => setHelpWith(e.target.value)}
                     placeholder="Describe your concern or what you'd like to work on..."
+                    maxLength={USER_CONCERN_MAX_LENGTH}
                     className="w-full min-h-[120px] px-4 py-3 rounded-xl border border-gray-200 focus:border-[#44666C] focus:ring-2 focus:ring-[#44666C]/20 outline-none resize-y text-[#304048] placeholder-gray-400"
                     rows={4}
                   />
+                  <p className="text-xs text-gray-400 mt-1.5">
+                    Max {USER_CONCERN_MAX_LENGTH.toLocaleString()} characters.
+                  </p>
                 </section>
 
                 {/* Select Date */}

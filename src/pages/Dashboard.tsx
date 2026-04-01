@@ -5,13 +5,21 @@ import {
   useRef,
   type ReactNode,
 } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context/AuthContext";
 import Layout from "../components/Layout";
+import RescheduleAppointmentModal from "../components/RescheduleAppointmentModal";
+import ReviewModal from "../components/ReviewModal";
+import { usePollingNow } from "../hooks/usePollingNow";
+import { formatAppointmentStartsIn } from "../lib/appointmentStartsIn";
 import {
   getMyAppointments,
   isTerminalAppointmentStatus,
+  isScheduledAwaitingJoinInBookedWindow,
+  userCompleteAppointment,
+  userReportNoShow,
+  ApiHttpError,
   type MyAppointment,
   type AppointmentStatus,
 } from "../lib/api";
@@ -22,7 +30,6 @@ import {
   Video,
   Phone,
   MessageCircle,
-  ExternalLink,
   Copy,
   CheckCircle2,
   CalendarClock,
@@ -30,7 +37,13 @@ import {
   XCircle,
   UserX,
   Ban,
+  MessageSquareText,
+  Timer,
+  Star,
+  AlertCircle,
 } from "lucide-react";
+
+const MIN_SESSION_MINUTES = 5;
 
 const STATUS_VALUES: ("" | AppointmentStatus)[] = [
   "",
@@ -158,7 +171,19 @@ function StatusBadge({ status }: { status: AppointmentStatus }) {
   );
 }
 
-function AppointmentCard({ apt }: { apt: MyAppointment }) {
+function AppointmentCard({
+  apt,
+  nowMs,
+  onOpenReschedule,
+  onOpenReview,
+  onStatusChange,
+}: {
+  apt: MyAppointment;
+  nowMs: number;
+  onOpenReschedule?: (apt: MyAppointment) => void;
+  onOpenReview?: (apt: MyAppointment) => void;
+  onStatusChange?: () => void;
+}) {
   const { t } = useTranslation("common");
   const expertName =
     apt.expert?.user?.name ||
@@ -169,18 +194,83 @@ function AppointmentCard({ apt }: { apt: MyAppointment }) {
     apt.expert?.user?.email ?? "",
   );
   const [copied, setCopied] = useState(false);
-
-  const handleCopy = () => {
-    if (apt.meetLink) {
-      navigator.clipboard.writeText(apt.meetLink);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }
-  };
+  const [completing, setCompleting] = useState(false);
+  const [reportingNoShow, setReportingNoShow] = useState(false);
+  const [actionError, setActionError] = useState<string | null>(null);
+  const [actionSuccess, setActionSuccess] = useState<string | null>(null);
 
   const showMeetActions =
     !!apt.meetLink && !isTerminalAppointmentStatus(apt.status);
   const isVideoSession = apt.communicationMedium?.toUpperCase() === "VIDEO";
+  const showScheduledJoinHint = isScheduledAwaitingJoinInBookedWindow(
+    apt.status,
+    apt.startAt,
+    apt.endAt,
+  );
+  const startsInLabel =
+    apt.status === "SCHEDULED"
+      ? formatAppointmentStartsIn(apt.startAt, nowMs, t)
+      : null;
+  const showReschedule =
+    apt.status === "SCHEDULED" &&
+    typeof apt.expert?.id === "number" &&
+    apt.expert.id > 0 &&
+    !!onOpenReschedule;
+
+  const startAtMs = new Date(apt.startAt).getTime();
+  const minGateMs = startAtMs + MIN_SESSION_MINUTES * 60 * 1000;
+  const canResolve = nowMs >= minGateMs;
+  const showSessionActions =
+    (apt.status === "SCHEDULED" || apt.status === "IN_PROGRESS") &&
+    nowMs >= startAtMs;
+
+  const showReviewButton = apt.status === "COMPLETED" && !!onOpenReview;
+
+  const handleMarkComplete = async () => {
+    setCompleting(true);
+    setActionError(null);
+    setActionSuccess(null);
+    try {
+      const res = await userCompleteAppointment(apt.id);
+      if (res.unchanged) {
+        setActionSuccess(t("sessionCompleteAlreadyDone"));
+      } else {
+        setActionSuccess(t("sessionCompleteSuccess"));
+      }
+      onStatusChange?.();
+    } catch (err) {
+      if (err instanceof ApiHttpError) {
+        setActionError(err.message);
+      } else {
+        setActionError(err instanceof Error ? err.message : "Unknown error");
+      }
+    } finally {
+      setCompleting(false);
+    }
+  };
+
+  const handleReportNoShow = async () => {
+    setReportingNoShow(true);
+    setActionError(null);
+    setActionSuccess(null);
+    try {
+      const res = await userReportNoShow(apt.id);
+      if (res.unchanged) {
+        setActionSuccess(t("sessionNoShowAlreadyDone"));
+      } else {
+        setActionSuccess(t("sessionNoShowSuccess"));
+      }
+      onStatusChange?.();
+    } catch (err) {
+      if (err instanceof ApiHttpError) {
+        setActionError(err.message);
+      } else {
+        setActionError(err instanceof Error ? err.message : "Unknown error");
+      }
+    } finally {
+      setReportingNoShow(false);
+    }
+  };
 
   return (
     <article className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-200 border border-gray-100">
@@ -204,15 +294,23 @@ function AppointmentCard({ apt }: { apt: MyAppointment }) {
         </div>
 
         {/* Date & time block */}
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 py-4 px-4 rounded-xl bg-gray-50 border border-gray-100">
-          <span className="flex items-center gap-2 text-[#304048] font-medium">
-            <Calendar className="w-5 h-5 text-[#44666C] shrink-0" />
-            {formatDate(apt.startAt)}
-          </span>
-          <span className="flex items-center gap-2 text-gray-700">
-            <Clock className="w-5 h-5 text-gray-400 shrink-0" />
-            {formatTime(apt.startAt)} – {formatTime(apt.endAt)}
-          </span>
+        <div className="py-4 px-4 rounded-xl bg-gray-50 border border-gray-100">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+            <span className="flex items-center gap-2 text-[#304048] font-medium">
+              <Calendar className="w-5 h-5 text-[#44666C] shrink-0" />
+              {formatDate(apt.startAt)}
+            </span>
+            <span className="flex items-center gap-2 text-gray-700">
+              <Clock className="w-5 h-5 text-gray-400 shrink-0" />
+              {formatTime(apt.startAt)} – {formatTime(apt.endAt)}
+            </span>
+          </div>
+          {startsInLabel ? (
+            <div className="mt-3 pt-3 border-t border-gray-200/80 flex items-center gap-2 text-sm font-semibold text-[#44666C]">
+              <Timer className="w-4 h-4 shrink-0 opacity-90" aria-hidden />
+              <span>{startsInLabel}</span>
+            </div>
+          ) : null}
         </div>
 
         {/* Chips row: medium + amount */}
@@ -225,68 +323,175 @@ function AppointmentCard({ apt }: { apt: MyAppointment }) {
           )}
         </div>
 
-        {/* Meeting link CTA — tracked video uses in-app Jitsi + session APIs */}
-        {showMeetActions && (
-          <div className="mt-5 pt-4 border-t border-gray-100 flex flex-wrap items-center gap-3">
-            {isVideoSession ? (
-              <Link
-                to={`/appointments/${apt.id}/video`}
-                className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#44666C] text-white rounded-xl font-semibold text-sm hover:bg-[#365a62] transition-colors shadow-sm"
-              >
-                <Video className="w-4 h-4" />
-                {t("dashboardJoinVideoTracked")}
-              </Link>
-            ) : (
-              <a
-                href={apt.meetLink!}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#44666C] text-white rounded-xl font-semibold text-sm hover:bg-[#365a62] transition-colors shadow-sm"
-              >
-                <ExternalLink className="w-4 h-4" />
-                {t("dashboardJoinSession")}
-              </a>
+        {apt.userConcern?.trim() ? (
+          <div className="mt-4 rounded-xl border border-gray-100 bg-stone-50/80 px-4 py-3">
+            <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-1.5 flex items-center gap-1.5">
+              <MessageSquareText className="w-3.5 h-3.5" />
+              {t("appointmentConcernYouShared")}
+            </p>
+            <p className="text-sm text-[#304048] leading-relaxed whitespace-pre-wrap">
+              {apt.userConcern.trim()}
+            </p>
+          </div>
+        ) : null}
+
+        {showScheduledJoinHint ? (
+          <div
+            className="mt-4 rounded-xl border border-sky-100 bg-sky-50/90 px-4 py-3"
+            role="status"
+          >
+            <p className="text-sm font-semibold text-sky-950">
+              {t("sessionNotStartedYet")}
+            </p>
+            <p className="mt-1 text-sm text-sky-900/90 leading-snug">
+              {t("sessionWaitingForBothParticipants")}
+            </p>
+          </div>
+        ) : null}
+
+        {/* Action feedback */}
+        {actionError && (
+          <div className="mt-4 p-3 rounded-xl bg-red-50 border border-red-200 flex items-start gap-2">
+            <AlertCircle className="w-4 h-4 text-red-600 mt-0.5 shrink-0" />
+            <p className="text-sm text-red-700">{actionError}</p>
+          </div>
+        )}
+        {actionSuccess && (
+          <div className="mt-4 p-3 rounded-xl bg-emerald-50 border border-emerald-200 flex items-start gap-2">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" />
+            <p className="text-sm text-emerald-700">{actionSuccess}</p>
+          </div>
+        )}
+
+        {/* Session actions: Mark complete / Report no-show */}
+        {showSessionActions && !actionSuccess ? (
+          <div className="mt-4 space-y-3">
+            {!canResolve && (
+              <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+                {t("sessionCompleteTimeGateHint")}
+              </p>
             )}
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={handleMarkComplete}
+                disabled={!canResolve || completing || reportingNoShow}
+                className="inline-flex items-center gap-2 px-4 py-2.5 bg-emerald-600 text-white rounded-xl font-semibold text-sm hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {completing ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    {t("sessionActionMarkingComplete")}
+                  </>
+                ) : (
+                  <>
+                    <CheckCircle2 className="w-4 h-4" />
+                    {t("sessionActionMarkComplete")}
+                  </>
+                )}
+              </button>
+              <button
+                type="button"
+                onClick={handleReportNoShow}
+                disabled={!canResolve || completing || reportingNoShow}
+                className="inline-flex items-center gap-2 px-4 py-2.5 border border-orange-300 text-orange-700 rounded-xl font-semibold text-sm hover:bg-orange-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {reportingNoShow ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    {t("sessionActionReportingNoShow")}
+                  </>
+                ) : (
+                  <>
+                    <UserX className="w-4 h-4" />
+                    {t("sessionActionReportNoShow")}
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        ) : null}
+
+        {/* Reschedule button */}
+        {showReschedule ? (
+          <div className="mt-4">
+            <button
+              type="button"
+              onClick={() => onOpenReschedule?.(apt)}
+              className="inline-flex items-center gap-2 px-4 py-2.5 border border-[#44666C]/40 text-[#44666C] rounded-xl font-semibold text-sm hover:bg-[#E0ECEE]/80 transition-colors"
+            >
+              <CalendarClock className="w-4 h-4" />
+              {t("appointmentRescheduleButton")}
+            </button>
+          </div>
+        ) : null}
+
+        {/* Review button for completed sessions */}
+        {showReviewButton ? (
+          <div className="mt-4">
+            <button
+              type="button"
+              onClick={() => onOpenReview?.(apt)}
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-amber-500 text-white rounded-xl font-semibold text-sm hover:bg-amber-600 transition-colors shadow-sm"
+            >
+              <Star className="w-4 h-4" />
+              {t("reviewWriteReviewButton")}
+            </button>
+          </div>
+        ) : null}
+
+        {showMeetActions ? (
+          <div className="mt-5 pt-4 border-t border-gray-100 space-y-3">
             <a
               href={apt.meetLink!}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2.5 border border-gray-200 text-gray-700 rounded-xl font-medium text-sm hover:bg-gray-50 transition-colors"
+              className="inline-flex w-full sm:w-auto items-center justify-center gap-2 px-4 py-2.5 bg-[#44666C] text-white rounded-xl font-semibold text-sm hover:bg-[#365a62] transition-colors shadow-sm"
             >
-              <ExternalLink className="w-4 h-4" />
-              {t("dashboardOpenMeetingTab")}
+              <Video className="w-4 h-4" />
+              {isVideoSession
+                ? t("dashboardJoinVideoTracked")
+                : t("dashboardJoinSession")}
             </a>
             <button
               type="button"
-              onClick={handleCopy}
-              className="inline-flex items-center gap-2 px-4 py-2.5 border border-gray-200 text-gray-700 rounded-xl font-medium text-sm hover:bg-gray-50 transition-colors"
+              onClick={() => {
+                navigator.clipboard.writeText(apt.meetLink!);
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+              }}
+              className="inline-flex w-full sm:w-auto items-center justify-center gap-2 px-4 py-2.5 border border-gray-200 text-gray-700 rounded-xl font-medium text-sm hover:bg-gray-50 transition-colors"
             >
               {copied ? (
                 <>
                   <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                  Copied!
+                  {t("expertAppointmentLinkCopied")}
                 </>
               ) : (
                 <>
                   <Copy className="w-4 h-4" />
-                  Copy link
+                  {t("dashboardCopyMeetingLink")}
                 </>
               )}
             </button>
           </div>
-        )}
+        ) : null}
       </div>
     </article>
   );
 }
 
 export default function Dashboard() {
+  const nowMs = usePollingNow(1000);
   const { user, isLoading, refreshUserFromServer } = useAuth();
   const [appointments, setAppointments] = useState<MyAppointment[]>([]);
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<"" | AppointmentStatus>("");
+  const [rescheduleTarget, setRescheduleTarget] =
+    useState<MyAppointment | null>(null);
+  const [reviewTarget, setReviewTarget] = useState<MyAppointment | null>(null);
   const { t } = useTranslation("common");
   const dashboardSessionSynced = useRef(false);
 
@@ -395,7 +600,13 @@ export default function Dashboard() {
           <ul className="space-y-5">
             {appointments.map((apt) => (
               <li key={apt.id}>
-                <AppointmentCard apt={apt} />
+                <AppointmentCard
+                  apt={apt}
+                  nowMs={nowMs}
+                  onOpenReschedule={setRescheduleTarget}
+                  onOpenReview={setReviewTarget}
+                  onStatusChange={fetchAppointments}
+                />
               </li>
             ))}
           </ul>
@@ -406,6 +617,25 @@ export default function Dashboard() {
             {t("dashboardAppointmentCount", { count })}
           </p>
         )}
+
+        {rescheduleTarget ? (
+          <RescheduleAppointmentModal
+            isOpen={!!rescheduleTarget}
+            onClose={() => setRescheduleTarget(null)}
+            appointmentId={rescheduleTarget.id}
+            expertId={rescheduleTarget.expert.id}
+            onSuccess={() => void fetchAppointments()}
+          />
+        ) : null}
+
+        {reviewTarget ? (
+          <ReviewModal
+            isOpen={!!reviewTarget}
+            onClose={() => setReviewTarget(null)}
+            appointmentId={reviewTarget.id}
+            onSuccess={() => void fetchAppointments()}
+          />
+        ) : null}
       </div>
     </Layout>
   );

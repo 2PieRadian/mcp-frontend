@@ -1,5 +1,4 @@
 import { useState, type ReactNode } from "react";
-import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
   Calendar,
@@ -8,7 +7,6 @@ import {
   Video,
   Phone,
   MessageCircle,
-  ExternalLink,
   Copy,
   CheckCircle2,
   CalendarClock,
@@ -17,12 +15,18 @@ import {
   XCircle,
   UserX,
   Ban,
+  MessageSquareText,
+  Timer,
 } from "lucide-react";
+import { usePollingNow } from "../../../hooks/usePollingNow";
+import { formatAppointmentStartsIn } from "../../../lib/appointmentStartsIn";
 import {
   isTerminalAppointmentStatus,
+  isScheduledAwaitingJoinInBookedWindow,
   type ExpertAppointment,
   type AppointmentStatus,
 } from "../../../lib/api";
+import RescheduleAppointmentModal from "../../../components/RescheduleAppointmentModal";
 
 const STATUS_VALUES: ("" | AppointmentStatus)[] = [
   "",
@@ -156,31 +160,43 @@ function StatusBadge({ status }: { status: AppointmentStatus }) {
   );
 }
 
-function ExpertAppointmentCard({ apt }: { apt: ExpertAppointment }) {
+function ExpertAppointmentCard({
+  apt,
+  nowMs,
+  onOpenReschedule,
+}: {
+  apt: ExpertAppointment;
+  nowMs: number;
+  onOpenReschedule?: (apt: ExpertAppointment) => void;
+}) {
   const { t } = useTranslation("common");
   const client = apt.user;
   const displayName =
     client?.name?.trim() ||
     client?.email ||
     t("expertAppointmentClientFallback");
-  const initial = client
-    ? getClientInitial(client.name, client.email)
-    : "?";
+  const initial = client ? getClientInitial(client.name, client.email) : "?";
   const [copied, setCopied] = useState(false);
-
-  const handleCopy = () => {
-    if (apt.meetLink) {
-      void navigator.clipboard.writeText(apt.meetLink);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }
-  };
 
   const mins = durationMinutes(apt.startAt, apt.endAt);
   const showMeetActions =
     !!apt.meetLink && !isTerminalAppointmentStatus(apt.status);
-  const isVideoSession =
-    apt.communicationMedium?.toUpperCase() === "VIDEO";
+  const isVideoSession = apt.communicationMedium?.toUpperCase() === "VIDEO";
+  const showScheduledJoinHint = isScheduledAwaitingJoinInBookedWindow(
+    apt.status,
+    apt.startAt,
+    apt.endAt,
+  );
+  const startsInLabel =
+    apt.status === "SCHEDULED"
+      ? formatAppointmentStartsIn(apt.startAt, nowMs, t)
+      : null;
+  const expertIdForReschedule = apt.expert?.id ?? apt.expertId;
+  const showReschedule =
+    apt.status === "SCHEDULED" &&
+    expertIdForReschedule != null &&
+    expertIdForReschedule > 0 &&
+    !!onOpenReschedule;
 
   return (
     <article className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-200 border border-gray-100">
@@ -218,18 +234,27 @@ function ExpertAppointmentCard({ apt }: { apt: ExpertAppointment }) {
           <StatusBadge status={apt.status} />
         </div>
 
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 py-4 px-4 rounded-xl bg-gray-50 border border-gray-100">
-          <span className="flex items-center gap-2 text-[#304048] font-medium">
-            <Calendar className="w-5 h-5 text-[#44666C] shrink-0" />
-            {formatDate(apt.startAt)}
-          </span>
-          <span className="flex items-center gap-2 text-gray-700">
-            <Clock className="w-5 h-5 text-gray-400 shrink-0" />
-            {formatTime(apt.startAt)} – {formatTime(apt.endAt)}
-          </span>
-          <span className="text-sm text-gray-600">
-            {t("dashboardDuration")}: {mins} {t("expertAppointmentMinutesShort")}
-          </span>
+        <div className="py-4 px-4 rounded-xl bg-gray-50 border border-gray-100">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+            <span className="flex items-center gap-2 text-[#304048] font-medium">
+              <Calendar className="w-5 h-5 text-[#44666C] shrink-0" />
+              {formatDate(apt.startAt)}
+            </span>
+            <span className="flex items-center gap-2 text-gray-700">
+              <Clock className="w-5 h-5 text-gray-400 shrink-0" />
+              {formatTime(apt.startAt)} – {formatTime(apt.endAt)}
+            </span>
+            <span className="text-sm text-gray-600">
+              {t("dashboardDuration")}: {mins}{" "}
+              {t("expertAppointmentMinutesShort")}
+            </span>
+          </div>
+          {startsInLabel ? (
+            <div className="mt-3 pt-3 border-t border-gray-200/80 flex items-center gap-2 text-sm font-semibold text-[#44666C]">
+              <Timer className="w-4 h-4 shrink-0 opacity-90" aria-hidden />
+              <span>{startsInLabel}</span>
+            </div>
+          ) : null}
         </div>
 
         <div className="flex flex-wrap items-center gap-2 mt-4">
@@ -246,40 +271,66 @@ function ExpertAppointmentCard({ apt }: { apt: ExpertAppointment }) {
           )}
         </div>
 
-        {showMeetActions && (
-          <div className="mt-5 pt-4 border-t border-gray-100 flex flex-wrap items-center gap-3">
-            {isVideoSession ? (
-              <Link
-                to={`/appointments/${apt.id}/video`}
-                className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#44666C] text-white rounded-xl font-semibold text-sm hover:bg-[#365a62] transition-colors shadow-sm"
-              >
-                <Video className="w-4 h-4" />
-                {t("dashboardJoinVideoTracked")}
-              </Link>
-            ) : (
-              <a
-                href={apt.meetLink!}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#44666C] text-white rounded-xl font-semibold text-sm hover:bg-[#365a62] transition-colors shadow-sm"
-              >
-                <ExternalLink className="w-4 h-4" />
-                {t("dashboardJoinSession")}
-              </a>
-            )}
+        {apt.userConcern?.trim() ? (
+          <div className="mt-4 rounded-xl border border-gray-100 bg-stone-50/80 px-4 py-3">
+            <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-1.5 flex items-center gap-1.5">
+              <MessageSquareText className="w-3.5 h-3.5" />
+              {t("appointmentConcernFromClient")}
+            </p>
+            <p className="text-sm text-[#304048] leading-relaxed whitespace-pre-wrap">
+              {apt.userConcern.trim()}
+            </p>
+          </div>
+        ) : null}
+
+        {showScheduledJoinHint ? (
+          <div
+            className="mt-4 rounded-xl border border-sky-100 bg-sky-50/90 px-4 py-3"
+            role="status"
+          >
+            <p className="text-sm font-semibold text-sky-950">
+              {t("sessionNotStartedYet")}
+            </p>
+            <p className="mt-1 text-sm text-sky-900/90 leading-snug">
+              {t("sessionWaitingForBothParticipants")}
+            </p>
+          </div>
+        ) : null}
+
+        {showReschedule ? (
+          <div className="mt-4">
+            <button
+              type="button"
+              onClick={() => onOpenReschedule?.(apt)}
+              className="inline-flex items-center gap-2 px-4 py-2.5 border border-[#44666C]/40 text-[#44666C] rounded-xl font-semibold text-sm hover:bg-[#E0ECEE]/80 transition-colors"
+            >
+              <CalendarClock className="w-4 h-4" />
+              {t("appointmentRescheduleButton")}
+            </button>
+          </div>
+        ) : null}
+
+        {showMeetActions ? (
+          <div className="mt-5 pt-4 border-t border-gray-100 space-y-3">
             <a
               href={apt.meetLink!}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2.5 border border-gray-200 text-gray-700 rounded-xl font-medium text-sm hover:bg-gray-50 transition-colors"
+              className="inline-flex w-full sm:w-auto items-center justify-center gap-2 px-4 py-2.5 bg-[#44666C] text-white rounded-xl font-semibold text-sm hover:bg-[#365a62] transition-colors shadow-sm"
             >
-              <ExternalLink className="w-4 h-4" />
-              {t("dashboardOpenMeetingTab")}
+              <Video className="w-4 h-4" />
+              {isVideoSession
+                ? t("dashboardJoinVideoTracked")
+                : t("dashboardJoinSession")}
             </a>
             <button
               type="button"
-              onClick={handleCopy}
-              className="inline-flex items-center gap-2 px-4 py-2.5 border border-gray-200 text-gray-700 rounded-xl font-medium text-sm hover:bg-gray-50 transition-colors"
+              onClick={() => {
+                void navigator.clipboard.writeText(apt.meetLink!);
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+              }}
+              className="inline-flex w-full sm:w-auto items-center justify-center gap-2 px-4 py-2.5 border border-gray-200 text-gray-700 rounded-xl font-medium text-sm hover:bg-gray-50 transition-colors"
             >
               {copied ? (
                 <>
@@ -294,7 +345,7 @@ function ExpertAppointmentCard({ apt }: { apt: ExpertAppointment }) {
               )}
             </button>
           </div>
-        )}
+        ) : null}
       </div>
     </article>
   );
@@ -320,6 +371,12 @@ export default function ExpertAppointmentsTab({
   onRefetch,
 }: ExpertAppointmentsTabProps) {
   const { t } = useTranslation("common");
+  const nowMs = usePollingNow(1000);
+  const [rescheduleTarget, setRescheduleTarget] =
+    useState<ExpertAppointment | null>(null);
+
+  const rescheduleExpertId =
+    rescheduleTarget?.expert?.id ?? rescheduleTarget?.expertId ?? 0;
 
   return (
     <section className="bg-[hsl(0,0%,97%)] shadow-m rounded-[16px] sm:rounded-[20px] p-[16px] sm:p-[24px]">
@@ -377,7 +434,11 @@ export default function ExpertAppointmentsTab({
         <ul className="space-y-5">
           {appointments.map((apt) => (
             <li key={apt.id}>
-              <ExpertAppointmentCard apt={apt} />
+              <ExpertAppointmentCard
+                apt={apt}
+                nowMs={nowMs}
+                onOpenReschedule={setRescheduleTarget}
+              />
             </li>
           ))}
         </ul>
@@ -388,6 +449,18 @@ export default function ExpertAppointmentsTab({
           {t("dashboardAppointmentCount", { count })}
         </p>
       )}
+
+      {rescheduleTarget && rescheduleExpertId > 0 ? (
+        <RescheduleAppointmentModal
+          isOpen={!!rescheduleTarget}
+          onClose={() => setRescheduleTarget(null)}
+          appointmentId={rescheduleTarget.id}
+          expertId={rescheduleExpertId}
+          onSuccess={() => {
+            void onRefetch?.();
+          }}
+        />
+      ) : null}
     </section>
   );
 }

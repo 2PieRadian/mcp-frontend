@@ -61,7 +61,7 @@ export default function ResponsiveNavbar() {
                     <img
                       src={user.avatarUrl}
                       alt={user.name || "Profile"}
-                      className="w-[32px] h-[32px] sm:w-[40px] sm:h-[40px] rounded-full object-cover transition-transform duration-200 hover:scale-110 cursor-pointer"
+                      className="w-[32px] h-[32px] sm:w-[40px] sm:h-[40px] rounded-full border border-gray-400 object-cover transition-transform duration-200 hover:scale-110 cursor-pointer"
                     />
                   </Link>
                 ) : (

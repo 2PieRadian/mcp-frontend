@@ -24,8 +24,9 @@ function NavbarItem({
   return (
     <Link
       to={link}
-      className={`cursor-pointer text-light-text px-[15px] py-[5px] hover:bg-hover-bg rounded-full transition-colors duration-200 ${isActive ? "bg-hover-bg" : ""
-        }`}
+      className={`cursor-pointer text-light-text px-[15px] py-[5px] hover:bg-hover-bg rounded-full transition-colors duration-200 ${
+        isActive ? "bg-hover-bg" : ""
+      }`}
     >
       {t(textKey)}
     </Link>
@@ -50,8 +51,9 @@ function NavbarItemIcon({
   const { t } = useTranslation("navigation");
   return (
     <div
-      className={`px-[12px] py-[5px] flex items-center gap-[5px] rounded-full cursor-pointer hover:bg-hover-bg transition-colors duration-200 ${isActive ? "bg-hover-bg" : ""
-        }`}
+      className={`px-[12px] py-[5px] flex items-center gap-[5px] rounded-full cursor-pointer hover:bg-hover-bg transition-colors duration-200 ${
+        isActive ? "bg-hover-bg" : ""
+      }`}
       onClick={onClick}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
@@ -176,8 +178,9 @@ export default function Navbar() {
 
           {/* Desktop Navigation - Hidden on mobile */}
           <div
-            className={`hidden lg:flex items-center text-[13px] relative ${user?.role === "EXPERT" ? "gap-5" : "gap-[2px]"
-              }`}
+            className={`hidden lg:flex items-center text-[13px] relative ${
+              user?.role === "EXPERT" ? "gap-5" : "gap-[2px]"
+            }`}
           >
             {selfAssessmentsModalOpen && user?.role !== "EXPERT" && (
               <div
@@ -213,8 +216,9 @@ export default function Navbar() {
                   icon={
                     <ChevronDown
                       size={15}
-                      className={`text-light-text transition-transform duration-200 ${weHelpWithModalOpen ? "rotate-180" : ""
-                        }`}
+                      className={`text-light-text transition-transform duration-200 ${
+                        weHelpWithModalOpen ? "rotate-180" : ""
+                      }`}
                     />
                   }
                   onMouseEnter={handleMouseEnter}
@@ -230,8 +234,9 @@ export default function Navbar() {
                   icon={
                     <ChevronDown
                       size={15}
-                      className={`text-light-text transition-transform duration-200 ${selfAssessmentsModalOpen ? "rotate-180" : ""
-                        }`}
+                      className={`text-light-text transition-transform duration-200 ${
+                        selfAssessmentsModalOpen ? "rotate-180" : ""
+                      }`}
                     />
                   }
                   onClick={() => navigate("/self-assessment")}
@@ -273,42 +278,40 @@ export default function Navbar() {
               user.avatarUrl ? (
                 <Link
                   to="/profile"
-                  className={`group flex items-center justify-center shrink-0 ${location.pathname.startsWith("/profile")
-                    ? ""
-                    : ""
-                    }`}
+                  className={`group flex items-center justify-center shrink-0 ${
+                    location.pathname.startsWith("/profile") ? "" : ""
+                  }`}
                   aria-label="Profile"
                 >
                   <img
                     src={user.avatarUrl}
                     alt={user.name || "Profile"}
-                    className="w-[25px] h-[25px] sm:w-[33px] sm:h-[33px] rounded-full object-cover transition-transform duration-200 hover:scale-110 cursor-pointer"
+                    className="w-[25px] h-[25px] sm:w-[33px] sm:h-[33px] rounded-full border border-gray-400 object-cover transition-transform duration-200 hover:scale-110 cursor-pointer"
                   />
                 </Link>
               ) : (
                 <Link
                   to="/profile"
-                  className={`group p-[6px] rounded-full border border-border-light transition-colors flex items-center justify-center shrink-0 ${location.pathname.startsWith("/profile")
-                    ? "bg-border-light text-white"
-                    : "hover:bg-border-light hover:text-white"
-                    }`}
+                  className={`group p-[6px] rounded-full border border-border-light transition-colors flex items-center justify-center shrink-0 ${
+                    location.pathname.startsWith("/profile")
+                      ? "bg-border-light text-white"
+                      : "hover:bg-border-light hover:text-white"
+                  }`}
                   aria-label="Profile"
                 >
                   <UserCircle2
                     size={32}
-                    className={`sm:w-[40px] sm:h-[40px] transition-colors ${location.pathname.startsWith("/profile")
-                      ? "text-white"
-                      : "text-logo-heading group-hover:text-white"
-                      }`}
+                    className={`sm:w-[40px] sm:h-[40px] transition-colors ${
+                      location.pathname.startsWith("/profile")
+                        ? "text-white"
+                        : "text-logo-heading group-hover:text-white"
+                    }`}
                   />
                 </Link>
               )
             ) : (
               <Link
-                to={loginPathWithRedirect(
-                  location.pathname,
-                  location.search,
-                )}
+                to={loginPathWithRedirect(location.pathname, location.search)}
                 className={`border border-border-light text-[${textColor}] transition-all duration-200 cursor-pointer rounded-full px-[14px] sm:px-[20px] py-[6px] text-[13px] sm:text-[15px] bg-primary text-white hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)]`}
               >
                 {t("login")}
