@@ -11,6 +11,7 @@ import {
   MessageCircle,
   Copy,
   ExternalLink,
+  AlertCircle,
 } from "lucide-react";
 import { useBooking } from "../context/BookingContext";
 import { useAuth } from "../context/AuthContext";
@@ -415,6 +416,26 @@ export default function BookingModal({
 
           {/* Content */}
           <div className="flex-1 px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+            {/* Booking error toast - fixed at top */}
+            {bookingError && (
+              <div className="sticky top-0 z-10 mx-auto max-w-4xl mb-4">
+                <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-red-800 text-sm shadow-lg flex items-start gap-3">
+                  <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
+                  <div className="flex-1 whitespace-pre-wrap">
+                    {bookingError}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setBookingError(null)}
+                    className="shrink-0 p-1 rounded-lg hover:bg-red-100 transition-colors"
+                    aria-label="Dismiss"
+                  >
+                    <X className="w-4 h-4 text-red-600" />
+                  </button>
+                </div>
+              </div>
+            )}
+
             {successResult ? (
               <div className="max-w-4xl mx-auto">
                 <div className="text-center py-8 sm:py-12">
@@ -481,11 +502,6 @@ export default function BookingModal({
               </div>
             ) : (
               <div className="max-w-4xl mx-auto space-y-8">
-                {bookingError && (
-                  <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-red-800 text-sm">
-                    {bookingError}
-                  </div>
-                )}
                 {/* What would you like help with? */}
                 <section>
                   <h3 className="text-[#304048] font-semibold text-lg mb-1">

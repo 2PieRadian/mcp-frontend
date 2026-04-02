@@ -19,6 +19,7 @@ import {
   isScheduledAwaitingJoinInBookedWindow,
   userCompleteAppointment,
   userReportNoShow,
+  cancelAppointment,
   ApiHttpError,
   type MyAppointment,
   type AppointmentStatus,
@@ -34,7 +35,6 @@ import {
   CheckCircle2,
   CalendarClock,
   Radio,
-  XCircle,
   UserX,
   Ban,
   MessageSquareText,
@@ -135,12 +135,6 @@ function StatusBadge({ status }: { status: AppointmentStatus }) {
       badge = "bg-emerald-50 text-emerald-800 border border-emerald-200";
       dot = "bg-emerald-500";
       break;
-    case "FAILED":
-      label = t("dashboardFilterFailed");
-      icon = <XCircle className="w-3.5 h-3.5" />;
-      badge = "bg-red-50 text-red-800 border border-red-200";
-      dot = "bg-red-500";
-      break;
     case "NO_SHOW":
       label = t("dashboardFilterNoShow");
       icon = <UserX className="w-3.5 h-3.5" />;
@@ -196,6 +190,7 @@ function AppointmentCard({
   const [copied, setCopied] = useState(false);
   const [completing, setCompleting] = useState(false);
   const [reportingNoShow, setReportingNoShow] = useState(false);
+  const [cancelling, setCancelling] = useState(false);
   const [actionError, setActionError] = useState<string | null>(null);
   const [actionSuccess, setActionSuccess] = useState<string | null>(null);
 
@@ -225,6 +220,7 @@ function AppointmentCard({
     nowMs >= startAtMs;
 
   const showReviewButton = apt.status === "COMPLETED" && !!onOpenReview;
+  const canCancel = apt.status === "SCHEDULED" && nowMs < startAtMs;
 
   const handleMarkComplete = async () => {
     setCompleting(true);
@@ -269,6 +265,25 @@ function AppointmentCard({
       }
     } finally {
       setReportingNoShow(false);
+    }
+  };
+
+  const handleCancel = async () => {
+    setCancelling(true);
+    setActionError(null);
+    setActionSuccess(null);
+    try {
+      await cancelAppointment(apt.id);
+      setActionSuccess(t("sessionCancelSuccess"));
+      onStatusChange?.();
+    } catch (err) {
+      if (err instanceof ApiHttpError) {
+        setActionError(err.message);
+      } else {
+        setActionError(err instanceof Error ? err.message : "Unknown error");
+      }
+    } finally {
+      setCancelling(false);
     }
   };
 
@@ -412,17 +427,40 @@ function AppointmentCard({
           </div>
         ) : null}
 
-        {/* Reschedule button */}
-        {showReschedule ? (
-          <div className="mt-4">
-            <button
-              type="button"
-              onClick={() => onOpenReschedule?.(apt)}
-              className="inline-flex items-center gap-2 px-4 py-2.5 border border-[#44666C]/40 text-[#44666C] rounded-xl font-semibold text-sm hover:bg-[#E0ECEE]/80 transition-colors"
-            >
-              <CalendarClock className="w-4 h-4" />
-              {t("appointmentRescheduleButton")}
-            </button>
+        {/* Reschedule and Cancel buttons for SCHEDULED appointments */}
+        {(showReschedule || canCancel) && !actionSuccess ? (
+          <div className="mt-4 flex flex-wrap gap-2">
+            {showReschedule && (
+              <button
+                type="button"
+                onClick={() => onOpenReschedule?.(apt)}
+                disabled={cancelling}
+                className="inline-flex items-center gap-2 px-4 py-2.5 border border-[#44666C]/40 text-[#44666C] rounded-xl font-semibold text-sm hover:bg-[#E0ECEE]/80 transition-colors disabled:opacity-50"
+              >
+                <CalendarClock className="w-4 h-4" />
+                {t("appointmentRescheduleButton")}
+              </button>
+            )}
+            {canCancel && (
+              <button
+                type="button"
+                onClick={handleCancel}
+                disabled={cancelling}
+                className="inline-flex items-center gap-2 px-4 py-2.5 border border-red-300 text-red-700 rounded-xl font-semibold text-sm hover:bg-red-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {cancelling ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    {t("sessionActionCancelling")}
+                  </>
+                ) : (
+                  <>
+                    <Ban className="w-4 h-4" />
+                    {t("sessionActionCancel")}
+                  </>
+                )}
+              </button>
+            )}
           </div>
         ) : null}
 

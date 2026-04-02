@@ -333,5 +333,18 @@
   "reviewEditReviewButton": "Edit review",
   "reviewStarAriaLabel": "{{rating}} star",
   "reviewCharacterCount": "{{count}}/2000",
-  "reviewRequired": "Please select a rating"
+  "reviewRequired": "Please select a rating",
+  "sessionActionCancel": "Cancel appointment",
+  "sessionActionCancelling": "Cancelling…",
+  "sessionCancelSuccess": "Appointment cancelled",
+  "sessionCancelNotAllowed": "Cannot cancel after the session has started",
+  "sessionNoShowDeadlinePassed": "The window to report no-show has passed",
+  "expertReviewsTitle": "Reviews",
+  "expertReviewsEmpty": "No reviews yet",
+  "expertReviewsBeFirst": "Be the first to review this expert after your session.",
+  "expertReviewsLoadMore": "Load more reviews",
+  "expertReviewsLoading": "Loading reviews…",
+  "expertReviewsError": "Failed to load reviews",
+  "expertReviewsShowingCount": "Showing {{shown}} of {{total}} reviews",
+  "expertReviewsVerifiedSession": "Verified session"
 }

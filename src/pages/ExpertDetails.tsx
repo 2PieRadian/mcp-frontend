@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
@@ -9,12 +9,16 @@ import {
   Languages,
   FileText,
   LogIn,
+  MessageSquare,
+  Loader2,
+  ChevronDown,
+  BadgeCheck,
 } from "lucide-react";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import BookingModal from "../components/BookingModal";
 import ImageViewer from "../components/ImageViewer";
 import type { ApiExpert } from "../types/experts";
-import { getAvatarUrl } from "../lib/api";
+import { getAvatarUrl, getExpertReviews, type PublicReview } from "../lib/api";
 import { useAuth } from "../context/AuthContext";
 
 function nameInitial(displayName: string): string {
@@ -63,6 +67,86 @@ function ExpertProfileAvatar({
   );
 }
 
+function ReviewerAvatar({
+  name,
+  avatarUrl,
+}: {
+  name: string | null;
+  avatarUrl: string | null;
+}) {
+  const [loadFailed, setLoadFailed] = useState(false);
+  const displayName = name || "User";
+  const initial = displayName.trim().charAt(0).toUpperCase() || "?";
+  const resolvedUrl = avatarUrl ? getAvatarUrl(avatarUrl) : undefined;
+
+  if (resolvedUrl && !loadFailed) {
+    return (
+      <img
+        src={resolvedUrl}
+        alt={displayName}
+        className="w-10 h-10 rounded-full object-cover shrink-0"
+        onError={() => setLoadFailed(true)}
+      />
+    );
+  }
+
+  return (
+    <div className="w-10 h-10 rounded-full bg-[#44666C] text-white flex items-center justify-center text-sm font-semibold shrink-0">
+      {initial}
+    </div>
+  );
+}
+
+function ReviewCard({ review }: { review: PublicReview }) {
+  const { t } = useTranslation("common");
+  const displayName = review.user.name || "Anonymous";
+  const reviewDate = new Date(review.createdAt).toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+
+  return (
+    <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-5">
+      <div className="flex items-start gap-3 mb-3">
+        <ReviewerAvatar name={review.user.name} avatarUrl={review.user.avatar} />
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center justify-between gap-2 flex-wrap">
+            <h4 className="font-semibold text-[#304048] truncate">{displayName}</h4>
+            <span className="text-xs text-gray-500 shrink-0">{reviewDate}</span>
+          </div>
+          <div className="flex items-center gap-2 mt-1">
+            <div className="flex items-center gap-0.5">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <Star
+                  key={star}
+                  size={14}
+                  className={
+                    star <= review.rating
+                      ? "fill-amber-400 text-amber-400"
+                      : "fill-none text-gray-300"
+                  }
+                />
+              ))}
+            </div>
+            {review.appointment && (
+              <span className="inline-flex items-center gap-1 text-xs text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
+                <BadgeCheck size={12} />
+                {t("expertReviewsVerifiedSession")}
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+      {review.comment && (
+        <p className="text-gray-700 text-sm leading-relaxed whitespace-pre-wrap">
+          {review.comment}
+        </p>
+      )}
+    </div>
+  );
+}
+
 export default function ExpertDetails() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -70,6 +154,14 @@ export default function ExpertDetails() {
   const { user } = useAuth();
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
+
+  // Reviews state
+  const [reviews, setReviews] = useState<PublicReview[]>([]);
+  const [reviewsPage, setReviewsPage] = useState(1);
+  const [reviewsTotalPages, setReviewsTotalPages] = useState(1);
+  const [reviewsTotal, setReviewsTotal] = useState(0);
+  const [reviewsLoading, setReviewsLoading] = useState(false);
+  const [reviewsError, setReviewsError] = useState<string | null>(null);
 
   // Get expert data from navigation state (passed via props)
   const expert = location.state?.expert as ApiExpert | undefined;
@@ -119,6 +211,40 @@ export default function ExpertDetails() {
   const hasLanguages = languagesList.length > 0;
 
   const avatarUrl = getAvatarUrl(expert.user.avatar);
+
+  const fetchReviews = useCallback(
+    async (page: number, append: boolean = false) => {
+      if (!expert) return;
+      setReviewsLoading(true);
+      setReviewsError(null);
+      try {
+        const res = await getExpertReviews(expert.id, page, 5);
+        setReviews((prev) => (append ? [...prev, ...res.reviews] : res.reviews));
+        setReviewsPage(res.page);
+        setReviewsTotalPages(res.totalPages);
+        setReviewsTotal(res.total);
+      } catch (err) {
+        setReviewsError(
+          err instanceof Error ? err.message : t("common:expertReviewsError"),
+        );
+      } finally {
+        setReviewsLoading(false);
+      }
+    },
+    [expert, t],
+  );
+
+  useEffect(() => {
+    if (expert) {
+      void fetchReviews(1);
+    }
+  }, [expert, fetchReviews]);
+
+  const handleLoadMoreReviews = () => {
+    if (reviewsPage < reviewsTotalPages && !reviewsLoading) {
+      void fetchReviews(reviewsPage + 1, true);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white px-4 sm:px-5">
@@ -332,6 +458,83 @@ export default function ExpertDetails() {
                       })}
                     </p>
                   </div>
+                </div>
+
+                {/* Reviews Section */}
+                <div className="mt-6 sm:mt-8">
+                  <div className="flex items-center justify-between mb-4">
+                    <h2
+                      className="font-semibold text-[#304048] flex items-center gap-2"
+                      style={{ fontSize: "clamp(16px, 1rem, 20.8px)" }}
+                    >
+                      <MessageSquare size={20} className="sm:w-6 sm:h-6 text-[#44666C]" />
+                      {t("common:expertReviewsTitle")}
+                      {reviewsTotal > 0 && (
+                        <span className="text-gray-500 font-normal text-sm">
+                          ({reviewsTotal})
+                        </span>
+                      )}
+                    </h2>
+                  </div>
+
+                  {reviewsLoading && reviews.length === 0 ? (
+                    <div className="flex items-center justify-center py-12 border-2 border-dashed border-gray-200 rounded-xl">
+                      <Loader2 className="w-6 h-6 text-[#44666C] animate-spin" />
+                      <span className="ml-3 text-gray-600">
+                        {t("common:expertReviewsLoading")}
+                      </span>
+                    </div>
+                  ) : reviewsError ? (
+                    <div className="text-center py-12 border-2 border-dashed border-gray-200 rounded-xl">
+                      <p className="text-red-600 mb-4 text-sm">{reviewsError}</p>
+                      <button
+                        onClick={() => fetchReviews(1)}
+                        className="px-4 py-2 bg-[#44666C] text-white rounded-lg hover:bg-[#365a62] text-sm font-medium"
+                      >
+                        {t("common:dashboardTryAgain")}
+                      </button>
+                    </div>
+                  ) : reviews.length === 0 ? (
+                    <div className="text-center py-12 border-2 border-dashed border-gray-200 rounded-xl">
+                      <MessageSquare className="w-10 h-10 text-gray-400 mx-auto mb-3" />
+                      <p className="text-gray-600 font-medium">
+                        {t("common:expertReviewsEmpty")}
+                      </p>
+                      <p className="text-gray-500 text-sm mt-1">
+                        {t("common:expertReviewsBeFirst")}
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {reviews.map((review) => (
+                        <ReviewCard key={review.id} review={review} />
+                      ))}
+
+                      {/* Load more / pagination info */}
+                      {reviewsTotal > reviews.length && (
+                        <div className="text-center pt-2">
+                          <p className="text-sm text-gray-500 mb-3">
+                            {t("common:expertReviewsShowingCount", {
+                              shown: reviews.length,
+                              total: reviewsTotal,
+                            })}
+                          </p>
+                          <button
+                            onClick={handleLoadMoreReviews}
+                            disabled={reviewsLoading}
+                            className="inline-flex items-center gap-2 px-4 py-2.5 border border-gray-300 text-gray-700 rounded-xl font-medium text-sm hover:bg-gray-50 disabled:opacity-50 transition-colors"
+                          >
+                            {reviewsLoading ? (
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                            ) : (
+                              <ChevronDown className="w-4 h-4" />
+                            )}
+                            {t("common:expertReviewsLoadMore")}
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
 

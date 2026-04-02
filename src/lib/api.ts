@@ -1,5 +1,5 @@
-// export const BACKEND_URL = "https://api.mindcurepath.com";
-export const BACKEND_URL = "http://localhost:3000";
+export const BACKEND_URL = "https://api.mindcurepath.com";
+// export const BACKEND_URL = "http://localhost:3000";
 
 /**
  * Constructs a full avatar URL from a backend avatar value.
@@ -273,22 +273,21 @@ export async function rescheduleAppointment(
   return data as RescheduleAppointmentResponse;
 }
 
-/** Appointment status (API). Legacy ONGOING is normalized to IN_PROGRESS. */
+/** Appointment status (API). Legacy ONGOING/FAILED are normalized. */
 export type AppointmentStatus =
   | "SCHEDULED"
   | "IN_PROGRESS"
   | "COMPLETED"
-  | "FAILED"
   | "NO_SHOW"
   | "CANCELLED";
 
 export function normalizeAppointmentStatus(raw: string): AppointmentStatus {
   if (raw === "ONGOING") return "IN_PROGRESS";
+  if (raw === "FAILED") return "NO_SHOW";
   if (
     raw === "SCHEDULED" ||
     raw === "IN_PROGRESS" ||
     raw === "COMPLETED" ||
-    raw === "FAILED" ||
     raw === "NO_SHOW" ||
     raw === "CANCELLED"
   ) {
@@ -302,7 +301,6 @@ export function isTerminalAppointmentStatus(
 ): boolean {
   return (
     status === "COMPLETED" ||
-    status === "FAILED" ||
     status === "NO_SHOW" ||
     status === "CANCELLED"
   );
@@ -900,6 +898,41 @@ export async function userReportNoShow(
   return data as UserReportNoShowResponse;
 }
 
+export type CancelAppointmentResponse = {
+  message: string;
+  appointment: MyAppointment;
+};
+
+/**
+ * POST /:id/cancel — booking user cancels a SCHEDULED appointment.
+ * Rules: must be SCHEDULED, now < startAt (cannot cancel after slot started).
+ */
+export async function cancelAppointment(
+  appointmentId: number,
+): Promise<CancelAppointmentResponse> {
+  const res = await fetch(
+    `${BACKEND_URL}/api/v1/appointments/${appointmentId}/cancel`,
+    { method: "POST", headers: getAuthHeaders(), body: JSON.stringify({}) },
+  );
+
+  const data = (await res.json().catch(() => ({}))) as Record<string, unknown>;
+
+  if (!res.ok) {
+    const fallback =
+      res.status === 403
+        ? "Only the booking user can cancel this appointment"
+        : res.status === 404
+          ? "Appointment not found"
+          : res.status === 409
+            ? "Cannot cancel — appointment is not scheduled or has already started"
+            : "Failed to cancel appointment";
+    const msg = getErrorMessageFromResponseBody(data, res.status, fallback);
+    throw new ApiHttpError(msg, res.status, data);
+  }
+
+  return data as CancelAppointmentResponse;
+}
+
 /** Review object returned by POST/PATCH review. */
 export type AppointmentReview = {
   id: number;
@@ -1025,4 +1058,80 @@ export async function getAppointmentReview(
   }
 
   return (data.review ?? data) as AppointmentReview;
+}
+
+/** User info included in public review listings. */
+export type ReviewUser = {
+  id: number;
+  name: string | null;
+  avatar: string | null;
+};
+
+/** Appointment info included in public review listings. */
+export type ReviewAppointment = {
+  id: number;
+  startAt: string;
+  appointmentType: "FREE" | "PAID";
+};
+
+/** Full review with user and appointment info for public listings. */
+export type PublicReview = {
+  id: number;
+  appointmentId: number;
+  userId: number;
+  expertId: number;
+  rating: number;
+  comment: string | null;
+  createdAt: string;
+  updatedAt: string;
+  user: ReviewUser;
+  appointment?: ReviewAppointment;
+};
+
+export type ExpertReviewsResponse = {
+  expertId: number;
+  rating: number | null;
+  totalReviews: number;
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+  reviews: PublicReview[];
+};
+
+/**
+ * GET /reviews/expert/:expertId — public endpoint to get all reviews for an expert.
+ * Supports pagination.
+ */
+export async function getExpertReviews(
+  expertId: number,
+  page: number = 1,
+  limit: number = 10,
+): Promise<ExpertReviewsResponse> {
+  const url = new URL(`${BACKEND_URL}/api/v1/appointments/reviews/expert/${expertId}`);
+  url.searchParams.set("page", String(page));
+  url.searchParams.set("limit", String(Math.min(limit, 50)));
+
+  const res = await fetch(url.toString(), {
+    method: "GET",
+    headers: { Accept: "application/json" },
+  });
+
+  const data = (await res.json().catch(() => ({}))) as Record<string, unknown>;
+
+  if (!res.ok) {
+    const fallback =
+      res.status === 400
+        ? "Invalid expert ID"
+        : res.status === 404
+          ? "Expert not found"
+          : "Failed to load reviews";
+    throw new ApiHttpError(
+      getErrorMessageFromResponseBody(data, res.status, fallback),
+      res.status,
+      data,
+    );
+  }
+
+  return data as ExpertReviewsResponse;
 }

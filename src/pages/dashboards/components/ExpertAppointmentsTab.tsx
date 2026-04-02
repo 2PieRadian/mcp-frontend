@@ -12,7 +12,6 @@ import {
   CalendarClock,
   Radio,
   User,
-  XCircle,
   UserX,
   Ban,
   MessageSquareText,
@@ -123,12 +122,6 @@ function StatusBadge({ status }: { status: AppointmentStatus }) {
       icon = <CheckCircle2 className="w-3.5 h-3.5" />;
       badge = "bg-emerald-50 text-emerald-800 border border-emerald-200";
       dot = "bg-emerald-500";
-      break;
-    case "FAILED":
-      label = t("dashboardFilterFailed");
-      icon = <XCircle className="w-3.5 h-3.5" />;
-      badge = "bg-red-50 text-red-800 border border-red-200";
-      dot = "bg-red-500";
       break;
     case "NO_SHOW":
       label = t("dashboardFilterNoShow");
