@@ -5,7 +5,7 @@ import {
   useRef,
   type ReactNode,
 } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context/AuthContext";
 import Layout from "../components/Layout";
@@ -41,6 +41,7 @@ import {
   Timer,
   Star,
   AlertCircle,
+  Zap,
 } from "lucide-react";
 
 const MIN_SESSION_MINUTES = 5;
@@ -328,12 +329,18 @@ function AppointmentCard({
           ) : null}
         </div>
 
-        {/* Chips row: medium + amount */}
+        {/* Chips row: medium + amount + emergency */}
         <div className="flex flex-wrap items-center gap-2 mt-4">
           <CommunicationChip medium={apt.communicationMedium} />
           {apt.amount > 0 && (
             <span className="inline-flex items-center px-3 py-1.5 rounded-lg bg-[#E0ECEE] text-[#44666C] text-sm font-semibold">
               {formatAmount(apt.amount)}
+            </span>
+          )}
+          {apt.isEmergency && (
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-100 text-amber-700 text-sm font-semibold">
+              <Zap className="w-3.5 h-3.5" />
+              {t("emergencyBadge")}
             </span>
           )}
         </div>
@@ -580,13 +587,22 @@ export default function Dashboard() {
   return (
     <Layout>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
-        <div className="mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-[#304048] tracking-tight">
-            {t("myAppointments")}
-          </h1>
-          <p className="text-gray-600 mt-1.5 sm:mt-2">
-            {t("myAppointmentsSubtitle")}
-          </p>
+        <div className="mb-8 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-bold text-[#304048] tracking-tight">
+              {t("myAppointments")}
+            </h1>
+            <p className="text-gray-600 mt-1.5 sm:mt-2">
+              {t("myAppointmentsSubtitle")}
+            </p>
+          </div>
+          <Link
+            to="/dashboard/urgent-requests"
+            className="inline-flex items-center gap-2 px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-semibold text-sm transition-colors shadow-sm shrink-0"
+          >
+            <Zap className="w-4 h-4" />
+            {t("urgentRequestsTab")}
+          </Link>
         </div>
 
         {/* Status filter */}

@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Calendar, Check } from "lucide-react";
+import { Calendar, Check, Zap, Loader2 } from "lucide-react";
 import type { WeeklyAvailability } from "../types";
+import { toggleEmergencyAvailability, ApiHttpError } from "../../../lib/api";
 
 type AvailabilityManagementTabProps = {
   availability: WeeklyAvailability;
@@ -11,6 +13,8 @@ type AvailabilityManagementTabProps = {
   error: string | null;
   onEdit: () => void;
   onSave: () => void;
+  emergencyAvailable?: boolean;
+  onEmergencyToggle?: (enabled: boolean) => void;
 };
 
 const daysOfWeek = [
@@ -39,8 +43,31 @@ export default function AvailabilityManagementTab({
   onEdit,
   onSave,
   onToggleSlot,
+  emergencyAvailable = false,
+  onEmergencyToggle,
 }: AvailabilityManagementTabProps) {
   const { t } = useTranslation("common");
+  const [emergencyToggling, setEmergencyToggling] = useState(false);
+  const [emergencyError, setEmergencyError] = useState<string | null>(null);
+
+  const handleEmergencyToggle = async () => {
+    if (emergencyToggling) return;
+    setEmergencyToggling(true);
+    setEmergencyError(null);
+    try {
+      const res = await toggleEmergencyAvailability(!emergencyAvailable);
+      onEmergencyToggle?.(res.expert.emergencyAvailable);
+    } catch (err) {
+      if (err instanceof ApiHttpError) {
+        setEmergencyError(err.message);
+      } else {
+        setEmergencyError(err instanceof Error ? err.message : "Failed to update");
+      }
+    } finally {
+      setEmergencyToggling(false);
+    }
+  };
+
   return (
     <section className="bg-[hsl(0,0%,97%)] shadow-m rounded-[16px] sm:rounded-[20px] p-[16px] sm:p-[24px]">
       <div className="flex items-center justify-between gap-[10px] mb-[16px]">
@@ -82,6 +109,55 @@ export default function AvailabilityManagementTab({
           {error}
         </div>
       )}
+
+      {/* Emergency Availability Toggle */}
+      <div className="mb-[20px] p-[16px] bg-white border border-amber-200 rounded-[12px]">
+        <div className="flex items-start gap-[12px]">
+          <div className="shrink-0 w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center">
+            <Zap className="w-5 h-5 text-amber-600" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <h3 className="text-[15px] font-semibold text-gray-900">
+                  {t("emergencyToggleLabel")}
+                </h3>
+                <p className="text-[13px] text-gray-600 mt-1">
+                  {t("emergencyToggleDescription")}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={handleEmergencyToggle}
+                disabled={emergencyToggling || isLoading}
+                className={`relative shrink-0 w-14 h-8 rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 disabled:opacity-50 ${
+                  emergencyAvailable ? "bg-amber-500" : "bg-gray-300"
+                }`}
+                role="switch"
+                aria-checked={emergencyAvailable}
+              >
+                <span
+                  className={`absolute top-1 left-1 w-6 h-6 bg-white rounded-full shadow transition-transform duration-200 flex items-center justify-center ${
+                    emergencyAvailable ? "translate-x-6" : "translate-x-0"
+                  }`}
+                >
+                  {emergencyToggling && (
+                    <Loader2 className="w-4 h-4 text-gray-400 animate-spin" />
+                  )}
+                </span>
+              </button>
+            </div>
+            {emergencyError && (
+              <p className="mt-2 text-[12px] text-red-600">{emergencyError}</p>
+            )}
+            {emergencyAvailable && !emergencyError && (
+              <p className="mt-2 text-[12px] text-amber-700 font-medium">
+                {t("emergencyToggleEnabled")}
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
 
       <div className="overflow-x-auto">
         <div className="min-w-[800px]">

@@ -55,6 +55,16 @@ export default function ExpertsDashboard() {
   >(null);
   const [earningsLoading, setEarningsLoading] = useState(false);
   const [earningsError, setEarningsError] = useState<string | null>(null);
+  const [emergencyAvailable, setEmergencyAvailable] = useState<boolean>(
+    user?.emergencyAvailable ?? false,
+  );
+
+  // Sync emergency availability with user context
+  useEffect(() => {
+    if (user?.emergencyAvailable !== undefined) {
+      setEmergencyAvailable(user.emergencyAvailable);
+    }
+  }, [user?.emergencyAvailable]);
 
   // Sync local availability with context availability when it changes
   useEffect(() => {
@@ -284,6 +294,8 @@ export default function ExpertsDashboard() {
                 onEdit={handleEditAvailability}
                 onSave={handleSaveAvailability}
                 onToggleSlot={toggleTimeSlot}
+                emergencyAvailable={emergencyAvailable}
+                onEmergencyToggle={setEmergencyAvailable}
               />
             )}
 

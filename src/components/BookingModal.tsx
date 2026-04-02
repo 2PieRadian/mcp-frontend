@@ -12,6 +12,7 @@ import {
   Copy,
   ExternalLink,
   AlertCircle,
+  Zap,
 } from "lucide-react";
 import { useBooking } from "../context/BookingContext";
 import { useAuth } from "../context/AuthContext";
@@ -21,6 +22,9 @@ import {
   verifyPayment,
   USER_CONCERN_MAX_LENGTH,
   ApiHttpError,
+  EMERGENCY_SURCHARGE_INR,
+  initiateResponseRequiresPayment,
+  getInitiatePaymentDetails,
   type CommunicationMedium,
 } from "../lib/api";
 import { openRazorpayCheckout } from "../lib/razorpay";
@@ -30,6 +34,25 @@ type ConnectionType = "call" | "video" | "chat";
 
 function toCommunicationMedium(c: ConnectionType): CommunicationMedium {
   return c === "call" ? "CALL" : c === "video" ? "VIDEO" : "CHAT";
+}
+
+/** Check if a slot starts within 30 minutes from now (emergency slot). */
+function isEmergencySlot(
+  dayData: { year: number; month: number; date: number },
+  startTime: string,
+): boolean {
+  const [hours, minutes] = startTime.split(":").map(Number);
+  const slotStart = new Date(
+    dayData.year,
+    dayData.month - 1,
+    dayData.date,
+    hours,
+    minutes,
+  );
+  const now = new Date();
+  const diffMs = slotStart.getTime() - now.getTime();
+  const diffMin = diffMs / 60000;
+  return diffMin > 0 && diffMin <= 30;
 }
 
 type BookingModalProps = {
@@ -80,6 +103,7 @@ export default function BookingModal({
     appointmentId: number;
     meetLink: string | null;
     medium: CommunicationMedium;
+    isEmergency?: boolean;
   } | null>(null);
 
   // Clear booking state when modal opens
@@ -300,30 +324,37 @@ export default function BookingModal({
         helpWith,
       );
 
-      if (response.type === "FREE") {
-        setSuccessResult({
-          appointmentId: response.appointmentId,
-          meetLink: response.meetLink ?? null,
-          medium,
-        });
-        setBookingInProgress(false);
-      } else {
+      // Check if payment is required (PAID or emergency FREE)
+      if (initiateResponseRequiresPayment(response)) {
+        const paymentDetails = getInitiatePaymentDetails(response);
+        if (!paymentDetails) {
+          setBookingError("Invalid payment response");
+          setBookingInProgress(false);
+          return;
+        }
+
         const razorpayKey =
-          response.keyId ||
+          paymentDetails.keyId ||
           (import.meta.env.VITE_RAZORPAY_KEY_ID as string | undefined);
         if (!razorpayKey) {
           setBookingError(t("bookingRazorpayKeyMissing"));
           setBookingInProgress(false);
           return;
         }
+
         openRazorpayCheckout({
           key: razorpayKey,
-          amount: response.amount,
-          currency: response.currency,
-          order_id: response.orderId,
+          amount: paymentDetails.amount,
+          currency: paymentDetails.currency,
+          order_id: paymentDetails.orderId,
           name: "MindCurePath",
+          description: response.isEmergency
+            ? t("emergencyPaymentTitle")
+            : undefined,
           modal: {
-            ondismiss: () => setBookingInProgress(false),
+            ondismiss: () => {
+              setBookingInProgress(false);
+            },
           },
           handler: async (res) => {
             try {
@@ -337,6 +368,7 @@ export default function BookingModal({
                 appointmentId: ap.id,
                 meetLink: ap.meetLink ?? null,
                 medium,
+                isEmergency: response.isEmergency,
               });
             } catch (err: unknown) {
               let msg =
@@ -352,6 +384,19 @@ export default function BookingModal({
             }
           },
         });
+      } else if (response.type === "FREE" && !response.isEmergency) {
+        // Non-emergency free booking - appointment created directly
+        setSuccessResult({
+          appointmentId: response.appointmentId!,
+          meetLink: response.meetLink ?? null,
+          medium,
+          isEmergency: false,
+        });
+        setBookingInProgress(false);
+      } else {
+        // Fallback for any edge case
+        setBookingError("Unexpected booking response");
+        setBookingInProgress(false);
       }
     } catch (err: unknown) {
       if (err instanceof ApiHttpError && err.status === 409) {
@@ -640,6 +685,10 @@ export default function BookingModal({
                         {selectedDayData.slots.map((slot) => {
                           const isSelected =
                             selectedSlot === slot.availabilityId;
+                          const isEmergency = isEmergencySlot(
+                            selectedDayData,
+                            slot.startTime,
+                          );
                           return (
                             <button
                               key={slot.availabilityId}
@@ -648,16 +697,30 @@ export default function BookingModal({
                               }
                               className={`relative shrink-0 min-w-[160px] sm:min-w-[180px] text-left p-4 pr-10 rounded-xl border-2 transition-all cursor-pointer ${
                                 isSelected
-                                  ? "border-[#44666C] bg-[#E0ECEE] shadow-md"
-                                  : "border-gray-200 hover:border-[#44666C]/50 hover:bg-gray-50"
+                                  ? isEmergency
+                                    ? "border-amber-500 bg-amber-50 shadow-md ring-2 ring-amber-200"
+                                    : "border-[#44666C] bg-[#E0ECEE] shadow-md"
+                                  : isEmergency
+                                    ? "border-amber-300 hover:border-amber-500 hover:bg-amber-50"
+                                    : "border-gray-200 hover:border-[#44666C]/50 hover:bg-gray-50"
                               }`}
                             >
                               {isSelected && (
-                                <div className="absolute top-2 right-2 bg-[#44666C] rounded-full p-1 pointer-events-none">
+                                <div
+                                  className={`absolute top-2 right-2 rounded-full p-1 pointer-events-none ${isEmergency ? "bg-amber-500" : "bg-[#44666C]"}`}
+                                >
                                   <Check
                                     className="w-3 h-3 text-white"
                                     strokeWidth={3}
                                   />
+                                </div>
+                              )}
+                              {isEmergency && (
+                                <div className="flex items-center gap-1.5 mb-2">
+                                  <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-amber-500 text-white text-xs font-bold rounded-full">
+                                    <Zap className="w-3 h-3" />
+                                    {t("emergencyBadge")}
+                                  </span>
                                 </div>
                               )}
                               <p className="font-semibold text-[#304048] text-base leading-tight">
@@ -669,6 +732,12 @@ export default function BookingModal({
                               </p>
                               <p className="text-gray-500 text-sm mt-2">
                                 1 hr session
+                                {isEmergency && (
+                                  <span className="text-amber-600 font-medium">
+                                    {" "}
+                                    · {t("emergencySurchargeNote", { amount: EMERGENCY_SURCHARGE_INR })}
+                                  </span>
+                                )}
                               </p>
                             </button>
                           );
@@ -779,14 +848,53 @@ export default function BookingModal({
                             </>
                           )}
                         </div>
-                        <div className="shrink-0 text-right">
-                          <span className="text-gray-500 text-sm sm:text-base">
-                            Price:{" "}
-                          </span>
-                          <span className="text-[#44666C] font-bold text-xl sm:text-2xl">
-                            ₹{expertPrice}
-                          </span>
-                        </div>
+                        {(() => {
+                          const slot = selectedDayData.slots.find(
+                            (s) => s.availabilityId === selectedSlot,
+                          );
+                          const isEmergency = slot
+                            ? isEmergencySlot(selectedDayData, slot.startTime)
+                            : false;
+                          const basePrice = expertPrice;
+                          const totalPrice = isEmergency
+                            ? basePrice + EMERGENCY_SURCHARGE_INR
+                            : basePrice;
+
+                          return (
+                            <div className="shrink-0 text-right">
+                              {isEmergency ? (
+                                <div className="space-y-0.5">
+                                  <div className="flex items-center justify-end gap-2 text-sm text-gray-600">
+                                    <span>{t("sessionFee")}:</span>
+                                    <span>₹{basePrice}</span>
+                                  </div>
+                                  <div className="flex items-center justify-end gap-2 text-sm text-amber-600 font-medium">
+                                    <Zap className="w-3.5 h-3.5" />
+                                    <span>{t("emergencySurcharge")}:</span>
+                                    <span>₹{EMERGENCY_SURCHARGE_INR}</span>
+                                  </div>
+                                  <div className="flex items-center justify-end gap-2 pt-1 border-t border-gray-200">
+                                    <span className="text-gray-600 text-sm">
+                                      {t("totalAmount")}:
+                                    </span>
+                                    <span className="text-amber-600 font-bold text-xl sm:text-2xl">
+                                      ₹{totalPrice}
+                                    </span>
+                                  </div>
+                                </div>
+                              ) : (
+                                <>
+                                  <span className="text-gray-500 text-sm sm:text-base">
+                                    Price:{" "}
+                                  </span>
+                                  <span className="text-[#44666C] font-bold text-xl sm:text-2xl">
+                                    ₹{basePrice}
+                                  </span>
+                                </>
+                              )}
+                            </div>
+                          );
+                        })()}
                       </>
                     )}
                 </div>
@@ -797,22 +905,43 @@ export default function BookingModal({
                   >
                     Cancel
                   </button>
-                  <button
-                    onClick={handleBook}
-                    disabled={!canBook || bookingInProgress}
-                    className="w-full sm:w-auto px-6 py-2.5 bg-[#44666C] text-white rounded-xl hover:bg-[#365a62] disabled:bg-gray-300 disabled:cursor-not-allowed font-medium flex items-center justify-center gap-2 transition-colors cursor-pointer"
-                  >
-                    {bookingInProgress ? (
-                      <Loader2 className="w-4 h-4 shrink-0 animate-spin" />
-                    ) : (
-                      <Calendar className="w-4 h-4 shrink-0" />
-                    )}
-                    {bookingInProgress
-                      ? "Booking…"
-                      : isFreeSessionAvailable
-                        ? "Book Free Appointment"
-                        : "Book Appointment"}
-                  </button>
+                  {(() => {
+                    const slot =
+                      selectedDayData?.slots.find(
+                        (s) => s.availabilityId === selectedSlot,
+                      ) ?? null;
+                    const isEmergency =
+                      slot && selectedDayData
+                        ? isEmergencySlot(selectedDayData, slot.startTime)
+                        : false;
+
+                    return (
+                      <button
+                        onClick={handleBook}
+                        disabled={!canBook || bookingInProgress}
+                        className={`w-full sm:w-auto px-6 py-2.5 rounded-xl disabled:bg-gray-300 disabled:cursor-not-allowed font-medium flex items-center justify-center gap-2 transition-colors cursor-pointer ${
+                          isEmergency
+                            ? "bg-amber-500 text-white hover:bg-amber-600"
+                            : "bg-[#44666C] text-white hover:bg-[#365a62]"
+                        }`}
+                      >
+                        {bookingInProgress ? (
+                          <Loader2 className="w-4 h-4 shrink-0 animate-spin" />
+                        ) : isEmergency ? (
+                          <Zap className="w-4 h-4 shrink-0" />
+                        ) : (
+                          <Calendar className="w-4 h-4 shrink-0" />
+                        )}
+                        {bookingInProgress
+                          ? "Booking…"
+                          : isEmergency
+                            ? t("emergencyBookNow")
+                            : isFreeSessionAvailable
+                              ? "Book Free Appointment"
+                              : "Book Appointment"}
+                      </button>
+                    );
+                  })()}
                 </div>
               </div>
             </div>

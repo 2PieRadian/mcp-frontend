@@ -28,17 +28,20 @@ export type AuthUser = {
   createdAt?: string;
   hasPassword?: boolean;
   googleId?: string;
+  /** Expert-only: whether emergency bookings are enabled. */
+  emergencyAvailable?: boolean;
 };
 
 function mapApiUserToAuthUser(u: Record<string, unknown> | null | undefined): AuthUser | null {
   if (!u || typeof u.email !== "string") return null;
   const avatarValue =
     (u.userUploadedAvatar as string) || (u.avatar as string) || (u.avatarUrl as string);
+  const expert = u.expert as { id?: number; emergencyAvailable?: boolean } | undefined;
   const mapped: AuthUser = {
     id: u.id != null ? String(u.id) : undefined,
     expertId:
-      typeof (u as { expert?: { id: number } }).expert?.id === "number"
-        ? (u as { expert: { id: number } }).expert.id
+      typeof expert?.id === "number"
+        ? expert.id
         : u.expertId != null
           ? Number(u.expertId)
           : undefined,
@@ -54,6 +57,10 @@ function mapApiUserToAuthUser(u: Record<string, unknown> | null | undefined): Au
     createdAt: u.createdAt as string | undefined,
     hasPassword: u.hasPassword as boolean | undefined,
     googleId: (u.googleId as string) || undefined,
+    emergencyAvailable:
+      typeof expert?.emergencyAvailable === "boolean"
+        ? expert.emergencyAvailable
+        : (u.emergencyAvailable as boolean | undefined),
   };
   return mapped;
 }

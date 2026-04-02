@@ -16,6 +16,7 @@ import {
   Ban,
   MessageSquareText,
   Timer,
+  Zap,
 } from "lucide-react";
 import { usePollingNow } from "../../../hooks/usePollingNow";
 import { formatAppointmentStartsIn } from "../../../lib/appointmentStartsIn";
@@ -260,6 +261,12 @@ function ExpertAppointmentCard({
           {apt.amount > 0 && (
             <span className="inline-flex items-center px-3 py-1.5 rounded-lg bg-[#E0ECEE] text-[#44666C] text-sm font-semibold">
               {formatAmount(apt.amount)}
+            </span>
+          )}
+          {apt.isEmergency && (
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-100 text-amber-700 text-sm font-semibold">
+              <Zap className="w-3.5 h-3.5" />
+              {t("emergencyBadge")}
             </span>
           )}
         </div>

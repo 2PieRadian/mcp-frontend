@@ -13,9 +13,11 @@ import {
   Loader2,
   ChevronDown,
   BadgeCheck,
+  Zap,
 } from "lucide-react";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import BookingModal from "../components/BookingModal";
+import UrgentRequestModal from "../components/UrgentRequestModal";
 import ImageViewer from "../components/ImageViewer";
 import type { ApiExpert } from "../types/experts";
 import { getAvatarUrl, getExpertReviews, type PublicReview } from "../lib/api";
@@ -153,6 +155,7 @@ export default function ExpertDetails() {
   const { t } = useTranslation(["common", "experts"]);
   const { user } = useAuth();
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+  const [isUrgentRequestModalOpen, setIsUrgentRequestModalOpen] = useState(false);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
 
   // Reviews state
@@ -625,6 +628,24 @@ export default function ExpertDetails() {
                       : "Book Appointment"}
                   </span>
                 </button>
+
+                {/* Urgent Request Button - shown when expert accepts emergency */}
+                {expert.emergencyAvailable && (
+                  <button
+                    onClick={() => {
+                      if (!user) {
+                        setShowLoginPrompt(true);
+                      } else {
+                        setIsUrgentRequestModalOpen(true);
+                      }
+                    }}
+                    className="w-full bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-white font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 sm:hover:-translate-y-1 cursor-pointer"
+                    style={{ fontSize: "16px" }}
+                  >
+                    <Zap size={18} className="sm:w-5 sm:h-5" />
+                    <span>{t("common:urgentRequestCTA")}</span>
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -683,6 +704,16 @@ export default function ExpertDetails() {
           expertName={formattedName}
           expertPrice={expert.isFreeSessionAvailable ? 0 : expert.pricePerHour}
           isFreeSessionAvailable={expert.isFreeSessionAvailable}
+        />
+      )}
+
+      {/* Urgent Request Modal */}
+      {expert && expert.emergencyAvailable && (
+        <UrgentRequestModal
+          isOpen={isUrgentRequestModalOpen}
+          onClose={() => setIsUrgentRequestModalOpen(false)}
+          expertId={expert.id}
+          expertName={formattedName}
         />
       )}
     </div>

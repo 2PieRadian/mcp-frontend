@@ -13,6 +13,7 @@ type RazorpayOptions = {
   currency: string;
   order_id: string;
   name: string;
+  description?: string;
   handler: (res: RazorpayHandlerResponse) => void;
   modal?: { ondismiss?: () => void };
 };

@@ -18,6 +18,7 @@ import Profile from "./pages/Profile";
 import OAuthCallback from "./pages/OAuthCallback";
 import ExpertsDashboard from "./pages/dashboards/ExpertsDashboard";
 import Dashboard from "./pages/Dashboard";
+import UrgentRequests from "./pages/UrgentRequests";
 import AppointmentVideoSession from "./pages/AppointmentVideoSession";
 import ExpertDetails from "./pages/ExpertDetails";
 import Wellness from "./pages/assessments/Wellness";
@@ -84,7 +85,10 @@ export default function App() {
               <Route path="/" element={<LandingPage />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
-              <Route path="/oauth/google/callback" element={<OAuthCallback />} />
+              <Route
+                path="/oauth/google/callback"
+                element={<OAuthCallback />}
+              />
 
               {/* Self Assessment */}
               <Route path="/self-assessment" element={<SelfAssessment />} />
@@ -159,14 +163,20 @@ export default function App() {
               />
 
               {/* Finance Experts */}
-              <Route path="/finance-experts" element={<FinanceExpertsIntro />} />
+              <Route
+                path="/finance-experts"
+                element={<FinanceExpertsIntro />}
+              />
               <Route
                 path="/finance-experts/:specialization"
                 element={<ExpertsListing />}
               />
 
               {/* Choose Expert Category */}
-              <Route path="/choose-experts" element={<ChooseExpertCategory />} />
+              <Route
+                path="/choose-experts"
+                element={<ChooseExpertCategory />}
+              />
 
               {/* Find Counsellors */}
               <Route path="/find-counsellors" element={<FindCounsellors />} />
@@ -177,6 +187,10 @@ export default function App() {
               {/* Authenticated */}
               <Route path="/profile" element={<Profile />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route
+                path="/dashboard/urgent-requests"
+                element={<UrgentRequests />}
+              />
               <Route path="/dashboard/expert" element={<ExpertsDashboard />} />
               <Route
                 path="/appointments/:appointmentId/video"

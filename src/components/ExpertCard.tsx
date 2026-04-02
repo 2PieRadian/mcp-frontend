@@ -1,4 +1,4 @@
-import { Star, Loader2 } from "lucide-react";
+import { Star, Loader2, Zap } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -177,12 +177,26 @@ export default function ExpertCard({
   };
 
   const hasLanguages = Boolean(languages?.trim());
+  const isEmergencyAvailable = expertData?.emergencyAvailable ?? false;
 
   return (
     <div
       onClick={handleCardClick}
-      className="Expert-Card border flex flex-col justify-between border-[#B5B5B5] transform hover:scale-[1.011] duration-100 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.15)] transition-all p-[15px] relative rounded-[15px] w-full cursor-pointer"
+      className={`Expert-Card border flex flex-col justify-between transform hover:scale-[1.011] duration-100 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.15)] transition-all p-[15px] relative rounded-[15px] w-full cursor-pointer ${
+        isEmergencyAvailable
+          ? "border-amber-400 ring-1 ring-amber-200"
+          : "border-[#B5B5B5]"
+      }`}
     >
+      {/* Emergency Available Badge */}
+      {isEmergencyAvailable && (
+        <div className="absolute -top-2 -right-2 z-10">
+          <span className="inline-flex items-center gap-1 px-2 py-1 bg-amber-500 text-white text-xs font-bold rounded-full shadow-md">
+            <Zap className="w-3 h-3" />
+            {t("emergencyAvailable")}
+          </span>
+        </div>
+      )}
       {/* Mobile Layout: Stacked */}
       <div className="flex flex-col min-[600px]:hidden">
         <div className="Profile-Image w-full">

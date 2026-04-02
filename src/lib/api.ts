@@ -1,5 +1,5 @@
-export const BACKEND_URL = "https://api.mindcurepath.com";
-// export const BACKEND_URL = "http://localhost:3000";
+// export const BACKEND_URL = "https://api.mindcurepath.com";
+export const BACKEND_URL = "http://localhost:3000";
 
 /**
  * Constructs a full avatar URL from a backend avatar value.
@@ -139,16 +139,42 @@ export function normalizeUserConcernForRequest(
     : t;
 }
 
-/** Initiate: FREE → appointment created; PAID → Razorpay order created. */
-export type InitiateResponseFree = {
+/** Emergency surcharge amount in INR. */
+export const EMERGENCY_SURCHARGE_INR = 300;
+
+/**
+ * Initiate response common fields for emergency bookings.
+ * isEmergency: true when startAt is within 30 minutes.
+ */
+type InitiateEmergencyFields = {
+  isEmergency: boolean;
+  baseAmount: number;
+  emergencySurcharge: number;
+  totalAmount: number;
+};
+
+/**
+ * FREE booking response.
+ * - Non-emergency: appointmentId + meetLink returned directly.
+ * - Emergency FREE: requires payment of surcharge, returns orderId.
+ */
+export type InitiateResponseFree = InitiateEmergencyFields & {
   type: "FREE";
-  appointmentId: number;
-  meetLink: string | null;
+  appointmentId?: number;
+  meetLink?: string | null;
+  orderId?: string;
+  amount?: number;
+  keyId?: string;
+  currency?: string;
   userConcern?: string | null;
   message?: string;
 };
 
-export type InitiateResponsePaid = {
+/**
+ * PAID booking response. Always requires Razorpay payment.
+ * Emergency adds Rs 300 surcharge to base price.
+ */
+export type InitiateResponsePaid = InitiateEmergencyFields & {
   type: "PAID";
   orderId: string;
   amount: number; // paise
@@ -160,6 +186,15 @@ export type InitiateResponsePaid = {
 };
 
 export type InitiateResponse = InitiateResponseFree | InitiateResponsePaid;
+
+/** Error response when expert is not available for emergency booking. */
+export type EmergencyRejectionResponse = {
+  message: string;
+  nextAvailableSlot: {
+    startAt: string;
+    endAt: string;
+  } | null;
+};
 
 /**
  * Initiate booking. Returns FREE (appointment created) or PAID (open Razorpay with orderId, amount, keyId).
@@ -578,6 +613,10 @@ export type MyAppointment = {
   userSessionResolvedAt?: string | null;
   resolutionSource?: ResolutionSource;
   resolvedByUserAction?: boolean;
+  /** True if this was an emergency booking (within 30 min). */
+  isEmergency?: boolean;
+  /** Emergency surcharge amount in rupees (if emergency). */
+  emergencySurcharge?: number;
 };
 
 /** Client (booker) on expert’s appointment list when API includes nested user. */
@@ -609,6 +648,10 @@ export type ExpertAppointment = {
   userSessionResolvedAt?: string | null;
   resolutionSource?: ResolutionSource;
   resolvedByUserAction?: boolean;
+  /** True if this was an emergency booking (within 30 min). */
+  isEmergency?: boolean;
+  /** Emergency surcharge amount in rupees (if emergency). */
+  emergencySurcharge?: number;
 };
 
 /**
@@ -1134,4 +1177,506 @@ export async function getExpertReviews(
   }
 
   return data as ExpertReviewsResponse;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Emergency Appointments
+// ─────────────────────────────────────────────────────────────────────────────
+
+export type ToggleEmergencyAvailabilityResponse = {
+  message: string;
+  expert: {
+    id: number;
+    emergencyAvailable: boolean;
+  };
+};
+
+/**
+ * PATCH /api/v1/expert/me/emergency-availability — expert toggles emergency availability.
+ */
+export async function toggleEmergencyAvailability(
+  emergencyAvailable: boolean,
+): Promise<ToggleEmergencyAvailabilityResponse> {
+  const res = await fetch(`${BACKEND_URL}/api/v1/expert/me/emergency-availability`, {
+    method: "PATCH",
+    headers: getAuthHeaders(),
+    body: JSON.stringify({ emergencyAvailable }),
+  });
+
+  const data = (await res.json().catch(() => ({}))) as Record<string, unknown>;
+
+  if (!res.ok) {
+    const fallback =
+      res.status === 401
+        ? "Unauthorized"
+        : res.status === 403
+          ? "Only experts can change emergency availability"
+          : "Failed to update emergency availability";
+    throw new ApiHttpError(
+      getErrorMessageFromResponseBody(data, res.status, fallback),
+      res.status,
+      data,
+    );
+  }
+
+  return data as ToggleEmergencyAvailabilityResponse;
+}
+
+/** Slot info for emergency availability. */
+export type EmergencySlotInfo = {
+  availabilityId: number;
+  startTime: string;
+  endTime: string;
+  isEmergency?: boolean;
+};
+
+/** Day with emergency slots. */
+export type EmergencySlotDay = {
+  day: string;
+  date: number;
+  month: number;
+  year: number;
+  slots: EmergencySlotInfo[];
+};
+
+export type EmergencySlotsResponse = {
+  emergencyAvailable: boolean;
+  emergencySurcharge?: number;
+  message?: string;
+  slots: EmergencySlotDay[];
+};
+
+/**
+ * GET /availability/:expertId/next-10-days?emergency=true — get emergency slots.
+ */
+export async function getEmergencySlots(
+  expertId: number,
+): Promise<EmergencySlotsResponse> {
+  const url = new URL(
+    `${BACKEND_URL}/api/v1/appointments/availability/${expertId}/next-10-days`,
+  );
+  url.searchParams.set("emergency", "true");
+
+  const res = await fetch(url.toString(), {
+    method: "GET",
+    headers: { Accept: "application/json" },
+  });
+
+  const data = (await res.json().catch(() => ({}))) as Record<string, unknown>;
+
+  if (!res.ok) {
+    throw new ApiHttpError(
+      getErrorMessageFromResponseBody(data, res.status, "Failed to load emergency slots"),
+      res.status,
+      data,
+    );
+  }
+
+  return data as EmergencySlotsResponse;
+}
+
+/** Next emergency slot response. */
+export type NextEmergencySlotResponse = {
+  emergencyAvailable: boolean;
+  slot: {
+    day: string;
+    date: number;
+    month: number;
+    year: number;
+    startTime: string;
+    endTime: string;
+    isEmergency?: boolean;
+    emergencySurcharge?: number;
+  } | null;
+  message?: string;
+};
+
+/**
+ * GET /availability/:expertId/next-slot?emergency=true — get next emergency slot.
+ */
+export async function getNextEmergencySlot(
+  expertId: number,
+): Promise<NextEmergencySlotResponse> {
+  const url = new URL(
+    `${BACKEND_URL}/api/v1/appointments/availability/${expertId}/next-slot`,
+  );
+  url.searchParams.set("emergency", "true");
+
+  const res = await fetch(url.toString(), {
+    method: "GET",
+    headers: { Accept: "application/json" },
+  });
+
+  const data = (await res.json().catch(() => ({}))) as Record<string, unknown>;
+
+  if (!res.ok) {
+    throw new ApiHttpError(
+      getErrorMessageFromResponseBody(data, res.status, "Failed to load emergency slot"),
+      res.status,
+      data,
+    );
+  }
+
+  return data as NextEmergencySlotResponse;
+}
+
+/**
+ * Helper to check if an initiate response requires payment (emergency FREE or any PAID).
+ */
+export function initiateResponseRequiresPayment(
+  res: InitiateResponse,
+): res is InitiateResponsePaid | (InitiateResponseFree & { orderId: string }) {
+  if (res.type === "PAID") return true;
+  if (res.type === "FREE" && res.isEmergency && res.orderId) return true;
+  return false;
+}
+
+/**
+ * Extract payment details from initiate response (for Razorpay).
+ */
+export function getInitiatePaymentDetails(res: InitiateResponse): {
+  orderId: string;
+  amount: number;
+  keyId?: string;
+  currency: string;
+} | null {
+  if (res.type === "PAID") {
+    return {
+      orderId: res.orderId,
+      amount: res.amount,
+      keyId: res.keyId,
+      currency: res.currency,
+    };
+  }
+  if (res.type === "FREE" && res.isEmergency && res.orderId && res.amount) {
+    return {
+      orderId: res.orderId,
+      amount: res.amount,
+      keyId: res.keyId,
+      currency: res.currency ?? "INR",
+    };
+  }
+  return null;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Urgent Requests
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** Constants for urgent requests. */
+export const URGENT_REQUEST_FEE_INR = 25;
+export const URGENT_CONTACT_VALIDITY_SECONDS = 1800; // 30 minutes
+export const URGENT_PAYMENT_WINDOW_MINUTES = 15;
+
+/** Status values for urgent requests. */
+export type UrgentRequestStatus =
+  | "PENDING"
+  | "APPROVED"
+  | "PAYMENT_COMPLETED"
+  | "REJECTED"
+  | "EXPIRED"
+  | "PAYMENT_EXPIRED";
+
+/** Expert info in urgent request. */
+export type UrgentRequestExpert = {
+  id: number;
+  user: {
+    name: string | null;
+    avatar?: string | null;
+    email?: string;
+  };
+};
+
+/** Appointment info after urgent request payment completion. */
+export type UrgentRequestAppointment = {
+  id: number;
+  startAt: string;
+  endAt: string;
+  meetLink: string | null;
+  communicationMedium: string;
+  status: AppointmentStatus;
+  expertName?: string;
+};
+
+/** Single urgent request from my-requests. */
+export type UrgentRequest = {
+  id: number;
+  status: UrgentRequestStatus;
+  statusMessage: string;
+  reason?: string | null;
+  expert?: UrgentRequestExpert | null;
+  assignedExpert?: UrgentRequestExpert | null;
+  appointment?: UrgentRequestAppointment | null;
+  baseAmount?: number;
+  emergencySurcharge?: number;
+  totalAmount?: number;
+  paymentExpiresAt?: string | null;
+  contactExpired: boolean;
+  contactRemainingSeconds?: number;
+  companyPhone?: string | null;
+  createdAt: string;
+  expiresAt?: string;
+};
+
+/** Response from POST /urgent-requests/initiate. */
+export type InitiateUrgentRequestResponse = {
+  message: string;
+  requestId: number;
+  orderId: string;
+  amount: number;
+  currency: string;
+  keyId?: string;
+  expiresAt: string;
+};
+
+/**
+ * POST /api/v1/urgent-requests/initiate — initiate an urgent request.
+ * Returns Razorpay order for Rs 25 request fee.
+ */
+export async function initiateUrgentRequest(
+  expertId?: number | null,
+  reason?: string,
+): Promise<InitiateUrgentRequestResponse> {
+  const body: Record<string, unknown> = {};
+  if (expertId != null) body.expertId = expertId;
+  if (reason?.trim()) body.reason = reason.trim().slice(0, 1000);
+
+  const res = await fetch(`${BACKEND_URL}/api/v1/urgent-requests/initiate`, {
+    method: "POST",
+    headers: getAuthHeaders(),
+    body: JSON.stringify(body),
+  });
+
+  const data = (await res.json().catch(() => ({}))) as Record<string, unknown>;
+
+  if (!res.ok) {
+    const fallback =
+      res.status === 400
+        ? "Expert not found or doesn't accept emergency bookings"
+        : res.status === 429
+          ? "You can only create 3 urgent requests per day"
+          : "Failed to initiate urgent request";
+    throw new ApiHttpError(
+      getErrorMessageFromResponseBody(data, res.status, fallback),
+      res.status,
+      data,
+    );
+  }
+
+  return data as InitiateUrgentRequestResponse;
+}
+
+/** Response from POST /urgent-requests/verify-request-fee. */
+export type VerifyUrgentRequestFeeResponse = {
+  message: string;
+  requestId: number;
+  companyPhone: string;
+  contactValidUntil: string;
+  contactValiditySeconds: number;
+  userStatus: string;
+};
+
+/**
+ * POST /api/v1/urgent-requests/verify-request-fee — verify Rs 25 payment.
+ * Returns company phone number to call.
+ */
+export async function verifyUrgentRequestFee(
+  razorpay_order_id: string,
+  razorpay_payment_id: string,
+  razorpay_signature: string,
+): Promise<VerifyUrgentRequestFeeResponse> {
+  const res = await fetch(
+    `${BACKEND_URL}/api/v1/urgent-requests/verify-request-fee`,
+    {
+      method: "POST",
+      headers: getAuthHeaders(),
+      body: JSON.stringify({
+        razorpay_order_id,
+        razorpay_payment_id,
+        razorpay_signature,
+      }),
+    },
+  );
+
+  const data = (await res.json().catch(() => ({}))) as Record<string, unknown>;
+
+  if (!res.ok) {
+    throw new ApiHttpError(
+      getErrorMessageFromResponseBody(
+        data,
+        res.status,
+        "Failed to verify payment",
+      ),
+      res.status,
+      data,
+    );
+  }
+
+  return data as VerifyUrgentRequestFeeResponse;
+}
+
+/** Response from GET /urgent-requests/my-requests. */
+export type MyUrgentRequestsResponse = {
+  requests: UrgentRequest[];
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
+};
+
+/**
+ * GET /api/v1/urgent-requests/my-requests — get user's urgent requests.
+ */
+export async function getMyUrgentRequests(
+  status?: UrgentRequestStatus,
+  page: number = 1,
+  limit: number = 10,
+): Promise<MyUrgentRequestsResponse> {
+  const url = new URL(`${BACKEND_URL}/api/v1/urgent-requests/my-requests`);
+  if (status) url.searchParams.set("status", status);
+  url.searchParams.set("page", String(page));
+  url.searchParams.set("limit", String(Math.min(limit, 50)));
+
+  const res = await fetch(url.toString(), {
+    method: "GET",
+    headers: getAuthHeaders(),
+  });
+
+  const data = (await res.json().catch(() => ({}))) as Record<string, unknown>;
+
+  if (!res.ok) {
+    throw new ApiHttpError(
+      getErrorMessageFromResponseBody(
+        data,
+        res.status,
+        "Failed to load urgent requests",
+      ),
+      res.status,
+      data,
+    );
+  }
+
+  return data as MyUrgentRequestsResponse;
+}
+
+/**
+ * GET /api/v1/urgent-requests/:id — get single urgent request.
+ */
+export async function getUrgentRequest(id: number): Promise<UrgentRequest> {
+  const res = await fetch(`${BACKEND_URL}/api/v1/urgent-requests/${id}`, {
+    method: "GET",
+    headers: getAuthHeaders(),
+  });
+
+  const data = (await res.json().catch(() => ({}))) as Record<string, unknown>;
+
+  if (!res.ok) {
+    throw new ApiHttpError(
+      getErrorMessageFromResponseBody(
+        data,
+        res.status,
+        "Failed to load urgent request",
+      ),
+      res.status,
+      data,
+    );
+  }
+
+  return data as UrgentRequest;
+}
+
+/** Response from POST /urgent-requests/:id/initiate-payment. */
+export type InitiateUrgentPaymentResponse = {
+  message: string;
+  requestId: number;
+  orderId: string;
+  amount: number;
+  baseAmount: number;
+  emergencySurcharge: number;
+  totalAmount: number;
+  currency: string;
+  keyId?: string;
+  paymentExpiresAt: string;
+};
+
+/**
+ * POST /api/v1/urgent-requests/:id/initiate-payment — initiate final payment after approval.
+ */
+export async function initiateUrgentPayment(
+  requestId: number,
+): Promise<InitiateUrgentPaymentResponse> {
+  const res = await fetch(
+    `${BACKEND_URL}/api/v1/urgent-requests/${requestId}/initiate-payment`,
+    {
+      method: "POST",
+      headers: getAuthHeaders(),
+      body: JSON.stringify({}),
+    },
+  );
+
+  const data = (await res.json().catch(() => ({}))) as Record<string, unknown>;
+
+  if (!res.ok) {
+    const fallback =
+      res.status === 400
+        ? "Payment window expired or request not approved"
+        : "Failed to initiate payment";
+    throw new ApiHttpError(
+      getErrorMessageFromResponseBody(data, res.status, fallback),
+      res.status,
+      data,
+    );
+  }
+
+  return data as InitiateUrgentPaymentResponse;
+}
+
+/** Response from POST /urgent-requests/:id/verify-payment. */
+export type VerifyUrgentPaymentResponse = {
+  message: string;
+  appointment: UrgentRequestAppointment;
+  sessionStartsIn: number;
+  appointmentDate: string;
+  appointmentTime: string;
+};
+
+/**
+ * POST /api/v1/urgent-requests/:id/verify-payment — verify final payment.
+ */
+export async function verifyUrgentPayment(
+  requestId: number,
+  razorpay_order_id: string,
+  razorpay_payment_id: string,
+  razorpay_signature: string,
+): Promise<VerifyUrgentPaymentResponse> {
+  const res = await fetch(
+    `${BACKEND_URL}/api/v1/urgent-requests/${requestId}/verify-payment`,
+    {
+      method: "POST",
+      headers: getAuthHeaders(),
+      body: JSON.stringify({
+        razorpay_order_id,
+        razorpay_payment_id,
+        razorpay_signature,
+      }),
+    },
+  );
+
+  const data = (await res.json().catch(() => ({}))) as Record<string, unknown>;
+
+  if (!res.ok) {
+    throw new ApiHttpError(
+      getErrorMessageFromResponseBody(
+        data,
+        res.status,
+        "Failed to verify payment",
+      ),
+      res.status,
+      data,
+    );
+  }
+
+  return data as VerifyUrgentPaymentResponse;
 }

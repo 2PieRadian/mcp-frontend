@@ -31,6 +31,8 @@ export type ApiExpert = {
   }>;
   /** When true, show "Book Free Appointment"; when false, show "Book Appointment". Personalized when user is logged in. */
   isFreeSessionAvailable?: boolean;
+  /** When true, expert accepts emergency bookings (slots within 30 min). */
+  emergencyAvailable?: boolean;
 };
 
 export type ApiResponse = {
