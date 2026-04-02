@@ -30,13 +30,15 @@ import {
   RefreshCw,
 } from "lucide-react";
 
-const STATUS_FILTERS: ("" | UrgentRequestStatus)[] = [
+type UrgentStatusFilter = "" | UrgentRequestStatus | "EXPIRED_GROUP";
+
+const STATUS_FILTERS: UrgentStatusFilter[] = [
   "",
   "PENDING",
   "APPROVED",
   "PAYMENT_COMPLETED",
   "REJECTED",
-  "EXPIRED",
+  "EXPIRED_GROUP",
 ];
 
 const STATUS_FILTER_KEYS = [
@@ -331,9 +333,7 @@ export default function UrgentRequests() {
   const [requests, setRequests] = useState<UrgentRequest[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [statusFilter, setStatusFilter] = useState<"" | UrgentRequestStatus>(
-    "",
-  );
+  const [statusFilter, setStatusFilter] = useState<UrgentStatusFilter>("");
   const [payingRequestId, setPayingRequestId] = useState<number | null>(null);
   // payingRequestId is tracked for potential future UI use (e.g. disabling buttons)
   void payingRequestId;
@@ -342,8 +342,25 @@ export default function UrgentRequests() {
     setLoading(true);
     setError(null);
     try {
-      const res = await getMyUrgentRequests(statusFilter || undefined, 1, 50);
-      setRequests(res.requests);
+      if (statusFilter === "EXPIRED_GROUP") {
+        const [expiredRes, paymentExpiredRes] = await Promise.all([
+          getMyUrgentRequests("EXPIRED", 1, 50),
+          getMyUrgentRequests("PAYMENT_EXPIRED", 1, 50),
+        ]);
+
+        const merged = [...expiredRes.requests, ...paymentExpiredRes.requests];
+        const deduped = Array.from(
+          new Map(merged.map((req) => [req.id, req])).values(),
+        ).sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+        );
+
+        setRequests(deduped);
+      } else {
+        const res = await getMyUrgentRequests(statusFilter || undefined, 1, 50);
+        setRequests(res.requests);
+      }
     } catch (e) {
       setError(e instanceof Error ? e.message : "Failed to load requests");
       setRequests([]);

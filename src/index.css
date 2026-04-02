@@ -11,6 +11,17 @@
     "Segoe UI Symbol", "Noto Color Emoji"; */
 }
 
+/* Global text selection color - green background with white text */
+::selection {
+  background-color: #10b981;
+  color: white;
+}
+
+::-moz-selection {
+  background-color: #10b981;
+  color: white;
+}
+
 html {
   overflow-x: hidden;
   overflow-y: auto;

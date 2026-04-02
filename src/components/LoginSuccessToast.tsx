@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, X } from "lucide-react";
 import { consumeLoginSuccessToastPending } from "../lib/loginSuccessToast";
 
 const DISPLAY_MS = 3000;
@@ -35,9 +35,17 @@ export default function LoginSuccessToast() {
     >
       <div className="pointer-events-auto flex items-center gap-3 rounded-xl border border-green-200 bg-green-50/95 px-5 py-3.5 text-green-800 shadow-2xl backdrop-blur-sm animate-in fade-in slide-in-from-top-2 duration-300">
         <CheckCircle2 className="size-6 shrink-0 text-green-600" aria-hidden />
-        <p className="text-[15px] font-medium leading-snug">
+        <p className="flex-1 text-[15px] font-medium leading-snug">
           {t("loggedInSuccessfully")}
         </p>
+        <button
+          type="button"
+          onClick={() => setVisible(false)}
+          className="shrink-0 p-1 rounded-lg hover:bg-green-200/50 transition-colors"
+          aria-label={t("close")}
+        >
+          <X className="size-4 text-green-700" />
+        </button>
       </div>
     </div>
   );

@@ -1,8 +1,4 @@
-import {
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import {
   ArrowLeft,
@@ -276,9 +272,7 @@ export default function AppointmentVideoSession() {
               className="inline-flex shrink-0 items-center gap-1.5 rounded-xl border border-white/10 bg-white/5 px-2.5 py-2 text-xs font-medium text-[#a8d4c4] transition hover:bg-white/10 sm:px-3"
             >
               <ExternalLink className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline">
-                New tab
-              </span>
+              <span className="hidden sm:inline">New tab</span>
             </a>
           ) : null}
         </div>
@@ -286,14 +280,11 @@ export default function AppointmentVideoSession() {
 
       {showScheduledJoinHint && !terminalBanner ? (
         <div
-          className="relative z-10 mx-3 mt-3 rounded-2xl border border-sky-500/25 bg-sky-950/40 px-4 py-3 text-sm text-sky-100 shadow-xl backdrop-blur-md sm:mx-4"
+          className="relative z-10 mx-3 mt-3 rounded-2xl border border-emerald-500/25 bg-emerald-950/40 px-4 py-3 text-sm text-emerald-100 shadow-xl backdrop-blur-md sm:mx-4"
           role="status"
         >
-          <p className="font-semibold text-sky-50">
-            {t("sessionNotStartedYet")}
-          </p>
-          <p className="mt-1 text-sky-100/90 leading-snug">
-            {t("sessionWaitingForBothParticipants")}
+          <p className="font-semibold text-emerald-50">
+            {t("sessionHasStartedPleaseJoin")}
           </p>
         </div>
       ) : null}

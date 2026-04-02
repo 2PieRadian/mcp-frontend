@@ -285,14 +285,11 @@ function ExpertAppointmentCard({
 
         {showScheduledJoinHint ? (
           <div
-            className="mt-4 rounded-xl border border-sky-100 bg-sky-50/90 px-4 py-3"
+            className="mt-4 rounded-xl border border-emerald-100 bg-emerald-50/90 px-4 py-3"
             role="status"
           >
-            <p className="text-sm font-semibold text-sky-950">
-              {t("sessionNotStartedYet")}
-            </p>
-            <p className="mt-1 text-sm text-sky-900/90 leading-snug">
-              {t("sessionWaitingForBothParticipants")}
+            <p className="text-sm font-semibold text-emerald-800">
+              {t("sessionHasStartedPleaseJoin")}
             </p>
           </div>
         ) : null}

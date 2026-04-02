@@ -1,3 +1,5 @@
+import type { PublicQualification } from "../types/experts";
+
 export const BACKEND_URL = "https://api.mindcurepath.com";
 // export const BACKEND_URL = "http://localhost:3000";
 
@@ -1142,6 +1144,89 @@ export type ExpertReviewsResponse = {
   reviews: PublicReview[];
 };
 
+// Type for ApiExpert (import from types causes circular dependency issues)
+export type ApiExpertFromApi = {
+  id: number;
+  userId: number;
+  professionalTitle: string;
+  yearsOfExperience: number;
+  expertiseAreas?: string[];
+  bio: string;
+  pricePerHour: number;
+  rating: number;
+  totalReviews: number;
+  earnings?: number;
+  user: {
+    id: number;
+    email: string;
+    name: string;
+    languages: string[];
+    avatar?: string;
+    phoneNumber?: string;
+    gender?: string;
+    dateOfBirth?: string;
+  };
+  expertSpecializations?: Array<{
+    specialization: {
+      name: string;
+      domain: {
+        name: string;
+      };
+    };
+  }>;
+  isFreeSessionAvailable?: boolean;
+  emergencyAvailable?: boolean;
+  qualifications?: PublicQualification[];
+};
+
+export type GetExpertByIdResponse = {
+  message: string;
+  expert: ApiExpertFromApi;
+};
+
+/**
+ * GET /api/v1/expert/get-expert/:id — get a single expert by ID (public endpoint).
+ */
+export async function getExpertById(
+  expertId: number,
+): Promise<ApiExpertFromApi> {
+  const token =
+    window.localStorage.getItem("auth:token") ||
+    window.localStorage.getItem("token");
+
+  const headers: Record<string, string> = {
+    Accept: "application/json",
+  };
+
+  // Include auth token if available (for personalized isFreeSessionAvailable)
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+
+  const res = await fetch(`${BACKEND_URL}/api/v1/expert/get-expert/${expertId}`, {
+    method: "GET",
+    headers,
+  });
+
+  const data = (await res.json().catch(() => ({}))) as Record<string, unknown>;
+
+  if (!res.ok) {
+    const fallback =
+      res.status === 400
+        ? "Invalid expert ID"
+        : res.status === 404
+          ? "Expert not found"
+          : "Failed to fetch expert";
+    throw new ApiHttpError(
+      getErrorMessageFromResponseBody(data, res.status, fallback),
+      res.status,
+      data,
+    );
+  }
+
+  return (data as GetExpertByIdResponse).expert;
+}
+
 /**
  * GET /reviews/expert/:expertId — public endpoint to get all reviews for an expert.
  * Supports pagination.
@@ -1220,6 +1305,216 @@ export async function toggleEmergencyAvailability(
   }
 
   return data as ToggleEmergencyAvailabilityResponse;
+}
+
+/** Max length for expert bio. */
+export const EXPERT_BIO_MAX_LENGTH = 2000;
+
+export type UpdateExpertBioResponse = {
+  message: string;
+  expert: {
+    id: number;
+    bio: string | null;
+  };
+};
+
+/**
+ * PATCH /api/v1/expert/me/bio — expert updates their bio.
+ * bio can be string or null; max 2000 chars; empty string becomes null.
+ */
+export async function updateExpertBio(
+  bio: string | null,
+): Promise<UpdateExpertBioResponse> {
+  const res = await fetch(`${BACKEND_URL}/api/v1/expert/me/bio`, {
+    method: "PATCH",
+    headers: getAuthHeaders(),
+    body: JSON.stringify({ bio }),
+  });
+
+  const data = (await res.json().catch(() => ({}))) as Record<string, unknown>;
+
+  if (!res.ok) {
+    const fallback =
+      res.status === 401
+        ? "Unauthorized"
+        : res.status === 403
+          ? "Only experts can update their bio"
+          : res.status === 400
+            ? "Bio exceeds maximum length"
+            : "Failed to update bio";
+    throw new ApiHttpError(
+      getErrorMessageFromResponseBody(data, res.status, fallback),
+      res.status,
+      data,
+    );
+  }
+
+  return data as UpdateExpertBioResponse;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Expert qualifications (expert CRUD; public list is on expert payload)
+// ─────────────────────────────────────────────────────────────────────────────
+
+export const QUALIFICATION_DEGREE_MAX_LENGTH = 100;
+export const QUALIFICATION_FIELD_MAX_LENGTH = 200;
+export const QUALIFICATION_INSTITUTION_MAX_LENGTH = 200;
+export const QUALIFICATION_YEAR_MIN = 1900;
+
+export type QualificationStatus = "PENDING" | "VERIFIED" | "REJECTED";
+
+export type ExpertQualification = {
+  id: number;
+  expertId: number;
+  degree: string;
+  field: string;
+  institution: string;
+  year?: number | null;
+  status: QualificationStatus;
+  verifiedById?: number | null;
+  verifiedAt?: string | null;
+  rejectionReason?: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type ExpertQualificationInput = {
+  degree: string;
+  field: string;
+  institution: string;
+  year?: number;
+};
+
+export type CreateExpertQualificationResponse = {
+  message: string;
+  qualification: ExpertQualification;
+};
+
+export type ListMyExpertQualificationsResponse = {
+  message: string;
+  qualifications: ExpertQualification[];
+};
+
+export type UpdateExpertQualificationResponse = {
+  message: string;
+  qualification: ExpertQualification;
+};
+
+/**
+ * POST /api/v1/expert/me/qualifications — create (status PENDING).
+ */
+export async function createExpertQualification(
+  body: ExpertQualificationInput,
+): Promise<ExpertQualification> {
+  const res = await fetch(`${BACKEND_URL}/api/v1/expert/me/qualifications`, {
+    method: "POST",
+    headers: getAuthHeaders(),
+    body: JSON.stringify(body),
+  });
+  const data = (await res.json().catch(() => ({}))) as Record<string, unknown>;
+  if (!res.ok) {
+    const fallback =
+      res.status === 401
+        ? "Unauthorized"
+        : res.status === 403
+          ? "Only experts can add qualifications"
+          : "Failed to add qualification";
+    throw new ApiHttpError(
+      getErrorMessageFromResponseBody(data, res.status, fallback),
+      res.status,
+      data,
+    );
+  }
+  return (data as CreateExpertQualificationResponse).qualification;
+}
+
+/**
+ * GET /api/v1/expert/me/qualifications — all statuses, newest first.
+ */
+export async function getMyExpertQualifications(): Promise<ExpertQualification[]> {
+  const res = await fetch(`${BACKEND_URL}/api/v1/expert/me/qualifications`, {
+    method: "GET",
+    headers: getAuthHeaders(),
+  });
+  const data = (await res.json().catch(() => ({}))) as Record<string, unknown>;
+  if (!res.ok) {
+    const fallback =
+      res.status === 401
+        ? "Unauthorized"
+        : res.status === 403
+          ? "Only experts can view qualifications"
+          : "Failed to load qualifications";
+    throw new ApiHttpError(
+      getErrorMessageFromResponseBody(data, res.status, fallback),
+      res.status,
+      data,
+    );
+  }
+  const list = (data as ListMyExpertQualificationsResponse).qualifications;
+  return Array.isArray(list) ? list : [];
+}
+
+/**
+ * PATCH /api/v1/expert/me/qualifications/:id — updates; returns to PENDING.
+ */
+export async function updateExpertQualification(
+  id: number,
+  body: ExpertQualificationInput,
+): Promise<ExpertQualification> {
+  const res = await fetch(
+    `${BACKEND_URL}/api/v1/expert/me/qualifications/${id}`,
+    {
+      method: "PATCH",
+      headers: getAuthHeaders(),
+      body: JSON.stringify(body),
+    },
+  );
+  const data = (await res.json().catch(() => ({}))) as Record<string, unknown>;
+  if (!res.ok) {
+    const fallback =
+      res.status === 401
+        ? "Unauthorized"
+        : res.status === 403
+          ? "You cannot edit this qualification"
+          : res.status === 404
+            ? "Qualification not found"
+            : "Failed to update qualification";
+    throw new ApiHttpError(
+      getErrorMessageFromResponseBody(data, res.status, fallback),
+      res.status,
+      data,
+    );
+  }
+  return (data as UpdateExpertQualificationResponse).qualification;
+}
+
+/**
+ * DELETE /api/v1/expert/me/qualifications/:id
+ */
+export async function deleteExpertQualification(id: number): Promise<void> {
+  const res = await fetch(
+    `${BACKEND_URL}/api/v1/expert/me/qualifications/${id}`,
+    {
+      method: "DELETE",
+      headers: getAuthHeaders(),
+    },
+  );
+  const data = (await res.json().catch(() => ({}))) as Record<string, unknown>;
+  if (!res.ok) {
+    const fallback =
+      res.status === 401
+        ? "Unauthorized"
+        : res.status === 403
+          ? "You cannot delete this qualification"
+          : res.status === 404
+            ? "Qualification not found"
+            : "Failed to delete qualification";
+    throw new ApiHttpError(
+      getErrorMessageFromResponseBody(data, res.status, fallback),
+      res.status,
+      data,
+    );
+  }
 }
 
 /** Slot info for emergency availability. */

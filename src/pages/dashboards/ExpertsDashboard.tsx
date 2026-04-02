@@ -22,6 +22,10 @@ const AvailabilityManagementTab = lazy(
   () => import("./components/AvailabilityManagementTab"),
 );
 const EarningsTab = lazy(() => import("./components/EarningsTab"));
+const ExpertProfileTab = lazy(() => import("./components/ExpertProfileTab"));
+const ExpertQualificationsTab = lazy(
+  () => import("./components/ExpertQualificationsTab"),
+);
 
 export default function ExpertsDashboard() {
   const { t } = useTranslation("common");
@@ -40,7 +44,7 @@ export default function ExpertsDashboard() {
   const [expertAppointmentsCount, setExpertAppointmentsCount] = useState(0);
   const [appointmentStatusFilter, setAppointmentStatusFilter] = useState<
     "" | AppointmentStatus
-  >("");
+  >("SCHEDULED");
   const [localAvailability, setLocalAvailability] =
     useState<WeeklyAvailability>(availability);
   const [isEditingAvailability, setIsEditingAvailability] = useState(false);
@@ -58,6 +62,16 @@ export default function ExpertsDashboard() {
   const [emergencyAvailable, setEmergencyAvailable] = useState<boolean>(
     user?.emergencyAvailable ?? false,
   );
+  const [expertBio, setExpertBio] = useState<string | null>(
+    user?.expertBio ?? null,
+  );
+
+  // Sync expert bio with user context
+  useEffect(() => {
+    if (user?.expertBio !== undefined) {
+      setExpertBio(user.expertBio ?? null);
+    }
+  }, [user?.expertBio]);
 
   // Sync emergency availability with user context
   useEffect(() => {
@@ -147,6 +161,11 @@ export default function ExpertsDashboard() {
 
   const handleEditAvailability = () => {
     setIsEditingAvailability(true);
+  };
+
+  const handleCancelEditAvailability = () => {
+    setLocalAvailability(availability);
+    setIsEditingAvailability(false);
   };
 
   const handleSaveAvailability = async () => {
@@ -252,7 +271,7 @@ export default function ExpertsDashboard() {
   return (
     <div className="min-h-screen bg-light-100 px-[16px] sm:px-[20px]">
       <ResponsiveNavbar />
-      <div className="max-w-[1350px] mx-auto py-[30px] sm:py-[40px]">
+      <div className="max-w-[1350px] mx-auto py-[30px] sm:py-[40px] pb-[80px] sm:pb-[100px]">
         <div className="mb-[30px]">
           <h1 className="text-[clamp(24px,5vw,32px)] font-bold text-logo-heading">
             {t("expertDashboardTitle")}
@@ -293,6 +312,7 @@ export default function ExpertsDashboard() {
                 error={availabilityError}
                 onEdit={handleEditAvailability}
                 onSave={handleSaveAvailability}
+                onCancel={handleCancelEditAvailability}
                 onToggleSlot={toggleTimeSlot}
                 emergencyAvailable={emergencyAvailable}
                 onEmergencyToggle={setEmergencyAvailable}
@@ -305,6 +325,15 @@ export default function ExpertsDashboard() {
                 isLoading={earningsLoading}
                 error={earningsError}
                 onRefetch={fetchEarnings}
+              />
+            )}
+
+            {activeTab === "qualifications" && <ExpertQualificationsTab />}
+
+            {activeTab === "profile" && (
+              <ExpertProfileTab
+                initialBio={expertBio}
+                onBioUpdated={setExpertBio}
               />
             )}
           </div>

@@ -30,13 +30,25 @@ export type AuthUser = {
   googleId?: string;
   /** Expert-only: whether emergency bookings are enabled. */
   emergencyAvailable?: boolean;
+  /** Expert-only: bio text. */
+  expertBio?: string | null;
 };
 
-function mapApiUserToAuthUser(u: Record<string, unknown> | null | undefined): AuthUser | null {
+function mapApiUserToAuthUser(
+  u: Record<string, unknown> | null | undefined,
+): AuthUser | null {
   if (!u || typeof u.email !== "string") return null;
   const avatarValue =
-    (u.userUploadedAvatar as string) || (u.avatar as string) || (u.avatarUrl as string);
-  const expert = u.expert as { id?: number; emergencyAvailable?: boolean } | undefined;
+    (u.userUploadedAvatar as string) ||
+    (u.avatar as string) ||
+    (u.avatarUrl as string);
+  const expert = u.expert as
+    | {
+        id?: number;
+        emergencyAvailable?: boolean;
+        bio?: string | null;
+      }
+    | undefined;
   const mapped: AuthUser = {
     id: u.id != null ? String(u.id) : undefined,
     expertId:
@@ -61,6 +73,10 @@ function mapApiUserToAuthUser(u: Record<string, unknown> | null | undefined): Au
       typeof expert?.emergencyAvailable === "boolean"
         ? expert.emergencyAvailable
         : (u.emergencyAvailable as boolean | undefined),
+    expertBio:
+      typeof expert?.bio === "string" || expert?.bio === null
+        ? expert.bio
+        : (u.expertBio as string | null | undefined),
   };
   return mapped;
 }
@@ -175,11 +191,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(readInitialSessionUser() as AuthUser | null);
   }, []);
 
-  const login = useCallback((nextUser: AuthUser) => {
-    abortInFlightRefresh();
-    setUser(nextUser);
-    window.localStorage.setItem("auth:user", JSON.stringify(nextUser));
-  }, [abortInFlightRefresh]);
+  const login = useCallback(
+    (nextUser: AuthUser) => {
+      abortInFlightRefresh();
+      setUser(nextUser);
+      window.localStorage.setItem("auth:user", JSON.stringify(nextUser));
+    },
+    [abortInFlightRefresh],
+  );
 
   const logout = useCallback(() => {
     abortInFlightRefresh();

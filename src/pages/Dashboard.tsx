@@ -194,6 +194,9 @@ function AppointmentCard({
   const [cancelling, setCancelling] = useState(false);
   const [actionError, setActionError] = useState<string | null>(null);
   const [actionSuccess, setActionSuccess] = useState<string | null>(null);
+  const [showCompleteModal, setShowCompleteModal] = useState(false);
+  const [showNoShowModal, setShowNoShowModal] = useState(false);
+  const [showCancelModal, setShowCancelModal] = useState(false);
 
   const showMeetActions =
     !!apt.meetLink && !isTerminalAppointmentStatus(apt.status);
@@ -243,6 +246,7 @@ function AppointmentCard({
       }
     } finally {
       setCompleting(false);
+      setShowCompleteModal(false);
     }
   };
 
@@ -266,6 +270,7 @@ function AppointmentCard({
       }
     } finally {
       setReportingNoShow(false);
+      setShowNoShowModal(false);
     }
   };
 
@@ -285,6 +290,7 @@ function AppointmentCard({
       }
     } finally {
       setCancelling(false);
+      setShowCancelModal(false);
     }
   };
 
@@ -359,14 +365,11 @@ function AppointmentCard({
 
         {showScheduledJoinHint ? (
           <div
-            className="mt-4 rounded-xl border border-sky-100 bg-sky-50/90 px-4 py-3"
+            className="mt-4 rounded-xl border border-emerald-100 bg-emerald-50/90 px-4 py-3"
             role="status"
           >
-            <p className="text-sm font-semibold text-sky-950">
-              {t("sessionNotStartedYet")}
-            </p>
-            <p className="mt-1 text-sm text-sky-900/90 leading-snug">
-              {t("sessionWaitingForBothParticipants")}
+            <p className="text-sm font-semibold text-emerald-800">
+              {t("sessionHasStartedPleaseJoin")}
             </p>
           </div>
         ) : null}
@@ -385,7 +388,47 @@ function AppointmentCard({
           </div>
         )}
 
-        {/* Session actions: Mark complete / Report no-show */}
+        {/* Row 1: Join Session + Copy Link (side by side) */}
+        {showMeetActions ? (
+          <div className="mt-5 pt-4 border-t border-gray-100">
+            <div className="flex flex-wrap items-center gap-3">
+              <a
+                href={apt.meetLink!}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-[#44666C] text-white rounded-xl font-semibold text-sm hover:bg-[#365a62] transition-colors shadow-sm"
+              >
+                <Video className="w-4 h-4" />
+                {isVideoSession
+                  ? t("dashboardJoinVideoTracked")
+                  : t("dashboardJoinSession")}
+              </a>
+              <button
+                type="button"
+                onClick={() => {
+                  navigator.clipboard.writeText(apt.meetLink!);
+                  setCopied(true);
+                  setTimeout(() => setCopied(false), 2000);
+                }}
+                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 border border-gray-200 text-gray-700 rounded-xl font-medium text-sm hover:bg-gray-50 transition-colors"
+              >
+                {copied ? (
+                  <>
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                    {t("expertAppointmentLinkCopied")}
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-4 h-4" />
+                    {t("dashboardCopyMeetingLink")}
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        ) : null}
+
+        {/* Row 2: Session actions - Mark Complete, Expert Didn't Join, Reschedule */}
         {showSessionActions && !actionSuccess ? (
           <div className="mt-4 space-y-3">
             {!canResolve && (
@@ -396,46 +439,39 @@ function AppointmentCard({
             <div className="flex flex-wrap gap-2">
               <button
                 type="button"
-                onClick={handleMarkComplete}
+                onClick={() => setShowCompleteModal(true)}
                 disabled={!canResolve || completing || reportingNoShow}
                 className="inline-flex items-center gap-2 px-4 py-2.5 bg-emerald-600 text-white rounded-xl font-semibold text-sm hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {completing ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    {t("sessionActionMarkingComplete")}
-                  </>
-                ) : (
-                  <>
-                    <CheckCircle2 className="w-4 h-4" />
-                    {t("sessionActionMarkComplete")}
-                  </>
-                )}
+                <CheckCircle2 className="w-4 h-4" />
+                {t("sessionActionMarkComplete")}
               </button>
               <button
                 type="button"
-                onClick={handleReportNoShow}
+                onClick={() => setShowNoShowModal(true)}
                 disabled={!canResolve || completing || reportingNoShow}
                 className="inline-flex items-center gap-2 px-4 py-2.5 border border-orange-300 text-orange-700 rounded-xl font-semibold text-sm hover:bg-orange-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {reportingNoShow ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    {t("sessionActionReportingNoShow")}
-                  </>
-                ) : (
-                  <>
-                    <UserX className="w-4 h-4" />
-                    {t("sessionActionReportNoShow")}
-                  </>
-                )}
+                <UserX className="w-4 h-4" />
+                {t("sessionActionReportNoShow")}
               </button>
+              {showReschedule && (
+                <button
+                  type="button"
+                  onClick={() => onOpenReschedule?.(apt)}
+                  disabled={cancelling}
+                  className="inline-flex items-center gap-2 px-4 py-2.5 border border-[#44666C]/40 text-[#44666C] rounded-xl font-semibold text-sm hover:bg-[#E0ECEE]/80 transition-colors disabled:opacity-50"
+                >
+                  <CalendarClock className="w-4 h-4" />
+                  {t("appointmentRescheduleButton")}
+                </button>
+              )}
             </div>
           </div>
         ) : null}
 
-        {/* Reschedule and Cancel buttons for SCHEDULED appointments */}
-        {(showReschedule || canCancel) && !actionSuccess ? (
+        {/* Reschedule and Cancel buttons for SCHEDULED appointments (before session starts) */}
+        {!showSessionActions && (showReschedule || canCancel) && !actionSuccess ? (
           <div className="mt-4 flex flex-wrap gap-2">
             {showReschedule && (
               <button
@@ -451,21 +487,12 @@ function AppointmentCard({
             {canCancel && (
               <button
                 type="button"
-                onClick={handleCancel}
+                onClick={() => setShowCancelModal(true)}
                 disabled={cancelling}
                 className="inline-flex items-center gap-2 px-4 py-2.5 border border-red-300 text-red-700 rounded-xl font-semibold text-sm hover:bg-red-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {cancelling ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    {t("sessionActionCancelling")}
-                  </>
-                ) : (
-                  <>
-                    <Ban className="w-4 h-4" />
-                    {t("sessionActionCancel")}
-                  </>
-                )}
+                <Ban className="w-4 h-4" />
+                {t("sessionActionCancel")}
               </button>
             )}
           </div>
@@ -484,44 +511,166 @@ function AppointmentCard({
             </button>
           </div>
         ) : null}
-
-        {showMeetActions ? (
-          <div className="mt-5 pt-4 border-t border-gray-100 space-y-3">
-            <a
-              href={apt.meetLink!}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex w-full sm:w-auto items-center justify-center gap-2 px-4 py-2.5 bg-[#44666C] text-white rounded-xl font-semibold text-sm hover:bg-[#365a62] transition-colors shadow-sm"
-            >
-              <Video className="w-4 h-4" />
-              {isVideoSession
-                ? t("dashboardJoinVideoTracked")
-                : t("dashboardJoinSession")}
-            </a>
-            <button
-              type="button"
-              onClick={() => {
-                navigator.clipboard.writeText(apt.meetLink!);
-                setCopied(true);
-                setTimeout(() => setCopied(false), 2000);
-              }}
-              className="inline-flex w-full sm:w-auto items-center justify-center gap-2 px-4 py-2.5 border border-gray-200 text-gray-700 rounded-xl font-medium text-sm hover:bg-gray-50 transition-colors"
-            >
-              {copied ? (
-                <>
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                  {t("expertAppointmentLinkCopied")}
-                </>
-              ) : (
-                <>
-                  <Copy className="w-4 h-4" />
-                  {t("dashboardCopyMeetingLink")}
-                </>
-              )}
-            </button>
-          </div>
-        ) : null}
       </div>
+
+      {/* Confirmation Modal: Mark Complete */}
+      {showCompleteModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+          onClick={() => !completing && setShowCompleteModal(false)}
+        >
+          <div
+            className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center">
+                <CheckCircle2 className="w-6 h-6 text-emerald-600" />
+              </div>
+              <h3 className="text-lg font-bold text-[#304048]">
+                {t("confirmMarkCompleteTitle")}
+              </h3>
+            </div>
+            <p className="text-sm text-gray-600 mb-6">
+              {t("confirmMarkCompleteMessage")}
+            </p>
+            <div className="flex justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => setShowCompleteModal(false)}
+                disabled={completing}
+                className="px-4 py-2.5 border border-gray-200 text-gray-700 rounded-xl font-medium text-sm hover:bg-gray-50 transition-colors disabled:opacity-50"
+              >
+                {t("cancel")}
+              </button>
+              <button
+                type="button"
+                onClick={handleMarkComplete}
+                disabled={completing}
+                className="inline-flex items-center gap-2 px-4 py-2.5 bg-emerald-600 text-white rounded-xl font-semibold text-sm hover:bg-emerald-700 transition-colors disabled:opacity-50"
+              >
+                {completing ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    {t("sessionActionMarkingComplete")}
+                  </>
+                ) : (
+                  <>
+                    <CheckCircle2 className="w-4 h-4" />
+                    {t("confirm")}
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Confirmation Modal: Expert Didn't Join */}
+      {showNoShowModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+          onClick={() => !reportingNoShow && setShowNoShowModal(false)}
+        >
+          <div
+            className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center">
+                <UserX className="w-6 h-6 text-orange-600" />
+              </div>
+              <h3 className="text-lg font-bold text-[#304048]">
+                {t("confirmNoShowTitle")}
+              </h3>
+            </div>
+            <p className="text-sm text-gray-600 mb-6">
+              {t("confirmNoShowMessage")}
+            </p>
+            <div className="flex justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => setShowNoShowModal(false)}
+                disabled={reportingNoShow}
+                className="px-4 py-2.5 border border-gray-200 text-gray-700 rounded-xl font-medium text-sm hover:bg-gray-50 transition-colors disabled:opacity-50"
+              >
+                {t("cancel")}
+              </button>
+              <button
+                type="button"
+                onClick={handleReportNoShow}
+                disabled={reportingNoShow}
+                className="inline-flex items-center gap-2 px-4 py-2.5 bg-orange-600 text-white rounded-xl font-semibold text-sm hover:bg-orange-700 transition-colors disabled:opacity-50"
+              >
+                {reportingNoShow ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    {t("sessionActionReportingNoShow")}
+                  </>
+                ) : (
+                  <>
+                    <UserX className="w-4 h-4" />
+                    {t("confirm")}
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Confirmation Modal: Cancel Appointment */}
+      {showCancelModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+          onClick={() => !cancelling && setShowCancelModal(false)}
+        >
+          <div
+            className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
+                <Ban className="w-6 h-6 text-red-600" />
+              </div>
+              <h3 className="text-lg font-bold text-[#304048]">
+                {t("confirmCancelTitle")}
+              </h3>
+            </div>
+            <p className="text-sm text-gray-600 mb-6">
+              {t("confirmCancelMessage")}
+            </p>
+            <div className="flex justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => setShowCancelModal(false)}
+                disabled={cancelling}
+                className="px-4 py-2.5 border border-gray-200 text-gray-700 rounded-xl font-medium text-sm hover:bg-gray-50 transition-colors disabled:opacity-50"
+              >
+                {t("goBack")}
+              </button>
+              <button
+                type="button"
+                onClick={handleCancel}
+                disabled={cancelling}
+                className="inline-flex items-center gap-2 px-4 py-2.5 bg-red-600 text-white rounded-xl font-semibold text-sm hover:bg-red-700 transition-colors disabled:opacity-50"
+              >
+                {cancelling ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    {t("sessionActionCancelling")}
+                  </>
+                ) : (
+                  <>
+                    <Ban className="w-4 h-4" />
+                    {t("confirmCancelButton")}
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </article>
   );
 }

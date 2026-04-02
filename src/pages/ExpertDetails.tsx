@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
   Star,
@@ -14,13 +14,22 @@ import {
   ChevronDown,
   BadgeCheck,
   Zap,
+  Clock,
+  Share2,
+  Check,
+  GraduationCap,
 } from "lucide-react";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import BookingModal from "../components/BookingModal";
 import UrgentRequestModal from "../components/UrgentRequestModal";
 import ImageViewer from "../components/ImageViewer";
-import type { ApiExpert } from "../types/experts";
-import { getAvatarUrl, getExpertReviews, type PublicReview } from "../lib/api";
+import {
+  getAvatarUrl,
+  getExpertReviews,
+  getExpertById,
+  type PublicReview,
+  type ApiExpertFromApi,
+} from "../lib/api";
 import { useAuth } from "../context/AuthContext";
 
 function nameInitial(displayName: string): string {
@@ -43,7 +52,6 @@ function ExpertProfileAvatar({
 
   const showImage = Boolean(avatarUrl) && !loadFailed;
   const initial = nameInitial(displayName);
-  const sizeClass = "w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36";
 
   if (showImage && avatarUrl) {
     return (
@@ -51,7 +59,7 @@ function ExpertProfileAvatar({
         <img
           src={avatarUrl}
           alt={displayName}
-          className={`relative ${sizeClass} rounded-full border-4 border-white object-cover shadow-2xl`}
+          className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover ring-4 ring-white shadow-xl"
           onError={() => setLoadFailed(true)}
         />
       </ImageViewer>
@@ -60,8 +68,7 @@ function ExpertProfileAvatar({
 
   return (
     <div
-      className={`relative ${sizeClass} rounded-full border-4 border-white shadow-2xl flex items-center justify-center bg-white/25 text-white font-bold shrink-0`}
-      style={{ fontSize: "clamp(2rem, 10vw, 3.25rem)" }}
+      className="w-16 h-16 sm:w-20 sm:h-20 rounded-full ring-4 ring-white shadow-xl flex items-center justify-center bg-gradient-to-br from-teal-500 to-teal-700 text-white font-bold text-xl sm:text-2xl"
       aria-hidden
     >
       {initial}
@@ -86,14 +93,14 @@ function ReviewerAvatar({
       <img
         src={resolvedUrl}
         alt={displayName}
-        className="w-10 h-10 rounded-full object-cover shrink-0"
+        className="w-9 h-9 rounded-full object-cover shrink-0"
         onError={() => setLoadFailed(true)}
       />
     );
   }
 
   return (
-    <div className="w-10 h-10 rounded-full bg-[#44666C] text-white flex items-center justify-center text-sm font-semibold shrink-0">
+    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-teal-500 to-teal-600 text-white flex items-center justify-center text-sm font-semibold shrink-0">
       {initial}
     </div>
   );
@@ -109,20 +116,25 @@ function ReviewCard({ review }: { review: PublicReview }) {
   });
 
   return (
-    <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-5">
-      <div className="flex items-start gap-3 mb-3">
-        <ReviewerAvatar name={review.user.name} avatarUrl={review.user.avatar} />
+    <div className="bg-gray-50 hover:bg-gray-100/80 border border-gray-100 rounded-2xl p-4 transition-colors">
+      <div className="flex items-start gap-3 mb-2">
+        <ReviewerAvatar
+          name={review.user.name}
+          avatarUrl={review.user.avatar}
+        />
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between gap-2 flex-wrap">
-            <h4 className="font-semibold text-[#304048] truncate">{displayName}</h4>
-            <span className="text-xs text-gray-500 shrink-0">{reviewDate}</span>
+            <h4 className="font-semibold text-gray-900 text-sm truncate">
+              {displayName}
+            </h4>
+            <span className="text-xs text-gray-400">{reviewDate}</span>
           </div>
-          <div className="flex items-center gap-2 mt-1">
+          <div className="flex items-center gap-2 mt-0.5">
             <div className="flex items-center gap-0.5">
               {[1, 2, 3, 4, 5].map((star) => (
                 <Star
                   key={star}
-                  size={14}
+                  size={12}
                   className={
                     star <= review.rating
                       ? "fill-amber-400 text-amber-400"
@@ -132,8 +144,8 @@ function ReviewCard({ review }: { review: PublicReview }) {
               ))}
             </div>
             {review.appointment && (
-              <span className="inline-flex items-center gap-1 text-xs text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
-                <BadgeCheck size={12} />
+              <span className="inline-flex items-center gap-1 text-[10px] text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded-full font-medium">
+                <BadgeCheck size={10} />
                 {t("expertReviewsVerifiedSession")}
               </span>
             )}
@@ -141,7 +153,7 @@ function ReviewCard({ review }: { review: PublicReview }) {
         </div>
       </div>
       {review.comment && (
-        <p className="text-gray-700 text-sm leading-relaxed whitespace-pre-wrap">
+        <p className="text-gray-600 text-sm leading-relaxed whitespace-pre-wrap pl-12">
           {review.comment}
         </p>
       )}
@@ -149,49 +161,307 @@ function ReviewCard({ review }: { review: PublicReview }) {
   );
 }
 
+function SkeletonPulse({ className }: { className?: string }) {
+  return (
+    <div className={`animate-pulse bg-gray-200 rounded ${className || ""}`} />
+  );
+}
+
+function ExpertDetailsSkeleton() {
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2">
+        <ResponsiveNavbar />
+      </div>
+
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4 sm:py-6 pb-20 sm:pb-24">
+        {/* Back Button Skeleton */}
+        <SkeletonPulse className="w-16 h-5 mb-4" />
+
+        {/* Hero Card Skeleton */}
+        <div className="bg-white rounded-3xl shadow-lg shadow-gray-200/50 border border-gray-100 overflow-hidden mb-6">
+          <div className="bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 px-5 py-6 sm:px-8 sm:py-8">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
+              {/* Avatar Skeleton */}
+              <SkeletonPulse className="w-16 h-16 sm:w-20 sm:h-20 rounded-full shrink-0" />
+
+              {/* Info Skeleton */}
+              <div className="flex-1 text-center sm:text-left space-y-3">
+                <SkeletonPulse className="h-7 w-48 mx-auto sm:mx-0" />
+                <SkeletonPulse className="h-5 w-36 mx-auto sm:mx-0" />
+                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                  <SkeletonPulse className="h-8 w-20 rounded-full" />
+                  <SkeletonPulse className="h-8 w-24 rounded-full" />
+                  <SkeletonPulse className="h-8 w-28 rounded-full" />
+                </div>
+              </div>
+
+              {/* Price Badge Skeleton - Desktop */}
+              <div className="hidden sm:block">
+                <SkeletonPulse className="w-[140px] h-24 rounded-2xl" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile CTA Skeleton */}
+        <div className="lg:hidden space-y-3 mb-5">
+          <SkeletonPulse className="h-32 rounded-2xl" />
+          <SkeletonPulse className="h-12 rounded-full" />
+        </div>
+
+        {/* Content Grid Skeleton */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Main Content Skeleton */}
+          <div className="order-2 lg:order-1 lg:col-span-2 space-y-5">
+            {/* About Section Skeleton */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-6">
+              <SkeletonPulse className="h-5 w-24 mb-4" />
+              <div className="space-y-2">
+                <SkeletonPulse className="h-4 w-full" />
+                <SkeletonPulse className="h-4 w-full" />
+                <SkeletonPulse className="h-4 w-3/4" />
+              </div>
+            </div>
+
+            {/* Expertise Section Skeleton */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-6">
+              <SkeletonPulse className="h-5 w-40 mb-4" />
+              <div className="flex flex-wrap gap-2">
+                <SkeletonPulse className="h-8 w-24 rounded-full" />
+                <SkeletonPulse className="h-8 w-32 rounded-full" />
+                <SkeletonPulse className="h-8 w-28 rounded-full" />
+                <SkeletonPulse className="h-8 w-20 rounded-full" />
+              </div>
+            </div>
+
+            {/* Reviews Section Skeleton */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-6">
+              <SkeletonPulse className="h-5 w-24 mb-4" />
+              <div className="space-y-3">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="bg-gray-50 rounded-2xl p-4">
+                    <div className="flex items-start gap-3">
+                      <SkeletonPulse className="w-9 h-9 rounded-full shrink-0" />
+                      <div className="flex-1 space-y-2">
+                        <SkeletonPulse className="h-4 w-32" />
+                        <SkeletonPulse className="h-3 w-24" />
+                        <SkeletonPulse className="h-4 w-full" />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Sidebar Skeleton */}
+          <div className="order-1 lg:order-2 space-y-4">
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+              <SkeletonPulse className="h-5 w-24 mb-4" />
+              <div className="space-y-3">
+                {[1, 2, 3, 4].map((i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <SkeletonPulse className="w-9 h-9 rounded-xl" />
+                    <div className="flex-1 space-y-1">
+                      <SkeletonPulse className="h-4 w-20" />
+                      <SkeletonPulse className="h-3 w-16" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Pricing Card Skeleton - Desktop */}
+            <div className="hidden lg:block">
+              <SkeletonPulse className="h-28 rounded-2xl" />
+            </div>
+
+            {/* CTA Button Skeleton - Desktop */}
+            <div className="hidden lg:block">
+              <SkeletonPulse className="h-12 rounded-full" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function ExpertDetails() {
-  const location = useLocation();
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { t } = useTranslation(["common", "experts"]);
   const { user } = useAuth();
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
-  const [isUrgentRequestModalOpen, setIsUrgentRequestModalOpen] = useState(false);
+  const [isUrgentRequestModalOpen, setIsUrgentRequestModalOpen] =
+    useState(false);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
 
-  // Reviews state
+  const [expert, setExpert] = useState<ApiExpertFromApi | null>(null);
+  const [expertLoading, setExpertLoading] = useState(true);
+  const [expertError, setExpertError] = useState<string | null>(null);
+
   const [reviews, setReviews] = useState<PublicReview[]>([]);
   const [reviewsPage, setReviewsPage] = useState(1);
   const [reviewsTotalPages, setReviewsTotalPages] = useState(1);
   const [reviewsTotal, setReviewsTotal] = useState(0);
   const [reviewsLoading, setReviewsLoading] = useState(false);
   const [reviewsError, setReviewsError] = useState<string | null>(null);
+  const [isAboutExpanded, setIsAboutExpanded] = useState(false);
+  const [isQuickInfoExpanded, setIsQuickInfoExpanded] = useState(true);
+  const [shareCopied, setShareCopied] = useState(false);
 
-  // Get expert data from navigation state (passed via props)
-  const expert = location.state?.expert as ApiExpert | undefined;
+  const expertId = id ? parseInt(id, 10) : null;
 
-  if (!expert) {
+  const handleShare = async () => {
+    const shareUrl = window.location.href;
+    const shareTitle = expert
+      ? `${expert.user.name} - Expert Profile`
+      : "Expert Profile";
+    const shareText = expert
+      ? `Check out ${expert.user.name}, ${expert.professionalTitle} on MindCurePath!`
+      : "Check out this expert on MindCurePath!";
+
+    // Try native share API first (mobile)
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: shareTitle,
+          text: shareText,
+          url: shareUrl,
+        });
+        return;
+      } catch {
+        // User cancelled or share failed, fall back to clipboard
+      }
+    }
+
+    // Fall back to clipboard copy
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setShareCopied(true);
+      setTimeout(() => setShareCopied(false), 2000);
+    } catch {
+      // Fallback for older browsers
+      const textArea = document.createElement("textarea");
+      textArea.value = shareUrl;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textArea);
+      setShareCopied(true);
+      setTimeout(() => setShareCopied(false), 2000);
+    }
+  };
+
+  // Fetch expert data on mount
+  useEffect(() => {
+    if (!expertId || isNaN(expertId)) {
+      setExpertError("Invalid expert ID");
+      setExpertLoading(false);
+      return;
+    }
+
+    let cancelled = false;
+
+    const fetchExpert = async () => {
+      setExpertLoading(true);
+      setExpertError(null);
+      try {
+        const data = await getExpertById(expertId);
+        if (!cancelled) {
+          setExpert(data);
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setExpertError(
+            err instanceof Error ? err.message : "Failed to load expert",
+          );
+        }
+      } finally {
+        if (!cancelled) {
+          setExpertLoading(false);
+        }
+      }
+    };
+
+    void fetchExpert();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [expertId]);
+
+  const fetchReviews = useCallback(
+    async (page: number, append: boolean = false) => {
+      if (!expertId) return;
+      setReviewsLoading(true);
+      setReviewsError(null);
+      try {
+        const res = await getExpertReviews(expertId, page, 5);
+        setReviews((prev) =>
+          append ? [...prev, ...res.reviews] : res.reviews,
+        );
+        setReviewsPage(res.page);
+        setReviewsTotalPages(res.totalPages);
+        setReviewsTotal(res.total);
+      } catch (err) {
+        setReviewsError(
+          err instanceof Error ? err.message : t("common:expertReviewsError"),
+        );
+      } finally {
+        setReviewsLoading(false);
+      }
+    },
+    [expertId, t],
+  );
+
+  useEffect(() => {
+    if (expertId && !isNaN(expertId)) {
+      void fetchReviews(1);
+    }
+  }, [expertId, fetchReviews]);
+
+  const handleLoadMoreReviews = () => {
+    if (reviewsPage < reviewsTotalPages && !reviewsLoading) {
+      void fetchReviews(reviewsPage + 1, true);
+    }
+  };
+
+  // Show skeleton while loading
+  if (expertLoading) {
+    return <ExpertDetailsSkeleton />;
+  }
+
+  // Show error state
+  if (expertError || !expert) {
     return (
-      <div className="min-h-screen bg-white px-4 sm:px-5">
-        <ResponsiveNavbar />
-        <div className="max-w-6xl mx-auto py-6 sm:py-8">
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+        <div className="px-4 sm:px-6 lg:px-8 pt-2">
+          <ResponsiveNavbar />
+        </div>
+        <div className="max-w-4xl mx-auto px-4 py-8">
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-[#44666C] hover:text-[#365a62] mb-6 transition-colors cursor-pointer"
-            style={{ fontSize: "16px" }}
+            className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition-colors text-sm font-medium cursor-pointer"
           >
-            <ArrowLeft size={18} className="sm:w-5 sm:h-5" />
-            <span>Go Back</span>
+            <ArrowLeft size={16} />
+            Go Back
           </button>
-          <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 text-center">
-            <p
-              className="text-red-600 mb-2"
-              style={{ fontSize: "clamp(16px, 1rem, 20.8px)" }}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 text-center">
+            <p className="text-red-500 font-medium mb-2">
+              {expertError || "Expert not found"}
+            </p>
+            <p className="text-gray-500 text-sm mb-4">
+              Unable to load expert details. Please try again.
+            </p>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-4 py-2 bg-teal-600 text-white rounded-full hover:bg-teal-700 text-sm font-medium transition-colors cursor-pointer"
             >
-              Expert not found
-            </p>
-            <p className="text-gray-600" style={{ fontSize: "16px" }}>
-              Please navigate from an expert card to view their profile.
-            </p>
+              Retry
+            </button>
           </div>
         </div>
       </div>
@@ -215,422 +485,542 @@ export default function ExpertDetails() {
 
   const avatarUrl = getAvatarUrl(expert.user.avatar);
 
-  const fetchReviews = useCallback(
-    async (page: number, append: boolean = false) => {
-      if (!expert) return;
-      setReviewsLoading(true);
-      setReviewsError(null);
-      try {
-        const res = await getExpertReviews(expert.id, page, 5);
-        setReviews((prev) => (append ? [...prev, ...res.reviews] : res.reviews));
-        setReviewsPage(res.page);
-        setReviewsTotalPages(res.totalPages);
-        setReviewsTotal(res.total);
-      } catch (err) {
-        setReviewsError(
-          err instanceof Error ? err.message : t("common:expertReviewsError"),
-        );
-      } finally {
-        setReviewsLoading(false);
-      }
-    },
-    [expert, t],
-  );
-
-  useEffect(() => {
-    if (expert) {
-      void fetchReviews(1);
-    }
-  }, [expert, fetchReviews]);
-
-  const handleLoadMoreReviews = () => {
-    if (reviewsPage < reviewsTotalPages && !reviewsLoading) {
-      void fetchReviews(reviewsPage + 1, true);
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-white px-4 sm:px-5">
-      <ResponsiveNavbar />
-      <div className="max-w-6xl mx-auto py-6 sm:py-8">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2">
+        <ResponsiveNavbar />
+      </div>
+
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4 sm:py-6 pb-20 sm:pb-24">
         {/* Back Button */}
         <button
           onClick={() => navigate(-1)}
-          className="flex items-center gap-2 text-[#44666C] hover:text-[#365a62] mb-4 sm:mb-6 transition-colors cursor-pointer"
-          style={{ fontSize: "16px" }}
+          className="inline-flex items-center gap-1.5 text-gray-500 hover:text-gray-800 mb-4 transition-colors text-sm font-medium group cursor-pointer"
         >
-          <ArrowLeft size={18} className="sm:w-5 sm:h-5" />
-          <span>Go Back</span>
+          <ArrowLeft
+            size={16}
+            className="group-hover:-translate-x-0.5 transition-transform"
+          />
+          Back
         </button>
 
-        {/* Main Content */}
-        <div className="bg-white rounded-lg sm:rounded-xl shadow-lg overflow-hidden">
-          {/* Header Section - Profile Card */}
-          <div className="bg-linear-to-r from-[#44666C] to-[#365a62] relative overflow-hidden">
-            {/* Background Pattern */}
-            <div className="absolute inset-0 opacity-10">
-              <div
-                className="absolute inset-0"
-                style={{
-                  backgroundImage:
-                    "radial-gradient(circle at 2px 2px, white 1px, transparent 0)",
-                  backgroundSize: "40px 40px",
-                }}
-              ></div>
-            </div>
-
-            <div className="relative p-6 sm:p-8 md:p-10 text-white">
-              <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-center md:items-center">
-                {/* Avatar */}
-                <div className="shrink-0">
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-white/20 rounded-full blur-xl"></div>
-                    <div className="relative">
-                      <ExpertProfileAvatar
-                        displayName={formattedName}
-                        avatarUrl={avatarUrl}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Profile Info */}
-                <div className="flex-1 text-center md:text-left w-full space-y-4">
-                  {/* Name and Title */}
-                  <div className="space-y-2">
-                    <h1
-                      className="font-bold leading-tight drop-shadow-sm"
-                      style={{ fontSize: "clamp(20.8px, 1.3rem, 27px)" }}
-                    >
-                      {formattedName}
-                    </h1>
-                    <p
-                      className="opacity-95 font-medium"
-                      style={{ fontSize: "clamp(16px, 1rem, 20.8px)" }}
-                    >
-                      {formattedTitle}
-                    </p>
-                  </div>
-
-                  {/* Rating and Experience */}
-                  <div className="flex flex-col sm:flex-row items-center sm:items-center gap-3 sm:gap-4 flex-wrap justify-center md:justify-start">
-                    {/* Rating Badge */}
-                    <div className="flex items-center gap-2 bg-white/15 backdrop-blur-md px-4 py-2.5 rounded-xl border border-white/30 shadow-lg">
-                      <Star
-                        size={18}
-                        className="fill-yellow-400 text-yellow-400 shrink-0"
-                      />
-                      <div className="flex items-baseline gap-1.5">
-                        <span
-                          className="font-bold"
-                          style={{ fontSize: "16px" }}
-                        >
-                          {expert.rating}
-                        </span>
-                        <span
-                          className="opacity-90"
-                          style={{ fontSize: "14px" }}
-                        >
-                          ({expert.totalReviews}{" "}
-                          {expert.totalReviews === 1 ? "review" : "reviews"})
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Experience Badge */}
-                    <div className="flex items-center gap-2 bg-white/15 backdrop-blur-md px-4 py-2.5 rounded-xl border border-white/30 shadow-lg">
-                      <Award size={18} className="shrink-0" />
-                      <span style={{ fontSize: "16px" }}>
-                        {expert.yearsOfExperience}+ years of experience
-                      </span>
-                    </div>
-                  </div>
-                </div>
+        {/* Hero Card */}
+        <div className="bg-white rounded-3xl shadow-lg shadow-gray-200/50 border border-gray-100 overflow-hidden mb-6">
+          {/* Gradient Header */}
+          <div className="bg-gradient-to-r from-teal-600 via-teal-500 to-emerald-500 px-5 py-6 sm:px-8 sm:py-8">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
+              {/* Avatar */}
+              <div className="shrink-0">
+                <ExpertProfileAvatar
+                  displayName={formattedName}
+                  avatarUrl={avatarUrl}
+                />
               </div>
-            </div>
-          </div>
 
-          {/* Content Section */}
-          <div className="p-4 sm:p-6 md:p-8">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
-              {/* Main Info */}
-              <div className="lg:col-span-2 space-y-5 sm:space-y-6 order-2 lg:order-1">
-                {/* Bio */}
-                <div>
-                  <h2
-                    className="font-semibold text-[#304048] mb-3 sm:mb-4 flex items-center gap-2"
-                    style={{ fontSize: "clamp(16px, 1rem, 20.8px)" }}
-                  >
-                    <FileText size={20} className="sm:w-6 sm:h-6" />
-                    About
-                  </h2>
-                  <p
-                    className="text-gray-700 leading-relaxed whitespace-pre-wrap"
-                    style={{ fontSize: "16px" }}
-                  >
-                    {expert.bio || "No bio available."}
-                  </p>
-                </div>
+              {/* Info */}
+              <div className="flex-1 text-center sm:text-left">
+                <h1 className="text-xl sm:text-2xl font-bold text-white mb-1">
+                  {formattedName}
+                </h1>
+                <p className="text-teal-100 font-medium text-sm sm:text-base mb-3">
+                  {formattedTitle}
+                </p>
 
-                {/* Expertise Areas / Specializations */}
-                <div>
-                  <h2
-                    className="font-semibold text-[#304048] mb-3 sm:mb-4"
-                    style={{ fontSize: "clamp(16px, 1rem, 20.8px)" }}
-                  >
-                    Areas of Expertise
-                  </h2>
-                  <div className="flex flex-wrap gap-2">
-                    {expert.expertSpecializations &&
-                    expert.expertSpecializations.length > 0 ? (
-                      expert.expertSpecializations.map((esp, index) => (
-                        <span
-                          key={index}
-                          className="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#E0ECEE] text-[#133945] rounded-full font-medium"
-                          style={{ fontSize: "14px" }}
-                        >
-                          {esp.specialization.name}
-                        </span>
-                      ))
-                    ) : expert.expertiseAreas &&
-                      expert.expertiseAreas.length > 0 ? (
-                      expert.expertiseAreas.map((area, index) => (
-                        <span
-                          key={index}
-                          className="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#E0ECEE] text-[#133945] rounded-full font-medium"
-                          style={{ fontSize: "14px" }}
-                        >
-                          {area.charAt(0).toUpperCase() + area.slice(1)}
-                        </span>
-                      ))
-                    ) : (
-                      <span
-                        className="text-gray-500"
-                        style={{ fontSize: "16px" }}
-                      >
-                        No specializations listed
-                      </span>
-                    )}
+                {/* Stats Row */}
+                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                  <div className="flex items-center gap-1.5 bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full">
+                    <Star size={14} className="fill-amber-300 text-amber-300" />
+                    <span className="text-white font-semibold text-sm">
+                      {expert.rating}
+                    </span>
+                    <span className="text-teal-100 text-xs">
+                      ({expert.totalReviews})
+                    </span>
                   </div>
-                </div>
-
-                {/* Languages and Experience - Side by Side */}
-                <div
-                  className={`grid gap-4 sm:gap-6 ${hasLanguages ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1"}`}
-                >
+                  <div className="flex items-center gap-1.5 bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full">
+                    <Award size={14} className="text-teal-100" />
+                    <span className="text-white text-sm">
+                      {expert.yearsOfExperience}+ yrs
+                    </span>
+                  </div>
                   {hasLanguages && (
-                    <div className="bg-white border border-gray-200 rounded-lg p-4 sm:p-6">
-                      <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                        <Languages
-                          size={20}
-                          className="sm:w-6 sm:h-6 text-[#44666C]"
-                        />
-                        <h3
-                          className="font-semibold text-[#304048]"
-                          style={{ fontSize: "clamp(16px, 1rem, 20.8px)" }}
-                        >
-                          {t("experts:languagesLabel")}
-                        </h3>
-                      </div>
-                      <p className="text-gray-700" style={{ fontSize: "16px" }}>
+                    <div className="flex items-center gap-1.5 bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full">
+                      <Languages size={14} className="text-teal-100" />
+                      <span className="text-white text-sm">
                         {formattedLanguages}
-                      </p>
-                    </div>
-                  )}
-
-                  {/* Experience Card */}
-                  <div className="bg-white border border-gray-200 rounded-lg p-4 sm:p-6">
-                    <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                      <Award
-                        size={20}
-                        className="sm:w-6 sm:h-6 text-[#44666C]"
-                      />
-                      <h3
-                        className="font-semibold text-[#304048]"
-                        style={{ fontSize: "clamp(16px, 1rem, 20.8px)" }}
-                      >
-                        {t("common:experience")}
-                      </h3>
-                    </div>
-                    <p
-                      className="text-gray-700 font-medium"
-                      style={{ fontSize: "clamp(16px, 1rem, 20.8px)" }}
-                    >
-                      {t("experts:experienceYears", {
-                        count: expert.yearsOfExperience,
-                      })}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Reviews Section */}
-                <div className="mt-6 sm:mt-8">
-                  <div className="flex items-center justify-between mb-4">
-                    <h2
-                      className="font-semibold text-[#304048] flex items-center gap-2"
-                      style={{ fontSize: "clamp(16px, 1rem, 20.8px)" }}
-                    >
-                      <MessageSquare size={20} className="sm:w-6 sm:h-6 text-[#44666C]" />
-                      {t("common:expertReviewsTitle")}
-                      {reviewsTotal > 0 && (
-                        <span className="text-gray-500 font-normal text-sm">
-                          ({reviewsTotal})
-                        </span>
-                      )}
-                    </h2>
-                  </div>
-
-                  {reviewsLoading && reviews.length === 0 ? (
-                    <div className="flex items-center justify-center py-12 border-2 border-dashed border-gray-200 rounded-xl">
-                      <Loader2 className="w-6 h-6 text-[#44666C] animate-spin" />
-                      <span className="ml-3 text-gray-600">
-                        {t("common:expertReviewsLoading")}
                       </span>
-                    </div>
-                  ) : reviewsError ? (
-                    <div className="text-center py-12 border-2 border-dashed border-gray-200 rounded-xl">
-                      <p className="text-red-600 mb-4 text-sm">{reviewsError}</p>
-                      <button
-                        onClick={() => fetchReviews(1)}
-                        className="px-4 py-2 bg-[#44666C] text-white rounded-lg hover:bg-[#365a62] text-sm font-medium"
-                      >
-                        {t("common:dashboardTryAgain")}
-                      </button>
-                    </div>
-                  ) : reviews.length === 0 ? (
-                    <div className="text-center py-12 border-2 border-dashed border-gray-200 rounded-xl">
-                      <MessageSquare className="w-10 h-10 text-gray-400 mx-auto mb-3" />
-                      <p className="text-gray-600 font-medium">
-                        {t("common:expertReviewsEmpty")}
-                      </p>
-                      <p className="text-gray-500 text-sm mt-1">
-                        {t("common:expertReviewsBeFirst")}
-                      </p>
-                    </div>
-                  ) : (
-                    <div className="space-y-4">
-                      {reviews.map((review) => (
-                        <ReviewCard key={review.id} review={review} />
-                      ))}
-
-                      {/* Load more / pagination info */}
-                      {reviewsTotal > reviews.length && (
-                        <div className="text-center pt-2">
-                          <p className="text-sm text-gray-500 mb-3">
-                            {t("common:expertReviewsShowingCount", {
-                              shown: reviews.length,
-                              total: reviewsTotal,
-                            })}
-                          </p>
-                          <button
-                            onClick={handleLoadMoreReviews}
-                            disabled={reviewsLoading}
-                            className="inline-flex items-center gap-2 px-4 py-2.5 border border-gray-300 text-gray-700 rounded-xl font-medium text-sm hover:bg-gray-50 disabled:opacity-50 transition-colors"
-                          >
-                            {reviewsLoading ? (
-                              <Loader2 className="w-4 h-4 animate-spin" />
-                            ) : (
-                              <ChevronDown className="w-4 h-4" />
-                            )}
-                            {t("common:expertReviewsLoadMore")}
-                          </button>
-                        </div>
-                      )}
                     </div>
                   )}
                 </div>
               </div>
 
-              {/* Sidebar */}
-              <div className="space-y-4 sm:space-y-6 order-1 lg:order-2">
-                {/* Price Card */}
-                <div className="bg-[#E0ECEE] rounded-lg p-4 sm:p-6">
-                  <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                    <h3
-                      className="font-semibold text-[#304048]"
-                      style={{ fontSize: "clamp(16px, 1rem, 20.8px)" }}
-                    >
-                      Session Fee
-                    </h3>
-                  </div>
-                  {expert.isFreeSessionAvailable ? (
-                    <div className="space-y-[6px]">
-                      <div
-                        className="font-bold flex items-center gap-1 flex-wrap"
-                        style={{ fontSize: "clamp(20.8px, 1.3rem, 27px)" }}
-                      >
-                        <span
-                          className="text-gray-400"
-                          style={{
-                            fontSize: "clamp(16px, 1rem, 20px)",
-                            textDecoration: "line-through",
-                          }}
-                        >
-                          ₹{expert.pricePerHour}
-                        </span>
-                        <span
-                          className="text-green-600"
-                          style={{ fontSize: "clamp(24px, 1.5rem, 30px)" }}
-                        >
-                          ₹0
-                        </span>
-                        <span
-                          className="text-green-600 font-bold"
-                          style={{ fontSize: "14px" }}
-                        >
-                          for first time
-                        </span>
-                        <span
-                          className="text-gray-600"
-                          style={{ fontSize: "14px", fontWeight: "normal" }}
-                        >
-                          30 min free consultation
-                        </span>
-                      </div>
-                      <p
-                        className="text-gray-400 mt-2"
-                        style={{ fontSize: "13px" }}
-                      >
-                        Only paid appointments are 1 hour long
-                      </p>
-                    </div>
+              {/* Share & Price - Desktop */}
+              <div className="hidden sm:flex flex-col gap-2.5 shrink-0">
+                {/* Share Button */}
+                <button
+                  onClick={handleShare}
+                  className="flex items-center justify-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm px-4 py-2.5 rounded-xl transition-all duration-200 cursor-pointer group"
+                >
+                  {shareCopied ? (
+                    <>
+                      <Check size={16} className="text-white" />
+                      <span className="text-white text-sm font-medium">
+                        Copied!
+                      </span>
+                    </>
                   ) : (
                     <>
-                      <div
-                        className="font-bold text-[#44666C] mb-2"
-                        style={{ fontSize: "clamp(20.8px, 1.3rem, 27px)" }}
-                      >
+                      <Share2
+                        size={16}
+                        className="text-white group-hover:scale-110 transition-transform"
+                      />
+                      <span className="text-white text-sm font-medium">
+                        Share
+                      </span>
+                    </>
+                  )}
+                </button>
+
+                {/* Price Badge */}
+                <div className="bg-white rounded-xl px-4 py-3 text-center shadow-lg min-w-[130px]">
+                  {expert.isFreeSessionAvailable ? (
+                    <>
+                      <div className="flex items-center justify-center gap-2">
+                        <span className="text-gray-400 line-through decoration-2 text-xs">
+                          ₹{expert.pricePerHour}
+                        </span>
+                        <span className="text-2xl font-bold text-emerald-600">
+                          FREE
+                        </span>
+                      </div>
+                      <p className="text-[10px] text-gray-500 mt-0.5">
+                        First session
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <div className="text-2xl font-bold text-emerald-600">
                         ₹{expert.pricePerHour}
                       </div>
-                      <p className="text-gray-600" style={{ fontSize: "14px" }}>
-                        1 hour consultation
+                      <p className="text-[10px] text-gray-500 mt-0.5">
+                        per session
                       </p>
                     </>
                   )}
                 </div>
+              </div>
+            </div>
 
-                {/* Book Appointment Button */}
-                <button
-                  onClick={() => {
-                    if (!user) {
-                      setShowLoginPrompt(true);
-                    } else {
-                      setIsBookingModalOpen(true);
-                    }
-                  }}
-                  className="w-full bg-[#44666C] hover:bg-[#365a62] active:bg-[#2d4d54] text-white font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 sm:hover:-translate-y-1 cursor-pointer"
-                  style={{ fontSize: "16px" }}
-                >
-                  <Calendar size={18} className="sm:w-5 sm:h-5" />
-                  <span>
-                    {expert.isFreeSessionAvailable !== false
-                      ? "Book Free Appointment"
-                      : "Book Appointment"}
+            {/* Mobile Share Button */}
+            <div className="sm:hidden mt-4 flex justify-center">
+              <button
+                onClick={handleShare}
+                className="flex items-center justify-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm px-5 py-2.5 rounded-full transition-all duration-200 cursor-pointer"
+              >
+                {shareCopied ? (
+                  <>
+                    <Check size={16} className="text-white" />
+                    <span className="text-white text-sm font-medium">
+                      Copied!
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <Share2 size={16} className="text-white" />
+                    <span className="text-white text-sm font-medium">
+                      Share Profile
+                    </span>
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile CTA Buttons (above About section) */}
+        <div className="lg:hidden space-y-3 mb-5">
+          <div className="bg-gradient-to-br from-teal-500 to-emerald-600 rounded-2xl p-5 text-white">
+            <h3 className="text-sm font-medium text-teal-100 mb-2">
+              Session Fee
+            </h3>
+            {expert.isFreeSessionAvailable ? (
+              <>
+                <div className="flex items-baseline gap-2 mb-1">
+                  <span className="text-teal-200 line-through decoration-2 text-lg">
+                    ₹{expert.pricePerHour}
                   </span>
-                </button>
+                  <span className="text-3xl font-bold">FREE</span>
+                </div>
+                <p className="text-teal-100 text-xs">
+                  First 30-min session is free
+                </p>
+                <p className="text-teal-200 text-[10px] mt-2 opacity-80">
+                  Paid sessions are 60 minutes
+                </p>
+              </>
+            ) : (
+              <>
+                <div className="text-3xl font-bold mb-1">
+                  ₹{expert.pricePerHour}
+                </div>
+                <p className="text-teal-100 text-xs">60 minute session</p>
+              </>
+            )}
+          </div>
 
-                {/* Urgent Request Button - shown when expert accepts emergency */}
-                {expert.emergencyAvailable && (
+          <button
+            onClick={() => {
+              if (!user) {
+                setShowLoginPrompt(true);
+              } else {
+                setIsBookingModalOpen(true);
+              }
+            }}
+            className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 text-white font-semibold rounded-full shadow-lg shadow-teal-500/25 hover:shadow-xl transition-all duration-300 cursor-pointer"
+          >
+            <Calendar size={18} />
+            {expert.isFreeSessionAvailable
+              ? "Book Free Session"
+              : "Book Session"}
+          </button>
+
+          {expert.emergencyAvailable && (
+            <div className="rounded-2xl border border-amber-100 bg-amber-50/60 p-4">
+              <p className="text-sm font-semibold text-amber-800">
+                No slots found?
+              </p>
+              <p className="mt-1 text-xs text-amber-700">
+                Request an urgent slot within the next 30 minutes.
+              </p>
+              <button
+                onClick={() => {
+                  if (!user) {
+                    setShowLoginPrompt(true);
+                  } else {
+                    setIsUrgentRequestModalOpen(true);
+                  }
+                }}
+                className="mt-3 w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold rounded-full shadow-lg shadow-amber-500/25 hover:shadow-xl transition-all duration-300 cursor-pointer"
+              >
+                <Zap size={18} />
+                Request Urgent Session
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Main Content */}
+          <div className="order-2 lg:order-1 lg:col-span-2 space-y-5">
+            {/* About Section - Collapsible */}
+            <section className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+              <button
+                type="button"
+                onClick={() => setIsAboutExpanded(!isAboutExpanded)}
+                className="w-full flex items-center justify-between gap-2 p-5 sm:p-6 text-left hover:bg-gray-50 transition-colors cursor-pointer"
+              >
+                <h2 className="flex items-center gap-2 text-base font-semibold text-gray-900">
+                  <FileText size={18} className="text-teal-600" />
+                  About
+                </h2>
+                <ChevronDown
+                  size={18}
+                  className={`text-gray-400 transition-transform duration-200 ${
+                    isAboutExpanded ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+              <div
+                className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                  isAboutExpanded
+                    ? "max-h-[500px] opacity-100"
+                    : "max-h-0 opacity-0"
+                }`}
+              >
+                <div className="px-5 sm:px-6 pb-5 sm:pb-6 pt-0">
+                  <p className="text-gray-600 text-sm leading-relaxed whitespace-pre-wrap">
+                    {expert.bio || "No bio available."}
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Expertise Section */}
+            <section className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-6">
+              <h2 className="flex items-center gap-2 text-base font-semibold text-gray-900 mb-3">
+                Areas of Expertise
+              </h2>
+              <div className="flex flex-wrap gap-2">
+                {expert.expertSpecializations &&
+                expert.expertSpecializations.length > 0 ? (
+                  expert.expertSpecializations.map((esp, index) => (
+                    <span
+                      key={index}
+                      className="px-3 py-1.5 bg-gradient-to-r from-teal-50 to-emerald-50 text-teal-600 rounded-full text-sm font-medium border border-teal-100"
+                    >
+                      {esp.specialization.name}
+                    </span>
+                  ))
+                ) : expert.expertiseAreas &&
+                  expert.expertiseAreas.length > 0 ? (
+                  expert.expertiseAreas.map((area, index) => (
+                    <span
+                      key={index}
+                      className="px-3 py-1.5 bg-gradient-to-r from-teal-50 to-emerald-50 text-teal-600 rounded-full text-sm font-medium border border-teal-100"
+                    >
+                      {area.charAt(0).toUpperCase() + area.slice(1)}
+                    </span>
+                  ))
+                ) : (
+                  <span className="text-gray-400 text-sm">
+                    No specializations listed
+                  </span>
+                )}
+              </div>
+            </section>
+
+            {/* Qualifications (verified only from API) */}
+            {(expert.qualifications ?? []).length > 0 && (
+              <section className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-6">
+                <h2 className="flex items-center gap-2 text-base font-semibold text-gray-900 mb-4">
+                  <GraduationCap size={18} className="text-teal-600" />
+                  {t("common:expertQualificationsTitle")}
+                </h2>
+                <ul className="space-y-3">
+                  {(expert.qualifications ?? []).map((q) => (
+                    <li
+                      key={q.id}
+                      className="rounded-xl border border-gray-100 bg-gray-50/80 px-4 py-3"
+                    >
+                      <p className="font-semibold text-gray-900">
+                        {q.degree}
+                        {q.year != null ? ` (${q.year})` : ""}
+                      </p>
+                      <p className="text-sm text-gray-700 mt-0.5">{q.field}</p>
+                      <p className="text-sm text-gray-500 mt-0.5">
+                        {q.institution}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {/* Reviews Section */}
+            <section className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="flex items-center gap-2 text-base font-semibold text-gray-900">
+                  <MessageSquare size={18} className="text-teal-600" />
+                  Reviews
+                  {reviewsTotal > 0 && (
+                    <span className="text-gray-400 font-normal text-sm">
+                      ({reviewsTotal})
+                    </span>
+                  )}
+                </h2>
+              </div>
+
+              {reviewsLoading && reviews.length === 0 ? (
+                <div className="flex items-center justify-center py-10">
+                  <Loader2 className="w-5 h-5 text-teal-600 animate-spin" />
+                  <span className="ml-2 text-gray-500 text-sm">
+                    {t("common:expertReviewsLoading")}
+                  </span>
+                </div>
+              ) : reviewsError ? (
+                <div className="text-center py-10">
+                  <p className="text-red-500 mb-3 text-sm">{reviewsError}</p>
+                  <button
+                    onClick={() => fetchReviews(1)}
+                    className="px-4 py-2 bg-teal-600 text-white rounded-full hover:bg-teal-700 text-sm font-medium transition-colors cursor-pointer"
+                  >
+                    {t("common:dashboardTryAgain")}
+                  </button>
+                </div>
+              ) : reviews.length === 0 ? (
+                <div className="text-center py-10">
+                  <MessageSquare className="w-8 h-8 text-gray-300 mx-auto mb-2" />
+                  <p className="text-gray-500 font-medium text-sm">
+                    {t("common:expertReviewsEmpty")}
+                  </p>
+                  <p className="text-gray-400 text-xs mt-1">
+                    {t("common:expertReviewsBeFirst")}
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {reviews.map((review) => (
+                    <ReviewCard key={review.id} review={review} />
+                  ))}
+
+                  {reviewsTotal > reviews.length && (
+                    <div className="text-center pt-3">
+                      <p className="text-xs text-gray-400 mb-2">
+                        {t("common:expertReviewsShowingCount", {
+                          shown: reviews.length,
+                          total: reviewsTotal,
+                        })}
+                      </p>
+                      <button
+                        onClick={handleLoadMoreReviews}
+                        disabled={reviewsLoading}
+                        className="inline-flex items-center gap-1.5 px-4 py-2 border border-gray-200 text-gray-600 rounded-full text-sm font-medium hover:bg-gray-50 disabled:opacity-50 transition-colors cursor-pointer"
+                      >
+                        {reviewsLoading ? (
+                          <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                        ) : (
+                          <ChevronDown className="w-3.5 h-3.5" />
+                        )}
+                        {t("common:expertReviewsLoadMore")}
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+            </section>
+          </div>
+
+          {/* Sidebar */}
+          <div className="order-1 lg:order-2 space-y-4">
+            {/* Quick Stats */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+              <button
+                type="button"
+                onClick={() => setIsQuickInfoExpanded((prev) => !prev)}
+                className="w-full flex items-center justify-between gap-2 p-5 text-left hover:bg-gray-50 transition-colors cursor-pointer"
+              >
+                <h3 className="text-sm font-semibold text-gray-900">
+                  Quick Info
+                </h3>
+                <ChevronDown
+                  size={18}
+                  className={`text-gray-400 transition-transform duration-200 ${
+                    isQuickInfoExpanded ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+              <div
+                className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                  isQuickInfoExpanded
+                    ? "max-h-[600px] opacity-100"
+                    : "max-h-0 opacity-0"
+                }`}
+              >
+                <div className="space-y-3 px-5 pb-5">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-amber-50 flex items-center justify-center">
+                      <Star
+                        size={16}
+                        className="text-amber-500 fill-amber-500"
+                      />
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-gray-900">
+                        {expert.rating} Rating
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        {expert.totalReviews} reviews
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-teal-50 flex items-center justify-center">
+                      <Award size={16} className="text-teal-600" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-gray-900">
+                        {expert.yearsOfExperience}+ Years
+                      </p>
+                      <p className="text-xs text-gray-500">Experience</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-purple-50 flex items-center justify-center">
+                      <Clock size={16} className="text-purple-600" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-gray-900">
+                        {expert.isFreeSessionAvailable ? "30 min" : "60 min"}
+                      </p>
+                      <p className="text-xs text-gray-500">Session duration</p>
+                    </div>
+                  </div>
+                  {hasLanguages && (
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center">
+                        <Languages size={16} className="text-blue-600" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-gray-900">
+                          Languages
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          {formattedLanguages}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Pricing Card */}
+            <div className="hidden lg:block bg-gradient-to-br from-teal-500 to-emerald-600 rounded-2xl p-5 text-white">
+              <h3 className="text-sm font-medium text-teal-100 mb-2">
+                Session Fee
+              </h3>
+              {expert.isFreeSessionAvailable ? (
+                <>
+                  <div className="flex items-baseline gap-2 mb-1">
+                    <span className="text-teal-200 line-through decoration-2 text-lg">
+                      ₹{expert.pricePerHour}
+                    </span>
+                    <span className="text-3xl font-bold">FREE</span>
+                  </div>
+                  <p className="text-teal-100 text-xs">
+                    First 30-min session is free
+                  </p>
+                  <p className="text-teal-200 text-[10px] mt-2 opacity-80">
+                    Paid sessions are 60 minutes
+                  </p>
+                </>
+              ) : (
+                <>
+                  <div className="text-3xl font-bold mb-1">
+                    ₹{expert.pricePerHour}
+                  </div>
+                  <p className="text-teal-100 text-xs">60 minute session</p>
+                </>
+              )}
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="hidden lg:block space-y-3">
+              <button
+                onClick={() => {
+                  if (!user) {
+                    setShowLoginPrompt(true);
+                  } else {
+                    setIsBookingModalOpen(true);
+                  }
+                }}
+                className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 text-white font-semibold rounded-full shadow-lg shadow-teal-500/25 hover:shadow-xl transition-all duration-300 cursor-pointer"
+              >
+                <Calendar size={18} />
+                {expert.isFreeSessionAvailable
+                  ? "Book Free Session"
+                  : "Book Session"}
+              </button>
+
+              {expert.emergencyAvailable && (
+                <div className="rounded-2xl border border-amber-100 bg-amber-50/60 p-4">
+                  <p className="text-sm font-semibold text-amber-800">
+                    No slots found?
+                  </p>
+                  <p className="mt-1 text-xs text-amber-700">
+                    Request an urgent slot within the next 30 minutes.
+                  </p>
                   <button
                     onClick={() => {
                       if (!user) {
@@ -639,54 +1029,52 @@ export default function ExpertDetails() {
                         setIsUrgentRequestModalOpen(true);
                       }
                     }}
-                    className="w-full bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-white font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 sm:hover:-translate-y-1 cursor-pointer"
-                    style={{ fontSize: "16px" }}
+                    className="mt-3 w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold rounded-full shadow-lg shadow-amber-500/25 hover:shadow-xl transition-all duration-300 cursor-pointer"
                   >
-                    <Zap size={18} className="sm:w-5 sm:h-5" />
-                    <span>{t("common:urgentRequestCTA")}</span>
+                    <Zap size={18} />
+                    Request Urgent Session
                   </button>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </div>
 
-      {/* Login required prompt */}
+      {/* Login Prompt Modal */}
       {showLoginPrompt && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
-          aria-modal="true"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
           onClick={() => setShowLoginPrompt(false)}
         >
           <div
-            className="bg-white rounded-2xl shadow-xl max-w-sm w-full p-6 text-center"
+            className="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-6 text-center transform transition-all"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="mx-auto w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mb-4">
-              <LogIn className="w-6 h-6 text-amber-700" />
+            <div className="mx-auto w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-50 to-orange-100 flex items-center justify-center mb-4">
+              <LogIn className="w-7 h-7 text-amber-600" />
             </div>
-            <h3 className="text-lg font-semibold text-[#304048] mb-2">
-              Login required
+            <h3 className="text-lg font-bold text-gray-900 mb-2">
+              Login Required
             </h3>
-            <p className="text-gray-600 text-sm mb-6">
+            <p className="text-gray-500 text-sm mb-6">
               Please log in to book a session with {formattedName}.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex flex-col gap-2">
               <button
                 onClick={() => {
                   setShowLoginPrompt(false);
                   navigate(
-                    `/login?redirect=${encodeURIComponent(location.pathname)}`,
+                    `/login?redirect=${encodeURIComponent(window.location.pathname)}`,
                   );
                 }}
-                className="flex-1 px-4 py-2.5 bg-[#44666C] text-white rounded-xl font-medium hover:bg-[#365a62] flex items-center justify-center gap-2"
+                className="w-full px-5 py-3 bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 text-white rounded-full font-semibold flex items-center justify-center gap-2 shadow-lg shadow-teal-500/25 transition-all cursor-pointer"
               >
                 <LogIn className="w-4 h-4" /> Log in
               </button>
               <button
                 onClick={() => setShowLoginPrompt(false)}
-                className="flex-1 px-4 py-2.5 border border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50"
+                className="w-full px-5 py-3 text-gray-600 rounded-full font-medium hover:bg-gray-100 transition-colors cursor-pointer"
               >
                 Cancel
               </button>

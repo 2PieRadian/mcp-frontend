@@ -1,3 +1,12 @@
+/** Verified-only qualification slice on public expert APIs (get-expert, get-experts). */
+export type PublicQualification = {
+  id: number;
+  degree: string;
+  field: string;
+  institution: string;
+  year?: number | null;
+};
+
 export type ApiUser = {
   id: number;
   email: string;
@@ -33,6 +42,8 @@ export type ApiExpert = {
   isFreeSessionAvailable?: boolean;
   /** When true, expert accepts emergency bookings (slots within 30 min). */
   emergencyAvailable?: boolean;
+  /** Verified qualifications only; treat missing as [] during API rollout. */
+  qualifications?: PublicQualification[];
 };
 
 export type ApiResponse = {

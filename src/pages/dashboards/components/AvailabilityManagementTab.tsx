@@ -1,6 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { Calendar, Check, Zap, Loader2 } from "lucide-react";
+import {
+  Calendar,
+  Check,
+  Zap,
+  Loader2,
+  Pencil,
+  Save,
+  X,
+  CheckCircle2,
+} from "lucide-react";
 import type { WeeklyAvailability } from "../types";
 import { toggleEmergencyAvailability, ApiHttpError } from "../../../lib/api";
 
@@ -13,6 +22,7 @@ type AvailabilityManagementTabProps = {
   error: string | null;
   onEdit: () => void;
   onSave: () => void;
+  onCancel?: () => void;
   emergencyAvailable?: boolean;
   onEmergencyToggle?: (enabled: boolean) => void;
 };
@@ -42,6 +52,7 @@ export default function AvailabilityManagementTab({
   error,
   onEdit,
   onSave,
+  onCancel,
   onToggleSlot,
   emergencyAvailable = false,
   onEmergencyToggle,
@@ -49,6 +60,17 @@ export default function AvailabilityManagementTab({
   const { t } = useTranslation("common");
   const [emergencyToggling, setEmergencyToggling] = useState(false);
   const [emergencyError, setEmergencyError] = useState<string | null>(null);
+  const [showSavedFeedback, setShowSavedFeedback] = useState(false);
+  const prevSavingRef = useRef(isSaving);
+
+  useEffect(() => {
+    if (prevSavingRef.current && !isSaving && !error) {
+      setShowSavedFeedback(true);
+      const timer = setTimeout(() => setShowSavedFeedback(false), 2500);
+      return () => clearTimeout(timer);
+    }
+    prevSavingRef.current = isSaving;
+  }, [isSaving, error]);
 
   const handleEmergencyToggle = async () => {
     if (emergencyToggling) return;
@@ -61,7 +83,9 @@ export default function AvailabilityManagementTab({
       if (err instanceof ApiHttpError) {
         setEmergencyError(err.message);
       } else {
-        setEmergencyError(err instanceof Error ? err.message : "Failed to update");
+        setEmergencyError(
+          err instanceof Error ? err.message : "Failed to update",
+        );
       }
     } finally {
       setEmergencyToggling(false);
@@ -69,44 +93,117 @@ export default function AvailabilityManagementTab({
   };
 
   return (
-    <section className="bg-[hsl(0,0%,97%)] shadow-m rounded-[16px] sm:rounded-[20px] p-[16px] sm:p-[24px]">
-      <div className="flex items-center justify-between gap-[10px] mb-[16px]">
+    <section
+      className={`relative shadow-m rounded-[16px] sm:rounded-[20px] p-[16px] sm:p-[24px] transition-all duration-300 ${
+        isEditing
+          ? "bg-gradient-to-br from-teal-50/80 via-white to-emerald-50/60 ring-2 ring-teal-400/50 ring-offset-2"
+          : "bg-[hsl(0,0%,97%)]"
+      }`}
+    >
+      {/* Edit Mode Banner */}
+      {isEditing && (
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
+          <div className="flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-teal-500 to-emerald-500 text-white text-xs font-semibold rounded-full shadow-lg shadow-teal-500/30">
+            <Pencil className="w-3.5 h-3.5" />
+            <span>{t("availabilityEditMode")}</span>
+          </div>
+        </div>
+      )}
+
+      {/* Saved Feedback Toast */}
+      {showSavedFeedback && (
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10 animate-in fade-in slide-in-from-top-2 duration-300">
+          <div className="flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-emerald-500 to-green-500 text-white text-xs font-semibold rounded-full shadow-lg shadow-emerald-500/30">
+            <CheckCircle2 className="w-3.5 h-3.5" />
+            <span>{t("availabilitySaved")}</span>
+          </div>
+        </div>
+      )}
+
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-[16px]">
         <div className="flex items-center gap-[10px]">
-          <Calendar className="text-primary w-6 h-6" />
-          <h2 className="text-[20px] sm:text-[24px] font-semibold text-logo-heading">
+          <div
+            className={`p-2 rounded-xl transition-colors duration-300 ${
+              isEditing ? "bg-teal-100" : "bg-gray-100"
+            }`}
+          >
+            <Calendar
+              className={`w-5 h-5 transition-colors duration-300 ${
+                isEditing ? "text-teal-600" : "text-primary"
+              }`}
+            />
+          </div>
+          <h2 className="text-[18px] sm:text-[22px] font-semibold text-logo-heading">
             {t("dashboardAvailabilityManagement")}
           </h2>
         </div>
+
+        {/* Action Buttons */}
         <div className="flex items-center gap-2">
           {!isEditing ? (
             <button
               type="button"
               onClick={onEdit}
               disabled={isLoading}
-              className="px-[14px] py-[8px] rounded-full text-[13px] sm:text-[14px] font-medium bg-primary text-white shadow-sm hover:bg-primary/90 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer transition-all duration-200"
+              className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-[13px] sm:text-[14px] font-semibold bg-gradient-to-r from-teal-500 to-emerald-500 text-white shadow-md shadow-teal-500/25 hover:shadow-lg hover:shadow-teal-500/30 hover:scale-[1.02] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 cursor-pointer transition-all duration-200"
             >
-              {t("dashboardEditAvailability")}
+              <Pencil className="w-4 h-4 group-hover:rotate-12 transition-transform duration-200" />
+              <span>{t("dashboardEditAvailability")}</span>
             </button>
           ) : (
-            <button
-              type="button"
-              onClick={onSave}
-              disabled={isSaving || isLoading}
-              className="px-[14px] py-[8px] rounded-full text-[13px] sm:text-[14px] font-medium bg-primary text-white shadow-sm hover:bg-primary/90 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer transition-all duration-200"
-            >
-              {isSaving ? t("dashboardSavingChanges") : t("dashboardSaveChanges")}
-            </button>
+            <div className="flex items-center gap-2">
+              {onCancel && (
+                <button
+                  type="button"
+                  onClick={onCancel}
+                  disabled={isSaving}
+                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-[13px] sm:text-[14px] font-medium bg-white border border-gray-200 text-gray-600 shadow-sm hover:bg-gray-50 hover:border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer transition-all duration-200"
+                >
+                  <X className="w-4 h-4" />
+                  <span>{t("cancel")}</span>
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={onSave}
+                disabled={isSaving || isLoading}
+                className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-[13px] sm:text-[14px] font-semibold shadow-md transition-all duration-200 cursor-pointer disabled:cursor-not-allowed ${
+                  isSaving
+                    ? "bg-gradient-to-r from-amber-400 to-orange-400 text-white shadow-amber-400/25"
+                    : "bg-gradient-to-r from-emerald-500 to-green-500 text-white shadow-emerald-500/25 hover:shadow-lg hover:shadow-emerald-500/30 hover:scale-[1.02]"
+                } disabled:opacity-70 disabled:hover:scale-100`}
+              >
+                {isSaving ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span>{t("dashboardSavingChanges")}</span>
+                  </>
+                ) : (
+                  <>
+                    <Save className="w-4 h-4" />
+                    <span>{t("dashboardSaveChanges")}</span>
+                  </>
+                )}
+              </button>
+            </div>
           )}
         </div>
       </div>
 
-      <p className="text-[13px] sm:text-[14px] text-light-text mb-[20px]">
-        {t("dashboardSelectSlotsDescription")}
+      <p
+        className={`text-[13px] sm:text-[14px] mb-[20px] transition-colors duration-300 ${
+          isEditing ? "text-teal-700" : "text-light-text"
+        }`}
+      >
+        {isEditing
+          ? t("availabilityEditHint")
+          : t("dashboardSelectSlotsDescription")}
       </p>
 
       {error && (
-        <div className="mb-[16px] text-[13px] text-red-600 bg-red-50 border border-red-100 rounded-[8px] px-[10px] py-[8px]">
-          {error}
+        <div className="mb-[16px] text-[13px] text-red-600 bg-red-50 border border-red-200 rounded-xl px-4 py-3 flex items-center gap-2">
+          <X className="w-4 h-4 shrink-0" />
+          <span>{error}</span>
         </div>
       )}
 
@@ -192,14 +289,29 @@ export default function AvailabilityManagementTab({
                       onToggleSlot(day, slot);
                     }}
                     disabled={isDisabled}
-                    className={`relative p-[8px] rounded-[8px] text-[12px] transition-all duration-200 cursor-pointer ${isSelected
-                      ? "bg-primary/88 text-white font-medium shadow-sm"
-                      : "bg-white border border-border-light/30 hover:bg-primary/10"
-                      }`}
+                    className={`relative p-[8px] rounded-[10px] text-[12px] transition-all duration-200 ${
+                      isDisabled ? "cursor-default" : "cursor-pointer"
+                    } ${
+                      isSelected
+                        ? isEditing
+                          ? "text-white font-medium shadow-md shadow-teal-500/25 ring-2 ring-teal-300/50"
+                          : "text-white font-medium shadow-sm"
+                        : isEditing
+                          ? "bg-white border-2 border-dashed border-gray-400 hover:border-teal-500 hover:bg-teal-50/50 hover:shadow-sm"
+                          : "bg-gray-100/80 border border-gray-300"
+                    }`}
+                    style={
+                      isSelected
+                        ? {
+                            background:
+                              "linear-gradient(90deg, hsla(173, 100%, 37%, 1) 0%, hsla(161, 45%, 44%, 1) 100%)",
+                          }
+                        : undefined
+                    }
                   >
                     {isSelected && (
                       <Check
-                        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4"
+                        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 drop-shadow-sm"
                         strokeWidth={3}
                       />
                     )}
