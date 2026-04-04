@@ -179,14 +179,19 @@ export default function BookingModal({
     if (e.target === e.currentTarget) handleClose();
   };
 
-  // Close on Escape key
+  // Close on Escape: dismiss booking error first, then close modal
   useEffect(() => {
     function handleEscape(event: KeyboardEvent) {
-      if (event.key === "Escape" && isOpen) handleClose();
+      if (event.key !== "Escape" || !isOpen) return;
+      if (bookingError) {
+        setBookingError(null);
+        return;
+      }
+      handleClose();
     }
     document.addEventListener("keydown", handleEscape);
     return () => document.removeEventListener("keydown", handleEscape);
-  }, [isOpen]);
+  }, [isOpen, bookingError]);
 
   const getDayName = (dayData: {
     year: number;
@@ -461,26 +466,6 @@ export default function BookingModal({
 
           {/* Content */}
           <div className="flex-1 px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-            {/* Booking error toast - fixed at top */}
-            {bookingError && (
-              <div className="sticky top-0 z-10 mx-auto max-w-4xl mb-4">
-                <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-red-800 text-sm shadow-lg flex items-start gap-3">
-                  <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
-                  <div className="flex-1 whitespace-pre-wrap">
-                    {bookingError}
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setBookingError(null)}
-                    className="shrink-0 p-1 rounded-lg hover:bg-red-100 transition-colors"
-                    aria-label="Dismiss"
-                  >
-                    <X className="w-4 h-4 text-red-600" />
-                  </button>
-                </div>
-              </div>
-            )}
-
             {successResult ? (
               <div className="max-w-4xl mx-auto">
                 <div className="text-center py-8 sm:py-12">
@@ -948,6 +933,52 @@ export default function BookingModal({
           )}
         </div>
       </div>
+
+      {/* Booking errors: centered overlay over the whole booking UI */}
+      {bookingError && (
+        <div
+          className="fixed inset-0 z-[70] flex items-center justify-center p-4 sm:p-6"
+          role="presentation"
+        >
+          <button
+            type="button"
+            className="absolute inset-0 bg-black/50 backdrop-blur-md cursor-pointer border-0 p-0"
+            onClick={() => setBookingError(null)}
+            aria-label={t("close")}
+          />
+          <div
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="booking-error-title"
+            className="relative w-full max-w-md rounded-2xl bg-white shadow-2xl border border-red-100/80 px-6 py-8 sm:px-8 sm:py-9 text-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-red-50 ring-1 ring-red-100">
+              <AlertCircle
+                className="h-8 w-8 text-red-600"
+                strokeWidth={2}
+                aria-hidden
+              />
+            </div>
+            <h2
+              id="booking-error-title"
+              className="text-lg sm:text-xl font-bold text-gray-900 mb-3"
+            >
+              {t("bookingErrorTitle")}
+            </h2>
+            <p className="text-sm sm:text-[15px] text-red-950/90 whitespace-pre-wrap leading-relaxed">
+              {bookingError}
+            </p>
+            <button
+              type="button"
+              onClick={() => setBookingError(null)}
+              className="mt-8 w-full sm:w-auto min-w-[140px] px-6 py-3 rounded-xl bg-[#44666C] text-white font-semibold text-sm hover:bg-[#365a62] transition-colors cursor-pointer shadow-sm"
+            >
+              {t("close")}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

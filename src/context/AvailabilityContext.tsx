@@ -18,7 +18,7 @@ type AvailabilityContextValue = {
 };
 
 const AvailabilityContext = createContext<AvailabilityContextValue | undefined>(
-  undefined
+  undefined,
 );
 
 export function AvailabilityProvider({ children }: { children: ReactNode }) {
@@ -51,13 +51,13 @@ export function AvailabilityProvider({ children }: { children: ReactNode }) {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(
-          errorData.message || "Failed to load weekly availability"
+          errorData.message || "Failed to load weekly availability",
         );
       }
 
@@ -141,7 +141,7 @@ export function useAvailability() {
 
   if (context === undefined) {
     throw new Error(
-      "useAvailability must be used within an AvailabilityProvider"
+      "useAvailability must be used within an AvailabilityProvider",
     );
   }
 

@@ -1,7 +1,7 @@
 import type { PublicQualification } from "../types/experts";
 
-export const BACKEND_URL = "https://api.mindcurepath.com";
-// export const BACKEND_URL = "http://localhost:3000";
+// export const BACKEND_URL = "https://api.mindcurepath.com";
+export const BACKEND_URL = "http://localhost:3000";
 
 /**
  * Constructs a full avatar URL from a backend avatar value.
@@ -943,41 +943,6 @@ export async function userReportNoShow(
   return data as UserReportNoShowResponse;
 }
 
-export type CancelAppointmentResponse = {
-  message: string;
-  appointment: MyAppointment;
-};
-
-/**
- * POST /:id/cancel — booking user cancels a SCHEDULED appointment.
- * Rules: must be SCHEDULED, now < startAt (cannot cancel after slot started).
- */
-export async function cancelAppointment(
-  appointmentId: number,
-): Promise<CancelAppointmentResponse> {
-  const res = await fetch(
-    `${BACKEND_URL}/api/v1/appointments/${appointmentId}/cancel`,
-    { method: "POST", headers: getAuthHeaders(), body: JSON.stringify({}) },
-  );
-
-  const data = (await res.json().catch(() => ({}))) as Record<string, unknown>;
-
-  if (!res.ok) {
-    const fallback =
-      res.status === 403
-        ? "Only the booking user can cancel this appointment"
-        : res.status === 404
-          ? "Appointment not found"
-          : res.status === 409
-            ? "Cannot cancel — appointment is not scheduled or has already started"
-            : "Failed to cancel appointment";
-    const msg = getErrorMessageFromResponseBody(data, res.status, fallback);
-    throw new ApiHttpError(msg, res.status, data);
-  }
-
-  return data as CancelAppointmentResponse;
-}
-
 /** Review object returned by POST/PATCH review. */
 export type AppointmentReview = {
   id: number;
@@ -1658,7 +1623,7 @@ export function getInitiatePaymentDetails(res: InitiateResponse): {
 // Urgent Requests
 // ─────────────────────────────────────────────────────────────────────────────
 
-/** Constants for urgent requests. */
+/** Legacy paid request-fee amount (₹); free initiate flow does not charge this. */
 export const URGENT_REQUEST_FEE_INR = 25;
 export const URGENT_CONTACT_VALIDITY_SECONDS = 1800; // 30 minutes
 export const URGENT_PAYMENT_WINDOW_MINUTES = 15;
@@ -1713,20 +1678,29 @@ export type UrgentRequest = {
   expiresAt?: string;
 };
 
-/** Response from POST /urgent-requests/initiate. */
+/**
+ * POST /api/v1/urgent-requests/initiate response.
+ * Free flow: `requestFeeRequired: false` + phone window fields.
+ * Legacy: `requestFeeRequired: true` + Razorpay `orderId` / `amount` / `currency`.
+ */
 export type InitiateUrgentRequestResponse = {
   message: string;
   requestId: number;
-  orderId: string;
-  amount: number;
-  currency: string;
+  /** False = free initiate (current). True / omitted with order fields = legacy paid fee. */
+  requestFeeRequired?: boolean;
+  companyPhone?: string | null;
+  contactValidUntil?: string;
+  contactValiditySeconds?: number;
+  expiresAt?: string;
+  userStatus?: string;
+  orderId?: string;
+  amount?: number;
+  currency?: string;
   keyId?: string;
-  expiresAt: string;
 };
 
 /**
- * POST /api/v1/urgent-requests/initiate — initiate an urgent request.
- * Returns Razorpay order for Rs 25 request fee.
+ * POST /api/v1/urgent-requests/initiate — free urgent request, or legacy paid fee + Razorpay order.
  */
 export async function initiateUrgentRequest(
   expertId?: number | null,
@@ -1772,24 +1746,34 @@ export type VerifyUrgentRequestFeeResponse = {
 };
 
 /**
- * POST /api/v1/urgent-requests/verify-request-fee — verify Rs 25 payment.
- * Returns company phone number to call.
+ * POST /api/v1/urgent-requests/verify-request-fee — legacy only: verify paid request-fee Razorpay order.
+ * Not used when {@link InitiateUrgentRequestResponse.requestFeeRequired} is false.
  */
 export async function verifyUrgentRequestFee(
   razorpay_order_id: string,
   razorpay_payment_id: string,
   razorpay_signature: string,
+  options?: {
+    expertId?: number | null;
+    reason?: string;
+  },
 ): Promise<VerifyUrgentRequestFeeResponse> {
+  const body: Record<string, unknown> = {
+    razorpay_order_id,
+    razorpay_payment_id,
+    razorpay_signature,
+  };
+  if (options?.expertId != null) body.expertId = options.expertId;
+  if (options?.reason?.trim()) {
+    body.reason = options.reason.trim().slice(0, 1000);
+  }
+
   const res = await fetch(
     `${BACKEND_URL}/api/v1/urgent-requests/verify-request-fee`,
     {
       method: "POST",
       headers: getAuthHeaders(),
-      body: JSON.stringify({
-        razorpay_order_id,
-        razorpay_payment_id,
-        razorpay_signature,
-      }),
+      body: JSON.stringify(body),
     },
   );
 

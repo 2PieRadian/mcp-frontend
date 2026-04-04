@@ -19,7 +19,6 @@ import {
   isScheduledAwaitingJoinInBookedWindow,
   userCompleteAppointment,
   userReportNoShow,
-  cancelAppointment,
   ApiHttpError,
   type MyAppointment,
   type AppointmentStatus,
@@ -191,12 +190,10 @@ function AppointmentCard({
   const [copied, setCopied] = useState(false);
   const [completing, setCompleting] = useState(false);
   const [reportingNoShow, setReportingNoShow] = useState(false);
-  const [cancelling, setCancelling] = useState(false);
   const [actionError, setActionError] = useState<string | null>(null);
   const [actionSuccess, setActionSuccess] = useState<string | null>(null);
   const [showCompleteModal, setShowCompleteModal] = useState(false);
   const [showNoShowModal, setShowNoShowModal] = useState(false);
-  const [showCancelModal, setShowCancelModal] = useState(false);
 
   const showMeetActions =
     !!apt.meetLink && !isTerminalAppointmentStatus(apt.status);
@@ -224,7 +221,6 @@ function AppointmentCard({
     nowMs >= startAtMs;
 
   const showReviewButton = apt.status === "COMPLETED" && !!onOpenReview;
-  const canCancel = apt.status === "SCHEDULED" && nowMs < startAtMs;
 
   const handleMarkComplete = async () => {
     setCompleting(true);
@@ -271,26 +267,6 @@ function AppointmentCard({
     } finally {
       setReportingNoShow(false);
       setShowNoShowModal(false);
-    }
-  };
-
-  const handleCancel = async () => {
-    setCancelling(true);
-    setActionError(null);
-    setActionSuccess(null);
-    try {
-      await cancelAppointment(apt.id);
-      setActionSuccess(t("sessionCancelSuccess"));
-      onStatusChange?.();
-    } catch (err) {
-      if (err instanceof ApiHttpError) {
-        setActionError(err.message);
-      } else {
-        setActionError(err instanceof Error ? err.message : "Unknown error");
-      }
-    } finally {
-      setCancelling(false);
-      setShowCancelModal(false);
     }
   };
 
@@ -459,7 +435,6 @@ function AppointmentCard({
                 <button
                   type="button"
                   onClick={() => onOpenReschedule?.(apt)}
-                  disabled={cancelling}
                   className="inline-flex items-center gap-2 px-4 py-2.5 border border-[#44666C]/40 text-[#44666C] rounded-xl font-semibold text-sm hover:bg-[#E0ECEE]/80 transition-colors disabled:opacity-50"
                 >
                   <CalendarClock className="w-4 h-4" />
@@ -470,31 +445,17 @@ function AppointmentCard({
           </div>
         ) : null}
 
-        {/* Reschedule and Cancel buttons for SCHEDULED appointments (before session starts) */}
-        {!showSessionActions && (showReschedule || canCancel) && !actionSuccess ? (
+        {/* Reschedule for SCHEDULED appointments (before session starts) */}
+        {!showSessionActions && showReschedule && !actionSuccess ? (
           <div className="mt-4 flex flex-wrap gap-2">
-            {showReschedule && (
-              <button
-                type="button"
-                onClick={() => onOpenReschedule?.(apt)}
-                disabled={cancelling}
-                className="inline-flex items-center gap-2 px-4 py-2.5 border border-[#44666C]/40 text-[#44666C] rounded-xl font-semibold text-sm hover:bg-[#E0ECEE]/80 transition-colors disabled:opacity-50"
-              >
-                <CalendarClock className="w-4 h-4" />
-                {t("appointmentRescheduleButton")}
-              </button>
-            )}
-            {canCancel && (
-              <button
-                type="button"
-                onClick={() => setShowCancelModal(true)}
-                disabled={cancelling}
-                className="inline-flex items-center gap-2 px-4 py-2.5 border border-red-300 text-red-700 rounded-xl font-semibold text-sm hover:bg-red-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <Ban className="w-4 h-4" />
-                {t("sessionActionCancel")}
-              </button>
-            )}
+            <button
+              type="button"
+              onClick={() => onOpenReschedule?.(apt)}
+              className="inline-flex items-center gap-2 px-4 py-2.5 border border-[#44666C]/40 text-[#44666C] rounded-xl font-semibold text-sm hover:bg-[#E0ECEE]/80 transition-colors disabled:opacity-50"
+            >
+              <CalendarClock className="w-4 h-4" />
+              {t("appointmentRescheduleButton")}
+            </button>
           </div>
         ) : null}
 
@@ -611,59 +572,6 @@ function AppointmentCard({
                   <>
                     <UserX className="w-4 h-4" />
                     {t("confirm")}
-                  </>
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Confirmation Modal: Cancel Appointment */}
-      {showCancelModal && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
-          onClick={() => !cancelling && setShowCancelModal(false)}
-        >
-          <div
-            className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
-                <Ban className="w-6 h-6 text-red-600" />
-              </div>
-              <h3 className="text-lg font-bold text-[#304048]">
-                {t("confirmCancelTitle")}
-              </h3>
-            </div>
-            <p className="text-sm text-gray-600 mb-6">
-              {t("confirmCancelMessage")}
-            </p>
-            <div className="flex justify-end gap-3">
-              <button
-                type="button"
-                onClick={() => setShowCancelModal(false)}
-                disabled={cancelling}
-                className="px-4 py-2.5 border border-gray-200 text-gray-700 rounded-xl font-medium text-sm hover:bg-gray-50 transition-colors disabled:opacity-50"
-              >
-                {t("goBack")}
-              </button>
-              <button
-                type="button"
-                onClick={handleCancel}
-                disabled={cancelling}
-                className="inline-flex items-center gap-2 px-4 py-2.5 bg-red-600 text-white rounded-xl font-semibold text-sm hover:bg-red-700 transition-colors disabled:opacity-50"
-              >
-                {cancelling ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    {t("sessionActionCancelling")}
-                  </>
-                ) : (
-                  <>
-                    <Ban className="w-4 h-4" />
-                    {t("confirmCancelButton")}
                   </>
                 )}
               </button>

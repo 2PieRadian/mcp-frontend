@@ -57,6 +57,15 @@ export default function ExpertsDashboard() {
   const [expertAppointmentsError, setExpertAppointmentsError] = useState<
     string | null
   >(null);
+  const [urgentAppointments, setUrgentAppointments] = useState<
+    ExpertAppointment[]
+  >([]);
+  const [urgentAppointmentsCount, setUrgentAppointmentsCount] = useState(0);
+  const [urgentAppointmentsLoading, setUrgentAppointmentsLoading] =
+    useState(false);
+  const [urgentAppointmentsError, setUrgentAppointmentsError] = useState<
+    string | null
+  >(null);
   const [earningsLoading, setEarningsLoading] = useState(false);
   const [earningsError, setEarningsError] = useState<string | null>(null);
   const [emergencyAvailable, setEmergencyAvailable] = useState<boolean>(
@@ -139,6 +148,29 @@ export default function ExpertsDashboard() {
   useEffect(() => {
     fetchExpertAppointments();
   }, [fetchExpertAppointments]);
+
+  const fetchUrgentAppointments = useCallback(async () => {
+    if (user?.role !== "EXPERT") return;
+    setUrgentAppointmentsLoading(true);
+    setUrgentAppointmentsError(null);
+    try {
+      const res = await getExpertAppointments();
+      const urgent = res.appointments.filter((a) => a.isEmergency === true);
+      setUrgentAppointments(urgent);
+      setUrgentAppointmentsCount(urgent.length);
+    } catch {
+      setUrgentAppointmentsError(t("dashboardFailedToLoadAppointments"));
+      setUrgentAppointments([]);
+      setUrgentAppointmentsCount(0);
+    } finally {
+      setUrgentAppointmentsLoading(false);
+    }
+  }, [user?.role, t]);
+
+  useEffect(() => {
+    if (activeTab !== "urgent" || user?.role !== "EXPERT") return;
+    void fetchUrgentAppointments();
+  }, [activeTab, user?.role, fetchUrgentAppointments]);
 
   useEffect(() => {
     fetchEarnings();
@@ -293,6 +325,7 @@ export default function ExpertsDashboard() {
           <div>
             {activeTab === "sessions" && (
               <ExpertAppointmentsTab
+                variant="sessions"
                 appointments={expertAppointments}
                 count={expertAppointmentsCount}
                 statusFilter={appointmentStatusFilter}
@@ -300,6 +333,19 @@ export default function ExpertsDashboard() {
                 isLoading={expertAppointmentsLoading}
                 error={expertAppointmentsError}
                 onRefetch={fetchExpertAppointments}
+              />
+            )}
+
+            {activeTab === "urgent" && (
+              <ExpertAppointmentsTab
+                variant="urgent"
+                appointments={urgentAppointments}
+                count={urgentAppointmentsCount}
+                statusFilter=""
+                onStatusFilterChange={() => {}}
+                isLoading={urgentAppointmentsLoading}
+                error={urgentAppointmentsError}
+                onRefetch={fetchUrgentAppointments}
               />
             )}
 

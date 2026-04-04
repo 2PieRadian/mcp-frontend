@@ -21,7 +21,6 @@ import {
   verifyUrgentPayment,
   getUrgentRequest,
   ApiHttpError,
-  URGENT_REQUEST_FEE_INR,
   type UrgentRequest,
   type VerifyUrgentPaymentResponse,
 } from "../lib/api";
@@ -240,6 +239,39 @@ export default function UrgentRequestModal({
 
     try {
       const response = await initiateUrgentRequest(expertId, reason);
+
+      const legacyPaidFee =
+        response.requestFeeRequired === true ||
+        (response.requestFeeRequired !== false &&
+          Boolean(response.orderId) &&
+          response.amount != null &&
+          Boolean(response.currency));
+
+      if (!legacyPaidFee) {
+        const phone = response.companyPhone;
+        if (!phone?.trim()) {
+          setError(t("urgentRequestMissingCompanyPhone"));
+          setLoading(false);
+          return;
+        }
+        const seconds = response.contactValiditySeconds ?? 0;
+        setCompanyPhone(phone);
+        setContactCountdown(seconds);
+        setUrgentRequest({
+          id: response.requestId,
+          status: "PENDING",
+          statusMessage: response.userStatus ?? response.message ?? "",
+          contactExpired: false,
+          contactRemainingSeconds: seconds,
+          companyPhone: phone,
+          createdAt: new Date().toISOString(),
+          expiresAt: response.expiresAt,
+        });
+        setStep("call_company");
+        setLoading(false);
+        return;
+      }
+
       setStep("paying_request_fee");
 
       const razorpayKey =
@@ -255,9 +287,9 @@ export default function UrgentRequestModal({
 
       openRazorpayCheckout({
         key: razorpayKey,
-        amount: response.amount,
-        currency: response.currency,
-        order_id: response.orderId,
+        amount: response.amount!,
+        currency: response.currency!,
+        order_id: response.orderId!,
         name: "MindCurePath",
         description: t("urgentRequestTitle"),
         modal: {
@@ -272,6 +304,7 @@ export default function UrgentRequestModal({
               res.razorpay_order_id,
               res.razorpay_payment_id,
               res.razorpay_signature,
+              { expertId, reason },
             );
 
             setCompanyPhone(verified.companyPhone);
@@ -439,17 +472,12 @@ export default function UrgentRequestModal({
                 {t("urgentRequestSubtitle")}
               </p>
 
-              <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl">
-                <div className="flex items-center justify-between">
-                  <span className="text-amber-800 font-medium">
-                    {t("urgentRequestFee")}
-                  </span>
-                  <span className="text-amber-900 font-bold text-lg">
-                    ₹{URGENT_REQUEST_FEE_INR}
-                  </span>
-                </div>
-                <p className="text-xs text-amber-700 mt-1">
-                  {t("urgentRequestFeeNote", { amount: URGENT_REQUEST_FEE_INR })}
+              <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-xl">
+                <p className="text-sm font-medium text-emerald-900">
+                  {t("urgentRequestNoFeeNote")}
+                </p>
+                <p className="text-xs text-emerald-800/90 mt-1">
+                  {t("urgentRequestNoFeeDetail")}
                 </p>
               </div>
 
@@ -475,11 +503,11 @@ export default function UrgentRequestModal({
                 {loading ? (
                   <Loader2 className="w-5 h-5 animate-spin" />
                 ) : (
-                  <CreditCard className="w-5 h-5" />
+                  <Zap className="w-5 h-5" />
                 )}
                 {loading
                   ? t("urgentRequestInitiating")
-                  : t("urgentRequestInitiate", { amount: URGENT_REQUEST_FEE_INR })}
+                  : t("urgentRequestSubmitFree")}
               </button>
             </div>
           )}

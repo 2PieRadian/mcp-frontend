@@ -349,6 +349,8 @@ function ExpertAppointmentCard({
 }
 
 type ExpertAppointmentsTabProps = {
+  /** Default lists all sessions with status filters; urgent lists emergency bookings only. */
+  variant?: "sessions" | "urgent";
   appointments: ExpertAppointment[];
   count: number;
   statusFilter: "" | AppointmentStatus;
@@ -359,6 +361,7 @@ type ExpertAppointmentsTabProps = {
 };
 
 export default function ExpertAppointmentsTab({
+  variant = "sessions",
   appointments,
   count,
   statusFilter,
@@ -371,35 +374,61 @@ export default function ExpertAppointmentsTab({
   const nowMs = usePollingNow(1000);
   const [rescheduleTarget, setRescheduleTarget] =
     useState<ExpertAppointment | null>(null);
+  const isUrgentTab = variant === "urgent";
 
   const rescheduleExpertId =
     rescheduleTarget?.expert?.id ?? rescheduleTarget?.expertId ?? 0;
 
   return (
-    <section className="bg-[hsl(0,0%,97%)] shadow-m rounded-[16px] sm:rounded-[20px] p-[16px] sm:p-[24px]">
-      <div className="flex items-center gap-[10px] mb-[20px]">
-        <Calendar className="text-primary w-6 h-6" />
-        <h2 className="text-[20px] sm:text-[24px] font-semibold text-logo-heading">
-          {t("tabUpcomingSessions")}
-        </h2>
+    <section
+      className={`shadow-m rounded-[16px] sm:rounded-[20px] p-[16px] sm:p-[24px] ${
+        isUrgentTab
+          ? "bg-gradient-to-br from-amber-50/90 via-[hsl(0,0%,97%)] to-orange-50/50 ring-1 ring-amber-200/60"
+          : "bg-[hsl(0,0%,97%)]"
+      }`}
+    >
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between mb-[20px]">
+        <div className="flex items-start gap-[10px]">
+          {isUrgentTab ? (
+            <div className="shrink-0 w-11 h-11 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-md shadow-amber-500/20">
+              <Zap className="text-white w-6 h-6" aria-hidden />
+            </div>
+          ) : (
+            <Calendar className="text-primary w-6 h-6 shrink-0 mt-1" />
+          )}
+          <div>
+            <h2 className="text-[20px] sm:text-[24px] font-semibold text-logo-heading">
+              {isUrgentTab
+                ? t("expertUrgentAppointmentsTitle")
+                : t("tabUpcomingSessions")}
+            </h2>
+            {isUrgentTab ? (
+              <p className="text-[13px] sm:text-[14px] text-amber-900/80 mt-1 max-w-xl">
+                {t("expertUrgentAppointmentsDescription")}
+              </p>
+            ) : null}
+          </div>
+        </div>
       </div>
 
-      <div className="flex flex-wrap gap-2 mb-6">
-        {STATUS_VALUES.map((value, i) => (
-          <button
-            key={value || "all"}
-            type="button"
-            onClick={() => onStatusFilterChange(value)}
-            className={`px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${
-              statusFilter === value
-                ? "bg-primary text-white shadow-sm"
-                : "bg-white text-light-text border border-border-light/40 hover:bg-primary/10"
-            }`}
-          >
-            {t(STATUS_KEYS[i])}
-          </button>
-        ))}
-      </div>
+      {!isUrgentTab ? (
+        <div className="flex flex-wrap gap-2 mb-6">
+          {STATUS_VALUES.map((value, i) => (
+            <button
+              key={value || "all"}
+              type="button"
+              onClick={() => onStatusFilterChange(value)}
+              className={`px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${
+                statusFilter === value
+                  ? "bg-primary text-white shadow-sm"
+                  : "bg-white text-light-text border border-border-light/40 hover:bg-primary/10"
+              }`}
+            >
+              {t(STATUS_KEYS[i])}
+            </button>
+          ))}
+        </div>
+      ) : null}
 
       {isLoading ? (
         <div className="flex items-center justify-center py-[40px]">
@@ -420,8 +449,12 @@ export default function ExpertAppointmentsTab({
         </div>
       ) : appointments.length === 0 ? (
         <div className="text-center py-[40px] px-4 rounded-2xl bg-white/60 border border-border-light/20">
-          <p className="text-light-text">{t("expertAppointmentsEmpty")}</p>
-          {statusFilter ? (
+          <p className="text-light-text">
+            {isUrgentTab
+              ? t("expertUrgentAppointmentsEmpty")
+              : t("expertAppointmentsEmpty")}
+          </p>
+          {!isUrgentTab && statusFilter ? (
             <p className="text-sm text-gray-500 mt-2">
               {t("dashboardNoAppointmentsFilter")}
             </p>

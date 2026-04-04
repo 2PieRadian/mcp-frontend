@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { Calendar, Clock, Wallet, User, GraduationCap } from "lucide-react";
+import { Calendar, Clock, Wallet, User, GraduationCap, Zap } from "lucide-react";
 import type { TabType } from "../types";
 
 type DashboardTabsProps = {
@@ -9,6 +9,7 @@ type DashboardTabsProps = {
 
 const tabs: { key: TabType; labelKey: string; icon: typeof Calendar }[] = [
   { key: "sessions", labelKey: "tabSessions", icon: Calendar },
+  { key: "urgent", labelKey: "tabUrgent", icon: Zap },
   { key: "availability", labelKey: "tabAvailability", icon: Clock },
   { key: "earnings", labelKey: "tabEarnings", icon: Wallet },
   { key: "qualifications", labelKey: "tabQualifications", icon: GraduationCap },
