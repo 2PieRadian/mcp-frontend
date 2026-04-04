@@ -1,7 +1,7 @@
 import type { PublicQualification } from "../types/experts";
 
-// export const BACKEND_URL = "https://api.mindcurepath.com";
-export const BACKEND_URL = "http://localhost:3000";
+export const BACKEND_URL = "https://api.mindcurepath.com";
+// export const BACKEND_URL = "http://localhost:3000";
 
 /**
  * Constructs a full avatar URL from a backend avatar value.
