@@ -293,7 +293,9 @@ export default function ExpertCard({
                 <span className="text-sm text-gray-400 line-through decoration-2">
                   ₹{price}
                 </span>
-                <span className="text-xl font-bold text-emerald-600">FREE</span>
+                <span className="text-xl font-bold text-emerald-600 animate-mcp-free-rotate">
+                  FREE
+                </span>
               </div>
             ) : (
               <div className="flex items-baseline gap-1">

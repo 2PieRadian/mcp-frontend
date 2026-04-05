@@ -641,7 +641,7 @@ export default function ExpertDetails() {
                         <span className="text-gray-400 line-through decoration-2 text-xs">
                           ₹{expert.pricePerHour}
                         </span>
-                        <span className="text-2xl font-bold text-emerald-600">
+                        <span className="text-2xl font-bold text-emerald-600 animate-mcp-free-rotate">
                           FREE
                         </span>
                       </div>
@@ -761,7 +761,9 @@ export default function ExpertDetails() {
                   <span className="text-teal-200 line-through decoration-2 text-lg">
                     ₹{expert.pricePerHour}
                   </span>
-                  <span className="text-3xl font-bold">FREE</span>
+                  <span className="text-3xl font-bold animate-mcp-free-rotate">
+                    FREE
+                  </span>
                 </div>
                 <p className="text-teal-100 text-xs">
                   First 30-min session is free
@@ -1081,7 +1083,9 @@ export default function ExpertDetails() {
                     <span className="text-teal-200 line-through decoration-2 text-lg">
                       ₹{expert.pricePerHour}
                     </span>
-                    <span className="text-3xl font-bold">FREE</span>
+                    <span className="text-3xl font-bold animate-mcp-free-rotate">
+                      FREE
+                    </span>
                   </div>
                   <p className="text-teal-100 text-xs">
                     First 30-min session is free
