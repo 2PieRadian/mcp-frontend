@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
   ChevronDown,
+  ChevronUp,
   ChevronRight,
   X,
   Languages as LanguagesIcon,
@@ -11,6 +12,15 @@ import { loginPathWithRedirect } from "../../lib/loginRedirect";
 import { useAuth } from "../../context/AuthContext";
 import { useTranslation } from "react-i18next";
 import { gsap } from "gsap";
+
+/** Active state for top-level nav items (dashboard is exact; articles allows detail routes). */
+function isMobileNavActive(to: string, pathname: string): boolean {
+  if (to === "/") return pathname === "/";
+  if (to === "/dashboard" || to === "/dashboard/expert") {
+    return pathname === to;
+  }
+  return pathname === to || pathname.startsWith(`${to}/`);
+}
 
 interface MobileNavModalProps {
   isOpen: boolean;
@@ -31,11 +41,17 @@ function MobileNavItem({
   ns?: string;
 }) {
   const { t } = useTranslation(ns);
+  const location = useLocation();
+  const active = to ? isMobileNavActive(to, location.pathname) : false;
+
   return (
-    <Link to={to || ""} onClick={onClick}>
+    <Link to={to || ""} onClick={onClick} className="block">
       <div
-        className="cursor-pointer text-light-text px-[25px] py-[12px] hover:bg-hover-bg rounded-full transition-colors duration-200 text-[16px]"
-        onClick={onClick}
+        className={`cursor-pointer rounded-xl px-4 py-3.5 text-[15px] font-semibold tracking-tight transition-all duration-200 border shadow-sm ${
+          active
+            ? "bg-[hsl(173,35%,92%)] border-cure-color/35 text-logo-heading ring-1 ring-cure-color/25"
+            : "border-slate-200 bg-white text-logo-heading hover:border-slate-300 hover:bg-slate-50 hover:shadow-md active:scale-[0.99]"
+        }`}
       >
         {t(textKey)}
       </div>
@@ -316,7 +332,7 @@ export default function MobileNavModal({
     >
       {/* Backdrop with blur effect */}
       <div
-        className={`absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ease-out ${
+        className={`absolute inset-0 bg-black/50 transition-opacity duration-300 ease-out ${
           isOpen ? "opacity-100" : "opacity-0"
         }`}
         onClick={isOpen ? onClose : undefined}
@@ -324,25 +340,42 @@ export default function MobileNavModal({
 
       {/* Drawer */}
       <div
-        className={`absolute inset-y-0 left-0 w-screen bg-white flex flex-col shadow-2xl transform-gpu transition-transform duration-300 ease-out will-change-transform ${
+        className={`absolute inset-y-0 left-0 w-screen flex flex-col bg-white shadow-2xl transform-gpu transition-transform duration-300 ease-out will-change-transform ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        {/* Header with close button */}
-        <div className="flex justify-between items-center px-[25px] py-[20px] border-b border-gray-200 shrink-0">
-          <h1 className="text-[22px] font-semibold text-logo-heading">
-            {t("appName", { ns: "common" }) === "MindCurePath" ? (
-              <>
-                Mind<span className="text-[#62af9b]">Cure</span>Path
-              </>
-            ) : (
-              t("appName", { ns: "common" })
-            )}
-          </h1>
+        {/* Header: logo, brand, close */}
+        <div className="flex shrink-0 items-start justify-between gap-3 border-b border-slate-200 bg-white px-5 py-4">
+          <Link
+            to="/"
+            onClick={onClose}
+            className="flex min-w-0 flex-1 items-start gap-3 pt-0.5"
+          >
+            <img
+              src="/images/navbar/logo.png"
+              alt={`${t("appName", { ns: "common" })} Logo`}
+              className="h-11 w-11 shrink-0 self-center object-contain"
+            />
+            <div className="flex min-w-0 flex-col">
+              <span className="truncate text-[20px] font-semibold leading-tight text-logo-heading">
+                {t("appName", { ns: "common" }) === "MindCurePath" ? (
+                  <>
+                    Mind<span className="text-cure-color">Cure</span>Path
+                  </>
+                ) : (
+                  t("appName", { ns: "common" })
+                )}
+              </span>
+              <span className="mt-0.5 line-clamp-2 text-[10px] leading-snug text-cure-color">
+                Guided by experts, driven by care, healing every mind
+              </span>
+            </div>
+          </Link>
           <button
             ref={closeButtonRef}
+            type="button"
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
+            className="shrink-0 rounded-full p-2 ring-1 ring-transparent transition-colors duration-200 hover:bg-slate-100 hover:ring-slate-200"
             aria-label="Close"
           >
             <X size={24} className="text-gray-600" />
@@ -350,7 +383,7 @@ export default function MobileNavModal({
         </div>
 
         {/* Navigation items */}
-        <div className="p-[20px] flex flex-col gap-[10px] overflow-y-auto flex-1">
+        <div className="flex flex-1 flex-col gap-3 overflow-y-auto bg-slate-50 p-5">
           {/* Dashboard - first for logged-in non-expert users */}
           {user?.role !== "EXPERT" && user && (
             <MobileNavItem
@@ -361,24 +394,27 @@ export default function MobileNavModal({
           )}
           {/* We Help With - Expandable */}
           {user?.role !== "EXPERT" && (
-            <div>
+            <div className="rounded-2xl border border-slate-200 bg-white p-1 shadow-sm">
               <div
-                className={`flex items-center justify-between cursor-pointer px-[20px] py-[14px] rounded-[16px] transition-colors duration-200 border ${
+                className={`flex cursor-pointer items-center justify-between rounded-xl px-4 py-3.5 transition-colors duration-200 ${
                   weHelpWithExpanded
-                    ? "bg-gray-50 border-gray-200"
-                    : "border-transparent hover:bg-hover-bg"
+                    ? "bg-slate-100 shadow-inner"
+                    : "hover:bg-slate-50"
                 }`}
                 onClick={() => {
                   setWeHelpWithExpanded(!weHelpWithExpanded);
                   setSelfAssessmentExpanded(false);
                 }}
               >
-                <span className="text-primary text-[16px]">
-                  {t("expertCategories", { ns: "navigation" })}
-                </span>
+                <div className="min-w-0 pr-2">
+                  <span className="text-[15px] font-semibold text-logo-heading leading-tight">
+                    {t("expertCategories", { ns: "navigation" })}
+                  </span>
+                </div>
                 <ChevronDown
-                  size={15}
-                  className={`text-primary transition-transform duration-200 ${
+                  size={18}
+                  strokeWidth={2.25}
+                  className={`shrink-0 text-primary transition-transform duration-200 ${
                     weHelpWithExpanded ? "rotate-180" : ""
                   }`}
                 />
@@ -390,61 +426,70 @@ export default function MobileNavModal({
                 className="overflow-hidden"
                 style={{ height: 0, opacity: 0 }}
               >
-                <div className="mt-[10px] ml-[18px] pl-[14px] border-l border-gray-200 flex flex-col gap-[6px] pb-[2px]">
-                  <Link
-                    to="/wellness-experts"
-                    onClick={onClose}
-                    className="flex items-center justify-between px-[14px] py-[10px] text-[15px] text-[#304048] rounded-[12px] cursor-pointer hover:bg-gray-50 transition-colors duration-200"
-                  >
-                    <span className="font-medium">
-                      {t("wellnessExperts", { ns: "navigation" })}
-                    </span>
-                    <ChevronRight size={16} className="text-gray-400" />
-                  </Link>
-                  <Link
-                    to="/education-experts"
-                    onClick={onClose}
-                    className="flex items-center justify-between px-[14px] py-[10px] text-[15px] text-[#304048] rounded-[12px] cursor-pointer hover:bg-gray-50 transition-colors duration-200"
-                  >
-                    <span className="font-medium">
-                      {t("educationExperts", { ns: "navigation" })}
-                    </span>
-                    <ChevronRight size={16} className="text-gray-400" />
-                  </Link>
-                  <Link
-                    to="/finance-experts"
-                    onClick={onClose}
-                    className="flex items-center justify-between px-[14px] py-[10px] text-[15px] text-[#304048] rounded-[12px] cursor-pointer hover:bg-gray-50 transition-colors duration-200"
-                  >
-                    <span className="font-medium">
-                      {t("financeExperts", { ns: "navigation" })}
-                    </span>
-                    <ChevronRight size={16} className="text-gray-400" />
-                  </Link>
+                <div className="mx-1 mb-2 mt-1 rounded-xl border border-slate-200 bg-slate-100 p-2 shadow-inner">
+                  <p className="px-2 pb-2 pt-1 text-[11px] font-medium leading-snug text-slate-500">
+                    {t("expertCategoriesHint", { ns: "navigation" })}
+                  </p>
+                  <div className="flex flex-col gap-1">
+                    <Link
+                      to="/wellness-experts"
+                      onClick={onClose}
+                      className="group flex items-center justify-between gap-2 rounded-lg border border-transparent bg-white px-3 py-2.5 text-[13px] font-medium text-slate-600 shadow-sm transition-all hover:border-cure-color/25 hover:bg-white hover:text-logo-heading hover:shadow-md active:scale-[0.99]"
+                    >
+                      <span>{t("wellnessExperts", { ns: "navigation" })}</span>
+                      <ChevronRight
+                        size={16}
+                        className="text-slate-400 transition-transform group-hover:translate-x-0.5 group-hover:text-cure-color"
+                      />
+                    </Link>
+                    <Link
+                      to="/education-experts"
+                      onClick={onClose}
+                      className="group flex items-center justify-between gap-2 rounded-lg border border-transparent bg-white px-3 py-2.5 text-[13px] font-medium text-slate-600 shadow-sm transition-all hover:border-cure-color/25 hover:bg-white hover:text-logo-heading hover:shadow-md active:scale-[0.99]"
+                    >
+                      <span>{t("educationExperts", { ns: "navigation" })}</span>
+                      <ChevronRight
+                        size={16}
+                        className="text-slate-400 transition-transform group-hover:translate-x-0.5 group-hover:text-cure-color"
+                      />
+                    </Link>
+                    <Link
+                      to="/finance-experts"
+                      onClick={onClose}
+                      className="group flex items-center justify-between gap-2 rounded-lg border border-transparent bg-white px-3 py-2.5 text-[13px] font-medium text-slate-600 shadow-sm transition-all hover:border-cure-color/25 hover:bg-white hover:text-logo-heading hover:shadow-md active:scale-[0.99]"
+                    >
+                      <span>{t("financeExperts", { ns: "navigation" })}</span>
+                      <ChevronRight
+                        size={16}
+                        className="text-slate-400 transition-transform group-hover:translate-x-0.5 group-hover:text-cure-color"
+                      />
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
           )}
 
           {user?.role !== "EXPERT" && (
-            <div>
+            <div className="rounded-2xl border border-slate-200 bg-white p-1 shadow-sm">
               <div
-                className={`flex items-center justify-between cursor-pointer px-[20px] py-[14px] rounded-[16px] transition-colors duration-200 border ${
+                className={`flex cursor-pointer items-center justify-between rounded-xl px-4 py-3.5 transition-colors duration-200 ${
                   selfAssessmentExpanded
-                    ? "bg-gray-50 border-gray-200"
-                    : "border-transparent hover:bg-hover-bg"
+                    ? "bg-slate-100 shadow-inner"
+                    : "hover:bg-slate-50"
                 }`}
                 onClick={() => {
                   setSelfAssessmentExpanded(!selfAssessmentExpanded);
                   setWeHelpWithExpanded(false);
                 }}
               >
-                <span className="text-primary text-[16px]">
+                <span className="text-[15px] font-semibold text-logo-heading leading-tight pr-2">
                   {t("selfAssessment", { ns: "navigation" })}
                 </span>
                 <ChevronDown
-                  size={15}
-                  className={`text-primary transition-transform duration-200 ${
+                  size={18}
+                  strokeWidth={2.25}
+                  className={`shrink-0 text-primary transition-transform duration-200 ${
                     selfAssessmentExpanded ? "rotate-180" : ""
                   }`}
                 />
@@ -455,37 +500,53 @@ export default function MobileNavModal({
                 className="overflow-hidden"
                 style={{ height: 0, opacity: 0 }}
               >
-                <div className="mt-[10px] ml-[18px] pl-[14px] border-l border-gray-200 flex flex-col gap-[6px] pb-[2px]">
-                  {(Object.keys(MOBILE_ASSESSMENTS) as AssessmentDomain[]).map(
-                    (domain) => (
-                      <div key={domain}>
-                        <div className="text-[13px] font-medium text-gray-500 mt-3 first:mt-1 px-[14px] py-[4px]">
-                          {t(
-                            `common:${
-                              domain === "wellness"
-                                ? "wellnessAssessments"
-                                : domain === "education"
-                                  ? "educationAssessments"
-                                  : "financeAssessments"
-                            }`,
-                          )}
+                <div className="mx-1 mb-2 mt-1 rounded-xl border border-slate-200 bg-slate-100 p-2 shadow-inner">
+                  <p className="px-2 pb-2 pt-1 text-[11px] font-medium leading-snug text-slate-500">
+                    {t("selfAssessmentHint", { ns: "navigation" })}
+                  </p>
+                  <div className="flex flex-col gap-3">
+                    {(
+                      Object.keys(MOBILE_ASSESSMENTS) as AssessmentDomain[]
+                    ).map((domain) => (
+                      <div key={domain} className="relative">
+                        <div
+                          className="mb-1.5 flex items-center gap-2 border-b border-slate-200 pb-1.5 pl-1"
+                          aria-hidden
+                        >
+                          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-cure-color" />
+                          <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-cure-color">
+                            {t(
+                              `common:${
+                                domain === "wellness"
+                                  ? "wellnessAssessments"
+                                  : domain === "education"
+                                    ? "educationAssessments"
+                                    : "financeAssessments"
+                              }`,
+                            )}
+                          </span>
                         </div>
-                        {MOBILE_ASSESSMENTS[domain].map((a) => (
-                          <Link
-                            key={`${domain}:${a.slug}`}
-                            to={`/assessments/${domain}/${a.slug}`}
-                            onClick={onClose}
-                            className="flex items-center justify-between px-[14px] py-[10px] text-[15px] text-[#304048] rounded-[12px] cursor-pointer hover:bg-gray-50 transition-colors duration-200"
-                          >
-                            <span className="font-medium">
-                              {t(`quiz:${a.labelKey}`)}
-                            </span>
-                            <ChevronRight size={16} className="text-gray-400" />
-                          </Link>
-                        ))}
+                        <div className="flex flex-col gap-1 pl-0.5">
+                          {MOBILE_ASSESSMENTS[domain].map((a) => (
+                            <Link
+                              key={`${domain}:${a.slug}`}
+                              to={`/assessments/${domain}/${a.slug}`}
+                              onClick={onClose}
+                              className="group flex items-center justify-between gap-2 rounded-lg border border-transparent bg-white px-3 py-2.5 text-[13px] font-medium text-slate-600 shadow-sm transition-all hover:border-cure-color/25 hover:bg-white hover:text-logo-heading hover:shadow-md active:scale-[0.99]"
+                            >
+                              <span className="leading-snug">
+                                {t(`quiz:${a.labelKey}`)}
+                              </span>
+                              <ChevronRight
+                                size={16}
+                                className="shrink-0 text-slate-400 transition-transform group-hover:translate-x-0.5 group-hover:text-cure-color"
+                              />
+                            </Link>
+                          ))}
+                        </div>
                       </div>
-                    ),
-                  )}
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -506,81 +567,94 @@ export default function MobileNavModal({
 
           <MobileNavItem textKey="articles" to="/articles" onClick={onClose} />
 
-          {/* Profile/Login */}
+          {/* Profile/Login — same visual weight as other primary links */}
           {user ? (
-            <Link
-              to="/profile"
-              className={`group px-[25px] py-[12px] flex items-center gap-[12px] rounded-full transition-colors ${
-                location.pathname.startsWith("/profile")
-                  ? "bg-hover-bg"
-                  : "hover:bg-hover-bg"
-              }`}
-              onClick={onClose}
-            >
-              <span className="text-light-text text-[16px]">
+            <Link to="/profile" onClick={onClose} className="block">
+              <div
+                className={`rounded-xl px-4 py-3.5 text-[15px] font-semibold tracking-tight transition-all duration-200 border shadow-sm ${
+                  location.pathname.startsWith("/profile")
+                    ? "bg-[hsl(173,35%,92%)] border-cure-color/35 text-logo-heading ring-1 ring-cure-color/25"
+                    : "border-slate-200 bg-white text-logo-heading hover:border-slate-300 hover:bg-slate-50 hover:shadow-md active:scale-[0.99]"
+                }`}
+              >
                 {t("profile", { ns: "navigation" })}
-              </span>
+              </div>
             </Link>
           ) : (
             <Link
               to={loginPathWithRedirect(location.pathname, location.search)}
-              className="px-[25px] py-[12px] text-primary transition-all duration-200 cursor-pointer rounded-full text-[16px] hover:bg-hover-bg"
               onClick={onClose}
+              className="block rounded-xl border border-primary/25 bg-primary px-4 py-3.5 text-center text-[15px] font-semibold text-white shadow-md shadow-primary/20 transition-all hover:brightness-105 active:scale-[0.99]"
             >
               {t("login", { ns: "common" })}
             </Link>
           )}
         </div>
 
-        {/* Bottom section with language switcher only */}
-        <div className="p-[20px] border-t border-gray-200 shrink-0">
-          {/* Language Switcher - Expandable */}
-          <div>
+        {/* Bottom: language — nested list style matches expandable sections */}
+        <div className="shrink-0 border-t border-slate-200 bg-white p-4 shadow-[0_-4px_16px_rgba(15,23,42,0.06)]">
+          <div className="rounded-2xl border border-slate-200 bg-slate-100 p-1">
             <div
-              className="flex items-center justify-between cursor-pointer px-[12px] py-[8px] hover:bg-gray-50 rounded-full transition-colors duration-200"
+              className={`flex cursor-pointer items-center justify-between rounded-xl px-3 py-3 transition-colors ${
+                languageExpanded ? "bg-white shadow-inner" : "hover:bg-slate-50"
+              }`}
               onClick={() => setLanguageExpanded(!languageExpanded)}
             >
-              <div className="flex items-center gap-2">
-                <LanguagesIcon size={20} className="text-primary" />
-                <span className="text-sm font-medium text-primary">
-                  {currentLanguage.nativeName}
-                </span>
+              <div className="flex min-w-0 items-center gap-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white shadow-sm ring-1 ring-slate-200">
+                  <LanguagesIcon size={20} className="text-primary" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-500">
+                    {t("footerLanguage", { ns: "common" })}
+                  </p>
+                  <p className="truncate text-[14px] font-semibold text-logo-heading">
+                    {currentLanguage.nativeName}
+                  </p>
+                </div>
               </div>
-              <ChevronDown
-                size={15}
-                className={`text-primary transition-transform duration-200 ${
-                  languageExpanded ? "rotate-180" : ""
-                }`}
-              />
+              {languageExpanded ? (
+                <ChevronDown
+                  size={18}
+                  strokeWidth={2.25}
+                  className="shrink-0 text-primary transition-transform duration-200"
+                />
+              ) : (
+                <ChevronUp
+                  size={18}
+                  strokeWidth={2.25}
+                  className="shrink-0 text-primary transition-transform duration-200"
+                />
+              )}
             </div>
 
-            {/* Language list with animation */}
             <div
               className={`transition-all duration-300 ease-in-out scrollbar-hide ${
                 languageExpanded
-                  ? "max-h-[200px] opacity-100 overflow-y-auto"
-                  : "max-h-0 opacity-0 overflow-hidden"
+                  ? "max-h-[220px] overflow-y-auto opacity-100"
+                  : "max-h-0 overflow-hidden opacity-0"
               }`}
             >
-              <div className="pl-[30px] pt-[8px] flex flex-col gap-[4px]">
+              <div className="mt-1 space-y-1 border-t border-slate-200 px-2 pb-2 pt-2">
                 {availableLanguages.map((lang) => (
                   <button
                     key={lang.code}
+                    type="button"
                     onClick={() => changeLanguage(lang.code)}
-                    className={`w-full text-left px-[15px] py-[8px] rounded-[8px] cursor-pointer hover:bg-gray-50 transition-colors flex items-center justify-between ${
-                      i18n.language === lang.code ? "bg-gray-100" : ""
+                    className={`flex w-full cursor-pointer items-center justify-between gap-2 rounded-lg border px-3 py-2.5 text-left text-[13px] transition-all ${
+                      i18n.language === lang.code
+                        ? "border-cure-color/40 bg-white font-semibold text-logo-heading shadow-sm ring-1 ring-cure-color/20"
+                        : "border-transparent bg-white text-slate-600 hover:border-slate-200 hover:bg-slate-50 hover:text-logo-heading"
                     }`}
                   >
-                    <div className="flex flex-col">
-                      <span className="text-sm font-medium text-[#304048]">
-                        {lang.name}
-                      </span>
-                      <span className="text-xs text-gray-500">
+                    <div className="flex min-w-0 flex-col">
+                      <span className="truncate font-medium">{lang.name}</span>
+                      <span className="truncate text-[11px] text-slate-500">
                         {lang.nativeName}
                       </span>
                     </div>
                     {i18n.language === lang.code && (
-                      <Check size={16} className="text-primary" />
+                      <Check size={16} className="shrink-0 text-cure-color" />
                     )}
                   </button>
                 ))}

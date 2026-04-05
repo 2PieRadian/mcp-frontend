@@ -8,6 +8,8 @@
   "financeExperts": "நிதி அறிவாளர்",
   "dashboard": "டாஷ்போர்டு",
   "expertCategories": "அறிவாளர் பிரிவுகள்",
+  "expertCategoriesHint": "Browse experts by area",
+  "selfAssessmentHint": "Choose an assessment to begin",
   "profile": "சுயவிவரம்",
   "viewMore": "மேலும் பார்க்க"
 }

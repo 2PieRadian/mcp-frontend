@@ -8,6 +8,8 @@
   "financeExperts": "Finance Experts",
   "dashboard": "Dashboard",
   "expertCategories": "Expert Categories",
+  "expertCategoriesHint": "Browse experts by area",
+  "selfAssessmentHint": "Choose an assessment to begin",
   "profile": "Profile",
   "viewMore": "View more"
 }
