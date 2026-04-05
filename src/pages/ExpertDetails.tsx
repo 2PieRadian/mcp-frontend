@@ -791,14 +791,7 @@ export default function ExpertDetails() {
                       key={q.id}
                       className="rounded-xl border border-gray-100 bg-gray-50/80 px-4 py-3"
                     >
-                      <p className="font-semibold text-gray-900">
-                        {q.degree}
-                        {q.year != null ? ` (${q.year})` : ""}
-                      </p>
-                      <p className="text-sm text-gray-700 mt-0.5">{q.field}</p>
-                      <p className="text-sm text-gray-500 mt-0.5">
-                        {q.institution}
-                      </p>
+                      <p className="font-semibold text-gray-900">{q.degree}</p>
                     </li>
                   ))}
                 </ul>
