@@ -26,6 +26,8 @@ import {
   getAvatarUrl,
   getExpertReviews,
   getExpertById,
+  getExpertNextSlot,
+  type ExpertNextSlot,
   type PublicReview,
   type ApiExpertFromApi,
 } from "../lib/api";
@@ -157,6 +159,30 @@ function ReviewCard({ review }: { review: PublicReview }) {
       )}
     </div>
   );
+}
+
+function formatExpertNextSlotLabel(slot: ExpertNextSlot): string {
+  try {
+    const startDate = new Date(
+      slot.year,
+      slot.month - 1,
+      slot.date,
+      ...slot.startTime.split(":").map(Number),
+    );
+    const datePart = startDate.toLocaleDateString("en-IN", {
+      weekday: "long",
+      day: "numeric",
+      month: "short",
+    });
+    const timePart = startDate.toLocaleTimeString("en-IN", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+    return `${datePart} · ${timePart}`;
+  } catch {
+    return "";
+  }
 }
 
 function SkeletonPulse({ className }: { className?: string }) {
@@ -309,6 +335,8 @@ export default function ExpertDetails() {
   const [isAboutExpanded, setIsAboutExpanded] = useState(false);
   const [isQuickInfoExpanded, setIsQuickInfoExpanded] = useState(true);
   const [shareCopied, setShareCopied] = useState(false);
+  const [nextSlotData, setNextSlotData] = useState<ExpertNextSlot | null>(null);
+  const [nextSlotLoading, setNextSlotLoading] = useState(true);
 
   const expertId = id ? parseInt(id, 10) : null;
 
@@ -386,6 +414,29 @@ export default function ExpertDetails() {
 
     void fetchExpert();
 
+    return () => {
+      cancelled = true;
+    };
+  }, [expertId]);
+
+  useEffect(() => {
+    if (!expertId || Number.isNaN(expertId)) {
+      setNextSlotLoading(false);
+      setNextSlotData(null);
+      return;
+    }
+    let cancelled = false;
+    setNextSlotLoading(true);
+    void getExpertNextSlot(expertId)
+      .then((data) => {
+        if (!cancelled) setNextSlotData(data);
+      })
+      .catch(() => {
+        if (!cancelled) setNextSlotData(null);
+      })
+      .finally(() => {
+        if (!cancelled) setNextSlotLoading(false);
+      });
     return () => {
       cancelled = true;
     };
@@ -482,6 +533,9 @@ export default function ExpertDetails() {
   const hasLanguages = languagesList.length > 0;
 
   const avatarUrl = getAvatarUrl(expert.user.avatar);
+  const nextSlotLabel = nextSlotData
+    ? formatExpertNextSlotLabel(nextSlotData)
+    : "";
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50">
@@ -605,6 +659,66 @@ export default function ExpertDetails() {
                       </p>
                     </>
                   )}
+                </div>
+              </div>
+            </div>
+
+            {/* Next available slot (API) */}
+            <div className="mt-5 pt-5 border-t border-white/20 sm:mt-6 sm:pt-6">
+              <div className="rounded-2xl bg-white/12 backdrop-blur-md border border-white/18 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] overflow-hidden">
+                <div className="flex flex-col sm:flex-row sm:items-stretch">
+                  <div className="flex items-start gap-3 sm:gap-4 p-4 sm:p-5 flex-1 min-w-0">
+                    <div
+                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/20 text-white shadow-sm"
+                      aria-hidden
+                    >
+                      <Calendar className="h-6 w-6 opacity-95" strokeWidth={2} />
+                    </div>
+                    <div className="min-w-0 flex-1 pt-0.5">
+                      <p className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.14em] text-teal-100/90">
+                        {t("expertDetailsNextAvailable")}
+                      </p>
+                      {nextSlotLoading ? (
+                        <div className="mt-2 flex items-center gap-2 text-white">
+                          <Loader2
+                            className="h-5 w-5 animate-spin shrink-0 opacity-90"
+                            aria-hidden
+                          />
+                          <span className="text-sm sm:text-base font-medium text-teal-50">
+                            {t("expertDetailsNextSlotChecking")}
+                          </span>
+                        </div>
+                      ) : nextSlotData && nextSlotLabel ? (
+                        <>
+                          <p className="mt-1.5 text-lg sm:text-xl font-bold text-white leading-snug tracking-tight">
+                            {nextSlotLabel}
+                          </p>
+                          <p className="mt-2 text-xs sm:text-sm text-teal-100/85 leading-relaxed max-w-xl">
+                            {t("expertDetailsNextSlotHint")}
+                          </p>
+                        </>
+                      ) : (
+                        <p className="mt-2 text-sm sm:text-base font-semibold text-teal-50/95">
+                          {t("nextSlot")}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  {!nextSlotLoading && nextSlotData && nextSlotLabel ? (
+                    <div className="hidden sm:flex sm:w-px bg-white/15 shrink-0" aria-hidden />
+                  ) : null}
+                  {!nextSlotLoading && nextSlotData && nextSlotLabel ? (
+                    <div className="sm:w-[min(200px,28%)] flex items-center justify-center px-4 py-3 sm:py-5 bg-black/10 border-t border-white/10 sm:border-t-0 sm:border-l sm:border-white/10">
+                      <div className="text-center">
+                        <p className="text-[10px] font-semibold uppercase tracking-wider text-teal-200/90 mb-1">
+                          {t("bookASession")}
+                        </p>
+                        <p className="text-xs text-white/90 leading-snug">
+                          {t("for60MinConsultation")}
+                        </p>
+                      </div>
+                    </div>
+                  ) : null}
                 </div>
               </div>
             </div>

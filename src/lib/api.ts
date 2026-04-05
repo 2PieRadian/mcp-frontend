@@ -1535,6 +1535,55 @@ export type NextEmergencySlotResponse = {
 };
 
 /**
+ * Next standard bookable slot from GET .../availability/:expertId/next-slot (no query).
+ * Same shape as expert listing cards use.
+ */
+export type ExpertNextSlot = {
+  day: string;
+  date: number;
+  month: number;
+  year: number;
+  startTime: string;
+  endTime: string;
+};
+
+export async function getExpertNextSlot(
+  expertId: number,
+): Promise<ExpertNextSlot | null> {
+  const res = await fetch(
+    `${BACKEND_URL}/api/v1/appointments/availability/${expertId}/next-slot`,
+    { method: "GET", headers: { Accept: "application/json" } },
+  );
+  if (!res.ok) return null;
+  const data = (await res.json().catch(() => null)) as unknown;
+  if (data == null || typeof data !== "object") return null;
+  const o = data as Record<string, unknown>;
+  const year = Number(o.year);
+  const month = Number(o.month);
+  const date = Number(o.date);
+  const startTime =
+    typeof o.startTime === "string" ? o.startTime : "";
+  const endTime = typeof o.endTime === "string" ? o.endTime : "";
+  const day = typeof o.day === "string" ? o.day : "";
+  if (
+    !Number.isFinite(year) ||
+    !Number.isFinite(month) ||
+    !Number.isFinite(date) ||
+    !startTime
+  ) {
+    return null;
+  }
+  return {
+    day,
+    date,
+    month,
+    year,
+    startTime,
+    endTime,
+  };
+}
+
+/**
  * GET /availability/:expertId/next-slot?emergency=true — get next emergency slot.
  */
 export async function getNextEmergencySlot(
