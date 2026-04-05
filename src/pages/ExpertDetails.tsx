@@ -193,8 +193,8 @@ function SkeletonPulse({ className }: { className?: string }) {
 
 function ExpertDetailsSkeleton() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2">
+    <div className="min-h-screen bg-white">
+      <div className="px-4 sm:px-6 lg:px-8">
         <ResponsiveNavbar />
       </div>
 
@@ -486,8 +486,8 @@ export default function ExpertDetails() {
   // Show error state
   if (expertError || !expert) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-        <div className="px-4 sm:px-6 lg:px-8 pt-2">
+      <div className="min-h-screen bg-white">
+        <div className="px-4 sm:px-6 lg:px-8">
           <ResponsiveNavbar />
         </div>
         <div className="max-w-4xl mx-auto px-4 py-8">
@@ -538,8 +538,8 @@ export default function ExpertDetails() {
     : "";
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2">
+    <div className="min-h-screen bg-white">
+      <div className="px-4 sm:px-6 lg:px-8">
         <ResponsiveNavbar />
       </div>
 
@@ -645,7 +645,7 @@ export default function ExpertDetails() {
                           FREE
                         </span>
                       </div>
-                      <p className="text-[10px] text-gray-500 mt-0.5">
+                      <p className="text-sm text-gray-600 mt-1">
                         First session
                       </p>
                     </>
@@ -672,7 +672,10 @@ export default function ExpertDetails() {
                       className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/20 text-white shadow-sm"
                       aria-hidden
                     >
-                      <Calendar className="h-6 w-6 opacity-95" strokeWidth={2} />
+                      <Calendar
+                        className="h-6 w-6 opacity-95"
+                        strokeWidth={2}
+                      />
                     </div>
                     <div className="min-w-0 flex-1 pt-0.5">
                       <p className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.14em] text-teal-100/90">
@@ -705,7 +708,10 @@ export default function ExpertDetails() {
                     </div>
                   </div>
                   {!nextSlotLoading && nextSlotData && nextSlotLabel ? (
-                    <div className="hidden sm:flex sm:w-px bg-white/15 shrink-0" aria-hidden />
+                    <div
+                      className="hidden sm:flex sm:w-px bg-white/15 shrink-0"
+                      aria-hidden
+                    />
                   ) : null}
                   {!nextSlotLoading && nextSlotData && nextSlotLabel ? (
                     <div className="sm:w-[min(200px,28%)] flex items-center justify-center px-4 py-3 sm:py-5 bg-black/10 border-t border-white/10 sm:border-t-0 sm:border-l sm:border-white/10">
