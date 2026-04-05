@@ -1,6 +1,6 @@
 import { ChevronDown, UserCircle2, Menu } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import WeHelpWith from "./modals/WeHelpWith";
 import LanguageSwitcher from "./LanguageSwitcher";
@@ -68,7 +68,6 @@ export default function Navbar() {
   const { t } = useTranslation("common");
   const { user } = useAuth();
   const location = useLocation();
-  const navigate = useNavigate();
   const [weHelpWithModalOpen, setWeHelpWithModalOpen] = useState(false);
   const [selfAssessmentsModalOpen, setSelfAssessmentsModalOpen] =
     useState(false);
@@ -239,7 +238,6 @@ export default function Navbar() {
                       }`}
                     />
                   }
-                  onClick={() => navigate("/self-assessment")}
                   onMouseEnter={handleAssessmentsMouseEnter}
                   onMouseLeave={handleAssessmentsMouseLeave}
                   isActive={selfAssessmentsModalOpen}
