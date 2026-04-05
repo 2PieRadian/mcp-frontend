@@ -21,6 +21,7 @@ import {
   verifyUrgentPayment,
   getUrgentRequest,
   postAppointmentJoinThenOpenMeet,
+  isTerminalAppointmentStatus,
   ApiHttpError,
   type UrgentRequest,
   type VerifyUrgentPaymentResponse,
@@ -185,7 +186,10 @@ export default function UrgentRequestModal({
         if (updated.paymentExpiresAt) {
           const expiresMs = new Date(updated.paymentExpiresAt).getTime();
           const nowMs = Date.now();
-          const remainingSecs = Math.max(0, Math.floor((expiresMs - nowMs) / 1000));
+          const remainingSecs = Math.max(
+            0,
+            Math.floor((expiresMs - nowMs) / 1000),
+          );
           setPaymentCountdown(remainingSecs);
         }
       } else if (updated.status === "REJECTED") {
@@ -325,7 +329,9 @@ export default function UrgentRequestModal({
             setStep("call_company");
           } catch (err) {
             setError(
-              err instanceof Error ? err.message : "Payment verification failed",
+              err instanceof Error
+                ? err.message
+                : "Payment verification failed",
             );
             setStep("initiate");
           } finally {
@@ -395,7 +401,9 @@ export default function UrgentRequestModal({
             onAppointmentCreated?.(verified.appointment.id);
           } catch (err) {
             setError(
-              err instanceof Error ? err.message : "Payment verification failed",
+              err instanceof Error
+                ? err.message
+                : "Payment verification failed",
             );
             setStep("approved");
           } finally {
@@ -565,7 +573,9 @@ export default function UrgentRequestModal({
               ) : (
                 <div className="flex items-center justify-center gap-2 text-red-700 bg-red-50 rounded-xl p-3">
                   <AlertCircle className="w-4 h-4" />
-                  <span className="text-sm">{t("urgentRequestContactExpired")}</span>
+                  <span className="text-sm">
+                    {t("urgentRequestContactExpired")}
+                  </span>
                 </div>
               )}
 
@@ -603,10 +613,13 @@ export default function UrgentRequestModal({
 
               {companyPhone && contactCountdown > 0 && (
                 <div className="p-3 bg-gray-50 rounded-xl text-sm text-gray-700">
-                  <p className="font-medium mb-1">{t("urgentRequestCompanyPhone")}</p>
+                  <p className="font-medium mb-1">
+                    {t("urgentRequestCompanyPhone")}
+                  </p>
                   <p className="font-mono text-lg">{companyPhone}</p>
                   <p className="text-xs text-gray-500 mt-1">
-                    {t("urgentRequestContactExpires")}: {formatCountdown(contactCountdown)}
+                    {t("urgentRequestContactExpires")}:{" "}
+                    {formatCountdown(contactCountdown)}
                   </p>
                 </div>
               )}
@@ -638,11 +651,15 @@ export default function UrgentRequestModal({
 
               <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl space-y-2">
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">{t("urgentRequestBaseAmount")}</span>
+                  <span className="text-gray-600">
+                    {t("urgentRequestBaseAmount")}
+                  </span>
                   <span>₹{urgentRequest.baseAmount ?? 0}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">{t("urgentRequestEmergencySurcharge")}</span>
+                  <span className="text-gray-600">
+                    {t("urgentRequestEmergencySurcharge")}
+                  </span>
                   <span>₹{urgentRequest.emergencySurcharge ?? 300}</span>
                 </div>
                 <div className="flex justify-between font-bold text-amber-900 pt-2 border-t border-amber-200">
@@ -671,7 +688,10 @@ export default function UrgentRequestModal({
                 ) : (
                   <CreditCard className="w-5 h-5" />
                 )}
-                {t("urgentRequestPayNow")} - ₹{urgentRequest.totalAmount ?? 0}
+                {t("urgentRequestPayNow")}{" "}
+                <span className="tabular-nums">
+                  ₹{urgentRequest.totalAmount ?? 0}
+                </span>
               </button>
             </div>
           )}
@@ -719,34 +739,37 @@ export default function UrgentRequestModal({
                   </p>
                 </div>
 
-                {appointmentResult.appointment.meetLink && (
-                  <button
-                    type="button"
-                    disabled={joiningSession || !authUser?.id}
-                    onClick={() => {
-                      const apt = appointmentResult.appointment;
-                      const link = apt.meetLink!;
-                      if (!authUser?.id) return;
-                      setJoiningSession(true);
-                      void postAppointmentJoinThenOpenMeet(apt.id, link, {
-                        participantId: authUser.id,
-                        role: "USER",
-                      })
-                        .catch(() => {
-                          window.open(link, "_blank", "noopener,noreferrer");
+                {appointmentResult.appointment.meetLink &&
+                  !isTerminalAppointmentStatus(
+                    appointmentResult.appointment.status,
+                  ) && (
+                    <button
+                      type="button"
+                      disabled={joiningSession || !authUser?.id}
+                      onClick={() => {
+                        const apt = appointmentResult.appointment;
+                        const link = apt.meetLink!;
+                        if (!authUser?.id) return;
+                        setJoiningSession(true);
+                        void postAppointmentJoinThenOpenMeet(apt.id, link, {
+                          participantId: authUser.id,
+                          role: "USER",
                         })
-                        .finally(() => setJoiningSession(false));
-                    }}
-                    className="flex items-center justify-center gap-2 w-full py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-xl font-medium transition-colors disabled:opacity-60 cursor-pointer"
-                  >
-                    {joiningSession ? (
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                    ) : (
-                      <ExternalLink className="w-4 h-4" />
-                    )}
-                    Join Session
-                  </button>
-                )}
+                          .catch(() => {
+                            window.open(link, "_blank", "noopener,noreferrer");
+                          })
+                          .finally(() => setJoiningSession(false));
+                      }}
+                      className="flex items-center justify-center gap-2 w-full py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-xl font-medium transition-colors disabled:opacity-60 cursor-pointer"
+                    >
+                      {joiningSession ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <ExternalLink className="w-4 h-4" />
+                      )}
+                      {t("urgentRequestJoinMeeting")}
+                    </button>
+                  )}
               </div>
 
               <button

@@ -880,7 +880,7 @@ export async function userCompleteAppointment(
           : res.status === 404
             ? "Appointment not found"
             : res.status === 409
-              ? "Session was already marked as no-show"
+              ? "This session was already closed as the expert not attending"
               : "Failed to mark session complete";
     const msg = getErrorMessageFromResponseBody(data, res.status, fallback);
     throw new ApiHttpError(msg, res.status, data);
@@ -911,14 +911,14 @@ export async function userReportNoShow(
   if (!res.ok) {
     const fallback =
       res.status === 400
-        ? "Please wait a few minutes before reporting no-show"
+        ? "Please wait a few minutes before reporting that the expert didn't join"
         : res.status === 403
-          ? "Only the booking user can report no-show"
+          ? "Only the person who booked can report that the expert didn't join"
           : res.status === 404
             ? "Appointment not found"
             : res.status === 409
-              ? "Cannot report no-show on a completed session"
-              : "Failed to report no-show";
+              ? "You can't report this on a session that's already completed"
+              : "Couldn't submit your report. Please try again.";
     const msg = getErrorMessageFromResponseBody(data, res.status, fallback);
     throw new ApiHttpError(msg, res.status, data);
   }

@@ -473,8 +473,8 @@ export default function TermsAndConditions() {
                       <span className="mt-2 h-1.5 w-1.5 rounded-full bg-teal-500 shrink-0"></span>
                       <span>
                         A minimum 24-hour notice is required for rescheduling.
-                        Late rescheduling or no-shows may result in full session
-                        charges.
+                        Late rescheduling or not attending a booked session
+                        without notice may result in full session charges.
                       </span>
                     </li>
                     <li className="flex items-start gap-3">

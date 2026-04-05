@@ -567,9 +567,21 @@ function AppointmentCard({
                 {t("confirmNoShowTitle")}
               </h3>
             </div>
-            <p className="text-sm text-gray-600 mb-6">
+            <p className="text-sm text-gray-600 mb-4">
               {t("confirmNoShowMessage")}
             </p>
+            <div
+              className="mb-6 flex gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-950"
+              role="alert"
+            >
+              <AlertCircle
+                className="w-5 h-5 shrink-0 text-red-600 mt-0.5"
+                aria-hidden
+              />
+              <p className="font-medium leading-relaxed">
+                {t("confirmNoShowFalseReportWarning")}
+              </p>
+            </div>
             <div className="flex justify-end gap-3">
               <button
                 type="button"

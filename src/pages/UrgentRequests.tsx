@@ -10,6 +10,7 @@ import {
   initiateUrgentPayment,
   verifyUrgentPayment,
   postAppointmentJoinThenOpenMeet,
+  isTerminalAppointmentStatus,
   ApiHttpError,
   type UrgentRequest,
   type UrgentRequestStatus,
@@ -25,7 +26,7 @@ import {
   Calendar,
   CreditCard,
   Zap,
-  ChevronRight,
+  ArrowLeft,
   ExternalLink,
   Copy,
   RefreshCw,
@@ -108,11 +109,38 @@ function StatusBadge({ status }: { status: UrgentRequestStatus }) {
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold ${c.bg} ${c.text}`}
+      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] sm:text-xs font-semibold leading-snug max-w-52 sm:max-w-none ${c.bg} ${c.text}`}
     >
       <Icon className="w-3.5 h-3.5" />
       {c.label}
     </span>
+  );
+}
+
+function UrgentRequestCardSkeleton() {
+  return (
+    <div
+      className="p-5 sm:p-6 space-y-4 animate-pulse"
+      aria-busy="true"
+      aria-label="Loading"
+    >
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 rounded-full bg-gray-200 shrink-0" />
+          <div className="space-y-2.5 pt-0.5">
+            <div className="h-5 w-44 sm:w-52 bg-gray-200 rounded-lg" />
+            <div className="h-3.5 w-14 rounded-md bg-gray-200" />
+          </div>
+        </div>
+        <div className="h-8 w-28 rounded-full bg-gray-200" />
+      </div>
+      <div className="h-18 rounded-xl bg-gray-100 border border-gray-100" />
+      <div className="h-20 rounded-xl bg-gray-100 border border-gray-100" />
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-4 border-t border-gray-100">
+        <div className="h-4 w-40 max-w-full bg-gray-200 rounded-md" />
+        <div className="h-10 w-full sm:w-36 rounded-xl bg-gray-200 self-end sm:self-auto" />
+      </div>
+    </div>
   );
 }
 
@@ -121,11 +149,13 @@ function UrgentRequestCard({
   nowMs,
   onPayNow,
   onRefresh,
+  isRefreshing,
 }: {
   request: UrgentRequest;
   nowMs: number;
   onPayNow: (req: UrgentRequest) => void;
   onRefresh: () => void;
+  isRefreshing: boolean;
 }) {
   const { t } = useTranslation("common");
   const { user: authUser } = useAuth();
@@ -166,181 +196,225 @@ function UrgentRequestCard({
   };
 
   return (
-    <article className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-200 border border-gray-100">
-      <div className="p-5 sm:p-6">
-        {/* Header */}
-        <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-amber-500 text-white flex items-center justify-center shrink-0 shadow-sm">
-              <Zap className="w-6 h-6" />
+    <article className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 transition-shadow duration-200 hover:shadow-md">
+      {isRefreshing ? (
+        <UrgentRequestCardSkeleton />
+      ) : (
+        <div className="p-5 sm:p-6">
+          {/* Header */}
+          <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-amber-500 text-white flex items-center justify-center shrink-0 shadow-sm">
+                <Zap className="w-6 h-6" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-[#304048] leading-snug">
+                  {t("urgentRequestCardTitle")}
+                </h3>
+                <p className="text-sm text-gray-500 mt-0.5">
+                  <span className="text-gray-400">
+                    {t("urgentRequestCardRequestLabel")}
+                  </span>{" "}
+                  <span className="font-medium text-gray-600 tabular-nums">
+                    #{request.id}
+                  </span>
+                </p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-lg font-bold text-[#304048]">
-                {t("urgentRequestTitle")}
-              </h3>
-              <p className="text-sm text-gray-500">#{request.id}</p>
-            </div>
+            <StatusBadge status={request.status} />
           </div>
-          <StatusBadge status={request.status} />
-        </div>
 
-        {/* Expert info */}
-        <div className="py-3 px-4 rounded-xl bg-gray-50 border border-gray-100 mb-4">
-          <p className="text-xs text-gray-500 mb-1">
-            {request.assignedExpert
-              ? t("urgentRequestAssignedExpert")
-              : t("urgentRequestRequestedExpert")}
-          </p>
-          <p className="font-semibold text-[#304048]">{expertName}</p>
-        </div>
-
-        {/* Reason if provided */}
-        {request.reason && (
-          <div className="mb-4 p-3 bg-stone-50 rounded-xl border border-gray-100">
-            <p className="text-xs text-gray-500 mb-1">Your reason</p>
-            <p className="text-sm text-gray-700">{request.reason}</p>
+          {/* Expert info */}
+          <div className="py-3.5 px-4 rounded-xl bg-gray-50 border border-gray-100 mb-4">
+            <p className="text-sm text-gray-500 mb-1.5 leading-snug">
+              {request.assignedExpert
+                ? t("urgentRequestAssignedExpert")
+                : t("urgentRequestRequestedExpert")}
+            </p>
+            <p className="text-base font-semibold text-[#304048] leading-snug">
+              {expertName}
+            </p>
           </div>
-        )}
 
-        {/* Company phone if available and not expired */}
-        {request.companyPhone &&
-          !request.contactExpired &&
-          request.status === "PENDING" && (
-            <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-xl">
-              <p className="text-xs text-green-700 mb-2">
-                {t("urgentRequestCompanyPhone")}
+          {/* Reason if provided */}
+          {request.reason && (
+            <div className="mb-4 p-3.5 bg-stone-50 rounded-xl border border-gray-100">
+              <p className="text-sm text-gray-500 mb-1.5">
+                {t("urgentRequestYourNote")}
               </p>
-              <div className="flex items-center justify-between gap-2">
-                <span className="text-xl font-bold text-green-900 tracking-wide">
-                  {request.companyPhone}
-                </span>
-                <div className="flex items-center gap-2">
-                  <a
-                    href={`tel:${request.companyPhone}`}
-                    className="p-2 rounded-lg bg-green-600 text-white hover:bg-green-700 transition-colors"
-                  >
-                    <Phone className="w-5 h-5" />
-                  </a>
-                  <button
-                    onClick={handleCopyPhone}
-                    className="p-2 rounded-lg bg-green-100 text-green-700 hover:bg-green-200 transition-colors"
-                  >
-                    {copied ? (
-                      <CheckCircle2 className="w-5 h-5" />
-                    ) : (
-                      <Copy className="w-5 h-5" />
-                    )}
-                  </button>
+              <p className="text-sm text-gray-800 leading-relaxed">
+                {request.reason}
+              </p>
+            </div>
+          )}
+
+          {/* Company phone if available and not expired */}
+          {request.companyPhone &&
+            !request.contactExpired &&
+            request.status === "PENDING" && (
+              <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-xl">
+                <p className="text-sm font-medium text-green-800 mb-2 leading-snug">
+                  {t("urgentRequestCompanyPhone")}
+                </p>
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-xl font-bold text-green-900 tracking-wide">
+                    {request.companyPhone}
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <a
+                      href={`tel:${request.companyPhone}`}
+                      className="p-2 rounded-lg bg-green-600 text-white hover:bg-green-700 transition-colors"
+                    >
+                      <Phone className="w-5 h-5" />
+                    </a>
+                    <button
+                      onClick={handleCopyPhone}
+                      className="p-2 rounded-lg bg-green-100 text-green-700 hover:bg-green-200 transition-colors"
+                    >
+                      {copied ? (
+                        <CheckCircle2 className="w-5 h-5" />
+                      ) : (
+                        <Copy className="w-5 h-5" />
+                      )}
+                    </button>
+                  </div>
+                </div>
+                {request.contactRemainingSeconds != null &&
+                  request.contactRemainingSeconds > 0 && (
+                    <p className="text-sm text-green-700 mt-2 leading-snug">
+                      {t("urgentRequestContactExpires")}{" "}
+                      <span className="font-semibold tabular-nums">
+                        {formatCountdown(request.contactRemainingSeconds)}
+                      </span>
+                    </p>
+                  )}
+              </div>
+            )}
+
+          {/* Payment info for approved requests */}
+          {request.status === "APPROVED" && (
+            <div className="mb-4 p-4 bg-amber-50 border border-amber-200 rounded-xl">
+              <div className="space-y-2.5 text-sm">
+                <div className="flex justify-between gap-4 text-gray-700">
+                  <span className="leading-snug">{t("urgentRequestBaseAmount")}</span>
+                  <span className="font-medium tabular-nums shrink-0">
+                    ₹{request.baseAmount ?? 0}
+                  </span>
+                </div>
+                <div className="flex justify-between gap-4 text-gray-700">
+                  <span className="leading-snug">
+                    {t("urgentRequestEmergencySurcharge")}
+                  </span>
+                  <span className="font-medium tabular-nums shrink-0">
+                    ₹{request.emergencySurcharge ?? 300}
+                  </span>
+                </div>
+                <div className="flex justify-between gap-4 font-bold text-amber-950 pt-2.5 border-t border-amber-200/80 text-base">
+                  <span>{t("urgentRequestTotalToPay")}</span>
+                  <span className="tabular-nums shrink-0">
+                    ₹{request.totalAmount ?? 0}
+                  </span>
                 </div>
               </div>
-              {request.contactRemainingSeconds != null &&
-                request.contactRemainingSeconds > 0 && (
-                  <p className="text-xs text-green-600 mt-2">
-                    {t("urgentRequestContactExpires")}:{" "}
-                    {formatCountdown(request.contactRemainingSeconds)}
+
+              {paymentSecondsLeft > 0 && (
+                <div className="flex items-start gap-2 mt-3 text-amber-800 text-sm leading-snug">
+                  <Clock className="w-4 h-4 shrink-0 mt-0.5" aria-hidden />
+                  <span>
+                    {t("urgentRequestPaymentExpires")}:{" "}
+                    <strong className="tabular-nums">
+                      {formatCountdown(paymentSecondsLeft)}
+                    </strong>
+                  </span>
+                </div>
+              )}
+
+              <button
+                onClick={() => onPayNow(request)}
+                disabled={paymentSecondsLeft <= 0}
+                className="w-full mt-4 py-3.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-semibold text-base flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
+              >
+                <CreditCard className="w-5 h-5 shrink-0" aria-hidden />
+                <span>
+                  {t("urgentRequestPayNow")}{" "}
+                  <span className="tabular-nums">
+                    ₹{request.totalAmount ?? 0}
+                  </span>
+                </span>
+              </button>
+            </div>
+          )}
+
+          {/* Appointment info for completed requests */}
+          {request.status === "PAYMENT_COMPLETED" && request.appointment && (
+            <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-xl">
+              <div className="flex items-start gap-3 mb-3">
+                <Calendar
+                  className="w-5 h-5 text-green-600 shrink-0 mt-0.5"
+                  aria-hidden
+                />
+                <div className="min-w-0">
+                  <p className="text-sm text-gray-600 leading-snug mb-1">
+                    {t("urgentRequestSessionScheduled")}
                   </p>
+                  <p className="text-base font-semibold text-gray-900 leading-snug">
+                    {formatDate(request.appointment.startAt)}
+                  </p>
+                </div>
+              </div>
+              {request.appointment.meetLink &&
+                !isTerminalAppointmentStatus(request.appointment.status) && (
+                  <button
+                    type="button"
+                    disabled={joiningSession || !authUser?.id}
+                    onClick={() => {
+                      const link = request.appointment!.meetLink!;
+                      if (!authUser?.id) return;
+                      setJoiningSession(true);
+                      void postAppointmentJoinThenOpenMeet(
+                        request.appointment!.id,
+                        link,
+                        { participantId: authUser.id, role: "USER" },
+                      )
+                        .catch(() => {
+                          window.open(link, "_blank", "noopener,noreferrer");
+                        })
+                        .finally(() => setJoiningSession(false));
+                    }}
+                    className="flex items-center justify-center gap-2 w-full py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-xl font-medium transition-colors disabled:opacity-60 cursor-pointer"
+                  >
+                    {joiningSession ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <ExternalLink className="w-4 h-4" />
+                    )}
+                    {t("urgentRequestJoinMeeting")}
+                  </button>
                 )}
             </div>
           )}
 
-        {/* Payment info for approved requests */}
-        {request.status === "APPROVED" && (
-          <div className="mb-4 p-4 bg-amber-50 border border-amber-200 rounded-xl">
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span className="text-gray-600">
-                  {t("urgentRequestBaseAmount")}
-                </span>
-                <span>₹{request.baseAmount ?? 0}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">
-                  {t("urgentRequestEmergencySurcharge")}
-                </span>
-                <span>₹{request.emergencySurcharge ?? 300}</span>
-              </div>
-              <div className="flex justify-between font-bold text-amber-900 pt-2 border-t border-amber-200">
-                <span>{t("urgentRequestTotalToPay")}</span>
-                <span>₹{request.totalAmount ?? 0}</span>
-              </div>
-            </div>
-
-            {paymentSecondsLeft > 0 && (
-              <div className="flex items-center gap-2 mt-3 text-amber-700 text-sm">
-                <Clock className="w-4 h-4" />
-                <span>
-                  {t("urgentRequestPaymentExpires")}:{" "}
-                  <strong>{formatCountdown(paymentSecondsLeft)}</strong>
-                </span>
-              </div>
-            )}
-
+          {/* Footer */}
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4 pt-4 mt-1 border-t border-gray-100">
+            <span className="text-xs sm:text-sm text-gray-600 order-2 sm:order-1 leading-snug">
+              <span className="text-gray-500 block sm:inline sm:mr-1">
+                {t("urgentRequestRequestedOn")}
+              </span>
+              <span className="font-medium text-gray-700 tabular-nums">
+                {formatDate(request.createdAt)}
+              </span>
+            </span>
             <button
-              onClick={() => onPayNow(request)}
-              disabled={paymentSecondsLeft <= 0}
-              className="w-full mt-4 py-3 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-semibold flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              type="button"
+              onClick={onRefresh}
+              className="order-1 sm:order-2 inline-flex items-center justify-center gap-2 self-stretch sm:self-auto rounded-xl border border-[#44666C]/20 bg-[#f0f7f8] px-4 py-2.5 text-sm font-semibold text-[#44666C] shadow-sm hover:bg-[#e4f0f2] hover:border-[#44666C]/35 active:scale-[0.99] transition-all cursor-pointer"
             >
-              <CreditCard className="w-5 h-5" />
-              {t("urgentRequestPayNow")} - ₹{request.totalAmount ?? 0}
+              <RefreshCw className="w-4 h-4 shrink-0" aria-hidden />
+              {t("urgentRequestsRefreshCard")}
             </button>
           </div>
-        )}
-
-        {/* Appointment info for completed requests */}
-        {request.status === "PAYMENT_COMPLETED" && request.appointment && (
-          <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-xl">
-            <div className="flex items-center gap-3 mb-3">
-              <Calendar className="w-5 h-5 text-green-600" />
-              <div>
-                <p className="text-sm text-gray-600">Session scheduled</p>
-                <p className="font-semibold text-gray-900">
-                  {formatDate(request.appointment.startAt)}
-                </p>
-              </div>
-            </div>
-            {request.appointment.meetLink && (
-              <button
-                type="button"
-                disabled={joiningSession || !authUser?.id}
-                onClick={() => {
-                  const link = request.appointment!.meetLink!;
-                  if (!authUser?.id) return;
-                  setJoiningSession(true);
-                  void postAppointmentJoinThenOpenMeet(
-                    request.appointment!.id,
-                    link,
-                    { participantId: authUser.id, role: "USER" },
-                  )
-                    .catch(() => {
-                      window.open(link, "_blank", "noopener,noreferrer");
-                    })
-                    .finally(() => setJoiningSession(false));
-                }}
-                className="flex items-center justify-center gap-2 w-full py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-xl font-medium transition-colors disabled:opacity-60 cursor-pointer"
-              >
-                {joiningSession ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                ) : (
-                  <ExternalLink className="w-4 h-4" />
-                )}
-                Join Session
-              </button>
-            )}
-          </div>
-        )}
-
-        {/* Footer */}
-        <div className="flex items-center justify-between text-sm text-gray-500 pt-3 border-t border-gray-100">
-          <span>{formatDate(request.createdAt)}</span>
-          <button
-            onClick={onRefresh}
-            className="flex items-center gap-1 text-[#44666C] hover:text-[#365a62] font-medium"
-          >
-            <RefreshCw className="w-4 h-4" />
-            Refresh
-          </button>
         </div>
-      </div>
+      )}
     </article>
   );
 }
@@ -355,6 +429,7 @@ export default function UrgentRequests() {
   const [error, setError] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<UrgentStatusFilter>("");
   const [payingRequestId, setPayingRequestId] = useState<number | null>(null);
+  const [refreshingId, setRefreshingId] = useState<number | null>(null);
   // payingRequestId is tracked for potential future UI use (e.g. disabling buttons)
   void payingRequestId;
 
@@ -455,11 +530,14 @@ export default function UrgentRequests() {
   };
 
   const handleRefreshRequest = async (id: number) => {
+    setRefreshingId(id);
     try {
       const updated = await getUrgentRequest(id);
       setRequests((prev) => prev.map((r) => (r.id === id ? updated : r)));
     } catch {
       // Ignore
+    } finally {
+      setRefreshingId(null);
     }
   };
 
@@ -493,17 +571,22 @@ export default function UrgentRequests() {
               {t("urgentRequestsTab")}
             </h1>
           </div>
-          <p className="text-gray-600 mt-1.5 sm:mt-2">
+          <p className="text-gray-600 mt-1.5 sm:mt-2 max-w-2xl">
             {t("urgentRequestsEmptyDescription")}
           </p>
 
-          <Link
-            to="/dashboard"
-            className="inline-flex items-center gap-1 mt-3 text-sm text-[#44666C] hover:text-[#365a62] font-medium"
-          >
-            <ChevronRight className="w-4 h-4 rotate-180" />
-            Back to appointments
-          </Link>
+          <div className="mt-6 sm:mt-7">
+            <Link
+              to="/dashboard"
+              className="group inline-flex items-center gap-2.5 rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm font-semibold text-[#304048] shadow-sm ring-1 ring-black/3 transition-all hover:border-[#44666C]/35 hover:bg-[#f4fafb] hover:text-[#44666C] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#44666C]/30 focus-visible:ring-offset-2"
+            >
+              <ArrowLeft
+                className="w-4 h-4 shrink-0 text-[#44666C] transition-transform group-hover:-translate-x-0.5"
+                aria-hidden
+              />
+              {t("urgentRequestsBackToAppointments")}
+            </Link>
+          </div>
         </div>
 
         {/* Status filter */}
@@ -563,6 +646,7 @@ export default function UrgentRequests() {
                 nowMs={nowMs}
                 onPayNow={handlePayNow}
                 onRefresh={() => handleRefreshRequest(request.id)}
+                isRefreshing={refreshingId === request.id}
               />
             ))}
           </div>
