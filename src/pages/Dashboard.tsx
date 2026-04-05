@@ -180,6 +180,7 @@ function AppointmentCard({
   onStatusChange?: () => void;
 }) {
   const { t } = useTranslation("common");
+  const { user: authUser } = useAuth();
   const expertName =
     apt.expert?.user?.name ||
     apt.expert?.user?.email ||
@@ -379,9 +380,15 @@ function AppointmentCard({
                   void postAppointmentJoinThenOpenMeet(apt.id, apt.meetLink, {
                     participantId: authUser.id,
                     role: "USER",
-                  }).catch(() => {
-                    window.open(apt.meetLink!, "_blank", "noopener,noreferrer");
-                  }).finally(() => setJoiningSession(false));
+                  })
+                    .catch(() => {
+                      window.open(
+                        apt.meetLink!,
+                        "_blank",
+                        "noopener,noreferrer",
+                      );
+                    })
+                    .finally(() => setJoiningSession(false));
                 }}
                 className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-[#44666C] text-white rounded-xl font-semibold text-sm hover:bg-[#365a62] transition-colors shadow-sm disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
               >
