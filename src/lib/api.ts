@@ -482,20 +482,15 @@ export type AppointmentSessionActionResponse = {
 };
 
 /**
- * Calls `POST /api/v1/appointments/:id/{join|heartbeat|leave}`.
+ * Calls `POST /api/v1/appointments/:id/join` or `.../heartbeat`.
  *
- * **Backend contract (confirm in the API repo — not enforced here):**
- * - `participantId` must match the authenticated user id (API compares as string).
- * - Handlers may return 200 with `unchanged: true` or skip persisting timestamps when the
- *   appointment is terminal or **outside the booked window** (`startAt` / `endAt`). If DB
- *   fields stay `null` when users connect long before or after the slot, adjust server-side
- *   participation logic (e.g. `appointmentParticipation`) rather than the client.
- * - Client must invoke these endpoints whenever the meeting lifecycle changes; server does not
- *   infer presence automatically from the raw meeting link.
+ * `participantId` must match the authenticated user id (API compares as string).
+ * `role` is `"USER"` for the booking user or `"EXPERT"` for the expert’s login.
+ * First successful join per role sets `userJoinTime` / `expertJoinTime`; repeats are idempotent.
  */
 async function postAppointmentSessionAction(
   appointmentId: number,
-  pathSegment: "join" | "heartbeat" | "leave",
+  pathSegment: "join" | "heartbeat",
   body: AppointmentSessionParticipantBody,
 ): Promise<AppointmentSessionActionResponse> {
   const res = await fetch(
@@ -548,38 +543,17 @@ export function postAppointmentHeartbeat(
   return postAppointmentSessionAction(appointmentId, "heartbeat", body);
 }
 
-export function postAppointmentLeave(
+/**
+ * Records join via API, then opens the meeting link in a new tab.
+ * Use for every “Join session” action so `userJoinTime` / `expertJoinTime` are set.
+ */
+export async function postAppointmentJoinThenOpenMeet(
   appointmentId: number,
+  meetLink: string,
   body: AppointmentSessionParticipantBody,
-): Promise<AppointmentSessionActionResponse> {
-  return postAppointmentSessionAction(appointmentId, "leave", body);
-}
-
-/** Best-effort leave when the tab is closing (no await). */
-export function leaveAppointmentSessionKeepalive(
-  appointmentId: number,
-  body: AppointmentSessionParticipantBody,
-): void {
-  const token =
-    window.localStorage.getItem("auth:token") ||
-    window.localStorage.getItem("token");
-  if (!token) return;
-  try {
-    void fetch(
-      `${BACKEND_URL}/api/v1/appointments/${appointmentId}/leave`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(body),
-        keepalive: true,
-      },
-    ).catch(() => { });
-  } catch {
-    /* ignore */
-  }
+): Promise<void> {
+  await postAppointmentJoin(appointmentId, body);
+  window.open(meetLink, "_blank", "noopener,noreferrer");
 }
 
 /** Expert user (no password). */
@@ -619,6 +593,12 @@ export type MyAppointment = {
   isEmergency?: boolean;
   /** Emergency surcharge amount in rupees (if emergency). */
   emergencySurcharge?: number;
+  /** First successful join for the booking user (idempotent). */
+  userJoinTime?: string | null;
+  /** First successful join for the expert’s user account (idempotent). */
+  expertJoinTime?: string | null;
+  /** Set when the user successfully reported expert no-show. */
+  userReportedExpertNoShowAt?: string | null;
 };
 
 /** Client (booker) on expert’s appointment list when API includes nested user. */
@@ -654,6 +634,9 @@ export type ExpertAppointment = {
   isEmergency?: boolean;
   /** Emergency surcharge amount in rupees (if emergency). */
   emergencySurcharge?: number;
+  userJoinTime?: string | null;
+  expertJoinTime?: string | null;
+  userReportedExpertNoShowAt?: string | null;
 };
 
 /**

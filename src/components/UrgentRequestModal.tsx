@@ -20,11 +20,13 @@ import {
   initiateUrgentPayment,
   verifyUrgentPayment,
   getUrgentRequest,
+  postAppointmentJoinThenOpenMeet,
   ApiHttpError,
   type UrgentRequest,
   type VerifyUrgentPaymentResponse,
 } from "../lib/api";
 import { openRazorpayCheckout } from "../lib/razorpay";
+import { useAuth } from "../context/AuthContext";
 
 type UrgentRequestModalProps = {
   isOpen: boolean;
@@ -60,6 +62,7 @@ export default function UrgentRequestModal({
   onAppointmentCreated,
 }: UrgentRequestModalProps) {
   const { t } = useTranslation("common");
+  const { user: authUser } = useAuth();
   const backdropRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const [isClosing, setIsClosing] = useState(false);
@@ -78,6 +81,7 @@ export default function UrgentRequestModal({
   const [paymentCountdown, setPaymentCountdown] = useState(0);
   const [appointmentResult, setAppointmentResult] =
     useState<VerifyUrgentPaymentResponse | null>(null);
+  const [joiningSession, setJoiningSession] = useState(false);
 
   const pollIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -716,15 +720,32 @@ export default function UrgentRequestModal({
                 </div>
 
                 {appointmentResult.appointment.meetLink && (
-                  <a
-                    href={appointmentResult.appointment.meetLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-xl font-medium transition-colors"
+                  <button
+                    type="button"
+                    disabled={joiningSession || !authUser?.id}
+                    onClick={() => {
+                      const apt = appointmentResult.appointment;
+                      const link = apt.meetLink!;
+                      if (!authUser?.id) return;
+                      setJoiningSession(true);
+                      void postAppointmentJoinThenOpenMeet(apt.id, link, {
+                        participantId: authUser.id,
+                        role: "USER",
+                      })
+                        .catch(() => {
+                          window.open(link, "_blank", "noopener,noreferrer");
+                        })
+                        .finally(() => setJoiningSession(false));
+                    }}
+                    className="flex items-center justify-center gap-2 w-full py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-xl font-medium transition-colors disabled:opacity-60 cursor-pointer"
                   >
-                    <ExternalLink className="w-4 h-4" />
+                    {joiningSession ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <ExternalLink className="w-4 h-4" />
+                    )}
                     Join Session
-                  </a>
+                  </button>
                 )}
               </div>
 

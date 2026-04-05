@@ -20,9 +20,11 @@ import {
 } from "lucide-react";
 import { usePollingNow } from "../../../hooks/usePollingNow";
 import { formatAppointmentStartsIn } from "../../../lib/appointmentStartsIn";
+import { useAuth } from "../../../context/AuthContext";
 import {
   isTerminalAppointmentStatus,
   isScheduledAwaitingJoinInBookedWindow,
+  postAppointmentJoinThenOpenMeet,
   type ExpertAppointment,
   type AppointmentStatus,
 } from "../../../lib/api";
@@ -164,6 +166,8 @@ function ExpertAppointmentCard({
   onOpenReschedule?: (apt: ExpertAppointment) => void;
 }) {
   const { t } = useTranslation("common");
+  const { user: authUser } = useAuth();
+  const [joiningSession, setJoiningSession] = useState(false);
   const client = apt.user;
   const displayName =
     client?.name?.trim() ||
@@ -309,17 +313,32 @@ function ExpertAppointmentCard({
 
         {showMeetActions ? (
           <div className="mt-5 pt-4 border-t border-gray-100 space-y-3">
-            <a
-              href={apt.meetLink!}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex w-full sm:w-auto items-center justify-center gap-2 px-4 py-2.5 bg-[#44666C] text-white rounded-xl font-semibold text-sm hover:bg-[#365a62] transition-colors shadow-sm"
+            <button
+              type="button"
+              disabled={joiningSession || !authUser?.id}
+              onClick={() => {
+                if (!authUser?.id || !apt.meetLink) return;
+                setJoiningSession(true);
+                void postAppointmentJoinThenOpenMeet(apt.id, apt.meetLink, {
+                  participantId: authUser.id,
+                  role: "EXPERT",
+                })
+                  .catch(() => {
+                    window.open(apt.meetLink!, "_blank", "noopener,noreferrer");
+                  })
+                  .finally(() => setJoiningSession(false));
+              }}
+              className="inline-flex w-full sm:w-auto items-center justify-center gap-2 px-4 py-2.5 bg-[#44666C] text-white rounded-xl font-semibold text-sm hover:bg-[#365a62] transition-colors shadow-sm disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
             >
-              <Video className="w-4 h-4" />
+              {joiningSession ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <Video className="w-4 h-4" />
+              )}
               {isVideoSession
                 ? t("dashboardJoinVideoTracked")
                 : t("dashboardJoinSession")}
-            </a>
+            </button>
             <button
               type="button"
               onClick={() => {

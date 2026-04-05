@@ -22,7 +22,6 @@ import {
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import BookingModal from "../components/BookingModal";
 import UrgentRequestModal from "../components/UrgentRequestModal";
-import ImageViewer from "../components/ImageViewer";
 import {
   getAvatarUrl,
   getExpertReviews,
@@ -55,14 +54,13 @@ function ExpertProfileAvatar({
 
   if (showImage && avatarUrl) {
     return (
-      <ImageViewer src={avatarUrl} alt={displayName} className="relative">
-        <img
-          src={avatarUrl}
-          alt={displayName}
-          className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover ring-4 ring-white shadow-xl"
-          onError={() => setLoadFailed(true)}
-        />
-      </ImageViewer>
+      <img
+        src={avatarUrl}
+        alt={displayName}
+        className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover ring-4 ring-white shadow-xl select-none"
+        draggable={false}
+        onError={() => setLoadFailed(true)}
+      />
     );
   }
 

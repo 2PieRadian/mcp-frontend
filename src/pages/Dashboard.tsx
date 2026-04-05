@@ -19,6 +19,7 @@ import {
   isScheduledAwaitingJoinInBookedWindow,
   userCompleteAppointment,
   userReportNoShow,
+  postAppointmentJoinThenOpenMeet,
   ApiHttpError,
   type MyAppointment,
   type AppointmentStatus,
@@ -194,6 +195,7 @@ function AppointmentCard({
   const [actionSuccess, setActionSuccess] = useState<string | null>(null);
   const [showCompleteModal, setShowCompleteModal] = useState(false);
   const [showNoShowModal, setShowNoShowModal] = useState(false);
+  const [joiningSession, setJoiningSession] = useState(false);
 
   const showMeetActions =
     !!apt.meetLink && !isTerminalAppointmentStatus(apt.status);
@@ -368,17 +370,30 @@ function AppointmentCard({
         {showMeetActions ? (
           <div className="mt-5 pt-4 border-t border-gray-100">
             <div className="flex flex-wrap items-center gap-3">
-              <a
-                href={apt.meetLink!}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-[#44666C] text-white rounded-xl font-semibold text-sm hover:bg-[#365a62] transition-colors shadow-sm"
+              <button
+                type="button"
+                disabled={joiningSession || !authUser?.id}
+                onClick={() => {
+                  if (!authUser?.id || !apt.meetLink) return;
+                  setJoiningSession(true);
+                  void postAppointmentJoinThenOpenMeet(apt.id, apt.meetLink, {
+                    participantId: authUser.id,
+                    role: "USER",
+                  }).catch(() => {
+                    window.open(apt.meetLink!, "_blank", "noopener,noreferrer");
+                  }).finally(() => setJoiningSession(false));
+                }}
+                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-[#44666C] text-white rounded-xl font-semibold text-sm hover:bg-[#365a62] transition-colors shadow-sm disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
               >
-                <Video className="w-4 h-4" />
+                {joiningSession ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Video className="w-4 h-4" />
+                )}
                 {isVideoSession
                   ? t("dashboardJoinVideoTracked")
                   : t("dashboardJoinSession")}
-              </a>
+              </button>
               <button
                 type="button"
                 onClick={() => {

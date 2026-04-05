@@ -20,6 +20,7 @@ import gsap from "gsap";
 import {
   initiateAppointment,
   verifyPayment,
+  postAppointmentJoinThenOpenMeet,
   USER_CONCERN_MAX_LENGTH,
   ApiHttpError,
   EMERGENCY_SURCHARGE_INR,
@@ -82,7 +83,7 @@ export default function BookingModal({
     currentExpertId,
     setCurrentExpertId,
   } = useBooking();
-  const { refreshUserFromServer } = useAuth();
+  const { refreshUserFromServer, user: authUser } = useAuth();
 
   const [selectedDateIndex, setSelectedDateIndex] = useState<number | null>(
     null,
@@ -105,6 +106,7 @@ export default function BookingModal({
     medium: CommunicationMedium;
     isEmergency?: boolean;
   } | null>(null);
+  const [openingMeetFromSuccess, setOpeningMeetFromSuccess] = useState(false);
 
   // Clear booking state when modal opens
   useEffect(() => {
@@ -485,14 +487,9 @@ export default function BookingModal({
                         Meeting link
                       </p>
                       <div className="flex flex-col sm:flex-row gap-2">
-                        <a
-                          href={successResult.meetLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-1 truncate text-[#44666C] hover:underline font-medium"
-                        >
+                        <span className="flex-1 truncate text-[#44666C] font-medium break-all">
                           {successResult.meetLink}
-                        </a>
+                        </span>
                         <div className="flex gap-2 shrink-0">
                           <button
                             type="button"
@@ -505,14 +502,44 @@ export default function BookingModal({
                           >
                             <Copy className="w-4 h-4" /> Copy
                           </button>
-                          <a
-                            href={successResult.meetLink!}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="px-3 py-2 rounded-lg bg-[#44666C] text-white hover:bg-[#365a62] flex items-center gap-2"
+                          <button
+                            type="button"
+                            disabled={
+                              openingMeetFromSuccess || !authUser?.id
+                            }
+                            onClick={() => {
+                              const link = successResult!.meetLink!;
+                              const id = successResult!.appointmentId;
+                              if (!authUser?.id) return;
+                              setOpeningMeetFromSuccess(true);
+                              void postAppointmentJoinThenOpenMeet(
+                                id,
+                                link,
+                                {
+                                  participantId: authUser.id,
+                                  role: "USER",
+                                },
+                              )
+                                .catch(() => {
+                                  window.open(
+                                    link,
+                                    "_blank",
+                                    "noopener,noreferrer",
+                                  );
+                                })
+                                .finally(() =>
+                                  setOpeningMeetFromSuccess(false),
+                                );
+                            }}
+                            className="px-3 py-2 rounded-lg bg-[#44666C] text-white hover:bg-[#365a62] flex items-center gap-2 disabled:opacity-60 cursor-pointer"
                           >
-                            <ExternalLink className="w-4 h-4" /> Open
-                          </a>
+                            {openingMeetFromSuccess ? (
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                            ) : (
+                              <ExternalLink className="w-4 h-4" />
+                            )}{" "}
+                            Open
+                          </button>
                         </div>
                       </div>
                     </div>

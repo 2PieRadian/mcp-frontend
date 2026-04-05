@@ -9,6 +9,7 @@ import {
   getUrgentRequest,
   initiateUrgentPayment,
   verifyUrgentPayment,
+  postAppointmentJoinThenOpenMeet,
   ApiHttpError,
   type UrgentRequest,
   type UrgentRequestStatus,
@@ -127,7 +128,9 @@ function UrgentRequestCard({
   onRefresh: () => void;
 }) {
   const { t } = useTranslation("common");
+  const { user: authUser } = useAuth();
   const [copied, setCopied] = useState(false);
+  const [joiningSession, setJoiningSession] = useState(false);
 
   const formatDate = (iso: string) => {
     const d = new Date(iso);
@@ -296,15 +299,32 @@ function UrgentRequestCard({
               </div>
             </div>
             {request.appointment.meetLink && (
-              <a
-                href={request.appointment.meetLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-xl font-medium transition-colors"
+              <button
+                type="button"
+                disabled={joiningSession || !authUser?.id}
+                onClick={() => {
+                  const link = request.appointment!.meetLink!;
+                  if (!authUser?.id) return;
+                  setJoiningSession(true);
+                  void postAppointmentJoinThenOpenMeet(
+                    request.appointment!.id,
+                    link,
+                    { participantId: authUser.id, role: "USER" },
+                  )
+                    .catch(() => {
+                      window.open(link, "_blank", "noopener,noreferrer");
+                    })
+                    .finally(() => setJoiningSession(false));
+                }}
+                className="flex items-center justify-center gap-2 w-full py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-xl font-medium transition-colors disabled:opacity-60 cursor-pointer"
               >
-                <ExternalLink className="w-4 h-4" />
+                {joiningSession ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <ExternalLink className="w-4 h-4" />
+                )}
                 Join Session
-              </a>
+              </button>
             )}
           </div>
         )}

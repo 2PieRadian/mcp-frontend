@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import {
   ArrowLeft,
@@ -16,6 +16,7 @@ import {
   isTerminalAppointmentStatus,
   isScheduledAwaitingJoinInBookedWindow,
   expertAuthUserOwnsAppointment,
+  postAppointmentJoinThenOpenMeet,
   type AppointmentStatus,
   type ExpertAppointment,
   type MyAppointment,
@@ -123,18 +124,24 @@ export default function AppointmentVideoSession() {
   const shouldAutoOpen =
     !resolving && !!appointment && !isTerminal && hasMeetLink && isVideo;
 
-  // Auto-open the backend meeting URL once on this route.
+  const openMeetWithJoin = useCallback(() => {
+    if (!meetLink || !sessionRole || !user?.id) return;
+    void postAppointmentJoinThenOpenMeet(appointmentNumericId, meetLink, {
+      participantId: user.id,
+      role: sessionRole,
+    }).catch(() => {
+      window.open(meetLink, "_blank", "noopener,noreferrer");
+    });
+  }, [appointmentNumericId, meetLink, sessionRole, user?.id]);
+
+  // Auto-open the backend meeting URL once on this route (after recording join).
   const autoOpenedRef = useRef(false);
   useEffect(() => {
-    if (!shouldAutoOpen) return;
+    if (!shouldAutoOpen || !user?.id || !sessionRole) return;
     if (autoOpenedRef.current) return;
     autoOpenedRef.current = true;
-    try {
-      window.open(meetLink!, "_blank", "noopener,noreferrer");
-    } catch {
-      /* ignore */
-    }
-  }, [shouldAutoOpen, meetLink]);
+    void openMeetWithJoin();
+  }, [shouldAutoOpen, user?.id, sessionRole, openMeetWithJoin]);
 
   if (!authLoading && !user) {
     return (
@@ -265,15 +272,14 @@ export default function AppointmentVideoSession() {
           </div>
 
           {appointment?.meetLink ? (
-            <a
-              href={appointment.meetLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex shrink-0 items-center gap-1.5 rounded-xl border border-white/10 bg-white/5 px-2.5 py-2 text-xs font-medium text-[#a8d4c4] transition hover:bg-white/10 sm:px-3"
+            <button
+              type="button"
+              onClick={() => void openMeetWithJoin()}
+              className="inline-flex shrink-0 items-center gap-1.5 rounded-xl border border-white/10 bg-white/5 px-2.5 py-2 text-xs font-medium text-[#a8d4c4] transition hover:bg-white/10 sm:px-3 cursor-pointer"
             >
               <ExternalLink className="h-3.5 w-3.5" />
               <span className="hidden sm:inline">New tab</span>
-            </a>
+            </button>
           ) : null}
         </div>
       </header>
@@ -352,15 +358,14 @@ export default function AppointmentVideoSession() {
               join via phone or chat as arranged.
             </p>
             {appointment.meetLink ? (
-              <a
-                href={appointment.meetLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl bg-[#44666C] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#365a62]"
+              <button
+                type="button"
+                onClick={() => void openMeetWithJoin()}
+                className="inline-flex items-center gap-2 rounded-xl bg-[#44666C] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#365a62] cursor-pointer"
               >
                 <ExternalLink className="h-4 w-4" />
                 Open link
-              </a>
+              </button>
             ) : null}
           </div>
         ) : !appointment.meetLink ? (
@@ -374,15 +379,14 @@ export default function AppointmentVideoSession() {
                 We’ll open your meeting in a new tab.
               </p>
               <div className="mt-5 flex flex-col gap-3">
-                <a
-                  href={appointment.meetLink!}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#44666C] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#365a62]"
+                <button
+                  type="button"
+                  onClick={() => void openMeetWithJoin()}
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#44666C] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#365a62] cursor-pointer"
                 >
                   <ExternalLink className="h-4 w-4" />
                   Open meeting
-                </a>
+                </button>
                 <Link
                   to={dashboardPath}
                   className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/10 px-5 py-2.5 text-sm font-medium text-white hover:bg-white/15"
