@@ -48,7 +48,7 @@ export default function GuidanceQuotesSection() {
   ] as const;
 
   return (
-    <section className="relative w-full overflow-hidden bg-white mb-[70px]">
+    <section className="relative w-full overflow-hidden bg-white mb-[70px] mt-[40px] sm:mt-[70px]">
       <div className="relative max-w-[1350px] mx-auto">
         <div className="text-center px-[4px]">
           <h2 className="mt-2 text-[clamp(30px,3.4vw,36px)] font-bold text-primary leading-tight">
@@ -77,9 +77,8 @@ export default function GuidanceQuotesSection() {
                   />
 
                   <div
-                    className={`relative flex flex-col md:flex-row ${
-                      flip ? "md:flex-row-reverse" : ""
-                    } md:items-stretch gap-[14px] sm:gap-[18px] p-[16px] sm:p-[22px]`}
+                    className={`relative flex flex-col md:flex-row ${flip ? "md:flex-row-reverse" : ""
+                      } md:items-stretch gap-[14px] sm:gap-[18px] p-[16px] sm:p-[22px]`}
                   >
                     <div className="flex-1">
                       <div className="flex items-center justify-between gap-3">

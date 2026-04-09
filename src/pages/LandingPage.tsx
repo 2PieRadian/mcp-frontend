@@ -115,14 +115,18 @@ export default function UserDashboard() {
         />
       </Helmet>
 
-      <div className="landing-page px-[16px] sm:px-[20px] w-full max-w-full bg-white">
-        <ResponsiveNavbar />
+      <div className="landing-page w-full max-w-full bg-white">
+        <div className="px-[16px] sm:px-[20px]">
+          <ResponsiveNavbar />
+        </div>
         <HeroSection />
-        <GuidanceQuotesSection />
-        <MakeInIndia />
-        <ExpertVerifiedAssessmentsSection />
-        <HowDoesItWork />
-        <WhyChooseUsSection />
+        <div className="px-[16px] sm:px-[20px]">
+          <GuidanceQuotesSection />
+          <MakeInIndia />
+          <ExpertVerifiedAssessmentsSection />
+          <HowDoesItWork />
+          <WhyChooseUsSection />
+        </div>
       </div>
       <Footer />
     </>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TrendingUp, BookOpenText, HeartPulse } from "lucide-react";
 import { useScreen } from "../context/ScreenContext";
 import { Link } from "react-router-dom";
@@ -20,6 +20,14 @@ export default function HeroSection() {
   const { screenWidth } = useScreen();
   const showCardsBelow = screenWidth < 1024;
   const [hoveredCardIndex, setHoveredCardIndex] = useState<number | null>(null);
+  const [showMainText, setShowMainText] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowMainText(true);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const descriptionVisibleForCard = (index: number) => hoveredCardIndex === index;
 
@@ -31,58 +39,151 @@ export default function HeroSection() {
     setHoveredCardIndex(null);
   };
 
-  return (
-    <div className="relative w-full bg-white">
-      {/* Content Container */}
-      <div className="max-w-[1350px] mx-auto py-[70px] md:py-[90px]">
-        <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-[40px] lg:gap-[80px]">
-          {/* Left Content */}
-          <div className="flex-1 text-center lg:text-left space-y-6">
-            {/* Main Heading */}
-            <h1 className="text-[clamp(45px,5vw,55px)] font-bold leading-[1.1] text-[hsl(187,55%,28%)] tracking-tight">
-              {t("discoverYourPath")}
-              <span className="block mt-2 text-[hsl(190,35%,36%)]">
-                {t("betterLiving")}
+  const renderStaggeredText = (text: string, baseDelay: number = 0, delayStep: number = 0.015) => {
+    let charIndex = 0;
+    return (text || "").split(" ").map((word, wIndex, array) => {
+      const wordNode = (
+        <span key={`word-${wIndex}`} className="inline-block whitespace-nowrap">
+          {word.split("").map((char, cIndex) => {
+            const delay = baseDelay + charIndex * delayStep;
+            charIndex++;
+            return (
+              <span
+                key={`char-${cIndex}`}
+                className="inline-block opacity-0 animate-letter-reveal"
+                style={{ animationDelay: `${delay}s` }}
+              >
+                {char}
               </span>
-            </h1>
+            );
+          })}
+        </span>
+      );
+      charIndex++; // space takes one delay step
+
+      return (
+        <span key={`wrap-${wIndex}`}>
+          {wordNode}
+          {wIndex < array.length - 1 && " "}
+        </span>
+      );
+    });
+  };
+
+  return (
+    <div className="relative w-full bg-[#fcfdfe] overflow-hidden min-h-[90vh] flex items-center">
+      <style>{`
+        @keyframes blob {
+          0% { transform: translate(0px, 0px) scale(1); }
+          33% { transform: translate(30px, -50px) scale(1.1); }
+          66% { transform: translate(-20px, 20px) scale(0.9); }
+          100% { transform: translate(0px, 0px) scale(1); }
+        }
+        @keyframes letter-reveal {
+          0% { opacity: 0; transform: translateY(-30px); filter: blur(4px); }
+          50% { opacity: 1; filter: blur(0); }
+          65% { transform: translateY(6px); }
+          80% { transform: translateY(-3px); }
+          100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+        @keyframes fade-out {
+          0% { opacity: 1; filter: blur(0); }
+          100% { opacity: 0; filter: blur(4px); }
+        }
+        .animate-letter-reveal {
+          animation: letter-reveal 0.7s ease-out forwards;
+        }
+        .fade-out-welcome {
+          animation: fade-out 0.5s ease-out forwards;
+          animation-delay: 2.5s;
+        }
+        .animate-blob {
+          animation: blob 8s infinite ease-in-out;
+        }
+        .animation-delay-2000 {
+          animation-delay: 2s;
+        }
+        .animation-delay-4000 {
+          animation-delay: 4s;
+        }
+      `}</style>
+
+      {/* Animated Glowing Mesh Background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-[10%] -left-[10%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] rounded-full bg-gradient-to-br from-[#0ea5e9]/20 to-[#06b6d4]/10 blur-[80px] md:blur-[120px] mix-blend-multiply animate-blob"></div>
+        <div className="absolute top-[20%] -right-[10%] w-[45vw] h-[45vw] max-w-[500px] max-h-[500px] rounded-full bg-gradient-to-br from-[#10b981]/20 to-[#059669]/10 blur-[80px] md:blur-[120px] mix-blend-multiply animate-blob animation-delay-2000"></div>
+        <div className="absolute -bottom-[20%] left-[20%] w-[55vw] h-[55vw] max-w-[700px] max-h-[700px] rounded-full bg-gradient-to-br from-[#f59e0b]/20 to-[#d97706]/10 blur-[80px] md:blur-[120px] mix-blend-multiply animate-blob animation-delay-4000"></div>
+      </div>
+
+      {/* Content Container */}
+      <div className="relative z-10 w-full max-w-[1350px] mx-auto py-[70px] md:py-[80px] px-[16px] lg:px-[40px]">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-[50px] lg:gap-[80px]">
+
+          {/* Left Content */}
+          <div className="flex-1 text-center lg:text-left space-y-7 md:space-y-4 max-w-[650px]">
+            {/* Main Heading */}
+            <div className="min-h-[140px] md:min-h-[180px] flex items-center justify-center lg:justify-start">
+              {!showMainText ? (
+                <h1 className="text-[clamp(40px,5vw,60px)] font-extrabold leading-[1.2] text-[#083a57] tracking-tight fade-out-welcome">
+                  {renderStaggeredText("Welcome to MindCurePath", 0, 0.04)}
+                </h1>
+              ) : (
+                <h1 className="text-[clamp(40px,5vw,60px)] font-extrabold leading-[1.2] text-[#083a57] tracking-tight">
+                  <span className="inline-block w-full">
+                    {renderStaggeredText(t("discoverYourPath"), 0, 0.035)}
+                  </span>
+                  {t("betterLiving") && (
+                    <span className="block mt-2 bg-clip-text text-transparent bg-gradient-to-r from-[#0ea5e9] to-[#10b981]">
+                      <span
+                        className="inline-block opacity-0 animate-letter-reveal"
+                        style={{ animationDelay: `${(t("discoverYourPath")?.length || 0) * 0.035}s` }}
+                      >
+                        {t("betterLiving")}
+                      </span>
+                    </span>
+                  )}
+                </h1>
+              )}
+            </div>
 
             {/* Subheading */}
-            <p className="text-[clamp(16px,2.5vw,20px)] text-[#4F5B64] leading-relaxed max-w-[600px] mx-auto lg:mx-0">
+            <p className="text-[clamp(16px,2vw,20px)] text-[#4F5B64] leading-relaxed max-w-[600px] mx-auto lg:mx-0 font-medium">
               {t("heroSubheading")}
             </p>
 
             {/* Key Points */}
-            <div className="flex flex-row gap-2 md:gap-3 justify-center lg:justify-start overflow-x-auto">
-              <div className="inline-flex items-center px-2 py-0.5 md:px-3 md:py-1 bg-[#ecf4f6] rounded-full border border-primary/10">
-                <span className="text-[10px] md:text-[12px] font-medium text-primary">
-                  {t("scienceBacked")}
+            <div className="flex flex-row gap-3 md:gap-4 justify-center lg:justify-start flex-wrap">
+              <div className="inline-flex items-center px-4 py-1.5 bg-white/70 backdrop-blur-sm rounded-full border border-white/50 shadow-sm cursor-default hover:bg-white transition-colors duration-300">
+                <span className="text-[12px] md:text-[14px] font-bold text-[#0ea5e9]">
+                  ✓ {t("scienceBacked")}
                 </span>
               </div>
-              <div className="inline-flex items-center px-2 py-0.5 md:px-3 md:py-1 bg-[#ecf4f6] rounded-full border border-primary/10">
-                <span className="text-[10px] md:text-[12px] font-medium text-primary">
-                  {t("expertVerifiedAssessmentsBadge")}
+              <div className="inline-flex items-center px-4 py-1.5 bg-white/70 backdrop-blur-sm rounded-full border border-white/50 shadow-sm cursor-default hover:bg-white transition-colors duration-300">
+                <span className="text-[12px] md:text-[14px] font-bold text-[#10b981]">
+                  ✓ {t("expertVerifiedAssessmentsBadge")}
                 </span>
               </div>
-              <div className="inline-flex items-center px-2 py-0.5 md:px-3 md:py-1 bg-[#ecf4f6] rounded-full border border-primary/10">
-                <span className="text-[10px] md:text-[12px] font-medium text-primary">
-                  {t("freeAssessments")}
+              <div className="inline-flex items-center px-4 py-1.5 bg-white/70 backdrop-blur-sm rounded-full border border-white/50 shadow-sm cursor-default hover:bg-white transition-colors duration-300">
+                <span className="text-[12px] md:text-[14px] font-bold text-[#f59e0b]">
+                  ✓ {t("freeAssessments")}
                 </span>
               </div>
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-[10px] justify-center lg:justify-start pt-[30px]">
+            <div className="flex flex-col sm:flex-row gap-[16px] justify-center lg:justify-start pt-[10px]">
               <Link
                 to="/choose-experts"
-                className="group inline-flex items-center whitespace-nowrap justify-center gap-2 px-[25px] py-[12px] bg-[hsl(187,55%,28%)] text-white rounded-[16px] font-medium text-[16px] hover:bg-[hsl(187,55%,22%)] transition-all duration-300 hover:scale-[1.02] shadow-[0_2px_8px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)]"
+                className="group relative inline-flex items-center whitespace-nowrap justify-center gap-2 px-[32px] py-[16px] bg-gradient-to-r from-[#083a57] to-[#0c5c8a] text-white rounded-[24px] font-bold text-[16px] md:text-[18px] hover:shadow-[0_12px_24px_rgba(8,58,87,0.25)] transition-all duration-300 hover:scale-[1.02] overflow-hidden"
               >
-                {t("findYourExpert")}
+                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out rounded-[24px]"></div>
+                <span className="relative z-10">{t("findYourExpert")}</span>
               </Link>
 
               <a
                 href="#expert-verified-assessments"
                 onClick={(e) => smoothScrollToHash(e, "#expert-verified-assessments")}
-                className="inline-flex items-center whitespace-nowrap justify-center px-[25px] py-[12px] bg-transparent text-primary rounded-[16px] font-medium text-[16px] border border-gray-300 hover:bg-[#ecf4f6] transition-all duration-300 hover:scale-[1.02] shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.12)]"
+                className="inline-flex mb-[40px] sm:mb-[0] items-center whitespace-nowrap justify-center px-[32px] py-[16px] bg-white/60 backdrop-blur-md text-[#083a57] rounded-[24px] font-bold text-[16px] md:text-[18px] border border-gray-200 md:border-[2px] md:border-white hover:bg-white hover:text-[#0ea5e9] transition-all duration-300 hover:scale-[1.02] shadow-[0_8px_16px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_24px_rgba(0,0,0,0.08)]"
               >
                 {t("startFreeAssessment")}
               </a>
@@ -91,33 +192,35 @@ export default function HeroSection() {
 
           {/* Right Content - Visual Elements */}
           {!showCardsBelow && (
-            <div className="flex-1 relative w-full max-w-[440px] lg:max-w-[480px] min-h-[420px] lg:min-h-[460px]">
+            <div className="flex-1 relative w-full max-w-[440px] lg:max-w-[480px] min-h-[460px] lg:min-h-[500px]">
               {/* Floating cards – row 1: Wellness + Education; row 2: Finance centered */}
               <div className="relative w-full h-full" aria-hidden>
-                {/* Card 1 – Wellness (wrapper has float; Link has scale/rotate transition) */}
+                {/* Card 1 – Wellness */}
                 <div
-                  className={`group hero-card-float-1 absolute left-0 lg:left-0 top-0 z-10 w-[200px] h-[200px] lg:w-[220px] lg:h-[220px] group-hover:z-40 ${descriptionVisibleForCard(0) ? "hero-card-wrapper-active" : ""}`}
+                  className={`group hero-card-float-1 absolute left-0 lg:left-0 top-[20px] z-10 w-[200px] h-[200px] lg:w-[220px] lg:h-[220px] group-hover:z-40 ${descriptionVisibleForCard(0) ? "hero-card-wrapper-active" : ""}`}
                   onMouseEnter={() => handleCardMouseEnter(0)}
                   onMouseLeave={handleCardMouseLeave}
                 >
                   <Link
                     to="/wellness-experts"
-                    className="hero-card-link group w-full h-full rounded-full px-5 pt-5 pb-7 lg:px-6 lg:pt-6 lg:pb-9 flex flex-col items-center justify-center text-center shadow-[0_10px_30px_rgba(0,0,0,0.08)] hover:shadow-[0_16px_48px_rgba(0,0,0,0.12)] hover:z-40 cursor-pointer overflow-hidden bg-white/55 backdrop-blur-md border-2 border-[#0ea5e9]/35"
+                    className="hero-card-link group w-full h-full rounded-[40px] px-5 pt-5 pb-7 lg:px-6 lg:pt-6 lg:pb-9 flex flex-col items-center justify-center text-center shadow-[0_15px_40px_rgba(14,165,233,0.15)] hover:shadow-[0_20px_50px_rgba(14,165,233,0.3)] hover:z-40 cursor-pointer overflow-hidden bg-white/70 backdrop-blur-xl border border-white hover:border-[#0ea5e9]/50"
                   >
-                    <div className="pointer-events-none absolute inset-0 rounded-full bg-linear-to-br from-[#0ea5e9]/28 via-[#06b6d4]/18 to-[#06b6d4]/12" />
+                    <div className="pointer-events-none absolute inset-0 rounded-[40px] bg-gradient-to-br from-[#0ea5e9]/10 to-transparent" />
                     <div
-                      className={`hero-card-fill pointer-events-none absolute inset-0 rounded-full bg-[#0ea5e9] origin-center transition-transform duration-500 ease-in-out group-hover:scale-150 ${descriptionVisibleForCard(0) ? "scale-150" : "scale-0"}`}
+                      className={`hero-card-fill pointer-events-none absolute inset-0 rounded-[40px] bg-gradient-to-br from-[#0ea5e9] to-[#0284c7] origin-center transition-transform duration-500 ease-in-out group-hover:scale-[1.7] ${descriptionVisibleForCard(0) ? "scale-[1.7]" : "scale-0"}`}
                     />
                     <div className="hero-card-content relative z-10 flex flex-col items-center justify-center text-center transition-colors duration-500 ease-in-out group-hover:text-white">
-                      <HeartPulse className="w-10 h-10 lg:w-12 lg:h-12 text-[#083a57] group-hover:text-white mb-3 lg:mb-4 shrink-0 transition-colors duration-500 ease-in-out" />
-                      <h3 className="font-bold text-[#083a57] group-hover:text-white text-base lg:text-lg mb-1 leading-tight transition-colors duration-500 ease-in-out">
+                      <div className="w-14 h-14 lg:w-16 lg:h-16 rounded-full bg-white/90 shadow-sm flex items-center justify-center mb-4 group-hover:bg-white/20 transition-colors duration-500">
+                        <HeartPulse className="w-7 h-7 lg:w-8 lg:h-8 text-[#0ea5e9] group-hover:text-white transition-colors duration-500 ease-in-out" />
+                      </div>
+                      <h3 className="font-extrabold text-[#083a57] group-hover:text-white text-lg lg:text-xl mb-1 leading-tight transition-colors duration-500 ease-in-out tracking-tight">
                         {t("wellness")}
                       </h3>
                       <div
-                        className={`overflow-hidden transition-all duration-500 ease-in-out ${descriptionVisibleForCard(0) ? "max-h-20 opacity-100" : "max-h-0 opacity-0"
+                        className={`overflow-hidden transition-all duration-500 ease-in-out ${descriptionVisibleForCard(0) ? "max-h-20 opacity-100 mt-2" : "max-h-0 opacity-0 mt-0"
                           }`}
                       >
-                        <p className="text-[#083a57]/90 group-hover:text-white/95 text-xs lg:text-sm leading-snug transition-colors duration-500 ease-in-out">
+                        <p className="text-[#083a57]/80 group-hover:text-white/90 text-sm font-medium leading-snug transition-colors duration-500 ease-in-out">
                           {t("assessMentalHealth")}
                         </p>
                       </div>
@@ -133,22 +236,24 @@ export default function HeroSection() {
                 >
                   <Link
                     to="/education-experts"
-                    className="hero-card-link group w-full h-full rounded-full px-5 pt-5 pb-7 lg:px-6 lg:pt-6 lg:pb-9 flex flex-col items-center justify-center text-center shadow-[0_10px_30px_rgba(0,0,0,0.08)] hover:shadow-[0_16px_48px_rgba(0,0,0,0.12)] hover:z-40 cursor-pointer overflow-hidden bg-white/55 backdrop-blur-md border-2 border-[#10b981]/35"
+                    className="hero-card-link group w-full h-full rounded-[40px] px-5 pt-5 pb-7 lg:px-6 lg:pt-6 lg:pb-9 flex flex-col items-center justify-center text-center shadow-[0_15px_40px_rgba(16,185,129,0.15)] hover:shadow-[0_20px_50px_rgba(16,185,129,0.3)] hover:z-40 cursor-pointer overflow-hidden bg-white/70 backdrop-blur-xl border border-white hover:border-[#10b981]/50"
                   >
-                    <div className="pointer-events-none absolute inset-0 rounded-full bg-linear-to-br from-[#10b981]/28 via-[#059669]/18 to-[#059669]/12" />
+                    <div className="pointer-events-none absolute inset-0 rounded-[40px] bg-gradient-to-br from-[#10b981]/10 to-transparent" />
                     <div
-                      className={`hero-card-fill pointer-events-none absolute inset-0 rounded-full bg-[#10b981] origin-center transition-transform duration-500 ease-in-out group-hover:scale-150 ${descriptionVisibleForCard(1) ? "scale-150" : "scale-0"}`}
+                      className={`hero-card-fill pointer-events-none absolute inset-0 rounded-[40px] bg-gradient-to-br from-[#10b981] to-[#059669] origin-center transition-transform duration-500 ease-in-out group-hover:scale-[1.7] ${descriptionVisibleForCard(1) ? "scale-[1.7]" : "scale-0"}`}
                     />
                     <div className="hero-card-content relative z-10 flex flex-col items-center justify-center text-center transition-colors duration-500 ease-in-out group-hover:text-white">
-                      <BookOpenText className="w-10 h-10 lg:w-12 lg:h-12 text-[#064a36] group-hover:text-white mb-3 lg:mb-4 shrink-0 transition-colors duration-500 ease-in-out" />
-                      <h3 className="font-bold text-[#064a36] group-hover:text-white text-base lg:text-lg mb-1 leading-tight transition-colors duration-500 ease-in-out">
+                      <div className="w-14 h-14 lg:w-16 lg:h-16 rounded-full bg-white/90 shadow-sm flex items-center justify-center mb-4 group-hover:bg-white/20 transition-colors duration-500">
+                        <BookOpenText className="w-7 h-7 lg:w-8 lg:h-8 text-[#10b981] group-hover:text-white transition-colors duration-500 ease-in-out" />
+                      </div>
+                      <h3 className="font-extrabold text-[#064a36] group-hover:text-white text-lg lg:text-xl mb-1 leading-tight transition-colors duration-500 ease-in-out tracking-tight">
                         {t("education")}
                       </h3>
                       <div
-                        className={`overflow-hidden transition-all duration-500 ease-in-out ${descriptionVisibleForCard(1) ? "max-h-20 opacity-100" : "max-h-0 opacity-0"
+                        className={`overflow-hidden transition-all duration-500 ease-in-out ${descriptionVisibleForCard(1) ? "max-h-20 opacity-100 mt-2" : "max-h-0 opacity-0 mt-0"
                           }`}
                       >
-                        <p className="text-[#064a36]/90 group-hover:text-white/95 text-xs lg:text-sm leading-snug transition-colors duration-500 ease-in-out">
+                        <p className="text-[#064a36]/80 group-hover:text-white/90 text-sm font-medium leading-snug transition-colors duration-500 ease-in-out">
                           {t("planCareerEducational")}
                         </p>
                       </div>
@@ -156,30 +261,32 @@ export default function HeroSection() {
                   </Link>
                 </div>
 
-                {/* Card 3 – Finance (below, centered between card 1 and 2) */}
+                {/* Card 3 – Finance */}
                 <div
-                  className={`group hero-card-float-3 absolute left-[110px] lg:left-[120px] top-[200px] lg:top-[210px] z-30 w-[200px] h-[200px] lg:w-[220px] lg:h-[220px] group-hover:z-40 ${descriptionVisibleForCard(2) ? "hero-card-wrapper-active" : ""}`}
+                  className={`group hero-card-float-3 absolute left-[110px] lg:left-[120px] top-[220px] lg:top-[230px] z-30 w-[200px] h-[200px] lg:w-[220px] lg:h-[220px] group-hover:z-40 ${descriptionVisibleForCard(2) ? "hero-card-wrapper-active" : ""}`}
                   onMouseEnter={() => handleCardMouseEnter(2)}
                   onMouseLeave={handleCardMouseLeave}
                 >
                   <Link
                     to="/finance-experts"
-                    className="hero-card-link group w-full h-full rounded-full px-5 pt-5 pb-7 lg:px-6 lg:pt-6 lg:pb-9 flex flex-col items-center justify-center text-center shadow-[0_10px_30px_rgba(0,0,0,0.08)] hover:shadow-[0_16px_48px_rgba(0,0,0,0.12)] hover:z-40 cursor-pointer overflow-hidden bg-white/55 backdrop-blur-md border-2 border-[#f59e0b]/40"
+                    className="hero-card-link group w-full h-full rounded-[40px] px-5 pt-5 pb-7 lg:px-6 lg:pt-6 lg:pb-9 flex flex-col items-center justify-center text-center shadow-[0_15px_40px_rgba(245,158,11,0.15)] hover:shadow-[0_20px_50px_rgba(245,158,11,0.3)] hover:z-40 cursor-pointer overflow-hidden bg-white/70 backdrop-blur-xl border border-white hover:border-[#f59e0b]/50"
                   >
-                    <div className="pointer-events-none absolute inset-0 rounded-full bg-linear-to-br from-[#f59e0b]/28 via-[#d97706]/18 to-[#d97706]/12" />
+                    <div className="pointer-events-none absolute inset-0 rounded-[40px] bg-gradient-to-br from-[#f59e0b]/10 to-transparent" />
                     <div
-                      className={`hero-card-fill pointer-events-none absolute inset-0 rounded-full bg-[#f59e0b] origin-center transition-transform duration-500 ease-in-out group-hover:scale-150 ${descriptionVisibleForCard(2) ? "scale-150" : "scale-0"}`}
+                      className={`hero-card-fill pointer-events-none absolute inset-0 rounded-[40px] bg-gradient-to-br from-[#f59e0b] to-[#d97706] origin-center transition-transform duration-500 ease-in-out group-hover:scale-[1.7] ${descriptionVisibleForCard(2) ? "scale-[1.7]" : "scale-0"}`}
                     />
                     <div className="hero-card-content relative z-10 flex flex-col items-center justify-center text-center transition-colors duration-500 ease-in-out group-hover:text-white">
-                      <TrendingUp className="w-10 h-10 lg:w-12 lg:h-12 text-[#6a3e06] group-hover:text-white mb-3 lg:mb-4 shrink-0 transition-colors duration-500 ease-in-out" />
-                      <h3 className="font-bold text-[#6a3e06] group-hover:text-white text-base lg:text-lg mb-1 leading-tight transition-colors duration-500 ease-in-out">
+                      <div className="w-14 h-14 lg:w-16 lg:h-16 rounded-full bg-white/90 shadow-sm flex items-center justify-center mb-4 group-hover:bg-white/20 transition-colors duration-500">
+                        <TrendingUp className="w-7 h-7 lg:w-8 lg:h-8 text-[#f59e0b] group-hover:text-white transition-colors duration-500 ease-in-out" />
+                      </div>
+                      <h3 className="font-extrabold text-[#6a3e06] group-hover:text-white text-lg lg:text-xl mb-1 leading-tight transition-colors duration-500 ease-in-out tracking-tight">
                         {t("finance")}
                       </h3>
                       <div
-                        className={`overflow-hidden transition-all duration-500 ease-in-out ${descriptionVisibleForCard(2) ? "max-h-20 opacity-100" : "max-h-0 opacity-0"
+                        className={`overflow-hidden transition-all duration-500 ease-in-out ${descriptionVisibleForCard(2) ? "max-h-20 opacity-100 mt-2" : "max-h-0 opacity-0 mt-0"
                           }`}
                       >
-                        <p className="text-[#6a3e06]/90 group-hover:text-white/95 text-xs lg:text-sm leading-snug transition-colors duration-500 ease-in-out">
+                        <p className="text-[#6a3e06]/80 group-hover:text-white/90 text-sm font-medium leading-snug transition-colors duration-500 ease-in-out">
                           {t("buildFinancialFoundation")}
                         </p>
                       </div>
@@ -189,7 +296,9 @@ export default function HeroSection() {
               </div>
             </div>
           )}
+        </div>
 
+        <div className="relative z-20">
           {showCardsBelow && <ChooseYourPath />}
         </div>
       </div>
