@@ -1,4 +1,3 @@
-import { BookOpenText, TrendingUp } from "lucide-react";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -23,7 +22,14 @@ export default function ChooseYourPath() {
           to="/wellness-experts"
           className="mcp-cat-card group bg-white rounded-[16px] p-2.5 sm:p-5 shadow-md border border-gray-100 hover:scale-[1.02] transition-transform text-left max-[500px]:text-center"
         >
-          <div className="mcp-cat-thumb mcp-thumb--wellness w-full aspect-100/70 bg-linear-to-br from-[#0ea5e9] to-[#06b6d4] rounded-[10px] flex items-center justify-center mb-3 sm:mb-4">
+          <div className="mcp-cat-thumb mcp-thumb--wellness mcp-thumb--hero-photo w-full aspect-100/70 bg-slate-200 rounded-[10px] flex items-center justify-center mb-3 sm:mb-4">
+            <img
+              src="/images/hero/hero-wellness.jpg"
+              alt=""
+              className="mcp-cat-hero-photo"
+              loading="lazy"
+              decoding="async"
+            />
             <span className="mcp-cat-layer mcp-layer-1" />
             <span className="mcp-cat-layer mcp-layer-2" />
             <span className="mcp-cat-layer mcp-ring" />
@@ -34,13 +40,6 @@ export default function ChooseYourPath() {
               <span className="mcp-wellness-breathe" />
               <span className="mcp-wellness-leaf" />
             </span>
-            <img
-              src="/images/health/yoga.png"
-              alt="Wellness"
-              className="mcp-cat-icon w-10 h-10 sm:w-14 sm:h-14 md:w-[86px] md:h-[86px] object-contain group-hover:scale-125 transition-transform duration-300"
-              loading="lazy"
-              decoding="async"
-            />
           </div>
           <h3 className="font-bold text-primary text-[clamp(14px,2vw,18px)] mb-1">
             {t("wellness")}
@@ -54,7 +53,14 @@ export default function ChooseYourPath() {
           to="/education-experts"
           className="mcp-cat-card group bg-white rounded-[16px] p-2.5 sm:p-5 shadow-md border border-gray-100 hover:scale-[1.02] transition-transform text-left max-[500px]:text-center"
         >
-          <div className="mcp-cat-thumb mcp-thumb--education w-full aspect-100/70 bg-linear-to-br from-[#10b981] to-[#059669] rounded-[10px] flex items-center justify-center mb-3 sm:mb-4">
+          <div className="mcp-cat-thumb mcp-thumb--education mcp-thumb--hero-photo w-full aspect-100/70 bg-slate-200 rounded-[10px] flex items-center justify-center mb-3 sm:mb-4">
+            <img
+              src="/images/hero/hero-education.jpg"
+              alt=""
+              className="mcp-cat-hero-photo"
+              loading="lazy"
+              decoding="async"
+            />
             <span className="mcp-cat-layer mcp-layer-1" />
             <span className="mcp-cat-layer mcp-layer-2" />
             <span className="mcp-cat-layer mcp-fold" />
@@ -67,7 +73,6 @@ export default function ChooseYourPath() {
               <span className="mcp-edu-chip mcp-edu-chip-a" />
               <span className="mcp-edu-chip mcp-edu-chip-sigma" />
             </span>
-            <BookOpenText className="mcp-cat-icon w-7 h-7 sm:w-10 sm:h-10 md:w-[60px] md:h-[60px] text-white group-hover:scale-125 transition-transform duration-300" />
           </div>
           <h3 className="font-bold text-primary text-[clamp(14px,2vw,18px)] mb-1">
             {t("education")}
@@ -81,7 +86,14 @@ export default function ChooseYourPath() {
           to="/finance-experts"
           className="mcp-cat-card group bg-white rounded-[16px] p-2.5 sm:p-5 shadow-md border border-gray-100 hover:scale-[1.02] transition-transform text-left max-[500px]:text-center"
         >
-          <div className="mcp-cat-thumb mcp-thumb--finance w-full aspect-100/70 bg-linear-to-br from-[#f59e0b] to-[#d97706] rounded-[10px] flex items-center justify-center mb-3 sm:mb-4">
+          <div className="mcp-cat-thumb mcp-thumb--finance mcp-thumb--hero-photo w-full aspect-100/70 bg-slate-200 rounded-[10px] flex items-center justify-center mb-3 sm:mb-4">
+            <img
+              src="/images/hero/hero-finance.jpg"
+              alt=""
+              className="mcp-cat-hero-photo"
+              loading="lazy"
+              decoding="async"
+            />
             <span className="mcp-cat-layer mcp-layer-1" />
             <span className="mcp-cat-layer mcp-layer-2" />
             <span className="mcp-fin-bars" aria-hidden="true">
@@ -185,7 +197,6 @@ export default function ChooseYourPath() {
                 }
               />
             </span>
-            <TrendingUp className="mcp-cat-icon w-8 h-8 sm:w-12 sm:h-12 md:w-[76px] md:h-[76px] text-white group-hover:scale-125 transition-transform duration-300" />
           </div>
           <h3 className="font-bold text-primary text-[clamp(14px,2vw,18px)] mb-1">
             {t("finance")}

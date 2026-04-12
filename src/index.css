@@ -214,7 +214,7 @@ body:not([style*="position: fixed"]) {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-8px);
+    transform: translateY(-4px);
   }
 }
 @keyframes hero-float-2 {
@@ -223,7 +223,7 @@ body:not([style*="position: fixed"]) {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-5px);
   }
 }
 @keyframes hero-float-3 {
@@ -232,7 +232,7 @@ body:not([style*="position: fixed"]) {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-6px);
+    transform: translateY(-3px);
   }
 }
 .hero-card-float-1 {
@@ -263,21 +263,7 @@ body:not([style*="position: fixed"]) {
     box-shadow 0.5s ease-in-out;
 }
 .hero-card-link:hover {
-  transform: scale(1.12);
-}
-/* When card is active (auto interval or hover), scale the circle and fill bg */
-.hero-card-wrapper-active .hero-card-link {
-  transform: scale(1.12);
-}
-.hero-card-wrapper-active .hero-card-fill {
-  transform: scale(1.5);
-}
-.hero-card-wrapper-active .hero-card-content,
-.hero-card-wrapper-active .hero-card-content * {
-  color: white !important;
-}
-.hero-card-wrapper-active .hero-card-content p {
-  opacity: 0.95;
+  transform: scale(1.02);
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-card-link {
@@ -285,12 +271,6 @@ body:not([style*="position: fixed"]) {
   }
   .hero-card-link:hover {
     transform: scale(1);
-  }
-  .hero-card-wrapper-active .hero-card-link {
-    transform: scale(1);
-  }
-  .hero-card-wrapper-active .hero-card-fill {
-    transform: scale(0);
   }
 }
 
@@ -315,6 +295,23 @@ body:not([style*="position: fixed"]) {
   overflow: hidden;
   border-radius: 10px;
   isolation: isolate;
+}
+
+/* Landing hero parity: photo-led thumbnails (mobile “choose path”) */
+.mcp-thumb--hero-photo .mcp-cat-hero-photo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mcp-thumb--hero-photo .mcp-cat-layer,
+.mcp-thumb--hero-photo .mcp-wellness-scene,
+.mcp-thumb--hero-photo .mcp-edu-scene,
+.mcp-thumb--hero-photo .mcp-fin-bars {
+  display: none;
 }
 
 .mcp-cat-layer {

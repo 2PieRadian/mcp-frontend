@@ -12,7 +12,10 @@ export default function ExpertsTitle({
   const { t } = useTranslation(["experts"]);
 
   const displayTitle =
-    specialization || (sector ? `${sector} ${t("expertsTitleAll", { ns: "experts" })}` : t("expertsTitleAll", { ns: "experts" }));
+    specialization ||
+    (sector
+      ? `${sector} ${t("expertsTitleAll", { ns: "experts" })}`
+      : t("expertsTitleAll", { ns: "experts" }));
 
   return (
     <div className="max-w-[1350px] mx-auto">
