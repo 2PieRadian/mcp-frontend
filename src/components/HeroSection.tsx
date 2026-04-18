@@ -124,10 +124,10 @@ function HeroCategoryCard({
       >
         {body}
       </p>
-      <span className="mt-auto pt-3 inline-flex w-fit items-center gap-1 rounded-full border border-slate-200/90 bg-white/80 px-3 py-1.5 text-[11px] font-semibold text-slate-700 shadow-[0_4px_10px_rgba(148,163,184,0.12)] backdrop-blur-sm transition group-hover:border-slate-300 group-hover:bg-white sm:text-xs">
+      <span className="mt-auto inline-flex w-fit items-center justify-center gap-1 self-start rounded-full border border-slate-200/90 bg-white/80 px-3 py-1.5 text-[11px] font-semibold leading-none text-slate-700 shadow-[0_4px_10px_rgba(148,163,184,0.12)] backdrop-blur-sm transition group-hover:border-slate-300 group-hover:bg-white sm:text-xs">
         {t("heroCardExplore")}
         <ArrowRight
-          className="h-3.5 w-3.5 transition group-hover:translate-x-0.5 sm:h-4 sm:w-4"
+          className="h-3.5 w-3.5 shrink-0 transition group-hover:translate-x-0.5 sm:h-4 sm:w-4"
           aria-hidden
         />
       </span>
@@ -374,7 +374,7 @@ export default function HeroSection() {
 
   const leftColumn = (
     <div className="mx-auto min-w-0 max-w-xl flex-1 text-center xl:mx-0 xl:text-left">
-      <h1 className="text-balance text-[clamp(2.5rem,7.2vw,3.35rem)] font-bold leading-[1.1] tracking-tight text-[#1A2B3C] sm:text-[clamp(2.65rem,5vw,3.35rem)]">
+      <h1 className="text-balance text-[clamp(2.5rem,6.8vw,3.35rem)] font-bold leading-[1.1] tracking-tight text-[#1A2B3C] sm:text-[clamp(2.65rem,4vw,3.35rem)]">
         {t("discoverYourPath")}
       </h1>
 
@@ -422,7 +422,7 @@ export default function HeroSection() {
 
   return (
     <section className="isolate w-full overflow-x-hidden pb-16 mt-10 sm:pb-20 sm:pt-12 lg:min-h-0 lg:pb-24 lg:pt-10 xl:pt-12">
-      <div className="mx-auto w-full max-w-[1350px] px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-[1350px]">
         <div className="flex flex-col gap-12 xl:flex-row xl:items-start xl:justify-between xl:gap-14">
           {leftColumn}
           <div className="min-w-0 shrink-0 xl:w-[min(100%,496px)]">
