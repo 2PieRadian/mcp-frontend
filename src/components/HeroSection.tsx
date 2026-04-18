@@ -16,11 +16,11 @@ const HERO_CARD_IMAGES = {
   education: "/images/hero/hero-education.jpg",
 } as const;
 
-const CARD_GAP = 10;
+const CARD_GAP = 6;
 /** Top-row cards (vertical layout): image + title + body + CTA */
-const ROW1_H = 308;
+const ROW1_H = 356;
 /** Bottom full-width card (horizontal layout): needs extra room so copy is not clipped */
-const ROW2_H = 188;
+const ROW2_H = 206;
 const DECK_HEIGHT = ROW1_H + CARD_GAP + ROW2_H;
 const ROTATE_MS = 3000;
 const TWEEN_DURATION = 0.92;
@@ -74,7 +74,7 @@ type HeroCategoryCardProps = {
   imageAlt: string;
   title: string;
   body: string;
-  footerClass: string;
+  surfaceClass: string;
   linkClassName?: string;
   layout?: "vertical" | "horizontal";
 };
@@ -85,7 +85,7 @@ function HeroCategoryCard({
   imageAlt,
   title,
   body,
-  footerClass,
+  surfaceClass,
   linkClassName = "",
   layout = "vertical",
 }: HeroCategoryCardProps) {
@@ -97,33 +97,34 @@ function HeroCategoryCard({
       className={
         isHorizontal
           ? "w-[min(42%,11.5rem)] max-w-[184px] shrink-0 self-stretch overflow-hidden bg-slate-100 sm:max-w-[200px]"
-          : "aspect-4/3 w-full shrink-0 overflow-hidden bg-slate-100"
+          : "h-[43%] min-h-[132px] w-full shrink-0 overflow-hidden bg-slate-100"
       }
     >
       <img
         src={imageSrc}
         alt={imageAlt}
-        className={`h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.04] ${isHorizontal ? "min-h-29 sm:min-h-31" : ""}`}
+        className={`h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.06] ${isHorizontal ? "min-h-29 sm:min-h-31" : ""}`}
         width={400}
         height={300}
         decoding="async"
       />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(15,23,42,0.04)_0%,rgba(15,23,42,0)_32%,rgba(15,23,42,0.16)_100%)]" />
     </div>
   );
 
   const textBlock = (
     <div
-      className={`flex flex-col ${isHorizontal ? "min-w-0 flex-1 justify-center px-3 py-3 sm:px-4 sm:py-3.5" : "px-3.5 pb-3 pt-3"} ${footerClass}`}
+      className={`relative flex flex-col ${isHorizontal ? "min-w-0 flex-1 justify-center px-3.5 py-3 sm:px-4.5 sm:py-3.5" : "flex-1 px-4 pb-4 pt-3.5"} ${surfaceClass}`}
     >
-      <h3 className="text-lg font-bold tracking-tight text-[#1A2B3C] sm:text-xl">
+      <h3 className="text-lg font-bold tracking-tight text-slate-800 sm:text-[1.28rem]">
         {title}
       </h3>
       <p
-        className={`mt-1.5 text-xs leading-snug text-[#555555] sm:text-[13px] sm:leading-relaxed ${isHorizontal ? "line-clamp-4" : "line-clamp-3"}`}
+        className={`mt-2 text-[13px] leading-relaxed text-slate-600 sm:text-[13.5px] ${isHorizontal ? "line-clamp-4" : "line-clamp-3"}`}
       >
         {body}
       </p>
-      <span className="mt-2 inline-flex items-center gap-0.5 text-xs font-semibold text-[#2D8A6E] sm:text-sm">
+      <span className="mt-auto pt-3 inline-flex w-fit items-center gap-1 rounded-full border border-slate-200/90 bg-white/80 px-3 py-1.5 text-[11px] font-semibold text-slate-700 shadow-[0_4px_10px_rgba(148,163,184,0.12)] backdrop-blur-sm transition group-hover:border-slate-300 group-hover:bg-white sm:text-xs">
         {t("heroCardExplore")}
         <ArrowRight
           className="h-3.5 w-3.5 transition group-hover:translate-x-0.5 sm:h-4 sm:w-4"
@@ -136,8 +137,9 @@ function HeroCategoryCard({
   return (
     <Link
       to={to}
-      className={`hero-card-link group flex h-full min-h-0 w-full min-w-0 overflow-hidden rounded-2xl border border-white/90 shadow-[0_12px_32px_-18px_rgba(26,43,60,0.18)] ring-1 ring-slate-900/5 transition-[box-shadow,transform] hover:shadow-[0_16px_36px_-18px_rgba(26,43,60,0.24)] ${isHorizontal ? "flex-row" : "flex-col"} ${linkClassName}`}
+      className={`hero-card-link group relative flex h-full min-h-0 w-full min-w-0 overflow-hidden rounded-[1.45rem] border border-slate-200/80 bg-white/95 shadow-[0_14px_34px_rgba(148,163,184,0.18),0_3px_10px_rgba(148,163,184,0.1)] transition-[box-shadow,transform,border-color] hover:border-slate-300/90 hover:shadow-[0_20px_44px_rgba(148,163,184,0.22),0_10px_20px_rgba(148,163,184,0.12)] ${isHorizontal ? "flex-row" : "flex-col"} ${linkClassName}`}
     >
+      <div className="pointer-events-none absolute inset-x-5 top-0 h-px bg-white/90" />
       {imageBlock}
       {textBlock}
     </Link>
@@ -315,7 +317,7 @@ function HeroRotatingCards() {
   return (
     <div
       ref={containerRef}
-      className="relative mx-auto w-full max-w-lg xl:mx-0 xl:max-w-[440px]"
+      className="relative mx-auto w-full max-w-lg xl:mx-0 xl:max-w-[484px]"
       style={{ height: DECK_HEIGHT }}
     >
       <div
@@ -329,7 +331,7 @@ function HeroRotatingCards() {
           imageAlt={t("wellness")}
           title={t("wellness")}
           body={t("heroCardWellnessBody")}
-          footerClass="bg-white"
+          surfaceClass="bg-[linear-gradient(180deg,#ffffff_0%,#f6fbf9_100%)]"
           layout={L.wellness === "bottom" ? "horizontal" : "vertical"}
         />
       </div>
@@ -344,7 +346,7 @@ function HeroRotatingCards() {
           imageAlt={t("finance")}
           title={t("finance")}
           body={t("heroCardFinanceBody")}
-          footerClass="bg-[#f4fafc]"
+          surfaceClass="bg-[linear-gradient(180deg,#f8fcff_0%,#eef6fb_100%)]"
           layout={L.finance === "bottom" ? "horizontal" : "vertical"}
         />
       </div>
@@ -359,7 +361,7 @@ function HeroRotatingCards() {
           imageAlt={t("education")}
           title={t("education")}
           body={t("heroCardEducationBody")}
-          footerClass="bg-[#fffbf3]"
+          surfaceClass="bg-[linear-gradient(180deg,#fffdf8_0%,#fdf6e9_100%)]"
           layout={L.education === "bottom" ? "horizontal" : "vertical"}
         />
       </div>
@@ -373,10 +375,7 @@ export default function HeroSection() {
   const leftColumn = (
     <div className="mx-auto min-w-0 max-w-xl flex-1 text-center xl:mx-0 xl:text-left">
       <h1 className="text-balance text-[clamp(2.5rem,7.2vw,3.35rem)] font-bold leading-[1.1] tracking-tight text-[#1A2B3C] sm:text-[clamp(2.65rem,5vw,3.35rem)]">
-        {t("heroDesignTitle1")}
-        <span className="mt-1 block text-[#2D8A6E]">
-          {t("heroDesignTitle2")}
-        </span>
+        {t("discoverYourPath")}
       </h1>
 
       <p className="mx-auto mt-5 max-w-lg text-pretty text-base leading-relaxed text-[#555555] sm:text-lg xl:mx-0">
@@ -423,10 +422,10 @@ export default function HeroSection() {
 
   return (
     <section className="isolate w-full overflow-x-hidden pb-16 mt-10 sm:pb-20 sm:pt-12 lg:min-h-0 lg:pb-24 lg:pt-10 xl:pt-12">
-      <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-10">
-        <div className="flex flex-col gap-12 xl:flex-row xl:items-start xl:justify-between xl:gap-10">
+      <div className="mx-auto w-full max-w-[1350px] px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col gap-12 xl:flex-row xl:items-start xl:justify-between xl:gap-14">
           {leftColumn}
-          <div className="min-w-0 shrink-0 xl:w-[min(100%,460px)]">
+          <div className="min-w-0 shrink-0 xl:w-[min(100%,496px)]">
             <HeroRotatingCards />
           </div>
         </div>
