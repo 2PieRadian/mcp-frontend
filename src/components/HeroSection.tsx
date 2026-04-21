@@ -422,7 +422,7 @@ export default function HeroSection() {
 
   return (
     <section className="isolate w-full overflow-x-hidden pb-16 mt-10 sm:pb-20 sm:pt-12 lg:min-h-0 lg:pb-24 lg:pt-10 xl:pt-12">
-      <div className="mx-auto w-full max-w-[1350px]">
+      <div className="mx-auto w-full max-w-[1350px] px-[16px] sm:px-[20px] xl:px-8">
         <div className="flex flex-col gap-12 xl:flex-row xl:items-start xl:justify-between xl:gap-14">
           {leftColumn}
           <div className="min-w-0 shrink-0 xl:w-[min(100%,496px)]">

@@ -58,7 +58,7 @@ export async function updatePhone(phoneNumber: string): Promise<{
   if (!res.ok) {
     throw new Error(
       (data?.message as string) ||
-      (res.status === 401 ? "Unauthorized" : "Failed to update phone number"),
+        (res.status === 401 ? "Unauthorized" : "Failed to update phone number"),
     );
   }
 
@@ -337,9 +337,7 @@ export function isTerminalAppointmentStatus(
   status: AppointmentStatus,
 ): boolean {
   return (
-    status === "COMPLETED" ||
-    status === "NO_SHOW" ||
-    status === "CANCELLED"
+    status === "COMPLETED" || status === "NO_SHOW" || status === "CANCELLED"
   );
 }
 
@@ -378,14 +376,9 @@ function normalizeAppointmentApiRow(
   return {
     ...raw,
     id: Number.isFinite(id) ? id : 0,
-    status:
-      typeof st === "string"
-        ? normalizeAppointmentStatus(st)
-        : undefined,
+    status: typeof st === "string" ? normalizeAppointmentStatus(st) : undefined,
     meetLink:
-      raw.meetLink === undefined
-        ? undefined
-        : (raw.meetLink as string | null),
+      raw.meetLink === undefined ? undefined : (raw.meetLink as string | null),
     userConcern:
       raw.userConcern === undefined || raw.userConcern === null
         ? null
@@ -418,10 +411,7 @@ export async function verifyPayment(
     }),
   });
 
-  const data = (await res.json().catch(() => ({}))) as Record<
-    string,
-    unknown
-  >;
+  const data = (await res.json().catch(() => ({}))) as Record<string, unknown>;
 
   if (!res.ok) {
     const fallback =
@@ -502,19 +492,22 @@ async function postAppointmentSessionAction(
     },
   );
 
-  const data = (await res.json().catch(() => ({}))) as
-    AppointmentSessionActionResponse & { message?: string };
+  const data = (await res
+    .json()
+    .catch(() => ({}))) as AppointmentSessionActionResponse & {
+    message?: string;
+  };
 
   if (!res.ok) {
     throw new Error(
       (data?.message as string) ||
-      (res.status === 401
-        ? "Unauthorized"
-        : res.status === 403
-          ? "Forbidden"
-          : res.status === 404
-            ? "Appointment not found"
-            : "Session request failed"),
+        (res.status === 401
+          ? "Unauthorized"
+          : res.status === 403
+            ? "Forbidden"
+            : res.status === 404
+              ? "Appointment not found"
+              : "Session request failed"),
     );
   }
 
@@ -693,7 +686,7 @@ export async function getMyAppointments(
   if (!res.ok) {
     throw new Error(
       (data?.message as string) ||
-      (res.status === 401 ? "Unauthorized" : "Failed to load appointments"),
+        (res.status === 401 ? "Unauthorized" : "Failed to load appointments"),
     );
   }
 
@@ -719,9 +712,7 @@ export type ExpertAppointmentsResponse = {
 export async function getExpertAppointments(
   status?: AppointmentStatus,
 ): Promise<ExpertAppointmentsResponse> {
-  const url = new URL(
-    `${BACKEND_URL}/api/v1/appointments/expert/appointments`,
-  );
+  const url = new URL(`${BACKEND_URL}/api/v1/appointments/expert/appointments`);
   if (status) url.searchParams.set("status", status);
 
   const res = await fetch(url.toString(), {
@@ -734,11 +725,11 @@ export async function getExpertAppointments(
   if (!res.ok) {
     throw new Error(
       (data?.message as string) ||
-      (res.status === 403
-        ? "Forbidden"
-        : res.status === 401
-          ? "Unauthorized"
-          : "Failed to load appointments"),
+        (res.status === 403
+          ? "Forbidden"
+          : res.status === 401
+            ? "Unauthorized"
+            : "Failed to load appointments"),
     );
   }
 
@@ -794,11 +785,11 @@ export async function getExpertUpcomingSessions(): Promise<ExpertUpcomingSession
   if (!res.ok) {
     throw new Error(
       (data?.message as string) ||
-      (res.status === 403
-        ? "Forbidden"
-        : res.status === 401
-          ? "Unauthorized"
-          : "Failed to load upcoming sessions"),
+        (res.status === 403
+          ? "Forbidden"
+          : res.status === 401
+            ? "Unauthorized"
+            : "Failed to load upcoming sessions"),
     );
   }
 
@@ -831,11 +822,11 @@ export async function getExpertEarnings(): Promise<ExpertEarningsResponse> {
   if (!res.ok) {
     throw new Error(
       (data?.message as string) ||
-      (res.status === 403
-        ? "Forbidden"
-        : res.status === 401
-          ? "Unauthorized"
-          : "Failed to load earnings"),
+        (res.status === 403
+          ? "Forbidden"
+          : res.status === 401
+            ? "Unauthorized"
+            : "Failed to load earnings"),
     );
   }
 
@@ -998,7 +989,8 @@ export async function patchAppointmentReview(
   const body: Record<string, unknown> = {};
   if (updates.rating !== undefined) body.rating = updates.rating;
   if (updates.comment !== undefined) {
-    body.comment = updates.comment === null ? null : updates.comment.trim() || null;
+    body.comment =
+      updates.comment === null ? null : updates.comment.trim() || null;
   }
 
   const res = await fetch(
@@ -1044,7 +1036,11 @@ export async function getAppointmentReview(
 
   if (!res.ok) {
     throw new ApiHttpError(
-      getErrorMessageFromResponseBody(data, res.status, "Failed to fetch review"),
+      getErrorMessageFromResponseBody(
+        data,
+        res.status,
+        "Failed to fetch review",
+      ),
       res.status,
       data,
     );
@@ -1151,10 +1147,13 @@ export async function getExpertById(
     headers["Authorization"] = `Bearer ${token}`;
   }
 
-  const res = await fetch(`${BACKEND_URL}/api/v1/expert/get-expert/${expertId}`, {
-    method: "GET",
-    headers,
-  });
+  const res = await fetch(
+    `${BACKEND_URL}/api/v1/expert/get-expert/${expertId}`,
+    {
+      method: "GET",
+      headers,
+    },
+  );
 
   const data = (await res.json().catch(() => ({}))) as Record<string, unknown>;
 
@@ -1184,7 +1183,9 @@ export async function getExpertReviews(
   page: number = 1,
   limit: number = 10,
 ): Promise<ExpertReviewsResponse> {
-  const url = new URL(`${BACKEND_URL}/api/v1/appointments/reviews/expert/${expertId}`);
+  const url = new URL(
+    `${BACKEND_URL}/api/v1/appointments/reviews/expert/${expertId}`,
+  );
   url.searchParams.set("page", String(page));
   url.searchParams.set("limit", String(Math.min(limit, 50)));
 
@@ -1230,11 +1231,14 @@ export type ToggleEmergencyAvailabilityResponse = {
 export async function toggleEmergencyAvailability(
   emergencyAvailable: boolean,
 ): Promise<ToggleEmergencyAvailabilityResponse> {
-  const res = await fetch(`${BACKEND_URL}/api/v1/expert/me/emergency-availability`, {
-    method: "PATCH",
-    headers: getAuthHeaders(),
-    body: JSON.stringify({ emergencyAvailable }),
-  });
+  const res = await fetch(
+    `${BACKEND_URL}/api/v1/expert/me/emergency-availability`,
+    {
+      method: "PATCH",
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ emergencyAvailable }),
+    },
+  );
 
   const data = (await res.json().catch(() => ({}))) as Record<string, unknown>;
 
@@ -1379,7 +1383,9 @@ export async function createExpertQualification(
 /**
  * GET /api/v1/expert/me/qualifications — all statuses, newest first.
  */
-export async function getMyExpertQualifications(): Promise<ExpertQualification[]> {
+export async function getMyExpertQualifications(): Promise<
+  ExpertQualification[]
+> {
   const res = await fetch(`${BACKEND_URL}/api/v1/expert/me/qualifications`, {
     method: "GET",
     headers: getAuthHeaders(),
@@ -1509,7 +1515,11 @@ export async function getEmergencySlots(
 
   if (!res.ok) {
     throw new ApiHttpError(
-      getErrorMessageFromResponseBody(data, res.status, "Failed to load emergency slots"),
+      getErrorMessageFromResponseBody(
+        data,
+        res.status,
+        "Failed to load emergency slots",
+      ),
       res.status,
       data,
     );
@@ -1561,8 +1571,7 @@ export async function getExpertNextSlot(
   const year = Number(o.year);
   const month = Number(o.month);
   const date = Number(o.date);
-  const startTime =
-    typeof o.startTime === "string" ? o.startTime : "";
+  const startTime = typeof o.startTime === "string" ? o.startTime : "";
   const endTime = typeof o.endTime === "string" ? o.endTime : "";
   const day = typeof o.day === "string" ? o.day : "";
   if (
@@ -1603,7 +1612,11 @@ export async function getNextEmergencySlot(
 
   if (!res.ok) {
     throw new ApiHttpError(
-      getErrorMessageFromResponseBody(data, res.status, "Failed to load emergency slot"),
+      getErrorMessageFromResponseBody(
+        data,
+        res.status,
+        "Failed to load emergency slot",
+      ),
       res.status,
       data,
     );
