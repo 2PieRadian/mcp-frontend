@@ -7,7 +7,7 @@ import {
 } from "react";
 import { ArrowRight, FileText, Lock, ShieldCheck } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { useTranslation, Trans } from "react-i18next";
 import gsap from "gsap";
 
 const HERO_CARD_IMAGES = {
@@ -375,7 +375,10 @@ export default function HeroSection() {
   const leftColumn = (
     <div className="mx-auto min-w-0 max-w-xl flex-1 text-center xl:mx-0 xl:text-left">
       <h1 className="text-balance text-[clamp(2.5rem,6.8vw,3.35rem)] font-bold leading-[1.1] tracking-tight text-[#1A2B3C] sm:text-[clamp(2.65rem,4vw,3.35rem)]">
-        {t("discoverYourPath")}
+        <Trans
+          i18nKey="discoverYourPath"
+          components={{ highlight: <span className="text-[#2D8A6E]" /> }}
+        />
       </h1>
 
       <p className="mx-auto mt-5 max-w-lg text-pretty text-base leading-relaxed text-[#555555] sm:text-lg xl:mx-0">
