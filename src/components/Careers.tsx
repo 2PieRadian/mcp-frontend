@@ -1,10 +1,12 @@
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import Footer from "../components/Footer";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { gsap } from "gsap";
 
 export default function Careers() {
   const heroRef = useRef<HTMLDivElement>(null);
+  const [selectedDepartment, setSelectedDepartment] = useState("All");
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     if (!heroRef.current) return;
@@ -170,6 +172,30 @@ export default function Careers() {
         "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Teacher&jk=27522f2332312aee&q=mindcurepath&xpse=SoCT67I3jqb-_bzCSZ0LbzkdCdPP&xfps=ca550e6b-b68f-4551-9393-d77cccbaed93&xkcb=SoDm67M3jqbMFETC8R0FbzkdCdPP&vjs=3",
     },
   ];
+
+  const departmentFilters = useMemo(
+    () => ["All", ...new Set(openRoles.map((role) => role.department))],
+    [openRoles],
+  );
+
+  const filteredRoles = useMemo(() => {
+    const normalizedSearch = searchTerm.trim().toLowerCase();
+
+    return openRoles.filter((role) => {
+      const matchesDepartment =
+        selectedDepartment === "All" || role.department === selectedDepartment;
+
+      const matchesSearch =
+        normalizedSearch.length === 0 ||
+        role.title.toLowerCase().includes(normalizedSearch) ||
+        role.description.toLowerCase().includes(normalizedSearch) ||
+        role.skills.some((skill) =>
+          skill.toLowerCase().includes(normalizedSearch),
+        );
+
+      return matchesDepartment && matchesSearch;
+    });
+  }, [openRoles, searchTerm, selectedDepartment]);
 
   return (
     <div className="min-h-screen bg-white">
@@ -338,57 +364,102 @@ export default function Careers() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-            {openRoles.map((role, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-3xl border border-slate-200 p-7 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2 hover:border-emerald-300"
-              >
-                <div className="flex items-start justify-between gap-4 mb-5">
-                  <div>
-                    <h3 className="text-2xl font-semibold text-slate-900 mb-2">
-                      {role.title}
-                    </h3>
+          <div className="max-w-5xl mx-auto mb-8">
+            <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-sm">
+              <div className="flex flex-col gap-4">
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Search roles by title, description, or skills..."
+                  className="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400"
+                />
 
-                    <p className="text-slate-600">{role.department}</p>
-                  </div>
-
-                  <span className="px-4 py-2 rounded-full bg-emerald-100 text-emerald-800 text-sm font-medium">
-                    {role.type}
-                  </span>
-                </div>
-
-                <p className="text-slate-600 leading-relaxed mb-6">
-                  {role.description}
-                </p>
-
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {role.skills.map((skill, idx) => (
-                    <span
-                      key={idx}
-                      className={`px-3 py-1 rounded-full text-sm ${
-                        idx % 3 === 0
-                          ? "bg-emerald-100 text-emerald-800"
-                          : idx % 3 === 1
-                            ? "bg-sky-100 text-sky-800"
-                            : "bg-violet-100 text-violet-800"
+                <div className="flex flex-wrap gap-2">
+                  {departmentFilters.map((department) => (
+                    <button
+                      key={department}
+                      onClick={() => setSelectedDepartment(department)}
+                      className={`px-4 py-2 rounded-full text-sm font-medium border transition-all duration-200 ${
+                        selectedDepartment === department
+                          ? "bg-emerald-600 text-white border-emerald-600"
+                          : "bg-white text-slate-700 border-slate-300 hover:border-emerald-300 hover:text-emerald-700"
                       }`}
                     >
-                      {skill}
-                    </span>
+                      {department}
+                    </button>
                   ))}
                 </div>
 
-                <a
-                  href={role.applyLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full block text-center rounded-2xl bg-emerald-700 text-white py-3 font-medium hover:bg-emerald-800 transition-all duration-300 shadow-[0_8px_18px_-8px_rgba(5,150,105,0.8)]"
-                >
-                  Apply on Indeed
-                </a>
+                <p className="text-sm text-slate-600">
+                  Showing {filteredRoles.length} of {openRoles.length} roles
+                </p>
               </div>
-            ))}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            {filteredRoles.length === 0 ? (
+              <div className="md:col-span-2 bg-slate-50 border border-slate-200 rounded-2xl p-8 text-center">
+                <p className="text-slate-700 font-medium mb-2">
+                  No roles found for this filter.
+                </p>
+                <p className="text-slate-500 text-sm">
+                  Try another department or clear your search text.
+                </p>
+              </div>
+            ) : (
+              filteredRoles.map((role, index) => (
+                <div
+                  key={`${role.title}-${index}`}
+                  className="bg-white rounded-3xl border border-slate-200 p-7 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2 hover:border-emerald-300"
+                >
+                  <div className="flex items-start justify-between gap-4 mb-5">
+                    <div>
+                      <h3 className="text-2xl font-semibold text-slate-900 mb-2">
+                        {role.title}
+                      </h3>
+
+                      <p className="text-slate-600">{role.department}</p>
+                    </div>
+
+                    <span className="px-4 py-2 rounded-full bg-emerald-100 text-emerald-800 text-sm font-medium">
+                      {role.type}
+                    </span>
+                  </div>
+
+                  <p className="text-slate-600 leading-relaxed mb-6">
+                    {role.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {role.skills.map((skill, idx) => (
+                      <span
+                        key={idx}
+                        className={`px-3 py-1 rounded-full text-sm ${
+                          idx % 3 === 0
+                            ? "bg-emerald-100 text-emerald-800"
+                            : idx % 3 === 1
+                              ? "bg-sky-100 text-sky-800"
+                              : "bg-violet-100 text-violet-800"
+                        }`}
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+
+                  <a
+                    href={role.applyLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full block text-center rounded-2xl bg-emerald-700 text-white py-3 font-medium hover:bg-emerald-800 transition-all duration-300 shadow-[0_8px_18px_-8px_rgba(5,150,105,0.8)]"
+                  >
+                    Apply on Indeed
+                  </a>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>
