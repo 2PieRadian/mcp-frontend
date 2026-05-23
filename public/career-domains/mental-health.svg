@@ -1,0 +1,21 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="24" y1="16" x2="232" y2="248" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F5F3FF"/>
+      <stop offset="1" stop-color="#E9D5FF"/>
+    </linearGradient>
+    <linearGradient id="brain" x1="96" y1="78" x2="160" y2="150" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7C3AED"/>
+      <stop offset="1" stop-color="#A78BFA"/>
+    </linearGradient>
+  </defs>
+  <rect x="16" y="16" width="224" height="224" rx="48" fill="url(#bg)"/>
+  <circle cx="128" cy="128" r="72" fill="#FFFFFF" fill-opacity="0.65"/>
+  <path d="M103 101C96.3726 101 91 106.373 91 113V126C91 132.627 96.3726 138 103 138H105C107.761 138 110 140.239 110 143V145C110 151.627 115.373 157 122 157H134C140.627 157 146 151.627 146 145V143C146 140.239 148.239 138 151 138H153C159.627 138 165 132.627 165 126V113C165 106.373 159.627 101 153 101H151C148.239 101 146 98.7614 146 96V94C146 87.3726 140.627 82 134 82H122C115.373 82 110 87.3726 110 94V96C110 98.7614 107.761 101 105 101H103Z" fill="url(#brain)"/>
+  <path d="M118 95V143M138 95V143M103 114H153M110 129H146" stroke="#EDE9FE" stroke-width="4" stroke-linecap="round"/>
+  <path d="M86 169C86 159.059 94.0589 151 104 151H152C161.941 151 170 159.059 170 169V173H86V169Z" fill="#6D28D9" fill-opacity="0.2"/>
+  <path d="M170 104C180.493 104 189 112.507 189 123C189 126.749 187.913 130.244 186.037 133.186L189 142L179.843 139.037C177.03 140.305 173.908 141 170.624 141C160.131 141 151.624 132.493 151.624 122C151.624 111.507 160.131 103 170.624 103L170 104Z" fill="#FFFFFF" fill-opacity="0.92"/>
+  <circle cx="164" cy="122" r="3.5" fill="#7C3AED"/>
+  <circle cx="174" cy="122" r="3.5" fill="#7C3AED"/>
+  <circle cx="184" cy="122" r="3.5" fill="#7C3AED"/>
+</svg>

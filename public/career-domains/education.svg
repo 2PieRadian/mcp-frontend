@@ -1,0 +1,20 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="24" y1="20" x2="232" y2="244" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EFF6FF"/>
+      <stop offset="1" stop-color="#BFDBFE"/>
+    </linearGradient>
+    <linearGradient id="book" x1="78" y1="108" x2="178" y2="170" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0EA5E9"/>
+      <stop offset="1" stop-color="#2563EB"/>
+    </linearGradient>
+  </defs>
+  <rect x="16" y="16" width="224" height="224" rx="48" fill="url(#bg)"/>
+  <circle cx="128" cy="128" r="72" fill="#FFFFFF" fill-opacity="0.62"/>
+  <path d="M128 71L182 96L128 121L74 96L128 71Z" fill="#1D4ED8"/>
+  <path d="M88 104V141C88 146.523 105.909 151 128 151C150.091 151 168 146.523 168 141V104L128 123L88 104Z" fill="#3B82F6"/>
+  <rect x="76" y="159" width="104" height="12" rx="6" fill="#1E40AF" fill-opacity="0.2"/>
+  <path d="M78 130C78 123.373 83.3726 118 90 118H120C124.418 118 128 121.582 128 126V176H90C83.3726 176 78 170.627 78 164V130Z" fill="url(#book)"/>
+  <path d="M178 130C178 123.373 172.627 118 166 118H136C131.582 118 128 121.582 128 126V176H166C172.627 176 178 170.627 178 164V130Z" fill="#38BDF8"/>
+  <path d="M89 136H118M89 146H118M89 156H112M138 136H167M138 146H167M138 156H160" stroke="#DBEAFE" stroke-width="4" stroke-linecap="round"/>
+</svg>

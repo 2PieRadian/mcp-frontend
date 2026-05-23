@@ -199,6 +199,49 @@ export default function Careers() {
     });
   }, [openRoles, searchTerm, selectedDepartment]);
 
+  const careerDomains = [
+    {
+      image: "/career-domains/mental-health.svg",
+      title: "Mental Health",
+      description: "Support emotional wellness and counselling services.",
+      tags: ["Counsellor", "OCD/ADHD", "Depression"],
+      color: "bg-violet-100",
+      tagColor: "bg-violet-100 text-violet-800",
+    },
+    {
+      image: "/career-domains/education.svg",
+      title: "Education",
+      description: "Help students through mentoring and academic counselling.",
+      tags: ["Tutor", "Academic Counselor"],
+      color: "bg-sky-100",
+      tagColor: "bg-sky-100 text-sky-800",
+    },
+    {
+      image: "/career-domains/finance.svg",
+      title: "Finance",
+      description: "Guide clients with taxation, investments, and insurance.",
+      tags: ["CA", "Mutual Funds", "Insurance"],
+      color: "bg-emerald-100",
+      tagColor: "bg-emerald-100 text-emerald-800",
+    },
+    {
+      image: "/career-domains/wellness.svg",
+      title: "Wellness",
+      description: "Promote healthy lifestyles through wellness expertise.",
+      tags: ["Yoga Expert", "Dietician"],
+      color: "bg-amber-100",
+      tagColor: "bg-amber-100 text-amber-800",
+    },
+    {
+      image: "/career-domains/it-services.svg",
+      title: "IT Services",
+      description: "Build scalable digital products and AI solutions.",
+      tags: ["Full Stack", "UI/UX", "AI Automation"],
+      color: "bg-teal-100",
+      tagColor: "bg-teal-100 text-teal-800",
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-white">
       <div className="fixed inset-x-0 top-0 z-40 w-full bg-white px-[16px] sm:px-[20px] border-b border-emerald-100">
@@ -269,65 +312,20 @@ export default function Careers() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              {
-                icon: "🧠",
-                title: "Mental Health",
-                description:
-                  "Support emotional wellness and counselling services.",
-                tags: ["Counsellor", "OCD/ADHD", "Depression"],
-                color: "bg-violet-100",
-                tagColor: "bg-violet-100 text-violet-800",
-              },
-
-              {
-                icon: "📚",
-                title: "Education",
-                description:
-                  "Help students through mentoring and academic counselling.",
-                tags: ["Tutor", "Academic Counselor"],
-                color: "bg-sky-100",
-                tagColor: "bg-sky-100 text-sky-800",
-              },
-
-              {
-                icon: "💰",
-                title: "Finance",
-                description:
-                  "Guide clients with taxation, investments, and insurance.",
-                tags: ["CA", "Mutual Funds", "Insurance"],
-                color: "bg-emerald-100",
-                tagColor: "bg-emerald-100 text-emerald-800",
-              },
-
-              {
-                icon: "🧘",
-                title: "Wellness",
-                description:
-                  "Promote healthy lifestyles through wellness expertise.",
-                tags: ["Yoga Expert", "Dietician"],
-                color: "bg-amber-100",
-                tagColor: "bg-amber-100 text-amber-800",
-              },
-
-              {
-                icon: "💻",
-                title: "IT Services",
-                description:
-                  "Build scalable digital products and AI solutions.",
-                tags: ["Full Stack", "UI/UX", "AI Automation"],
-                color: "bg-teal-100",
-                tagColor: "bg-teal-100 text-teal-800",
-              },
-            ].map((domain, index) => (
+            {careerDomains.map((domain, index) => (
               <div
                 key={index}
                 className="group bg-white rounded-3xl border border-slate-200 p-6 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2 cursor-pointer hover:border-emerald-300"
               >
                 <div
-                  className={`w-14 h-14 rounded-2xl ${domain.color} ring-1 ring-white flex items-center justify-center mb-5`}
+                  className={`w-16 h-16 rounded-2xl ${domain.color} ring-1 ring-white flex items-center justify-center mb-5 overflow-hidden`}
                 >
-                  <span className="text-2xl">{domain.icon}</span>
+                  <img
+                    src={domain.image}
+                    alt={`${domain.title} domain`}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
                 </div>
 
                 <h3 className="text-2xl font-semibold text-slate-900 mb-3">
