@@ -148,7 +148,8 @@ export default function Careers() {
       title: "Urdu Teacher",
       department: "Education",
       type: "Indeed Listing",
-      description: "Support Urdu learning with structured language instruction.",
+      description:
+        "Support Urdu learning with structured language instruction.",
       skills: ["Urdu", "Teaching", "Student Engagement"],
       applyLink:
         "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Teacher&jk=2a9f387c10f72827&q=mindcurepath&xpse=SoCs67I3jqb_K2z4mp0LbzkdCdPP&xfps=ec956f26-27b7-4544-8b9d-e3dac9818569&xkcb=SoDP67M3jqbMFETC8R0HbzkdCdPP&vjs=3",
@@ -199,11 +200,11 @@ export default function Careers() {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="w-full bg-white/90 backdrop-blur px-[16px] sm:px-[20px] border-b border-emerald-100">
+      <div className="fixed inset-x-0 top-0 z-40 w-full bg-white px-[16px] sm:px-[20px] border-b border-emerald-100">
         <ResponsiveNavbar />
       </div>
 
-      <div className="max-w-6xl mx-auto px-[16px] sm:px-[20px] pb-24">
+      <div className="max-w-6xl mx-auto px-[16px] sm:px-[20px] pt-24 sm:pt-28 pb-24">
         {/* Hero Section */}
         <div ref={heroRef} className="relative pt-20 pb-24 overflow-hidden">
           {/* Background Elements */}

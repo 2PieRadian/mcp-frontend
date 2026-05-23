@@ -39,7 +39,7 @@ import Articles from "./pages/Articles";
 import ArticleDetail from "./pages/ArticleDetail";
 import { useGoogleAnalytics } from "./hooks/useGoogleAnalytics";
 import LoginSuccessToast from "./components/LoginSuccessToast";
-import Careers from "./components/Careers";
+import Careers from "./pages/Careers";
 
 export default function App() {
   const { pathname } = useLocation();

@@ -4,7 +4,6 @@ import {
   ChevronUp,
   ChevronRight,
   X,
-  Languages as LanguagesIcon,
   Check,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
@@ -12,6 +11,15 @@ import { loginPathWithRedirect } from "../../lib/loginRedirect";
 import { useAuth } from "../../context/AuthContext";
 import { useTranslation } from "react-i18next";
 import { gsap } from "gsap";
+
+const MOBILE_NAV_ICONS = {
+  expertCategories: "/images/mobile-nav/icon-expert-categories.svg",
+  selfAssessment: "/images/mobile-nav/icon-self-assessment.svg",
+  counsellors: "/images/mobile-nav/icon-counsellors.svg",
+  careers: "/images/mobile-nav/icon-careers.svg",
+  articles: "/images/mobile-nav/icon-articles.svg",
+  language: "/images/mobile-nav/icon-language.svg",
+} as const;
 
 /** Active state for top-level nav items (dashboard is exact; articles allows detail routes). */
 function isMobileNavActive(to: string, pathname: string): boolean {
@@ -35,12 +43,14 @@ function MobileNavItem({
   to,
   ns = "navigation",
   label,
+  iconSrc,
 }: {
   textKey: string;
   onClick?: () => void;
   to?: string;
   ns?: string;
   label?: string;
+  iconSrc?: string;
 }) {
   const { t } = useTranslation(ns);
   const location = useLocation();
@@ -49,13 +59,20 @@ function MobileNavItem({
   return (
     <Link to={to || ""} onClick={onClick} className="block">
       <div
-        className={`cursor-pointer rounded-xl px-4 py-3.5 text-[15px] font-semibold tracking-tight transition-all duration-200 border shadow-sm ${
+        className={`cursor-pointer rounded-2xl px-4 py-4 text-[15px] font-semibold tracking-tight transition-all duration-200 border shadow-sm ${
           active
-            ? "bg-[hsl(173,35%,92%)] border-cure-color/35 text-logo-heading ring-1 ring-cure-color/25"
-            : "border-slate-200 bg-white text-logo-heading hover:border-slate-300 hover:bg-slate-50 hover:shadow-md active:scale-[0.99]"
+            ? "bg-[hsl(173,35%,92%)] border-cure-color/35 text-logo-heading ring-1 ring-cure-color/20"
+            : "border-[#E1ECF4] bg-white text-logo-heading hover:border-[#CFE0ED] hover:bg-slate-50 hover:shadow-md active:scale-[0.99]"
         }`}
       >
-        {label ?? t(textKey)}
+        <div className="flex items-center gap-3">
+          {iconSrc ? (
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#F4F9FD] ring-1 ring-[#E1ECF4]">
+              <img src={iconSrc} alt="" className="h-5 w-5" />
+            </span>
+          ) : null}
+          <span>{label ?? t(textKey)}</span>
+        </div>
       </div>
     </Link>
   );
@@ -329,7 +346,7 @@ export default function MobileNavModal({
   return (
     <div
       ref={rootRef}
-      className={`fixed inset-0 z-50 ${isOpen ? "" : "pointer-events-none"}`}
+      className={`fixed inset-0 z-70 ${isOpen ? "" : "pointer-events-none"}`}
       aria-hidden={!isOpen}
     >
       {/* Backdrop with blur effect */}
@@ -347,7 +364,7 @@ export default function MobileNavModal({
         }`}
       >
         {/* Header: logo, brand, close */}
-        <div className="flex shrink-0 items-start justify-between gap-3 border-b border-slate-200 bg-white px-5 py-4">
+        <div className="flex shrink-0 items-start justify-between gap-3 border-b border-[#E4EDF4] bg-white px-5 py-4">
           <Link
             to="/"
             onClick={onClose}
@@ -385,7 +402,7 @@ export default function MobileNavModal({
         </div>
 
         {/* Navigation items */}
-        <div className="flex flex-1 flex-col gap-3 overflow-y-auto bg-slate-50 p-5">
+        <div className="flex flex-1 flex-col gap-3 overflow-y-auto bg-[#FBFDFF] p-5">
           {/* Dashboard - first for logged-in non-expert users */}
           {user?.role !== "EXPERT" && user && (
             <MobileNavItem
@@ -408,7 +425,14 @@ export default function MobileNavModal({
                   setSelfAssessmentExpanded(false);
                 }}
               >
-                <div className="min-w-0 pr-2">
+                <div className="min-w-0 pr-2 flex items-center gap-3">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#F4F9FD] ring-1 ring-[#E1ECF4]">
+                    <img
+                      src={MOBILE_NAV_ICONS.expertCategories}
+                      alt=""
+                      className="h-5 w-5"
+                    />
+                  </span>
                   <span className="text-[15px] font-semibold text-logo-heading leading-tight">
                     {t("expertCategories", { ns: "navigation" })}
                   </span>
@@ -485,9 +509,18 @@ export default function MobileNavModal({
                   setWeHelpWithExpanded(false);
                 }}
               >
-                <span className="text-[15px] font-semibold text-logo-heading leading-tight pr-2">
-                  {t("selfAssessment", { ns: "navigation" })}
-                </span>
+                <div className="flex items-center gap-3 pr-2">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#F4F9FD] ring-1 ring-[#E1ECF4]">
+                    <img
+                      src={MOBILE_NAV_ICONS.selfAssessment}
+                      alt=""
+                      className="h-5 w-5"
+                    />
+                  </span>
+                  <span className="text-[15px] font-semibold text-logo-heading leading-tight">
+                    {t("selfAssessment", { ns: "navigation" })}
+                  </span>
+                </div>
                 <ChevronDown
                   size={18}
                   strokeWidth={2.25}
@@ -554,7 +587,12 @@ export default function MobileNavModal({
             </div>
           )}
           {user?.role !== "EXPERT" && (
-            <MobileNavItem textKey="findCounsellors" to="/find-counsellors" />
+            <MobileNavItem
+              textKey="findCounsellors"
+              to="/find-counsellors"
+              onClick={onClose}
+              iconSrc={MOBILE_NAV_ICONS.counsellors}
+            />
           )}
           {user?.role === "EXPERT" && (
             <>
@@ -572,8 +610,14 @@ export default function MobileNavModal({
             label="Careers"
             to="/careers"
             onClick={onClose}
+            iconSrc={MOBILE_NAV_ICONS.careers}
           />
-          <MobileNavItem textKey="articles" to="/articles" onClick={onClose} />
+          <MobileNavItem
+            textKey="articles"
+            to="/articles"
+            onClick={onClose}
+            iconSrc={MOBILE_NAV_ICONS.articles}
+          />
 
           {/* Profile/Login — same visual weight as other primary links */}
           {user ? (
@@ -592,7 +636,7 @@ export default function MobileNavModal({
             <Link
               to={loginPathWithRedirect(location.pathname, location.search)}
               onClick={onClose}
-              className="block rounded-xl border border-primary/25 bg-primary px-4 py-3.5 text-center text-[15px] font-semibold text-white shadow-md shadow-primary/20 transition-all hover:brightness-105 active:scale-[0.99]"
+              className="block rounded-2xl border border-[#0C3D4A] bg-[#073B4C] px-4 py-3.5 text-center text-[15px] font-semibold text-white shadow-md shadow-[#073B4C]/25 transition-all hover:brightness-105 active:scale-[0.99]"
             >
               {t("login", { ns: "common" })}
             </Link>
@@ -600,8 +644,8 @@ export default function MobileNavModal({
         </div>
 
         {/* Bottom: language — nested list style matches expandable sections */}
-        <div className="shrink-0 border-t border-slate-200 bg-white p-4 shadow-[0_-4px_16px_rgba(15,23,42,0.06)]">
-          <div className="rounded-2xl border border-slate-200 bg-slate-100 p-1">
+        <div className="shrink-0 border-t border-[#E4EDF4] bg-white p-4 shadow-[0_-4px_16px_rgba(15,23,42,0.06)]">
+          <div className="rounded-2xl border border-[#E1ECF4] bg-[#F7FBFF] p-1">
             <div
               className={`flex cursor-pointer items-center justify-between rounded-xl px-3 py-3 transition-colors ${
                 languageExpanded ? "bg-white shadow-inner" : "hover:bg-slate-50"
@@ -609,8 +653,12 @@ export default function MobileNavModal({
               onClick={() => setLanguageExpanded(!languageExpanded)}
             >
               <div className="flex min-w-0 items-center gap-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white shadow-sm ring-1 ring-slate-200">
-                  <LanguagesIcon size={20} className="text-primary" />
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white shadow-sm ring-1 ring-[#E1ECF4]">
+                  <img
+                    src={MOBILE_NAV_ICONS.language}
+                    alt=""
+                    className="h-5 w-5"
+                  />
                 </div>
                 <div className="min-w-0">
                   <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-500">
