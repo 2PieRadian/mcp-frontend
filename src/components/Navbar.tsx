@@ -15,10 +15,12 @@ function NavbarItem({
   textKey,
   link,
   isActive = false,
+  label,
 }: {
   textKey: string;
   link: string;
   isActive?: boolean;
+  label?: string;
 }) {
   const { t } = useTranslation("navigation");
   return (
@@ -28,7 +30,7 @@ function NavbarItem({
         isActive ? "bg-hover-bg" : ""
       }`}
     >
-      {t(textKey)}
+      {label ?? t(textKey)}
     </Link>
   );
 }
@@ -165,7 +167,7 @@ export default function Navbar() {
               <span className="text-[18px] sm:text-[22px] font-semibold text-logo-heading cursor-pointer truncate">
                 {t("appName") === "MindCurePath" ? (
                   <>
-                    Mind<span className="text-[#62af9b]">Cure</span>Path
+                    Mind<span className="text-cure-color">Cure</span>Path
                   </>
                 ) : (
                   t("appName")
@@ -263,6 +265,12 @@ export default function Navbar() {
             {user?.role !== "EXPERT" && (
               <NavbarItem textKey="findCounsellors" link="/find-counsellors" />
             )}
+            <NavbarItem
+              textKey="careers"
+              label="Careers"
+              link="/careers"
+              isActive={location.pathname === "/careers"}
+            />
             <NavbarItem textKey="articles" link="/articles" />
           </div>
 

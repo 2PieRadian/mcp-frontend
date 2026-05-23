@@ -34,11 +34,13 @@ function MobileNavItem({
   onClick,
   to,
   ns = "navigation",
+  label,
 }: {
   textKey: string;
   onClick?: () => void;
   to?: string;
   ns?: string;
+  label?: string;
 }) {
   const { t } = useTranslation(ns);
   const location = useLocation();
@@ -53,7 +55,7 @@ function MobileNavItem({
             : "border-slate-200 bg-white text-logo-heading hover:border-slate-300 hover:bg-slate-50 hover:shadow-md active:scale-[0.99]"
         }`}
       >
-        {t(textKey)}
+        {label ?? t(textKey)}
       </div>
     </Link>
   );
@@ -565,6 +567,12 @@ export default function MobileNavModal({
             </>
           )}
 
+          <MobileNavItem
+            textKey="careers"
+            label="Careers"
+            to="/careers"
+            onClick={onClose}
+          />
           <MobileNavItem textKey="articles" to="/articles" onClick={onClose} />
 
           {/* Profile/Login — same visual weight as other primary links */}

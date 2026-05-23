@@ -39,6 +39,7 @@ import Articles from "./pages/Articles";
 import ArticleDetail from "./pages/ArticleDetail";
 import { useGoogleAnalytics } from "./hooks/useGoogleAnalytics";
 import LoginSuccessToast from "./components/LoginSuccessToast";
+import Careers from "./components/Careers";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -89,6 +90,7 @@ export default function App() {
                 path="/oauth/google/callback"
                 element={<OAuthCallback />}
               />
+              <Route path="/careers" element={<Careers />} />
 
               {/* Self Assessment */}
               <Route path="/self-assessment" element={<SelfAssessment />} />
