@@ -1,6 +1,7 @@
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import Footer from "../components/Footer";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { gsap } from "gsap";
 
 export default function Careers() {
@@ -450,14 +451,12 @@ export default function Careers() {
                     ))}
                   </div>
 
-                  <a
-                    href={role.applyLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    to={`/careers/apply?role=${encodeURIComponent(role.title)}`}
                     className="w-full block text-center rounded-2xl bg-emerald-700 text-white py-3 font-medium hover:bg-emerald-800 transition-all duration-300 shadow-[0_8px_18px_-8px_rgba(5,150,105,0.8)]"
                   >
-                    Apply on Indeed
-                  </a>
+                    Apply Now
+                  </Link>
                 </div>
               ))
             )}
