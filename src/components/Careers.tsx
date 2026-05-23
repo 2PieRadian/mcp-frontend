@@ -26,76 +26,148 @@ export default function Careers() {
 
   const openRoles = [
     {
-      title: "Full Stack Developer",
-      department: "IT Services",
-      type: "Remote",
-      description: "Build scalable digital products and web platforms.",
-      skills: ["React", "Node.js", "MongoDB"],
+      title: "Dietician",
+      department: "Wellness",
+      type: "Indeed Listing",
+      description: "Provide nutrition guidance and wellness planning support.",
+      skills: ["Nutrition", "Diet Planning", "Consultation"],
+      applyLink:
+        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Dietitian&jk=b15b0fa87647e60f&q=mindcurepath&xpse=SoAM67I3jqbLS1zCSZ0LbzkdCdPP&xfps=5368977a-202b-4f29-ab26-6e0a9f6a07c9&xkcb=SoC767M3jqbMFETC8R0LbzkdCdPP&vjs=3",
     },
-
     {
-      title: "OCD / ADHD Counsellor",
-      department: "Mental Health",
-      type: "Freelance",
-      description:
-        "Provide structured counselling and mental wellness support.",
-      skills: ["Psychology", "RCI", "Counselling"],
+      title: "Maths Tutor",
+      department: "Education",
+      type: "Indeed Listing",
+      description: "Teach and mentor students in mathematics effectively.",
+      skills: ["Mathematics", "Teaching", "Mentoring"],
+      applyLink:
+        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Tutor&jk=1eaf2851a7bd56f1&q=mindcurepath&xpse=SoC967I3jqbBG7TNqh0LbzkdCdPP&xfps=ca1be697-335d-4232-a9ce-3f7154ca6b16&xkcb=SoAP67M3jqbMFETC8R0KbzkdCdPP&vjs=3",
     },
-
     {
       title: "Tutor",
       department: "Education",
-      type: "Remote",
-      description: "Deliver engaging online teaching and mentoring sessions.",
-      skills: ["Teaching", "Mentoring", "Communication"],
+      type: "Indeed Listing",
+      description: "Deliver focused learning sessions and academic support.",
+      skills: ["Teaching", "Communication", "Student Support"],
+      applyLink:
+        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Tutor&jk=e95003f758d0ed17&q=mindcurepath&xpse=SoDG67I3jqbeaSAYAD0LbzkdCdPP&xfps=ae2af9bb-2567-4032-bd60-dd737007c89d&xkcb=SoCS67M3jqbMFETC8R0JbzkdCdPP&vjs=3",
     },
-
     {
-      title: "CA GST & Tax Expert",
+      title: "OCD",
+      department: "Mental Health",
+      type: "Indeed Listing",
+      description: "Support clients with OCD-focused counselling services.",
+      skills: ["Counselling", "Mental Health", "Client Support"],
+      applyLink:
+        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Ocd&jk=d8ed93407352d924&q=mindcurepath&xpse=SoBB67I3jqbeNxz5Rp0LbzkdCdPP&xfps=ada83522-aecd-4bc3-bce7-234ea5731f03&xkcb=SoAm67M3jqbMFETC8R0IbzkdCdPP&vjs=3",
+    },
+    {
+      title: "Depression Counsellor",
+      department: "Mental Health",
+      type: "Indeed Listing",
+      description: "Provide emotional support and depression counselling care.",
+      skills: ["Counselling", "Psychology", "Empathy"],
+      applyLink:
+        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Counselor&jk=2fc6ff3cbd8f66a3&q=mindcurepath&xpse=SoAH67I3jqbd01z5Xx0LbzkdCdPP&xfps=ddfa93f5-04fa-474a-bdf9-b0438d291026&xkcb=SoCo67M3jqbMFETC8R0PbzkdCdPP&vjs=3",
+    },
+    {
+      title: "Insurance Advisor",
       department: "Finance",
-      type: "Freelance",
-      description: "Handle GST filing and financial compliance services.",
-      skills: ["GST", "Taxation", "Compliance"],
+      type: "Indeed Listing",
+      description: "Advise clients on policy selection and insurance planning.",
+      skills: ["Insurance", "Advisory", "Client Relations"],
+      applyLink:
+        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Insurance+Advisor&jk=c1ed94f7e31780c5&q=mindcurepath&xpse=SoDR67I3jqbU-bz5Xx0LbzkdCdPP&xfps=fd482ef6-1f02-4e6d-a9e2-bcd314f1a428&xkcb=SoAc67M3jqbMFETC8R0ObzkdCdPP&vjs=3",
     },
-
     {
-      title: "Dietician",
-      department: "Wellness",
-      type: "Freelance",
-      description: "Provide personalized nutrition and wellness guidance.",
-      skills: ["Nutrition", "Diet Planning", "Consultation"],
-    },
-
-    {
-      title: "Yoga Expert",
-      department: "Wellness",
-      type: "Remote",
-      description: "Conduct yoga and lifestyle wellness sessions online.",
-      skills: ["Yoga", "Meditation", "Fitness"],
-    },
-
-    {
-      title: "Academic Counselor",
+      title: "Physics Faculty/ Teacher",
       department: "Education",
-      type: "Freelance",
-      description: "Guide students in academics and career development.",
-      skills: ["Counselling", "Education", "Mentorship"],
+      type: "Indeed Listing",
+      description: "Teach physics concepts with structured lesson delivery.",
+      skills: ["Physics", "Teaching", "Classroom Management"],
+      applyLink:
+        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Physics+Teacher&jk=c32e9bf0701ad327&q=mindcurepath&xpse=SoDt67I3jqbU5izNS50LbzkdCdPP&xfps=b94794e0-61b4-4cce-b9b9-f7e9c0358206&xkcb=SoCB67M3jqbMFETC8R0NbzkdCdPP&vjs=3",
     },
-
     {
-      title: "Mutual Fund Expert",
-      department: "Finance",
-      type: "Freelance",
-      description: "Assist clients in investments and portfolio planning.",
-      skills: ["NISM", "Investments", "Portfolio"],
+      title: "English teacher",
+      department: "Education",
+      type: "Indeed Listing",
+      description: "Improve language skills through engaging English lessons.",
+      skills: ["English", "Teaching", "Communication"],
+      applyLink:
+        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=English+Teacher&jk=7d546e1ca1bebeec&q=mindcurepath&xpse=SoBg67I3jqbQjbTCwJ0PbzkdCdPP&xfps=28b6733d-49fb-4b69-828f-a0ae5741701e&xkcb=SoA167M3jqbMFETC8R0MbzkdCdPP&vjs=3",
     },
-
     {
-      title: "Insurance Expert",
+      title: "Chartered Accountant",
       department: "Finance",
-      type: "Commission Based",
-      description: "Guide users in selecting suitable insurance products.",
-      skills: ["IRDAI", "Insurance", "Claims"],
+      type: "Indeed Listing",
+      description: "Handle accounting, taxation, and compliance workflows.",
+      skills: ["Accounting", "Taxation", "Compliance"],
+      applyLink:
+        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Accountant&jk=15a3d558c7609fdc&q=mindcurepath&xpse=SoB_67I3jqbQvSz4mp0LbzkdCdPP&xfps=99620e25-58e0-4119-971d-bc2d6d4a27e8&xkcb=SoDc67M3jqbMFETC8R0DbzkdCdPP&vjs=3",
+    },
+    {
+      title: "Biology Teacher",
+      department: "Education",
+      type: "Indeed Listing",
+      description: "Deliver biology instruction and student learning support.",
+      skills: ["Biology", "Teaching", "Lesson Planning"],
+      applyLink:
+        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Teacher&jk=94bd8579c9947823&q=mindcurepath&xpse=SoDD67I3jqbQpMz4BB0LbzkdCdPP&xfps=5bb37ab8-245b-48f1-a2a7-b733a2d753be&xkcb=SoBo67M3jqbMFETC8R0CbzkdCdPP&vjs=3",
+    },
+    {
+      title: "Physics Faculty teacher",
+      department: "Education",
+      type: "Indeed Listing",
+      description: "Lead physics sessions with concept-first teaching methods.",
+      skills: ["Physics", "Teaching", "Assessment"],
+      applyLink:
+        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Physics+Teacher&jk=c32e9bf0701ad327&q=mindcurepath&xpse=SoDt67I3jqbU5izNS50LbzkdCdPP&xfps=b94794e0-61b4-4cce-b9b9-f7e9c0358206&xkcb=SoCB67M3jqbMFETC8R0NbzkdCdPP&vjs=3",
+    },
+    {
+      title: "French Tutor",
+      department: "Education",
+      type: "Indeed Listing",
+      description: "Teach French language fundamentals and fluency skills.",
+      skills: ["French", "Tutoring", "Communication"],
+      applyLink:
+        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Tutor&jk=9fe44f5b00cdef2b&q=mindcurepath&xpse=SoBn67I3jqbnINzDQR0LbzkdCdPP&xfps=f2d0bf46-37fd-4156-a556-5af4397b43a8&xkcb=SoD167M3jqbMFETC8R0BbzkdCdPP&vjs=3",
+    },
+    {
+      title: "Spanish teacher",
+      department: "Education",
+      type: "Indeed Listing",
+      description: "Conduct interactive Spanish classes for students.",
+      skills: ["Spanish", "Teaching", "Language Skills"],
+      applyLink:
+        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Spanish+Teacher&jk=25ef6d619b25f7a4&q=mindcurepath&xpse=SoCc67I3jqbmhiz4KJ0LbzkdCdPP&xfps=dd2c5447-00ac-4f48-b075-47cb089b861a&xkcb=SoBB67M3jqbMFETC8R0AbzkdCdPP&vjs=3",
+    },
+    {
+      title: "Urdu Teacher",
+      department: "Education",
+      type: "Indeed Listing",
+      description: "Support Urdu learning with structured language instruction.",
+      skills: ["Urdu", "Teaching", "Student Engagement"],
+      applyLink:
+        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Teacher&jk=2a9f387c10f72827&q=mindcurepath&xpse=SoCs67I3jqb_K2z4mp0LbzkdCdPP&xfps=ec956f26-27b7-4544-8b9d-e3dac9818569&xkcb=SoDP67M3jqbMFETC8R0HbzkdCdPP&vjs=3",
+    },
+    {
+      title: "Social Science teacher",
+      department: "Education",
+      type: "Indeed Listing",
+      description: "Teach social science topics through engaging lessons.",
+      skills: ["Social Science", "Teaching", "Curriculum"],
+      applyLink:
+        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Science+Teacher&jk=49b39626a8dd118e&q=mindcurepath&xpse=SoC267I3jqb-0lzNS50LbzkdCdPP&xfps=dd69d882-1b9d-4922-aae4-841a3757a332&xkcb=SoB767M3jqbMFETC8R0GbzkdCdPP&vjs=3",
+    },
+    {
+      title: "Japanese Teacher",
+      department: "Education",
+      type: "Indeed Listing",
+      description: "Help students build Japanese reading and speaking skills.",
+      skills: ["Japanese", "Teaching", "Language Learning"],
+      applyLink:
+        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Teacher&jk=27522f2332312aee&q=mindcurepath&xpse=SoCT67I3jqb-_bzCSZ0LbzkdCdPP&xfps=ca550e6b-b68f-4551-9393-d77cccbaed93&xkcb=SoDm67M3jqbMFETC8R0FbzkdCdPP&vjs=3",
     },
   ];
 
@@ -307,9 +379,14 @@ export default function Careers() {
                   ))}
                 </div>
 
-                <button className="w-full rounded-2xl bg-emerald-700 text-white py-3 font-medium hover:bg-emerald-800 transition-all duration-300 shadow-[0_8px_18px_-8px_rgba(5,150,105,0.8)]">
-                  Apply Now
-                </button>
+                <a
+                  href={role.applyLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full block text-center rounded-2xl bg-emerald-700 text-white py-3 font-medium hover:bg-emerald-800 transition-all duration-300 shadow-[0_8px_18px_-8px_rgba(5,150,105,0.8)]"
+                >
+                  Apply on Indeed
+                </a>
               </div>
             ))}
           </div>
