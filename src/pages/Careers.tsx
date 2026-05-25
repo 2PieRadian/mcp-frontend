@@ -359,8 +359,9 @@ export default function Careers() {
             </h2>
 
             <p className="text-slate-600 text-lg max-w-2xl mx-auto">
-              Explore exciting opportunities across wellness, education,
-              finance, and technology domains.
+              Explore expert opportunities across wellness, education,
+              finance, and technology, then apply directly with your profile
+              and PDF resume.
             </p>
           </div>
 
@@ -424,7 +425,7 @@ export default function Careers() {
                     </div>
 
                     <span className="px-4 py-2 rounded-full bg-emerald-100 text-emerald-800 text-sm font-medium">
-                      {role.type}
+                      Expert Application
                     </span>
                   </div>
 

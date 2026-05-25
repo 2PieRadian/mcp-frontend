@@ -58,7 +58,7 @@ export async function updatePhone(phoneNumber: string): Promise<{
   if (!res.ok) {
     throw new Error(
       (data?.message as string) ||
-        (res.status === 401 ? "Unauthorized" : "Failed to update phone number"),
+      (res.status === 401 ? "Unauthorized" : "Failed to update phone number"),
     );
   }
 
@@ -121,6 +121,85 @@ export function getErrorMessageFromResponseBody(
     return "This time slot is no longer available or conflicts with an existing booking. Please choose another slot.";
   }
   return fallback;
+}
+
+export type ApiFieldError = {
+  field: string;
+  message: string;
+};
+
+export type ExpertApplicationStatus =
+  | "PENDING"
+  | "REVIEWED"
+  | "SHORTLISTED"
+  | "ACCEPTED"
+  | "REJECTED";
+
+export type ApiErrorResponse = {
+  success: false;
+  message: string;
+  errors?: ApiFieldError[];
+};
+
+export type ExpertApplicationFormValues = {
+  fullName: string;
+  email: string;
+  phone: string;
+  expertise: string;
+  experience: string;
+  resume: File | null;
+};
+
+export type CreateExpertApplicationSuccessResponse = {
+  success: true;
+  message: string;
+  application: {
+    id: number;
+    fullName: string;
+    email: string;
+    expertise: string;
+    createdAt: string;
+  };
+};
+
+export const EXPERT_APPLICATION_MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024;
+export const EXPERT_APPLICATION_PHONE_PATTERN = /^[0-9+\-() ]+$/;
+
+export async function submitExpertApplication(
+  values: ExpertApplicationFormValues,
+): Promise<CreateExpertApplicationSuccessResponse> {
+  const formData = new FormData();
+  formData.append("fullName", values.fullName.trim());
+  formData.append("email", values.email.trim());
+  formData.append("phone", values.phone.trim());
+  formData.append("expertise", values.expertise.trim());
+  formData.append("experience", values.experience.trim());
+
+  if (values.resume) {
+    formData.append("resume", values.resume);
+  }
+
+  const res = await fetch(`${BACKEND_URL}/api/v1/expert-applications`, {
+    method: "POST",
+    body: formData,
+  });
+
+  const data = (await res.json().catch(() => ({}))) as ApiErrorResponse &
+    Partial<CreateExpertApplicationSuccessResponse>;
+
+  if (!res.ok) {
+    const fallback =
+      res.status === 413
+        ? "Resume file size must not exceed 5MB"
+        : "Failed to submit expert application";
+    throw new ApiHttpError(
+      getErrorMessageFromResponseBody(data, res.status, fallback),
+      res.status,
+      data,
+    );
+  }
+
+  return data as CreateExpertApplicationSuccessResponse;
 }
 
 /** Communication medium for booking (must match backend enum). */
@@ -495,19 +574,19 @@ async function postAppointmentSessionAction(
   const data = (await res
     .json()
     .catch(() => ({}))) as AppointmentSessionActionResponse & {
-    message?: string;
-  };
+      message?: string;
+    };
 
   if (!res.ok) {
     throw new Error(
       (data?.message as string) ||
-        (res.status === 401
-          ? "Unauthorized"
-          : res.status === 403
-            ? "Forbidden"
-            : res.status === 404
-              ? "Appointment not found"
-              : "Session request failed"),
+      (res.status === 401
+        ? "Unauthorized"
+        : res.status === 403
+          ? "Forbidden"
+          : res.status === 404
+            ? "Appointment not found"
+            : "Session request failed"),
     );
   }
 
@@ -686,7 +765,7 @@ export async function getMyAppointments(
   if (!res.ok) {
     throw new Error(
       (data?.message as string) ||
-        (res.status === 401 ? "Unauthorized" : "Failed to load appointments"),
+      (res.status === 401 ? "Unauthorized" : "Failed to load appointments"),
     );
   }
 
@@ -725,11 +804,11 @@ export async function getExpertAppointments(
   if (!res.ok) {
     throw new Error(
       (data?.message as string) ||
-        (res.status === 403
-          ? "Forbidden"
-          : res.status === 401
-            ? "Unauthorized"
-            : "Failed to load appointments"),
+      (res.status === 403
+        ? "Forbidden"
+        : res.status === 401
+          ? "Unauthorized"
+          : "Failed to load appointments"),
     );
   }
 
@@ -785,11 +864,11 @@ export async function getExpertUpcomingSessions(): Promise<ExpertUpcomingSession
   if (!res.ok) {
     throw new Error(
       (data?.message as string) ||
-        (res.status === 403
-          ? "Forbidden"
-          : res.status === 401
-            ? "Unauthorized"
-            : "Failed to load upcoming sessions"),
+      (res.status === 403
+        ? "Forbidden"
+        : res.status === 401
+          ? "Unauthorized"
+          : "Failed to load upcoming sessions"),
     );
   }
 
@@ -822,11 +901,11 @@ export async function getExpertEarnings(): Promise<ExpertEarningsResponse> {
   if (!res.ok) {
     throw new Error(
       (data?.message as string) ||
-        (res.status === 403
-          ? "Forbidden"
-          : res.status === 401
-            ? "Unauthorized"
-            : "Failed to load earnings"),
+      (res.status === 403
+        ? "Forbidden"
+        : res.status === 401
+          ? "Unauthorized"
+          : "Failed to load earnings"),
     );
   }
 
