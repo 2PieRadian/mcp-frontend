@@ -185,7 +185,7 @@ export default function Careers() {
           </div>
 
           {/* Right Column (Image) */}
-          <div className="relative h-[650px] w-full mt-10 lg:mt-0 flex justify-end">
+          <div className="hidden lg:flex relative h-[650px] w-full mt-10 lg:mt-0 justify-end">
             <div className="absolute top-0 right-[-100px] bottom-0 w-[120%] lg:w-[130%] rounded-l-[300px] overflow-hidden bg-gray-100 z-0">
               <img src="/team_working.png" alt="Team working" className="w-full h-full object-cover" />
             </div>
@@ -208,8 +208,61 @@ export default function Careers() {
         </div>
       </main>
 
+      {/* Legacy Roles Section - Kept so functionality is not lost */}
+      <section id="open-roles" className="max-w-[1300px] mx-auto px-6 mt-10 mb-20 bg-[#f9fafb] p-8 rounded-3xl border border-gray-100">
+        <div className="mb-8 flex items-center justify-between gap-4">
+          <h2 className="text-3xl font-bold text-[#111827]">Open Roles</h2>
+        </div>
+
+        <div className="mb-8 flex flex-wrap gap-2">
+          {departmentFilters.map((item) => (
+            <button
+              key={item.name}
+              type="button"
+              onClick={() => setSelectedDepartment(item.name)}
+              className={`rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors ${selectedDepartment === item.name
+                ? "bg-[#15603A] text-white"
+                : "bg-white text-slate-700 hover:bg-[#eefcf2] hover:text-[#15603A] border border-gray-200"
+                }`}
+            >
+              {item.name}
+            </button>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {filteredRoles.map((role) => (
+            <div key={role.title} className="rounded-2xl border border-gray-200 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md transition-shadow flex flex-col justify-between">
+              <div>
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                  <h3 className="text-xl font-bold text-slate-900">{role.title}</h3>
+                  <span className="rounded-full bg-[#eefcf2] px-3 py-1 text-xs font-bold text-[#15603A]">
+                    {role.department}
+                  </span>
+                </div>
+                <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-slate-600 font-medium">
+                  {role.skills.map((skill) => (
+                    <span key={skill} className="inline-flex items-center gap-1">
+                      <span className="text-[#15603A] font-bold">•</span>
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+                <p className="text-sm leading-relaxed text-slate-600 mb-6">{role.description}</p>
+              </div>
+              <Link
+                to={`/careers/apply?role=${encodeURIComponent(role.title)}`}
+                className="inline-flex w-full sm:w-auto items-center justify-center rounded-xl bg-white border-2 border-[#15603A] px-6 py-2.5 text-sm font-bold text-[#15603A] transition-colors hover:bg-[#15603A] hover:text-white"
+              >
+                Apply Now
+              </Link>
+            </div>
+          ))}
+        </div>
+      </section >
+
       {/* Why Join Section */}
-      <section className="max-w-[1300px] mx-auto px-6 mt-28 mb-32">
+      < section className="max-w-[1300px] mx-auto px-6 mt-28 mb-32" >
         <h2 className="text-[2.2rem] font-bold text-center text-[#111827] mb-16">
           Why Join <span className="text-[#15603A]">MindCurePath?</span>
         </h2>
@@ -270,63 +323,9 @@ export default function Careers() {
             </p>
           </div>
         </div>
-      </section>
-
-      {/* Legacy Roles Section - Kept so functionality is not lost */}
-      <section id="open-roles" className="max-w-[1300px] mx-auto px-6 mb-20 bg-[#f9fafb] p-8 rounded-3xl border border-gray-100">
-        <div className="mb-8 flex items-center justify-between gap-4">
-          <h2 className="text-3xl font-bold text-[#111827]">Open Roles</h2>
-          <span className="text-sm font-semibold text-[#15603A] cursor-pointer">View all openings</span>
-        </div>
-
-        <div className="mb-8 flex flex-wrap gap-2">
-          {departmentFilters.map((item) => (
-            <button
-              key={item.name}
-              type="button"
-              onClick={() => setSelectedDepartment(item.name)}
-              className={`rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors ${selectedDepartment === item.name
-                ? "bg-[#15603A] text-white"
-                : "bg-white text-slate-700 hover:bg-[#eefcf2] hover:text-[#15603A] border border-gray-200"
-                }`}
-            >
-              {item.name}
-            </button>
-          ))}
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {filteredRoles.map((role) => (
-            <div key={role.title} className="rounded-2xl border border-gray-200 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md transition-shadow flex flex-col justify-between">
-              <div>
-                <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-                  <h3 className="text-xl font-bold text-slate-900">{role.title}</h3>
-                  <span className="rounded-full bg-[#eefcf2] px-3 py-1 text-xs font-bold text-[#15603A]">
-                    {role.department}
-                  </span>
-                </div>
-                <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-slate-600 font-medium">
-                  {role.skills.map((skill) => (
-                    <span key={skill} className="inline-flex items-center gap-1">
-                      <span className="text-[#15603A] font-bold">•</span>
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-                <p className="text-sm leading-relaxed text-slate-600 mb-6">{role.description}</p>
-              </div>
-              <Link
-                to={`/careers/apply?role=${encodeURIComponent(role.title)}`}
-                className="inline-flex w-full sm:w-auto items-center justify-center rounded-xl bg-white border-2 border-[#15603A] px-6 py-2.5 text-sm font-bold text-[#15603A] transition-colors hover:bg-[#15603A] hover:text-white"
-              >
-                Apply Now
-              </Link>
-            </div>
-          ))}
-        </div>
-      </section>
+      </section >
 
       <Footer />
-    </div>
+    </div >
   );
 }
