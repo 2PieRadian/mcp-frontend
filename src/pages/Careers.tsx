@@ -6,6 +6,8 @@ import { gsap } from "gsap";
 
 export default function Careers() {
   const heroRef = useRef<HTMLDivElement>(null);
+  const opportunitiesRef = useRef<HTMLDivElement>(null);
+  const processRef = useRef<HTMLDivElement>(null);
   const [selectedDepartment, setSelectedDepartment] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -26,6 +28,20 @@ export default function Careers() {
       },
     );
   }, []);
+
+  const scrollToOpenRoles = () => {
+    opportunitiesRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
+  const scrollToProcess = () => {
+    processRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
 
   const openRoles = [
     {
@@ -179,6 +195,8 @@ export default function Careers() {
     () => ["All", ...new Set(openRoles.map((role) => role.department))],
     [openRoles],
   );
+  const totalDepartments = departmentFilters.length - 1;
+  const featuredRoles = useMemo(() => openRoles.slice(0, 4), [openRoles]);
 
   const filteredRoles = useMemo(() => {
     const normalizedSearch = searchTerm.trim().toLowerCase();
@@ -242,6 +260,39 @@ export default function Careers() {
     },
   ];
 
+  const hiringHighlights = [
+    { label: "Open roles", value: String(openRoles.length), tone: "text-emerald-700" },
+    { label: "Teams hiring", value: String(totalDepartments), tone: "text-sky-700" },
+    { label: "Engagement", value: "Flexible", tone: "text-violet-700" },
+  ];
+
+  const hiringProcess = [
+    {
+      step: "01",
+      title: "Apply",
+      description:
+        "Submit your role interest, expertise, experience, and PDF resume in one place.",
+    },
+    {
+      step: "02",
+      title: "Review",
+      description:
+        "We review your profile for domain fit, communication strength, and current hiring needs.",
+    },
+    {
+      step: "03",
+      title: "Conversation",
+      description:
+        "Shortlisted applicants move into a practical role discussion with our team.",
+    },
+    {
+      step: "04",
+      title: "Onboarding",
+      description:
+        "Selected candidates receive next steps, expectations, and engagement details.",
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-white">
       <div className="fixed inset-x-0 top-0 z-40 w-full bg-white px-[16px] sm:px-[20px] border-b border-emerald-100">
@@ -250,64 +301,169 @@ export default function Careers() {
 
       <div className="max-w-6xl mx-auto px-[16px] sm:px-[20px] pt-24 sm:pt-28 pb-24">
         {/* Hero Section */}
-        <div ref={heroRef} className="relative pt-20 pb-24 overflow-hidden">
-          {/* Background Elements */}
+        <div ref={heroRef} className="relative pt-12 pb-20 overflow-hidden">
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            <div className="absolute top-20 left-20 w-32 h-32 rounded-full bg-emerald-200 blur-3xl opacity-55" />
-
-            <div className="absolute bottom-10 right-10 w-40 h-40 rounded-full bg-sky-200 blur-3xl opacity-50" />
-
-            <div className="absolute top-1/2 left-1/2 w-24 h-24 rounded-full bg-violet-200 blur-2xl opacity-45" />
+            <div className="absolute inset-x-6 top-6 h-80 rounded-full bg-linear-to-r from-emerald-100/80 via-sky-100/70 to-teal-100/70 blur-3xl" />
+            <div className="absolute left-0 top-28 h-40 w-40 rounded-full bg-emerald-200/70 blur-3xl" />
+            <div className="absolute right-0 top-16 h-52 w-52 rounded-full bg-sky-200/70 blur-3xl" />
+            <div className="absolute left-1/2 top-1/2 h-28 w-28 rounded-full bg-violet-200/60 blur-2xl" />
           </div>
 
-          <div className="relative z-10 max-w-3xl mx-auto text-center">
-            <div className="inline-flex items-center px-4 py-2 rounded-full bg-linear-to-r from-emerald-100 to-teal-100 text-emerald-900 text-sm font-semibold mb-6 border border-emerald-200">
-              Join Our Growing Team
-            </div>
+          <div className="relative z-10 rounded-[2rem] border border-emerald-100 bg-white/85 p-6 shadow-[0_32px_90px_-46px_rgba(15,90,78,0.45)] backdrop-blur md:p-10">
+            <div className="grid gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)] lg:items-center">
+              <div className="max-w-3xl">
+                <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-linear-to-r from-emerald-100 to-teal-100 px-4 py-2 text-sm font-semibold text-emerald-900 mb-6">
+                  <span className="inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
+                  Careers at MindCurePath
+                </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 leading-tight mb-6">
-              Careers at MindCurePath
-            </h1>
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 leading-[1.02] mb-6">
+                  Join a mission-driven team
+                  <span className="block text-emerald-700">
+                    building real-world expert services
+                  </span>
+                </h1>
 
-            <p className="text-lg md:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto mb-10">
-              Build meaningful impact through wellness, education, finance, and
-              technology while working with a fast-growing digital consultancy
-              ecosystem.
-            </p>
+                <p className="text-lg md:text-xl text-slate-600 leading-relaxed max-w-2xl mb-8">
+                  We’re hiring experts, educators, advisors, and operators who
+                  want to do meaningful work across wellness, education,
+                  finance, and digital services. Explore open positions, learn
+                  how we hire, and apply directly from one place.
+                </p>
 
-            <div className="flex flex-wrap justify-center gap-4">
-              <div className="px-5 py-3 rounded-2xl bg-emerald-50 border border-emerald-200 shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                <p className="text-sm text-emerald-700">Work Type</p>
-                <h3 className="font-semibold text-slate-900">
-                  Remote & Flexible
-                </h3>
+                <div className="flex flex-col sm:flex-row gap-3 sm:items-center mb-8">
+                  <button
+                    type="button"
+                    onClick={scrollToOpenRoles}
+                    className="inline-flex items-center justify-center rounded-2xl bg-emerald-700 px-6 py-3.5 text-base font-semibold text-white shadow-[0_14px_30px_-14px_rgba(5,150,105,0.95)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-emerald-800"
+                  >
+                    Apply Now
+                  </button>
+                  <button
+                    type="button"
+                    onClick={scrollToProcess}
+                    className="inline-flex items-center justify-center rounded-2xl border border-slate-300 bg-white px-6 py-3.5 text-base font-semibold text-slate-700 transition-all duration-300 hover:border-emerald-300 hover:text-emerald-700"
+                  >
+                    View Hiring Process
+                  </button>
+                </div>
+
+                <div className="grid gap-3 sm:grid-cols-3">
+                  {hiringHighlights.map((item) => (
+                    <div
+                      key={item.label}
+                      className="rounded-2xl border border-slate-200 bg-white px-4 py-4 shadow-sm"
+                    >
+                      <p className="text-sm text-slate-500">{item.label}</p>
+                      <p className={`mt-2 text-2xl font-semibold ${item.tone}`}>
+                        {item.value}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
 
-              <div className="px-5 py-3 rounded-2xl bg-sky-50 border border-sky-200 shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                <p className="text-sm text-sky-700">Domains</p>
-                <h3 className="font-semibold text-slate-900">Multi-Industry</h3>
-              </div>
+              <div className="relative">
+                <div className="rounded-[2rem] border border-slate-800 bg-slate-950 p-6 text-white shadow-[0_30px_70px_-35px_rgba(15,23,42,0.6)]">
+                  <div className="flex items-center justify-between gap-4 mb-6">
+                    <div>
+                      <p className="text-sm font-medium text-emerald-300">
+                        Active hiring
+                      </p>
+                      <h2 className="text-2xl font-semibold text-white">
+                        Featured openings
+                      </h2>
+                    </div>
+                    <div className="rounded-2xl bg-emerald-400/15 px-3 py-2 text-sm font-semibold text-emerald-200">
+                      {openRoles.length} roles
+                    </div>
+                  </div>
 
-              <div className="px-5 py-3 rounded-2xl bg-violet-50 border border-violet-200 shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                <p className="text-sm text-violet-700">Opportunities</p>
-                <h3 className="font-semibold text-slate-900">
-                  Internship & Freelance
-                </h3>
+                  <div className="space-y-3">
+                    {featuredRoles.map((role) => (
+                      <div
+                        key={role.title}
+                        className="rounded-2xl border border-white/10 bg-white/5 px-4 py-4"
+                      >
+                        <div className="flex items-start justify-between gap-3">
+                          <div>
+                            <p className="text-base font-semibold text-white">
+                              {role.title}
+                            </p>
+                            <p className="mt-1 text-sm text-slate-300">
+                              {role.department}
+                            </p>
+                          </div>
+                          <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-slate-200">
+                            Open
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-6 rounded-2xl border border-emerald-400/20 bg-emerald-400/10 px-4 py-4">
+                    <p className="text-sm font-semibold text-emerald-200">
+                      Who this page is for
+                    </p>
+                    <p className="mt-1 text-sm text-slate-200">
+                      People looking for flexible, impact-driven opportunities
+                      with a growing expert-led platform.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Career Domains Section */}
-        <div className="pb-24 px-2 sm:px-0">
+        <div ref={processRef} className="pb-24 px-2 sm:px-0">
+          <div className="rounded-[2rem] border border-slate-200 bg-slate-50 px-6 py-8 md:px-8 md:py-10">
+            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between mb-8">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-700">
+                  Hiring Process
+                </p>
+                <h2 className="mt-2 text-3xl md:text-4xl font-bold text-slate-900">
+                  What happens after you apply
+                </h2>
+              </div>
+              <p className="max-w-2xl text-slate-600 text-base md:text-lg">
+                We keep the process direct and practical so good applicants can
+                move quickly from submission to conversation.
+              </p>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              {hiringProcess.map((item) => (
+                <div
+                  key={item.step}
+                  className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm"
+                >
+                  <p className="text-sm font-semibold text-emerald-700">
+                    {item.step}
+                  </p>
+                  <h3 className="mt-3 text-xl font-semibold text-slate-900">
+                    {item.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                    {item.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div ref={opportunitiesRef} className="pb-24 px-2 sm:px-0">
           <div className="text-center mb-14">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-              Explore Career Domains
+              Teams We’re Hiring In
             </h2>
 
             <p className="text-slate-600 text-lg max-w-2xl mx-auto">
-              Join a growing ecosystem of experts, innovators, educators, and
-              technology professionals.
+              These are the domains where we’re actively expanding our expert
+              and delivery network.
             </p>
           </div>
 
@@ -315,7 +471,7 @@ export default function Careers() {
             {careerDomains.map((domain, index) => (
               <div
                 key={index}
-                className="group bg-white rounded-3xl border border-slate-200 p-6 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2 cursor-pointer hover:border-emerald-300"
+                className="group bg-white rounded-3xl border border-slate-200 p-6 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2 hover:border-emerald-300"
               >
                 <div
                   className={`w-16 h-16 rounded-2xl ${domain.color} ring-1 ring-white flex items-center justify-center mb-5 overflow-hidden`}
@@ -328,9 +484,14 @@ export default function Careers() {
                   />
                 </div>
 
-                <h3 className="text-2xl font-semibold text-slate-900 mb-3">
-                  {domain.title}
-                </h3>
+                <div className="flex items-center justify-between gap-3 mb-3">
+                  <h3 className="text-2xl font-semibold text-slate-900">
+                    {domain.title}
+                  </h3>
+                  <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
+                    Hiring Focus
+                  </span>
+                </div>
 
                 <p className="text-slate-600 leading-relaxed mb-5">
                   {domain.description}
