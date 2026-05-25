@@ -159,9 +159,6 @@ export default function Careers() {
               >
                 Explore Open Roles <ArrowRight size={18} strokeWidth={2.5} />
               </a>
-              <button className="bg-white border-[1.5px] border-[#15603A] text-[#15603A] hover:bg-[#f4fbf7] px-7 py-3.5 rounded-[12px] font-semibold transition-colors">
-                Life at MindCurePath
-              </button>
             </div>
 
             <div className="mt-12 flex flex-wrap gap-x-8 gap-y-4">
