@@ -132,7 +132,7 @@ export default function Careers() {
 
   return (
     <div className="min-h-screen bg-white font-sans">
-      <div className="fixed inset-x-0 top-0 z-40 w-full bg-white border-b border-gray-100">
+      <div className="fixed inset-x-0 top-0 z-40 w-full bg-white border-b border-gray-100 px-6">
         <ResponsiveNavbar />
       </div>
 
