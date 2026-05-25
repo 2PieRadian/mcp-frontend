@@ -129,52 +129,6 @@ export default function Careers() {
     return roles.filter((role) => role.department === selectedDepartment);
   }, [selectedDepartment]);
 
-  const heroPoints = ["Purpose Driven", "People First", "Continuous Growth", "Remote Friendly"];
-  const whyJoinItems = [
-    {
-      icon: "◎",
-      title: "Meaningful Impact",
-      description: "Work on products that positively impact millions of lives.",
-    },
-    {
-      icon: "↗",
-      title: "Real Ownership",
-      description: "Take ownership, share ideas, and see your work create value.",
-    },
-    {
-      icon: "◍",
-      title: "Grow Together",
-      description: "Learn, upskill, and grow with mentors and a supportive team.",
-    },
-    {
-      icon: "▣",
-      title: "Flexible & Remote",
-      description: "Work from anywhere with healthy flexibility and balance.",
-    },
-    {
-      icon: "♥",
-      title: "Inclusive Culture",
-      description: "A diverse, respectful workplace where everyone belongs.",
-    },
-  ];
-  const perks = [
-    {
-      title: "Health & Wellness",
-      description: "Comprehensive health insurance and wellness programs.",
-    },
-    {
-      title: "Learning Budget",
-      description: "Annual budget for courses, workshops, and conferences.",
-    },
-    {
-      title: "Paid Time Off",
-      description: "Generous PTO policy to help you rest and recharge.",
-    },
-    {
-      title: "Team Retreats",
-      description: "Regular offsites and virtual events to connect and celebrate.",
-    },
-  ];
 
   return (
     <div className="min-h-screen bg-white font-sans">
@@ -332,8 +286,8 @@ export default function Careers() {
               type="button"
               onClick={() => setSelectedDepartment(item.name)}
               className={`rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors ${selectedDepartment === item.name
-                  ? "bg-[#15603A] text-white"
-                  : "bg-white text-slate-700 hover:bg-[#eefcf2] hover:text-[#15603A] border border-gray-200"
+                ? "bg-[#15603A] text-white"
+                : "bg-white text-slate-700 hover:bg-[#eefcf2] hover:text-[#15603A] border border-gray-200"
                 }`}
             >
               {item.name}
