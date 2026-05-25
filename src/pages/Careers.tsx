@@ -1,628 +1,376 @@
-import ResponsiveNavbar from "../components/ResponsiveNavbar";
-import Footer from "../components/Footer";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { gsap } from "gsap";
+import Footer from "../components/Footer";
+import ResponsiveNavbar from "../components/ResponsiveNavbar";
+import { ArrowRight, Heart, Users, Rocket, Laptop, GraduationCap, Monitor } from "lucide-react";
+
+type Role = {
+  title: string;
+  department: string;
+  description: string;
+  skills: [string, string, string];
+};
+
+const roles: Role[] = [
+  {
+    title: "Dietician",
+    department: "Wellness",
+    description: "Provide nutrition guidance and wellness planning support.",
+    skills: ["Nutrition", "Diet Planning", "Consultation"],
+  },
+  {
+    title: "Maths Tutor",
+    department: "Education",
+    description: "Teach and mentor students in mathematics effectively.",
+    skills: ["Mathematics", "Teaching", "Mentoring"],
+  },
+  {
+    title: "Tutor",
+    department: "Education",
+    description: "Deliver focused learning sessions and academic support.",
+    skills: ["Teaching", "Communication", "Student Support"],
+  },
+  {
+    title: "OCD",
+    department: "Mental Health",
+    description: "Support clients with OCD-focused counselling services.",
+    skills: ["Counselling", "Mental Health", "Client Support"],
+  },
+  {
+    title: "Depression Counsellor",
+    department: "Mental Health",
+    description: "Provide emotional support and depression counselling care.",
+    skills: ["Counselling", "Psychology", "Empathy"],
+  },
+  {
+    title: "Insurance Advisor",
+    department: "Finance",
+    description: "Advise clients on policy selection and insurance planning.",
+    skills: ["Insurance", "Advisory", "Client Relations"],
+  },
+  {
+    title: "Physics Faculty/ Teacher",
+    department: "Education",
+    description: "Teach physics concepts with structured lesson delivery.",
+    skills: ["Physics", "Teaching", "Classroom Management"],
+  },
+  {
+    title: "English teacher",
+    department: "Education",
+    description: "Improve language skills through engaging English lessons.",
+    skills: ["English", "Teaching", "Communication"],
+  },
+  {
+    title: "Chartered Accountant",
+    department: "Finance",
+    description: "Handle accounting, taxation, and compliance workflows.",
+    skills: ["Accounting", "Taxation", "Compliance"],
+  },
+  {
+    title: "Biology Teacher",
+    department: "Education",
+    description: "Deliver biology instruction and student learning support.",
+    skills: ["Biology", "Teaching", "Lesson Planning"],
+  },
+  {
+    title: "Physics Faculty teacher",
+    department: "Education",
+    description: "Lead physics sessions with concept-first teaching methods.",
+    skills: ["Physics", "Teaching", "Assessment"],
+  },
+  {
+    title: "French Tutor",
+    department: "Education",
+    description: "Teach French language fundamentals and fluency skills.",
+    skills: ["French", "Tutoring", "Communication"],
+  },
+  {
+    title: "Spanish teacher",
+    department: "Education",
+    description: "Conduct interactive Spanish classes for students.",
+    skills: ["Spanish", "Teaching", "Language Skills"],
+  },
+  {
+    title: "Urdu Teacher",
+    department: "Education",
+    description: "Support Urdu learning with structured language instruction.",
+    skills: ["Urdu", "Teaching", "Student Engagement"],
+  },
+  {
+    title: "Social Science teacher",
+    department: "Education",
+    description: "Teach social science topics through engaging lessons.",
+    skills: ["Social Science", "Teaching", "Curriculum"],
+  },
+  {
+    title: "Japanese Teacher",
+    department: "Education",
+    description: "Help students build Japanese reading and speaking skills.",
+    skills: ["Japanese", "Teaching", "Language Learning"],
+  },
+];
 
 export default function Careers() {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const opportunitiesRef = useRef<HTMLDivElement>(null);
-  const processRef = useRef<HTMLDivElement>(null);
-  const [selectedDepartment, setSelectedDepartment] = useState("All");
-  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedDepartment, setSelectedDepartment] = useState("All Departments");
 
-  useEffect(() => {
-    if (!heroRef.current) return;
-
-    gsap.fromTo(
-      heroRef.current,
-      {
-        opacity: 0,
-        y: 40,
-      },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: "power3.out",
-      },
-    );
+  const departmentFilters = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const role of roles) {
+      counts.set(role.department, (counts.get(role.department) ?? 0) + 1);
+    }
+    return [
+      { name: "All Departments", count: roles.length },
+      ...Array.from(counts.entries()).map(([name, count]) => ({ name, count })),
+    ];
   }, []);
 
-  const scrollToOpenRoles = () => {
-    opportunitiesRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-  };
-
-  const scrollToProcess = () => {
-    processRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-  };
-
-  const openRoles = [
-    {
-      title: "Dietician",
-      department: "Wellness",
-      type: "Indeed Listing",
-      description: "Provide nutrition guidance and wellness planning support.",
-      skills: ["Nutrition", "Diet Planning", "Consultation"],
-      applyLink:
-        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Dietitian&jk=b15b0fa87647e60f&q=mindcurepath&xpse=SoAM67I3jqbLS1zCSZ0LbzkdCdPP&xfps=5368977a-202b-4f29-ab26-6e0a9f6a07c9&xkcb=SoC767M3jqbMFETC8R0LbzkdCdPP&vjs=3",
-    },
-    {
-      title: "Maths Tutor",
-      department: "Education",
-      type: "Indeed Listing",
-      description: "Teach and mentor students in mathematics effectively.",
-      skills: ["Mathematics", "Teaching", "Mentoring"],
-      applyLink:
-        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Tutor&jk=1eaf2851a7bd56f1&q=mindcurepath&xpse=SoC967I3jqbBG7TNqh0LbzkdCdPP&xfps=ca1be697-335d-4232-a9ce-3f7154ca6b16&xkcb=SoAP67M3jqbMFETC8R0KbzkdCdPP&vjs=3",
-    },
-    {
-      title: "Tutor",
-      department: "Education",
-      type: "Indeed Listing",
-      description: "Deliver focused learning sessions and academic support.",
-      skills: ["Teaching", "Communication", "Student Support"],
-      applyLink:
-        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Tutor&jk=e95003f758d0ed17&q=mindcurepath&xpse=SoDG67I3jqbeaSAYAD0LbzkdCdPP&xfps=ae2af9bb-2567-4032-bd60-dd737007c89d&xkcb=SoCS67M3jqbMFETC8R0JbzkdCdPP&vjs=3",
-    },
-    {
-      title: "OCD",
-      department: "Mental Health",
-      type: "Indeed Listing",
-      description: "Support clients with OCD-focused counselling services.",
-      skills: ["Counselling", "Mental Health", "Client Support"],
-      applyLink:
-        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Ocd&jk=d8ed93407352d924&q=mindcurepath&xpse=SoBB67I3jqbeNxz5Rp0LbzkdCdPP&xfps=ada83522-aecd-4bc3-bce7-234ea5731f03&xkcb=SoAm67M3jqbMFETC8R0IbzkdCdPP&vjs=3",
-    },
-    {
-      title: "Depression Counsellor",
-      department: "Mental Health",
-      type: "Indeed Listing",
-      description: "Provide emotional support and depression counselling care.",
-      skills: ["Counselling", "Psychology", "Empathy"],
-      applyLink:
-        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Counselor&jk=2fc6ff3cbd8f66a3&q=mindcurepath&xpse=SoAH67I3jqbd01z5Xx0LbzkdCdPP&xfps=ddfa93f5-04fa-474a-bdf9-b0438d291026&xkcb=SoCo67M3jqbMFETC8R0PbzkdCdPP&vjs=3",
-    },
-    {
-      title: "Insurance Advisor",
-      department: "Finance",
-      type: "Indeed Listing",
-      description: "Advise clients on policy selection and insurance planning.",
-      skills: ["Insurance", "Advisory", "Client Relations"],
-      applyLink:
-        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Insurance+Advisor&jk=c1ed94f7e31780c5&q=mindcurepath&xpse=SoDR67I3jqbU-bz5Xx0LbzkdCdPP&xfps=fd482ef6-1f02-4e6d-a9e2-bcd314f1a428&xkcb=SoAc67M3jqbMFETC8R0ObzkdCdPP&vjs=3",
-    },
-    {
-      title: "Physics Faculty/ Teacher",
-      department: "Education",
-      type: "Indeed Listing",
-      description: "Teach physics concepts with structured lesson delivery.",
-      skills: ["Physics", "Teaching", "Classroom Management"],
-      applyLink:
-        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Physics+Teacher&jk=c32e9bf0701ad327&q=mindcurepath&xpse=SoDt67I3jqbU5izNS50LbzkdCdPP&xfps=b94794e0-61b4-4cce-b9b9-f7e9c0358206&xkcb=SoCB67M3jqbMFETC8R0NbzkdCdPP&vjs=3",
-    },
-    {
-      title: "English teacher",
-      department: "Education",
-      type: "Indeed Listing",
-      description: "Improve language skills through engaging English lessons.",
-      skills: ["English", "Teaching", "Communication"],
-      applyLink:
-        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=English+Teacher&jk=7d546e1ca1bebeec&q=mindcurepath&xpse=SoBg67I3jqbQjbTCwJ0PbzkdCdPP&xfps=28b6733d-49fb-4b69-828f-a0ae5741701e&xkcb=SoA167M3jqbMFETC8R0MbzkdCdPP&vjs=3",
-    },
-    {
-      title: "Chartered Accountant",
-      department: "Finance",
-      type: "Indeed Listing",
-      description: "Handle accounting, taxation, and compliance workflows.",
-      skills: ["Accounting", "Taxation", "Compliance"],
-      applyLink:
-        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Accountant&jk=15a3d558c7609fdc&q=mindcurepath&xpse=SoB_67I3jqbQvSz4mp0LbzkdCdPP&xfps=99620e25-58e0-4119-971d-bc2d6d4a27e8&xkcb=SoDc67M3jqbMFETC8R0DbzkdCdPP&vjs=3",
-    },
-    {
-      title: "Biology Teacher",
-      department: "Education",
-      type: "Indeed Listing",
-      description: "Deliver biology instruction and student learning support.",
-      skills: ["Biology", "Teaching", "Lesson Planning"],
-      applyLink:
-        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Teacher&jk=94bd8579c9947823&q=mindcurepath&xpse=SoDD67I3jqbQpMz4BB0LbzkdCdPP&xfps=5bb37ab8-245b-48f1-a2a7-b733a2d753be&xkcb=SoBo67M3jqbMFETC8R0CbzkdCdPP&vjs=3",
-    },
-    {
-      title: "Physics Faculty teacher",
-      department: "Education",
-      type: "Indeed Listing",
-      description: "Lead physics sessions with concept-first teaching methods.",
-      skills: ["Physics", "Teaching", "Assessment"],
-      applyLink:
-        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Physics+Teacher&jk=c32e9bf0701ad327&q=mindcurepath&xpse=SoDt67I3jqbU5izNS50LbzkdCdPP&xfps=b94794e0-61b4-4cce-b9b9-f7e9c0358206&xkcb=SoCB67M3jqbMFETC8R0NbzkdCdPP&vjs=3",
-    },
-    {
-      title: "French Tutor",
-      department: "Education",
-      type: "Indeed Listing",
-      description: "Teach French language fundamentals and fluency skills.",
-      skills: ["French", "Tutoring", "Communication"],
-      applyLink:
-        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Tutor&jk=9fe44f5b00cdef2b&q=mindcurepath&xpse=SoBn67I3jqbnINzDQR0LbzkdCdPP&xfps=f2d0bf46-37fd-4156-a556-5af4397b43a8&xkcb=SoD167M3jqbMFETC8R0BbzkdCdPP&vjs=3",
-    },
-    {
-      title: "Spanish teacher",
-      department: "Education",
-      type: "Indeed Listing",
-      description: "Conduct interactive Spanish classes for students.",
-      skills: ["Spanish", "Teaching", "Language Skills"],
-      applyLink:
-        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Spanish+Teacher&jk=25ef6d619b25f7a4&q=mindcurepath&xpse=SoCc67I3jqbmhiz4KJ0LbzkdCdPP&xfps=dd2c5447-00ac-4f48-b075-47cb089b861a&xkcb=SoBB67M3jqbMFETC8R0AbzkdCdPP&vjs=3",
-    },
-    {
-      title: "Urdu Teacher",
-      department: "Education",
-      type: "Indeed Listing",
-      description:
-        "Support Urdu learning with structured language instruction.",
-      skills: ["Urdu", "Teaching", "Student Engagement"],
-      applyLink:
-        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Teacher&jk=2a9f387c10f72827&q=mindcurepath&xpse=SoCs67I3jqb_K2z4mp0LbzkdCdPP&xfps=ec956f26-27b7-4544-8b9d-e3dac9818569&xkcb=SoDP67M3jqbMFETC8R0HbzkdCdPP&vjs=3",
-    },
-    {
-      title: "Social Science teacher",
-      department: "Education",
-      type: "Indeed Listing",
-      description: "Teach social science topics through engaging lessons.",
-      skills: ["Social Science", "Teaching", "Curriculum"],
-      applyLink:
-        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Science+Teacher&jk=49b39626a8dd118e&q=mindcurepath&xpse=SoC267I3jqb-0lzNS50LbzkdCdPP&xfps=dd69d882-1b9d-4922-aae4-841a3757a332&xkcb=SoB767M3jqbMFETC8R0GbzkdCdPP&vjs=3",
-    },
-    {
-      title: "Japanese Teacher",
-      department: "Education",
-      type: "Indeed Listing",
-      description: "Help students build Japanese reading and speaking skills.",
-      skills: ["Japanese", "Teaching", "Language Learning"],
-      applyLink:
-        "https://in.indeed.com/viewjob?cmp=MINDCUREPATH-CONSULTANTING-PVT-LTD&t=Teacher&jk=27522f2332312aee&q=mindcurepath&xpse=SoCT67I3jqb-_bzCSZ0LbzkdCdPP&xfps=ca550e6b-b68f-4551-9393-d77cccbaed93&xkcb=SoDm67M3jqbMFETC8R0FbzkdCdPP&vjs=3",
-    },
-  ];
-
-  const departmentFilters = useMemo(
-    () => ["All", ...new Set(openRoles.map((role) => role.department))],
-    [openRoles],
-  );
-  const totalDepartments = departmentFilters.length - 1;
-  const featuredRoles = useMemo(() => openRoles.slice(0, 4), [openRoles]);
-
   const filteredRoles = useMemo(() => {
-    const normalizedSearch = searchTerm.trim().toLowerCase();
+    if (selectedDepartment === "All Departments") return roles;
+    return roles.filter((role) => role.department === selectedDepartment);
+  }, [selectedDepartment]);
 
-    return openRoles.filter((role) => {
-      const matchesDepartment =
-        selectedDepartment === "All" || role.department === selectedDepartment;
-
-      const matchesSearch =
-        normalizedSearch.length === 0 ||
-        role.title.toLowerCase().includes(normalizedSearch) ||
-        role.description.toLowerCase().includes(normalizedSearch) ||
-        role.skills.some((skill) =>
-          skill.toLowerCase().includes(normalizedSearch),
-        );
-
-      return matchesDepartment && matchesSearch;
-    });
-  }, [openRoles, searchTerm, selectedDepartment]);
-
-  const careerDomains = [
+  const heroPoints = ["Purpose Driven", "People First", "Continuous Growth", "Remote Friendly"];
+  const whyJoinItems = [
     {
-      image: "/career-domains/mental-health.svg",
-      title: "Mental Health",
-      description: "Support emotional wellness and counselling services.",
-      tags: ["Counsellor", "OCD/ADHD", "Depression"],
-      color: "bg-violet-100",
-      tagColor: "bg-violet-100 text-violet-800",
+      icon: "◎",
+      title: "Meaningful Impact",
+      description: "Work on products that positively impact millions of lives.",
     },
     {
-      image: "/career-domains/education.svg",
-      title: "Education",
-      description: "Help students through mentoring and academic counselling.",
-      tags: ["Tutor", "Academic Counselor"],
-      color: "bg-sky-100",
-      tagColor: "bg-sky-100 text-sky-800",
+      icon: "↗",
+      title: "Real Ownership",
+      description: "Take ownership, share ideas, and see your work create value.",
     },
     {
-      image: "/career-domains/finance.svg",
-      title: "Finance",
-      description: "Guide clients with taxation, investments, and insurance.",
-      tags: ["CA", "Mutual Funds", "Insurance"],
-      color: "bg-emerald-100",
-      tagColor: "bg-emerald-100 text-emerald-800",
+      icon: "◍",
+      title: "Grow Together",
+      description: "Learn, upskill, and grow with mentors and a supportive team.",
     },
     {
-      image: "/career-domains/wellness.svg",
-      title: "Wellness",
-      description: "Promote healthy lifestyles through wellness expertise.",
-      tags: ["Yoga Expert", "Dietician"],
-      color: "bg-amber-100",
-      tagColor: "bg-amber-100 text-amber-800",
+      icon: "▣",
+      title: "Flexible & Remote",
+      description: "Work from anywhere with healthy flexibility and balance.",
     },
     {
-      image: "/career-domains/it-services.svg",
-      title: "IT Services",
-      description: "Build scalable digital products and AI solutions.",
-      tags: ["Full Stack", "UI/UX", "AI Automation"],
-      color: "bg-teal-100",
-      tagColor: "bg-teal-100 text-teal-800",
+      icon: "♥",
+      title: "Inclusive Culture",
+      description: "A diverse, respectful workplace where everyone belongs.",
     },
   ];
-
-  const hiringHighlights = [
-    { label: "Open roles", value: String(openRoles.length), tone: "text-emerald-700" },
-    { label: "Teams hiring", value: String(totalDepartments), tone: "text-sky-700" },
-    { label: "Engagement", value: "Flexible", tone: "text-violet-700" },
-  ];
-
-  const hiringProcess = [
+  const perks = [
     {
-      step: "01",
-      title: "Apply",
-      description:
-        "Submit your role interest, expertise, experience, and PDF resume in one place.",
+      title: "Health & Wellness",
+      description: "Comprehensive health insurance and wellness programs.",
     },
     {
-      step: "02",
-      title: "Review",
-      description:
-        "We review your profile for domain fit, communication strength, and current hiring needs.",
+      title: "Learning Budget",
+      description: "Annual budget for courses, workshops, and conferences.",
     },
     {
-      step: "03",
-      title: "Conversation",
-      description:
-        "Shortlisted applicants move into a practical role discussion with our team.",
+      title: "Paid Time Off",
+      description: "Generous PTO policy to help you rest and recharge.",
     },
     {
-      step: "04",
-      title: "Onboarding",
-      description:
-        "Selected candidates receive next steps, expectations, and engagement details.",
+      title: "Team Retreats",
+      description: "Regular offsites and virtual events to connect and celebrate.",
     },
   ];
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="fixed inset-x-0 top-0 z-40 w-full bg-white px-[16px] sm:px-[20px] border-b border-emerald-100">
+    <div className="min-h-screen bg-white font-sans">
+      <div className="fixed inset-x-0 top-0 z-40 w-full bg-white border-b border-gray-100">
         <ResponsiveNavbar />
       </div>
 
-      <div className="max-w-6xl mx-auto px-[16px] sm:px-[20px] pt-24 sm:pt-28 pb-24">
-        {/* Hero Section */}
-        <div ref={heroRef} className="relative pt-12 pb-20 overflow-hidden">
-          <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            <div className="absolute inset-x-6 top-6 h-80 rounded-full bg-linear-to-r from-emerald-100/80 via-sky-100/70 to-teal-100/70 blur-3xl" />
-            <div className="absolute left-0 top-28 h-40 w-40 rounded-full bg-emerald-200/70 blur-3xl" />
-            <div className="absolute right-0 top-16 h-52 w-52 rounded-full bg-sky-200/70 blur-3xl" />
-            <div className="absolute left-1/2 top-1/2 h-28 w-28 rounded-full bg-violet-200/60 blur-2xl" />
-          </div>
+      {/* Hero Section */}
+      <main className="mx-auto max-w-[1300px] px-6 pt-[140px] pb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-12 items-center">
+          {/* Left Column */}
+          <div className="max-w-xl xl:pl-4">
+            <h1 className="text-[3.5rem] md:text-[4rem] leading-[1.05] font-extrabold text-[#111827] tracking-tight">
+              Your work can <br />
+              change lives. <br />
+              <span className="text-[#15603A]">Let's build the future together.</span>
+            </h1>
+            <p className="mt-6 text-[1.1rem] text-[#4b5563] leading-relaxed max-w-[90%]">
+              At MindCurePath, we combine technology, empathy, and
+              expertise to create trusted solutions that make a real
+              difference in people's lives.
+            </p>
 
-          <div className="relative z-10 rounded-[2rem] border border-emerald-100 bg-white/85 p-6 shadow-[0_32px_90px_-46px_rgba(15,90,78,0.45)] backdrop-blur md:p-10">
-            <div className="grid gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)] lg:items-center">
-              <div className="max-w-3xl">
-                <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-linear-to-r from-emerald-100 to-teal-100 px-4 py-2 text-sm font-semibold text-emerald-900 mb-6">
-                  <span className="inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
-                  Careers at MindCurePath
-                </div>
+            <div className="mt-10 flex flex-wrap gap-4">
+              <a
+                href="#open-roles"
+                className="bg-[#15603A] hover:bg-[#104b2c] text-white px-7 py-3.5 rounded-[12px] font-semibold flex items-center gap-2 transition-colors shadow-sm"
+              >
+                Explore Open Roles <ArrowRight size={18} strokeWidth={2.5} />
+              </a>
+              <button className="bg-white border-[1.5px] border-[#15603A] text-[#15603A] hover:bg-[#f4fbf7] px-7 py-3.5 rounded-[12px] font-semibold transition-colors">
+                Life at MindCurePath
+              </button>
+            </div>
 
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 leading-[1.02] mb-6">
-                  Join a mission-driven team
-                  <span className="block text-emerald-700">
-                    building real-world expert services
-                  </span>
-                </h1>
-
-                <p className="text-lg md:text-xl text-slate-600 leading-relaxed max-w-2xl mb-8">
-                  We’re hiring experts, educators, advisors, and operators who
-                  want to do meaningful work across wellness, education,
-                  finance, and digital services. Explore open positions, learn
-                  how we hire, and apply directly from one place.
-                </p>
-
-                <div className="flex flex-col sm:flex-row gap-3 sm:items-center mb-8">
-                  <button
-                    type="button"
-                    onClick={scrollToOpenRoles}
-                    className="inline-flex items-center justify-center rounded-2xl bg-emerald-700 px-6 py-3.5 text-base font-semibold text-white shadow-[0_14px_30px_-14px_rgba(5,150,105,0.95)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-emerald-800"
-                  >
-                    Apply Now
-                  </button>
-                  <button
-                    type="button"
-                    onClick={scrollToProcess}
-                    className="inline-flex items-center justify-center rounded-2xl border border-slate-300 bg-white px-6 py-3.5 text-base font-semibold text-slate-700 transition-all duration-300 hover:border-emerald-300 hover:text-emerald-700"
-                  >
-                    View Hiring Process
-                  </button>
-                </div>
-
-                <div className="grid gap-3 sm:grid-cols-3">
-                  {hiringHighlights.map((item) => (
-                    <div
-                      key={item.label}
-                      className="rounded-2xl border border-slate-200 bg-white px-4 py-4 shadow-sm"
-                    >
-                      <p className="text-sm text-slate-500">{item.label}</p>
-                      <p className={`mt-2 text-2xl font-semibold ${item.tone}`}>
-                        {item.value}
-                      </p>
-                    </div>
-                  ))}
-                </div>
+            <div className="mt-12 flex flex-wrap gap-x-8 gap-y-4">
+              <div className="flex items-center gap-2 text-[#4b5563] text-sm font-semibold">
+                <Heart size={18} className="text-[#15603A]" strokeWidth={2.5} />
+                <span>Purpose Driven</span>
               </div>
-
-              <div className="relative">
-                <div className="rounded-[2rem] border border-slate-800 bg-slate-950 p-6 text-white shadow-[0_30px_70px_-35px_rgba(15,23,42,0.6)]">
-                  <div className="flex items-center justify-between gap-4 mb-6">
-                    <div>
-                      <p className="text-sm font-medium text-emerald-300">
-                        Active hiring
-                      </p>
-                      <h2 className="text-2xl font-semibold text-white">
-                        Featured openings
-                      </h2>
-                    </div>
-                    <div className="rounded-2xl bg-emerald-400/15 px-3 py-2 text-sm font-semibold text-emerald-200">
-                      {openRoles.length} roles
-                    </div>
-                  </div>
-
-                  <div className="space-y-3">
-                    {featuredRoles.map((role) => (
-                      <div
-                        key={role.title}
-                        className="rounded-2xl border border-white/10 bg-white/5 px-4 py-4"
-                      >
-                        <div className="flex items-start justify-between gap-3">
-                          <div>
-                            <p className="text-base font-semibold text-white">
-                              {role.title}
-                            </p>
-                            <p className="mt-1 text-sm text-slate-300">
-                              {role.department}
-                            </p>
-                          </div>
-                          <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-slate-200">
-                            Open
-                          </span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="mt-6 rounded-2xl border border-emerald-400/20 bg-emerald-400/10 px-4 py-4">
-                    <p className="text-sm font-semibold text-emerald-200">
-                      Who this page is for
-                    </p>
-                    <p className="mt-1 text-sm text-slate-200">
-                      People looking for flexible, impact-driven opportunities
-                      with a growing expert-led platform.
-                    </p>
-                  </div>
-                </div>
+              <div className="flex items-center gap-2 text-[#4b5563] text-sm font-semibold">
+                <Users size={18} className="text-[#15603A]" strokeWidth={2.5} />
+                <span>People First</span>
+              </div>
+              <div className="flex items-center gap-2 text-[#4b5563] text-sm font-semibold">
+                <Rocket size={18} className="text-[#15603A]" strokeWidth={2.5} />
+                <span>Continuous Growth</span>
+              </div>
+              <div className="flex items-center gap-2 text-[#4b5563] text-sm font-semibold">
+                <Laptop size={18} className="text-[#15603A]" strokeWidth={2.5} />
+                <span>Remote Friendly</span>
               </div>
             </div>
           </div>
-        </div>
 
-        <div ref={processRef} className="pb-24 px-2 sm:px-0">
-          <div className="rounded-[2rem] border border-slate-200 bg-slate-50 px-6 py-8 md:px-8 md:py-10">
-            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between mb-8">
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-700">
-                  Hiring Process
-                </p>
-                <h2 className="mt-2 text-3xl md:text-4xl font-bold text-slate-900">
-                  What happens after you apply
-                </h2>
+          {/* Right Column (Image) */}
+          <div className="relative h-[650px] w-full mt-10 lg:mt-0 flex justify-end">
+            <div className="absolute top-0 right-[-100px] bottom-0 w-[120%] lg:w-[130%] rounded-l-[300px] overflow-hidden bg-gray-100 z-0">
+              <img src="/team_working.png" alt="Team working" className="w-full h-full object-cover" />
+            </div>
+
+            {/* Floating Card */}
+            <div className="absolute -bottom-10 left-0 lg:left-[-20px] bg-white rounded-2xl p-8 shadow-[0_20px_50px_rgba(0,0,0,0.1)] max-w-[340px] border border-gray-50 z-10">
+              <div className="text-[#15603A] mb-4">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M14.017 18L14.017 10.609C14.017 4.905 17.748 1.039 23 0L23.995 2.151C21.563 3.068 20 5.789 20 8H24V18H14.017ZM0 18V10.609C0 4.905 3.748 1.038 9 0L9.996 2.151C7.563 3.068 6 5.789 6 8H9.983L9.983 18L0 18Z" />
+                </svg>
               </div>
-              <p className="max-w-2xl text-slate-600 text-base md:text-lg">
-                We keep the process direct and practical so good applicants can
-                move quickly from submission to conversation.
+              <p className="text-[#374151] text-[1.05rem] leading-relaxed font-medium mb-5">
+                I love that my work here directly contributes to helping people make better decisions.
+              </p>
+              <p className="text-[#6b7280] text-sm font-semibold">
+                — Team Member
               </p>
             </div>
-
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-              {hiringProcess.map((item) => (
-                <div
-                  key={item.step}
-                  className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm"
-                >
-                  <p className="text-sm font-semibold text-emerald-700">
-                    {item.step}
-                  </p>
-                  <h3 className="mt-3 text-xl font-semibold text-slate-900">
-                    {item.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-slate-600">
-                    {item.description}
-                  </p>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
+      </main>
 
-        <div ref={opportunitiesRef} className="pb-24 px-2 sm:px-0">
-          <div className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-              Teams We’re Hiring In
-            </h2>
+      {/* Why Join Section */}
+      <section className="max-w-[1300px] mx-auto px-6 mt-28 mb-32">
+        <h2 className="text-[2.2rem] font-bold text-center text-[#111827] mb-16">
+          Why Join <span className="text-[#15603A]">MindCurePath?</span>
+        </h2>
 
-            <p className="text-slate-600 text-lg max-w-2xl mx-auto">
-              These are the domains where we’re actively expanding our expert
-              and delivery network.
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 divide-y-2 lg:divide-y-0 lg:divide-x-[1.5px] divide-gray-200/60">
+          {/* Item 1 */}
+          <div className="px-6 py-8 lg:py-0 lg:px-8 text-center flex flex-col items-center">
+            <div className="w-[60px] h-[60px] bg-[#eefcf2] rounded-full flex items-center justify-center mb-5">
+              <Users className="w-7 h-7 text-[#15603A]" strokeWidth={2} />
+            </div>
+            <h3 className="text-[1.1rem] font-bold text-[#111827] mb-3">Meaningful Impact</h3>
+            <p className="text-[#6b7280] text-[0.95rem] leading-[1.6]">
+              Work on products that positively impact millions of lives.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {careerDomains.map((domain, index) => (
-              <div
-                key={index}
-                className="group bg-white rounded-3xl border border-slate-200 p-6 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2 hover:border-emerald-300"
-              >
-                <div
-                  className={`w-16 h-16 rounded-2xl ${domain.color} ring-1 ring-white flex items-center justify-center mb-5 overflow-hidden`}
-                >
-                  <img
-                    src={domain.image}
-                    alt={`${domain.title} domain`}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
+          {/* Item 2 */}
+          <div className="px-6 py-8 lg:py-0 lg:px-8 text-center flex flex-col items-center">
+            <div className="w-[60px] h-[60px] bg-[#eefcf2] rounded-full flex items-center justify-center mb-5">
+              <Rocket className="w-7 h-7 text-[#15603A]" strokeWidth={2} />
+            </div>
+            <h3 className="text-[1.1rem] font-bold text-[#111827] mb-3">Real Ownership</h3>
+            <p className="text-[#6b7280] text-[0.95rem] leading-[1.6]">
+              Take ownership, share ideas, and see your work create real value.
+            </p>
+          </div>
 
-                <div className="flex items-center justify-between gap-3 mb-3">
-                  <h3 className="text-2xl font-semibold text-slate-900">
-                    {domain.title}
-                  </h3>
-                  <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
-                    Hiring Focus
+          {/* Item 3 */}
+          <div className="px-6 py-8 lg:py-0 lg:px-8 text-center flex flex-col items-center">
+            <div className="w-[60px] h-[60px] bg-[#eefcf2] rounded-full flex items-center justify-center mb-5">
+              <GraduationCap className="w-7 h-7 text-[#15603A]" strokeWidth={2} />
+            </div>
+            <h3 className="text-[1.1rem] font-bold text-[#111827] mb-3">Grow Together</h3>
+            <p className="text-[#6b7280] text-[0.95rem] leading-[1.6]">
+              Learn, upskill and grow with mentors and a culture that supports you.
+            </p>
+          </div>
+
+          {/* Item 4 */}
+          <div className="px-6 py-8 lg:py-0 lg:px-8 text-center flex flex-col items-center">
+            <div className="w-[60px] h-[60px] bg-[#eefcf2] rounded-full flex items-center justify-center mb-5">
+              <Monitor className="w-7 h-7 text-[#15603A]" strokeWidth={2} />
+            </div>
+            <h3 className="text-[1.1rem] font-bold text-[#111827] mb-3">Flexible & Remote</h3>
+            <p className="text-[#6b7280] text-[0.95rem] leading-[1.6]">
+              Work from anywhere with flexible hours and a healthy work-life balance.
+            </p>
+          </div>
+
+          {/* Item 5 */}
+          <div className="px-6 py-8 lg:py-0 lg:px-8 text-center flex flex-col items-center">
+            <div className="w-[60px] h-[60px] bg-[#eefcf2] rounded-full flex items-center justify-center mb-5">
+              <Heart className="w-7 h-7 text-[#15603A]" strokeWidth={2} />
+            </div>
+            <h3 className="text-[1.1rem] font-bold text-[#111827] mb-3">Inclusive Culture</h3>
+            <p className="text-[#6b7280] text-[0.95rem] leading-[1.6]">
+              We celebrate diversity and believe in an inclusive, respectful workplace.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Legacy Roles Section - Kept so functionality is not lost */}
+      <section id="open-roles" className="max-w-[1300px] mx-auto px-6 mb-20 bg-[#f9fafb] p-8 rounded-3xl border border-gray-100">
+        <div className="mb-8 flex items-center justify-between gap-4">
+          <h2 className="text-3xl font-bold text-[#111827]">Open Roles</h2>
+          <span className="text-sm font-semibold text-[#15603A] cursor-pointer">View all openings</span>
+        </div>
+
+        <div className="mb-8 flex flex-wrap gap-2">
+          {departmentFilters.map((item) => (
+            <button
+              key={item.name}
+              type="button"
+              onClick={() => setSelectedDepartment(item.name)}
+              className={`rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors ${selectedDepartment === item.name
+                  ? "bg-[#15603A] text-white"
+                  : "bg-white text-slate-700 hover:bg-[#eefcf2] hover:text-[#15603A] border border-gray-200"
+                }`}
+            >
+              {item.name}
+            </button>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {filteredRoles.map((role) => (
+            <div key={role.title} className="rounded-2xl border border-gray-200 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md transition-shadow flex flex-col justify-between">
+              <div>
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                  <h3 className="text-xl font-bold text-slate-900">{role.title}</h3>
+                  <span className="rounded-full bg-[#eefcf2] px-3 py-1 text-xs font-bold text-[#15603A]">
+                    {role.department}
                   </span>
                 </div>
-
-                <p className="text-slate-600 leading-relaxed mb-5">
-                  {domain.description}
-                </p>
-
-                <div className="flex flex-wrap gap-2">
-                  {domain.tags.map((tag, idx) => (
-                    <span
-                      key={idx}
-                      className={`px-3 py-1 rounded-full text-sm ${domain.tagColor}`}
-                    >
-                      {tag}
+                <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-slate-600 font-medium">
+                  {role.skills.map((skill) => (
+                    <span key={skill} className="inline-flex items-center gap-1">
+                      <span className="text-[#15603A] font-bold">•</span>
+                      {skill}
                     </span>
                   ))}
                 </div>
+                <p className="text-sm leading-relaxed text-slate-600 mb-6">{role.description}</p>
               </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Open Roles Section */}
-        <div className="pb-24 px-2 sm:px-0">
-          <div className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-              Open Opportunities
-            </h2>
-
-            <p className="text-slate-600 text-lg max-w-2xl mx-auto">
-              Explore expert opportunities across wellness, education,
-              finance, and technology, then apply directly with your profile
-              and PDF resume.
-            </p>
-          </div>
-
-          <div className="max-w-5xl mx-auto mb-8">
-            <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-sm">
-              <div className="flex flex-col gap-4">
-                <input
-                  type="text"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Search roles by title, description, or skills..."
-                  className="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400"
-                />
-
-                <div className="flex flex-wrap gap-2">
-                  {departmentFilters.map((department) => (
-                    <button
-                      key={department}
-                      onClick={() => setSelectedDepartment(department)}
-                      className={`px-4 py-2 rounded-full text-sm font-medium border transition-all duration-200 ${
-                        selectedDepartment === department
-                          ? "bg-emerald-600 text-white border-emerald-600"
-                          : "bg-white text-slate-700 border-slate-300 hover:border-emerald-300 hover:text-emerald-700"
-                      }`}
-                    >
-                      {department}
-                    </button>
-                  ))}
-                </div>
-
-                <p className="text-sm text-slate-600">
-                  Showing {filteredRoles.length} of {openRoles.length} roles
-                </p>
-              </div>
+              <Link
+                to={`/careers/apply?role=${encodeURIComponent(role.title)}`}
+                className="inline-flex w-full sm:w-auto items-center justify-center rounded-xl bg-white border-2 border-[#15603A] px-6 py-2.5 text-sm font-bold text-[#15603A] transition-colors hover:bg-[#15603A] hover:text-white"
+              >
+                Apply Now
+              </Link>
             </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-            {filteredRoles.length === 0 ? (
-              <div className="md:col-span-2 bg-slate-50 border border-slate-200 rounded-2xl p-8 text-center">
-                <p className="text-slate-700 font-medium mb-2">
-                  No roles found for this filter.
-                </p>
-                <p className="text-slate-500 text-sm">
-                  Try another department or clear your search text.
-                </p>
-              </div>
-            ) : (
-              filteredRoles.map((role, index) => (
-                <div
-                  key={`${role.title}-${index}`}
-                  className="bg-white rounded-3xl border border-slate-200 p-7 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2 hover:border-emerald-300"
-                >
-                  <div className="flex items-start justify-between gap-4 mb-5">
-                    <div>
-                      <h3 className="text-2xl font-semibold text-slate-900 mb-2">
-                        {role.title}
-                      </h3>
-
-                      <p className="text-slate-600">{role.department}</p>
-                    </div>
-
-                    <span className="px-4 py-2 rounded-full bg-emerald-100 text-emerald-800 text-sm font-medium">
-                      Expert Application
-                    </span>
-                  </div>
-
-                  <p className="text-slate-600 leading-relaxed mb-6">
-                    {role.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {role.skills.map((skill, idx) => (
-                      <span
-                        key={idx}
-                        className={`px-3 py-1 rounded-full text-sm ${
-                          idx % 3 === 0
-                            ? "bg-emerald-100 text-emerald-800"
-                            : idx % 3 === 1
-                              ? "bg-sky-100 text-sky-800"
-                              : "bg-violet-100 text-violet-800"
-                        }`}
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-
-                  <Link
-                    to={`/careers/apply?role=${encodeURIComponent(role.title)}`}
-                    className="w-full block text-center rounded-2xl bg-emerald-700 text-white py-3 font-medium hover:bg-emerald-800 transition-all duration-300 shadow-[0_8px_18px_-8px_rgba(5,150,105,0.8)]"
-                  >
-                    Apply Now
-                  </Link>
-                </div>
-              ))
-            )}
-          </div>
+          ))}
         </div>
-      </div>
+      </section>
 
       <Footer />
     </div>
