@@ -3,6 +3,8 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import { useScreen } from "../context/ScreenContext";
+import { useAuth } from "../context/AuthContext";
+import LoginRequiredModal from "../components/modals/LoginRequiredModal";
 import { ArrowLeft, AlertTriangle, X } from "lucide-react";
 import {
   ADHD_QUESTIONS,
@@ -48,6 +50,7 @@ export default function AssessmentQuestions() {
   const location = useLocation();
   const { assessmentType } = useParams<{ assessmentType: string }>();
   const { screenWidth } = useScreen();
+  const { user } = useAuth();
 
   // Determine domain from pathname
   const domain = location.pathname.includes("/assessments/education/")
@@ -141,6 +144,18 @@ export default function AssessmentQuestions() {
   const handleCancelBack = () => {
     setShowBackModal(false);
   };
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-white">
+        <ResponsiveNavbar />
+        <LoginRequiredModal
+          isOpen={true}
+          onClose={() => navigate(`/assessments/${domain}/${assessmentType}`)}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="self-assessment-questions-page max-w-[1350px] mx-auto px-[25px] pb-[70px] sm:pb-[90px]">

@@ -70,8 +70,7 @@ export default function LoginRequiredModal({
   };
 
   const handleLogin = () => {
-    handleClose();
-    // Pass the current pathname as state so they can be redirected back after login
+    // Navigate immediately to avoid triggering onClose which might redirect elsewhere
     navigate("/login", { state: { from: location.pathname } });
   };
 

@@ -5,6 +5,8 @@ import SelfAssessmentNavbar from "../components/SelfAssessmentNavbar";
 import { SELF_ASSESSMENT_QUIZ } from "../lib/constants/selfAssessment";
 import type { QuizOption } from "../lib/interfaces";
 import { useScreen } from "../context/ScreenContext";
+import { useAuth } from "../context/AuthContext";
+import LoginRequiredModal from "../components/modals/LoginRequiredModal";
 
 function OptionItem({
   option,
@@ -51,6 +53,7 @@ export default function SelfAssessmentQuestions() {
   const [currentQuestion, setCurrentQuestion] = useState<number>(1);
   const totalQuestions: number = SELF_ASSESSMENT_QUIZ.length;
   const { screenWidth } = useScreen();
+  const { user } = useAuth();
 
   const currentSelectedOption = answers[currentQuestion] || null;
 
@@ -136,6 +139,18 @@ export default function SelfAssessmentQuestions() {
   };
 
   const selectedTranslatedOption = getSelectedTranslatedOption();
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-white">
+        <SelfAssessmentNavbar />
+        <LoginRequiredModal
+          isOpen={true}
+          onClose={() => navigate("/self-assessment")}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="self-assessment-questions-page max-w-[1350px] mx-auto px-[25px]">
