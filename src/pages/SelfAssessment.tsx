@@ -1,8 +1,15 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
 import SelfAssessmentNavbar from "../components/SelfAssessmentNavbar";
+import { useAuth } from "../context/AuthContext";
+import LoginRequiredModal from "../components/modals/LoginRequiredModal";
+
 export default function SelfAssessment() {
   const { t } = useTranslation("sectors");
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const [showLoginModal, setShowLoginModal] = useState(false);
 
   return (
     <div className="self-assessment-page max-w-[1350px] mx-auto px-[25px]">
@@ -19,13 +26,23 @@ export default function SelfAssessment() {
           </p>
         </div>
 
-        <Link
-          to="/self-assessment/questions"
-          className="mt-[50px] bg-[#44666C] text-white px-[30px] py-[13px] rounded-[30px] text-[18px]"
+        <button
+          onClick={() => {
+            if (!user) {
+              setShowLoginModal(true);
+            } else {
+              navigate("/self-assessment/questions");
+            }
+          }}
+          className="mt-[50px] bg-[#44666C] text-white px-[30px] py-[13px] rounded-[30px] text-[18px] cursor-pointer"
         >
           {t("startAssessment", { ns: "common" })}
-        </Link>
+        </button>
       </div>
+      <LoginRequiredModal
+        isOpen={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
+      />
     </div>
   );
 }

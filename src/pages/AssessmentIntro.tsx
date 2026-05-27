@@ -1,7 +1,10 @@
 import { Helmet } from "react-helmet-async";
-import { useParams, Link, useLocation } from "react-router-dom";
+import { useParams, Link, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
+import { useAuth } from "../context/AuthContext";
+import LoginRequiredModal from "../components/modals/LoginRequiredModal";
 import {
   Brain,
   Apple,
@@ -234,8 +237,11 @@ const assessmentData: Record<string, AssessmentInfo> = {
 
 export default function AssessmentIntro() {
   const location = useLocation();
+  const navigate = useNavigate();
   const { assessmentType } = useParams<{ assessmentType: string }>();
   const { t } = useTranslation("quiz");
+  const { user } = useAuth();
+  const [showLoginModal, setShowLoginModal] = useState(false);
   const data = assessmentData[assessmentType || ""];
   const title = data ? t(data.titleKey) : "";
   const description = data ? t(data.descriptionKey) : "";
@@ -344,15 +350,21 @@ export default function AssessmentIntro() {
 
           {/* Start Assessment Button */}
           <div className="mb-[clamp(1.5rem,3vw,3rem)]">
-            <Link
-              to={`/assessments/${domain}/${assessmentType}/questions`}
-              className="w-full md:w-auto inline-block px-[clamp(2rem,5vw,3rem)] py-[clamp(0.75rem,1.5vw,1rem)] rounded-[clamp(25px,30px,30px)] text-white font-semibold text-[clamp(1rem,2vw,1.125rem)] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)] text-center"
+            <button
+              onClick={() => {
+                if (!user) {
+                  setShowLoginModal(true);
+                } else {
+                  navigate(`/assessments/${domain}/${assessmentType}/questions`);
+                }
+              }}
+              className="w-full md:w-auto inline-block px-[clamp(2rem,5vw,3rem)] py-[clamp(0.75rem,1.5vw,1rem)] rounded-[clamp(25px,30px,30px)] text-white font-semibold text-[clamp(1rem,2vw,1.125rem)] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)] text-center cursor-pointer"
               style={{
                 background: `linear-gradient(135deg, ${data.gradientFrom} 0%, ${data.gradientTo} 100%)`,
               }}
             >
               {t("startAssessmentCta")}
-            </Link>
+            </button>
           </div>
 
           {/* Content Grid */}
@@ -435,6 +447,10 @@ export default function AssessmentIntro() {
           </div>
         </div>
       </div>
+      <LoginRequiredModal
+        isOpen={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
+      />
     </>
   );
 }
