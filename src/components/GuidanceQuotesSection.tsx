@@ -11,8 +11,21 @@ export default function GuidanceQuotesSection() {
     const target = document.getElementById(targetId);
 
     if (target) {
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
       window.history.replaceState(null, "", assessmentHash);
+
+      const headerOffset = window.innerWidth >= 768 ? 90 : 70;
+      const scrollToTarget = (behavior: ScrollBehavior) => {
+        const absoluteTop =
+          target.getBoundingClientRect().top + window.scrollY - headerOffset;
+        const top = Math.max(0, absoluteTop);
+
+        window.scrollTo({ top, behavior });
+        document.scrollingElement?.scrollTo({ top, behavior });
+      };
+
+      scrollToTarget("smooth");
+      requestAnimationFrame(() => scrollToTarget("auto"));
+      window.setTimeout(() => scrollToTarget("auto"), 180);
       return;
     }
 
