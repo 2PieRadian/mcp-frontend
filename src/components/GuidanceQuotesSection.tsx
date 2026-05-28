@@ -5,6 +5,20 @@ import { Link } from "react-router-dom";
 
 export default function GuidanceQuotesSection() {
   const { t } = useTranslation("common");
+
+  const handleAssessmentScroll = (assessmentHash: string) => {
+    const targetId = assessmentHash.replace("#", "");
+    const target = document.getElementById(targetId);
+
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.history.replaceState(null, "", assessmentHash);
+      return;
+    }
+
+    window.location.hash = assessmentHash;
+  };
+
   const accents = [
     {
       ring: "from-[#0ea5e9] to-[#06b6d4]",
@@ -113,13 +127,14 @@ export default function GuidanceQuotesSection() {
                         </p>
 
                         <div className="mt-4 flex flex-col sm:flex-row gap-2">
-                          <a
-                            href={dest.assessmentHash}
+                          <button
+                            type="button"
+                            onClick={() => handleAssessmentScroll(dest.assessmentHash)}
                             className={`group inline-flex items-center justify-center gap-2 rounded-[14px] px-[14px] py-[10px] text-white text-[14px] font-medium transition-colors ${accent.ctaBg} ${accent.ctaHover}`}
                           >
                             {t("guidanceQuotesStartFreeAssessment")}
                             <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
-                          </a>
+                          </button>
                           <Link
                             to={dest.expertsRoute}
                             className="inline-flex items-center justify-center rounded-[14px] border border-gray-200 bg-white px-[14px] py-[10px] text-[14px] font-medium text-primary hover:bg-[#ecf4f6] transition-colors"

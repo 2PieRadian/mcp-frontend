@@ -233,7 +233,7 @@ Status: `200`
       "id": 1,
       "fullName": "Raman Bhardwaj",
       "email": "raman@gmail.com",
-      "phone": "+919876543210",
+      "phone": "7078497263",
       "expertise": "Anxiety Counselling",
       "experience": "6 years working with anxiety and stress clients.",
       "status": "PENDING",

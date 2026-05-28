@@ -886,10 +886,10 @@ export default function PrivacyPolicy() {
                       <Phone className="w-4 h-4" />
                       <span className="font-medium">{t("s23PhoneLabel")}</span>
                       <a
-                        href="tel:+918447537710"
+                        href="tel:7078497263"
                         className="text-teal-600 hover:text-teal-700"
                       >
-                        +91 84475 37710
+                        7078497263
                       </a>
                     </p>
                     <p className="flex items-center gap-2 mt-2">
