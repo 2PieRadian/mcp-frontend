@@ -262,14 +262,16 @@ export default function Navbar() {
                 />
               </>
             )}
-            {user?.role !== "EXPERT" && (
-              <NavbarItem textKey="findCounsellors" link="/find-counsellors" />
-            )}
             <NavbarItem
               textKey="careers"
               label="Careers"
               link="/careers"
               isActive={location.pathname === "/careers"}
+            />
+            <NavbarItem
+              textKey="about"
+              link="/about"
+              isActive={location.pathname === "/about"}
             />
             <NavbarItem textKey="articles" link="/articles" />
           </div>

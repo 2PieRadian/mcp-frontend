@@ -1,11 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import {
-  ChevronDown,
-  ChevronUp,
-  ChevronRight,
-  X,
-  Check,
-} from "lucide-react";
+import { ChevronDown, ChevronUp, ChevronRight, X, Check } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { loginPathWithRedirect } from "../../lib/loginRedirect";
 import { useAuth } from "../../context/AuthContext";
@@ -586,14 +580,6 @@ export default function MobileNavModal({
               </div>
             </div>
           )}
-          {user?.role !== "EXPERT" && (
-            <MobileNavItem
-              textKey="findCounsellors"
-              to="/find-counsellors"
-              onClick={onClose}
-              iconSrc={MOBILE_NAV_ICONS.counsellors}
-            />
-          )}
           {user?.role === "EXPERT" && (
             <>
               <MobileNavItem textKey="Home" to="/" onClick={onClose} />
@@ -612,6 +598,7 @@ export default function MobileNavModal({
             onClick={onClose}
             iconSrc={MOBILE_NAV_ICONS.careers}
           />
+          <MobileNavItem textKey="about" to="/about" onClick={onClose} />
           <MobileNavItem
             textKey="articles"
             to="/articles"
