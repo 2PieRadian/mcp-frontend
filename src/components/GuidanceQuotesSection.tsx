@@ -7,38 +7,8 @@ export default function GuidanceQuotesSection() {
   const { t } = useTranslation("common");
   const navigate = useNavigate();
 
-  const handleAssessmentClick = (
-    assessmentHash: string,
-    assessmentRoute: string,
-  ) => {
-    if (window.matchMedia("(max-width: 767px)").matches) {
-      navigate(assessmentRoute);
-      return;
-    }
-
-    const targetId = assessmentHash.replace("#", "");
-    const target = document.getElementById(targetId);
-
-    if (target) {
-      window.history.replaceState(null, "", assessmentHash);
-
-      const headerOffset = window.innerWidth >= 768 ? 90 : 70;
-      const scrollToTarget = (behavior: ScrollBehavior) => {
-        const absoluteTop =
-          target.getBoundingClientRect().top + window.scrollY - headerOffset;
-        const top = Math.max(0, absoluteTop);
-
-        window.scrollTo({ top, behavior });
-        document.scrollingElement?.scrollTo({ top, behavior });
-      };
-
-      scrollToTarget("smooth");
-      requestAnimationFrame(() => scrollToTarget("auto"));
-      window.setTimeout(() => scrollToTarget("auto"), 180);
-      return;
-    }
-
-    window.location.hash = assessmentHash;
+  const handleAssessmentClick = (assessmentRoute: string) => {
+    navigate(assessmentRoute);
   };
 
   const accents = [
@@ -70,17 +40,14 @@ export default function GuidanceQuotesSection() {
 
   const destinations = [
     {
-      assessmentHash: "#expert-verified-assessments-wellness",
       assessmentRoute: "/assessments/wellness",
       expertsRoute: "/wellness-experts",
     },
     {
-      assessmentHash: "#expert-verified-assessments-education",
       assessmentRoute: "/assessments/education",
       expertsRoute: "/education-experts",
     },
     {
-      assessmentHash: "#expert-verified-assessments-finance",
       assessmentRoute: "/assessments/finance",
       expertsRoute: "/finance-experts",
     },
@@ -156,10 +123,7 @@ export default function GuidanceQuotesSection() {
                           <button
                             type="button"
                             onClick={() =>
-                              handleAssessmentClick(
-                                dest.assessmentHash,
-                                dest.assessmentRoute,
-                              )
+                              handleAssessmentClick(dest.assessmentRoute)
                             }
                             className={`group inline-flex cursor-pointer items-center justify-center gap-2 rounded-[14px] px-[14px] py-[10px] text-white text-[14px] font-medium transition-colors ${accent.ctaBg} ${accent.ctaHover}`}
                           >
