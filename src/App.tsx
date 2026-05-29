@@ -41,6 +41,7 @@ import { useGoogleAnalytics } from "./hooks/useGoogleAnalytics";
 import LoginSuccessToast from "./components/LoginSuccessToast";
 import Careers from "./pages/Careers";
 import JobApplication from "./pages/JobApplication";
+import About from "./pages/About";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -93,6 +94,7 @@ export default function App() {
               />
               <Route path="/careers" element={<Careers />} />
               <Route path="/careers/apply" element={<JobApplication />} />
+              <Route path="/about" element={<About />} />
 
               {/* Self Assessment */}
               <Route path="/self-assessment" element={<SelfAssessment />} />
