@@ -171,9 +171,9 @@ export default function Footer() {
                   <li>
                     <Link
                       className="transition-colors duration-200 hover:text-white"
-                      to="/self-assessment"
+                      to="/about"
                     >
-                      {t("selfAssessment", { ns: "navigation" })}
+                      {t("about", { ns: "navigation" })}
                     </Link>
                   </li>
                   <li>
@@ -212,10 +212,7 @@ export default function Footer() {
               </nav>
 
               {/* Support */}
-              <nav
-                aria-label={t("support")}
-                className="space-y-4 sm:space-y-3"
-              >
+              <nav aria-label={t("support")} className="space-y-4 sm:space-y-3">
                 <h3 className="text-sm font-semibold tracking-wide text-white uppercase">
                   {t("support")}
                 </h3>
@@ -288,7 +285,9 @@ export default function Footer() {
           {/* Disclaimer */}
           <div className="mt-10 border-t border-white/10 pt-6 sm:mt-12 sm:pt-8 w-full">
             <p className="text-xs sm:text-sm text-slate-400 leading-relaxed text-center sm:text-left w-full">
-              <span className="font-semibold text-slate-300">{t("footerDisclaimerLabel")}</span>{" "}
+              <span className="font-semibold text-slate-300">
+                {t("footerDisclaimerLabel")}
+              </span>{" "}
               {t("footerDisclaimerText")}
             </p>
           </div>

@@ -228,7 +228,6 @@ function About() {
           <WaveShape className="right-[-80px] top-[115px] h-[580px] w-[1040px]" />
           <div className="relative mx-auto flex max-w-[1280px] flex-col px-6 pb-24 pt-16 sm:px-8 sm:pt-20 lg:pt-24">
             <div className="max-w-[570px]">
-              <SectionLabel>About Us</SectionLabel>
               <h1 className="mt-9 text-[56px] font-extrabold leading-[1.06] tracking-[-0.055em] text-[#0d1f36] sm:text-[74px] lg:text-[86px]">
                 About
                 <br />
