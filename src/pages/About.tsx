@@ -186,25 +186,11 @@ function StoryIllustration() {
   return (
     <div className="relative">
       <div className="relative overflow-hidden rounded-[28px] bg-[#e9f5ef] shadow-[0_26px_70px_rgba(15,54,48,0.12)]">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(255,255,255,0.8),transparent_28%),linear-gradient(135deg,#f8efe2,#eaf6f2_52%,#d8eee6)]" />
-        <div className="relative h-[440px] overflow-hidden">
-          <div className="absolute left-[10%] top-[12%] h-[68%] w-[34%] rounded-t-[120px] bg-[#f8fbf8] shadow-inner">
-            <div className="absolute left-1/2 top-8 h-16 w-16 -translate-x-1/2 rounded-full bg-[#245c45]" />
-            <div className="absolute left-[16%] top-[42%] h-[42%] w-[68%] rounded-t-[90px] bg-[#19785c]" />
-            <div className="absolute left-[5%] top-[52%] h-[42%] w-[90%] rounded-[50%] bg-[#0f5c49]" />
-          </div>
-          <div className="absolute right-[9%] top-[16%] h-[68%] w-[36%] rounded-t-[120px] bg-[#fffaf4] shadow-inner">
-            <div className="absolute left-1/2 top-8 h-16 w-16 -translate-x-1/2 rounded-full bg-[#c58b61]" />
-            <div className="absolute left-[18%] top-[40%] h-[45%] w-[68%] rounded-t-[90px] bg-[#fbf3e7]" />
-            <div className="absolute left-[-6%] top-[52%] h-[42%] w-[92%] rounded-[50%] bg-[#efe6da]" />
-          </div>
-          <div className="absolute bottom-0 left-0 right-0 h-[32%] bg-[#d9c6ae]" />
-          <div className="absolute bottom-8 left-[40%] h-16 w-16 rounded-t-full bg-[#78a66b]" />
-          <div className="absolute bottom-20 left-[42%] h-16 w-2 rounded-full bg-[#4d7c47]" />
-          <div className="absolute right-[12%] top-[10%] h-[72%] w-px bg-white/80" />
-          <div className="absolute right-[12%] top-[10%] h-px w-[34%] bg-white/80" />
-          <div className="absolute left-[7%] top-[8%] h-20 w-16 rounded-xl border-10 border-[#f4eee4] bg-[#277553]" />
-        </div>
+        <img
+          src="/about-story-consultation.png"
+          alt="MindCurePath expert consultation session"
+          className="h-[440px] w-full object-cover"
+        />
       </div>
       <div className="absolute -bottom-8 left-5 flex items-center gap-4 rounded-[20px] bg-white px-6 py-5 shadow-[0_22px_50px_rgba(13,31,54,0.16)]">
         <span className="flex h-14 w-14 items-center justify-center rounded-full bg-[#159374] text-white">
@@ -258,7 +244,7 @@ function About() {
           </div>
         </section>
 
-        <section className="relative bg-white py-24 sm:py-28">
+        <section className="relative bg-white pb-24 pt-2 sm:pb-28 sm:pt-4">
           <DotPattern className="left-5 top-10" />
           <WaveShape className="bottom-[-210px] left-[-160px] h-[420px] w-[720px]" />
           <div className="relative mx-auto grid max-w-[1230px] items-center gap-20 px-6 sm:px-8 lg:grid-cols-[1fr_1.08fr]">

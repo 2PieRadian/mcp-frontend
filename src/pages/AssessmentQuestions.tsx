@@ -7,16 +7,9 @@ import { useAuth } from "../context/AuthContext";
 import LoginRequiredModal from "../components/modals/LoginRequiredModal";
 import { ArrowLeft, AlertTriangle, X } from "lucide-react";
 import {
-  ADHD_QUESTIONS,
-  DIET_QUESTIONS,
-  RELATIONSHIP_QUESTIONS,
-  YOGA_QUESTIONS,
-  PATH_FINDER_QUESTIONS,
-  CAREER_PLANNING_QUESTIONS,
-  ACADEMIC_QUESTIONS,
-  GST_TAXATION_QUESTIONS,
-  FINANCIAL_PLANNING_QUESTIONS,
-} from "../lib/constants/assessments";
+  ASSESSMENT_DISCLAIMER,
+  getAssessmentBySlug,
+} from "../lib/constants/assessmentCatalog";
 import type { QuizOption } from "../lib/interfaces";
 
 function OptionItem({
@@ -56,35 +49,12 @@ export default function AssessmentQuestions() {
   const domain = location.pathname.includes("/assessments/education/")
     ? "education"
     : location.pathname.includes("/assessments/finance/")
-    ? "finance"
-    : "wellness";
+      ? "finance"
+      : "wellness";
 
-  // Get questions based on assessment type
-  const getQuestions = () => {
-    switch (assessmentType) {
-      case "adhd":
-        return ADHD_QUESTIONS;
-      case "diet":
-        return DIET_QUESTIONS;
-      case "relationship":
-        return RELATIONSHIP_QUESTIONS;
-      case "yoga":
-        return YOGA_QUESTIONS;
-      case "path-finder":
-        return PATH_FINDER_QUESTIONS;
-      case "career-planning":
-        return CAREER_PLANNING_QUESTIONS;
-      case "academic":
-        return ACADEMIC_QUESTIONS;
-      case "gst-taxation":
-        return GST_TAXATION_QUESTIONS;
-      case "financial-planning":
-        return FINANCIAL_PLANNING_QUESTIONS;
-      default:
-        return ADHD_QUESTIONS;
-    }
-  };
-  const questions = getQuestions();
+  const assessment = getAssessmentBySlug(assessmentType);
+  const assessmentDomain = assessment?.domain || domain;
+  const questions = assessment?.questions || [];
   const totalQuestions = questions.length;
 
   const [answers, setAnswers] = useState<Record<number, QuizOption>>({});
@@ -97,7 +67,7 @@ export default function AssessmentQuestions() {
   const calculateTotalScore = (): number => {
     return Object.values(answers).reduce(
       (sum, option) => sum + option.score,
-      0
+      0,
     );
   };
 
@@ -124,7 +94,7 @@ export default function AssessmentQuestions() {
     const totalScore = calculateTotalScore();
     // Navigate to results page with score as URL parameter
     navigate(
-      `/assessments/${domain}/${assessmentType}/result?score=${totalScore}`
+      `/assessments/${assessmentDomain}/${assessmentType}/result?score=${totalScore}`,
     );
   }
 
@@ -138,7 +108,7 @@ export default function AssessmentQuestions() {
   };
 
   const handleConfirmBack = () => {
-    navigate(`/assessments/${domain}/${assessmentType}`);
+    navigate(`/assessments/${assessmentDomain}/${assessmentType}`);
   };
 
   const handleCancelBack = () => {
@@ -151,8 +121,21 @@ export default function AssessmentQuestions() {
         <ResponsiveNavbar />
         <LoginRequiredModal
           isOpen={true}
-          onClose={() => navigate(`/assessments/${domain}/${assessmentType}`)}
+          onClose={() =>
+            navigate(`/assessments/${assessmentDomain}/${assessmentType}`)
+          }
         />
+      </div>
+    );
+  }
+
+  if (!assessment || !currentQuizQuestion) {
+    return (
+      <div className="min-h-screen bg-white">
+        <ResponsiveNavbar />
+        <div className="max-w-[900px] mx-auto px-[25px] py-[80px] text-center">
+          <p className="text-[#44666C] text-xl">Assessment not found</p>
+        </div>
       </div>
     );
   }
@@ -173,6 +156,9 @@ export default function AssessmentQuestions() {
       <h1 className="text-[20px] font-semibold text-[#44666C]">
         {t("question")} {currentQuestion} {t("of")} {totalQuestions}
       </h1>
+      <p className="mt-3 text-[#5a6c75] text-[14px] leading-relaxed max-w-[900px]">
+        {ASSESSMENT_DISCLAIMER}
+      </p>
       {/* Progress bar */}
       <div className="w-full h-[12px] bg-[#D9D9D9] rounded-[10px] mt-[14px]">
         <div
