@@ -24,13 +24,6 @@ import Footer from "../components/Footer";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import ScrollToTopButton from "../components/ScrollToTopButton";
 
-const stats = [
-  { icon: UsersRound, value: "10+", label: "Domains Covered" },
-  { icon: ShieldCheck, value: "100+", label: "Verified Experts" },
-  { icon: CalendarDays, value: "1000+", label: "Successful Sessions" },
-  { icon: Heart, value: "Trusted by", label: "Thousands of Users" },
-];
-
 const workingSteps = [
   {
     icon: Search,
@@ -192,16 +185,6 @@ function StoryIllustration() {
           className="h-[440px] w-full object-cover"
         />
       </div>
-      <div className="absolute -bottom-8 left-5 flex items-center gap-4 rounded-[20px] bg-white px-6 py-5 shadow-[0_22px_50px_rgba(13,31,54,0.16)]">
-        <span className="flex h-14 w-14 items-center justify-center rounded-full bg-[#159374] text-white">
-          <UsersRound size={27} fill="currentColor" strokeWidth={1.7} />
-        </span>
-        <p className="text-[15px] font-bold leading-snug text-[#13243b]">
-          Guided by experts,
-          <br />
-          <span className="text-[#159374]">driven by care.</span>
-        </p>
-      </div>
     </div>
   );
 }
@@ -277,30 +260,6 @@ function About() {
                   a reliable, transparent, and user-centric ecosystem where
                   meaningful guidance is only a few clicks away.
                 </p>
-              </div>
-
-              <div className="mt-11 grid grid-cols-2 gap-y-8 lg:grid-cols-4">
-                {stats.map((item, index) => {
-                  const Icon = item.icon;
-                  return (
-                    <div
-                      key={item.label}
-                      className={`px-4 text-center ${
-                        index > 0 ? "lg:border-l lg:border-[#d8e1de]" : ""
-                      }`}
-                    >
-                      <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#e9f8f4] text-[#149373]">
-                        <Icon size={29} strokeWidth={2.4} />
-                      </span>
-                      <p className="mt-4 text-[25px] font-extrabold leading-none text-[#0d1f36]">
-                        {item.value}
-                      </p>
-                      <p className="mt-2 text-[15px] leading-tight text-[#576273]">
-                        {item.label}
-                      </p>
-                    </div>
-                  );
-                })}
               </div>
             </div>
           </div>
