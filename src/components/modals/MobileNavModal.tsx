@@ -5,6 +5,10 @@ import { loginPathWithRedirect } from "../../lib/loginRedirect";
 import { useAuth } from "../../context/AuthContext";
 import { useTranslation } from "react-i18next";
 import { gsap } from "gsap";
+import {
+  getAssessmentsByDomain,
+  type AssessmentDomain,
+} from "../../lib/constants/assessmentCatalog";
 
 const MOBILE_NAV_ICONS = {
   expertCategories: "/images/mobile-nav/icon-expert-categories.svg",
@@ -72,28 +76,11 @@ function MobileNavItem({
   );
 }
 
-type AssessmentDomain = "wellness" | "education" | "finance";
-
-const MOBILE_ASSESSMENTS: Record<
-  AssessmentDomain,
-  { labelKey: string; slug: string }[]
-> = {
-  wellness: [
-    { labelKey: "wellnessCardAdhdTitle", slug: "adhd" },
-    { labelKey: "wellnessCardDietTitle", slug: "diet" },
-    { labelKey: "wellnessCardRelationshipTitle", slug: "relationship" },
-    { labelKey: "wellnessCardYogaTitle", slug: "yoga" },
-  ],
-  education: [
-    { labelKey: "educationCardPathFinderTitle", slug: "path-finder" },
-    { labelKey: "educationCardCareerPlanningTitle", slug: "career-planning" },
-    { labelKey: "educationCardAcademicTitle", slug: "academic" },
-  ],
-  finance: [
-    { labelKey: "financeCardGstTitle", slug: "gst-taxation" },
-    { labelKey: "financeCardPlanningTitle", slug: "financial-planning" },
-  ],
-};
+const ASSESSMENT_DOMAINS: AssessmentDomain[] = [
+  "wellness",
+  "education",
+  "finance",
+];
 
 export default function MobileNavModal({
   isOpen,
@@ -534,9 +521,7 @@ export default function MobileNavModal({
                     {t("selfAssessmentHint", { ns: "navigation" })}
                   </p>
                   <div className="flex flex-col gap-3">
-                    {(
-                      Object.keys(MOBILE_ASSESSMENTS) as AssessmentDomain[]
-                    ).map((domain) => (
+                    {ASSESSMENT_DOMAINS.map((domain) => (
                       <div key={domain} className="relative">
                         <div
                           className="mb-1.5 flex items-center gap-2 border-b border-slate-200 pb-1.5 pl-1"
@@ -556,15 +541,15 @@ export default function MobileNavModal({
                           </span>
                         </div>
                         <div className="flex flex-col gap-1 pl-0.5">
-                          {MOBILE_ASSESSMENTS[domain].map((a) => (
+                          {getAssessmentsByDomain(domain).map((assessment) => (
                             <Link
-                              key={`${domain}:${a.slug}`}
-                              to={`/assessments/${domain}/${a.slug}`}
+                              key={`${domain}:${assessment.slug}`}
+                              to={`/assessments/${domain}/${assessment.slug}`}
                               onClick={onClose}
                               className="group flex items-center justify-between gap-2 rounded-lg border border-transparent bg-white px-3 py-2.5 text-[13px] font-medium text-slate-600 shadow-sm transition-all hover:border-cure-color/25 hover:bg-white hover:text-logo-heading hover:shadow-md active:scale-[0.99]"
                             >
                               <span className="leading-snug">
-                                {t(`quiz:${a.labelKey}`)}
+                                {assessment.title}
                               </span>
                               <ChevronRight
                                 size={16}

@@ -1,47 +1,28 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-
-type AssessmentDomain = "wellness" | "education" | "finance";
+import {
+  getAssessmentsByDomain,
+  type AssessmentDomain,
+} from "../../lib/constants/assessmentCatalog";
 
 interface SelfAssmentsModalProps {
   modalRef: React.RefObject<HTMLDivElement | null>;
   navbarType: "landing" | "experts";
 }
 
-const ASSESSMENTS: Record<
-  AssessmentDomain,
-  { labelKey: string; slug: string }[]
-> = {
-  wellness: [
-    { labelKey: "wellnessCardAdhdTitle", slug: "adhd" },
-    { labelKey: "wellnessCardDietTitle", slug: "diet" },
-    { labelKey: "wellnessCardRelationshipTitle", slug: "relationship" },
-    { labelKey: "wellnessCardYogaTitle", slug: "yoga" },
-  ],
-  education: [
-    { labelKey: "educationCardPathFinderTitle", slug: "path-finder" },
-    { labelKey: "educationCardCareerPlanningTitle", slug: "career-planning" },
-    { labelKey: "educationCardAcademicTitle", slug: "academic" },
-  ],
-  finance: [
-    { labelKey: "financeCardGstTitle", slug: "gst-taxation" },
-    { labelKey: "financeCardPlanningTitle", slug: "financial-planning" },
-  ],
-};
-
 export default function SelfAssmentsModal({
   modalRef,
   navbarType = "experts",
 }: SelfAssmentsModalProps) {
   const { t } = useTranslation(["navigation", "common", "quiz"]);
-  const [hoveredDomain, setHoveredDomain] = useState<AssessmentDomain>(
-    "wellness"
-  );
+  const [hoveredDomain, setHoveredDomain] =
+    useState<AssessmentDomain>("wellness");
 
   const getDomainRoute = (domain: AssessmentDomain) => `/assessments/${domain}`;
   const getAssessmentRoute = (domain: AssessmentDomain, slug: string) =>
     `/assessments/${domain}/${slug}`;
+  const assessments = getAssessmentsByDomain(hoveredDomain);
 
   return (
     <div
@@ -93,14 +74,14 @@ export default function SelfAssmentsModal({
       <div className="flex-4 w-full bg-navbar-dropdown-right-outer-bg border border-navbar-dropdown-right-outer text-white p-[5px] rounded-[10px] flex max-h-[400px] overflow-y-auto">
         <div className="flex flex-col gap-[8px] w-full h-full">
           <div className="grid grid-cols-2 gap-[5px] w-full">
-            {ASSESSMENTS[hoveredDomain].map((a) => (
+            {assessments.map((assessment) => (
               <Link
-                key={`${hoveredDomain}:${a.slug}`}
-                to={getAssessmentRoute(hoveredDomain, a.slug)}
-                className="group bg-navbar-dropdown-bg rounded-[10px] p-[12px] flex items-center justify-center text-center hover:bg-white hover:text-navbar-dropdown-bg transition-all cursor-pointer"
+                key={`${hoveredDomain}:${assessment.slug}`}
+                to={getAssessmentRoute(hoveredDomain, assessment.slug)}
+                className="group bg-navbar-dropdown-bg rounded-[10px] px-[13px] py-[13px] flex items-center justify-center text-center hover:bg-white hover:text-navbar-dropdown-bg transition-all cursor-pointer"
               >
-                <span className="text-[14px] leading-tight inline-block group-hover:scale-[1.1] transition-all">
-                  {t(`quiz:${a.labelKey}`)}
+                <span className="text-[14px] leading-tight inline-block group-hover:scale-[1.04] transition-all">
+                  {assessment.title}
                 </span>
               </Link>
             ))}
@@ -113,5 +94,3 @@ export default function SelfAssmentsModal({
     </div>
   );
 }
-
-
