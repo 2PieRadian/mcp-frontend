@@ -324,7 +324,7 @@ export default function Navbar() {
                 to={loginPathWithRedirect(location.pathname, location.search)}
                 className={
                   isLanding
-                    ? "rounded-xl border border-[#0d4a42] bg-[#0F5A4E] px-[14px] sm:px-[20px] py-[6px] text-[13px] sm:text-[15px] font-medium text-white shadow-[0_6px_20px_-4px_rgba(15,90,78,0.45)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#0c4d42] hover:shadow-[0_10px_28px_-6px_rgba(15,90,78,0.5)]"
+                    ? "rounded-full border border-[#0d4a42] bg-[#0F5A4E] px-[14px] sm:px-[20px] py-[6px] text-[13px] sm:text-[15px] font-medium text-white shadow-[0_6px_20px_-4px_rgba(15,90,78,0.45)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#0c4d42] hover:shadow-[0_10px_28px_-6px_rgba(15,90,78,0.5)]"
                     : "rounded-full border border-border-light bg-primary px-[14px] sm:px-[20px] py-[6px] text-[13px] sm:text-[15px] font-medium text-white transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(0,0,0,0.2)]"
                 }
               >

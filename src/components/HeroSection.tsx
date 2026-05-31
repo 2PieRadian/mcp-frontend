@@ -1,59 +1,36 @@
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
-import { ArrowRight, FileText, Lock, ShieldCheck } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTranslation, Trans } from "react-i18next";
-import gsap from "gsap";
 
-const HERO_CARD_IMAGES = {
-  wellness: "/images/hero/hero-wellness.jpg",
-  finance: "/images/hero/hero-finance.jpg",
-  education: "/images/hero/hero-education.jpg",
-} as const;
-
-const CARD_GAP = 6;
-/** Top-row cards (vertical layout): image + title + body + CTA */
-const ROW1_H = 356;
-/** Bottom full-width card (horizontal layout): needs extra room so copy is not clipped */
-const ROW2_H = 206;
-const DECK_HEIGHT = ROW1_H + CARD_GAP + ROW2_H;
-const ROTATE_MS = 3000;
-const TWEEN_DURATION = 0.92;
-const TWEEN_STAGGER = 0.06;
-
-type Slot = "tl" | "tr" | "bottom";
-
-const ROTATION_LAYOUTS: Array<{
-  wellness: Slot;
-  finance: Slot;
-  education: Slot;
-}> = [
-  { wellness: "tl", finance: "tr", education: "bottom" },
-  { wellness: "bottom", finance: "tl", education: "tr" },
-  { wellness: "tr", finance: "bottom", education: "tl" },
-];
-
-function slotBox(
-  slot: Slot,
-  W: number,
-  gap: number,
-  row1: number,
-  row2: number,
-): { left: number; top: number; width: number; height: number } {
-  const half = (W - gap) / 2;
-  if (slot === "tl") {
-    return { left: 0, top: 0, width: half, height: row1 };
-  }
-  if (slot === "tr") {
-    return { left: half + gap, top: 0, width: half, height: row1 };
-  }
-  return { left: 0, top: row1 + gap, width: W, height: row2 };
-}
+const HERO_CATEGORIES = [
+  {
+    key: "wellness",
+    to: "/wellness-experts",
+    imageSrc: "/images/hero/hero-wellness.jpg",
+    titleKey: "wellness",
+    bodyKey: "heroCardWellnessBody",
+    gradient: "from-emerald-500/45 via-teal-500/35 to-cyan-500/30",
+    glow: "bg-emerald-300/35",
+  },
+  {
+    key: "education",
+    to: "/education-experts",
+    imageSrc: "/images/hero/hero-education.jpg",
+    titleKey: "education",
+    bodyKey: "heroCardEducationBody",
+    gradient: "from-amber-500/45 via-orange-400/35 to-yellow-400/30",
+    glow: "bg-amber-300/35",
+  },
+  {
+    key: "finance",
+    to: "/finance-experts",
+    imageSrc: "/images/hero/hero-finance.jpg",
+    titleKey: "finance",
+    bodyKey: "heroCardFinanceBody",
+    gradient: "from-sky-500/45 via-blue-500/35 to-indigo-500/30",
+    glow: "bg-sky-300/35",
+  },
+] as const;
 
 function smoothScrollToHash(
   e: React.MouseEvent<HTMLAnchorElement>,
@@ -68,371 +45,127 @@ function smoothScrollToHash(
   }
 }
 
-type HeroCategoryCardProps = {
-  to: string;
-  imageSrc: string;
-  imageAlt: string;
-  title: string;
-  body: string;
-  surfaceClass: string;
-  linkClassName?: string;
-  layout?: "vertical" | "horizontal";
-};
-
-function HeroCategoryCard({
-  to,
-  imageSrc,
-  imageAlt,
-  title,
-  body,
-  surfaceClass,
-  linkClassName = "",
-  layout = "vertical",
-}: HeroCategoryCardProps) {
+function CategoryCard({
+  category,
+}: {
+  category: (typeof HERO_CATEGORIES)[number];
+}) {
   const { t } = useTranslation("common");
-  const isHorizontal = layout === "horizontal";
-
-  const imageBlock = (
-    <div
-      className={
-        isHorizontal
-          ? "w-[min(42%,11.5rem)] max-w-[184px] shrink-0 self-stretch overflow-hidden bg-slate-100 sm:max-w-[200px]"
-          : "h-[43%] min-h-[132px] w-full shrink-0 overflow-hidden bg-slate-100"
-      }
-    >
-      <img
-        src={imageSrc}
-        alt={imageAlt}
-        className={`h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.06] ${isHorizontal ? "min-h-29 sm:min-h-31" : ""}`}
-        width={400}
-        height={300}
-        decoding="async"
-      />
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(15,23,42,0.04)_0%,rgba(15,23,42,0)_32%,rgba(15,23,42,0.16)_100%)]" />
-    </div>
-  );
-
-  const textBlock = (
-    <div
-      className={`relative flex flex-col ${isHorizontal ? "min-w-0 flex-1 justify-center px-3.5 py-3 sm:px-4.5 sm:py-3.5" : "flex-1 px-4 pb-4 pt-3.5"} ${surfaceClass}`}
-    >
-      <h3 className="text-lg font-bold tracking-tight text-slate-800 sm:text-[1.28rem]">
-        {title}
-      </h3>
-      <p
-        className={`mt-2 text-[13px] leading-relaxed text-slate-600 sm:text-[13.5px] ${isHorizontal ? "line-clamp-4" : "line-clamp-3"}`}
-      >
-        {body}
-      </p>
-      <span className="mt-auto inline-flex w-fit items-center justify-center gap-1 self-start rounded-full border border-slate-200/90 bg-white/80 px-3 py-1.5 text-[11px] font-semibold leading-none text-slate-700 shadow-[0_4px_10px_rgba(148,163,184,0.12)] backdrop-blur-sm transition group-hover:border-slate-300 group-hover:bg-white sm:text-xs">
-        {t("heroCardExplore")}
-        <ArrowRight
-          className="h-3.5 w-3.5 shrink-0 transition group-hover:translate-x-0.5 sm:h-4 sm:w-4"
-          aria-hidden
-        />
-      </span>
-    </div>
-  );
+  const title = t(category.titleKey);
 
   return (
     <Link
-      to={to}
-      className={`hero-card-link group relative flex h-full min-h-0 w-full min-w-0 overflow-hidden rounded-[1.45rem] border border-slate-200/80 bg-white/95 shadow-[0_14px_34px_rgba(148,163,184,0.18),0_3px_10px_rgba(148,163,184,0.1)] transition-[box-shadow,transform,border-color] hover:border-slate-300/90 hover:shadow-[0_20px_44px_rgba(148,163,184,0.22),0_10px_20px_rgba(148,163,184,0.12)] ${isHorizontal ? "flex-row" : "flex-col"} ${linkClassName}`}
+      to={category.to}
+      className="group relative isolate flex min-h-[430px] overflow-hidden rounded-4xl border border-white/70 bg-white shadow-[0_24px_70px_-34px_rgba(15,23,42,0.5)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_34px_80px_-32px_rgba(15,90,78,0.45)]"
     >
-      <div className="pointer-events-none absolute inset-x-5 top-0 h-px bg-white/90" />
-      {imageBlock}
-      {textBlock}
+      <div
+        className={`absolute -right-12 -top-12 h-40 w-40 rounded-full blur-3xl transition duration-500 group-hover:scale-125 ${category.glow}`}
+      />
+
+      <div className="flex w-full flex-col">
+        <div className="relative h-56 overflow-hidden">
+          <img
+            src={category.imageSrc}
+            alt={title}
+            className="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-110"
+            width={520}
+            height={340}
+            decoding="async"
+          />
+          <div
+            className={`absolute inset-0 bg-linear-to-br ${category.gradient}`}
+          />
+        </div>
+
+        <div className="relative flex flex-1 flex-col p-6 sm:p-7">
+          <div className="pointer-events-none absolute inset-x-7 top-0 h-px bg-linear-to-r from-transparent via-slate-200 to-transparent" />
+          <h3 className="text-2xl font-bold tracking-tight text-[#1A2B3C]">
+            {title}
+          </h3>
+          <p className="mt-3 text-[15px] leading-relaxed text-slate-600">
+            {t(category.bodyKey)}
+          </p>
+          <span className="mt-auto inline-flex w-fit items-center justify-center gap-2 rounded-full bg-[#0F5A4E] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_10px_26px_-10px_rgba(15,90,78,0.75)] transition group-hover:bg-[#0c4d42]">
+            {t("heroCardExplore")}
+            <ArrowRight
+              className="h-4 w-4 shrink-0 transition group-hover:translate-x-1"
+              aria-hidden
+            />
+          </span>
+        </div>
+      </div>
     </Link>
-  );
-}
-
-function relativeRect(
-  el: HTMLElement,
-  containerRect: DOMRect,
-): { left: number; top: number; width: number; height: number } {
-  const r = el.getBoundingClientRect();
-  return {
-    left: r.left - containerRect.left,
-    top: r.top - containerRect.top,
-    width: r.width,
-    height: r.height,
-  };
-}
-
-function HeroRotatingCards() {
-  const { t } = useTranslation("common");
-  const containerRef = useRef<HTMLDivElement>(null);
-  const wellnessWrapRef = useRef<HTMLDivElement>(null);
-  const financeWrapRef = useRef<HTMLDivElement>(null);
-  const educationWrapRef = useRef<HTMLDivElement>(null);
-
-  const [layoutStep, setLayoutStep] = useState(0);
-  const layoutStepRef = useRef(0);
-  layoutStepRef.current = layoutStep;
-
-  const busyRef = useRef(false);
-
-  const applyPositions = useCallback((step: number, immediate: boolean) => {
-    const c = containerRef.current;
-    const wEl = wellnessWrapRef.current;
-    const fEl = financeWrapRef.current;
-    const eEl = educationWrapRef.current;
-    if (!c || !wEl || !fEl || !eEl) return;
-
-    const W = c.clientWidth;
-    const L = ROTATION_LAYOUTS[step];
-    const map = {
-      wellness: slotBox(L.wellness, W, CARD_GAP, ROW1_H, ROW2_H),
-      finance: slotBox(L.finance, W, CARD_GAP, ROW1_H, ROW2_H),
-      education: slotBox(L.education, W, CARD_GAP, ROW1_H, ROW2_H),
-    };
-
-    const els = [wEl, fEl, eEl];
-    const boxes = [map.wellness, map.finance, map.education];
-    const reduceMotion =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    els.forEach((el, i) => {
-      const b = boxes[i];
-      if (immediate || reduceMotion) {
-        gsap.set(el, {
-          left: b.left,
-          top: b.top,
-          width: b.width,
-          height: b.height,
-        });
-      }
-    });
-  }, []);
-
-  const tweenToStep = useCallback(
-    (toStep: number, onComplete: () => void) => {
-      const c = containerRef.current;
-      const wEl = wellnessWrapRef.current;
-      const fEl = financeWrapRef.current;
-      const eEl = educationWrapRef.current;
-      if (!c || !wEl || !fEl || !eEl) {
-        onComplete();
-        return;
-      }
-
-      const reduceMotion =
-        typeof window !== "undefined" &&
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-      if (reduceMotion) {
-        layoutStepRef.current = toStep;
-        setLayoutStep(toStep);
-        applyPositions(toStep, true);
-        onComplete();
-        return;
-      }
-
-      const cRect = c.getBoundingClientRect();
-      const W = c.clientWidth;
-      const toL = ROTATION_LAYOUTS[toStep];
-
-      const cards = [
-        { el: wEl, key: "wellness" as const },
-        { el: fEl, key: "finance" as const },
-        { el: eEl, key: "education" as const },
-      ];
-
-      gsap.killTweensOf([wEl, fEl, eEl]);
-
-      const tl = gsap.timeline({
-        defaults: { duration: TWEEN_DURATION, ease: "power3.inOut" },
-        onComplete: onComplete,
-      });
-
-      cards.forEach((card, index) => {
-        const to = slotBox(toL[card.key], W, CARD_GAP, ROW1_H, ROW2_H);
-        const start = relativeRect(card.el, cRect);
-        gsap.set(card.el, {
-          left: start.left,
-          top: start.top,
-          width: start.width,
-          height: start.height,
-        });
-        tl.to(
-          card.el,
-          {
-            left: to.left,
-            top: to.top,
-            width: to.width,
-            height: to.height,
-            overwrite: "auto",
-          },
-          index * TWEEN_STAGGER,
-        );
-      });
-
-      tl.call(
-        () => {
-          layoutStepRef.current = toStep;
-          setLayoutStep(toStep);
-        },
-        undefined,
-        TWEEN_DURATION * 0.55,
-      );
-    },
-    [applyPositions],
-  );
-
-  useLayoutEffect(() => {
-    applyPositions(0, true);
-  }, [applyPositions]);
-
-  useEffect(() => {
-    const onResize = () => {
-      applyPositions(layoutStepRef.current, true);
-    };
-    const ro = new ResizeObserver(onResize);
-    if (containerRef.current) {
-      ro.observe(containerRef.current);
-    }
-    window.addEventListener("resize", onResize);
-    return () => {
-      ro.disconnect();
-      window.removeEventListener("resize", onResize);
-    };
-  }, [applyPositions]);
-
-  useEffect(() => {
-    const id = window.setInterval(() => {
-      if (busyRef.current) return;
-      busyRef.current = true;
-      const from = layoutStepRef.current;
-      const to = (from + 1) % ROTATION_LAYOUTS.length;
-      tweenToStep(to, () => {
-        busyRef.current = false;
-      });
-    }, ROTATE_MS);
-    return () => clearInterval(id);
-  }, [tweenToStep]);
-
-  const L = ROTATION_LAYOUTS[layoutStep];
-
-  return (
-    <div
-      ref={containerRef}
-      className="relative mx-auto w-full max-w-lg xl:mx-0 xl:max-w-[484px]"
-      style={{ height: DECK_HEIGHT }}
-    >
-      <div
-        ref={wellnessWrapRef}
-        className="absolute z-1 overflow-hidden rounded-2xl will-change-[left,top,width,height]"
-        style={{ left: 0, top: 0 }}
-      >
-        <HeroCategoryCard
-          to="/wellness-experts"
-          imageSrc={HERO_CARD_IMAGES.wellness}
-          imageAlt={t("wellness")}
-          title={t("wellness")}
-          body={t("heroCardWellnessBody")}
-          surfaceClass="bg-[linear-gradient(180deg,#ffffff_0%,#f6fbf9_100%)]"
-          layout={L.wellness === "bottom" ? "horizontal" : "vertical"}
-        />
-      </div>
-      <div
-        ref={financeWrapRef}
-        className="absolute z-1 overflow-hidden rounded-2xl will-change-[left,top,width,height]"
-        style={{ left: 0, top: 0 }}
-      >
-        <HeroCategoryCard
-          to="/finance-experts"
-          imageSrc={HERO_CARD_IMAGES.finance}
-          imageAlt={t("finance")}
-          title={t("finance")}
-          body={t("heroCardFinanceBody")}
-          surfaceClass="bg-[linear-gradient(180deg,#f8fcff_0%,#eef6fb_100%)]"
-          layout={L.finance === "bottom" ? "horizontal" : "vertical"}
-        />
-      </div>
-      <div
-        ref={educationWrapRef}
-        className="absolute z-1 overflow-hidden rounded-2xl will-change-[left,top,width,height]"
-        style={{ left: 0, top: 0 }}
-      >
-        <HeroCategoryCard
-          to="/education-experts"
-          imageSrc={HERO_CARD_IMAGES.education}
-          imageAlt={t("education")}
-          title={t("education")}
-          body={t("heroCardEducationBody")}
-          surfaceClass="bg-[linear-gradient(180deg,#fffdf8_0%,#fdf6e9_100%)]"
-          layout={L.education === "bottom" ? "horizontal" : "vertical"}
-        />
-      </div>
-    </div>
   );
 }
 
 export default function HeroSection() {
   const { t } = useTranslation("common");
 
-  const leftColumn = (
-    <div className="mx-auto min-w-0 max-w-xl flex-1 text-center xl:mx-0 xl:text-left">
-      <h1 className="text-balance text-[clamp(2.5rem,6.8vw,3.35rem)] font-bold leading-[1.1] tracking-tight text-[#1A2B3C] sm:text-[clamp(2.65rem,4vw,3.35rem)]">
-        <Trans
-          i18nKey="discoverYourPath"
-          components={{ highlight: <span className="text-[#2D8A6E]" /> }}
-        />
-      </h1>
-
-      <p className="mx-auto mt-5 max-w-lg text-pretty text-base leading-relaxed text-[#555555] sm:text-lg xl:mx-0">
-        {t("heroDesignSub")}
-      </p>
-
-      <div className="mt-9 flex flex-col items-stretch gap-3 sm:flex-row sm:justify-center xl:justify-start">
-        <Link
-          to="/choose-experts"
-          className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#0F5A4E] px-7 py-3.5 text-[15px] font-semibold text-white shadow-[0_8px_28px_-6px_rgba(15,90,78,0.55)] transition hover:bg-[#0c4d42] hover:shadow-[0_12px_32px_-6px_rgba(15,90,78,0.6)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2D8A6E]"
-        >
-          {t("heroDesignCtaPrimary")}
-          <ArrowRight className="h-4 w-4 shrink-0" aria-hidden />
-        </Link>
-        <a
-          href="#expert-verified-assessments"
-          onClick={(e) => smoothScrollToHash(e, "#expert-verified-assessments")}
-          className="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-[#2D8A6E]/35 bg-white px-7 py-3.5 text-[15px] font-semibold text-[#0F5A4E] shadow-sm transition hover:border-[#2D8A6E]/55 hover:bg-emerald-50/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2D8A6E]"
-        >
-          <FileText className="h-4 w-4 shrink-0 opacity-80" aria-hidden />
-          {t("heroDesignCtaSecondary")}
-        </a>
-      </div>
-
-      <ul
-        className="mt-10 flex max-w-full flex-nowrap items-center justify-center gap-x-4 overflow-x-auto sm:gap-x-8 xl:justify-start [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-        style={{ WebkitOverflowScrolling: "touch" }}
-      >
-        <li className="flex shrink-0 items-center gap-2 text-xs font-medium text-[#1A2B3C] whitespace-nowrap sm:gap-2.5 sm:text-sm">
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-[#2D8A6E] sm:h-9 sm:w-9">
-            <ShieldCheck className="h-3.5 w-3.5 sm:h-4 sm:w-4" aria-hidden />
-          </span>
-          {t("heroDesignTrustExpert")}
-        </li>
-        <li className="flex shrink-0 items-center gap-2 text-xs font-medium text-[#1A2B3C] whitespace-nowrap sm:gap-2.5 sm:text-sm">
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-[#2D8A6E] sm:h-9 sm:w-9">
-            <Lock className="h-3.5 w-3.5 sm:h-4 sm:w-4" aria-hidden />
-          </span>
-          {t("heroDesignTrustPrivate")}
-        </li>
-      </ul>
-    </div>
-  );
-
   return (
-    <section className="isolate w-full overflow-x-hidden pb-16 mt-10 sm:pb-20 sm:pt-12 lg:min-h-0 lg:pb-24 lg:pt-10 xl:pt-12">
-      <div className="mx-auto w-full max-w-[1350px] px-[16px] sm:px-[20px] xl:px-8">
-        <div className="flex flex-col gap-12 xl:flex-row xl:items-start xl:justify-between xl:gap-14">
-          {leftColumn}
-          <div className="min-w-0 shrink-0 xl:w-[min(100%,496px)]">
-            <HeroRotatingCards />
+    <>
+      <section className="relative isolate w-full overflow-hidden px-[16px] pb-12 pt-4 sm:px-[20px] sm:pb-16 sm:pt-8 lg:pb-20">
+        <div className="absolute inset-0 -z-10 bg-linear-to-b from-white via-[#f7fbfa] to-white" />
+        <div className="absolute inset-x-0 bottom-0 -z-10 h-32 bg-linear-to-t from-white to-transparent" />
+
+        <div className="mx-auto flex min-h-[clamp(340px,48vw,500px)] max-w-[1000px] flex-col items-center justify-center text-center">
+          <h1 className="max-w-4xl text-balance text-[clamp(2.05rem,5vw,4rem)] font-bold leading-[1.04] tracking-tight text-[#1A2B3C]">
+            <Trans
+              i18nKey="discoverYourPath"
+              components={{ highlight: <span className="text-[#2D8A6E]" /> }}
+            />
+          </h1>
+
+          <p className="mx-auto mt-7 max-w-2xl text-pretty text-base leading-relaxed text-[#555555] sm:text-xl">
+            {t("heroDesignSub")}
+          </p>
+
+          <div className="mt-9 flex w-full max-w-xl flex-col items-stretch justify-center gap-3 sm:flex-row">
+            <Link
+              to="/choose-experts"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-[#2D8A6E] px-8 py-4 text-[15px] font-semibold text-white shadow-[0_14px_34px_-12px_rgba(45,138,110,0.75)] transition hover:-translate-y-0.5 hover:bg-[#25765e] hover:shadow-[0_18px_42px_-14px_rgba(45,138,110,0.8)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2D8A6E]"
+            >
+              {t("heroDesignCtaPrimary")}
+            </Link>
+            <a
+              href="#expert-verified-assessments"
+              onClick={(e) =>
+                smoothScrollToHash(e, "#expert-verified-assessments")
+              }
+              className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-slate-200 bg-white px-8 py-4 text-[15px] font-semibold text-black shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2D8A6E]"
+            >
+              {t("heroDesignCtaSecondary")}
+            </a>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <section
+        aria-labelledby="categories-heading"
+        className="w-full px-[16px] pb-16 sm:px-[20px] sm:pb-20 lg:pb-24"
+      >
+        <div className="mx-auto max-w-[1350px]">
+          <div className="mx-auto mb-10 max-w-2xl text-center">
+            <h2
+              id="categories-heading"
+              className="text-[clamp(2rem,4vw,3.4rem)] font-bold leading-tight tracking-tight text-[#1A2B3C]"
+            >
+              {t("categoriesSectionTitle", { defaultValue: "Categories" })}
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg">
+              {t("categoriesSectionSubtitle", {
+                defaultValue:
+                  "Explore support across wellness, education, and finance with clear next steps.",
+              })}
+            </p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-3 lg:gap-8">
+            {HERO_CATEGORIES.map((category) => (
+              <CategoryCard key={category.key} category={category} />
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
