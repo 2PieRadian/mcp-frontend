@@ -15,7 +15,6 @@ import {
   ShieldCheck,
   ShoppingBag,
   Smartphone,
-  Sparkles,
   UsersRound,
   Workflow,
 } from "lucide-react";
@@ -237,7 +236,12 @@ const technologyCapabilities = [
   {
     icon: Cloud,
     title: "Cloud & DevOps",
-    items: ["AWS", "Docker", "CI/CD Pipelines", "Cloud Infrastructure Services"],
+    items: [
+      "AWS",
+      "Docker",
+      "CI/CD Pipelines",
+      "Cloud Infrastructure Services",
+    ],
   },
 ];
 
@@ -349,31 +353,12 @@ function DigitalTechnologySolutions() {
           <DotPattern className="left-[6%] top-[120px]" />
           <div className="relative mx-auto grid max-w-[1280px] items-center gap-12 px-6 pb-20 pt-12 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:pb-28 lg:pt-20">
             <div>
-              <SectionLabel>Digital & Technology Solutions</SectionLabel>
-              <h1 className="mt-8 max-w-[760px] text-[44px] font-extrabold leading-[1.04] tracking-[-0.055em] text-[#0d1f36] sm:text-[64px] lg:text-[78px]">
-                Empowering Businesses Through{" "}
-                <span className="text-[#159374]">Technology</span>
+              <h1 className="max-w-[700px] text-[38px] font-extrabold leading-[1.08] tracking-[-0.045em] text-[#0d1f36] sm:text-[52px] lg:text-[64px]">
+                Digital & Technology Solutions
               </h1>
-              <div className="mt-8 max-w-[680px] space-y-5 text-[18px] leading-[1.7] text-[#5d6672] sm:text-[20px]">
-                <p>
-                  MindCurePath provides professional digital and technology
-                  solutions designed to help businesses establish a strong
-                  digital presence, streamline operations, improve customer
-                  engagement, and support long-term growth.
-                </p>
-                <p>
-                  We work with startups, small and medium-sized businesses,
-                  enterprises, educational institutions, healthcare providers,
-                  service-based organizations, and technology partners to
-                  deliver tailored technology solutions aligned with business
-                  objectives.
-                </p>
-                <p>
-                  Our team combines technical expertise, industry best
-                  practices, and modern development methodologies to create
-                  scalable, secure, and user-focused digital products.
-                </p>
-              </div>
+              <p className="mt-6 max-w-[620px] text-[24px] font-bold leading-tight text-[#159374] sm:text-[32px]">
+                Empowering Businesses Through Technology
+              </p>
               <Link
                 to="/technology-contact"
                 className="mt-9 inline-flex items-center gap-2 rounded-full bg-[#149373] px-7 py-3.5 text-[15px] font-bold text-white shadow-[0_18px_42px_rgba(20,147,115,0.22)] transition hover:-translate-y-0.5 hover:bg-[#107b60]"
@@ -388,9 +373,9 @@ function DigitalTechnologySolutions() {
               <div className="relative overflow-hidden rounded-[32px] border border-[#d8eee8] bg-linear-to-br from-[#f8fffc] via-white to-[#e9f5ef] p-8 shadow-[0_28px_80px_rgba(15,54,48,0.13)]">
                 <div className="absolute right-[-50px] top-[-50px] h-40 w-40 rounded-full bg-[#149373]/15 blur-2xl" />
                 <img
-                  src="/career-domains/it-services.svg"
+                  src="/images/category/it/it_solutions.png"
                   alt="Digital and technology solutions"
-                  className="mx-auto h-[260px] w-full object-contain"
+                  className="mx-auto h-[320px] w-full object-contain"
                 />
                 <div className="mt-8 grid grid-cols-2 gap-3">
                   {[
@@ -408,6 +393,30 @@ function DigitalTechnologySolutions() {
                   ))}
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-white px-6 pb-20 sm:px-8 lg:pb-24">
+          <div className="mx-auto max-w-[1080px] rounded-[30px] border border-[#d8eee8] bg-[#f8fffc] p-7 shadow-[0_18px_55px_rgba(15,54,48,0.07)] sm:p-10">
+            <div className="space-y-5 text-[17px] leading-[1.75] text-[#5d6672] sm:text-[19px]">
+              <p>
+                MindCurePath provides professional digital and technology
+                solutions designed to help businesses establish a strong digital
+                presence, streamline operations, improve customer engagement,
+                and support long-term growth.
+              </p>
+              <p>
+                We work with startups, small and medium-sized businesses,
+                enterprises, educational institutions, healthcare providers,
+                service-based organizations, and technology partners to deliver
+                tailored technology solutions aligned with business objectives.
+              </p>
+              <p>
+                Our team combines technical expertise, industry best practices,
+                and modern development methodologies to create scalable, secure,
+                and user-focused digital products.
+              </p>
             </div>
           </div>
         </section>
@@ -547,8 +556,7 @@ function DigitalTechnologySolutions() {
                   Modern tools for scalable digital products
                 </Heading>
                 <p className="mt-7 text-[18px] leading-[1.7] text-[#5d6672]">
-                  Our team works with a range of modern technologies,
-                  including:
+                  Our team works with a range of modern technologies, including:
                 </p>
               </div>
               <div className="grid gap-5 sm:grid-cols-2">
@@ -587,14 +595,13 @@ function DigitalTechnologySolutions() {
 
         <section className="px-6 py-20 sm:px-8 lg:py-24">
           <div className="mx-auto max-w-[1100px] overflow-hidden rounded-[34px] bg-linear-to-br from-[#0d1f36] via-[#12362f] to-[#149373] p-8 text-white shadow-[0_28px_80px_rgba(15,54,48,0.22)] sm:p-12">
-            <Sparkles className="h-10 w-10 text-[#6ee7c2]" aria-hidden />
-            <h2 className="mt-6 text-[32px] font-extrabold leading-tight tracking-[-0.04em] sm:text-[46px]">
+            <h2 className="text-[32px] font-extrabold leading-tight tracking-[-0.04em] sm:text-[46px]">
               Project Outsourcing & Technology Partnerships
             </h2>
             <p className="mt-5 max-w-3xl text-[18px] leading-[1.7] text-white/78">
-              MindCurePath also collaborates with agencies, startups,
-              consulting firms, and technology partners by providing technology
-              development support and project execution services.
+              MindCurePath also collaborates with agencies, startups, consulting
+              firms, and technology partners by providing technology development
+              support and project execution services.
             </p>
             <p className="mt-8 text-sm font-bold uppercase tracking-[0.16em] text-[#6ee7c2]">
               Engagement models may include:

@@ -265,53 +265,62 @@ export default function TechnologyContact() {
               </div>
             </div>
 
-            <aside className="relative overflow-hidden rounded-[32px] border border-[#d8eee8] bg-white p-7 shadow-[0_28px_80px_rgba(15,54,48,0.13)]">
-              <div className="absolute right-[-60px] top-[-60px] h-44 w-44 rounded-full bg-[#149373]/12 blur-2xl" />
+            <aside className="relative overflow-hidden rounded-[34px] border border-[#d8eee8] bg-white p-5 shadow-[0_28px_80px_rgba(15,54,48,0.13)] sm:p-6">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(20,147,115,0.14),transparent_34%)]" />
               <div className="relative grid gap-4">
-                <div className="rounded-[26px] bg-[#0d1f36] p-6 text-white">
-                  <Mail className="h-8 w-8 text-[#6ee7c2]" aria-hidden />
-                  <p className="mt-5 text-sm font-bold uppercase tracking-[0.16em] text-[#6ee7c2]">
-                    Email
-                  </p>
-                  <a
-                    href="mailto:contact@mindcurepath.com"
-                    className="mt-2 block text-[22px] font-extrabold leading-tight"
-                  >
-                    contact@mindcurepath.com
-                  </a>
-                  <p className="mt-3 text-sm leading-relaxed text-white/70">
+                <a
+                  href="mailto:contact@mindcurepath.com"
+                  className="group rounded-[28px] border border-[#d8eee8] bg-[#f8fffc] p-6 transition hover:-translate-y-1 hover:border-[#149373]/35 hover:bg-white hover:shadow-[0_22px_55px_rgba(15,54,48,0.11)]"
+                >
+                  <div className="flex items-start gap-4">
+                    <span className="flex h-13 w-13 shrink-0 items-center justify-center rounded-2xl bg-[#149373] text-white shadow-[0_14px_30px_rgba(20,147,115,0.22)]">
+                      <Mail className="h-6 w-6" aria-hidden />
+                    </span>
+                    <span>
+                      <span className="text-sm font-bold uppercase tracking-[0.16em] text-[#149373]">
+                        Email
+                      </span>
+                      <span className="mt-2 block break-all text-[22px] font-extrabold leading-tight text-[#0d1f36]">
+                        contact@mindcurepath.com
+                      </span>
+                    </span>
+                  </div>
+                  <p className="mt-5 text-sm leading-relaxed text-[#5d6672]">
                     For project inquiries, technical consultations, partnership
                     opportunities, or business discussions.
                   </p>
-                </div>
+                </a>
+
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="rounded-[24px] border border-[#d8eee8] bg-[#f7fbfa] p-5">
-                    <Phone className="h-7 w-7 text-[#149373]" aria-hidden />
-                    <p className="mt-4 text-sm font-bold uppercase tracking-[0.14em] text-[#149373]">
+                  <a
+                    href="tel:+91XXXXXXXXXX"
+                    className="group rounded-[26px] border border-[#d8eee8] bg-white p-5 transition hover:-translate-y-1 hover:border-[#149373]/35 hover:shadow-[0_18px_45px_rgba(15,54,48,0.1)]"
+                  >
+                    <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#e9f5ef] text-[#149373] transition group-hover:bg-[#149373] group-hover:text-white">
+                      <Phone className="h-6 w-6" aria-hidden />
+                    </span>
+                    <p className="mt-5 text-xs font-bold uppercase tracking-[0.16em] text-[#149373]">
                       Phone
                     </p>
-                    <a
-                      href="tel:+91XXXXXXXXXX"
-                      className="mt-2 block text-lg font-extrabold text-[#0d1f36]"
-                    >
+                    <p className="mt-2 text-xl font-extrabold text-[#0d1f36]">
                       +91 XXXXX XXXXX
-                    </a>
-                    <p className="mt-2 text-sm leading-relaxed text-[#5d6672]">
+                    </p>
+                    <p className="mt-3 text-sm leading-relaxed text-[#5d6672]">
                       Speak with our team during business hours.
                     </p>
-                  </div>
-                  <div className="rounded-[24px] border border-[#d8eee8] bg-[#f7fbfa] p-5">
-                    <CalendarClock
-                      className="h-7 w-7 text-[#149373]"
-                      aria-hidden
-                    />
-                    <p className="mt-4 text-sm font-bold uppercase tracking-[0.14em] text-[#149373]">
+                  </a>
+
+                  <div className="rounded-[26px] border border-[#d8eee8] bg-white p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
+                    <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#e9f5ef] text-[#149373]">
+                      <CalendarClock className="h-6 w-6" aria-hidden />
+                    </span>
+                    <p className="mt-5 text-xs font-bold uppercase tracking-[0.16em] text-[#149373]">
                       Business Hours
                     </p>
-                    <p className="mt-2 text-lg font-extrabold text-[#0d1f36]">
+                    <p className="mt-2 text-xl font-extrabold text-[#0d1f36]">
                       Monday - Saturday
                     </p>
-                    <p className="mt-2 text-sm leading-relaxed text-[#5d6672]">
+                    <p className="mt-3 rounded-full bg-[#f7fbfa] px-4 py-2 text-sm font-bold text-[#0F5A4E]">
                       9:00 AM - 6:00 PM (IST)
                     </p>
                   </div>

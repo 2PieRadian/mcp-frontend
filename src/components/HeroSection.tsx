@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTranslation, Trans } from "react-i18next";
 
@@ -33,13 +33,20 @@ const HERO_CATEGORIES = [
   {
     key: "technology",
     to: "/digital-technology-solutions",
-    imageSrc: "/career-domains/it-services.svg",
+    imageSrc: "/images/category/it/it_solutions.png",
     title: "Digital & Technology Solutions",
-    body: "Build websites, mobile apps, custom software, e-commerce platforms, cloud systems, and digital growth tools tailored to your business.",
+    body: "Innovative digital solutions to help your business grow, scale, and succeed in the digital world.",
     gradient: "from-[#149373]/40 via-[#62af9b]/28 to-[#dff3ee]/35",
     glow: "bg-[#149373]/25",
-    imageClassName: "object-contain p-10",
-    highlights: ["Websites", "Mobile Apps", "Software", "Cloud"],
+    imageClassName: "object-contain",
+    highlights: [
+      "Web & Mobile Development",
+      "Custom Software Solutions",
+      "UI/UX Design",
+      "Digital Marketing",
+      "Cloud Solutions",
+      "IT Consulting",
+    ],
   },
 ] as const;
 
@@ -135,6 +142,65 @@ function CategoryCard({
   );
 }
 
+function TechnologyCategoryCard({
+  category,
+}: {
+  category: Extract<(typeof HERO_CATEGORIES)[number], { key: "technology" }>;
+}) {
+  const { t } = useTranslation("common");
+
+  return (
+    <Link
+      to={category.to}
+      className="group relative isolate grid min-h-[430px] overflow-hidden rounded-4xl border border-[#d8eee8] bg-white shadow-[0_28px_90px_-42px_rgba(15,54,48,0.45)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_36px_100px_-40px_rgba(20,147,115,0.42)] lg:grid-cols-[0.82fr_1.18fr]"
+    >
+      <div className="flex flex-col justify-center px-7 py-9 sm:px-10 lg:px-12">
+        <h3 className="max-w-[440px] text-[34px] font-extrabold leading-[1.12] tracking-tight text-[#063f34] sm:text-[40px]">
+          {category.title}
+        </h3>
+        <span className="mt-5 h-1 w-12 rounded-full bg-[#149373]" />
+        <p className="mt-7 max-w-[430px] text-base leading-relaxed text-slate-700 sm:text-lg">
+          {category.body}
+        </p>
+
+        <div className="mt-6 grid gap-x-7 gap-y-3 sm:grid-cols-2">
+          {category.highlights.map((highlight) => (
+            <span
+              key={highlight}
+              className="flex items-center gap-2 text-sm font-medium text-[#1A2B3C]"
+            >
+              <CheckCircle2
+                className="h-4.5 w-4.5 shrink-0 fill-[#5ab66d] text-white"
+                aria-hidden
+              />
+              {highlight}
+            </span>
+          ))}
+        </div>
+
+        <span className="mt-9 inline-flex w-fit items-center justify-center gap-3 rounded-full bg-[#21875f] px-7 py-4 text-sm font-semibold text-white shadow-[0_16px_34px_-18px_rgba(15,90,78,0.9)] transition group-hover:bg-[#176d4c]">
+          {t("heroCardExplore")}
+          <ArrowRight
+            className="h-5 w-5 shrink-0 transition group-hover:translate-x-1"
+            aria-hidden
+          />
+        </span>
+      </div>
+
+      <div className="relative order-first flex min-h-[300px] items-center justify-center overflow-hidden px-6 pb-3 pt-6 lg:order-0 lg:min-h-[430px] lg:px-10 lg:py-8">
+        <img
+          src={category.imageSrc}
+          alt={category.title}
+          className="w-full max-w-[620px] object-contain object-center transition duration-700 ease-out group-hover:scale-[1.03] lg:max-w-[680px]"
+          width={1024}
+          height={683}
+          decoding="async"
+        />
+      </div>
+    </Link>
+  );
+}
+
 export default function HeroSection() {
   const { t } = useTranslation("common");
 
@@ -197,14 +263,20 @@ export default function HeroSection() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3 lg:gap-8">
-            {HERO_CATEGORIES.map((category, index) => (
+            {HERO_CATEGORIES.map((category) => (
               <div
                 key={category.key}
                 className={
-                  index === HERO_CATEGORIES.length - 1 ? "xl:col-start-2" : ""
+                  category.key === "technology"
+                    ? "md:col-span-2 xl:col-span-3"
+                    : ""
                 }
               >
-                <CategoryCard category={category} />
+                {category.key === "technology" ? (
+                  <TechnologyCategoryCard category={category} />
+                ) : (
+                  <CategoryCard category={category} />
+                )}
               </div>
             ))}
           </div>
