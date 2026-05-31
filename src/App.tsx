@@ -42,6 +42,8 @@ import LoginSuccessToast from "./components/LoginSuccessToast";
 import Careers from "./pages/Careers";
 import JobApplication from "./pages/JobApplication";
 import About from "./pages/About";
+import DigitalTechnologySolutions from "./pages/DigitalTechnologySolutions";
+import TechnologyContact from "./pages/TechnologyContact";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -95,6 +97,14 @@ export default function App() {
               <Route path="/careers" element={<Careers />} />
               <Route path="/careers/apply" element={<JobApplication />} />
               <Route path="/about" element={<About />} />
+              <Route
+                path="/digital-technology-solutions"
+                element={<DigitalTechnologySolutions />}
+              />
+              <Route
+                path="/technology-contact"
+                element={<TechnologyContact />}
+              />
 
               {/* Self Assessment */}
               <Route path="/self-assessment" element={<SelfAssessment />} />
