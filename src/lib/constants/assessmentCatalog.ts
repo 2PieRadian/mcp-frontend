@@ -43,7 +43,7 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
   {
     "slug": "anxiety-panic",
     "domain": "wellness",
-    "title": "Anxiety & Panic Reflection",
+    "title": "Anxiety and Panic Attack",
     "subtitle": "Anxiety patterns & coping",
     "description": "Reflect on anxiety-related feelings, body sensations, triggers, and coping patterns in daily situations.",
     "focus": "anxiety and panic-like feelings",
@@ -400,7 +400,7 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
   {
     "slug": "low-mood",
     "domain": "wellness",
-    "title": "Mood Reflection",
+    "title": "Depression",
     "subtitle": "Mood, energy & daily functioning",
     "description": "Reflect on recent mood, motivation, energy, connection, and hopefulness without treating the result as a diagnosis.",
     "focus": "low mood and daily functioning",
@@ -757,7 +757,7 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
   {
     "slug": "repetitive-thoughts-behaviors",
     "domain": "wellness",
-    "title": "Thoughts & Habits Reflection",
+    "title": "OCD",
     "subtitle": "Repeated thoughts & routines",
     "description": "Reflect on unwanted repeated thoughts, checking, cleaning, ordering, and how much these patterns affect your day.",
     "focus": "repetitive thoughts and behaviors",
@@ -1114,7 +1114,7 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
   {
     "slug": "relationship",
     "domain": "wellness",
-    "title": "Couple Communication",
+    "title": "Couple Fights & Relationship Issues",
     "subtitle": "Conflict & communication",
     "description": "Reflect on disagreement patterns, emotional safety, communication, and repair in a close relationship.",
     "focus": "couple communication and conflict patterns",
@@ -1471,7 +1471,7 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
   {
     "slug": "adhd",
     "domain": "wellness",
-    "title": "Attention & Focus",
+    "title": "ADHD",
     "subtitle": "Focus, organization & impulsivity",
     "description": "Reflect on focus, organization, restlessness, forgetfulness, and daily task patterns without using the result as a diagnosis.",
     "focus": "attention, focus, organization, and impulse patterns",
@@ -1828,7 +1828,7 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
   {
     "slug": "family-communication",
     "domain": "wellness",
-    "title": "Family Communication",
+    "title": "Family Fights and Issues",
     "subtitle": "Family roles & boundaries",
     "description": "Reflect on family disagreements, expectations, boundaries, communication gaps, and emotional pressure.",
     "focus": "family communication and conflict patterns",
@@ -2185,7 +2185,7 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
   {
     "slug": "breakup-recovery",
     "domain": "wellness",
-    "title": "Breakup Recovery",
+    "title": "Breakup Issues and Recovery",
     "subtitle": "Healing & emotional support",
     "description": "Reflect on memories, emotional triggers, support, hopefulness, and recovery after a relationship ending.",
     "focus": "breakup recovery and emotional adjustment",
@@ -2542,7 +2542,7 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
   {
     "slug": "loneliness-connection",
     "domain": "wellness",
-    "title": "Loneliness & Connection",
+    "title": "Loneliness",
     "subtitle": "Belonging & social support",
     "description": "Reflect on social connection, belonging, support-seeking, and moments of isolation in daily life.",
     "focus": "loneliness, connection, and social support",
@@ -2899,7 +2899,7 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
   {
     "slug": "relationship-decision",
     "domain": "wellness",
-    "title": "Relationship Clarity",
+    "title": "Decision on Divorce / Separation (Stay or Not)",
     "subtitle": "Safety, respect & clarity",
     "description": "Reflect on safety, respect, trust, communication, and the need for professional support when considering major relationship decisions.",
     "focus": "relationship safety, respect, and decision clarity",
@@ -3256,7 +3256,7 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
   {
     "slug": "stress-overthinking",
     "domain": "wellness",
-    "title": "Stress & Overthinking",
+    "title": "Stress / Overthinking",
     "subtitle": "Stress load & thought patterns",
     "description": "Reflect on stress load, repeated thoughts, sleep impact, decision pressure, and coping habits.",
     "focus": "stress and overthinking patterns",
@@ -3613,7 +3613,7 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
   {
     "slug": "diet",
     "domain": "wellness",
-    "title": "Eating Habits",
+    "title": "Diet Habits and Lifestyle",
     "subtitle": "Food, routine & energy",
     "description": "Reflect on meals, hydration, cravings, activity, sleep, and routine patterns that shape everyday wellness.",
     "focus": "eating habits and lifestyle routines",
@@ -3970,7 +3970,7 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
   {
     "slug": "yoga",
     "domain": "wellness",
-    "title": "Yoga & Mind-Body",
+    "title": "Yoga Practice and Lifestyle",
     "subtitle": "Movement, breath & mindfulness",
     "description": "Reflect on stretching, breath awareness, posture, relaxation, meditation, and mind-body connection.",
     "focus": "yoga practice and mind-body awareness",
@@ -4327,7 +4327,7 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
   {
     "slug": "path-finder",
     "domain": "education",
-    "title": "Career Path Clarity",
+    "title": "Challenges in Finding the Right Career Path",
     "subtitle": "Direction & self-awareness",
     "description": "Reflect on career direction, confidence, strengths, decision-making, and readiness to seek guidance.",
     "focus": "career path clarity and self-awareness",
@@ -4684,7 +4684,7 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
   {
     "slug": "academic",
     "domain": "education",
-    "title": "Academic Habits",
+    "title": "Academic",
     "subtitle": "Study habits & learning confidence",
     "description": "Reflect on focus, study consistency, revision, assignments, classroom engagement, and academic confidence.",
     "focus": "academic habits and learning confidence",
@@ -5041,7 +5041,7 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
   {
     "slug": "achiever-guidance",
     "domain": "education",
-    "title": "Mentorship Readiness",
+    "title": "Role of Achievers in Guiding Aspirants",
     "subtitle": "Mentorship & learning from others",
     "description": "Reflect on how you seek, receive, and apply guidance from experienced people while pursuing goals.",
     "focus": "guidance readiness and mentorship support",
@@ -5398,7 +5398,7 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
   {
     "slug": "competitive-exam",
     "domain": "education",
-    "title": "Exam Preparation",
+    "title": "Aspirants (Competitive Exam Preparation)",
     "subtitle": "Preparation, consistency & support",
     "description": "Reflect on preparation planning, discipline, stress management, revision, and support during exam preparation.",
     "focus": "competitive exam preparation habits",
@@ -5755,7 +5755,7 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
   {
     "slug": "academic-growth",
     "domain": "education",
-    "title": "Academic Growth",
+    "title": "Academic Scholars",
     "subtitle": "Scholarship, goals & discipline",
     "description": "Reflect on academic ambition, consistency, research habits, feedback, and long-term learning goals.",
     "focus": "academic growth and scholarship readiness",
@@ -6112,7 +6112,7 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
   {
     "slug": "self-learning",
     "domain": "education",
-    "title": "Self-Learning",
+    "title": "Self Education and Learning",
     "subtitle": "Independent learning & curiosity",
     "description": "Reflect on curiosity, learning routines, self-discipline, skill building, and applying what you learn.",
     "focus": "self-learning habits and independent growth",
@@ -6469,7 +6469,7 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
   {
     "slug": "investment-awareness",
     "domain": "finance",
-    "title": "Investment Awareness",
+    "title": "Investment Awareness & Decision-Making",
     "subtitle": "Clarity, risk & decision-making",
     "description": "Reflect on investment goals, research habits, risk awareness, decision-making, and learning needs.",
     "focus": "investment awareness and decision-making",
@@ -6826,7 +6826,7 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
   {
     "slug": "gst-taxation",
     "domain": "finance",
-    "title": "GST & Tax Awareness",
+    "title": "GST and Tax Awareness",
     "subtitle": "Compliance awareness & records",
     "description": "Reflect on tax awareness, record keeping, compliance habits, and when professional guidance may be useful.",
     "focus": "GST and tax awareness",
@@ -7897,7 +7897,7 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
   {
     "slug": "business-finance-consulting",
     "domain": "finance",
-    "title": "Business Finance Readiness",
+    "title": "Business Finance Consultant",
     "subtitle": "Analysis, risk & professional growth",
     "description": "Reflect on business finance analysis, client communication, risk awareness, and areas for professional growth.",
     "focus": "business finance consulting readiness",
