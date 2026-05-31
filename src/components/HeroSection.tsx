@@ -34,18 +34,18 @@ const HERO_CATEGORIES = [
     key: "technology",
     to: "/digital-technology-solutions",
     imageSrc: "/images/category/it/it_solutions.png",
-    title: "Digital & Technology Solutions",
-    body: "Innovative digital solutions to help your business grow, scale, and succeed in the digital world.",
+    titleKey: "digitalTechnologySolutions",
+    bodyKey: "heroCardTechnologyBody",
     gradient: "from-[#149373]/40 via-[#62af9b]/28 to-[#dff3ee]/35",
     glow: "bg-[#149373]/25",
     imageClassName: "object-contain",
-    highlights: [
-      "Web & Mobile Development",
-      "Custom Software Solutions",
-      "UI/UX Design",
-      "Digital Marketing",
-      "Cloud Solutions",
-      "IT Consulting",
+    highlightKeys: [
+      "heroCardTechnologyHighlightWebMobile",
+      "heroCardTechnologyHighlightSoftware",
+      "heroCardTechnologyHighlightUiUx",
+      "heroCardTechnologyHighlightMarketing",
+      "heroCardTechnologyHighlightCloud",
+      "heroCardTechnologyHighlightConsulting",
     ],
   },
 ] as const;
@@ -66,11 +66,11 @@ function smoothScrollToHash(
 function CategoryCard({
   category,
 }: {
-  category: (typeof HERO_CATEGORIES)[number];
+  category: Exclude<(typeof HERO_CATEGORIES)[number], { key: "technology" }>;
 }) {
   const { t } = useTranslation("common");
-  const title = "title" in category ? category.title : t(category.titleKey);
-  const body = "body" in category ? category.body : t(category.bodyKey);
+  const title = t(category.titleKey);
+  const body = t(category.bodyKey);
 
   return (
     <Link
@@ -117,18 +117,6 @@ function CategoryCard({
           <p className="mt-3 text-[15px] leading-relaxed text-slate-600">
             {body}
           </p>
-          {"highlights" in category && (
-            <div className="mt-5 flex flex-wrap gap-2">
-              {category.highlights.map((highlight) => (
-                <span
-                  key={highlight}
-                  className="rounded-full border border-[#149373]/15 bg-[#e9f5ef] px-3 py-1 text-xs font-semibold text-[#0F5A4E]"
-                >
-                  {highlight}
-                </span>
-              ))}
-            </div>
-          )}
           <span className="mt-auto inline-flex w-fit items-center justify-center gap-2 rounded-full bg-[#0F5A4E] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_10px_26px_-10px_rgba(15,90,78,0.75)] transition group-hover:bg-[#0c4d42]">
             {t("heroCardExplore")}
             <ArrowRight
@@ -148,6 +136,11 @@ function TechnologyCategoryCard({
   category: Extract<(typeof HERO_CATEGORIES)[number], { key: "technology" }>;
 }) {
   const { t } = useTranslation("common");
+  const title = t(category.titleKey);
+  const body = t(category.bodyKey);
+  const highlights = category.highlightKeys.map((highlightKey) =>
+    t(highlightKey),
+  );
 
   return (
     <Link
@@ -156,15 +149,15 @@ function TechnologyCategoryCard({
     >
       <div className="flex flex-col justify-center px-7 py-9 sm:px-10 lg:px-12">
         <h3 className="max-w-[440px] text-[34px] font-extrabold leading-[1.12] tracking-tight text-[#063f34] sm:text-[40px]">
-          {category.title}
+          {title}
         </h3>
         <span className="mt-5 h-1 w-12 rounded-full bg-[#149373]" />
         <p className="mt-7 max-w-[430px] text-base leading-relaxed text-slate-700 sm:text-lg">
-          {category.body}
+          {body}
         </p>
 
         <div className="mt-6 grid gap-x-7 gap-y-3 sm:grid-cols-2">
-          {category.highlights.map((highlight) => (
+          {highlights.map((highlight) => (
             <span
               key={highlight}
               className="flex items-center gap-2 text-sm font-medium text-[#1A2B3C]"
@@ -190,7 +183,7 @@ function TechnologyCategoryCard({
       <div className="relative order-first flex min-h-[300px] items-center justify-center overflow-hidden px-6 pb-3 pt-6 lg:order-0 lg:min-h-[430px] lg:px-10 lg:py-8">
         <img
           src={category.imageSrc}
-          alt={category.title}
+          alt={title}
           className="w-full max-w-[620px] object-contain object-center transition duration-700 ease-out group-hover:scale-[1.03] lg:max-w-[680px]"
           width={1024}
           height={683}

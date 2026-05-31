@@ -262,7 +262,17 @@
   "heroDesignTrustPrivate": "100% सुरक्षित और गोपनीय",
   "heroDesignPartnersLabel": "इनके जानकारों का भरोसा",
   "heroCardExplore": "और देखें",
+  "categoriesSectionTitle": "श्रेणियां",
+  "categoriesSectionSubtitle": "सेहत, शिक्षा, वित्त और डिजिटल टेक्नोलॉजी में साफ अगले कदमों के साथ सहायता पाएं।",
   "heroCardWellnessBody": "तनाव कम करें, अच्छी आदतें बनाएं और संतुलित जीवन जिएं।",
   "heroCardFinanceBody": "पैसों की सही योजना बनाएं, समझदारी से फैसले लें और सुरक्षित भविष्य बनाएं।",
-  "heroCardEducationBody": "सही रास्ता चुनें, अपना काम बढ़ाएं और भविष्य बेहतर बनाएं।"
+  "heroCardEducationBody": "सही रास्ता चुनें, अपना काम बढ़ाएं और भविष्य बेहतर बनाएं।",
+  "digitalTechnologySolutions": "डिजिटल और टेक्नोलॉजी समाधान",
+  "heroCardTechnologyBody": "आपके व्यवसाय को डिजिटल दुनिया में बढ़ने, स्केल करने और सफल होने में मदद करने वाले नए डिजिटल समाधान।",
+  "heroCardTechnologyHighlightWebMobile": "वेब और मोबाइल डेवलपमेंट",
+  "heroCardTechnologyHighlightSoftware": "कस्टम सॉफ्टवेयर समाधान",
+  "heroCardTechnologyHighlightUiUx": "UI/UX डिजाइन",
+  "heroCardTechnologyHighlightMarketing": "डिजिटल मार्केटिंग",
+  "heroCardTechnologyHighlightCloud": "क्लाउड समाधान",
+  "heroCardTechnologyHighlightConsulting": "आईटी परामर्श"
 }
