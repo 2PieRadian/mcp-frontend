@@ -9,6 +9,7 @@ import {
   getAssessmentsByDomain,
   type AssessmentDomain,
 } from "../../lib/constants/assessmentCatalog";
+import { EXPERT_CATEGORIES } from "../../lib/constants/experts";
 
 const MOBILE_NAV_ICONS = {
   expertCategories: "/images/mobile-nav/icon-expert-categories.svg",
@@ -87,7 +88,12 @@ export default function MobileNavModal({
   onClose,
   menuTriggerRef,
 }: MobileNavModalProps) {
-  const { t, i18n } = useTranslation(["common", "navigation", "quiz"]);
+  const { t, i18n } = useTranslation([
+    "common",
+    "navigation",
+    "quiz",
+    "experts",
+  ]);
   const { user } = useAuth();
   const location = useLocation();
   const [weHelpWithExpanded, setWeHelpWithExpanded] = useState(false);
@@ -460,6 +466,26 @@ export default function MobileNavModal({
                         className="text-slate-400 transition-transform group-hover:translate-x-0.5 group-hover:text-cure-color"
                       />
                     </Link>
+                    <div className="ml-3 flex flex-col gap-1 border-l border-cure-color/15 pl-3">
+                      {EXPERT_CATEGORIES.education.map((category) => (
+                        <Link
+                          key={category.slug}
+                          to={`/education-experts/${category.slug}`}
+                          onClick={onClose}
+                          className="group flex items-center justify-between gap-2 rounded-lg border border-transparent bg-white/80 px-3 py-2 text-[12.5px] font-medium text-slate-600 shadow-sm transition-all hover:border-cure-color/25 hover:bg-white hover:text-logo-heading hover:shadow-md active:scale-[0.99]"
+                        >
+                          <span>
+                            {t(`${category.i18nKey}.title`, {
+                              ns: "experts",
+                            })}
+                          </span>
+                          <ChevronRight
+                            size={15}
+                            className="text-slate-400 transition-transform group-hover:translate-x-0.5 group-hover:text-cure-color"
+                          />
+                        </Link>
+                      ))}
+                    </div>
                     <Link
                       to="/finance-experts"
                       onClick={onClose}

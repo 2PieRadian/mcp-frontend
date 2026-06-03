@@ -96,21 +96,17 @@
       "title": "Academic Counsellor",
       "description": "Academic Counsellor provides expert guidance to help students choose the right courses, improve academic performance, and plan their education for a successful future."
     },
-    "achievers": {
-      "title": "Achievers",
-      "description": "Achievers are individuals who have cleared competitive or professional examinations."
+    "school-subject-experts": {
+      "title": "School Subject Experts",
+      "description": "School Subject Experts help students strengthen concepts, improve subject understanding, and prepare confidently for school exams."
     },
-    "aspirants": {
-      "title": "Aspirants",
-      "description": "Aspirants are individuals preparing for competitive or professional examinations."
+    "foreign-language-trainers": {
+      "title": "Foreign Language Trainers",
+      "description": "Foreign Language Trainers support learners with spoken and written language skills, grammar, vocabulary, and practical communication."
     },
-    "academic-scholars": {
-      "title": "Academic Scholars",
-      "description": "Academic Scholars are students who have successfully cleared competitive academic examinations."
-    },
-    "educator": {
-      "title": "Educator",
-      "description": "Connect with experienced educators for guidance on teaching practice, learner engagement, assessment strategies, and professional growth—ideal for teachers, tutors, trainers, and parents who want structured support around how people learn."
+    "skill-development-coaches": {
+      "title": "Skill Development Coaches",
+      "description": "Skill Development Coaches help learners build practical skills, confidence, and career-ready abilities through structured guidance."
     },
     "investment-expert": {
       "title": "Investment Expert",

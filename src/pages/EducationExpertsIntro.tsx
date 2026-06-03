@@ -5,12 +5,10 @@ import { gsap } from "gsap";
 import {
   ArrowRight,
   Compass,
-  Target,
   BookOpen,
-  Brain,
   GraduationCap,
+  Languages,
   Lightbulb,
-  School,
   type LucideIcon,
 } from "lucide-react";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
@@ -20,21 +18,18 @@ import { EXPERT_CATEGORIES } from "../lib/constants/experts";
 const EDUCATION_ICONS: Record<string, LucideIcon> = {
   "Career Path Finder": Compass,
   "Academic Counsellor": BookOpen,
-  Achievers: Target,
-  Aspirants: Brain,
-  "Academic Scholars": GraduationCap,
-  Educator: School,
+  "School Subject Experts": BookOpen,
+  "Foreign Language Trainers": Languages,
+  "Skill Development Coaches": Lightbulb,
 };
 
 // Catchier accent colors for education
 const EDUCATION_COLORS: Record<string, string> = {
-  // Bright colors with cues (direction, focus, achievement, ambition, growth)
   "Career Path Finder": "#14B8A6", // teal (direction / clarity)
-  "Academic Counsellor": "#6366F1", // indigo (focus / guidance)
-  Achievers: "#F59E0B", // gold/amber (achievement)
-  Aspirants: "#8B5CF6", // violet (ambition / potential)
-  "Academic Scholars": "#22C55E", // green (growth / mastery)
-  Educator: "#0EA5E9", // sky (teaching / clarity in the classroom)
+  "Academic Counsellor": "#16A34A", // green (guidance / growth)
+  "School Subject Experts": "#0F766E", // deep teal (subject mastery)
+  "Foreign Language Trainers": "#059669", // emerald (communication)
+  "Skill Development Coaches": "#22C55E", // green (growth / practice)
 };
 
 interface ExpertCategoryCardProps {
@@ -57,6 +52,10 @@ function ExpertCategoryCard({
 }: ExpertCategoryCardProps) {
   const navigate = useNavigate();
   const [isTapped, setIsTapped] = useState(false);
+  const cardStyle: CSSProperties & { "--accent": string } = {
+    border: `1px solid ${accentColor}30`,
+    "--accent": accentColor,
+  };
 
   const handleClick = () => {
     if (isTapped) return;
@@ -96,12 +95,7 @@ function ExpertCategoryCard({
       {/* Card container */}
       <div
         className="relative rounded-2xl h-full overflow-hidden transition-all duration-500"
-        style={
-          {
-            border: `1px solid ${accentColor}30`,
-            ["--accent" as any]: accentColor,
-          } as CSSProperties
-        }
+        style={cardStyle}
       >
         {/* Background fill animation */}
         <div

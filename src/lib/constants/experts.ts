@@ -84,24 +84,19 @@ export const EXPERT_CATEGORIES: Record<ExpertDomain, ExpertSpecialization[]> = {
       i18nKey: "specializations.academic-counsellor",
     },
     {
-      slug: "achievers",
-      value: "Achievers",
-      i18nKey: "specializations.achievers",
+      slug: "school-subject-experts",
+      value: "School Subject Experts",
+      i18nKey: "specializations.school-subject-experts",
     },
     {
-      slug: "aspirants",
-      value: "Aspirants",
-      i18nKey: "specializations.aspirants",
+      slug: "foreign-language-trainers",
+      value: "Foreign Language Trainers",
+      i18nKey: "specializations.foreign-language-trainers",
     },
     {
-      slug: "academic-scholars",
-      value: "Academic Scholars",
-      i18nKey: "specializations.academic-scholars",
-    },
-    {
-      slug: "educator",
-      value: "Educator",
-      i18nKey: "specializations.educator",
+      slug: "skill-development-coaches",
+      value: "Skill Development Coaches",
+      i18nKey: "specializations.skill-development-coaches",
     },
   ],
   finance: [
