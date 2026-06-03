@@ -11,32 +11,14 @@ export default function GuidanceQuotesSection() {
     navigate(assessmentRoute);
   };
 
-  const accents = [
-    {
-      ring: "from-[#0ea5e9] to-[#06b6d4]",
-      soft: "from-[#0ea5e9]/12 via-transparent to-[#06b6d4]/10",
-      badge: "bg-[#0ea5e9]/10 text-[#0b6ea6] border-[#0ea5e9]/20",
-      quoteText: "text-[#083a57]",
-      ctaBg: "bg-[#083a57]",
-      ctaHover: "hover:bg-[#062d43]",
-    },
-    {
-      ring: "from-[#10b981] to-[#059669]",
-      soft: "from-[#10b981]/12 via-transparent to-[#059669]/10",
-      badge: "bg-[#10b981]/10 text-[#087a59] border-[#10b981]/20",
-      quoteText: "text-[#064a36]",
-      ctaBg: "bg-[#064a36]",
-      ctaHover: "hover:bg-[#043625]",
-    },
-    {
-      ring: "from-[#f59e0b] to-[#d97706]",
-      soft: "from-[#f59e0b]/14 via-transparent to-[#d97706]/10",
-      badge: "bg-[#f59e0b]/12 text-[#9a5a07] border-[#f59e0b]/25",
-      quoteText: "text-[#6a3e06]",
-      ctaBg: "bg-[#6a3e06]",
-      ctaHover: "hover:bg-[#522f05]",
-    },
-  ] as const;
+  const accent = {
+    ring: "from-[#10b981] to-[#059669]",
+    soft: "from-[#10b981]/12 via-transparent to-[#059669]/10",
+    badge: "bg-[#10b981]/10 text-[#087a59] border-[#10b981]/20",
+    quoteText: "text-[#064a36]",
+    ctaBg: "bg-[#064a36]",
+    ctaHover: "hover:bg-[#043625]",
+  } as const;
 
   const destinations = [
     {
@@ -67,7 +49,6 @@ export default function GuidanceQuotesSection() {
 
         <div className="mt-[20px] sm:mt-[26px] flex flex-col gap-[12px] sm:gap-[16px] px-[4px]">
           {LANDING_PAGE_QUOTES.map((item, index) => {
-            const accent = accents[index % accents.length];
             const dest = destinations[index % destinations.length];
             const flip = index % 2 === 1;
             const number = String(index + 1).padStart(2, "0");
