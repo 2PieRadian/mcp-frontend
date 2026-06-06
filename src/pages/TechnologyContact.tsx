@@ -250,14 +250,14 @@ export default function TechnologyContact() {
               </div>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                 <a
-                  href="mailto:contact@mindcurepath.com"
+                  href="mailto:support@mindcurepath.com"
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-[#149373] px-7 py-3.5 text-[15px] font-bold text-white shadow-[0_18px_42px_rgba(20,147,115,0.22)] transition hover:-translate-y-0.5 hover:bg-[#107b60]"
                 >
                   Email Technology Team
                   <ArrowRight className="h-4 w-4" aria-hidden />
                 </a>
                 <a
-                  href="tel:+91XXXXXXXXXX"
+                  href="tel:7078497263"
                   className="inline-flex items-center justify-center gap-2 rounded-full border border-[#d8eee8] bg-white px-7 py-3.5 text-[15px] font-bold text-[#0d1f36] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#f7fbfa]"
                 >
                   Call Our Team
@@ -269,7 +269,7 @@ export default function TechnologyContact() {
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(20,147,115,0.14),transparent_34%)]" />
               <div className="relative grid gap-4">
                 <a
-                  href="mailto:contact@mindcurepath.com"
+                  href="mailto:support@mindcurepath.com"
                   className="group rounded-[28px] border border-[#d8eee8] bg-[#f8fffc] p-6 transition hover:-translate-y-1 hover:border-[#149373]/35 hover:bg-white hover:shadow-[0_22px_55px_rgba(15,54,48,0.11)]"
                 >
                   <div className="flex items-start gap-4">
@@ -281,7 +281,7 @@ export default function TechnologyContact() {
                         Email
                       </span>
                       <span className="mt-2 block break-all text-[22px] font-extrabold leading-tight text-[#0d1f36]">
-                        contact@mindcurepath.com
+                        support@mindcurepath.com
                       </span>
                     </span>
                   </div>
@@ -293,7 +293,7 @@ export default function TechnologyContact() {
 
                 <div className="grid gap-4 sm:grid-cols-2">
                   <a
-                    href="tel:+91XXXXXXXXXX"
+                    href="tel:7078497263"
                     className="group rounded-[26px] border border-[#d8eee8] bg-white p-5 transition hover:-translate-y-1 hover:border-[#149373]/35 hover:shadow-[0_18px_45px_rgba(15,54,48,0.1)]"
                   >
                     <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#e9f5ef] text-[#149373] transition group-hover:bg-[#149373] group-hover:text-white">
@@ -303,7 +303,7 @@ export default function TechnologyContact() {
                       Phone
                     </p>
                     <p className="mt-2 text-xl font-extrabold text-[#0d1f36]">
-                      +91 XXXXX XXXXX
+                      7078497263
                     </p>
                     <p className="mt-3 text-sm leading-relaxed text-[#5d6672]">
                       Speak with our team during business hours.
