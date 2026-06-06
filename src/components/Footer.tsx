@@ -179,6 +179,14 @@ export default function Footer() {
                   <li>
                     <Link
                       className="transition-colors duration-200 hover:text-white"
+                      to="/careers"
+                    >
+                      {t("careers", { ns: "navigation", defaultValue: "Careers" })}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className="transition-colors duration-200 hover:text-white"
                       to="/assessments/wellness"
                     >
                       {t("wellnessAssessments")}
