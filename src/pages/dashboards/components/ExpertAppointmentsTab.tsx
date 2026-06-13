@@ -262,6 +262,11 @@ function ExpertAppointmentCard({
               {apt.appointmentType}
             </span>
           ) : null}
+          {apt.specialization && (
+            <span className="inline-flex items-center px-3 py-1.5 rounded-lg bg-indigo-50 border border-indigo-100 text-indigo-700 text-sm font-semibold">
+              {apt.specialization.name}
+            </span>
+          )}
           {apt.amount > 0 && (
             <span className="inline-flex items-center px-3 py-1.5 rounded-lg bg-[#E0ECEE] text-[#44666C] text-sm font-semibold">
               {formatAmount(apt.amount)}

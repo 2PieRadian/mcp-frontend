@@ -286,6 +286,7 @@ export async function initiateAppointment(
   endAt: string,
   communicationMedium: CommunicationMedium,
   userConcern?: string,
+  specializationId?: number,
 ): Promise<InitiateResponse> {
   const body: Record<string, unknown> = {
     expertId,
@@ -293,6 +294,9 @@ export async function initiateAppointment(
     endAt,
     communicationMedium,
   };
+  if (specializationId) {
+    body.specializationId = specializationId;
+  }
   const uc = normalizeUserConcernForRequest(userConcern);
   if (uc !== undefined) body.userConcern = uc;
 
@@ -444,6 +448,7 @@ export type AppointmentApiRow = {
   meetLink?: string | null;
   userConcern?: string | null;
   status?: AppointmentStatus;
+  specialization?: { id: number; name: string };
   [key: string]: unknown;
 };
 
@@ -671,6 +676,7 @@ export type MyAppointment = {
   expertJoinTime?: string | null;
   /** Set when the user successfully reported expert no-show. */
   userReportedExpertNoShowAt?: string | null;
+  specialization?: { id: number; name: string };
 };
 
 /** Client (booker) on expert’s appointment list when API includes nested user. */
@@ -709,6 +715,7 @@ export type ExpertAppointment = {
   userJoinTime?: string | null;
   expertJoinTime?: string | null;
   userReportedExpertNoShowAt?: string | null;
+  specialization?: { id: number; name: string };
 };
 
 /**

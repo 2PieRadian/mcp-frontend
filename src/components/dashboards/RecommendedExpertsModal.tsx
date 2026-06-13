@@ -113,7 +113,7 @@ export default function RecommendedExpertsModal({
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-[10px]">
               {experts.map((expert) => {
                 const initial =
                   expert.user.name?.charAt(0)?.toUpperCase() ||

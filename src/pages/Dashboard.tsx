@@ -323,6 +323,11 @@ function AppointmentCard({
               {formatAmount(apt.amount)}
             </span>
           )}
+          {apt.specialization && (
+            <span className="inline-flex items-center px-3 py-1.5 rounded-lg bg-indigo-50 border border-indigo-100 text-indigo-700 text-sm font-semibold">
+              {apt.specialization.name}
+            </span>
+          )}
           {apt.isEmergency && (
             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-100 text-amber-700 text-sm font-semibold">
               <Zap className="w-3.5 h-3.5" />

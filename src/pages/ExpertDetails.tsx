@@ -1207,6 +1207,7 @@ export default function ExpertDetails() {
           expertName={formattedName}
           expertPrice={expert.isFreeSessionAvailable ? 0 : expert.pricePerHour}
           isFreeSessionAvailable={expert.isFreeSessionAvailable}
+          specializations={expert.expertSpecializations?.map((es: any) => es.specialization) || []}
         />
       )}
 

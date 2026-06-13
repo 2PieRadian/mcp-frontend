@@ -64,6 +64,7 @@ type BookingModalProps = {
   expertPrice: number;
   /** When true, show "Book Free Appointment"; when false, show "Book Appointment". */
   isFreeSessionAvailable?: boolean;
+  specializations?: { id: number; name: string }[];
 };
 
 export default function BookingModal({
@@ -73,6 +74,7 @@ export default function BookingModal({
   expertName,
   expertPrice,
   isFreeSessionAvailable = true,
+  specializations = [],
 }: BookingModalProps) {
   const { t } = useTranslation("common");
   const {
@@ -89,6 +91,7 @@ export default function BookingModal({
     null,
   );
   const [selectedSlot, setSelectedSlot] = useState<number | null>(null);
+  const [selectedSpecialization, setSelectedSpecialization] = useState<number | null>(null);
   const [helpWith, setHelpWith] = useState("");
   const [connectionType, setConnectionType] = useState<ConnectionType | null>(
     null,
@@ -329,6 +332,7 @@ export default function BookingModal({
         endAt,
         medium,
         helpWith,
+        selectedSpecialization || undefined,
       );
 
       // Check if payment is required (PAID or emergency FREE)
@@ -580,6 +584,37 @@ export default function BookingModal({
                     Max {USER_CONCERN_MAX_LENGTH.toLocaleString()} characters.
                   </p>
                 </section>
+
+                {/* Select Specialization (if available) */}
+                {specializations && specializations.length > 0 && (
+                  <section>
+                    <h3 className="text-[#304048] font-semibold text-lg mb-1">
+                      What area do you want to focus on?
+                    </h3>
+                    <p className="text-gray-500 text-sm mb-3">
+                      Select a specialization (optional).
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {specializations.map((spec) => (
+                        <button
+                          key={spec.id}
+                          onClick={() =>
+                            setSelectedSpecialization(
+                              selectedSpecialization === spec.id ? null : spec.id
+                            )
+                          }
+                          className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${
+                            selectedSpecialization === spec.id
+                              ? "bg-[#44666C] text-white border-[#44666C]"
+                              : "bg-white text-gray-700 border-gray-200 hover:border-[#44666C]/50 hover:bg-gray-50"
+                          }`}
+                        >
+                          {spec.name}
+                        </button>
+                      ))}
+                    </div>
+                  </section>
+                )}
 
                 {/* Select Date */}
                 <section>
