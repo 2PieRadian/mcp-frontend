@@ -11,6 +11,7 @@ import { useAuth } from "../context/AuthContext";
 import Layout from "../components/Layout";
 import RescheduleAppointmentModal from "../components/RescheduleAppointmentModal";
 import ReviewModal from "../components/ReviewModal";
+import RecommendedExpertsModal from "../components/dashboards/RecommendedExpertsModal";
 import { usePollingNow } from "../hooks/usePollingNow";
 import { formatAppointmentStartsIn } from "../lib/appointmentStartsIn";
 import {
@@ -628,6 +629,7 @@ export default function Dashboard() {
   const [rescheduleTarget, setRescheduleTarget] =
     useState<MyAppointment | null>(null);
   const [reviewTarget, setReviewTarget] = useState<MyAppointment | null>(null);
+  const [showRecommendedExpertsModal, setShowRecommendedExpertsModal] = useState(false);
   const { t } = useTranslation("common");
   const dashboardSessionSynced = useRef(false);
 
@@ -687,13 +689,22 @@ export default function Dashboard() {
               {t("myAppointmentsSubtitle")}
             </p>
           </div>
-          <Link
-            to="/dashboard/urgent-requests"
-            className="inline-flex items-center gap-2 px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-semibold text-sm transition-colors shadow-sm shrink-0"
-          >
-            <Zap className="w-4 h-4" />
-            {t("urgentRequestsTab")}
-          </Link>
+          <div className="flex items-center gap-3 shrink-0 flex-wrap">
+            <button
+              onClick={() => setShowRecommendedExpertsModal(true)}
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#44666C] hover:bg-[#365a62] text-white rounded-xl font-semibold text-sm transition-colors shadow-sm"
+            >
+              <Star className="w-4 h-4 fill-current" />
+              Recommended Experts
+            </button>
+            <Link
+              to="/dashboard/urgent-requests"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-semibold text-sm transition-colors shadow-sm"
+            >
+              <Zap className="w-4 h-4" />
+              {t("urgentRequestsTab")}
+            </Link>
+          </div>
         </div>
 
         {/* Status filter */}
@@ -781,6 +792,11 @@ export default function Dashboard() {
             onSuccess={() => void fetchAppointments()}
           />
         ) : null}
+
+        <RecommendedExpertsModal
+          isOpen={showRecommendedExpertsModal}
+          onClose={() => setShowRecommendedExpertsModal(false)}
+        />
       </div>
     </Layout>
   );

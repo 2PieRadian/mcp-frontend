@@ -1,4 +1,4 @@
-import type { PublicQualification } from "../types/experts";
+import type { ApiExpert, PublicQualification } from "../types/experts";
 
 export const BACKEND_URL = "https://api.mindcurepath.com";
 // export const BACKEND_URL = "http://localhost:3000";
@@ -58,7 +58,7 @@ export async function updatePhone(phoneNumber: string): Promise<{
   if (!res.ok) {
     throw new Error(
       (data?.message as string) ||
-      (res.status === 401 ? "Unauthorized" : "Failed to update phone number"),
+        (res.status === 401 ? "Unauthorized" : "Failed to update phone number"),
     );
   }
 
@@ -574,19 +574,19 @@ async function postAppointmentSessionAction(
   const data = (await res
     .json()
     .catch(() => ({}))) as AppointmentSessionActionResponse & {
-      message?: string;
-    };
+    message?: string;
+  };
 
   if (!res.ok) {
     throw new Error(
       (data?.message as string) ||
-      (res.status === 401
-        ? "Unauthorized"
-        : res.status === 403
-          ? "Forbidden"
-          : res.status === 404
-            ? "Appointment not found"
-            : "Session request failed"),
+        (res.status === 401
+          ? "Unauthorized"
+          : res.status === 403
+            ? "Forbidden"
+            : res.status === 404
+              ? "Appointment not found"
+              : "Session request failed"),
     );
   }
 
@@ -765,7 +765,7 @@ export async function getMyAppointments(
   if (!res.ok) {
     throw new Error(
       (data?.message as string) ||
-      (res.status === 401 ? "Unauthorized" : "Failed to load appointments"),
+        (res.status === 401 ? "Unauthorized" : "Failed to load appointments"),
     );
   }
 
@@ -804,11 +804,11 @@ export async function getExpertAppointments(
   if (!res.ok) {
     throw new Error(
       (data?.message as string) ||
-      (res.status === 403
-        ? "Forbidden"
-        : res.status === 401
-          ? "Unauthorized"
-          : "Failed to load appointments"),
+        (res.status === 403
+          ? "Forbidden"
+          : res.status === 401
+            ? "Unauthorized"
+            : "Failed to load appointments"),
     );
   }
 
@@ -864,11 +864,11 @@ export async function getExpertUpcomingSessions(): Promise<ExpertUpcomingSession
   if (!res.ok) {
     throw new Error(
       (data?.message as string) ||
-      (res.status === 403
-        ? "Forbidden"
-        : res.status === 401
-          ? "Unauthorized"
-          : "Failed to load upcoming sessions"),
+        (res.status === 403
+          ? "Forbidden"
+          : res.status === 401
+            ? "Unauthorized"
+            : "Failed to load upcoming sessions"),
     );
   }
 
@@ -901,11 +901,11 @@ export async function getExpertEarnings(): Promise<ExpertEarningsResponse> {
   if (!res.ok) {
     throw new Error(
       (data?.message as string) ||
-      (res.status === 403
-        ? "Forbidden"
-        : res.status === 401
-          ? "Unauthorized"
-          : "Failed to load earnings"),
+        (res.status === 403
+          ? "Forbidden"
+          : res.status === 401
+            ? "Unauthorized"
+            : "Failed to load earnings"),
     );
   }
 
@@ -2082,4 +2082,67 @@ export async function verifyUrgentPayment(
   }
 
   return data as VerifyUrgentPaymentResponse;
+}
+
+export type Specialization = {
+  id: number;
+  name: string;
+  domainId: number;
+  domain: {
+    id: number;
+    name: string;
+  };
+};
+
+export async function getSpecializations(): Promise<Specialization[]> {
+  const res = await fetch(`${BACKEND_URL}/api/v1/expert/specializations`);
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok)
+    throw new Error(data?.message || "Failed to fetch specializations");
+  return data.specializations as Specialization[];
+}
+
+export async function getRecommendedExperts(): Promise<{
+  experts: (ApiExpert & {
+    nextSlot?: {
+      day: string;
+      date: number;
+      month: number;
+      year: number;
+      startTime: string;
+      endTime: string;
+    } | null;
+  })[];
+}> {
+  const res = await fetch(`${BACKEND_URL}/api/v1/expert/recommended`, {
+    headers: getAuthHeaders(),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok)
+    throw new Error(data?.message || "Failed to fetch recommended experts");
+  return data as {
+    experts: (ApiExpert & {
+      nextSlot?: {
+        day: string;
+        date: number;
+        month: number;
+        year: number;
+        startTime: string;
+        endTime: string;
+      } | null;
+    })[];
+  };
+}
+
+export async function updateExpertPreferences(
+  preferences: string[],
+): Promise<{ message: string; user: Record<string, unknown> }> {
+  const res = await fetch(`${BACKEND_URL}/api/v1/profile/preferences`, {
+    method: "PATCH",
+    headers: getAuthHeaders(),
+    body: JSON.stringify({ preferences }),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data?.message || "Failed to update preferences");
+  return data as { message: string; user: Record<string, unknown> };
 }

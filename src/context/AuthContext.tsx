@@ -32,6 +32,8 @@ export type AuthUser = {
   emergencyAvailable?: boolean;
   /** Expert-only: bio text. */
   expertBio?: string | null;
+  /** User-only: list of preferred specializations for recommendations */
+  expertPreferences?: string[];
 };
 
 function mapApiUserToAuthUser(
@@ -77,6 +79,7 @@ function mapApiUserToAuthUser(
       typeof expert?.bio === "string" || expert?.bio === null
         ? expert.bio
         : (u.expertBio as string | null | undefined),
+    expertPreferences: u.expertPreferences as string[] | undefined,
   };
   return mapped;
 }

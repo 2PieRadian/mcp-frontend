@@ -19,6 +19,7 @@ const ChangePasswordCard = lazy(
   () => import("../components/profile/ChangePasswordCard"),
 );
 const LanguagesCard = lazy(() => import("../components/profile/LanguagesCard"));
+const ExpertPreferencesCard = lazy(() => import("../components/profile/ExpertPreferencesCard"));
 
 export default function Profile() {
   const { user, isLoading, logout, updateUserAvatar, refreshUserFromServer } =
@@ -338,6 +339,7 @@ export default function Profile() {
           <AgeCard />
           <LanguagesCard />
           <ChangePasswordCard />
+          <ExpertPreferencesCard />
           <AccountActivityCard />
         </section>
       </main>
