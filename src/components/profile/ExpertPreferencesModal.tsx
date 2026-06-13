@@ -1,6 +1,5 @@
 import { CheckCircle2, Loader2, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { useAuth } from "../../context/AuthContext";
 import {
   getSpecializations,
@@ -18,7 +17,6 @@ export default function ExpertPreferencesModal({
   onClose,
 }: ExpertPreferencesModalProps) {
   const { user, updateUserFromApi } = useAuth();
-  const { t } = useTranslation("profile");
 
   const [specializations, setSpecializations] = useState<Specialization[]>([]);
   const [loadingSpecs, setLoadingSpecs] = useState(true);
@@ -100,12 +98,15 @@ export default function ExpertPreferencesModal({
           ) : (
             <div className="space-y-6">
               {Object.entries(
-                specializations.reduce((acc, spec) => {
-                  const domain = spec.domain.name;
-                  if (!acc[domain]) acc[domain] = [];
-                  acc[domain].push(spec);
-                  return acc;
-                }, {} as Record<string, Specialization[]>)
+                specializations.reduce(
+                  (acc, spec) => {
+                    const domain = spec.domain.name;
+                    if (!acc[domain]) acc[domain] = [];
+                    acc[domain].push(spec);
+                    return acc;
+                  },
+                  {} as Record<string, Specialization[]>,
+                ),
               ).map(([domainName, specs]) => (
                 <div key={domainName}>
                   <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wider mb-3">
