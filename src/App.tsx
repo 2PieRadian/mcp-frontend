@@ -44,6 +44,7 @@ import JobApplication from "./pages/JobApplication";
 import About from "./pages/About";
 import DigitalTechnologySolutions from "./pages/DigitalTechnologySolutions";
 import TechnologyContact from "./pages/TechnologyContact";
+import DeleteAccount from "./pages/DeleteAccount";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -220,6 +221,7 @@ export default function App() {
                 element={<TermsAndConditions />}
               />
               <Route path="/terms-of-use" element={<TermsOfUse />} />
+              <Route path="/delete-account" element={<DeleteAccount />} />
 
               {/* Contact, FAQ & Help */}
               <Route path="/contact" element={<ContactUs />} />
