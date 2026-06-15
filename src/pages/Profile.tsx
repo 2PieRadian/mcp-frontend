@@ -1,11 +1,18 @@
-import { Navigate, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import ResponsiveNavbar from "../components/ResponsiveNavbar";
-import ImageViewer from "../components/ImageViewer";
-import { lazy, useState, useRef, useEffect } from "react";
-import { AlertTriangle, X, CheckCircle2, XCircle, Eye, Upload } from "lucide-react";
-import googleIcon from "../assets/google.svg";
+import {
+  AlertTriangle,
+  CheckCircle2,
+  Eye,
+  Upload,
+  X,
+  XCircle,
+} from "lucide-react";
+import { lazy, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Navigate, useNavigate } from "react-router-dom";
+import googleIcon from "../assets/google.svg";
+import ImageViewer from "../components/ImageViewer";
+import ResponsiveNavbar from "../components/ResponsiveNavbar";
+import { useAuth } from "../context/AuthContext";
 import { BACKEND_URL } from "../lib/api";
 
 const BasicInfoCard = lazy(() => import("../components/profile/BasicInfoCard"));
@@ -19,7 +26,12 @@ const ChangePasswordCard = lazy(
   () => import("../components/profile/ChangePasswordCard"),
 );
 const LanguagesCard = lazy(() => import("../components/profile/LanguagesCard"));
-const ExpertPreferencesCard = lazy(() => import("../components/profile/ExpertPreferencesCard"));
+const ExpertPreferencesCard = lazy(
+  () => import("../components/profile/ExpertPreferencesCard"),
+);
+const DeleteAccountCard = lazy(
+  () => import("../components/profile/DeleteAccountCard"),
+);
 
 export default function Profile() {
   const { user, isLoading, logout, updateUserAvatar, refreshUserFromServer } =
@@ -151,7 +163,7 @@ export default function Profile() {
         showToast(
           "error",
           errorData.message ||
-          "Unable to prepare image upload. Please try again later.",
+            "Unable to prepare image upload. Please try again later.",
         );
         return;
       }
@@ -341,6 +353,7 @@ export default function Profile() {
           <ChangePasswordCard />
           <ExpertPreferencesCard />
           <AccountActivityCard />
+          <DeleteAccountCard />
         </section>
       </main>
 
@@ -348,10 +361,11 @@ export default function Profile() {
       {toast.show && (
         <div className="fixed top-4 right-4 z-50 animate-in slide-in-from-top-2 duration-300">
           <div
-            className={`flex items-center gap-3 px-6 py-4 rounded-xl shadow-2xl backdrop-blur-sm border ${toast.type === "success"
-              ? "bg-green-50/95 border-green-200 text-green-800"
-              : "bg-red-50/95 border-red-200 text-red-800"
-              } max-w-md`}
+            className={`flex items-center gap-3 px-6 py-4 rounded-xl shadow-2xl backdrop-blur-sm border ${
+              toast.type === "success"
+                ? "bg-green-50/95 border-green-200 text-green-800"
+                : "bg-red-50/95 border-red-200 text-red-800"
+            } max-w-md`}
           >
             {toast.type === "success" ? (
               <CheckCircle2 className="text-green-600 shrink-0" size={24} />
@@ -363,10 +377,11 @@ export default function Profile() {
             </p>
             <button
               onClick={() => setToast({ ...toast, show: false })}
-              className={`ml-2 shrink-0 ${toast.type === "success"
-                ? "text-green-600 hover:text-green-800"
-                : "text-red-600 hover:text-red-800"
-                } transition-colors`}
+              className={`ml-2 shrink-0 ${
+                toast.type === "success"
+                  ? "text-green-600 hover:text-green-800"
+                  : "text-red-600 hover:text-red-800"
+              } transition-colors`}
             >
               <X size={18} />
             </button>
