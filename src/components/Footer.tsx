@@ -181,7 +181,10 @@ export default function Footer() {
                       className="transition-colors duration-200 hover:text-white"
                       to="/careers"
                     >
-                      {t("careers", { ns: "navigation", defaultValue: "Careers" })}
+                      {t("careers", {
+                        ns: "navigation",
+                        defaultValue: "Careers",
+                      })}
                     </Link>
                   </li>
                   <li>
@@ -247,6 +250,14 @@ export default function Footer() {
                       to="/help"
                     >
                       {t("helpCenter")}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className="transition-colors duration-200 hover:text-white"
+                      to="/delete-account"
+                    >
+                      {t("deleteAccount", { defaultValue: "Delete Account" })}
                     </Link>
                   </li>
                 </ul>
