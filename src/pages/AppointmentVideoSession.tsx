@@ -1,9 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import {
   ArrowLeft,
   Loader2,
-  ExternalLink,
   Video,
   Shield,
   MessageSquareText,
@@ -16,11 +15,13 @@ import {
   isTerminalAppointmentStatus,
   isScheduledAwaitingJoinInBookedWindow,
   expertAuthUserOwnsAppointment,
-  postAppointmentJoinThenOpenMeet,
+  postAppointmentJoin,
+  BACKEND_URL,
   type AppointmentStatus,
   type ExpertAppointment,
   type MyAppointment,
 } from "../lib/api";
+import { WebRTCSession } from "../components/WebRTCSession";
 
 export default function AppointmentVideoSession() {
   const { appointmentId: appointmentIdParam } = useParams<{
@@ -40,11 +41,10 @@ export default function AppointmentVideoSession() {
   const [resolveError, setResolveError] = useState<string | null>(null);
   const [resolving, setResolving] = useState(true);
   const [terminalBanner] = useState<AppointmentStatus | null>(null);
+  const [hasJoinedCall, setHasJoinedCall] = useState(false);
 
   const dashboardPath =
     user?.role === "EXPERT" ? "/dashboard/expert" : "/dashboard";
-
-  const meetLink = appointment?.meetLink ?? null;
 
   useEffect(() => {
     if (
@@ -120,28 +120,19 @@ export default function AppointmentVideoSession() {
     : false;
   const isVideo =
     (appointment?.communicationMedium || "").toUpperCase() === "VIDEO";
-  const hasMeetLink = !!meetLink && typeof meetLink === "string";
-  const shouldAutoOpen =
-    !resolving && !!appointment && !isTerminal && hasMeetLink && isVideo;
 
-  const openMeetWithJoin = useCallback(() => {
-    if (!meetLink || !sessionRole || !user?.id) return;
-    void postAppointmentJoinThenOpenMeet(appointmentNumericId, meetLink, {
-      participantId: user.id,
-      role: sessionRole,
-    }).catch(() => {
-      window.open(meetLink, "_blank", "noopener,noreferrer");
-    });
-  }, [appointmentNumericId, meetLink, sessionRole, user?.id]);
-
-  // Auto-open the backend meeting URL once on this route (after recording join).
-  const autoOpenedRef = useRef(false);
-  useEffect(() => {
-    if (!shouldAutoOpen || !user?.id || !sessionRole) return;
-    if (autoOpenedRef.current) return;
-    autoOpenedRef.current = true;
-    void openMeetWithJoin();
-  }, [shouldAutoOpen, user?.id, sessionRole, openMeetWithJoin]);
+  const handleJoinCall = useCallback(async () => {
+    if (!sessionRole || !user?.id) return;
+    try {
+      await postAppointmentJoin(appointmentNumericId, {
+        participantId: user.id,
+        role: sessionRole,
+      });
+    } catch (e) {
+      console.error("Failed to record join", e);
+    }
+    setHasJoinedCall(true);
+  }, [appointmentNumericId, sessionRole, user?.id]);
 
   if (!authLoading && !user) {
     return (
@@ -187,10 +178,9 @@ export default function AppointmentVideoSession() {
   const showJitsiStage =
     appointment &&
     isVideo &&
-    meetLink &&
     !isTerminal &&
     !terminalBanner &&
-    true;
+    hasJoinedCall;
 
   const showScheduledJoinHint =
     appointment &&
@@ -271,14 +261,14 @@ export default function AppointmentVideoSession() {
             <span>Private session</span>
           </div>
 
-          {appointment?.meetLink ? (
+          {!hasJoinedCall && !isTerminal && isVideo ? (
             <button
               type="button"
-              onClick={() => void openMeetWithJoin()}
-              className="inline-flex shrink-0 items-center gap-1.5 rounded-xl border border-white/10 bg-white/5 px-2.5 py-2 text-xs font-medium text-[#a8d4c4] transition hover:bg-white/10 sm:px-3 cursor-pointer"
+              onClick={handleJoinCall}
+              className="inline-flex shrink-0 items-center gap-1.5 rounded-xl border border-white/10 bg-[#44666C] px-3 py-2 text-xs font-semibold text-white transition hover:bg-[#365a62] cursor-pointer"
             >
-              <ExternalLink className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline">New tab</span>
+              <Video className="h-3.5 w-3.5" />
+              <span className="hidden sm:inline">Join call</span>
             </button>
           ) : null}
         </div>
@@ -354,38 +344,30 @@ export default function AppointmentVideoSession() {
         ) : !isVideo ? (
           <div className="flex flex-1 flex-col items-center justify-center gap-6 p-8 text-center">
             <p className="max-w-md text-stone-300">
-              Tracked video is only for video appointments. Use your link or
-              join via phone or chat as arranged.
+              This session is not a video appointment. Use your phone or chat as arranged.
             </p>
-            {appointment.meetLink ? (
-              <button
-                type="button"
-                onClick={() => void openMeetWithJoin()}
-                className="inline-flex items-center gap-2 rounded-xl bg-[#44666C] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#365a62] cursor-pointer"
-              >
-                <ExternalLink className="h-4 w-4" />
-                Open link
-              </button>
-            ) : null}
           </div>
-        ) : !appointment.meetLink ? (
-          <div className="flex flex-1 items-center justify-center p-8 text-center text-stone-400">
-            No meeting link is available for this appointment yet.
-          </div>
+        ) : hasJoinedCall ? (
+          <WebRTCSession
+            appointmentId={appointmentNumericId.toString()}
+            userId={user?.id?.toString() ?? ""}
+            backendUrl={BACKEND_URL}
+            onLeave={() => navigate(dashboardPath)}
+          />
         ) : (
           <div className="flex flex-1 flex-col items-center justify-center gap-6 p-8 text-center">
             <div className="rounded-2xl border border-white/10 bg-white/4 p-8 max-w-md">
               <p className="text-stone-300">
-                We’ll open your meeting in a new tab.
+                You are ready to join the video session.
               </p>
               <div className="mt-5 flex flex-col gap-3">
                 <button
                   type="button"
-                  onClick={() => void openMeetWithJoin()}
+                  onClick={handleJoinCall}
                   className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#44666C] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#365a62] cursor-pointer"
                 >
-                  <ExternalLink className="h-4 w-4" />
-                  Open meeting
+                  <Video className="h-4 w-4" />
+                  Join Video Call
                 </button>
                 <Link
                   to={dashboardPath}
