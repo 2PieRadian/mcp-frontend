@@ -28,12 +28,17 @@ export function WebRTCSession({
   const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
   const [isVideoEnabled, setIsVideoEnabled] = useState(true);
   const [isAudioEnabled, setIsAudioEnabled] = useState(true);
+  const [remoteVideoEnabled, setRemoteVideoEnabled] = useState(true);
+  const [remoteAudioEnabled, setRemoteAudioEnabled] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
 
   // Device IDs
-  const [selectedVideoInput, setSelectedVideoInput] = useState<string>("default");
-  const [selectedAudioInput, setSelectedAudioInput] = useState<string>("default");
-  const [selectedAudioOutput, setSelectedAudioOutput] = useState<string>("default");
+  const [selectedVideoInput, setSelectedVideoInput] =
+    useState<string>("default");
+  const [selectedAudioInput, setSelectedAudioInput] =
+    useState<string>("default");
+  const [selectedAudioOutput, setSelectedAudioOutput] =
+    useState<string>("default");
 
   const localVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
@@ -42,6 +47,7 @@ export function WebRTCSession({
   // Resize and Drag state for remote video
   const [remoteSize] = useState({ width: 640, height: 480 });
   const remoteContainerRef = useRef<HTMLDivElement>(null);
+  const pendingCandidatesRef = useRef<RTCIceCandidateInit[]>([]);
 
   // Initialize Media and Socket
   useEffect(() => {
@@ -52,8 +58,18 @@ export function WebRTCSession({
     async function init() {
       try {
         currentStream = await navigator.mediaDevices.getUserMedia({
-          video: { deviceId: selectedVideoInput !== "default" ? { exact: selectedVideoInput } : undefined },
-          audio: { deviceId: selectedAudioInput !== "default" ? { exact: selectedAudioInput } : undefined },
+          video: {
+            deviceId:
+              selectedVideoInput !== "default"
+                ? { exact: selectedVideoInput }
+                : undefined,
+          },
+          audio: {
+            deviceId:
+              selectedAudioInput !== "default"
+                ? { exact: selectedAudioInput }
+                : undefined,
+          },
         });
         setLocalStream(currentStream);
         if (localVideoRef.current) {
@@ -100,39 +116,90 @@ export function WebRTCSession({
           }
         });
 
-        currentSocket.on("webrtc-offer", async (data: { offer: RTCSessionDescriptionInit }) => {
-          try {
-            await currentPc!.setRemoteDescription(new RTCSessionDescription(data.offer));
-            const answer = await currentPc!.createAnswer();
-            await currentPc!.setLocalDescription(answer);
-            currentSocket?.emit("webrtc-answer", {
-              roomId: appointmentId,
-              answer,
-            });
-          } catch (e) {
-            console.error("Error handling offer:", e);
-          }
-        });
+        currentSocket.on(
+          "webrtc-offer",
+          async (data: { offer: RTCSessionDescriptionInit }) => {
+            try {
+              await currentPc!.setRemoteDescription(
+                new RTCSessionDescription(data.offer),
+              );
+              const answer = await currentPc!.createAnswer();
+              await currentPc!.setLocalDescription(answer);
+              currentSocket?.emit("webrtc-answer", {
+                roomId: appointmentId,
+                answer,
+              });
+              // Process queued ICE candidates
+              pendingCandidatesRef.current.forEach(async (candidate) => {
+                try {
+                  await currentPc!.addIceCandidate(
+                    new RTCIceCandidate(candidate),
+                  );
+                } catch (e) {
+                  console.error("Error adding queued ice candidate:", e);
+                }
+              });
+              pendingCandidatesRef.current = [];
+            } catch (e) {
+              console.error("Error handling offer:", e);
+            }
+          },
+        );
 
-        currentSocket.on("webrtc-answer", async (data: { answer: RTCSessionDescriptionInit }) => {
-          try {
-            await currentPc!.setRemoteDescription(new RTCSessionDescription(data.answer));
-          } catch (e) {
-            console.error("Error handling answer:", e);
-          }
-        });
+        currentSocket.on(
+          "webrtc-answer",
+          async (data: { answer: RTCSessionDescriptionInit }) => {
+            try {
+              await currentPc!.setRemoteDescription(
+                new RTCSessionDescription(data.answer),
+              );
+              // Process queued ICE candidates
+              pendingCandidatesRef.current.forEach(async (candidate) => {
+                try {
+                  await currentPc!.addIceCandidate(
+                    new RTCIceCandidate(candidate),
+                  );
+                } catch (e) {
+                  console.error("Error adding queued ice candidate:", e);
+                }
+              });
+              pendingCandidatesRef.current = [];
+            } catch (e) {
+              console.error("Error handling answer:", e);
+            }
+          },
+        );
 
-        currentSocket.on("webrtc-ice-candidate", async (data: { candidate: RTCIceCandidateInit }) => {
-          try {
-            await currentPc!.addIceCandidate(new RTCIceCandidate(data.candidate));
-          } catch (e) {
-            console.error("Error adding ice candidate:", e);
-          }
-        });
+        currentSocket.on(
+          "webrtc-ice-candidate",
+          async (data: { candidate: RTCIceCandidateInit }) => {
+            try {
+              if (
+                currentPc!.remoteDescription &&
+                currentPc!.remoteDescription.type
+              ) {
+                await currentPc!.addIceCandidate(
+                  new RTCIceCandidate(data.candidate),
+                );
+              } else {
+                pendingCandidatesRef.current.push(data.candidate);
+              }
+            } catch (e) {
+              console.error("Error adding ice candidate:", e);
+            }
+          },
+        );
+
+        currentSocket.on(
+          "peer-toggled-media",
+          (data: { type: string; enabled: boolean }) => {
+            if (data.type === "video") setRemoteVideoEnabled(data.enabled);
+            if (data.type === "audio") setRemoteAudioEnabled(data.enabled);
+          },
+        );
 
         // Finally, join room
         currentSocket.emit("join-room", appointmentId, userId);
-
       } catch (err) {
         console.error("Error accessing media devices.", err);
       }
@@ -145,7 +212,13 @@ export function WebRTCSession({
       currentPc?.close();
       currentSocket?.disconnect();
     };
-  }, [appointmentId, userId, backendUrl, selectedAudioInput, selectedVideoInput]); // Note: re-running on device change is handled separately below
+  }, [
+    appointmentId,
+    userId,
+    backendUrl,
+    selectedAudioInput,
+    selectedVideoInput,
+  ]); // Note: re-running on device change is handled separately below
 
   // Apply remote stream
   useEffect(() => {
@@ -171,7 +244,7 @@ export function WebRTCSession({
   // Handle Device Change
   const handleDeviceChange = async (
     deviceId: string,
-    kind: "audioinput" | "videoinput" | "audiooutput"
+    kind: "audioinput" | "videoinput" | "audiooutput",
   ) => {
     if (kind === "audiooutput") {
       setSelectedAudioOutput(deviceId);
@@ -183,20 +256,47 @@ export function WebRTCSession({
 
     try {
       const newStream = await navigator.mediaDevices.getUserMedia({
-        video: kind === "videoinput" ? { deviceId: { exact: deviceId } } : { deviceId: selectedVideoInput !== "default" ? { exact: selectedVideoInput } : undefined },
-        audio: kind === "audioinput" ? { deviceId: { exact: deviceId } } : { deviceId: selectedAudioInput !== "default" ? { exact: selectedAudioInput } : undefined },
+        video:
+          kind === "videoinput"
+            ? { deviceId: { exact: deviceId } }
+            : {
+                deviceId:
+                  selectedVideoInput !== "default"
+                    ? { exact: selectedVideoInput }
+                    : undefined,
+              },
+        audio:
+          kind === "audioinput"
+            ? { deviceId: { exact: deviceId } }
+            : {
+                deviceId:
+                  selectedAudioInput !== "default"
+                    ? { exact: selectedAudioInput }
+                    : undefined,
+              },
       });
 
       if (localStream) {
-        localStream.getTracks().forEach(track => {
+        localStream.getTracks().forEach((track) => {
           if (track.kind === "video" && kind === "videoinput") track.stop();
           if (track.kind === "audio" && kind === "audioinput") track.stop();
         });
       }
 
-      setLocalStream(prev => {
+      setLocalStream((prev) => {
         if (!prev) return newStream;
-        const tracks = [...prev.getTracks().filter(t => t.kind !== (kind === "videoinput" ? "video" : "audio")), ...newStream.getTracks().filter(t => t.kind === (kind === "videoinput" ? "video" : "audio"))];
+        const tracks = [
+          ...prev
+            .getTracks()
+            .filter(
+              (t) => t.kind !== (kind === "videoinput" ? "video" : "audio"),
+            ),
+          ...newStream
+            .getTracks()
+            .filter(
+              (t) => t.kind === (kind === "videoinput" ? "video" : "audio"),
+            ),
+        ];
         const combined = new MediaStream(tracks);
         if (localVideoRef.current) localVideoRef.current.srcObject = combined;
         return combined;
@@ -204,8 +304,8 @@ export function WebRTCSession({
 
       if (peerConnectionRef.current) {
         const senders = peerConnectionRef.current.getSenders();
-        newStream.getTracks().forEach(track => {
-          const sender = senders.find(s => s.track?.kind === track.kind);
+        newStream.getTracks().forEach((track) => {
+          const sender = senders.find((s) => s.track?.kind === track.kind);
           if (sender) sender.replaceTrack(track);
         });
       }
@@ -216,21 +316,31 @@ export function WebRTCSession({
 
   const toggleVideo = () => {
     if (localStream) {
-      localStream.getVideoTracks().forEach(track => {
+      localStream.getVideoTracks().forEach((track) => {
         track.enabled = !isVideoEnabled;
       });
       setIsVideoEnabled(!isVideoEnabled);
-      socket?.emit("peer-toggled-media", { roomId: appointmentId, userId, type: "video", enabled: !isVideoEnabled });
+      socket?.emit("peer-toggled-media", {
+        roomId: appointmentId,
+        userId,
+        type: "video",
+        enabled: !isVideoEnabled,
+      });
     }
   };
 
   const toggleAudio = () => {
     if (localStream) {
-      localStream.getAudioTracks().forEach(track => {
+      localStream.getAudioTracks().forEach((track) => {
         track.enabled = !isAudioEnabled;
       });
       setIsAudioEnabled(!isAudioEnabled);
-      socket?.emit("peer-toggled-media", { roomId: appointmentId, userId, type: "audio", enabled: !isAudioEnabled });
+      socket?.emit("peer-toggled-media", {
+        roomId: appointmentId,
+        userId,
+        type: "audio",
+        enabled: !isAudioEnabled,
+      });
     }
   };
 
@@ -242,23 +352,42 @@ export function WebRTCSession({
           ref={remoteContainerRef}
           className="relative bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10 group"
           style={{
-            resize: 'both',
-            overflow: 'hidden',
+            resize: "both",
+            overflow: "hidden",
             width: remoteSize.width,
             height: remoteSize.height,
-            minWidth: '320px',
-            minHeight: '240px',
-            maxWidth: '100%',
-            maxHeight: '100%',
+            minWidth: "320px",
+            minHeight: "240px",
+            maxWidth: "100%",
+            maxHeight: "100%",
           }}
         >
           {remoteStream ? (
-            <video
-              ref={remoteVideoRef}
-              autoPlay
-              playsInline
-              className="w-full h-full object-cover"
-            />
+            <>
+              <video
+                ref={remoteVideoRef}
+                autoPlay
+                playsInline
+                className={`w-full h-full object-cover ${!remoteVideoEnabled ? "opacity-0" : "opacity-100"}`}
+              />
+              {!remoteVideoEnabled && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black">
+                  <div className="flex flex-col items-center gap-3">
+                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/10">
+                      <VideoOff className="h-8 w-8 text-stone-400" />
+                    </div>
+                    <p className="text-sm font-medium text-stone-300">
+                      Camera off
+                    </p>
+                  </div>
+                </div>
+              )}
+              {!remoteAudioEnabled && (
+                <div className="absolute top-4 right-4 flex items-center justify-center h-8 w-8 rounded-full bg-red-500/80 backdrop-blur-md">
+                  <MicOff className="h-4 w-4 text-white" />
+                </div>
+              )}
+            </>
           ) : (
             <div className="flex w-full h-full items-center justify-center flex-col gap-3 text-stone-500">
               <div className="w-16 h-16 rounded-full bg-white/5 animate-pulse flex items-center justify-center">
@@ -267,7 +396,7 @@ export function WebRTCSession({
               <p>Waiting for the other person to join...</p>
             </div>
           )}
-          
+
           {/* Resize handle indicator */}
           <div className="absolute bottom-0 right-0 w-4 h-4 cursor-se-resize opacity-0 group-hover:opacity-100 transition bg-gradient-to-tl from-white/30 to-transparent" />
         </div>
@@ -295,19 +424,31 @@ export function WebRTCSession({
         <button
           onClick={toggleAudio}
           className={`flex h-12 w-12 items-center justify-center rounded-full transition ${
-            isAudioEnabled ? "bg-white/10 text-white hover:bg-white/20" : "bg-red-500 text-white hover:bg-red-600"
+            isAudioEnabled
+              ? "bg-white/10 text-white hover:bg-white/20"
+              : "bg-red-500 text-white hover:bg-red-600"
           }`}
         >
-          {isAudioEnabled ? <Mic className="h-5 w-5" /> : <MicOff className="h-5 w-5" />}
+          {isAudioEnabled ? (
+            <Mic className="h-5 w-5" />
+          ) : (
+            <MicOff className="h-5 w-5" />
+          )}
         </button>
 
         <button
           onClick={toggleVideo}
           className={`flex h-12 w-12 items-center justify-center rounded-full transition ${
-            isVideoEnabled ? "bg-white/10 text-white hover:bg-white/20" : "bg-red-500 text-white hover:bg-red-600"
+            isVideoEnabled
+              ? "bg-white/10 text-white hover:bg-white/20"
+              : "bg-red-500 text-white hover:bg-red-600"
           }`}
         >
-          {isVideoEnabled ? <Video className="h-5 w-5" /> : <VideoOff className="h-5 w-5" />}
+          {isVideoEnabled ? (
+            <Video className="h-5 w-5" />
+          ) : (
+            <VideoOff className="h-5 w-5" />
+          )}
         </button>
 
         <button
