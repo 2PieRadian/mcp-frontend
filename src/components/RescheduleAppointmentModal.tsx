@@ -70,24 +70,24 @@ export default function RescheduleAppointmentModal({
     timeString: string,
     dayData?: { year: number; month: number; date: number },
   ): string => {
-    const [hours, minutes] = timeString.split(":").map(Number);
+    const pad = (n: number) => String(n).padStart(2, "0");
+    const [hours, minutes] = timeString.split(":");
+    const hh = pad(Number(hours));
+    const mm = pad(Number(minutes));
+
     if (dayData) {
-      const dateTime = new Date(
-        dayData.year,
-        dayData.month - 1,
-        dayData.date,
-        hours,
-        minutes,
-      );
+      const datePrefix = `${dayData.year}-${pad(dayData.month)}-${pad(dayData.date)}`;
+      const dateTime = new Date(`${datePrefix}T${hh}:${mm}:00+05:30`);
       return dateTime.toLocaleTimeString("en-US", {
         hour: "numeric",
         minute: "2-digit",
         hour12: true,
       });
     }
-    const date = new Date();
-    date.setHours(hours, minutes, 0, 0);
-    return date.toLocaleTimeString("en-US", {
+    const now = new Date();
+    const todayPrefix = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+    const dateTime = new Date(`${todayPrefix}T${hh}:${mm}:00+05:30`);
+    return dateTime.toLocaleTimeString("en-US", {
       hour: "numeric",
       minute: "2-digit",
       hour12: true,

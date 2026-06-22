@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.twopieradian.mcpapp",
+      "sha256_cert_fingerprints": [
+        "78:54:C4:D8:A0:4D:47:79:42:BD:52:9C:00:6D:C7:47:BE:AB:6A:94:FF:49:E5:46:BE:A5:45:AE:43:E0:57:1B"
+      ]
+    }
+  }
+]

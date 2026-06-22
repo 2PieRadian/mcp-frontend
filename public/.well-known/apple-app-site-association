@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "<YOUR_APPLE_TEAM_ID_HERE>.com.twopieradian.mcpapp",
+        "paths": [
+          "/meet/*"
+        ]
+      }
+    ]
+  }
+}
