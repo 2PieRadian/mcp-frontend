@@ -356,7 +356,7 @@ export function WebRTCSession({
             overflow: "hidden",
             width: remoteSize.width,
             height: remoteSize.height,
-            minWidth: "320px",
+            minWidth: "240px",
             minHeight: "240px",
             maxWidth: "100%",
             maxHeight: "100%",
@@ -403,7 +403,7 @@ export function WebRTCSession({
       </div>
 
       {/* Local Video PIP */}
-      <div className="absolute bottom-24 right-6 z-20 w-48 aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-black/50 backdrop-blur-md">
+      <div className="absolute bottom-24 sm:bottom-24 right-4 sm:right-6 z-20 w-28 sm:w-48 aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-black/50 backdrop-blur-md">
         <video
           ref={localVideoRef}
           autoPlay
@@ -414,58 +414,59 @@ export function WebRTCSession({
         />
         {!isVideoEnabled && (
           <div className="absolute inset-0 flex items-center justify-center bg-black/80">
-            <VideoOff className="w-8 h-8 text-stone-400" />
+            <VideoOff className="w-6 h-6 sm:w-8 sm:h-8 text-stone-400" />
           </div>
         )}
       </div>
 
       {/* Controls Bar */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-4 rounded-3xl bg-[#121a24]/90 px-6 py-3 shadow-2xl backdrop-blur-xl border border-white/10">
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 sm:gap-4 rounded-3xl bg-[#121a24]/90 px-3 sm:px-6 py-2 sm:py-3 shadow-2xl backdrop-blur-xl border border-white/10 w-[95%] max-w-max justify-center overflow-x-auto whitespace-nowrap">
         <button
           onClick={toggleAudio}
-          className={`flex h-12 w-12 items-center justify-center rounded-full transition ${
+          className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full transition shrink-0 ${
             isAudioEnabled
               ? "bg-white/10 text-white hover:bg-white/20"
               : "bg-red-500 text-white hover:bg-red-600"
           }`}
         >
           {isAudioEnabled ? (
-            <Mic className="h-5 w-5" />
+            <Mic className="h-4 w-4 sm:h-5 sm:w-5" />
           ) : (
-            <MicOff className="h-5 w-5" />
+            <MicOff className="h-4 w-4 sm:h-5 sm:w-5" />
           )}
         </button>
 
         <button
           onClick={toggleVideo}
-          className={`flex h-12 w-12 items-center justify-center rounded-full transition ${
+          className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full transition shrink-0 ${
             isVideoEnabled
               ? "bg-white/10 text-white hover:bg-white/20"
               : "bg-red-500 text-white hover:bg-red-600"
           }`}
         >
           {isVideoEnabled ? (
-            <Video className="h-5 w-5" />
+            <Video className="h-4 w-4 sm:h-5 sm:w-5" />
           ) : (
-            <VideoOff className="h-5 w-5" />
+            <VideoOff className="h-4 w-4 sm:h-5 sm:w-5" />
           )}
         </button>
 
         <button
           onClick={() => setShowSettings(true)}
-          className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
+          className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 shrink-0"
         >
-          <Settings className="h-5 w-5" />
+          <Settings className="h-4 w-4 sm:h-5 sm:w-5" />
         </button>
 
-        <div className="w-px h-8 bg-white/10 mx-2" />
+        <div className="w-px h-6 sm:h-8 bg-white/10 mx-1 sm:mx-2 shrink-0" />
 
         <button
           onClick={onLeave}
-          className="flex h-12 px-6 items-center justify-center gap-2 rounded-full bg-red-500 text-white transition hover:bg-red-600 font-medium"
+          className="flex h-10 sm:h-12 px-4 sm:px-6 items-center justify-center gap-2 rounded-full bg-red-500 text-white transition hover:bg-red-600 font-medium shrink-0"
         >
-          <PhoneOff className="h-5 w-5" />
-          <span>Leave Call</span>
+          <PhoneOff className="h-4 w-4 sm:h-5 sm:w-5" />
+          <span className="text-sm sm:text-base hidden sm:inline">Leave Call</span>
+          <span className="text-sm sm:hidden">Leave</span>
         </button>
       </div>
 
