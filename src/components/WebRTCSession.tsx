@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
-import { Mic, MicOff, Video, VideoOff, Settings, PhoneOff } from "lucide-react";
+import { Mic, MicOff, Video, VideoOff, Settings, PhoneOff, MonitorUp } from "lucide-react";
 import { DeviceSettingsModal } from "./DeviceSettingsModal";
 
 interface WebRTCSessionProps {
@@ -31,6 +31,47 @@ export function WebRTCSession({
   const [remoteVideoEnabled, setRemoteVideoEnabled] = useState(true);
   const [remoteAudioEnabled, setRemoteAudioEnabled] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
+
+  const [isScreenSharing, setIsScreenSharing] = useState(false);
+  const [toastMessage, setToastMessage] = useState<{message: string, type: 'join' | 'leave'} | null>(null);
+
+  // PIP dragging state
+  const [pipPos, setPipPos] = useState({ 
+    x: typeof window !== 'undefined' ? window.innerWidth - 240 : 800, 
+    y: typeof window !== 'undefined' ? window.innerHeight - 340 : 600 
+  });
+  const isDragging = useRef(false);
+  const dragStart = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    if (toastMessage) {
+      const timer = setTimeout(() => setToastMessage(null), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [toastMessage]);
+
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLElement;
+    if (target.tagName === 'BUTTON' || target.closest('button')) return;
+    
+    const rect = e.currentTarget.getBoundingClientRect();
+    const isBottomRight = e.clientX > rect.right - 20 && e.clientY > rect.bottom - 20;
+    if (isBottomRight) return;
+
+    isDragging.current = true;
+    dragStart.current = { x: e.clientX - pipPos.x, y: e.clientY - pipPos.y };
+    e.currentTarget.setPointerCapture(e.pointerId);
+  };
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDragging.current) return;
+    setPipPos({ x: e.clientX - dragStart.current.x, y: e.clientY - dragStart.current.y });
+  };
+
+  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    isDragging.current = false;
+    e.currentTarget.releasePointerCapture(e.pointerId);
+  };
 
   // Device IDs
   const [selectedVideoInput, setSelectedVideoInput] =
@@ -103,6 +144,7 @@ export function WebRTCSession({
 
         // Socket Events
         currentSocket.on("user-joined", async () => {
+          setToastMessage({ message: "A user joined the call", type: "join" });
           // A new user joined, we are the initiator so we create the offer
           try {
             const offer = await currentPc!.createOffer();
@@ -197,6 +239,13 @@ export function WebRTCSession({
             if (data.type === "audio") setRemoteAudioEnabled(data.enabled);
           },
         );
+
+        currentSocket.on("user-left", () => {
+          setToastMessage({ message: "A user left the call", type: "leave" });
+          setRemoteStream(null);
+          setRemoteVideoEnabled(true);
+          setRemoteAudioEnabled(true);
+        });
 
         // Finally, join room
         currentSocket.emit("join-room", appointmentId, userId);
@@ -344,23 +393,81 @@ export function WebRTCSession({
     }
   };
 
+  const toggleScreenShare = async () => {
+    if (!peerConnectionRef.current) return;
+
+    try {
+      if (isScreenSharing) {
+        // Stop screen share and revert to camera
+        const newStream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            deviceId:
+              selectedVideoInput !== "default"
+                ? { exact: selectedVideoInput }
+                : undefined,
+          },
+        });
+        const newVideoTrack = newStream.getVideoTracks()[0];
+
+        if (localStream) {
+          localStream.getVideoTracks().forEach((track) => track.stop());
+          const freshStream = new MediaStream();
+          localStream.getAudioTracks().forEach((track) => freshStream.addTrack(track));
+          freshStream.addTrack(newVideoTrack);
+          setLocalStream(freshStream);
+          if (localVideoRef.current) localVideoRef.current.srcObject = freshStream;
+        }
+
+        const senders = peerConnectionRef.current.getSenders();
+        const videoSender = senders.find((s) => s.track?.kind === "video");
+        if (videoSender) await videoSender.replaceTrack(newVideoTrack);
+
+        setIsScreenSharing(false);
+        setIsVideoEnabled(true);
+      } else {
+        // Start screen share
+        const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+        const screenTrack = screenStream.getVideoTracks()[0];
+
+        screenTrack.onended = () => {
+          toggleScreenShare(); 
+        };
+
+        if (localStream) {
+          localStream.getVideoTracks().forEach((track) => track.stop());
+          const freshStream = new MediaStream();
+          localStream.getAudioTracks().forEach((track) => freshStream.addTrack(track));
+          freshStream.addTrack(screenTrack);
+          setLocalStream(freshStream);
+          if (localVideoRef.current) localVideoRef.current.srcObject = freshStream;
+        }
+
+        const senders = peerConnectionRef.current.getSenders();
+        const videoSender = senders.find((s) => s.track?.kind === "video");
+        if (videoSender) await videoSender.replaceTrack(screenTrack);
+
+        setIsScreenSharing(true);
+        setIsVideoEnabled(true);
+      }
+    } catch (e) {
+      console.error("Error toggling screen share:", e);
+    }
+  };
+
   return (
     <div className="relative flex flex-1 flex-col overflow-hidden bg-[#070a0f]">
-      {/* Remote Video Container - Resizable */}
-      <div className="flex-1 flex items-center justify-center relative w-full h-full p-4">
+      {/* Toast Notification */}
+      {toastMessage && (
+        <div className={`absolute top-4 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-full font-medium text-white shadow-lg transition-all ${toastMessage.type === 'join' ? 'bg-emerald-500' : 'bg-red-500'}`}>
+          {toastMessage.message}
+        </div>
+      )}
+
+      {/* Remote Video Container - Full Width */}
+      <div className="flex-1 flex items-center justify-center relative w-full h-full">
         <div
           ref={remoteContainerRef}
-          className="relative bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10 group"
-          style={{
-            resize: "both",
-            overflow: "hidden",
-            width: remoteSize.width,
-            height: remoteSize.height,
-            minWidth: "240px",
-            minHeight: "240px",
-            maxWidth: "100%",
-            maxHeight: "100%",
-          }}
+          className="relative bg-black overflow-hidden w-full h-full"
         >
           {remoteStream ? (
             <>
@@ -397,20 +504,28 @@ export function WebRTCSession({
             </div>
           )}
 
-          {/* Resize handle indicator */}
-          <div className="absolute bottom-0 right-0 w-4 h-4 cursor-se-resize opacity-0 group-hover:opacity-100 transition bg-gradient-to-tl from-white/30 to-transparent" />
         </div>
       </div>
 
       {/* Local Video PIP */}
-      <div className="absolute bottom-24 sm:bottom-24 right-4 sm:right-6 z-20 w-28 sm:w-48 aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-black/50 backdrop-blur-md">
+      <div 
+        className="absolute z-40 w-48 sm:w-64 aspect-video sm:aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-black/50 backdrop-blur-md cursor-move touch-none"
+        style={{
+          left: `${pipPos.x}px`,
+          top: `${pipPos.y}px`,
+          resize: "both",
+        }}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+      >
         <video
           ref={localVideoRef}
           autoPlay
           playsInline
           muted
-          className="w-full h-full object-cover mirror"
-          style={{ transform: "scaleX(-1)" }}
+          className={`w-full h-full object-cover ${isScreenSharing ? "" : "mirror"}`}
+          style={{ transform: isScreenSharing ? "none" : "scaleX(-1)" }}
         />
         {!isVideoEnabled && (
           <div className="absolute inset-0 flex items-center justify-center bg-black/80">
@@ -449,6 +564,17 @@ export function WebRTCSession({
           ) : (
             <VideoOff className="h-4 w-4 sm:h-5 sm:w-5" />
           )}
+        </button>
+
+        <button
+          onClick={toggleScreenShare}
+          className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full transition shrink-0 ${
+            isScreenSharing
+              ? "bg-blue-500 text-white hover:bg-blue-600"
+              : "bg-white/10 text-white hover:bg-white/20"
+          }`}
+        >
+          <MonitorUp className="h-4 w-4 sm:h-5 sm:w-5" />
         </button>
 
         <button
