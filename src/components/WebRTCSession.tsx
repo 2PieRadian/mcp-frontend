@@ -1,6 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
-import { Mic, MicOff, Video, VideoOff, Settings, PhoneOff, MonitorUp } from "lucide-react";
+import {
+  Mic,
+  MicOff,
+  Video,
+  VideoOff,
+  Settings,
+  PhoneOff,
+  MonitorUp,
+} from "lucide-react";
 import { DeviceSettingsModal } from "./DeviceSettingsModal";
 
 interface WebRTCSessionProps {
@@ -33,12 +41,15 @@ export function WebRTCSession({
   const [showSettings, setShowSettings] = useState(false);
 
   const [isScreenSharing, setIsScreenSharing] = useState(false);
-  const [toastMessage, setToastMessage] = useState<{message: string, type: 'join' | 'leave'} | null>(null);
+  const [toastMessage, setToastMessage] = useState<{
+    message: string;
+    type: "join" | "leave";
+  } | null>(null);
 
   // PIP dragging state
-  const [pipPos, setPipPos] = useState({ 
-    x: typeof window !== 'undefined' ? window.innerWidth - 240 : 800, 
-    y: typeof window !== 'undefined' ? window.innerHeight - 340 : 600 
+  const [pipPos, setPipPos] = useState({
+    x: typeof window !== "undefined" ? window.innerWidth - 240 : 800,
+    y: typeof window !== "undefined" ? window.innerHeight - 340 : 600,
   });
   const isDragging = useRef(false);
   const dragStart = useRef({ x: 0, y: 0 });
@@ -52,10 +63,11 @@ export function WebRTCSession({
 
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     const target = e.target as HTMLElement;
-    if (target.tagName === 'BUTTON' || target.closest('button')) return;
-    
+    if (target.tagName === "BUTTON" || target.closest("button")) return;
+
     const rect = e.currentTarget.getBoundingClientRect();
-    const isBottomRight = e.clientX > rect.right - 20 && e.clientY > rect.bottom - 20;
+    const isBottomRight =
+      e.clientX > rect.right - 20 && e.clientY > rect.bottom - 20;
     if (isBottomRight) return;
 
     isDragging.current = true;
@@ -65,7 +77,10 @@ export function WebRTCSession({
 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!isDragging.current) return;
-    setPipPos({ x: e.clientX - dragStart.current.x, y: e.clientY - dragStart.current.y });
+    setPipPos({
+      x: e.clientX - dragStart.current.x,
+      y: e.clientY - dragStart.current.y,
+    });
   };
 
   const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -86,7 +101,6 @@ export function WebRTCSession({
   const peerConnectionRef = useRef<RTCPeerConnection | null>(null);
 
   // Resize and Drag state for remote video
-  const [remoteSize] = useState({ width: 640, height: 480 });
   const remoteContainerRef = useRef<HTMLDivElement>(null);
   const pendingCandidatesRef = useRef<RTCIceCandidateInit[]>([]);
 
@@ -412,10 +426,13 @@ export function WebRTCSession({
         if (localStream) {
           localStream.getVideoTracks().forEach((track) => track.stop());
           const freshStream = new MediaStream();
-          localStream.getAudioTracks().forEach((track) => freshStream.addTrack(track));
+          localStream
+            .getAudioTracks()
+            .forEach((track) => freshStream.addTrack(track));
           freshStream.addTrack(newVideoTrack);
           setLocalStream(freshStream);
-          if (localVideoRef.current) localVideoRef.current.srcObject = freshStream;
+          if (localVideoRef.current)
+            localVideoRef.current.srcObject = freshStream;
         }
 
         const senders = peerConnectionRef.current.getSenders();
@@ -426,20 +443,25 @@ export function WebRTCSession({
         setIsVideoEnabled(true);
       } else {
         // Start screen share
-        const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+        const screenStream = await navigator.mediaDevices.getDisplayMedia({
+          video: true,
+        });
         const screenTrack = screenStream.getVideoTracks()[0];
 
         screenTrack.onended = () => {
-          toggleScreenShare(); 
+          toggleScreenShare();
         };
 
         if (localStream) {
           localStream.getVideoTracks().forEach((track) => track.stop());
           const freshStream = new MediaStream();
-          localStream.getAudioTracks().forEach((track) => freshStream.addTrack(track));
+          localStream
+            .getAudioTracks()
+            .forEach((track) => freshStream.addTrack(track));
           freshStream.addTrack(screenTrack);
           setLocalStream(freshStream);
-          if (localVideoRef.current) localVideoRef.current.srcObject = freshStream;
+          if (localVideoRef.current)
+            localVideoRef.current.srcObject = freshStream;
         }
 
         const senders = peerConnectionRef.current.getSenders();
@@ -458,7 +480,9 @@ export function WebRTCSession({
     <div className="relative flex flex-1 flex-col overflow-hidden bg-[#070a0f]">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className={`absolute top-4 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-full font-medium text-white shadow-lg transition-all ${toastMessage.type === 'join' ? 'bg-emerald-500' : 'bg-red-500'}`}>
+        <div
+          className={`absolute top-4 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-full font-medium text-white shadow-lg transition-all ${toastMessage.type === "join" ? "bg-emerald-500" : "bg-red-500"}`}
+        >
           {toastMessage.message}
         </div>
       )}
@@ -503,12 +527,11 @@ export function WebRTCSession({
               <p>Waiting for the other person to join...</p>
             </div>
           )}
-
         </div>
       </div>
 
       {/* Local Video PIP */}
-      <div 
+      <div
         className="absolute z-40 w-48 sm:w-64 aspect-video sm:aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-black/50 backdrop-blur-md cursor-move touch-none"
         style={{
           left: `${pipPos.x}px`,
@@ -591,7 +614,9 @@ export function WebRTCSession({
           className="flex h-10 sm:h-12 px-4 sm:px-6 items-center justify-center gap-2 rounded-full bg-red-500 text-white transition hover:bg-red-600 font-medium shrink-0"
         >
           <PhoneOff className="h-4 w-4 sm:h-5 sm:w-5" />
-          <span className="text-sm sm:text-base hidden sm:inline">Leave Call</span>
+          <span className="text-sm sm:text-base hidden sm:inline">
+            Leave Call
+          </span>
           <span className="text-sm sm:hidden">Leave</span>
         </button>
       </div>
