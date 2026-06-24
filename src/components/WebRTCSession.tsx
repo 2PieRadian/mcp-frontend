@@ -41,6 +41,10 @@ export function WebRTCSession({
   const [showSettings, setShowSettings] = useState(false);
 
   const [isScreenSharing, setIsScreenSharing] = useState(false);
+  const [remoteScreenStream, setRemoteScreenStream] = useState<MediaStream | null>(null);
+  const screenSenderRef = useRef<RTCRtpSender | null>(null);
+  const localScreenStreamRef = useRef<MediaStream | null>(null);
+
   const [toastMessage, setToastMessage] = useState<{
     message: string;
     type: "join" | "leave";
@@ -144,7 +148,17 @@ export function WebRTCSession({
         });
 
         currentPc.ontrack = (event) => {
-          setRemoteStream(event.streams[0]);
+          const stream = event.streams[0];
+          // Simple heuristic: if remoteStream is already set and has a different ID, it's the screen stream.
+          // Alternatively, we handle stream IDs via socket below.
+          setRemoteStream((prev) => {
+            if (!prev) return stream;
+            if (prev.id !== stream.id) {
+              setRemoteScreenStream(stream);
+              return prev;
+            }
+            return stream;
+          });
         };
 
         currentPc.onicecandidate = (event) => {
@@ -254,9 +268,19 @@ export function WebRTCSession({
           },
         );
 
+        currentSocket.on("screen-share-stopped", () => {
+          setRemoteScreenStream(null);
+        });
+
+        currentSocket.on("screen-share-started", () => {
+          // If we already received the stream in ontrack, we can map it if we kept a list,
+          // but for now relying on the ontrack heuristic + this event is okay.
+        });
+
         currentSocket.on("user-left", () => {
           setToastMessage({ message: "A user left the call", type: "leave" });
           setRemoteStream(null);
+          setRemoteScreenStream(null);
           setRemoteVideoEnabled(true);
           setRemoteAudioEnabled(true);
         });
@@ -412,64 +436,47 @@ export function WebRTCSession({
 
     try {
       if (isScreenSharing) {
-        // Stop screen share and revert to camera
-        const newStream = await navigator.mediaDevices.getUserMedia({
-          video: {
-            deviceId:
-              selectedVideoInput !== "default"
-                ? { exact: selectedVideoInput }
-                : undefined,
-          },
-        });
-        const newVideoTrack = newStream.getVideoTracks()[0];
-
-        if (localStream) {
-          localStream.getVideoTracks().forEach((track) => track.stop());
-          const freshStream = new MediaStream();
-          localStream
-            .getAudioTracks()
-            .forEach((track) => freshStream.addTrack(track));
-          freshStream.addTrack(newVideoTrack);
-          setLocalStream(freshStream);
-          if (localVideoRef.current)
-            localVideoRef.current.srcObject = freshStream;
+        // Stop screen share and revert to camera-only
+        if (screenSenderRef.current && peerConnectionRef.current) {
+          peerConnectionRef.current.removeTrack(screenSenderRef.current);
+          screenSenderRef.current = null;
+        }
+        if (localScreenStreamRef.current) {
+          localScreenStreamRef.current.getTracks().forEach((track) => track.stop());
+          localScreenStreamRef.current = null;
         }
 
-        const senders = peerConnectionRef.current.getSenders();
-        const videoSender = senders.find((s) => s.track?.kind === "video");
-        if (videoSender) await videoSender.replaceTrack(newVideoTrack);
-
         setIsScreenSharing(false);
-        setIsVideoEnabled(true);
+        socket?.emit("screen-share-stopped", { roomId: appointmentId, userId });
+
+        // Renegotiate
+        const offer = await peerConnectionRef.current.createOffer();
+        await peerConnectionRef.current.setLocalDescription(offer);
+        socket?.emit("webrtc-offer", { roomId: appointmentId, offer });
+
       } else {
         // Start screen share
         const screenStream = await navigator.mediaDevices.getDisplayMedia({
           video: true,
         });
         const screenTrack = screenStream.getVideoTracks()[0];
+        localScreenStreamRef.current = screenStream;
 
         screenTrack.onended = () => {
           toggleScreenShare();
         };
 
-        if (localStream) {
-          localStream.getVideoTracks().forEach((track) => track.stop());
-          const freshStream = new MediaStream();
-          localStream
-            .getAudioTracks()
-            .forEach((track) => freshStream.addTrack(track));
-          freshStream.addTrack(screenTrack);
-          setLocalStream(freshStream);
-          if (localVideoRef.current)
-            localVideoRef.current.srcObject = freshStream;
-        }
-
-        const senders = peerConnectionRef.current.getSenders();
-        const videoSender = senders.find((s) => s.track?.kind === "video");
-        if (videoSender) await videoSender.replaceTrack(screenTrack);
+        // Add the screen track as a separate stream
+        const sender = peerConnectionRef.current.addTrack(screenTrack, screenStream);
+        screenSenderRef.current = sender;
 
         setIsScreenSharing(true);
-        setIsVideoEnabled(true);
+        socket?.emit("screen-share-started", { roomId: appointmentId, userId, streamId: screenStream.id });
+
+        // Renegotiate
+        const offer = await peerConnectionRef.current.createOffer();
+        await peerConnectionRef.current.setLocalDescription(offer);
+        socket?.emit("webrtc-offer", { roomId: appointmentId, offer });
       }
     } catch (e) {
       console.error("Error toggling screen share:", e);
@@ -493,7 +500,18 @@ export function WebRTCSession({
           ref={remoteContainerRef}
           className="relative bg-black overflow-hidden w-full h-full"
         >
-          {remoteStream ? (
+          {remoteScreenStream ? (
+            <video
+              autoPlay
+              playsInline
+              className="w-full h-full object-contain"
+              ref={(el) => {
+                if (el && el.srcObject !== remoteScreenStream) {
+                  el.srcObject = remoteScreenStream;
+                }
+              }}
+            />
+          ) : remoteStream ? (
             <>
               <video
                 ref={remoteVideoRef}
@@ -513,11 +531,6 @@ export function WebRTCSession({
                   </div>
                 </div>
               )}
-              {!remoteAudioEnabled && (
-                <div className="absolute top-4 right-4 flex items-center justify-center h-8 w-8 rounded-full bg-red-500/80 backdrop-blur-md">
-                  <MicOff className="h-4 w-4 text-white" />
-                </div>
-              )}
             </>
           ) : (
             <div className="flex w-full h-full items-center justify-center flex-col gap-3 text-stone-500">
@@ -527,8 +540,34 @@ export function WebRTCSession({
               <p>Waiting for the other person to join...</p>
             </div>
           )}
+          {remoteStream && !remoteAudioEnabled && (
+            <div className="absolute top-4 right-4 flex items-center justify-center h-8 w-8 rounded-full bg-red-500/80 backdrop-blur-md">
+              <MicOff className="h-4 w-4 text-white" />
+            </div>
+          )}
         </div>
       </div>
+
+      {/* Remote Camera PIP (only shown if remote is screen sharing) */}
+      {remoteScreenStream && remoteStream && (
+        <div className="absolute z-30 w-32 sm:w-48 aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-black/50 top-4 left-4">
+          <video
+            autoPlay
+            playsInline
+            className={`w-full h-full object-cover ${!remoteVideoEnabled ? "opacity-0" : "opacity-100"}`}
+            ref={(el) => {
+              if (el && el.srcObject !== remoteStream) {
+                el.srcObject = remoteStream;
+              }
+            }}
+          />
+          {!remoteVideoEnabled && (
+            <div className="absolute inset-0 flex items-center justify-center bg-black/80">
+              <VideoOff className="w-5 h-5 sm:w-6 sm:h-6 text-stone-400" />
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Local Video PIP */}
       <div
