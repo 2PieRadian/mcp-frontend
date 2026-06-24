@@ -86,8 +86,14 @@ export function WebRTCSession({
   const chatEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+    if (messages.length > 0) {
+      // Only scroll if we're on desktop OR if the mobile chat modal is currently open.
+      // This prevents the browser from forcibly scrolling the entire page when the chat is hidden.
+      if (window.innerWidth >= 1024 || showMobileChatRef.current) {
+        chatEndRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
+    }
+  }, [messages, showMobileChat]);
 
   const sendMessage = (e: React.FormEvent) => {
     e.preventDefault();
