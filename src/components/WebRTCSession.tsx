@@ -1,17 +1,18 @@
-import { useEffect, useRef, useState } from "react";
-import { io, Socket } from "socket.io-client";
 import {
+  Bell,
+  MessageSquare,
   Mic,
   MicOff,
+  MonitorUp,
+  PhoneOff,
+  Send,
+  Settings,
   Video,
   VideoOff,
-  Settings,
-  PhoneOff,
-  MonitorUp,
-  Send,
-  MessageSquare,
   X,
 } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { io, Socket } from "socket.io-client";
 import { DeviceSettingsModal } from "./DeviceSettingsModal";
 
 interface WebRTCSessionProps {
@@ -46,9 +47,11 @@ export function WebRTCSession({
   const [remoteVideoEnabled, setRemoteVideoEnabled] = useState(true);
   const [remoteAudioEnabled, setRemoteAudioEnabled] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
+  const [isNotifying, setIsNotifying] = useState(false);
 
   const [isScreenSharing, setIsScreenSharing] = useState(false);
-  const [remoteScreenStream, setRemoteScreenStream] = useState<MediaStream | null>(null);
+  const [remoteScreenStream, setRemoteScreenStream] =
+    useState<MediaStream | null>(null);
   const screenSenderRef = useRef<RTCRtpSender | null>(null);
   const localScreenStreamRef = useRef<MediaStream | null>(null);
 
@@ -76,7 +79,9 @@ export function WebRTCSession({
     }
   }, [chatNotification]);
 
-  const [messages, setMessages] = useState<{ senderId: string; senderName: string; text: string; timestamp: number }[]>([]);
+  const [messages, setMessages] = useState<
+    { senderId: string; senderName: string; text: string; timestamp: number }[]
+  >([]);
   const [chatInput, setChatInput] = useState("");
   const chatEndRef = useRef<HTMLDivElement>(null);
 
@@ -328,13 +333,28 @@ export function WebRTCSession({
           // but for now relying on the ontrack heuristic + this event is okay.
         });
 
-        currentSocket.on("chat-message", (data: { senderId: string; senderName: string; text: string; timestamp: number }) => {
-          setMessages((prev) => [...prev, data]);
-          
-          if (window.innerWidth < 1024 && !showMobileChatRef.current && data.senderId !== userId) {
-            setChatNotification({ senderName: data.senderName, text: data.text });
-          }
-        });
+        currentSocket.on(
+          "chat-message",
+          (data: {
+            senderId: string;
+            senderName: string;
+            text: string;
+            timestamp: number;
+          }) => {
+            setMessages((prev) => [...prev, data]);
+
+            if (
+              window.innerWidth < 1024 &&
+              !showMobileChatRef.current &&
+              data.senderId !== userId
+            ) {
+              setChatNotification({
+                senderName: data.senderName,
+                text: data.text,
+              });
+            }
+          },
+        );
 
         currentSocket.on("user-left", () => {
           setToastMessage({ message: "A user left the call", type: "leave" });
@@ -501,7 +521,9 @@ export function WebRTCSession({
           screenSenderRef.current = null;
         }
         if (localScreenStreamRef.current) {
-          localScreenStreamRef.current.getTracks().forEach((track) => track.stop());
+          localScreenStreamRef.current
+            .getTracks()
+            .forEach((track) => track.stop());
           localScreenStreamRef.current = null;
         }
 
@@ -512,7 +534,6 @@ export function WebRTCSession({
         const offer = await peerConnectionRef.current.createOffer();
         await peerConnectionRef.current.setLocalDescription(offer);
         socket?.emit("webrtc-offer", { roomId: appointmentId, offer });
-
       } else {
         // Start screen share
         const screenStream = await navigator.mediaDevices.getDisplayMedia({
@@ -526,11 +547,18 @@ export function WebRTCSession({
         };
 
         // Add the screen track as a separate stream
-        const sender = peerConnectionRef.current.addTrack(screenTrack, screenStream);
+        const sender = peerConnectionRef.current.addTrack(
+          screenTrack,
+          screenStream,
+        );
         screenSenderRef.current = sender;
 
         setIsScreenSharing(true);
-        socket?.emit("screen-share-started", { roomId: appointmentId, userId, streamId: screenStream.id });
+        socket?.emit("screen-share-started", {
+          roomId: appointmentId,
+          userId,
+          streamId: screenStream.id,
+        });
 
         // Renegotiate
         const offer = await peerConnectionRef.current.createOffer();
@@ -539,6 +567,35 @@ export function WebRTCSession({
       }
     } catch (e) {
       console.error("Error toggling screen share:", e);
+    }
+  };
+
+  const handleNotifyPeer = async () => {
+    if (isNotifying) return;
+    setIsNotifying(true);
+    try {
+      const response = await fetch(
+        `${backendUrl}/api/v1/appointments/${appointmentId}/notify`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        },
+      );
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
+        setToastMessage({
+          message: data.message || "Failed to notify peer",
+          type: "leave",
+        });
+      } else {
+        setToastMessage({ message: "Notification sent", type: "join" });
+      }
+    } catch (error) {
+      console.error("Error notifying peer:", error);
+      setToastMessage({ message: "Failed to notify peer", type: "leave" });
+    } finally {
+      setIsNotifying(false);
     }
   };
 
@@ -564,8 +621,12 @@ export function WebRTCSession({
         >
           <div className="flex items-center justify-between">
             <div className="pr-4">
-              <p className="text-xs text-[#7eb8aa] font-medium mb-1">New message from {chatNotification.senderName}</p>
-              <p className="text-sm text-stone-200 line-clamp-1">{chatNotification.text}</p>
+              <p className="text-xs text-[#7eb8aa] font-medium mb-1">
+                New message from {chatNotification.senderName}
+              </p>
+              <p className="text-sm text-stone-200 line-clamp-1">
+                {chatNotification.text}
+              </p>
             </div>
             <div className="h-8 w-8 rounded-full bg-[#44666C]/20 flex items-center justify-center shrink-0">
               <MessageSquare className="w-4 h-4 text-[#7eb8aa]" />
@@ -578,193 +639,221 @@ export function WebRTCSession({
       <div className="relative flex flex-col flex-1 lg:w-[70%] h-full shrink-0">
         {/* Remote Video Container - Full Width */}
         <div className="flex-1 flex items-center justify-center relative w-full h-full">
-        <div
-          ref={remoteContainerRef}
-          className="relative bg-black overflow-hidden w-full h-full"
-        >
-          {remoteScreenStream ? (
+          <div
+            ref={remoteContainerRef}
+            className="relative bg-black overflow-hidden w-full h-full"
+          >
+            {remoteScreenStream ? (
+              <video
+                autoPlay
+                playsInline
+                className="w-full h-full object-contain"
+                ref={(el) => {
+                  if (el && el.srcObject !== remoteScreenStream) {
+                    el.srcObject = remoteScreenStream;
+                  }
+                }}
+              />
+            ) : remoteStream ? (
+              <>
+                <video
+                  ref={remoteVideoRef}
+                  autoPlay
+                  playsInline
+                  className={`w-full h-full object-cover ${!remoteVideoEnabled ? "opacity-0" : "opacity-100"}`}
+                />
+                {!remoteVideoEnabled && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-black">
+                    <div className="flex flex-col items-center gap-3">
+                      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/10">
+                        <VideoOff className="h-8 w-8 text-stone-400" />
+                      </div>
+                      <p className="text-sm font-medium text-stone-300">
+                        Camera off
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="flex w-full h-full items-center justify-center flex-col gap-3 text-stone-500">
+                <div className="w-16 h-16 rounded-full bg-white/5 animate-pulse flex items-center justify-center">
+                  <VideoOff className="w-8 h-8 opacity-50" />
+                </div>
+                <p>Waiting for the other person to join...</p>
+                <button
+                  onClick={handleNotifyPeer}
+                  disabled={isNotifying}
+                  className="mt-4 px-6 py-3 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-medium flex items-center gap-2 transition disabled:opacity-50"
+                >
+                  <Bell className="w-5 h-5" />
+                  {isNotifying ? "Notifying..." : "Notify them to join"}
+                </button>
+              </div>
+            )}
+            {remoteStream && !remoteAudioEnabled && (
+              <div className="absolute top-4 right-4 flex items-center justify-center h-8 w-8 rounded-full bg-red-500/80 backdrop-blur-md">
+                <MicOff className="h-4 w-4 text-white" />
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Remote Camera PIP (only shown if remote is screen sharing) */}
+        {remoteScreenStream && remoteStream && (
+          <div className="absolute z-30 w-32 sm:w-48 aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-black/50 top-4 left-4">
             <video
               autoPlay
               playsInline
-              className="w-full h-full object-contain"
+              className={`w-full h-full object-cover ${!remoteVideoEnabled ? "opacity-0" : "opacity-100"}`}
               ref={(el) => {
-                if (el && el.srcObject !== remoteScreenStream) {
-                  el.srcObject = remoteScreenStream;
+                if (el && el.srcObject !== remoteStream) {
+                  el.srcObject = remoteStream;
                 }
               }}
             />
-          ) : remoteStream ? (
-            <>
-              <video
-                ref={remoteVideoRef}
-                autoPlay
-                playsInline
-                className={`w-full h-full object-cover ${!remoteVideoEnabled ? "opacity-0" : "opacity-100"}`}
-              />
-              {!remoteVideoEnabled && (
-                <div className="absolute inset-0 flex items-center justify-center bg-black">
-                  <div className="flex flex-col items-center gap-3">
-                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/10">
-                      <VideoOff className="h-8 w-8 text-stone-400" />
-                    </div>
-                    <p className="text-sm font-medium text-stone-300">
-                      Camera off
-                    </p>
-                  </div>
-                </div>
-              )}
-            </>
-          ) : (
-            <div className="flex w-full h-full items-center justify-center flex-col gap-3 text-stone-500">
-              <div className="w-16 h-16 rounded-full bg-white/5 animate-pulse flex items-center justify-center">
-                <VideoOff className="w-8 h-8 opacity-50" />
+            {!remoteVideoEnabled && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/80">
+                <VideoOff className="w-5 h-5 sm:w-6 sm:h-6 text-stone-400" />
               </div>
-              <p>Waiting for the other person to join...</p>
-            </div>
-          )}
-          {remoteStream && !remoteAudioEnabled && (
-            <div className="absolute top-4 right-4 flex items-center justify-center h-8 w-8 rounded-full bg-red-500/80 backdrop-blur-md">
-              <MicOff className="h-4 w-4 text-white" />
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Remote Camera PIP (only shown if remote is screen sharing) */}
-      {remoteScreenStream && remoteStream && (
-        <div className="absolute z-30 w-32 sm:w-48 aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-black/50 top-4 left-4">
-          <video
-            autoPlay
-            playsInline
-            className={`w-full h-full object-cover ${!remoteVideoEnabled ? "opacity-0" : "opacity-100"}`}
-            ref={(el) => {
-              if (el && el.srcObject !== remoteStream) {
-                el.srcObject = remoteStream;
-              }
-            }}
-          />
-          {!remoteVideoEnabled && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black/80">
-              <VideoOff className="w-5 h-5 sm:w-6 sm:h-6 text-stone-400" />
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Local Video PIP */}
-      <div
-        className="absolute z-40 w-48 sm:w-64 aspect-video sm:aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-black/50 backdrop-blur-md cursor-move touch-none"
-        style={{
-          left: `${pipPos.x}px`,
-          top: `${pipPos.y}px`,
-          resize: "both",
-        }}
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerUp}
-      >
-        <video
-          ref={localVideoRef}
-          autoPlay
-          playsInline
-          muted
-          className={`w-full h-full object-cover ${isScreenSharing ? "" : "mirror"}`}
-          style={{ transform: isScreenSharing ? "none" : "scaleX(-1)" }}
-        />
-        {!isVideoEnabled && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/80">
-            <VideoOff className="w-6 h-6 sm:w-8 sm:h-8 text-stone-400" />
+            )}
           </div>
         )}
-      </div>
 
-      {/* Controls Bar */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 sm:gap-4 rounded-3xl bg-[#121a24]/90 px-3 sm:px-6 py-2 sm:py-3 shadow-2xl backdrop-blur-xl border border-white/10 w-[95%] max-w-max justify-center overflow-x-auto whitespace-nowrap">
-        <button
-          onClick={toggleAudio}
-          className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full transition shrink-0 ${
-            isAudioEnabled
-              ? "bg-white/10 text-white hover:bg-white/20"
-              : "bg-red-500 text-white hover:bg-red-600"
-          }`}
+        {/* Local Video PIP */}
+        <div
+          className="absolute z-40 w-48 sm:w-64 aspect-video sm:aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-black/50 backdrop-blur-md cursor-move touch-none"
+          style={{
+            left: `${pipPos.x}px`,
+            top: `${pipPos.y}px`,
+            resize: "both",
+          }}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
         >
-          {isAudioEnabled ? (
-            <Mic className="h-4 w-4 sm:h-5 sm:w-5" />
-          ) : (
-            <MicOff className="h-4 w-4 sm:h-5 sm:w-5" />
+          <video
+            ref={localVideoRef}
+            autoPlay
+            playsInline
+            muted
+            className={`w-full h-full object-cover ${isScreenSharing ? "" : "mirror"}`}
+            style={{ transform: isScreenSharing ? "none" : "scaleX(-1)" }}
+          />
+          {!isVideoEnabled && (
+            <div className="absolute inset-0 flex items-center justify-center bg-black/80">
+              <VideoOff className="w-6 h-6 sm:w-8 sm:h-8 text-stone-400" />
+            </div>
           )}
-        </button>
+        </div>
 
-        <button
-          onClick={toggleVideo}
-          className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full transition shrink-0 ${
-            isVideoEnabled
-              ? "bg-white/10 text-white hover:bg-white/20"
-              : "bg-red-500 text-white hover:bg-red-600"
-          }`}
-        >
-          {isVideoEnabled ? (
-            <Video className="h-4 w-4 sm:h-5 sm:w-5" />
-          ) : (
-            <VideoOff className="h-4 w-4 sm:h-5 sm:w-5" />
-          )}
-        </button>
+        {/* Controls Bar */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 sm:gap-4 rounded-3xl bg-[#121a24]/90 px-3 sm:px-6 py-2 sm:py-3 shadow-2xl backdrop-blur-xl border border-white/10 w-[95%] max-w-max justify-center overflow-x-auto whitespace-nowrap">
+          <button
+            onClick={toggleAudio}
+            className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full transition shrink-0 ${
+              isAudioEnabled
+                ? "bg-white/10 text-white hover:bg-white/20"
+                : "bg-red-500 text-white hover:bg-red-600"
+            }`}
+          >
+            {isAudioEnabled ? (
+              <Mic className="h-4 w-4 sm:h-5 sm:w-5" />
+            ) : (
+              <MicOff className="h-4 w-4 sm:h-5 sm:w-5" />
+            )}
+          </button>
 
-        <button
-          onClick={toggleScreenShare}
-          className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full transition shrink-0 ${
-            isScreenSharing
-              ? "bg-blue-500 text-white hover:bg-blue-600"
-              : "bg-white/10 text-white hover:bg-white/20"
-          }`}
-        >
-          <MonitorUp className="h-4 w-4 sm:h-5 sm:w-5" />
-        </button>
+          <button
+            onClick={toggleVideo}
+            className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full transition shrink-0 ${
+              isVideoEnabled
+                ? "bg-white/10 text-white hover:bg-white/20"
+                : "bg-red-500 text-white hover:bg-red-600"
+            }`}
+          >
+            {isVideoEnabled ? (
+              <Video className="h-4 w-4 sm:h-5 sm:w-5" />
+            ) : (
+              <VideoOff className="h-4 w-4 sm:h-5 sm:w-5" />
+            )}
+          </button>
 
-        <button
-          onClick={() => setShowMobileChat(true)}
-          className="lg:hidden flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 shrink-0 relative"
-        >
-          <MessageSquare className="h-4 w-4 sm:h-5 sm:w-5" />
-          {chatNotification && (
-            <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 border-2 border-[#121a24] rounded-full"></span>
-          )}
-        </button>
+          <button
+            onClick={toggleScreenShare}
+            className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full transition shrink-0 ${
+              isScreenSharing
+                ? "bg-blue-500 text-white hover:bg-blue-600"
+                : "bg-white/10 text-white hover:bg-white/20"
+            }`}
+          >
+            <MonitorUp className="h-4 w-4 sm:h-5 sm:w-5" />
+          </button>
 
-        <button
-          onClick={() => setShowSettings(true)}
-          className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 shrink-0"
-        >
-          <Settings className="h-4 w-4 sm:h-5 sm:w-5" />
-        </button>
+          <button
+            onClick={() => setShowMobileChat(true)}
+            className="lg:hidden flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 shrink-0 relative"
+          >
+            <MessageSquare className="h-4 w-4 sm:h-5 sm:w-5" />
+            {chatNotification && (
+              <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 border-2 border-[#121a24] rounded-full"></span>
+            )}
+          </button>
 
-        <div className="w-px h-6 sm:h-8 bg-white/10 mx-1 sm:mx-2 shrink-0" />
+          <button
+            onClick={() => setShowSettings(true)}
+            className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 shrink-0"
+          >
+            <Settings className="h-4 w-4 sm:h-5 sm:w-5" />
+          </button>
 
-        <button
-          onClick={onLeave}
-          className="flex h-10 sm:h-12 px-4 sm:px-6 items-center justify-center gap-2 rounded-full bg-red-500 text-white transition hover:bg-red-600 font-medium shrink-0"
-        >
-          <PhoneOff className="h-4 w-4 sm:h-5 sm:w-5" />
-          <span className="text-sm sm:text-base hidden sm:inline">
-            Leave Call
-          </span>
-          <span className="text-sm sm:hidden">Leave</span>
-        </button>
-      </div>
+          <button
+            onClick={handleNotifyPeer}
+            disabled={isNotifying}
+            title="Notify Peer"
+            className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full transition shrink-0 ${
+              isNotifying
+                ? "bg-white/5 text-stone-500"
+                : "bg-white/10 text-white hover:bg-amber-500/20 hover:text-amber-400"
+            }`}
+          >
+            <Bell
+              className={`h-4 w-4 sm:h-5 sm:w-5 ${isNotifying ? "opacity-50" : ""}`}
+            />
+          </button>
+
+          <div className="w-px h-6 sm:h-8 bg-white/10 mx-1 sm:mx-2 shrink-0" />
+
+          <button
+            onClick={onLeave}
+            className="flex h-10 sm:h-12 px-4 sm:px-6 items-center justify-center gap-2 rounded-full bg-red-500 text-white transition hover:bg-red-600 font-medium shrink-0"
+          >
+            <PhoneOff className="h-4 w-4 sm:h-5 sm:w-5" />
+            <span className="text-sm sm:text-base hidden sm:inline">
+              Leave Call
+            </span>
+            <span className="text-sm sm:hidden">Leave</span>
+          </button>
+        </div>
       </div>
 
       {/* Side Panel (Participants & Chat) - 30% */}
-      <div 
+      <div
         className={`fixed inset-0 z-50 lg:static flex flex-col w-full lg:w-[30%] bg-[#0c1219] lg:border-l border-white/10 transition-transform duration-300 lg:translate-y-0 ${showMobileChat ? "translate-y-0" : "translate-y-full"}`}
       >
         {/* Mobile Header with Close Button */}
         <div className="flex lg:hidden items-center justify-between p-4 border-b border-white/10 bg-[#121a24] shrink-0">
-          <h2 className="text-sm font-semibold text-white">Chat & Participants</h2>
-          <button onClick={() => setShowMobileChat(false)} className="p-2 text-stone-400 hover:text-white rounded-full bg-white/5">
+          <h2 className="text-sm font-semibold text-white">
+            Chat & Participants
+          </h2>
+          <button
+            onClick={() => setShowMobileChat(false)}
+            className="p-2 text-stone-400 hover:text-white rounded-full bg-white/5"
+          >
             <X className="w-5 h-5" />
           </button>
         </div>
-        
+
         {/* Participants Tab */}
         <div className="flex flex-col border-b border-white/10 p-4 shrink-0 bg-[#0c1219]">
           <h2 className="text-xs font-semibold uppercase tracking-wider text-stone-400 mb-3">
@@ -781,8 +870,16 @@ export function WebRTCSession({
                 </span>
               </div>
               <div className="flex items-center gap-1.5 shrink-0">
-                {isAudioEnabled ? <Mic className="w-4 h-4 text-emerald-400" /> : <MicOff className="w-4 h-4 text-red-500" />}
-                {isVideoEnabled ? <Video className="w-4 h-4 text-emerald-400" /> : <VideoOff className="w-4 h-4 text-red-500" />}
+                {isAudioEnabled ? (
+                  <Mic className="w-4 h-4 text-emerald-400" />
+                ) : (
+                  <MicOff className="w-4 h-4 text-red-500" />
+                )}
+                {isVideoEnabled ? (
+                  <Video className="w-4 h-4 text-emerald-400" />
+                ) : (
+                  <VideoOff className="w-4 h-4 text-red-500" />
+                )}
               </div>
             </div>
 
@@ -796,8 +893,16 @@ export function WebRTCSession({
                 </span>
               </div>
               <div className="flex items-center gap-1.5 shrink-0">
-                {remoteAudioEnabled ? <Mic className="w-4 h-4 text-emerald-400" /> : <MicOff className="w-4 h-4 text-red-500" />}
-                {remoteVideoEnabled ? <Video className="w-4 h-4 text-emerald-400" /> : <VideoOff className="w-4 h-4 text-red-500" />}
+                {remoteAudioEnabled ? (
+                  <Mic className="w-4 h-4 text-emerald-400" />
+                ) : (
+                  <MicOff className="w-4 h-4 text-red-500" />
+                )}
+                {remoteVideoEnabled ? (
+                  <Video className="w-4 h-4 text-emerald-400" />
+                ) : (
+                  <VideoOff className="w-4 h-4 text-red-500" />
+                )}
               </div>
             </div>
           </div>
@@ -815,9 +920,16 @@ export function WebRTCSession({
               messages.map((msg, idx) => {
                 const isMe = msg.senderId === userId;
                 return (
-                  <div key={idx} className={`flex flex-col ${isMe ? "items-end" : "items-start"} max-w-full`}>
-                    <span className="text-[10px] text-stone-500 mb-0.5 px-1">{msg.senderName}</span>
-                    <div className={`px-3 py-2 rounded-2xl max-w-[90%] text-sm break-words ${isMe ? "bg-[#44666C] text-white rounded-br-sm" : "bg-white/10 text-stone-200 rounded-bl-sm"}`}>
+                  <div
+                    key={idx}
+                    className={`flex flex-col ${isMe ? "items-end" : "items-start"} max-w-full`}
+                  >
+                    <span className="text-[10px] text-stone-500 mb-0.5 px-1">
+                      {msg.senderName}
+                    </span>
+                    <div
+                      className={`px-3 py-2 rounded-2xl max-w-[90%] text-sm break-words ${isMe ? "bg-[#44666C] text-white rounded-br-sm" : "bg-white/10 text-stone-200 rounded-bl-sm"}`}
+                    >
                       {msg.text}
                     </div>
                   </div>
@@ -829,7 +941,10 @@ export function WebRTCSession({
 
           {/* Chat Input */}
           <div className="p-3 bg-[#0c1219] border-t border-white/5 shrink-0">
-            <form onSubmit={sendMessage} className="flex items-end gap-2 relative">
+            <form
+              onSubmit={sendMessage}
+              className="flex items-end gap-2 relative"
+            >
               <input
                 type="text"
                 placeholder="Type a message..."
