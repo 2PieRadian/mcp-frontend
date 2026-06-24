@@ -715,6 +715,7 @@ export function WebRTCSession({
               style={{
                 left: `${pipPos.x}px`,
                 top: `${pipPos.y}px`,
+                resize: "both",
               }}
               onPointerDown={handlePointerDown}
               onPointerMove={handlePointerMove}
