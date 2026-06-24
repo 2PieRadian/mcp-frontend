@@ -354,9 +354,15 @@ export function WebRTCSession({
 
         currentSocket.on(
           "peer-toggled-media",
-          (data: { type: string; enabled: boolean }) => {
-            if (data.type === "video") setRemoteVideoEnabled(data.enabled);
-            if (data.type === "audio") setRemoteAudioEnabled(data.enabled);
+          (data: {
+            senderId: string;
+            isCameraOn?: boolean;
+            isMuted?: boolean;
+          }) => {
+            if (data.isCameraOn !== undefined)
+              setRemoteVideoEnabled(data.isCameraOn);
+            if (data.isMuted !== undefined)
+              setRemoteAudioEnabled(!data.isMuted);
           },
         );
 
@@ -523,11 +529,10 @@ export function WebRTCSession({
         track.enabled = !isVideoEnabled;
       });
       setIsVideoEnabled(!isVideoEnabled);
-      socket?.emit("peer-toggled-media", {
+      socket?.emit("toggle-media", {
         roomId: appointmentId,
-        userId,
-        type: "video",
-        enabled: !isVideoEnabled,
+        senderId: userId,
+        isCameraOn: !isVideoEnabled,
       });
     }
   };
@@ -538,11 +543,10 @@ export function WebRTCSession({
         track.enabled = !isAudioEnabled;
       });
       setIsAudioEnabled(!isAudioEnabled);
-      socket?.emit("peer-toggled-media", {
+      socket?.emit("toggle-media", {
         roomId: appointmentId,
-        userId,
-        type: "audio",
-        enabled: !isAudioEnabled,
+        senderId: userId,
+        isMuted: isAudioEnabled,
       });
     }
   };
