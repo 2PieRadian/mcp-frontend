@@ -94,7 +94,7 @@ body:not([style*="position: fixed"]) {
 
 @theme {
   /* Base Colors */
-  --color-primary: hsl(187, 73%, 16%);
+  --color-primary: #0F766E;
   --color-light-100: hsl(0, 0%, 100%);
   --color-input-bg: hsl(187, 57%, 96%);
   --color-role-bg: hsl(170, 27%, 32%);

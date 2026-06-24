@@ -67,7 +67,7 @@ function CategoryCard({
   return (
     <Link
       to={category.to}
-      className="group relative isolate flex min-h-[430px] overflow-hidden rounded-4xl border border-white/70 bg-white shadow-[0_24px_70px_-34px_rgba(15,23,42,0.5)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_34px_80px_-32px_rgba(15,90,78,0.45)]"
+      className="group relative isolate flex min-h-[430px] overflow-hidden rounded-4xl border border-stone-100 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md"
     >
       <div
         className={`absolute -right-12 -top-12 h-40 w-40 rounded-full blur-3xl transition duration-500 group-hover:scale-125 ${category.glow}`}
@@ -109,7 +109,7 @@ function CategoryCard({
           <p className="mt-3 text-[15px] leading-relaxed text-slate-600">
             {body}
           </p>
-          <span className="mt-auto inline-flex w-fit items-center justify-center gap-2 rounded-full bg-[#0F5A4E] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_10px_26px_-10px_rgba(15,90,78,0.75)] transition group-hover:bg-[#0c4d42]">
+          <span className="mt-[20px] inline-flex w-fit items-center justify-center gap-2 rounded-full bg-[#0F766E] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_10px_26px_-10px_rgba(15,118,110,0.75)] transition group-hover:bg-[#0D635C]">
             {t("heroCardExplore")}
             <ArrowRight
               className="h-4 w-4 shrink-0 transition group-hover:translate-x-1"
@@ -135,7 +135,7 @@ export default function HeroSection() {
           <h1 className="max-w-4xl text-balance text-[clamp(2.05rem,5vw,4rem)] font-bold leading-[1.04] tracking-tight text-[#1A2B3C]">
             <Trans
               i18nKey="discoverYourPath"
-              components={{ highlight: <span className="text-[#2D8A6E]" /> }}
+              components={{ highlight: <span className="text-[#0F766E]" /> }}
             />
           </h1>
 
@@ -146,7 +146,7 @@ export default function HeroSection() {
           <div className="mt-9 flex w-full max-w-xl flex-col items-stretch justify-center gap-3 sm:flex-row">
             <Link
               to="/choose-experts"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-[#2D8A6E] px-8 py-4 text-[15px] font-semibold text-white shadow-[0_14px_34px_-12px_rgba(45,138,110,0.75)] transition hover:-translate-y-0.5 hover:bg-[#25765e] hover:shadow-[0_18px_42px_-14px_rgba(45,138,110,0.8)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2D8A6E]"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0F766E] px-8 py-4 text-[15px] font-semibold text-white shadow-[0_14px_34px_-12px_rgba(15,118,110,0.75)] transition hover:-translate-y-0.5 hover:bg-[#0D635C] hover:shadow-[0_18px_42px_-14px_rgba(15,118,110,0.8)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F766E]"
             >
               {t("heroDesignCtaPrimary")}
             </Link>
@@ -155,7 +155,7 @@ export default function HeroSection() {
               onClick={(e) =>
                 smoothScrollToHash(e, "#expert-verified-assessments")
               }
-              className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-slate-200 bg-white px-8 py-4 text-[15px] font-semibold text-black shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2D8A6E]"
+              className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-slate-200 bg-white px-8 py-4 text-[15px] font-semibold text-black shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F766E]"
             >
               {t("heroDesignCtaSecondary")}
             </a>
@@ -183,7 +183,7 @@ export default function HeroSection() {
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4 lg:gap-8">
+          <div className="grid gap-[10px] md:grid-cols-2 xl:grid-cols-4">
             {HERO_CATEGORIES.map((category) => (
               <CategoryCard key={category.key} category={category} />
             ))}

@@ -331,7 +331,7 @@ function DigitalTechnologySolutions() {
   return (
     <div className="min-h-screen bg-white">
       <Helmet>
-        <title>Digital & Technology Solutions | MindCurePath</title>
+        <title>Digital & Tech Solutions | MindCurePath</title>
         <meta
           name="description"
           content="MindCurePath provides website development, mobile apps, custom software, UI/UX, e-commerce, digital marketing, cloud infrastructure, and technology partnership services."
@@ -354,7 +354,7 @@ function DigitalTechnologySolutions() {
           <div className="relative mx-auto grid max-w-[1280px] items-center gap-12 px-6 pb-20 pt-12 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:pb-28 lg:pt-20">
             <div>
               <h1 className="max-w-[700px] text-[38px] font-extrabold leading-[1.08] tracking-[-0.045em] text-[#0d1f36] sm:text-[52px] lg:text-[64px]">
-                Digital & Technology Solutions
+                Digital & Tech Solutions
               </h1>
               <p className="mt-6 max-w-[620px] text-[24px] font-bold leading-tight text-[#159374] sm:text-[32px]">
                 Empowering Businesses Through Technology
@@ -579,7 +579,7 @@ function DigitalTechnologySolutions() {
                         {capability.items.map((item) => (
                           <span
                             key={item}
-                            className="rounded-full border border-[#149373]/15 bg-[#e9f5ef] px-3 py-1.5 text-sm font-bold text-[#0F5A4E]"
+                            className="rounded-full border border-[#149373]/15 bg-[#e9f5ef] px-3 py-1.5 text-sm font-bold text-[#0F766E]"
                           >
                             {item}
                           </span>

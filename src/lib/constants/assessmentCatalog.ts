@@ -48,9 +48,9 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
     "description": "Reflect on anxiety-related feelings, body sensations, triggers, and coping patterns in daily situations.",
     "focus": "anxiety and panic-like feelings",
     "iconKey": "brain",
-    "gradientFrom": "#4F46E5",
-    "gradientTo": "#6366F1",
-    "accentColor": "#818CF8",
+    "gradientFrom": "#0F766E",
+    "gradientTo": "#0F766E",
+    "accentColor": "#0F766E",
     "lightBg": "#EEF2FF",
     "benefits": [
       "Notice patterns in your thoughts, feelings, habits, and relationships.",
@@ -405,9 +405,9 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
     "description": "Reflect on recent mood, motivation, energy, connection, and hopefulness without treating the result as a diagnosis.",
     "focus": "low mood and daily functioning",
     "iconKey": "heart",
-    "gradientFrom": "#7C3AED",
-    "gradientTo": "#8B5CF6",
-    "accentColor": "#A78BFA",
+    "gradientFrom": "#0F766E",
+    "gradientTo": "#0F766E",
+    "accentColor": "#0F766E",
     "lightBg": "#F3E8FF",
     "benefits": [
       "Notice patterns in your thoughts, feelings, habits, and relationships.",
@@ -762,9 +762,9 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
     "description": "Reflect on unwanted repeated thoughts, checking, cleaning, ordering, and how much these patterns affect your day.",
     "focus": "repetitive thoughts and behaviors",
     "iconKey": "brain",
-    "gradientFrom": "#0D9488",
-    "gradientTo": "#14B8A6",
-    "accentColor": "#2DD4BF",
+    "gradientFrom": "#0F766E",
+    "gradientTo": "#0F766E",
+    "accentColor": "#0F766E",
     "lightBg": "#F0FDFA",
     "benefits": [
       "Notice patterns in your thoughts, feelings, habits, and relationships.",
@@ -1119,9 +1119,9 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
     "description": "Reflect on disagreement patterns, emotional safety, communication, and repair in a close relationship.",
     "focus": "couple communication and conflict patterns",
     "iconKey": "heart",
-    "gradientFrom": "#E11D48",
-    "gradientTo": "#F43F5E",
-    "accentColor": "#FB7185",
+    "gradientFrom": "#0F766E",
+    "gradientTo": "#0F766E",
+    "accentColor": "#0F766E",
     "lightBg": "#FEF2F2",
     "benefits": [
       "Notice patterns in your thoughts, feelings, habits, and relationships.",
@@ -1476,9 +1476,9 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
     "description": "Reflect on focus, organization, restlessness, forgetfulness, and daily task patterns without using the result as a diagnosis.",
     "focus": "attention, focus, organization, and impulse patterns",
     "iconKey": "brain",
-    "gradientFrom": "#4F46E5",
-    "gradientTo": "#6366F1",
-    "accentColor": "#818CF8",
+    "gradientFrom": "#0F766E",
+    "gradientTo": "#0F766E",
+    "accentColor": "#0F766E",
     "lightBg": "#EEF2FF",
     "benefits": [
       "Notice patterns in your thoughts, feelings, habits, and relationships.",
@@ -1833,9 +1833,9 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
     "description": "Reflect on family disagreements, expectations, boundaries, communication gaps, and emotional pressure.",
     "focus": "family communication and conflict patterns",
     "iconKey": "heart",
-    "gradientFrom": "#EA580C",
-    "gradientTo": "#F97316",
-    "accentColor": "#FDBA74",
+    "gradientFrom": "#0F766E",
+    "gradientTo": "#0F766E",
+    "accentColor": "#0F766E",
     "lightBg": "#FFF7ED",
     "benefits": [
       "Notice patterns in your thoughts, feelings, habits, and relationships.",
@@ -2190,9 +2190,9 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
     "description": "Reflect on memories, emotional triggers, support, hopefulness, and recovery after a relationship ending.",
     "focus": "breakup recovery and emotional adjustment",
     "iconKey": "heart",
-    "gradientFrom": "#BE123C",
-    "gradientTo": "#E11D48",
-    "accentColor": "#FB7185",
+    "gradientFrom": "#0F766E",
+    "gradientTo": "#0F766E",
+    "accentColor": "#0F766E",
     "lightBg": "#FFF1F2",
     "benefits": [
       "Notice patterns in your thoughts, feelings, habits, and relationships.",
@@ -2547,9 +2547,9 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
     "description": "Reflect on social connection, belonging, support-seeking, and moments of isolation in daily life.",
     "focus": "loneliness, connection, and social support",
     "iconKey": "heart",
-    "gradientFrom": "#2563EB",
-    "gradientTo": "#3B82F6",
-    "accentColor": "#93C5FD",
+    "gradientFrom": "#0F766E",
+    "gradientTo": "#0F766E",
+    "accentColor": "#0F766E",
     "lightBg": "#EFF6FF",
     "benefits": [
       "Notice patterns in your thoughts, feelings, habits, and relationships.",
@@ -2904,9 +2904,9 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
     "description": "Reflect on safety, respect, trust, communication, and the need for professional support when considering major relationship decisions.",
     "focus": "relationship safety, respect, and decision clarity",
     "iconKey": "heart",
-    "gradientFrom": "#DB2777",
-    "gradientTo": "#EC4899",
-    "accentColor": "#F9A8D4",
+    "gradientFrom": "#0F766E",
+    "gradientTo": "#0F766E",
+    "accentColor": "#0F766E",
     "lightBg": "#FDF2F8",
     "benefits": [
       "Notice patterns in your thoughts, feelings, habits, and relationships.",
@@ -3261,9 +3261,9 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
     "description": "Reflect on stress load, repeated thoughts, sleep impact, decision pressure, and coping habits.",
     "focus": "stress and overthinking patterns",
     "iconKey": "brain",
-    "gradientFrom": "#9333EA",
-    "gradientTo": "#A855F7",
-    "accentColor": "#D8B4FE",
+    "gradientFrom": "#0F766E",
+    "gradientTo": "#0F766E",
+    "accentColor": "#0F766E",
     "lightBg": "#FAF5FF",
     "benefits": [
       "Notice patterns in your thoughts, feelings, habits, and relationships.",
@@ -3618,9 +3618,9 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
     "description": "Reflect on meals, hydration, cravings, activity, sleep, and routine patterns that shape everyday wellness.",
     "focus": "eating habits and lifestyle routines",
     "iconKey": "apple",
-    "gradientFrom": "#059669",
-    "gradientTo": "#10B981",
-    "accentColor": "#34D399",
+    "gradientFrom": "#0F766E",
+    "gradientTo": "#0F766E",
+    "accentColor": "#0F766E",
     "lightBg": "#ECFDF5",
     "benefits": [
       "Notice patterns in your thoughts, feelings, habits, and relationships.",
@@ -3975,9 +3975,9 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
     "description": "Reflect on stretching, breath awareness, posture, relaxation, meditation, and mind-body connection.",
     "focus": "yoga practice and mind-body awareness",
     "iconKey": "flower",
-    "gradientFrom": "#0D9488",
-    "gradientTo": "#14B8A6",
-    "accentColor": "#2DD4BF",
+    "gradientFrom": "#0F766E",
+    "gradientTo": "#0F766E",
+    "accentColor": "#0F766E",
     "lightBg": "#F0FDFA",
     "benefits": [
       "Notice patterns in your thoughts, feelings, habits, and relationships.",
@@ -4332,9 +4332,9 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
     "description": "Reflect on career direction, confidence, strengths, decision-making, and readiness to seek guidance.",
     "focus": "career path clarity and self-awareness",
     "iconKey": "compass",
-    "gradientFrom": "#7C3AED",
-    "gradientTo": "#8B5CF6",
-    "accentColor": "#A78BFA",
+    "gradientFrom": "#0F766E",
+    "gradientTo": "#0F766E",
+    "accentColor": "#0F766E",
     "lightBg": "#F3E8FF",
     "benefits": [
       "Understand your current learning, planning, and growth patterns.",
@@ -4689,9 +4689,9 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
     "description": "Reflect on focus, study consistency, revision, assignments, classroom engagement, and academic confidence.",
     "focus": "academic habits and learning confidence",
     "iconKey": "graduation",
-    "gradientFrom": "#0891B2",
-    "gradientTo": "#06B6D4",
-    "accentColor": "#22D3EE",
+    "gradientFrom": "#0F766E",
+    "gradientTo": "#0F766E",
+    "accentColor": "#0F766E",
     "lightBg": "#ECFEFF",
     "benefits": [
       "Understand your current learning, planning, and growth patterns.",
@@ -5039,25 +5039,25 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
     ]
   },
   {
-    "slug": "achiever-guidance",
+    "slug": "school-subject-expert",
     "domain": "education",
-    "title": "Role of Achievers in Guiding Aspirants",
-    "subtitle": "Mentorship & learning from others",
-    "description": "Reflect on how you seek, receive, and apply guidance from experienced people while pursuing goals.",
-    "focus": "guidance readiness and mentorship support",
-    "iconKey": "graduation",
-    "gradientFrom": "#CA8A04",
-    "gradientTo": "#EAB308",
-    "accentColor": "#FDE047",
+    "title": "School Subject Expert",
+    "subtitle": "Subject mastery & teaching skills",
+    "description": "Reflect on your expertise in specific school subjects, your teaching methodology, and how effectively you can impart knowledge.",
+    "focus": "subject mastery and pedagogy",
+    "iconKey": "briefcase",
+    "gradientFrom": "#0F766E",
+    "gradientTo": "#0F766E",
+    "accentColor": "#0F766E",
     "lightBg": "#FEFCE8",
     "benefits": [
-      "Understand your current learning, planning, and growth patterns.",
-      "Identify areas where structure, mentoring, or counseling may help.",
-      "Reflect on strengths and obstacles without judgment.",
-      "Receive practical next steps for guided improvement."
+      "Evaluate your deep understanding of specific school subjects.",
+      "Reflect on your communication and teaching techniques.",
+      "Identify areas for methodological improvement.",
+      "Receive insights into engaging students better."
     ],
     "takeaways": [
-      "A private learning reflection summary",
+      "A pedagogical reflection summary",
       "Supportive score interpretation",
       "Guidance-oriented next steps",
       "A reminder that this is educational and non-diagnostic"
@@ -5065,713 +5065,176 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
     "questions": [
       {
         "id": 1,
-        "question": "How often do you seek guidance from achievers (people who cleared competitive exams)?",
+        "question": "How confidently can you explain complex subject concepts to a beginner?",
         "options": [
-          {
-            "text": "I regularly follow and learn from them",
-            "score": 1
-          },
-          {
-            "text": "I sometimes try but not consistently",
-            "score": 2
-          },
-          {
-            "text": "I rarely seek their guidance",
-            "score": 3
-          },
-          {
-            "text": "I never consider their guidance",
-            "score": 4
-          }
+          { "text": "Very confidently with simple analogies", "score": 1 },
+          { "text": "I can explain but it might take time", "score": 2 },
+          { "text": "I struggle to simplify complex topics", "score": 3 },
+          { "text": "I avoid explaining complex topics", "score": 4 }
         ]
       },
       {
         "id": 2,
-        "question": "Imagine this situation: You watch a topper's strategy video. What do you do next?",
+        "question": "Imagine this situation: A student repeatedly fails to understand a topic. What is your approach?",
         "options": [
-          {
-            "text": "I feel motivated but don't apply anything",
-            "score": 3
-          },
-          {
-            "text": "I apply their strategy in a structured way",
-            "score": 1
-          },
-          {
-            "text": "I feel confused due to too many ideas",
-            "score": 4
-          },
-          {
-            "text": "I try to apply but inconsistently",
-            "score": 2
-          }
+          { "text": "I change my teaching method and try again", "score": 1 },
+          { "text": "I repeat the same method slower", "score": 2 },
+          { "text": "I feel frustrated but keep trying", "score": 3 },
+          { "text": "I ask them to figure it out themselves", "score": 4 }
         ]
       },
       {
         "id": 3,
-        "question": "Imagine this situation: An achiever shares their study plan. How do you respond?",
+        "question": "How often do you update your knowledge in your subject area?",
         "options": [
-          {
-            "text": "I copy it completely without thinking",
-            "score": 3
-          },
-          {
-            "text": "I analyze and adapt it to my needs",
-            "score": 1
-          },
-          {
-            "text": "I feel overwhelmed and ignore it",
-            "score": 4
-          },
-          {
-            "text": "I partially follow it with doubts",
-            "score": 2
-          }
+          { "text": "Regularly through active research", "score": 1 },
+          { "text": "Sometimes when required", "score": 2 },
+          { "text": "Rarely, I stick to the syllabus", "score": 3 },
+          { "text": "Never, my current knowledge is enough", "score": 4 }
         ]
       },
       {
         "id": 4,
-        "question": "How much do achievers influence your study approach?",
+        "question": "Imagine this situation: You are asked a question you don't know the answer to. What do you do?",
         "options": [
-          {
-            "text": "Positively and in a balanced way",
-            "score": 1
-          },
-          {
-            "text": "Slightly influence my approach",
-            "score": 2
-          },
-          {
-            "text": "Influence me but create confusion",
-            "score": 3
-          },
-          {
-            "text": "Over-influence me and distract me",
-            "score": 4
-          }
+          { "text": "I admit I don't know and promise to find out", "score": 1 },
+          { "text": "I try to give a related but partial answer", "score": 2 },
+          { "text": "I deflect the question", "score": 3 },
+          { "text": "I pretend to know the answer", "score": 4 }
         ]
       },
       {
         "id": 5,
-        "question": "Imagine this situation: You compare your preparation with a topper. What happens?",
+        "question": "How do you evaluate student understanding during a lesson?",
         "options": [
-          {
-            "text": "I feel motivated to improve",
-            "score": 1
-          },
-          {
-            "text": "I feel slightly pressured but continue",
-            "score": 2
-          },
-          {
-            "text": "I feel stressed and demotivated",
-            "score": 4
-          },
-          {
-            "text": "I feel confused about my own strategy",
-            "score": 3
-          }
+          { "text": "Through continuous interactive questions", "score": 1 },
+          { "text": "By observing their expressions", "score": 2 },
+          { "text": "I wait for the test results", "score": 3 },
+          { "text": "I assume they understand if they are quiet", "score": 4 }
         ]
       },
       {
         "id": 6,
-        "question": "Imagine this situation: You attend a seminar/webinar by achievers. What do you do?",
+        "question": "Imagine this situation: You have to teach a very boring topic. How do you handle it?",
         "options": [
-          {
-            "text": "I take notes and implement key learnings",
-            "score": 1
-          },
-          {
-            "text": "I listen but forget to apply",
-            "score": 3
-          },
-          {
-            "text": "I feel inspired but don't act",
-            "score": 2
-          },
-          {
-            "text": "I feel overwhelmed with information",
-            "score": 4
-          }
+          { "text": "I find real-world applications to make it interesting", "score": 1 },
+          { "text": "I try to rush through it", "score": 2 },
+          { "text": "I just read from the textbook", "score": 3 },
+          { "text": "I skip it if possible", "score": 4 }
         ]
       },
       {
         "id": 7,
-        "question": "How confident are you in using achievers' advice effectively?",
+        "question": "How effectively do you manage different learning speeds in a classroom?",
         "options": [
-          {
-            "text": "Very confident and selective",
-            "score": 1
-          },
-          {
-            "text": "Somewhat confident",
-            "score": 2
-          },
-          {
-            "text": "Slightly confused while applying",
-            "score": 3
-          },
-          {
-            "text": "Not confident at all",
-            "score": 4
-          }
+          { "text": "Very effectively by differentiating tasks", "score": 1 },
+          { "text": "Somewhat effectively but it's hard", "score": 2 },
+          { "text": "I struggle to balance the pace", "score": 3 },
+          { "text": "I only focus on the average pace", "score": 4 }
         ]
       },
       {
         "id": 8,
-        "question": "Imagine this situation: You get different advice from multiple achievers. What do you do?",
+        "question": "Imagine this situation: A student challenges your explanation. What do you do?",
         "options": [
-          {
-            "text": "I get confused and don't follow anything",
-            "score": 4
-          },
-          {
-            "text": "I evaluate and choose what suits me",
-            "score": 1
-          },
-          {
-            "text": "I try to follow everything at once",
-            "score": 3
-          },
-          {
-            "text": "I follow some but feel unsure",
-            "score": 2
-          }
+          { "text": "I welcome the discussion and explore it", "score": 1 },
+          { "text": "I listen but stick to my point", "score": 2 },
+          { "text": "I feel offended but answer", "score": 3 },
+          { "text": "I shut down the argument", "score": 4 }
         ]
       },
       {
         "id": 9,
-        "question": "Imagine this situation: An achiever suggests a difficult routine. What happens?",
+        "question": "How much emphasis do you place on critical thinking over memorization?",
         "options": [
-          {
-            "text": "I try but quit quickly",
-            "score": 4
-          },
-          {
-            "text": "I adapt it according to my capacity",
-            "score": 1
-          },
-          {
-            "text": "I follow it inconsistently",
-            "score": 2
-          },
-          {
-            "text": "I feel confused and avoid it",
-            "score": 3
-          }
+          { "text": "A lot, it's the main focus", "score": 1 },
+          { "text": "Some emphasis, but memorization is needed", "score": 2 },
+          { "text": "Little emphasis", "score": 3 },
+          { "text": "No emphasis, exams test memorization", "score": 4 }
         ]
       },
       {
         "id": 10,
-        "question": "How often do achievers motivate you to stay consistent?",
+        "question": "Imagine this situation: You notice a student losing interest. What do you do?",
         "options": [
-          {
-            "text": "Very often, they keep me focused",
-            "score": 1
-          },
-          {
-            "text": "Sometimes, but not always",
-            "score": 2
-          },
-          {
-            "text": "Rarely, I lose motivation quickly",
-            "score": 3
-          },
-          {
-            "text": "Never, I don't feel motivated",
-            "score": 4
-          }
+          { "text": "I change the activity to re-engage them", "score": 1 },
+          { "text": "I ask them a question directly", "score": 2 },
+          { "text": "I ignore it if they aren't disruptive", "score": 3 },
+          { "text": "I reprimand them", "score": 4 }
         ]
       },
       {
         "id": 11,
-        "question": "Imagine this situation: You fail in a mock test. What would an achiever-inspired mindset make you do?",
+        "question": "How well do you adapt your language to suit the students' level?",
         "options": [
-          {
-            "text": "Learn from mistakes and improve",
-            "score": 1
-          },
-          {
-            "text": "Try again but with hesitation",
-            "score": 2
-          },
-          {
-            "text": "Feel confused and unsure what to change",
-            "score": 3
-          },
-          {
-            "text": "Feel discouraged and stop trying",
-            "score": 4
-          }
+          { "text": "Very well, I use age-appropriate vocabulary", "score": 1 },
+          { "text": "Moderately well", "score": 2 },
+          { "text": "I sometimes use language that is too complex", "score": 3 },
+          { "text": "I don't change my language", "score": 4 }
         ]
       },
       {
         "id": 12,
-        "question": "Imagine this situation: You follow multiple toppers on social media. What happens?",
+        "question": "Imagine this situation: You are planning a new lesson. What is your primary focus?",
         "options": [
-          {
-            "text": "I stay focused and take only useful insights",
-            "score": 1
-          },
-          {
-            "text": "I get slightly distracted but manage",
-            "score": 2
-          },
-          {
-            "text": "I feel confused due to too much content",
-            "score": 4
-          },
-          {
-            "text": "I keep switching strategies frequently",
-            "score": 3
-          }
+          { "text": "Clear objectives and student engagement", "score": 1 },
+          { "text": "Covering the syllabus content", "score": 2 },
+          { "text": "Creating the presentation", "score": 3 },
+          { "text": "Finishing quickly", "score": 4 }
         ]
       },
       {
         "id": 13,
-        "question": "How effectively do you convert achievers' advice into action?",
+        "question": "How do you handle making a mistake while teaching?",
         "options": [
-          {
-            "text": "Very effectively with consistency",
-            "score": 1
-          },
-          {
-            "text": "Somewhat effectively",
-            "score": 2
-          },
-          {
-            "text": "With inconsistency and limited effect",
-            "score": 3
-          },
-          {
-            "text": "Not able to apply at all",
-            "score": 4
-          }
+          { "text": "I correct it immediately and use it as a learning moment", "score": 1 },
+          { "text": "I correct it quietly", "score": 2 },
+          { "text": "I feel embarrassed and try to hide it", "score": 3 },
+          { "text": "I never admit to mistakes", "score": 4 }
         ]
       },
       {
         "id": 14,
-        "question": "Imagine this situation: You see an achiever studying long hours. What do you do?",
+        "question": "Imagine this situation: A parent asks about their child's poor performance. How do you respond?",
         "options": [
-          {
-            "text": "I understand my limits and plan wisely",
-            "score": 1
-          },
-          {
-            "text": "I try to copy but struggle",
-            "score": 2
-          },
-          {
-            "text": "I feel pressured and stressed",
-            "score": 3
-          },
-          {
-            "text": "I feel demotivated and give up",
-            "score": 4
-          }
+          { "text": "With constructive feedback and an improvement plan", "score": 1 },
+          { "text": "With general comments on behavior", "score": 2 },
+          { "text": "By blaming the student's lack of effort", "score": 3 },
+          { "text": "By avoiding the parent", "score": 4 }
         ]
       },
       {
         "id": 15,
-        "question": "Imagine this situation: When you reflect on achievers' role in your journey, what feels closest?",
+        "question": "When reflecting on your role as a subject expert, what is your ultimate goal?",
         "options": [
-          {
-            "text": "They guide me effectively and clearly",
-            "score": 1
-          },
-          {
-            "text": "They help but I need better application",
-            "score": 2
-          },
-          {
-            "text": "They sometimes confuse me",
-            "score": 3
-          },
-          {
-            "text": "They don't help me at all",
-            "score": 4
-          }
+          { "text": "To inspire a lifelong love for the subject", "score": 1 },
+          { "text": "To help students pass their exams", "score": 2 },
+          { "text": "To complete the curriculum on time", "score": 3 },
+          { "text": "To just do my job", "score": 4 }
         ]
       }
     ]
   },
   {
-    "slug": "competitive-exam",
+    "slug": "foreign-language-trainers",
     "domain": "education",
-    "title": "Aspirants (Competitive Exam Preparation)",
-    "subtitle": "Preparation, consistency & support",
-    "description": "Reflect on preparation planning, discipline, stress management, revision, and support during exam preparation.",
-    "focus": "competitive exam preparation habits",
+    "title": "Foreign Language Trainers",
+    "subtitle": "Language acquisition & coaching",
+    "description": "Reflect on your approach to teaching foreign languages, handling linguistic challenges, and fostering fluency.",
+    "focus": "language coaching and fluency building",
     "iconKey": "graduation",
-    "gradientFrom": "#DC2626",
-    "gradientTo": "#EF4444",
-    "accentColor": "#F87171",
-    "lightBg": "#FEF2F2",
-    "benefits": [
-      "Understand your current learning, planning, and growth patterns.",
-      "Identify areas where structure, mentoring, or counseling may help.",
-      "Reflect on strengths and obstacles without judgment.",
-      "Receive practical next steps for guided improvement."
-    ],
-    "takeaways": [
-      "A private learning reflection summary",
-      "Supportive score interpretation",
-      "Guidance-oriented next steps",
-      "A reminder that this is educational and non-diagnostic"
-    ],
-    "questions": [
-      {
-        "id": 1,
-        "question": "How clear are you about your exam and preparation strategy?",
-        "options": [
-          {
-            "text": "Somewhat clear but need improvement",
-            "score": 2
-          },
-          {
-            "text": "Completely unclear and directionless",
-            "score": 4
-          },
-          {
-            "text": "Very clear with a structured plan",
-            "score": 1
-          },
-          {
-            "text": "Slightly confused about the approach",
-            "score": 3
-          }
-        ]
-      },
-      {
-        "id": 2,
-        "question": "Imagine this situation: You start preparing for a competitive exam. What is your first step?",
-        "options": [
-          {
-            "text": "I keep thinking but delay starting",
-            "score": 3
-          },
-          {
-            "text": "I make a proper plan and syllabus breakdown",
-            "score": 1
-          },
-          {
-            "text": "I feel confused and don't begin properly",
-            "score": 4
-          },
-          {
-            "text": "I start studying without clear planning",
-            "score": 2
-          }
-        ]
-      },
-      {
-        "id": 3,
-        "question": "Imagine this situation: You miss your daily study target. What do you do?",
-        "options": [
-          {
-            "text": "I ignore it and move ahead",
-            "score": 3
-          },
-          {
-            "text": "I lose consistency completely",
-            "score": 4
-          },
-          {
-            "text": "I adjust and complete it the next day",
-            "score": 1
-          },
-          {
-            "text": "I try but feel slightly demotivated",
-            "score": 2
-          }
-        ]
-      },
-      {
-        "id": 4,
-        "question": "How often do you revise your studied topics?",
-        "options": [
-          {
-            "text": "Rarely revise",
-            "score": 2
-          },
-          {
-            "text": "Regularly and systematically",
-            "score": 1
-          },
-          {
-            "text": "Never revise",
-            "score": 4
-          },
-          {
-            "text": "Sometimes revise",
-            "score": 3
-          }
-        ]
-      },
-      {
-        "id": 5,
-        "question": "Imagine this situation: You find a subject difficult. What is your approach?",
-        "options": [
-          {
-            "text": "I study but without proper understanding",
-            "score": 3
-          },
-          {
-            "text": "I avoid it most of the time",
-            "score": 4
-          },
-          {
-            "text": "I break it down and practice regularly",
-            "score": 1
-          },
-          {
-            "text": "I try but struggle to stay consistent",
-            "score": 2
-          }
-        ]
-      },
-      {
-        "id": 6,
-        "question": "Imagine this situation: You get distracted while studying. What happens?",
-        "options": [
-          {
-            "text": "I keep switching between tasks",
-            "score": 3
-          },
-          {
-            "text": "I quickly regain focus",
-            "score": 1
-          },
-          {
-            "text": "I stop studying completely",
-            "score": 4
-          },
-          {
-            "text": "I get distracted but return later",
-            "score": 2
-          }
-        ]
-      },
-      {
-        "id": 7,
-        "question": "How confident are you in clearing your exam?",
-        "options": [
-          {
-            "text": "Slightly doubtful",
-            "score": 3
-          },
-          {
-            "text": "Very confident due to preparation",
-            "score": 1
-          },
-          {
-            "text": "Not confident at all",
-            "score": 4
-          },
-          {
-            "text": "Somewhat confident",
-            "score": 2
-          }
-        ]
-      },
-      {
-        "id": 8,
-        "question": "Imagine this situation: You receive low marks in a mock test. What do you do?",
-        "options": [
-          {
-            "text": "Try again but without clear analysis",
-            "score": 2
-          },
-          {
-            "text": "Feel discouraged and stop trying",
-            "score": 4
-          },
-          {
-            "text": "Analyze mistakes and improve",
-            "score": 1
-          },
-          {
-            "text": "Feel confused about improvement",
-            "score": 3
-          }
-        ]
-      },
-      {
-        "id": 9,
-        "question": "Imagine this situation: You see other aspirants studying more than you. What happens?",
-        "options": [
-          {
-            "text": "I feel distracted and lose focus",
-            "score": 3
-          },
-          {
-            "text": "I stay focused on my own strategy",
-            "score": 1
-          },
-          {
-            "text": "I feel stressed and compare constantly",
-            "score": 4
-          },
-          {
-            "text": "I feel slightly pressured but continue",
-            "score": 2
-          }
-        ]
-      },
-      {
-        "id": 10,
-        "question": "How consistent are you with your study routine?",
-        "options": [
-          {
-            "text": "Inconsistent most of the time",
-            "score": 3
-          },
-          {
-            "text": "Highly consistent and disciplined",
-            "score": 1
-          },
-          {
-            "text": "Not consistent at all",
-            "score": 4
-          },
-          {
-            "text": "Moderately consistent",
-            "score": 2
-          }
-        ]
-      },
-      {
-        "id": 11,
-        "question": "Imagine this situation: You have limited time before exams. What do you do?",
-        "options": [
-          {
-            "text": "Try to cover everything quickly",
-            "score": 2
-          },
-          {
-            "text": "Panic and waste time",
-            "score": 4
-          },
-          {
-            "text": "Prioritize important topics smartly",
-            "score": 1
-          },
-          {
-            "text": "Feel confused about what to study",
-            "score": 3
-          }
-        ]
-      },
-      {
-        "id": 12,
-        "question": "Imagine this situation: You feel mentally exhausted during preparation. What happens?",
-        "options": [
-          {
-            "text": "Take breaks but lose rhythm",
-            "score": 2
-          },
-          {
-            "text": "Completely stop studying for a while",
-            "score": 4
-          },
-          {
-            "text": "Take a short break and restart effectively",
-            "score": 1
-          },
-          {
-            "text": "Feel demotivated and slow down",
-            "score": 3
-          }
-        ]
-      },
-      {
-        "id": 13,
-        "question": "How often do you practice mock tests?",
-        "options": [
-          {
-            "text": "Rarely attempt tests",
-            "score": 3
-          },
-          {
-            "text": "Regularly with proper analysis",
-            "score": 1
-          },
-          {
-            "text": "Never attempt mock tests",
-            "score": 4
-          },
-          {
-            "text": "Occasionally with limited analysis",
-            "score": 2
-          }
-        ]
-      },
-      {
-        "id": 14,
-        "question": "Imagine this situation: You fail to meet weekly goals. What is your reaction?",
-        "options": [
-          {
-            "text": "I feel frustrated and confused",
-            "score": 3
-          },
-          {
-            "text": "I reassess and improve my plan",
-            "score": 1
-          },
-          {
-            "text": "I give up on planning",
-            "score": 4
-          },
-          {
-            "text": "I try again but feel uncertain",
-            "score": 2
-          }
-        ]
-      },
-      {
-        "id": 15,
-        "question": "Imagine this situation: When you reflect on your preparation journey, what feels closest?",
-        "options": [
-          {
-            "text": "I feel confused and inconsistent",
-            "score": 3
-          },
-          {
-            "text": "I am on the right track and progressing well",
-            "score": 1
-          },
-          {
-            "text": "I feel completely lost in preparation",
-            "score": 4
-          },
-          {
-            "text": "I am improving but need better consistency",
-            "score": 2
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "slug": "academic-growth",
-    "domain": "education",
-    "title": "Academic Scholars",
-    "subtitle": "Scholarship, goals & discipline",
-    "description": "Reflect on academic ambition, consistency, research habits, feedback, and long-term learning goals.",
-    "focus": "academic growth and scholarship readiness",
-    "iconKey": "graduation",
-    "gradientFrom": "#2563EB",
-    "gradientTo": "#3B82F6",
-    "accentColor": "#93C5FD",
+    "gradientFrom": "#0F766E",
+    "gradientTo": "#0F766E",
+    "accentColor": "#0F766E",
     "lightBg": "#EFF6FF",
     "benefits": [
-      "Understand your current learning, planning, and growth patterns.",
-      "Identify areas where structure, mentoring, or counseling may help.",
-      "Reflect on strengths and obstacles without judgment.",
-      "Receive practical next steps for guided improvement."
+      "Understand your current language teaching methodologies.",
+      "Reflect on how you handle different learning paces and styles.",
+      "Identify areas where new coaching techniques may help.",
+      "Receive practical next steps for improved language instruction."
     ],
     "takeaways": [
-      "A private learning reflection summary",
+      "A teaching reflection summary",
       "Supportive score interpretation",
       "Guidance-oriented next steps",
       "A reminder that this is educational and non-diagnostic"
@@ -5779,356 +5242,176 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
     "questions": [
       {
         "id": 1,
-        "question": "How do you approach your academic learning goals?",
+        "question": "How do you approach teaching a new grammar rule?",
         "options": [
-          {
-            "text": "I follow a structured and focused approach",
-            "score": 1
-          },
-          {
-            "text": "I feel confused about my learning goals",
-            "score": 3
-          },
-          {
-            "text": "I have some clarity but need improvement",
-            "score": 2
-          },
-          {
-            "text": "I have no clear academic direction",
-            "score": 4
-          }
+          { "text": "Through context and practical examples", "score": 1 },
+          { "text": "By explaining the rule and giving exercises", "score": 2 },
+          { "text": "By making students memorize the rule", "score": 3 },
+          { "text": "I avoid complex grammar if possible", "score": 4 }
         ]
       },
       {
         "id": 2,
-        "question": "Imagine this situation: You are given a complex topic to master. What do you do?",
+        "question": "Imagine this situation: A student is too shy to speak in the foreign language. What do you do?",
         "options": [
-          {
-            "text": "I feel overwhelmed and avoid it",
-            "score": 4
-          },
-          {
-            "text": "I try but struggle to understand fully",
-            "score": 2
-          },
-          {
-            "text": "I break it down and study deeply",
-            "score": 1
-          },
-          {
-            "text": "I study it but without deep understanding",
-            "score": 3
-          }
+          { "text": "Create small, low-pressure speaking tasks", "score": 1 },
+          { "text": "Encourage them gently in front of the class", "score": 2 },
+          { "text": "Force them to speak", "score": 3 },
+          { "text": "Let them remain silent", "score": 4 }
         ]
       },
       {
         "id": 3,
-        "question": "Imagine this situation: You aim to score top marks in exams. What is your strategy?",
+        "question": "How much do you emphasize cultural context in language learning?",
         "options": [
-          {
-            "text": "I study but without proper planning",
-            "score": 3
-          },
-          {
-            "text": "I study consistently with smart techniques",
-            "score": 1
-          },
-          {
-            "text": "I try but lack consistency",
-            "score": 2
-          },
-          {
-            "text": "I feel confused about how to achieve it",
-            "score": 4
-          }
+          { "text": "A lot, culture and language are intertwined", "score": 1 },
+          { "text": "Some emphasis, mainly on facts", "score": 2 },
+          { "text": "Little emphasis, focus is on language", "score": 3 },
+          { "text": "None, it's not relevant", "score": 4 }
         ]
       },
       {
         "id": 4,
-        "question": "How often do you engage in deep learning (beyond memorization)?",
+        "question": "Imagine this situation: A student constantly translates directly from their native language. How do you correct them?",
         "options": [
-          {
-            "text": "Always focus on conceptual understanding",
-            "score": 1
-          },
-          {
-            "text": "Rarely focus on deep learning",
-            "score": 3
-          },
-          {
-            "text": "Never go beyond memorization",
-            "score": 4
-          },
-          {
-            "text": "Sometimes try to understand concepts",
-            "score": 2
-          }
+          { "text": "Teach them phrases and thinking patterns in the target language", "score": 1 },
+          { "text": "Correct the specific errors", "score": 2 },
+          { "text": "Tell them to stop doing it", "score": 3 },
+          { "text": "I don't correct it if the meaning is clear", "score": 4 }
         ]
       },
       {
         "id": 5,
-        "question": "Imagine this situation: You don't perform well in an exam. What do you do?",
+        "question": "How do you balance reading, writing, listening, and speaking skills?",
         "options": [
-          {
-            "text": "I try again but without strong strategy",
-            "score": 2
-          },
-          {
-            "text": "I feel discouraged and give up",
-            "score": 4
-          },
-          {
-            "text": "I analyze mistakes and improve deeply",
-            "score": 1
-          },
-          {
-            "text": "I feel confused about what went wrong",
-            "score": 3
-          }
+          { "text": "Equally and integratively", "score": 1 },
+          { "text": "Focusing mostly on speaking and listening", "score": 2 },
+          { "text": "Focusing mostly on reading and writing", "score": 3 },
+          { "text": "I don't have a balanced approach", "score": 4 }
         ]
       },
       {
         "id": 6,
-        "question": "Imagine this situation: You have to manage multiple academic subjects. What happens?",
+        "question": "Imagine this situation: A student gets frustrated with pronunciation. What is your response?",
         "options": [
-          {
-            "text": "I fail to manage properly",
-            "score": 4
-          },
-          {
-            "text": "I manage effectively with planning",
-            "score": 1
-          },
-          {
-            "text": "I feel confused and unorganized",
-            "score": 3
-          },
-          {
-            "text": "I try but feel slightly overwhelmed",
-            "score": 2
-          }
+          { "text": "Break down the sounds and practice patiently", "score": 1 },
+          { "text": "Tell them it takes time", "score": 2 },
+          { "text": "Tell them their accent is fine", "score": 3 },
+          { "text": "Ignore the pronunciation errors", "score": 4 }
         ]
       },
       {
         "id": 7,
-        "question": "How consistent are you with academic discipline?",
+        "question": "How often do you use the students' native language in class?",
         "options": [
-          {
-            "text": "Not disciplined at all",
-            "score": 4
-          },
-          {
-            "text": "Moderately disciplined",
-            "score": 2
-          },
-          {
-            "text": "Highly disciplined and consistent",
-            "score": 1
-          },
-          {
-            "text": "Inconsistent most of the time",
-            "score": 3
-          }
+          { "text": "Rarely, only for complex clarifications", "score": 1 },
+          { "text": "Sometimes, to save time", "score": 2 },
+          { "text": "Often, it's easier to explain", "score": 3 },
+          { "text": "Almost always, except for target words", "score": 4 }
         ]
       },
       {
         "id": 8,
-        "question": "Imagine this situation: You are asked to explain a concept to others. What do you do?",
+        "question": "Imagine this situation: You are teaching vocabulary. What method do you prefer?",
         "options": [
-          {
-            "text": "I cannot explain properly",
-            "score": 4
-          },
-          {
-            "text": "I explain but with some gaps",
-            "score": 2
-          },
-          {
-            "text": "I feel unsure while explaining",
-            "score": 3
-          },
-          {
-            "text": "I explain clearly with strong understanding",
-            "score": 1
-          }
+          { "text": "Using visuals, actions, and context", "score": 1 },
+          { "text": "Providing a list with translations", "score": 2 },
+          { "text": "Making them write words multiple times", "score": 3 },
+          { "text": "Relying purely on textbook exercises", "score": 4 }
         ]
       },
       {
         "id": 9,
-        "question": "Imagine this situation: You face a difficult academic problem. What is your reaction?",
+        "question": "How do you assess conversational fluency?",
         "options": [
-          {
-            "text": "I avoid attempting it",
-            "score": 4
-          },
-          {
-            "text": "I try but get stuck often",
-            "score": 2
-          },
-          {
-            "text": "I solve it step by step with patience",
-            "score": 1
-          },
-          {
-            "text": "I feel confused and leave it",
-            "score": 3
-          }
+          { "text": "Through unstructured role-plays and discussions", "score": 1 },
+          { "text": "Through structured speaking tests", "score": 2 },
+          { "text": "By listening to them read aloud", "score": 3 },
+          { "text": "I rely on written exams", "score": 4 }
         ]
       },
       {
         "id": 10,
-        "question": "How often do you revise and reinforce concepts?",
+        "question": "Imagine this situation: The class energy is low during a language lesson. What do you do?",
         "options": [
-          {
-            "text": "Never revise",
-            "score": 4
-          },
-          {
-            "text": "Sometimes revise",
-            "score": 2
-          },
-          {
-            "text": "Regularly with strong focus",
-            "score": 1
-          },
-          {
-            "text": "Rarely revise",
-            "score": 3
-          }
+          { "text": "Introduce an interactive language game", "score": 1 },
+          { "text": "Play an audio or video clip", "score": 2 },
+          { "text": "Continue with the lesson plan", "score": 3 },
+          { "text": "Give them individual reading tasks", "score": 4 }
         ]
       },
       {
         "id": 11,
-        "question": "Imagine this situation: You see top performers in your class. What do you feel?",
+        "question": "How do you handle errors during a free-speaking activity?",
         "options": [
-          {
-            "text": "I feel demotivated",
-            "score": 4
-          },
-          {
-            "text": "I feel slightly pressured",
-            "score": 2
-          },
-          {
-            "text": "I feel motivated and improve myself",
-            "score": 1
-          },
-          {
-            "text": "I feel confused about my level",
-            "score": 3
-          }
+          { "text": "Note them down and review later without interrupting", "score": 1 },
+          { "text": "Correct major errors immediately", "score": 2 },
+          { "text": "Correct every single error", "score": 3 },
+          { "text": "I don't correct errors during free speech", "score": 4 }
         ]
       },
       {
         "id": 12,
-        "question": "Imagine this situation: You are given a research-based assignment. What do you do?",
+        "question": "Imagine this situation: A student wants to learn slang and informal language. How do you respond?",
         "options": [
-          {
-            "text": "I avoid or delay it",
-            "score": 4
-          },
-          {
-            "text": "I explore deeply and give my best work",
-            "score": 1
-          },
-          {
-            "text": "I complete it with moderate effort",
-            "score": 2
-          },
-          {
-            "text": "I feel confused about how to approach",
-            "score": 3
-          }
+          { "text": "Incorporate it appropriately as part of cultural learning", "score": 1 },
+          { "text": "Teach a few words occasionally", "score": 2 },
+          { "text": "Discourage it in favor of formal language", "score": 3 },
+          { "text": "Forbid it completely", "score": 4 }
         ]
       },
       {
         "id": 13,
-        "question": "How actively do you seek knowledge beyond your syllabus?",
+        "question": "How do you maintain your own fluency and language skills?",
         "options": [
-          {
-            "text": "Never explore beyond syllabus",
-            "score": 4
-          },
-          {
-            "text": "Sometimes explore extra knowledge",
-            "score": 2
-          },
-          {
-            "text": "Very actively and consistently",
-            "score": 1
-          },
-          {
-            "text": "Rarely go beyond syllabus",
-            "score": 3
-          }
+          { "text": "By actively consuming media and speaking with natives", "score": 1 },
+          { "text": "By teaching the language", "score": 2 },
+          { "text": "I occasionally review materials", "score": 3 },
+          { "text": "I don't do anything extra", "score": 4 }
         ]
       },
       {
         "id": 14,
-        "question": "Imagine this situation: You compare your academic growth with others. What happens?",
+        "question": "Imagine this situation: You have to teach a mixed-level class. What is your strategy?",
         "options": [
-          {
-            "text": "I feel demotivated and stressed",
-            "score": 4
-          },
-          {
-            "text": "I stay focused on my own growth",
-            "score": 1
-          },
-          {
-            "text": "I feel slightly affected",
-            "score": 2
-          },
-          {
-            "text": "I feel distracted and pressured",
-            "score": 3
-          }
+          { "text": "Use group work and peer teaching", "score": 1 },
+          { "text": "Teach to the middle level", "score": 2 },
+          { "text": "Focus on the advanced students", "score": 3 },
+          { "text": "Focus on the beginners", "score": 4 }
         ]
       },
       {
         "id": 15,
-        "question": "Imagine this situation: When you reflect on your academic journey, what feels closest?",
+        "question": "When reflecting on your role as a language trainer, what is your ultimate goal?",
         "options": [
-          {
-            "text": "I feel academically lost",
-            "score": 4
-          },
-          {
-            "text": "I am improving but need refinement",
-            "score": 2
-          },
-          {
-            "text": "I am on the path of academic excellence",
-            "score": 1
-          },
-          {
-            "text": "I feel confused and inconsistent",
-            "score": 3
-          }
+          { "text": "To enable confident and culturally aware communication", "score": 1 },
+          { "text": "To help them pass language proficiency exams", "score": 2 },
+          { "text": "To teach them perfect grammar", "score": 3 },
+          { "text": "To finish the coursebook", "score": 4 }
         ]
       }
     ]
   },
   {
-    "slug": "self-learning",
+    "slug": "skill-development-coaches",
     "domain": "education",
-    "title": "Self Education and Learning",
-    "subtitle": "Independent learning & curiosity",
-    "description": "Reflect on curiosity, learning routines, self-discipline, skill building, and applying what you learn.",
-    "focus": "self-learning habits and independent growth",
+    "title": "Skill Development Coaches",
+    "subtitle": "Practical skills & mentoring",
+    "description": "Reflect on your ability to coach practical skills, track progress, and mentor individuals towards mastery.",
+    "focus": "practical coaching and mentorship",
     "iconKey": "compass",
-    "gradientFrom": "#059669",
-    "gradientTo": "#10B981",
-    "accentColor": "#34D399",
+    "gradientFrom": "#0F766E",
+    "gradientTo": "#0F766E",
+    "accentColor": "#0F766E",
     "lightBg": "#ECFDF5",
     "benefits": [
-      "Understand your current learning, planning, and growth patterns.",
-      "Identify areas where structure, mentoring, or counseling may help.",
-      "Reflect on strengths and obstacles without judgment.",
-      "Receive practical next steps for guided improvement."
+      "Evaluate your skill tracking and mentorship strategies.",
+      "Identify areas to improve feedback delivery and motivation.",
+      "Reflect on the real-world applicability of your training.",
+      "Receive insights into fostering a growth mindset."
     ],
     "takeaways": [
-      "A private learning reflection summary",
+      "A coaching reflection summary",
       "Supportive score interpretation",
       "Guidance-oriented next steps",
       "A reminder that this is educational and non-diagnostic"
@@ -6136,332 +5419,152 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
     "questions": [
       {
         "id": 1,
-        "question": "How actively do you take responsibility for your own learning?",
+        "question": "How do you determine a learner's initial skill level?",
         "options": [
-          {
-            "text": "I depend on others most of the time",
-            "score": 3
-          },
-          {
-            "text": "I take full responsibility and learn independently",
-            "score": 1
-          },
-          {
-            "text": "I don't take responsibility for learning",
-            "score": 4
-          },
-          {
-            "text": "I try but need guidance often",
-            "score": 2
-          }
+          { "text": "Through practical assessments and interviews", "score": 1 },
+          { "text": "By asking them their experience level", "score": 2 },
+          { "text": "By looking at their resume", "score": 3 },
+          { "text": "I start everyone at the same level", "score": 4 }
         ]
       },
       {
         "id": 2,
-        "question": "Imagine this situation: You want to learn a new skill on your own. What do you do?",
+        "question": "Imagine this situation: A learner is struggling to grasp a physical or technical skill. What do you do?",
         "options": [
-          {
-            "text": "I start but without proper direction",
-            "score": 2
-          },
-          {
-            "text": "I feel confused and don't start",
-            "score": 4
-          },
-          {
-            "text": "I find resources and start learning systematically",
-            "score": 1
-          },
-          {
-            "text": "I delay and keep postponing",
-            "score": 3
-          }
+          { "text": "Break it down into micro-steps and demonstrate", "score": 1 },
+          { "text": "Show them the full action again", "score": 2 },
+          { "text": "Tell them to practice more", "score": 3 },
+          { "text": "Assume they don't have the aptitude", "score": 4 }
         ]
       },
       {
         "id": 3,
-        "question": "Imagine this situation: You face difficulty while self-studying. What happens?",
+        "question": "How do you measure progress in skill development?",
         "options": [
-          {
-            "text": "I feel confused and lose direction",
-            "score": 3
-          },
-          {
-            "text": "I try different methods and continue",
-            "score": 1
-          },
-          {
-            "text": "I quit learning that topic",
-            "score": 4
-          },
-          {
-            "text": "I struggle but keep trying",
-            "score": 2
-          }
+          { "text": "Through objective milestones and practical application", "score": 1 },
+          { "text": "By their confidence level", "score": 2 },
+          { "text": "By completion of modules", "score": 3 },
+          { "text": "I rely on subjective feeling", "score": 4 }
         ]
       },
       {
         "id": 4,
-        "question": "How often do you set personal learning goals?",
+        "question": "Imagine this situation: A learner is unmotivated to practice. How do you handle it?",
         "options": [
-          {
-            "text": "Sometimes set goals",
-            "score": 2
-          },
-          {
-            "text": "Never set goals",
-            "score": 4
-          },
-          {
-            "text": "Always set clear goals",
-            "score": 1
-          },
-          {
-            "text": "Rarely set goals",
-            "score": 3
-          }
+          { "text": "Connect the practice to their personal goals", "score": 1 },
+          { "text": "Remind them of the requirements", "score": 2 },
+          { "text": "Give them a warning", "score": 3 },
+          { "text": "Ignore it, it's their choice", "score": 4 }
         ]
       },
       {
         "id": 5,
-        "question": "Imagine this situation: You have access to multiple learning resources. What do you do?",
+        "question": "How much focus do you put on the 'why' behind a skill versus the 'how'?",
         "options": [
-          {
-            "text": "I randomly use resources",
-            "score": 3
-          },
-          {
-            "text": "I select and use them wisely",
-            "score": 1
-          },
-          {
-            "text": "I feel confused due to too many options",
-            "score": 4
-          },
-          {
-            "text": "I use some but not effectively",
-            "score": 2
-          }
+          { "text": "A balanced focus on both theory and practice", "score": 1 },
+          { "text": "Mostly on the 'how' with some 'why'", "score": 2 },
+          { "text": "Only on the 'how' (practical execution)", "score": 3 },
+          { "text": "Only on the 'why' (theory)", "score": 4 }
         ]
       },
       {
         "id": 6,
-        "question": "Imagine this situation: You get distracted while self-learning. What happens?",
+        "question": "Imagine this situation: You are teaching a group with diverse backgrounds. What is your approach?",
         "options": [
-          {
-            "text": "I get distracted but return later",
-            "score": 2
-          },
-          {
-            "text": "I stop learning completely",
-            "score": 4
-          },
-          {
-            "text": "I regain focus quickly",
-            "score": 1
-          },
-          {
-            "text": "I keep switching between tasks",
-            "score": 3
-          }
+          { "text": "Use varied examples that relate to different contexts", "score": 1 },
+          { "text": "Stick to generic examples", "score": 2 },
+          { "text": "Focus on the majority's background", "score": 3 },
+          { "text": "I don't adapt my examples", "score": 4 }
         ]
       },
       {
         "id": 7,
-        "question": "How consistent are you in self-learning?",
+        "question": "How do you handle giving feedback on poor performance?",
         "options": [
-          {
-            "text": "Moderately consistent",
-            "score": 2
-          },
-          {
-            "text": "Not consistent at all",
-            "score": 4
-          },
-          {
-            "text": "Highly consistent and disciplined",
-            "score": 1
-          },
-          {
-            "text": "Inconsistent most of the time",
-            "score": 3
-          }
+          { "text": "Constructively, focusing on actionable improvements", "score": 1 },
+          { "text": "Directly stating what was wrong", "score": 2 },
+          { "text": "Softening it so they don't feel bad", "score": 3 },
+          { "text": "I avoid giving negative feedback", "score": 4 }
         ]
       },
       {
         "id": 8,
-        "question": "Imagine this situation: You don't understand a concept while learning alone. What do you do?",
+        "question": "Imagine this situation: A learner learns much faster than the rest. What do you do?",
         "options": [
-          {
-            "text": "I try but remain partially confused",
-            "score": 2
-          },
-          {
-            "text": "I avoid learning it further",
-            "score": 4
-          },
-          {
-            "text": "I research and clarify it myself",
-            "score": 1
-          },
-          {
-            "text": "I feel stuck and leave it",
-            "score": 3
-          }
+          { "text": "Provide advanced challenges and leadership roles", "score": 1 },
+          { "text": "Give them more of the same work", "score": 2 },
+          { "text": "Tell them to wait for the others", "score": 3 },
+          { "text": "Ignore them and focus on the slow learners", "score": 4 }
         ]
       },
       {
         "id": 9,
-        "question": "Imagine this situation: You fail to complete your learning targets. What is your reaction?",
+        "question": "How do you ensure skills learned are transferred to real-world situations?",
         "options": [
-          {
-            "text": "I give up on the goal",
-            "score": 4
-          },
-          {
-            "text": "I reassess and improve my plan",
-            "score": 1
-          },
-          {
-            "text": "I feel confused and demotivated",
-            "score": 3
-          },
-          {
-            "text": "I try again but without clear changes",
-            "score": 2
-          }
+          { "text": "By using simulations and real-world projects", "score": 1 },
+          { "text": "By discussing real-world applications", "score": 2 },
+          { "text": "By giving hypothetical scenarios", "score": 3 },
+          { "text": "I assume they will figure it out", "score": 4 }
         ]
       },
       {
         "id": 10,
-        "question": "How often do you revise what you learn independently?",
+        "question": "Imagine this situation: The technology or method you teach becomes outdated. What is your reaction?",
         "options": [
-          {
-            "text": "Sometimes revise",
-            "score": 2
-          },
-          {
-            "text": "Never revise",
-            "score": 4
-          },
-          {
-            "text": "Regularly revise and reinforce learning",
-            "score": 1
-          },
-          {
-            "text": "Rarely revise",
-            "score": 3
-          }
+          { "text": "Proactively learn the new method and update curriculum", "score": 1 },
+          { "text": "Wait for a formal training before updating", "score": 2 },
+          { "text": "Continue teaching the old method for a while", "score": 3 },
+          { "text": "Resist the change", "score": 4 }
         ]
       },
       {
         "id": 11,
-        "question": "Imagine this situation: You compare your learning progress with others. What happens?",
+        "question": "How do you foster a growth mindset in your learners?",
         "options": [
-          {
-            "text": "I feel pressured and distracted",
-            "score": 3
-          },
-          {
-            "text": "I stay focused on my own growth",
-            "score": 1
-          },
-          {
-            "text": "I feel demotivated",
-            "score": 4
-          },
-          {
-            "text": "I feel slightly affected",
-            "score": 2
-          }
+          { "text": "By praising effort and framing mistakes as learning opportunities", "score": 1 },
+          { "text": "By encouraging them constantly", "score": 2 },
+          { "text": "By praising their natural talent", "score": 3 },
+          { "text": "I don't actively focus on mindset", "score": 4 }
         ]
       },
       {
         "id": 12,
-        "question": "Imagine this situation: You feel mentally tired during self-learning. What do you do?",
+        "question": "Imagine this situation: A learner is afraid of making mistakes. How do you help them?",
         "options": [
-          {
-            "text": "Feel demotivated and slow down",
-            "score": 3
-          },
-          {
-            "text": "Take a short break and restart effectively",
-            "score": 1
-          },
-          {
-            "text": "Stop learning for a long time",
-            "score": 4
-          },
-          {
-            "text": "Take breaks but lose consistency",
-            "score": 2
-          }
+          { "text": "Create a safe environment where failure is normalized", "score": 1 },
+          { "text": "Tell them not to worry", "score": 2 },
+          { "text": "Ensure they only do tasks they can succeed in", "score": 3 },
+          { "text": "Push them into high-stakes situations", "score": 4 }
         ]
       },
       {
         "id": 13,
-        "question": "How actively do you seek new knowledge beyond necessity?",
+        "question": "How do you structure a skill training session?",
         "options": [
-          {
-            "text": "Sometimes explore new topics",
-            "score": 2
-          },
-          {
-            "text": "Never seek extra knowledge",
-            "score": 4
-          },
-          {
-            "text": "Very actively and consistently",
-            "score": 1
-          },
-          {
-            "text": "Rarely explore beyond basics",
-            "score": 3
-          }
+          { "text": "Demonstration, guided practice, independent practice, review", "score": 1 },
+          { "text": "Lecture followed by practice", "score": 2 },
+          { "text": "Mainly practical exercises", "score": 3 },
+          { "text": "Unstructured exploration", "score": 4 }
         ]
       },
       {
         "id": 14,
-        "question": "Imagine this situation: You learn something new. How do you ensure retention?",
+        "question": "Imagine this situation: You are asked to teach a skill you are not fully proficient in. What do you do?",
         "options": [
-          {
-            "text": "I forget due to lack of practice",
-            "score": 3
-          },
-          {
-            "text": "I revise and apply it regularly",
-            "score": 1
-          },
-          {
-            "text": "I don't revise at all",
-            "score": 4
-          },
-          {
-            "text": "I revise occasionally",
-            "score": 2
-          }
+          { "text": "Be honest and collaborate with a true expert", "score": 1 },
+          { "text": "Learn it quickly before teaching", "score": 2 },
+          { "text": "Teach only the basics", "score": 3 },
+          { "text": "Pretend to be an expert", "score": 4 }
         ]
       },
       {
         "id": 15,
-        "question": "Imagine this situation: When you reflect on your self-learning journey, what feels closest?",
+        "question": "When reflecting on your role as a skill development coach, what is your ultimate goal?",
         "options": [
-          {
-            "text": "I feel unable to learn independently",
-            "score": 4
-          },
-          {
-            "text": "I am highly effective in self-learning",
-            "score": 1
-          },
-          {
-            "text": "I feel inconsistent and confused",
-            "score": 3
-          },
-          {
-            "text": "I am improving but need consistency",
-            "score": 2
-          }
+          { "text": "To empower learners to confidently apply skills independently", "score": 1 },
+          { "text": "To help them get a certification", "score": 2 },
+          { "text": "To ensure they complete the training hours", "score": 3 },
+          { "text": "To share my knowledge", "score": 4 }
         ]
       }
     ]
@@ -6475,8 +5578,8 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
     "focus": "investment awareness and decision-making",
     "iconKey": "wallet",
     "gradientFrom": "#0F766E",
-    "gradientTo": "#14B8A6",
-    "accentColor": "#5EEAD4",
+    "gradientTo": "#0F766E",
+    "accentColor": "#0F766E",
     "lightBg": "#F0FDFA",
     "benefits": [
       "Reflect on current awareness, planning habits, and decision patterns.",
@@ -6831,9 +5934,9 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
     "description": "Reflect on tax awareness, record keeping, compliance habits, and when professional guidance may be useful.",
     "focus": "GST and tax awareness",
     "iconKey": "receipt",
-    "gradientFrom": "#F59E0B",
-    "gradientTo": "#D97706",
-    "accentColor": "#FBBF24",
+    "gradientFrom": "#0F766E",
+    "gradientTo": "#0F766E",
+    "accentColor": "#0F766E",
     "lightBg": "#FFFBEB",
     "benefits": [
       "Reflect on current awareness, planning habits, and decision patterns.",
@@ -7188,9 +6291,9 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
     "description": "Reflect on financial goals, budgeting, saving, investing, reviews, and planning support needs.",
     "focus": "financial planning habits",
     "iconKey": "wallet",
-    "gradientFrom": "#10B981",
-    "gradientTo": "#059669",
-    "accentColor": "#34D399",
+    "gradientFrom": "#0F766E",
+    "gradientTo": "#0F766E",
+    "accentColor": "#0F766E",
     "lightBg": "#ECFDF5",
     "benefits": [
       "Reflect on current awareness, planning habits, and decision patterns.",
@@ -7545,9 +6648,9 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
     "description": "Reflect on insurance needs, policy understanding, claims awareness, premium discipline, and coverage planning.",
     "focus": "insurance planning awareness",
     "iconKey": "wallet",
-    "gradientFrom": "#2563EB",
-    "gradientTo": "#1D4ED8",
-    "accentColor": "#60A5FA",
+    "gradientFrom": "#0F766E",
+    "gradientTo": "#0F766E",
+    "accentColor": "#0F766E",
     "lightBg": "#EFF6FF",
     "benefits": [
       "Reflect on current awareness, planning habits, and decision patterns.",
@@ -7902,9 +7005,9 @@ export const ASSESSMENTS: AssessmentCatalogItem[] = [
     "description": "Reflect on business finance analysis, client communication, risk awareness, and areas for professional growth.",
     "focus": "business finance consulting readiness",
     "iconKey": "briefcase",
-    "gradientFrom": "#7C2D12",
-    "gradientTo": "#EA580C",
-    "accentColor": "#FDBA74",
+    "gradientFrom": "#0F766E",
+    "gradientTo": "#0F766E",
+    "accentColor": "#0F766E",
     "lightBg": "#FFF7ED",
     "benefits": [
       "Reflect on current awareness, planning habits, and decision patterns.",

@@ -320,7 +320,7 @@ export default function TechnologyContact() {
                     <p className="mt-2 text-xl font-extrabold text-[#0d1f36]">
                       Monday - Saturday
                     </p>
-                    <p className="mt-3 rounded-full bg-[#f7fbfa] px-4 py-2 text-sm font-bold text-[#0F5A4E]">
+                    <p className="mt-3 rounded-full bg-[#f7fbfa] px-4 py-2 text-sm font-bold text-[#0F766E]">
                       9:00 AM - 6:00 PM (IST)
                     </p>
                   </div>

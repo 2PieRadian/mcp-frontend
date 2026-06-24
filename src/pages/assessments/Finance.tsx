@@ -17,29 +17,20 @@ interface FinanceCardProps {
 function FinanceCard({ assessment, ctaLabel }: FinanceCardProps) {
   return (
     <div
-      className="group relative overflow-hidden rounded-2xl md:rounded-3xl transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl"
-      style={{
-        background: `linear-gradient(135deg, ${assessment.gradientFrom} 0%, ${assessment.gradientTo} 100%)`,
-      }}
+      className="group relative overflow-hidden rounded-2xl md:rounded-3xl bg-white shadow-lg border border-stone-100 transition-all duration-500 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-2xl"
+      style={
+        {
+          "--accent": assessment.accentColor,
+        } as any
+      }
     >
-      <div className="absolute inset-0 opacity-5">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at 25% 30%, rgba(255,255,255,0.3) 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
-          }}
-        />
-      </div>
-
       <div className="relative z-10 px-[clamp(20px,2.1vw,35px)] py-[clamp(25px,2.5vw,35px)] flex flex-col h-full min-h-[clamp(200px,25vw,260px)]">
         <div
-          className="mb-[clamp(0.5rem,1.5vw,1rem)] w-[clamp(2.5rem,6vw,3rem)] h-[clamp(2.5rem,6vw,3rem)] rounded-xl flex items-center justify-center shadow-lg transform group-hover:rotate-6 group-hover:scale-110 transition-all duration-300"
-          style={{ backgroundColor: assessment.accentColor }}
+          className="mb-[clamp(0.5rem,1.5vw,1rem)] w-[clamp(2.5rem,6vw,3rem)] h-[clamp(2.5rem,6vw,3rem)] rounded-xl flex items-center justify-center shadow-md transform group-hover:rotate-6 group-hover:scale-110 transition-all duration-500"
+          style={{ backgroundColor: "var(--accent)" }}
         >
           <div
-            className="text-white flex items-center justify-center"
+            className="text-white flex items-center justify-center transition-colors duration-500"
             style={{
               width: "clamp(1rem, 2.5vw, 1.5rem)",
               height: "clamp(1rem, 2.5vw, 1.5rem)",
@@ -50,9 +41,9 @@ function FinanceCard({ assessment, ctaLabel }: FinanceCardProps) {
         </div>
 
         <p
-          className="font-semibold uppercase tracking-wider mb-[clamp(0.25rem,1vw,0.5rem)] opacity-90"
+          className="font-semibold uppercase tracking-wider mb-[clamp(0.25rem,1vw,0.5rem)] opacity-90 transition-colors duration-500"
           style={{
-            color: assessment.accentColor,
+            color: "var(--accent)",
             fontSize: "clamp(12px, 1.5vw, 14px)",
           }}
         >
@@ -60,14 +51,14 @@ function FinanceCard({ assessment, ctaLabel }: FinanceCardProps) {
         </p>
 
         <h3
-          className="font-bold text-white mb-[clamp(0.5rem,1.5vw,0.75rem)] leading-tight group-hover:translate-x-1 transition-transform duration-300"
+          className="font-bold mb-[clamp(0.5rem,1.5vw,0.75rem)] leading-tight group-hover:translate-x-1 transition-all duration-500 text-stone-800"
           style={{ fontSize: "clamp(20px, 3vw, 28px)" }}
         >
           {assessment.title}
         </h3>
 
         <p
-          className="text-white/90 leading-relaxed mb-[clamp(1.5rem,3vw,2rem)] grow"
+          className="leading-relaxed mb-[clamp(1.5rem,3vw,2rem)] grow transition-colors duration-500 text-stone-500"
           style={{ fontSize: "16px" }}
         >
           {assessment.description}
@@ -75,19 +66,19 @@ function FinanceCard({ assessment, ctaLabel }: FinanceCardProps) {
 
         <Link
           to={`/assessments/${assessment.domain}/${assessment.slug}`}
-          className="flex items-center justify-center gap-2 bg-white text-[#44666C] font-semibold px-[clamp(20px,3vw,28px)] py-[clamp(12px,2vw,16px)] rounded-xl mt-auto transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-gray-50 group/btn cursor-pointer"
+          className="relative overflow-hidden flex items-center justify-center gap-2 font-semibold px-[clamp(20px,3vw,28px)] py-[clamp(12px,2vw,16px)] rounded-xl mt-auto transition-all duration-500 hover:scale-105 hover:shadow-lg group/btn cursor-pointer bg-[var(--accent)] text-white hover:opacity-95"
         >
-          <span style={{ fontSize: "16px" }}>{ctaLabel}</span>
+          <span
+            className="relative z-10 transition-colors duration-500 text-white"
+            style={{ fontSize: "16px" }}
+          >
+            {ctaLabel}
+          </span>
           <ArrowRight
-            className="group-hover/btn:translate-x-1 transition-transform duration-300"
+            className="relative z-10 group-hover/btn:translate-x-1 transition-transform duration-500 text-white"
             size={18}
           />
         </Link>
-
-        <div
-          className="absolute bottom-0 left-0 right-0 h-1 transform origin-left group-hover:scale-x-100 scale-x-0 transition-transform duration-500"
-          style={{ backgroundColor: assessment.accentColor }}
-        />
       </div>
     </div>
   );
@@ -100,12 +91,30 @@ export default function Finance() {
   return (
     <>
       <Helmet>
-        <title>Finance Self-Assessment | MindCurePath Expert-Verified Financial Insights</title>
-        <meta name="description" content="Take MindCurePath finance self-reflections to explore planning, investment, tax, insurance, and business finance awareness for educational guidance." />
-        <link href="https://mindcurepath.com/assessments/finance" rel="canonical" />
-        <meta property="og:title" content="Finance Self-Assessment | MindCurePath" />
-        <meta property="og:description" content="Discover finance reflection tools across financial planning, investments, GST and tax awareness, insurance, and business finance readiness." />
-        <meta property="og:url" content="https://mindcurepath.com/assessments/finance" />
+        <title>
+          Finance Self-Assessment | MindCurePath Expert-Verified Financial
+          Insights
+        </title>
+        <meta
+          name="description"
+          content="Take MindCurePath finance self-reflections to explore planning, investment, tax, insurance, and business finance awareness for educational guidance."
+        />
+        <link
+          href="https://mindcurepath.com/assessments/finance"
+          rel="canonical"
+        />
+        <meta
+          property="og:title"
+          content="Finance Self-Assessment | MindCurePath"
+        />
+        <meta
+          property="og:description"
+          content="Discover finance reflection tools across financial planning, investments, GST and tax awareness, insurance, and business finance readiness."
+        />
+        <meta
+          property="og:url"
+          content="https://mindcurepath.com/assessments/finance"
+        />
       </Helmet>
 
       <div className="min-h-screen bg-white px-[16px] sm:px-[20px]">
@@ -128,7 +137,9 @@ export default function Finance() {
             >
               {t("financeAssessHeaderTitleLine1")}
               <br />
-              <span className="text-[#44666C]">{t("financeAssessHeaderTitleLine2")}</span>
+              <span className="text-[#44666C]">
+                {t("financeAssessHeaderTitleLine2")}
+              </span>
             </h1>
 
             <p
