@@ -651,6 +651,14 @@ export function WebRTCSession({
         </div>
       )}
 
+      {/* Screen Sharing Indicator */}
+      {isScreenSharing && (
+        <div className="absolute top-20 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-full font-medium text-white shadow-lg bg-blue-500/90 backdrop-blur-sm border border-blue-400/30 flex items-center gap-2 animate-in fade-in slide-in-from-top-4">
+          <MonitorUp className="w-5 h-5" />
+          You are sharing your screen
+        </div>
+      )}
+
       {/* Bottom Chat Notification (Mobile) */}
       {chatNotification && (
         <div
