@@ -55,6 +55,38 @@ function smoothScrollToHash(
   }
 }
 
+function WaveShape({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      className={`pointer-events-none absolute text-[#dff3ee] ${className}`}
+      viewBox="0 0 900 360"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M18 280C162 120 254 218 386 186C535 150 556 15 720 50C802 68 858 136 898 176V360H0C0 360 -10 312 18 280Z"
+        fill="currentColor"
+        opacity="0.62"
+      />
+      {Array.from({ length: 8 }).map((_, index) => (
+        <path
+          key={index}
+          d={`M${10 + index * 4} ${270 - index * 14}C160 ${
+            110 - index * 2
+          } 255 ${210 - index * 9} 390 ${178 - index * 12}C535 ${
+            142 - index * 13
+          } 560 ${18 + index * 2} 716 ${54 + index * 8}C802 ${
+            72 + index * 8
+          } 854 ${132 + index * 5} 898 ${170 + index * 6}`}
+          stroke="#b7dfd5"
+          strokeWidth="1"
+          opacity="0.45"
+        />
+      ))}
+    </svg>
+  );
+}
+
 function CategoryCard({
   category,
 }: {
@@ -127,45 +159,45 @@ export default function HeroSection() {
 
   return (
     <>
-      <section className="relative isolate w-full overflow-hidden px-[16px] pb-12 pt-4 sm:px-[20px] sm:pb-16 sm:pt-8 lg:pb-20">
-        <div className="absolute inset-0 -z-10 bg-linear-to-b from-white via-[#f7fbfa] to-white" />
-        <div className="absolute inset-x-0 bottom-0 -z-10 h-32 bg-linear-to-t from-white to-transparent" />
+      <section className="relative min-h-[calc(100svh-88px)] bg-white flex flex-col overflow-hidden pt-[10vh]">
+        <WaveShape className="right-[-10%] bottom-[-25%] w-[120%] min-w-[1400px] h-auto" />
+        <div className="relative mx-auto flex w-full max-w-[1350px] flex-col px-[16px] sm:px-[20px] pb-24 z-10">
+          <div className="max-w-[760px]">
+            <h1 className="mt-4 text-[42px] font-extrabold leading-[1.1] tracking-[-0.04em] text-[#0d1f36] sm:text-[56px] lg:text-[64px]">
+              <Trans
+                i18nKey="discoverYourPath"
+                components={{ highlight: <span className="text-[#159374]" /> }}
+              />
+            </h1>
 
-        <div className="mx-auto flex min-h-[clamp(340px,48vw,500px)] max-w-[1000px] flex-col items-center justify-center text-center">
-          <h1 className="max-w-4xl text-balance text-[clamp(2.05rem,5vw,4rem)] font-bold leading-[1.04] tracking-tight text-[#1A2B3C]">
-            <Trans
-              i18nKey="discoverYourPath"
-              components={{ highlight: <span className="text-[#0F766E]" /> }}
-            />
-          </h1>
+            <p className="mt-8 max-w-[620px] text-[22px] leading-[1.55] text-[#5d6672]">
+              {t("heroDesignSub")}
+            </p>
 
-          <p className="mx-auto mt-7 max-w-2xl text-pretty text-base leading-relaxed text-[#555555] sm:text-xl">
-            {t("heroDesignSub")}
-          </p>
-
-          <div className="mt-9 flex w-full max-w-xl flex-col items-stretch justify-center gap-3 sm:flex-row">
-            <Link
-              to="/choose-experts"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0F766E] px-8 py-4 text-[15px] font-semibold text-white shadow-[0_14px_34px_-12px_rgba(15,118,110,0.75)] transition hover:-translate-y-0.5 hover:bg-[#0D635C] hover:shadow-[0_18px_42px_-14px_rgba(15,118,110,0.8)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F766E]"
-            >
-              {t("heroDesignCtaPrimary")}
-            </Link>
-            <a
-              href="#expert-verified-assessments"
-              onClick={(e) =>
-                smoothScrollToHash(e, "#expert-verified-assessments")
-              }
-              className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-slate-200 bg-white px-8 py-4 text-[15px] font-semibold text-black shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F766E]"
-            >
-              {t("heroDesignCtaSecondary")}
-            </a>
+            <div className="mt-10 flex w-full flex-col gap-4 sm:flex-row">
+              <Link
+                to="/choose-experts"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#149373] px-9 py-[18px] text-[16px] font-semibold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-[#107b5f]"
+              >
+                {t("heroDesignCtaPrimary")}
+              </Link>
+              <a
+                href="#expert-verified-assessments"
+                onClick={(e) =>
+                  smoothScrollToHash(e, "#expert-verified-assessments")
+                }
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-9 py-[18px] text-[16px] font-semibold text-black shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-50"
+              >
+                {t("heroDesignCtaSecondary")}
+              </a>
+            </div>
           </div>
         </div>
       </section>
 
       <section
         aria-labelledby="categories-heading"
-        className="w-full px-[16px] pb-16 sm:px-[20px] sm:pb-20 lg:pb-24"
+        className="w-full px-[16px] py-16 sm:px-[20px] sm:py-20 lg:py-24"
       >
         <div className="mx-auto max-w-[1350px]">
           <div className="mx-auto mb-10 max-w-2xl text-center">
