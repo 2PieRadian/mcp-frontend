@@ -1,5 +1,11 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { ChevronDown, ChevronUp, ChevronRight, X, Check } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronUp,
+  ChevronRight,
+  X,
+  BookOpen,
+} from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { loginPathWithRedirect } from "../../lib/loginRedirect";
 import { useAuth } from "../../context/AuthContext";
@@ -11,16 +17,6 @@ import {
 } from "../../lib/constants/assessmentCatalog";
 import { EXPERT_CATEGORIES } from "../../lib/constants/experts";
 
-const MOBILE_NAV_ICONS = {
-  expertCategories: "/images/mobile-nav/icon-expert-categories.svg",
-  selfAssessment: "/images/mobile-nav/icon-self-assessment.svg",
-  counsellors: "/images/mobile-nav/icon-counsellors.svg",
-  careers: "/images/mobile-nav/icon-careers.svg",
-  articles: "/images/mobile-nav/icon-articles.svg",
-  language: "/images/mobile-nav/icon-language.svg",
-} as const;
-
-/** Active state for top-level nav items (dashboard is exact; articles allows detail routes). */
 function isMobileNavActive(to: string, pathname: string): boolean {
   if (to === "/") return pathname === "/";
   if (to === "/dashboard" || to === "/dashboard/expert") {
@@ -32,7 +28,6 @@ function isMobileNavActive(to: string, pathname: string): boolean {
 interface MobileNavModalProps {
   isOpen: boolean;
   onClose: () => void;
-  /** Focus returns here when the drawer closes (avoids focus inside aria-hidden). */
   menuTriggerRef?: React.RefObject<HTMLElement | null>;
 }
 
@@ -42,38 +37,29 @@ function MobileNavItem({
   to,
   ns = "navigation",
   label,
-  iconSrc,
 }: {
   textKey: string;
   onClick?: () => void;
   to?: string;
   ns?: string;
   label?: string;
-  iconSrc?: string;
 }) {
   const { t } = useTranslation(ns);
   const location = useLocation();
   const active = to ? isMobileNavActive(to, location.pathname) : false;
 
   return (
-    <Link to={to || ""} onClick={onClick} className="block">
-      <div
-        className={`cursor-pointer rounded-2xl px-4 py-4 text-[15px] font-semibold tracking-tight transition-all duration-200 border shadow-sm ${
-          active
-            ? "bg-[hsl(173,35%,92%)] border-cure-color/35 text-logo-heading ring-1 ring-cure-color/20"
-            : "border-[#E1ECF4] bg-white text-logo-heading hover:border-[#CFE0ED] hover:bg-slate-50 hover:shadow-md active:scale-[0.99]"
-        }`}
-      >
-        <div className="flex items-center gap-3">
-          {iconSrc ? (
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#F4F9FD] ring-1 ring-[#E1ECF4]">
-              <img src={iconSrc} alt="" className="h-5 w-5" />
-            </span>
-          ) : null}
-          <span>{label ?? t(textKey)}</span>
+    <div className="border-b border-[#F0F0F0] bg-white">
+      <Link to={to || ""} onClick={onClick} className="block px-5">
+        <div className="flex cursor-pointer items-center justify-between py-[18px] transition-colors">
+          <span
+            className={`text-[17px] font-bold tracking-tight ${active ? "text-cure-color" : "text-[#1A1A1A]"}`}
+          >
+            {label ?? t(textKey)}
+          </span>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 }
 
@@ -134,21 +120,17 @@ export default function MobileNavModal({
     setLanguageExpanded(false);
   };
 
-  // Restore body/html so the page is never left stuck (e.g. after navigation with menu open)
   const restoreScrollLock = () => {
     const body = document.body;
     const html = document.documentElement;
     const prev = scrollLockRef.current;
 
-    // Always reset these styles regardless of whether we have saved values
-    // This ensures we never leave the page in a stuck state
     html.style.overflow = prev?.htmlOverflow ?? "";
     body.style.overflow = prev?.bodyOverflow ?? "";
     body.style.position = prev?.bodyPosition || "";
     body.style.top = prev?.bodyTop ?? "";
     body.style.width = prev?.bodyWidth ?? "";
 
-    // Restore scroll position
     if (typeof prev?.scrollY === "number") {
       window.scrollTo(0, prev.scrollY);
     }
@@ -156,12 +138,10 @@ export default function MobileNavModal({
     scrollLockRef.current = null;
   };
 
-  // Force unlock body styles - used as a safety fallback
   const forceUnlockBody = () => {
     const body = document.body;
     const html = document.documentElement;
 
-    // If body is in fixed position (locked state), force unlock
     if (body.style.position === "fixed") {
       const scrollY = Math.abs(parseInt(body.style.top || "0", 10));
       html.style.overflow = "";
@@ -173,7 +153,6 @@ export default function MobileNavModal({
     }
   };
 
-  // Robust scroll lock for mobile (prevents background page scroll, including iOS)
   useEffect(() => {
     if (isOpen) {
       const body = document.body;
@@ -201,16 +180,13 @@ export default function MobileNavModal({
     }
   }, [isOpen]);
 
-  // Unmount safeguard: always restore body when modal is removed (e.g. route change, resize to desktop)
   useEffect(() => {
     return () => {
       restoreScrollLock();
-      // Extra safety: force unlock if body is still stuck
       forceUnlockBody();
     };
   }, []);
 
-  // Handle page refresh/navigation - ensure body is unlocked when page becomes visible again
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible" && !isOpen) {
@@ -219,7 +195,6 @@ export default function MobileNavModal({
     };
 
     const handlePageShow = (e: PageTransitionEvent) => {
-      // bfcache restoration (back/forward navigation)
       if (e.persisted && !isOpen) {
         forceUnlockBody();
       }
@@ -236,16 +211,12 @@ export default function MobileNavModal({
 
   useEffect(() => {
     if (!isOpen) return;
-
-    // Focus close button when drawer opens for better keyboard UX
     const id = window.setTimeout(() => {
       closeButtonRef.current?.focus();
     }, 50);
-
     return () => window.clearTimeout(id);
   }, [isOpen]);
 
-  // When closed, nothing inside the aria-hidden wrapper may retain focus (browser a11y warning).
   useLayoutEffect(() => {
     if (isOpen) return;
     const root = rootRef.current;
@@ -262,29 +233,21 @@ export default function MobileNavModal({
 
   useEffect(() => {
     if (!isOpen) return;
-
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
-
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [isOpen, onClose]);
 
-  // GSAP animation for Expert Categories
   useEffect(() => {
     if (!expertCategoriesRef.current) return;
-
     const element = expertCategoriesRef.current;
-
     if (weHelpWithExpanded) {
-      // Measure the content height by temporarily setting to auto
       const heightBefore = element.style.height;
       element.style.height = "auto";
       const targetHeight = element.scrollHeight;
       element.style.height = heightBefore;
-
-      // Animate from 0 to measured height
       gsap.to(element, {
         height: targetHeight,
         opacity: 1,
@@ -292,7 +255,6 @@ export default function MobileNavModal({
         ease: "power2.inOut",
       });
     } else {
-      // Animate to 0
       gsap.to(element, {
         height: 0,
         opacity: 0,
@@ -302,18 +264,14 @@ export default function MobileNavModal({
     }
   }, [weHelpWithExpanded]);
 
-  // GSAP animation for Self Assessment
   useEffect(() => {
     if (!selfAssessmentRef.current) return;
-
     const element = selfAssessmentRef.current;
-
     if (selfAssessmentExpanded) {
       const heightBefore = element.style.height;
       element.style.height = "auto";
       const targetHeight = element.scrollHeight;
       element.style.height = heightBefore;
-
       gsap.to(element, {
         height: targetHeight,
         opacity: 1,
@@ -336,7 +294,6 @@ export default function MobileNavModal({
       className={`fixed inset-0 z-70 ${isOpen ? "" : "pointer-events-none"}`}
       aria-hidden={!isOpen}
     >
-      {/* Backdrop with blur effect */}
       <div
         className={`absolute inset-0 bg-black/50 transition-opacity duration-300 ease-out ${
           isOpen ? "opacity-100" : "opacity-0"
@@ -344,53 +301,42 @@ export default function MobileNavModal({
         onClick={isOpen ? onClose : undefined}
       />
 
-      {/* Drawer */}
       <div
         className={`absolute inset-y-0 left-0 w-screen flex flex-col bg-white shadow-2xl transform-gpu transition-transform duration-300 ease-out will-change-transform ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        {/* Header: logo, brand, close */}
-        <div className="flex shrink-0 items-start justify-between gap-3 border-b border-[#E4EDF4] bg-white px-5 py-4">
-          <Link
-            to="/"
-            onClick={onClose}
-            className="flex min-w-0 flex-1 items-start gap-3 pt-0.5"
-          >
+        {/* Header */}
+        <div className="flex shrink-0 items-center justify-between border-b border-[#F0F0F0] bg-white px-5 py-[14px]">
+          <Link to="/" onClick={onClose} className="flex items-center gap-2">
             <img
               src="/images/navbar/logo.png"
               alt={`${t("appName", { ns: "common" })} Logo`}
-              className="h-11 w-11 shrink-0 self-center object-contain"
+              className="h-10 w-10 object-contain"
             />
-            <div className="flex min-w-0 flex-col">
-              <span className="truncate text-[20px] font-semibold leading-tight text-logo-heading">
-                {t("appName", { ns: "common" }) === "MindCurePath" ? (
-                  <>
-                    Mind<span className="text-cure-color">Cure</span>Path
-                  </>
-                ) : (
-                  t("appName", { ns: "common" })
-                )}
-              </span>
-              <span className="mt-0.5 line-clamp-2 text-[10px] leading-snug text-cure-color">
-                Guided by experts, driven by care, healing every mind
-              </span>
-            </div>
+            <span className="text-[22px] font-bold tracking-tight text-logo-heading">
+              {t("appName", { ns: "common" }) === "MindCurePath" ? (
+                <>
+                  Mind<span className="text-cure-color">Cure</span>Path
+                </>
+              ) : (
+                t("appName", { ns: "common" })
+              )}
+            </span>
           </Link>
           <button
             ref={closeButtonRef}
             type="button"
             onClick={onClose}
-            className="shrink-0 rounded-full p-2 ring-1 ring-transparent transition-colors duration-200 hover:bg-slate-100 hover:ring-slate-200"
+            className="shrink-0 p-1 transition-colors duration-200"
             aria-label="Close"
           >
-            <X size={24} className="text-gray-600" />
+            <X size={26} strokeWidth={1.5} className="text-[#1A1A1A]" />
           </button>
         </div>
 
-        {/* Navigation items */}
-        <div className="flex flex-1 flex-col gap-3 overflow-y-auto bg-[#FBFDFF] p-5">
-          {/* Dashboard - first for logged-in non-expert users */}
+        {/* Navigation Items */}
+        <div className="flex flex-1 flex-col overflow-y-auto bg-white pt-1">
           {user?.role !== "EXPERT" && user && (
             <MobileNavItem
               textKey="dashboard"
@@ -398,104 +344,101 @@ export default function MobileNavModal({
               onClick={onClose}
             />
           )}
-          {/* We Help With - Expandable */}
+
+          {/* Expert Categories */}
           {user?.role !== "EXPERT" && (
-            <div className="rounded-2xl border border-slate-200 bg-white p-1 shadow-sm">
+            <div className="border-b border-[#F0F0F0] bg-white">
               <div
-                className={`flex cursor-pointer items-center justify-between rounded-xl px-4 py-3.5 transition-colors duration-200 ${
-                  weHelpWithExpanded
-                    ? "bg-slate-100 shadow-inner"
-                    : "hover:bg-slate-50"
-                }`}
+                className="flex cursor-pointer items-center justify-between py-[18px] px-5 transition-colors"
                 onClick={() => {
                   setWeHelpWithExpanded(!weHelpWithExpanded);
                   setSelfAssessmentExpanded(false);
                 }}
               >
-                <div className="min-w-0 pr-2 flex items-center gap-3">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#F4F9FD] ring-1 ring-[#E1ECF4]">
-                    <img
-                      src={MOBILE_NAV_ICONS.expertCategories}
-                      alt=""
-                      className="h-5 w-5"
-                    />
-                  </span>
-                  <span className="text-[15px] font-semibold text-logo-heading leading-tight">
-                    {t("expertCategories", { ns: "navigation" })}
-                  </span>
-                </div>
-                <ChevronDown
-                  size={18}
-                  strokeWidth={2.25}
-                  className={`shrink-0 text-primary transition-transform duration-200 ${
-                    weHelpWithExpanded ? "rotate-180" : ""
-                  }`}
-                />
+                <span
+                  className={`text-[17px] font-bold tracking-tight ${weHelpWithExpanded ? "text-cure-color" : "text-[#1A1A1A]"}`}
+                >
+                  {t("expertCategories", { ns: "navigation" })}
+                </span>
+                {weHelpWithExpanded ? (
+                  <ChevronUp
+                    size={20}
+                    strokeWidth={2.5}
+                    className="text-[#1A1A1A]"
+                  />
+                ) : (
+                  <ChevronDown
+                    size={20}
+                    strokeWidth={2.5}
+                    className="text-[#1A1A1A]"
+                  />
+                )}
               </div>
 
-              {/* Nested list with GSAP animation */}
               <div
                 ref={expertCategoriesRef}
-                className="overflow-hidden"
+                className="overflow-hidden bg-[#F7F8F9]"
                 style={{ height: 0, opacity: 0 }}
               >
-                <div className="mx-1 mb-2 mt-1 rounded-xl border border-slate-200 bg-slate-100 p-2 shadow-inner">
-                  <p className="px-2 pb-2 pt-1 text-[11px] font-medium leading-snug text-slate-500">
-                    {t("expertCategoriesHint", { ns: "navigation" })}
-                  </p>
-                  <div className="flex flex-col gap-1">
-                    <Link
-                      to="/wellness-experts"
-                      onClick={onClose}
-                      className="group flex items-center justify-between gap-2 rounded-lg border border-transparent bg-white px-3 py-2.5 text-[13px] font-medium text-slate-600 shadow-sm transition-all hover:border-cure-color/25 hover:bg-white hover:text-logo-heading hover:shadow-md active:scale-[0.99]"
-                    >
-                      <span>{t("wellnessExperts", { ns: "navigation" })}</span>
-                      <ChevronRight
-                        size={16}
-                        className="text-slate-400 transition-transform group-hover:translate-x-0.5 group-hover:text-cure-color"
+                <div className="px-5 py-5">
+                  <div className="mb-4">
+                    <div className="flex items-center gap-2 border-b border-[#E0E2E6] pb-2 mb-4">
+                      <BookOpen
+                        size={14}
+                        strokeWidth={2.5}
+                        className="text-[#6B7280]"
                       />
-                    </Link>
-                    <Link
-                      to="/education-experts"
-                      onClick={onClose}
-                      className="group flex items-center justify-between gap-2 rounded-lg border border-transparent bg-white px-3 py-2.5 text-[13px] font-medium text-slate-600 shadow-sm transition-all hover:border-cure-color/25 hover:bg-white hover:text-logo-heading hover:shadow-md active:scale-[0.99]"
-                    >
-                      <span>{t("educationExperts", { ns: "navigation" })}</span>
-                      <ChevronRight
-                        size={16}
-                        className="text-slate-400 transition-transform group-hover:translate-x-0.5 group-hover:text-cure-color"
-                      />
-                    </Link>
-                    <div className="ml-3 flex flex-col gap-1 border-l border-cure-color/15 pl-3">
-                      {EXPERT_CATEGORIES.education.map((category) => (
-                        <Link
-                          key={category.slug}
-                          to={`/education-experts/${category.slug}`}
-                          onClick={onClose}
-                          className="group flex items-center justify-between gap-2 rounded-lg border border-transparent bg-white/80 px-3 py-2 text-[12.5px] font-medium text-slate-600 shadow-sm transition-all hover:border-cure-color/25 hover:bg-white hover:text-logo-heading hover:shadow-md active:scale-[0.99]"
-                        >
-                          <span>
-                            {t(`${category.i18nKey}.title`, {
-                              ns: "experts",
-                            })}
-                          </span>
-                          <ChevronRight
-                            size={15}
-                            className="text-slate-400 transition-transform group-hover:translate-x-0.5 group-hover:text-cure-color"
-                          />
-                        </Link>
-                      ))}
+                      <span className="text-[11px] font-bold uppercase tracking-widest text-[#6B7280]">
+                        {t("expertCategoriesHint", { ns: "navigation" })}
+                      </span>
                     </div>
+                    <div className="flex flex-col gap-4">
+                      <Link
+                        to="/wellness-experts"
+                        onClick={onClose}
+                        className="text-[14px] font-bold text-[#1A1A1A]"
+                      >
+                        {t("wellnessExperts", { ns: "navigation" })}
+                      </Link>
+                      <Link
+                        to="/education-experts"
+                        onClick={onClose}
+                        className="text-[14px] font-bold text-[#1A1A1A]"
+                      >
+                        {t("educationExperts", { ns: "navigation" })}
+                      </Link>
+                      <div className="ml-4 flex flex-col gap-3">
+                        {EXPERT_CATEGORIES.education.map((category) => (
+                          <Link
+                            key={category.slug}
+                            to={`/education-experts/${category.slug}`}
+                            onClick={onClose}
+                            className="text-[13px] font-semibold text-[#4B5563]"
+                          >
+                            {t(`${category.i18nKey}.title`, { ns: "experts" })}
+                          </Link>
+                        ))}
+                      </div>
+                      <Link
+                        to="/finance-experts"
+                        onClick={onClose}
+                        className="text-[14px] font-bold text-[#1A1A1A]"
+                      >
+                        {t("financeExperts", { ns: "navigation" })}
+                      </Link>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 pt-4">
                     <Link
-                      to="/finance-experts"
+                      to="/choose-expert-category"
                       onClick={onClose}
-                      className="group flex items-center justify-between gap-2 rounded-lg border border-transparent bg-white px-3 py-2.5 text-[13px] font-medium text-slate-600 shadow-sm transition-all hover:border-cure-color/25 hover:bg-white hover:text-logo-heading hover:shadow-md active:scale-[0.99]"
+                      className="flex items-center gap-2 text-[13px] font-bold text-[#1A1A1A]"
                     >
-                      <span>{t("financeExperts", { ns: "navigation" })}</span>
-                      <ChevronRight
-                        size={16}
-                        className="text-slate-400 transition-transform group-hover:translate-x-0.5 group-hover:text-cure-color"
-                      />
+                      <span>See all categories</span>
+                      <div className="rounded-full border border-[#1A1A1A] p-0.5">
+                        <ChevronRight size={12} strokeWidth={3} />
+                      </div>
                     </Link>
                   </div>
                 </div>
@@ -503,94 +446,94 @@ export default function MobileNavModal({
             </div>
           )}
 
+          {/* Self Assessment */}
           {user?.role !== "EXPERT" && (
-            <div className="rounded-2xl border border-slate-200 bg-white p-1 shadow-sm">
+            <div className="border-b border-[#F0F0F0] bg-white">
               <div
-                className={`flex cursor-pointer items-center justify-between rounded-xl px-4 py-3.5 transition-colors duration-200 ${
-                  selfAssessmentExpanded
-                    ? "bg-slate-100 shadow-inner"
-                    : "hover:bg-slate-50"
-                }`}
+                className="flex cursor-pointer items-center justify-between py-[18px] px-5 transition-colors"
                 onClick={() => {
                   setSelfAssessmentExpanded(!selfAssessmentExpanded);
                   setWeHelpWithExpanded(false);
                 }}
               >
-                <div className="flex items-center gap-3 pr-2">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#F4F9FD] ring-1 ring-[#E1ECF4]">
-                    <img
-                      src={MOBILE_NAV_ICONS.selfAssessment}
-                      alt=""
-                      className="h-5 w-5"
-                    />
-                  </span>
-                  <span className="text-[15px] font-semibold text-logo-heading leading-tight">
-                    {t("selfAssessment", { ns: "navigation" })}
-                  </span>
-                </div>
-                <ChevronDown
-                  size={18}
-                  strokeWidth={2.25}
-                  className={`shrink-0 text-primary transition-transform duration-200 ${
-                    selfAssessmentExpanded ? "rotate-180" : ""
-                  }`}
-                />
+                <span
+                  className={`text-[17px] font-bold tracking-tight ${selfAssessmentExpanded ? "text-cure-color" : "text-[#1A1A1A]"}`}
+                >
+                  {t("selfAssessment", { ns: "navigation" })}
+                </span>
+                {selfAssessmentExpanded ? (
+                  <ChevronUp
+                    size={20}
+                    strokeWidth={2.5}
+                    className="text-[#1A1A1A]"
+                  />
+                ) : (
+                  <ChevronDown
+                    size={20}
+                    strokeWidth={2.5}
+                    className="text-[#1A1A1A]"
+                  />
+                )}
               </div>
 
               <div
                 ref={selfAssessmentRef}
-                className="overflow-hidden"
+                className="overflow-hidden bg-[#F7F8F9]"
                 style={{ height: 0, opacity: 0 }}
               >
-                <div className="mx-1 mb-2 mt-1 rounded-xl border border-slate-200 bg-slate-100 p-2 shadow-inner">
-                  <p className="px-2 pb-2 pt-1 text-[11px] font-medium leading-snug text-slate-500">
-                    {t("selfAssessmentHint", { ns: "navigation" })}
-                  </p>
-                  <div className="flex flex-col gap-3">
+                <div className="px-5 py-5">
+                  <div className="flex items-center gap-2 border-b border-[#E0E2E6] pb-2 mb-4">
+                    <BookOpen
+                      size={14}
+                      strokeWidth={2.5}
+                      className="text-[#6B7280]"
+                    />
+                    <span className="text-[11px] font-bold uppercase tracking-widest text-[#6B7280]">
+                      {t("selfAssessmentHint", { ns: "navigation" })}
+                    </span>
+                  </div>
+
+                  <div className="flex flex-col gap-6">
                     {ASSESSMENT_DOMAINS.map((domain) => (
-                      <div key={domain} className="relative">
-                        <div
-                          className="mb-1.5 flex items-center gap-2 border-b border-slate-200 pb-1.5 pl-1"
-                          aria-hidden
-                        >
-                          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-cure-color" />
-                          <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-cure-color">
-                            {t(
-                              `common:${
-                                domain === "wellness"
-                                  ? "wellnessAssessments"
-                                  : domain === "education"
-                                    ? "educationAssessments"
-                                    : "financeAssessments"
-                              }`,
-                            )}
-                          </span>
-                        </div>
-                        <div className="flex flex-col gap-1 pl-0.5">
+                      <div key={domain} className="flex flex-col gap-3">
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-[#6B7280]">
+                          {t(
+                            `common:${domain === "wellness" ? "wellnessAssessments" : domain === "education" ? "educationAssessments" : "financeAssessments"}`,
+                          )}
+                        </span>
+                        <div className="flex flex-col gap-3 pl-1">
                           {getAssessmentsByDomain(domain).map((assessment) => (
                             <Link
                               key={`${domain}:${assessment.slug}`}
                               to={`/assessments/${domain}/${assessment.slug}`}
                               onClick={onClose}
-                              className="group flex items-center justify-between gap-2 rounded-lg border border-transparent bg-white px-3 py-2.5 text-[13px] font-medium text-slate-600 shadow-sm transition-all hover:border-cure-color/25 hover:bg-white hover:text-logo-heading hover:shadow-md active:scale-[0.99]"
+                              className="text-[14px] font-bold text-[#1A1A1A]"
                             >
-                              <span className="leading-snug">
-                                {assessment.title}
-                              </span>
-                              <ChevronRight
-                                size={16}
-                                className="shrink-0 text-slate-400 transition-transform group-hover:translate-x-0.5 group-hover:text-cure-color"
-                              />
+                              {assessment.title}
                             </Link>
                           ))}
                         </div>
                       </div>
                     ))}
                   </div>
+
+                  <div className="mt-6 pt-4 border-t border-[#E0E2E6]">
+                    <Link
+                      to="/self-assessment"
+                      onClick={onClose}
+                      className="flex items-center gap-2 text-[13px] font-bold text-[#1A1A1A]"
+                    >
+                      <span>See all assessments</span>
+                      <div className="rounded-full border border-[#1A1A1A] p-0.5">
+                        <ChevronRight size={12} strokeWidth={3} />
+                      </div>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
           )}
+
           {user?.role === "EXPERT" && (
             <>
               <MobileNavItem textKey="Home" to="/" onClick={onClose} />
@@ -607,109 +550,87 @@ export default function MobileNavModal({
             label="Careers"
             to="/careers"
             onClick={onClose}
-            iconSrc={MOBILE_NAV_ICONS.careers}
           />
           <MobileNavItem textKey="about" to="/about" onClick={onClose} />
-          <MobileNavItem
-            textKey="articles"
-            to="/articles"
-            onClick={onClose}
-            iconSrc={MOBILE_NAV_ICONS.articles}
-          />
+          <MobileNavItem textKey="articles" to="/articles" onClick={onClose} />
 
-          {/* Profile/Login — same visual weight as other primary links */}
-          {user ? (
-            <Link to="/profile" onClick={onClose} className="block">
-              <div
-                className={`rounded-xl px-4 py-3.5 text-[15px] font-semibold tracking-tight transition-all duration-200 border shadow-sm ${
-                  location.pathname.startsWith("/profile")
-                    ? "bg-[hsl(173,35%,92%)] border-cure-color/35 text-logo-heading ring-1 ring-cure-color/25"
-                    : "border-slate-200 bg-white text-logo-heading hover:border-slate-300 hover:bg-slate-50 hover:shadow-md active:scale-[0.99]"
-                }`}
+          {/* Profile / Login */}
+          <div className="bg-white">
+            {user ? (
+              <Link
+                to="/profile"
+                onClick={onClose}
+                className="block px-5 py-[18px]"
               >
-                {t("profile", { ns: "navigation" })}
-              </div>
-            </Link>
-          ) : (
-            <Link
-              to={loginPathWithRedirect(location.pathname, location.search)}
-              onClick={onClose}
-              className="block rounded-2xl border border-[#0C3D4A] bg-[#073B4C] px-4 py-3.5 text-center text-[15px] font-semibold text-white shadow-md shadow-[#073B4C]/25 transition-all hover:brightness-105 active:scale-[0.99]"
-            >
-              {t("login", { ns: "common" })}
-            </Link>
-          )}
+                <span className="text-[17px] font-bold tracking-tight text-[#1A1A1A]">
+                  {t("profile", { ns: "navigation" })}
+                </span>
+              </Link>
+            ) : (
+              <Link
+                to={loginPathWithRedirect(location.pathname, location.search)}
+                onClick={onClose}
+                className="block px-5 py-[18px]"
+              >
+                <span className="text-[17px] font-bold tracking-tight text-[#1A1A1A]">
+                  {t("login", { ns: "common" })}
+                </span>
+              </Link>
+            )}
+          </div>
         </div>
 
-        {/* Bottom: language — nested list style matches expandable sections */}
-        <div className="shrink-0 border-t border-[#E4EDF4] bg-white p-4 shadow-[0_-4px_16px_rgba(15,23,42,0.06)]">
-          <div className="rounded-2xl border border-[#E1ECF4] bg-[#F7FBFF] p-1">
+        {/* Bottom Language Selector */}
+        <div className="shrink-0 bg-white pb-4">
+          <div className="border-t border-[#F0F0F0]">
             <div
-              className={`flex cursor-pointer items-center justify-between rounded-xl px-3 py-3 transition-colors ${
-                languageExpanded ? "bg-white shadow-inner" : "hover:bg-slate-50"
-              }`}
+              className="flex cursor-pointer items-center justify-between py-[16px] px-5 transition-colors"
               onClick={() => setLanguageExpanded(!languageExpanded)}
             >
-              <div className="flex min-w-0 items-center gap-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white shadow-sm ring-1 ring-[#E1ECF4]">
-                  <img
-                    src={MOBILE_NAV_ICONS.language}
-                    alt=""
-                    className="h-5 w-5"
-                  />
-                </div>
-                <div className="min-w-0">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-500">
-                    {t("footerLanguage", { ns: "common" })}
-                  </p>
-                  <p className="truncate text-[14px] font-semibold text-logo-heading">
-                    {currentLanguage.nativeName}
-                  </p>
-                </div>
+              <div className="flex flex-col">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-[#6B7280]">
+                  {t("footerLanguage", { ns: "common" })}
+                </span>
+                <span className="text-[15px] font-bold tracking-tight text-[#1A1A1A]">
+                  {currentLanguage.nativeName} (
+                  {currentLanguage.code.toUpperCase()})
+                </span>
               </div>
               {languageExpanded ? (
-                <ChevronDown
-                  size={18}
-                  strokeWidth={2.25}
-                  className="shrink-0 text-primary transition-transform duration-200"
+                <ChevronUp
+                  size={20}
+                  strokeWidth={2.5}
+                  className="text-[#1A1A1A]"
                 />
               ) : (
-                <ChevronUp
-                  size={18}
-                  strokeWidth={2.25}
-                  className="shrink-0 text-primary transition-transform duration-200"
+                <ChevronDown
+                  size={20}
+                  strokeWidth={2.5}
+                  className="text-[#1A1A1A]"
                 />
               )}
             </div>
 
             <div
-              className={`transition-all duration-300 ease-in-out scrollbar-hide ${
+              className={`transition-all duration-300 ease-in-out scrollbar-hide bg-[#F7F8F9] ${
                 languageExpanded
-                  ? "max-h-[220px] overflow-y-auto opacity-100"
+                  ? "max-h-[240px] overflow-y-auto opacity-100"
                   : "max-h-0 overflow-hidden opacity-0"
               }`}
             >
-              <div className="mt-1 space-y-1 border-t border-slate-200 px-2 pb-2 pt-2">
+              <div className="flex flex-col gap-4 px-5 py-5 border-t border-[#E0E2E6]">
                 {availableLanguages.map((lang) => (
                   <button
                     key={lang.code}
                     type="button"
                     onClick={() => changeLanguage(lang.code)}
-                    className={`flex w-full cursor-pointer items-center justify-between gap-2 rounded-lg border px-3 py-2.5 text-left text-[13px] transition-all ${
+                    className={`text-left text-[14px] ${
                       i18n.language === lang.code
-                        ? "border-cure-color/40 bg-white font-semibold text-logo-heading shadow-sm ring-1 ring-cure-color/20"
-                        : "border-transparent bg-white text-slate-600 hover:border-slate-200 hover:bg-slate-50 hover:text-logo-heading"
+                        ? "font-bold text-cure-color"
+                        : "font-bold text-[#4B5563]"
                     }`}
                   >
-                    <div className="flex min-w-0 flex-col">
-                      <span className="truncate font-medium">{lang.name}</span>
-                      <span className="truncate text-[11px] text-slate-500">
-                        {lang.nativeName}
-                      </span>
-                    </div>
-                    {i18n.language === lang.code && (
-                      <Check size={16} className="shrink-0 text-cure-color" />
-                    )}
+                    {lang.name} — {lang.nativeName}
                   </button>
                 ))}
               </div>

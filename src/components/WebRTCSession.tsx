@@ -615,11 +615,17 @@ export function WebRTCSession({
     if (isNotifying) return;
     setIsNotifying(true);
     try {
+      const token =
+        window.localStorage.getItem("auth:token") ||
+        window.localStorage.getItem("token");
       const response = await fetch(
         `${backendUrl}/api/v1/appointments/${appointmentId}/notify`,
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+          },
           credentials: "include",
         },
       );
