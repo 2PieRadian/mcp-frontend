@@ -9,12 +9,7 @@ interface CategoryCardProps {
   to: string;
   icon: React.ReactNode;
   title: string;
-  subtitle: string;
   description: string;
-  gradient: string;
-  iconBg: string;
-  hoverGradient: string;
-  accentColor: string;
   delay: number;
   exploreExpertsText: string;
 }
@@ -23,12 +18,7 @@ function CategoryCard({
   to,
   icon,
   title,
-  subtitle,
   description,
-  gradient,
-  iconBg,
-  hoverGradient,
-  accentColor,
   delay,
   exploreExpertsText,
 }: CategoryCardProps) {
@@ -40,11 +30,10 @@ function CategoryCard({
     if (cardRef.current) {
       gsap.fromTo(
         cardRef.current,
-        { opacity: 0, y: 60, scale: 0.95 },
+        { opacity: 0, y: 40 },
         {
           opacity: 1,
           y: 0,
-          scale: 1,
           duration: 0.8,
           delay,
           ease: "power3.out",
@@ -69,97 +58,42 @@ function CategoryCard({
     <Link
       ref={cardRef}
       to={to}
-      className="group relative block opacity-0"
+      className="group block opacity-0 h-full"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
       <div
-        className={`relative overflow-hidden rounded-3xl transition-all duration-500 transform-gpu ${
-          isActive ? "scale-[1.02] shadow-2xl" : "shadow-lg hover:shadow-xl"
+        className={`relative bg-white rounded-[2rem] p-8 md:p-10 h-full flex flex-col transition-all duration-300 border border-slate-100 ${
+          isActive
+            ? "shadow-xl -translate-y-1"
+            : "shadow-[0_8px_30px_rgb(0,0,0,0.04)]"
         }`}
-        style={{
-          background: isActive ? hoverGradient : gradient,
-          minHeight: "320px",
-        }}
       >
-        {/* Decorative background elements */}
-        <div
-          className={`absolute top-0 right-0 w-48 h-48 rounded-full blur-3xl transition-all duration-700 ${
-            isActive ? "opacity-40 scale-125" : "opacity-20"
-          }`}
-          style={{ background: accentColor }}
-        />
+        {/* Icon */}
+        <div className="w-14 h-14 rounded-2xl bg-[#f0f9f4] flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-105">
+          {icon}
+        </div>
 
-        <div
-          className={`absolute bottom-0 left-0 w-32 h-32 rounded-full blur-2xl transition-all duration-700 ${
-            isActive ? "opacity-30 scale-110" : "opacity-10"
-          }`}
-          style={{ background: accentColor }}
-        />
+        {/* Title */}
+        <h2 className="text-2xl font-bold text-[#0f172a] mb-3">{title}</h2>
 
-        {/* Animated border glow */}
-        <div
-          className={`absolute inset-0 rounded-3xl transition-opacity duration-500 ${
-            isActive ? "opacity-100" : "opacity-0"
-          }`}
-          style={{
-            boxShadow: `inset 0 0 0 2px ${accentColor}40, 0 0 60px ${accentColor}30`,
-          }}
-        />
+        {/* Underline */}
+        <div className="w-8 h-[2px] bg-[#2d7f5e] mb-5 transition-all duration-300 group-hover:w-12"></div>
 
-        {/* Content */}
-        <div className="relative z-10 p-8 md:p-10 h-full flex flex-col">
-          {/* Icon */}
+        {/* Description */}
+        <p className="text-slate-500 text-[15px] leading-relaxed flex-grow mb-8 font-medium">
+          {description}
+        </p>
+
+        {/* CTA */}
+        <div className="flex items-center gap-3 text-[#2d7f5e] font-bold text-sm mt-auto">
+          <span>{exploreExpertsText}</span>
           <div
-            className={`inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-2xl mb-6 transition-all duration-500 ${
-              isActive ? "scale-110 rotate-3" : ""
-            }`}
-            style={{ background: iconBg }}
+            className={`w-8 h-8 rounded-full bg-[#f0f9f4] flex items-center justify-center transition-all duration-300 ${isActive ? "bg-[#e2f1e9]" : ""}`}
           >
-            <div
-              className={`transition-transform duration-500 ${
-                isActive ? "scale-110" : ""
-              }`}
-            >
-              {icon}
-            </div>
-          </div>
-
-          {/* Title & Subtitle */}
-          <div className="mb-4">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-2 tracking-tight">
-              {title}
-            </h2>
-            <p className="text-white/70 text-sm md:text-base font-medium italic">
-              "{subtitle}"
-            </p>
-          </div>
-
-          {/* Description */}
-          <p className="text-white/80 text-sm md:text-base leading-relaxed grow">
-            {description}
-          </p>
-
-          {/* CTA */}
-          <div
-            className={`mt-6 inline-flex items-center gap-2 text-white font-semibold transition-all duration-300 ${
-              isActive ? "translate-x-2" : ""
-            }`}
-          >
-            <span>{exploreExpertsText}</span>
-            <div
-              className={`flex items-center justify-center w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm transition-all duration-300 ${
-                isActive ? "bg-white/30 scale-110" : ""
-              }`}
-            >
-              <ArrowRight
-                className={`w-4 h-4 text-white transition-transform duration-300 ${
-                  isActive ? "translate-x-0.5" : ""
-                }`}
-              />
-            </div>
+            <ArrowRight className="w-4 h-4" />
           </div>
         </div>
       </div>
@@ -186,87 +120,118 @@ export default function ChooseExpertCategory() {
   const categories = [
     {
       to: "/wellness-experts",
-      icon: <HeartPulse className="w-8 h-8 md:w-10 md:h-10 text-white" />,
+      icon: <HeartPulse className="w-7 h-7 text-[#2d7f5e]" strokeWidth={2.5} />,
       title: t("wellness"),
-      subtitle: t("wellnessSubtitle"),
       description: t("wellnessDescription"),
-      gradient:
-        "linear-gradient(135deg, #0ea5e9 0%, #0284c7 50%, #0369a1 100%)",
-      hoverGradient:
-        "linear-gradient(135deg, #38bdf8 0%, #0ea5e9 50%, #0284c7 100%)",
-      iconBg: "rgba(255, 255, 255, 0.2)",
-      accentColor: "#38bdf8",
       delay: 0.1,
       exploreExpertsText,
     },
     {
       to: "/education-experts",
-      icon: <BookOpenText className="w-8 h-8 md:w-10 md:h-10 text-white" />,
+      icon: (
+        <BookOpenText className="w-7 h-7 text-[#2d7f5e]" strokeWidth={2.5} />
+      ),
       title: t("education"),
-      subtitle: t("educationSubtitle"),
       description: t("educationDescription"),
-      gradient:
-        "linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%)",
-      hoverGradient:
-        "linear-gradient(135deg, #34d399 0%, #10b981 50%, #059669 100%)",
-      iconBg: "rgba(255, 255, 255, 0.2)",
-      accentColor: "#34d399",
       delay: 0.25,
       exploreExpertsText,
     },
     {
       to: "/finance-experts",
-      icon: <TrendingUp className="w-8 h-8 md:w-10 md:h-10 text-white" />,
+      icon: <TrendingUp className="w-7 h-7 text-[#2d7f5e]" strokeWidth={2.5} />,
       title: t("finance"),
-      subtitle: t("financeSubtitle"),
       description: t("financeDescription"),
-      gradient:
-        "linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%)",
-      hoverGradient:
-        "linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%)",
-      iconBg: "rgba(255, 255, 255, 0.2)",
-      accentColor: "#fbbf24",
       delay: 0.4,
       exploreExpertsText,
     },
   ];
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-slate-50 via-white to-slate-50">
+    <div className="min-h-screen bg-white relative overflow-hidden flex flex-col">
+      {/* Abstract wave background */}
+      <div
+        className="absolute inset-0 pointer-events-none z-0"
+        aria-hidden="true"
+      >
+        <svg
+          className="w-full h-full"
+          preserveAspectRatio="none"
+          viewBox="0 0 1440 600"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0 250 C 300 250, 400 150, 720 150 C 1040 150, 1140 250, 1440 250 L 1440 350 C 1140 350, 1040 250, 720 250 C 400 250, 300 350, 0 350 Z"
+            stroke="#eef2f6"
+            strokeWidth="1"
+            fill="none"
+            className="opacity-60"
+          />
+          <path
+            d="M0 270 C 300 270, 400 170, 720 170 C 1040 170, 1140 270, 1440 270 L 1440 370 C 1140 370, 1040 270, 720 270 C 400 270, 300 370, 0 370 Z"
+            stroke="#eef2f6"
+            strokeWidth="1"
+            fill="none"
+            className="opacity-50"
+          />
+          <path
+            d="M0 290 C 300 290, 400 190, 720 190 C 1040 190, 1140 290, 1440 290 L 1440 390 C 1140 390, 1040 290, 720 290 C 400 290, 300 390, 0 390 Z"
+            stroke="#eef2f6"
+            strokeWidth="1"
+            fill="none"
+            className="opacity-40"
+          />
+          <path
+            d="M0 310 C 300 310, 400 210, 720 210 C 1040 210, 1140 310, 1440 310 L 1440 410 C 1140 410, 1040 310, 720 310 C 400 310, 300 410, 0 410 Z"
+            stroke="#eef2f6"
+            strokeWidth="1"
+            fill="none"
+            className="opacity-30"
+          />
+        </svg>
+      </div>
+
       {/* Navbar */}
-      <div className="w-full bg-white/80 backdrop-blur-sm px-[16px] sm:px-[20px] sticky top-0 z-50 border-b border-slate-100">
+      <div className="w-full bg-white/80 backdrop-blur-sm px-[16px] sm:px-[20px] sticky top-0 z-50">
         <ResponsiveNavbar />
       </div>
 
       {/* Main Content */}
-      <div className="max-w-6xl mx-auto px-[16px] sm:px-[20px] py-12 md:py-20">
+      <div className="flex-1 max-w-6xl mx-auto px-[16px] sm:px-[20px] py-16 md:py-24 relative z-10 w-full flex flex-col justify-center">
         {/* Header */}
-        <div ref={headerRef} className="text-center mb-12 md:mb-16">
+        <div ref={headerRef} className="text-center mb-16 md:mb-24">
           {/* Title */}
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-stone-800 mb-4 tracking-tight">
-            {t("chooseExpertCategoryTitle")}
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#0f172a] mb-6 tracking-tight leading-tight">
+            {(() => {
+              const text = t("chooseExpertCategoryTitle");
+              const parts = text.split(/(guidance)/i);
+              return (
+                <div className="flex flex-col md:inline-block">
+                  {parts.map((part, i) =>
+                    part.toLowerCase() === "guidance" ? (
+                      <span key={i} className="text-[#2d7f5e]">
+                        {part}
+                      </span>
+                    ) : (
+                      <span key={i}>{part}</span>
+                    ),
+                  )}
+                </div>
+              );
+            })()}
           </h1>
 
           {/* Subtitle */}
-          <p className="text-stone-500 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+          <p className="text-slate-500 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-medium">
             {t("chooseExpertCategorySubtitle")}
           </p>
         </div>
 
         {/* Category Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
           {categories.map((category) => (
             <CategoryCard key={category.to} {...category} />
           ))}
-        </div>
-
-        {/* Bottom decorative section */}
-        <div className="text-center mt-16 md:mt-20">
-          <div className="inline-flex items-center gap-3 text-stone-400">
-            <div className="w-12 h-px bg-stone-200" />
-            <span className="text-sm">{t("chooseExpertCategoryFooter")}</span>
-            <div className="w-12 h-px bg-stone-200" />
-          </div>
         </div>
       </div>
     </div>
