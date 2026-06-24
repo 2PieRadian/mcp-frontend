@@ -17,6 +17,7 @@ import {
   expertAuthUserOwnsAppointment,
   postAppointmentJoin,
   BACKEND_URL,
+  getAvatarUrl,
   type AppointmentStatus,
   type ExpertAppointment,
   type MyAppointment,
@@ -175,12 +176,16 @@ export default function AppointmentVideoSession() {
           "Expert"
         : "Video session";
 
+  let counterpartyAvatarRaw: string | null | undefined = null;
+  if (sessionRole === "EXPERT" && appointment && "user" in appointment) {
+    counterpartyAvatarRaw = (appointment as ExpertAppointment).user?.avatarUrl;
+  } else if (appointment && "expert" in appointment && appointment.expert) {
+    counterpartyAvatarRaw = (appointment as MyAppointment).expert.user
+      ?.avatarUrl as string | null | undefined;
+  }
+
   const showJitsiStage =
-    appointment &&
-    isVideo &&
-    !isTerminal &&
-    !terminalBanner &&
-    hasJoinedCall;
+    appointment && isVideo && !isTerminal && !terminalBanner && hasJoinedCall;
 
   const showScheduledJoinHint =
     appointment &&
@@ -344,7 +349,8 @@ export default function AppointmentVideoSession() {
         ) : !isVideo ? (
           <div className="flex flex-1 flex-col items-center justify-center gap-6 p-8 text-center">
             <p className="max-w-md text-stone-300">
-              This session is not a video appointment. Use your phone or chat as arranged.
+              This session is not a video appointment. Use your phone or chat as
+              arranged.
             </p>
           </div>
         ) : hasJoinedCall ? (
@@ -352,7 +358,9 @@ export default function AppointmentVideoSession() {
             appointmentId={appointmentNumericId.toString()}
             userId={user?.id?.toString() ?? ""}
             localParticipantName={user?.name?.trim() || user?.email || "You"}
+            localParticipantImage={getAvatarUrl(user?.avatarUrl)}
             remoteParticipantName={counterpartyLabel}
+            remoteParticipantImage={getAvatarUrl(counterpartyAvatarRaw)}
             backendUrl={BACKEND_URL}
             onLeave={() => navigate(dashboardPath)}
             role={sessionRole as "USER" | "EXPERT"}

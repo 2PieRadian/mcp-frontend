@@ -19,7 +19,9 @@ interface WebRTCSessionProps {
   appointmentId: string;
   userId: string;
   localParticipantName: string;
+  localParticipantImage?: string;
   remoteParticipantName: string;
+  remoteParticipantImage?: string;
   backendUrl: string;
   onLeave: () => void;
   role: "USER" | "EXPERT";
@@ -36,7 +38,9 @@ export function WebRTCSession({
   appointmentId,
   userId,
   localParticipantName,
+  localParticipantImage,
   remoteParticipantName,
+  remoteParticipantImage,
   backendUrl,
   onLeave,
   role,
@@ -67,10 +71,16 @@ export function WebRTCSession({
     text: string;
   } | null>(null);
 
+  const [unreadCount, setUnreadCount] = useState(0);
+
   const [showMobileChat, setShowMobileChat] = useState(false);
   const showMobileChatRef = useRef(false);
 
   useEffect(() => {
+    if (showMobileChat) {
+      setUnreadCount(0);
+      setChatNotification(null);
+    }
     showMobileChatRef.current = showMobileChat;
   }, [showMobileChat]);
 
@@ -360,6 +370,7 @@ export function WebRTCSession({
               !showMobileChatRef.current &&
               data.senderId !== userId
             ) {
+              setUnreadCount((prev) => prev + 1);
               setChatNotification({
                 senderName: data.senderName,
                 text: data.text,
@@ -628,20 +639,31 @@ export function WebRTCSession({
           className="absolute bottom-24 left-4 right-4 lg:hidden z-40 bg-[#121a24] border border-[#44666C] rounded-xl p-4 shadow-2xl cursor-pointer transition-all animate-in slide-in-from-bottom-5"
           onClick={() => {
             setShowMobileChat(true);
-            setChatNotification(null);
           }}
         >
           <div className="flex items-center justify-between">
             <div className="pr-4">
-              <p className="text-xs text-[#7eb8aa] font-medium mb-1">
-                New message from {chatNotification.senderName}
-              </p>
+              <div className="flex items-center gap-2 mb-1">
+                <p className="text-xs text-[#7eb8aa] font-medium">
+                  New message from {chatNotification.senderName}
+                </p>
+                {unreadCount > 1 && (
+                  <span className="bg-[#44666C] text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+                    {unreadCount} new
+                  </span>
+                )}
+              </div>
               <p className="text-sm text-stone-200 line-clamp-1">
                 {chatNotification.text}
               </p>
             </div>
-            <div className="h-8 w-8 rounded-full bg-[#44666C]/20 flex items-center justify-center shrink-0">
+            <div className="relative h-8 w-8 rounded-full bg-[#44666C]/20 flex items-center justify-center shrink-0">
               <MessageSquare className="w-4 h-4 text-[#7eb8aa]" />
+              {unreadCount > 1 && (
+                <span className="absolute -top-1 -right-1 flex h-3 w-3 items-center justify-center rounded-full bg-red-500 text-[9px] font-bold text-white">
+                  {unreadCount}
+                </span>
+              )}
             </div>
           </div>
         </div>
@@ -807,8 +829,10 @@ export function WebRTCSession({
             className="lg:hidden flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 shrink-0 relative"
           >
             <MessageSquare className="h-4 w-4 sm:h-5 sm:w-5" />
-            {chatNotification && (
-              <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 border-2 border-[#121a24] rounded-full"></span>
+            {unreadCount > 0 && (
+              <span className="absolute top-0 right-0 flex items-center justify-center w-3.5 h-3.5 bg-red-500 border-2 border-[#121a24] rounded-full text-[8px] font-bold text-white leading-none">
+                {unreadCount > 9 ? "9+" : unreadCount}
+              </span>
             )}
           </button>
 
@@ -872,37 +896,58 @@ export function WebRTCSession({
             Participants (2)
           </h2>
           <div className="flex flex-col gap-3">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 min-w-0">
-                <div className="h-8 w-8 shrink-0 rounded-full bg-[#44666C] flex items-center justify-center text-white text-sm font-medium">
-                  {localParticipantName.charAt(0).toUpperCase()}
+            <div className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/5">
+              <div className="flex items-center gap-3">
+                {localParticipantImage ? (
+                  <img
+                    src={localParticipantImage}
+                    alt={localParticipantName}
+                    className="h-8 w-8 shrink-0 rounded-full object-cover bg-white/10"
+                  />
+                ) : (
+                  <div className="h-8 w-8 shrink-0 rounded-full bg-[#44666C] flex items-center justify-center text-white text-sm font-medium">
+                    {localParticipantName.charAt(0).toUpperCase()}
+                  </div>
+                )}
+                <div className="min-w-0">
+                  <p className="text-sm font-medium text-white truncate">
+                    {localParticipantName}{" "}
+                    <span className="text-stone-400 text-xs ml-1">(You)</span>
+                  </p>
                 </div>
-                <span className="truncate text-sm font-medium text-stone-200">
-                  {localParticipantName} (You)
-                </span>
               </div>
-              <div className="flex items-center gap-1.5 shrink-0">
+              <div className="flex items-center gap-2">
                 {isAudioEnabled ? (
                   <Mic className="w-4 h-4 text-emerald-400" />
                 ) : (
-                  <MicOff className="w-4 h-4 text-red-500" />
+                  <MicOff className="w-4 h-4 text-red-400" />
                 )}
-                {isVideoEnabled ? (
-                  <Video className="w-4 h-4 text-emerald-400" />
+                {!isVideoEnabled ? (
+                  <VideoOff className="w-4 h-4 text-red-400" />
                 ) : (
-                  <VideoOff className="w-4 h-4 text-red-500" />
+                  <Video className="w-4 h-4 text-emerald-400" />
                 )}
               </div>
             </div>
 
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 min-w-0">
-                <div className="h-8 w-8 shrink-0 rounded-full bg-[#2d4a52] flex items-center justify-center text-white text-sm font-medium">
-                  {remoteParticipantName.charAt(0).toUpperCase()}
+            <div className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/5">
+              <div className="flex items-center gap-3">
+                {remoteParticipantImage ? (
+                  <img
+                    src={remoteParticipantImage}
+                    alt={remoteParticipantName}
+                    className="h-8 w-8 shrink-0 rounded-full object-cover bg-white/10"
+                  />
+                ) : (
+                  <div className="h-8 w-8 shrink-0 rounded-full bg-[#2d4a52] flex items-center justify-center text-white text-sm font-medium">
+                    {remoteParticipantName.charAt(0).toUpperCase()}
+                  </div>
+                )}
+                <div className="min-w-0">
+                  <span className="truncate text-sm font-medium text-stone-200">
+                    {remoteParticipantName}
+                  </span>
                 </div>
-                <span className="truncate text-sm font-medium text-stone-200">
-                  {remoteParticipantName}
-                </span>
               </div>
               <div className="flex items-center gap-1.5 shrink-0">
                 {remoteAudioEnabled ? (
