@@ -351,6 +351,8 @@ export default function AppointmentVideoSession() {
           <WebRTCSession
             appointmentId={appointmentNumericId.toString()}
             userId={user?.id?.toString() ?? ""}
+            localParticipantName={user?.name?.trim() || user?.email || "You"}
+            remoteParticipantName={counterpartyLabel}
             backendUrl={BACKEND_URL}
             onLeave={() => navigate(dashboardPath)}
           />

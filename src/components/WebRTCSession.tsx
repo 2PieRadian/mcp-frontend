@@ -8,12 +8,17 @@ import {
   Settings,
   PhoneOff,
   MonitorUp,
+  Send,
+  MessageSquare,
+  X,
 } from "lucide-react";
 import { DeviceSettingsModal } from "./DeviceSettingsModal";
 
 interface WebRTCSessionProps {
   appointmentId: string;
   userId: string;
+  localParticipantName: string;
+  remoteParticipantName: string;
   backendUrl: string;
   onLeave: () => void;
 }
@@ -28,6 +33,8 @@ const configuration = {
 export function WebRTCSession({
   appointmentId,
   userId,
+  localParticipantName,
+  remoteParticipantName,
   backendUrl,
   onLeave,
 }: WebRTCSessionProps) {
@@ -49,6 +56,50 @@ export function WebRTCSession({
     message: string;
     type: "join" | "leave";
   } | null>(null);
+
+  const [chatNotification, setChatNotification] = useState<{
+    senderName: string;
+    text: string;
+  } | null>(null);
+
+  const [showMobileChat, setShowMobileChat] = useState(false);
+  const showMobileChatRef = useRef(false);
+
+  useEffect(() => {
+    showMobileChatRef.current = showMobileChat;
+  }, [showMobileChat]);
+
+  useEffect(() => {
+    if (chatNotification) {
+      const timer = setTimeout(() => setChatNotification(null), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [chatNotification]);
+
+  const [messages, setMessages] = useState<{ senderId: string; senderName: string; text: string; timestamp: number }[]>([]);
+  const [chatInput, setChatInput] = useState("");
+  const chatEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  const sendMessage = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!chatInput.trim() || !socket) return;
+
+    const newMsg = {
+      roomId: appointmentId,
+      senderId: userId,
+      senderName: localParticipantName,
+      text: chatInput.trim(),
+      timestamp: Date.now(),
+    };
+
+    socket.emit("chat-message", newMsg);
+    setMessages((prev) => [...prev, newMsg]);
+    setChatInput("");
+  };
 
   // PIP dragging state
   const [pipPos, setPipPos] = useState({
@@ -277,6 +328,14 @@ export function WebRTCSession({
           // but for now relying on the ontrack heuristic + this event is okay.
         });
 
+        currentSocket.on("chat-message", (data: { senderId: string; senderName: string; text: string; timestamp: number }) => {
+          setMessages((prev) => [...prev, data]);
+          
+          if (window.innerWidth < 1024 && !showMobileChatRef.current && data.senderId !== userId) {
+            setChatNotification({ senderName: data.senderName, text: data.text });
+          }
+        });
+
         currentSocket.on("user-left", () => {
           setToastMessage({ message: "A user left the call", type: "leave" });
           setRemoteStream(null);
@@ -484,7 +543,7 @@ export function WebRTCSession({
   };
 
   return (
-    <div className="relative flex flex-1 flex-col overflow-hidden bg-[#070a0f]">
+    <div className="relative flex flex-1 flex-col lg:flex-row overflow-hidden bg-[#070a0f]">
       {/* Toast Notification */}
       {toastMessage && (
         <div
@@ -494,8 +553,31 @@ export function WebRTCSession({
         </div>
       )}
 
-      {/* Remote Video Container - Full Width */}
-      <div className="flex-1 flex items-center justify-center relative w-full h-full">
+      {/* Bottom Chat Notification (Mobile) */}
+      {chatNotification && (
+        <div
+          className="absolute bottom-24 left-4 right-4 lg:hidden z-40 bg-[#121a24] border border-[#44666C] rounded-xl p-4 shadow-2xl cursor-pointer transition-all animate-in slide-in-from-bottom-5"
+          onClick={() => {
+            setShowMobileChat(true);
+            setChatNotification(null);
+          }}
+        >
+          <div className="flex items-center justify-between">
+            <div className="pr-4">
+              <p className="text-xs text-[#7eb8aa] font-medium mb-1">New message from {chatNotification.senderName}</p>
+              <p className="text-sm text-stone-200 line-clamp-1">{chatNotification.text}</p>
+            </div>
+            <div className="h-8 w-8 rounded-full bg-[#44666C]/20 flex items-center justify-center shrink-0">
+              <MessageSquare className="w-4 h-4 text-[#7eb8aa]" />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Video Area (70%) */}
+      <div className="relative flex flex-col flex-1 lg:w-[70%] h-full shrink-0">
+        {/* Remote Video Container - Full Width */}
+        <div className="flex-1 flex items-center justify-center relative w-full h-full">
         <div
           ref={remoteContainerRef}
           className="relative bg-black overflow-hidden w-full h-full"
@@ -640,6 +722,16 @@ export function WebRTCSession({
         </button>
 
         <button
+          onClick={() => setShowMobileChat(true)}
+          className="lg:hidden flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 shrink-0 relative"
+        >
+          <MessageSquare className="h-4 w-4 sm:h-5 sm:w-5" />
+          {chatNotification && (
+            <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 border-2 border-[#121a24] rounded-full"></span>
+          )}
+        </button>
+
+        <button
           onClick={() => setShowSettings(true)}
           className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 shrink-0"
         >
@@ -658,6 +750,103 @@ export function WebRTCSession({
           </span>
           <span className="text-sm sm:hidden">Leave</span>
         </button>
+      </div>
+      </div>
+
+      {/* Side Panel (Participants & Chat) - 30% */}
+      <div 
+        className={`fixed inset-0 z-50 lg:static flex flex-col w-full lg:w-[30%] bg-[#0c1219] lg:border-l border-white/10 transition-transform duration-300 lg:translate-y-0 ${showMobileChat ? "translate-y-0" : "translate-y-full"}`}
+      >
+        {/* Mobile Header with Close Button */}
+        <div className="flex lg:hidden items-center justify-between p-4 border-b border-white/10 bg-[#121a24] shrink-0">
+          <h2 className="text-sm font-semibold text-white">Chat & Participants</h2>
+          <button onClick={() => setShowMobileChat(false)} className="p-2 text-stone-400 hover:text-white rounded-full bg-white/5">
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+        
+        {/* Participants Tab */}
+        <div className="flex flex-col border-b border-white/10 p-4 shrink-0 bg-[#0c1219]">
+          <h2 className="text-xs font-semibold uppercase tracking-wider text-stone-400 mb-3">
+            Participants (2)
+          </h2>
+          <div className="flex flex-col gap-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 min-w-0">
+                <div className="h-8 w-8 shrink-0 rounded-full bg-[#44666C] flex items-center justify-center text-white text-sm font-medium">
+                  {localParticipantName.charAt(0).toUpperCase()}
+                </div>
+                <span className="truncate text-sm font-medium text-stone-200">
+                  {localParticipantName} (You)
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5 shrink-0">
+                {isAudioEnabled ? <Mic className="w-4 h-4 text-emerald-400" /> : <MicOff className="w-4 h-4 text-red-500" />}
+                {isVideoEnabled ? <Video className="w-4 h-4 text-emerald-400" /> : <VideoOff className="w-4 h-4 text-red-500" />}
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 min-w-0">
+                <div className="h-8 w-8 shrink-0 rounded-full bg-[#2d4a52] flex items-center justify-center text-white text-sm font-medium">
+                  {remoteParticipantName.charAt(0).toUpperCase()}
+                </div>
+                <span className="truncate text-sm font-medium text-stone-200">
+                  {remoteParticipantName}
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5 shrink-0">
+                {remoteAudioEnabled ? <Mic className="w-4 h-4 text-emerald-400" /> : <MicOff className="w-4 h-4 text-red-500" />}
+                {remoteVideoEnabled ? <Video className="w-4 h-4 text-emerald-400" /> : <VideoOff className="w-4 h-4 text-red-500" />}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Live Chat */}
+        <div className="flex flex-1 flex-col overflow-hidden">
+          {/* Chat Messages */}
+          <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-3">
+            {messages.length === 0 ? (
+              <div className="m-auto text-center text-sm text-stone-500">
+                No messages yet. Start the conversation!
+              </div>
+            ) : (
+              messages.map((msg, idx) => {
+                const isMe = msg.senderId === userId;
+                return (
+                  <div key={idx} className={`flex flex-col ${isMe ? "items-end" : "items-start"} max-w-full`}>
+                    <span className="text-[10px] text-stone-500 mb-0.5 px-1">{msg.senderName}</span>
+                    <div className={`px-3 py-2 rounded-2xl max-w-[90%] text-sm break-words ${isMe ? "bg-[#44666C] text-white rounded-br-sm" : "bg-white/10 text-stone-200 rounded-bl-sm"}`}>
+                      {msg.text}
+                    </div>
+                  </div>
+                );
+              })
+            )}
+            <div ref={chatEndRef} />
+          </div>
+
+          {/* Chat Input */}
+          <div className="p-3 bg-[#0c1219] border-t border-white/5 shrink-0">
+            <form onSubmit={sendMessage} className="flex items-end gap-2 relative">
+              <input
+                type="text"
+                placeholder="Type a message..."
+                value={chatInput}
+                onChange={(e) => setChatInput(e.target.value)}
+                className="w-full rounded-full bg-white/5 border border-white/10 px-4 py-2.5 text-sm text-white placeholder-stone-500 focus:outline-none focus:border-white/20 focus:bg-white/10 transition-colors"
+              />
+              <button
+                type="submit"
+                disabled={!chatInput.trim()}
+                className="shrink-0 flex h-10 w-10 items-center justify-center rounded-full bg-[#44666C] text-white transition-colors hover:bg-[#365a62] disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <Send className="w-4 h-4" />
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
 
       {/* Settings Modal */}
