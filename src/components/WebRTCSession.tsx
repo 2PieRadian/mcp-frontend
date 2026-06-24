@@ -1,5 +1,6 @@
 import {
   Bell,
+  LogOut,
   MessageSquare,
   Mic,
   MicOff,
@@ -54,6 +55,7 @@ export function WebRTCSession({
   const [remoteAudioEnabled, setRemoteAudioEnabled] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
   const [isNotifying, setIsNotifying] = useState(false);
+  const [showLeaveConfirm, setShowLeaveConfirm] = useState(false);
 
   const [isScreenSharing, setIsScreenSharing] = useState(false);
   const [remoteScreenStream, setRemoteScreenStream] =
@@ -861,7 +863,7 @@ export function WebRTCSession({
           <div className="w-px h-6 sm:h-8 bg-white/10 mx-1 sm:mx-2 shrink-0" />
 
           <button
-            onClick={onLeave}
+            onClick={() => setShowLeaveConfirm(true)}
             className="flex h-10 sm:h-12 px-4 sm:px-6 items-center justify-center gap-2 rounded-full bg-red-500 text-white transition hover:bg-red-600 font-medium shrink-0"
           >
             <PhoneOff className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -1020,6 +1022,55 @@ export function WebRTCSession({
           </div>
         </div>
       </div>
+
+      {/* Leave Confirmation Modal */}
+      {showLeaveConfirm && (
+        <div className="fixed inset-0 z-[500] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div
+            className="relative w-full max-w-sm rounded-2xl border border-white/10 bg-[#0c1219] p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-200"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="leave-confirm-title"
+          >
+            <div className="flex flex-col items-center text-center gap-4">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-red-500/15 ring-1 ring-red-500/30">
+                <LogOut className="h-6 w-6 text-red-400" />
+              </div>
+              <div>
+                <h3
+                  id="leave-confirm-title"
+                  className="text-lg font-semibold text-white"
+                >
+                  Leave Meeting?
+                </h3>
+                <p className="mt-1.5 text-sm text-stone-400 leading-relaxed">
+                  Are you sure you want to leave this session? You can rejoin
+                  later if the session is still active.
+                </p>
+              </div>
+              <div className="flex w-full gap-3 mt-1">
+                <button
+                  type="button"
+                  onClick={() => setShowLeaveConfirm(false)}
+                  className="flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-stone-200 transition hover:bg-white/10 hover:border-white/15"
+                >
+                  Stay
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowLeaveConfirm(false);
+                    onLeave();
+                  }}
+                  className="flex-1 rounded-xl bg-red-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-red-600"
+                >
+                  Leave Meeting
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Settings Modal */}
       {showSettings && (

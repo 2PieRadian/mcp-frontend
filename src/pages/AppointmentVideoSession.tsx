@@ -3,6 +3,7 @@ import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import {
   ArrowLeft,
   Loader2,
+  LogOut,
   Video,
   Shield,
   MessageSquareText,
@@ -43,6 +44,7 @@ export default function AppointmentVideoSession() {
   const [resolving, setResolving] = useState(true);
   const [terminalBanner] = useState<AppointmentStatus | null>(null);
   const [hasJoinedCall, setHasJoinedCall] = useState(false);
+  const [showLeaveConfirm, setShowLeaveConfirm] = useState(false);
 
   const dashboardPath =
     user?.role === "EXPERT" ? "/dashboard/expert" : "/dashboard";
@@ -210,9 +212,7 @@ export default function AppointmentVideoSession() {
         <div className="flex items-center gap-2 sm:gap-4 px-3 py-2.5 sm:px-5 sm:py-3.5">
           <button
             type="button"
-            onClick={() => {
-              navigate(dashboardPath);
-            }}
+            onClick={() => setShowLeaveConfirm(true)}
             className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm font-medium text-stone-200 transition hover:bg-white/10 hover:border-white/15"
           >
             <ArrowLeft className="w-4 h-4 shrink-0" />
@@ -391,6 +391,55 @@ export default function AppointmentVideoSession() {
           </div>
         )}
       </main>
+
+      {/* Leave Confirmation Modal */}
+      {showLeaveConfirm && (
+        <div className="fixed inset-0 z-[500] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div
+            className="relative w-full max-w-sm rounded-2xl border border-white/10 bg-[#0c1219] p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-200"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="leave-page-confirm-title"
+          >
+            <div className="flex flex-col items-center text-center gap-4">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-red-500/15 ring-1 ring-red-500/30">
+                <LogOut className="h-6 w-6 text-red-400" />
+              </div>
+              <div>
+                <h3
+                  id="leave-page-confirm-title"
+                  className="text-lg font-semibold text-white"
+                >
+                  Leave Meeting?
+                </h3>
+                <p className="mt-1.5 text-sm text-stone-400 leading-relaxed">
+                  Are you sure you want to leave this session? You can rejoin
+                  later if the session is still active.
+                </p>
+              </div>
+              <div className="flex w-full gap-3 mt-1">
+                <button
+                  type="button"
+                  onClick={() => setShowLeaveConfirm(false)}
+                  className="flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-stone-200 transition hover:bg-white/10 hover:border-white/15"
+                >
+                  Stay
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowLeaveConfirm(false);
+                    navigate(dashboardPath);
+                  }}
+                  className="flex-1 rounded-xl bg-red-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-red-600"
+                >
+                  Leave Meeting
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
