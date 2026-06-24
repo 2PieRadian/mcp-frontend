@@ -355,6 +355,7 @@ export default function AppointmentVideoSession() {
             remoteParticipantName={counterpartyLabel}
             backendUrl={BACKEND_URL}
             onLeave={() => navigate(dashboardPath)}
+            role={sessionRole as "USER" | "EXPERT"}
           />
         ) : (
           <div className="flex flex-1 flex-col items-center justify-center gap-6 p-8 text-center">

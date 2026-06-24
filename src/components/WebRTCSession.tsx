@@ -22,6 +22,7 @@ interface WebRTCSessionProps {
   remoteParticipantName: string;
   backendUrl: string;
   onLeave: () => void;
+  role: "USER" | "EXPERT";
 }
 
 const configuration = {
@@ -38,6 +39,7 @@ export function WebRTCSession({
   remoteParticipantName,
   backendUrl,
   onLeave,
+  role,
 }: WebRTCSessionProps) {
   const [socket, setSocket] = useState<Socket | null>(null);
   const [localStream, setLocalStream] = useState<MediaStream | null>(null);
@@ -90,7 +92,10 @@ export function WebRTCSession({
       // Only scroll if we're on desktop OR if the mobile chat modal is currently open.
       // This prevents the browser from forcibly scrolling the entire page when the chat is hidden.
       if (window.innerWidth >= 1024 || showMobileChatRef.current) {
-        chatEndRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        chatEndRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+        });
       }
     }
   }, [messages, showMobileChat]);
@@ -113,10 +118,7 @@ export function WebRTCSession({
   };
 
   // PIP dragging state
-  const [pipPos, setPipPos] = useState({
-    x: typeof window !== "undefined" ? window.innerWidth - 240 : 800,
-    y: typeof window !== "undefined" ? window.innerHeight - 340 : 600,
-  });
+  const [pipPos, setPipPos] = useState({ x: 16, y: 16 });
   const isDragging = useRef(false);
   const dragStart = useRef({ x: 0, y: 0 });
 
@@ -234,7 +236,11 @@ export function WebRTCSession({
 
         // Socket Events
         currentSocket.on("user-joined", async () => {
-          setToastMessage({ message: "A user joined the call", type: "join" });
+          const message =
+            role === "EXPERT"
+              ? "A user joined the session"
+              : "An expert joined the session";
+          setToastMessage({ message, type: "join" });
           // A new user joined, we are the initiator so we create the offer
           try {
             const offer = await currentPc!.createOffer();
@@ -702,6 +708,32 @@ export function WebRTCSession({
                 <MicOff className="h-4 w-4 text-white" />
               </div>
             )}
+
+            {/* Local Video PIP */}
+            <div
+              className="absolute z-40 w-32 sm:w-48 aspect-video sm:aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-black/50 backdrop-blur-md cursor-move touch-none"
+              style={{
+                left: `${pipPos.x}px`,
+                top: `${pipPos.y}px`,
+              }}
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              onPointerUp={handlePointerUp}
+            >
+              <video
+                ref={localVideoRef}
+                autoPlay
+                playsInline
+                muted
+                className={`w-full h-full object-cover ${isScreenSharing ? "" : "mirror"}`}
+                style={{ transform: isScreenSharing ? "none" : "scaleX(-1)" }}
+              />
+              {!isVideoEnabled && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black/80">
+                  <VideoOff className="w-6 h-6 sm:w-8 sm:h-8 text-stone-400" />
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
@@ -725,33 +757,6 @@ export function WebRTCSession({
             )}
           </div>
         )}
-
-        {/* Local Video PIP */}
-        <div
-          className="absolute z-40 w-48 sm:w-64 aspect-video sm:aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-black/50 backdrop-blur-md cursor-move touch-none"
-          style={{
-            left: `${pipPos.x}px`,
-            top: `${pipPos.y}px`,
-            resize: "both",
-          }}
-          onPointerDown={handlePointerDown}
-          onPointerMove={handlePointerMove}
-          onPointerUp={handlePointerUp}
-        >
-          <video
-            ref={localVideoRef}
-            autoPlay
-            playsInline
-            muted
-            className={`w-full h-full object-cover ${isScreenSharing ? "" : "mirror"}`}
-            style={{ transform: isScreenSharing ? "none" : "scaleX(-1)" }}
-          />
-          {!isVideoEnabled && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black/80">
-              <VideoOff className="w-6 h-6 sm:w-8 sm:h-8 text-stone-400" />
-            </div>
-          )}
-        </div>
 
         {/* Controls Bar */}
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 sm:gap-4 rounded-3xl bg-[#121a24]/90 px-3 sm:px-6 py-2 sm:py-3 shadow-2xl backdrop-blur-xl border border-white/10 w-[95%] max-w-max justify-center overflow-x-auto whitespace-nowrap">
@@ -845,7 +850,7 @@ export function WebRTCSession({
 
       {/* Side Panel (Participants & Chat) - 30% */}
       <div
-        className={`fixed inset-0 z-50 lg:static flex flex-col w-full lg:w-[30%] bg-[#0c1219] lg:border-l border-white/10 transition-transform duration-300 lg:translate-y-0 ${showMobileChat ? "translate-y-0" : "translate-y-full"}`}
+        className={`absolute inset-0 z-50 lg:static flex flex-col w-full lg:w-[30%] bg-[#0c1219] lg:border-l border-white/10 transition-transform duration-300 lg:translate-y-0 ${showMobileChat ? "translate-y-0" : "translate-y-full"}`}
       >
         {/* Mobile Header with Close Button */}
         <div className="flex lg:hidden items-center justify-between p-4 border-b border-white/10 bg-[#121a24] shrink-0">
