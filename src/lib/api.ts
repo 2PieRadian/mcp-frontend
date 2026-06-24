@@ -638,6 +638,7 @@ export type ExpertUser = {
   id: number;
   name: string | null;
   email: string;
+  avatarUrl?: string | null;
   [key: string]: unknown;
 };
 

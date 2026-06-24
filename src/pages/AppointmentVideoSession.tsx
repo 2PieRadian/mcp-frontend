@@ -183,7 +183,7 @@ export default function AppointmentVideoSession() {
     counterpartyAvatarRaw = (appointment as ExpertAppointment).user?.avatarUrl;
   } else if (appointment && "expert" in appointment && appointment.expert) {
     counterpartyAvatarRaw = (appointment as MyAppointment).expert.user
-      ?.avatarUrl as string | null | undefined;
+      ?.avatarUrl;
   }
 
   const showJitsiStage =

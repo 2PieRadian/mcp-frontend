@@ -225,6 +225,18 @@ export function WebRTCSession({
 
         currentPc.ontrack = (event) => {
           const stream = event.streams[0];
+          const track = event.track;
+
+          // Listen for mute/unmute on remote tracks so participant icons update
+          // even if the socket "peer-toggled-media" event is missed.
+          if (track.kind === "video") {
+            track.addEventListener("mute", () => setRemoteVideoEnabled(false));
+            track.addEventListener("unmute", () => setRemoteVideoEnabled(true));
+          } else if (track.kind === "audio") {
+            track.addEventListener("mute", () => setRemoteAudioEnabled(false));
+            track.addEventListener("unmute", () => setRemoteAudioEnabled(true));
+          }
+
           // Simple heuristic: if remoteStream is already set and has a different ID, it's the screen stream.
           // Alternatively, we handle stream IDs via socket below.
           setRemoteStream((prev) => {
