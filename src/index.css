@@ -329,12 +329,7 @@ body:not([style*="position: fixed"]) {
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.16),
-    rgba(0, 0, 0, 0) 55%,
-    rgba(255, 255, 255, 0.08)
-  );
+  background: none;
   opacity: 0.95;
 }
 

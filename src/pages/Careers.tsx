@@ -3,7 +3,15 @@ import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
 import { BACKEND_URL } from "../lib/api";
-import { ArrowRight, Heart, Users, Rocket, Laptop, GraduationCap, Monitor } from "lucide-react";
+import {
+  ArrowRight,
+  Heart,
+  Users,
+  Rocket,
+  Laptop,
+  GraduationCap,
+  Monitor,
+} from "lucide-react";
 
 type Role = {
   title: string;
@@ -13,107 +21,172 @@ type Role = {
 };
 
 const roles: Role[] = [
+  // Wellness
   {
-    title: "Dietician",
+    title: "Anxiety and Panic Attack Counsellor",
     department: "Wellness",
-    description: "Provide nutrition guidance and wellness planning support.",
-    skills: ["Nutrition", "Diet Planning", "Consultation"],
-  },
-  {
-    title: "Maths Tutor",
-    department: "Education",
-    description: "Teach and mentor students in mathematics effectively.",
-    skills: ["Mathematics", "Teaching", "Mentoring"],
-  },
-  {
-    title: "Tutor",
-    department: "Education",
-    description: "Deliver focused learning sessions and academic support.",
-    skills: ["Teaching", "Communication", "Student Support"],
-  },
-  {
-    title: "OCD",
-    department: "Mental Health",
-    description: "Support clients with OCD-focused counselling services.",
-    skills: ["Counselling", "Mental Health", "Client Support"],
+    description:
+      "Provide specialized counseling and coping strategies for individuals experiencing anxiety and panic attacks.",
+    skills: ["Cognitive Behavioral Therapy", "Anxiety Management", "Empathy"],
   },
   {
     title: "Depression Counsellor",
-    department: "Mental Health",
-    description: "Provide emotional support and depression counselling care.",
-    skills: ["Counselling", "Psychology", "Empathy"],
+    department: "Wellness",
+    description:
+      "Offer therapeutic support and emotional guidance to help individuals navigate and overcome depression.",
+    skills: ["Psychotherapy", "Emotional Support", "Crisis Intervention"],
   },
   {
-    title: "Insurance Advisor",
+    title: "OCD Counsellor",
+    department: "Wellness",
+    description:
+      "Support clients with Obsessive-Compulsive Disorder through targeted therapeutic interventions.",
+    skills: ["ERP Therapy", "Behavioral Analysis", "Mental Health"],
+  },
+  {
+    title: "ADHD Counsellor",
+    department: "Wellness",
+    description:
+      "Assist individuals in managing ADHD symptoms, improving focus, and developing organizational skills.",
+    skills: ["ADHD Coaching", "Behavioral Strategies", "Client Support"],
+  },
+  {
+    title: "Couple Counsellor",
+    department: "Wellness",
+    description:
+      "Facilitate communication and resolve conflicts to help partners build healthier relationships.",
+    skills: ["Couples Therapy", "Conflict Resolution", "Mediation"],
+  },
+  {
+    title: "Family Counsellor",
+    department: "Wellness",
+    description:
+      "Work with families to address emotional issues, improve communication, and strengthen family bonds.",
+    skills: ["Family Therapy", "Communication", "Interpersonal Skills"],
+  },
+  {
+    title: "Breakup Recovery Expert",
+    department: "Wellness",
+    description:
+      "Guide clients through the emotional process of relationship breakups and help them rebuild their lives.",
+    skills: ["Grief Counseling", "Emotional Healing", "Life Coaching"],
+  },
+  {
+    title: "Loneliness Counsellor",
+    department: "Wellness",
+    description:
+      "Provide compassionate support to individuals struggling with isolation and loneliness.",
+    skills: ["Active Listening", "Compassion", "Social Integration"],
+  },
+  {
+    title: "Divorce / Separation Counsellor",
+    department: "Wellness",
+    description:
+      "Help clients navigate the complex emotional and practical challenges of divorce or separation.",
+    skills: ["Divorce Counseling", "Stress Management", "Emotional Support"],
+  },
+  {
+    title: "Stress / Overthinking Expert",
+    department: "Wellness",
+    description:
+      "Teach effective techniques for managing chronic stress and reducing rumination.",
+    skills: ["Stress Management", "Mindfulness", "CBT Techniques"],
+  },
+  {
+    title: "Dietician",
+    department: "Wellness",
+    description:
+      "Develop personalized nutrition plans and provide expert advice for a healthier lifestyle.",
+    skills: ["Nutrition", "Diet Planning", "Consultation"],
+  },
+  {
+    title: "Yoga Expert",
+    department: "Wellness",
+    description:
+      "Lead yoga sessions focusing on physical health, mental clarity, and overall well-being.",
+    skills: ["Yoga Instruction", "Mindfulness", "Physical Therapy"],
+  },
+
+  // Education
+  {
+    title: "Career Path Finder",
+    department: "Education",
+    description:
+      "Assess skills and interests to guide individuals toward fulfilling and successful career choices.",
+    skills: ["Career Coaching", "Aptitude Testing", "Mentoring"],
+  },
+  {
+    title: "Academic Counsellor",
+    department: "Education",
+    description:
+      "Provide academic guidance, study strategies, and support for student success.",
+    skills: ["Student Counseling", "Academic Planning", "Communication"],
+  },
+  {
+    title: "School Subject Experts",
+    department: "Education",
+    description:
+      "Deliver high-quality tutoring and instructional support for various school-level subjects.",
+    skills: ["Subject Matter Expertise", "Teaching", "Lesson Planning"],
+  },
+  {
+    title: "Foreign Language Trainers",
+    department: "Education",
+    description:
+      "Teach foreign languages and help students achieve fluency and cultural understanding.",
+    skills: ["Language Instruction", "Linguistics", "Cultural Competence"],
+  },
+  {
+    title: "Skill Development Coaches",
+    department: "Education",
+    description:
+      "Train individuals in professional and soft skills necessary for personal and career growth.",
+    skills: ["Skill Training", "Coaching", "Curriculum Design"],
+  },
+
+  // Finance
+  {
+    title: "Investment Expert",
     department: "Finance",
-    description: "Advise clients on policy selection and insurance planning.",
-    skills: ["Insurance", "Advisory", "Client Relations"],
+    description:
+      "Advise clients on wealth building, portfolio management, and strategic investments.",
+    skills: ["Portfolio Management", "Market Analysis", "Advisory"],
   },
   {
-    title: "Physics Faculty/ Teacher",
-    department: "Education",
-    description: "Teach physics concepts with structured lesson delivery.",
-    skills: ["Physics", "Teaching", "Classroom Management"],
-  },
-  {
-    title: "English teacher",
-    department: "Education",
-    description: "Improve language skills through engaging English lessons.",
-    skills: ["English", "Teaching", "Communication"],
-  },
-  {
-    title: "Chartered Accountant",
+    title: "GST and Tax Expert",
     department: "Finance",
-    description: "Handle accounting, taxation, and compliance workflows.",
-    skills: ["Accounting", "Taxation", "Compliance"],
+    description:
+      "Provide specialized guidance on tax planning, compliance, and GST regulations.",
+    skills: ["Taxation", "Compliance", "Accounting"],
   },
   {
-    title: "Biology Teacher",
-    department: "Education",
-    description: "Deliver biology instruction and student learning support.",
-    skills: ["Biology", "Teaching", "Lesson Planning"],
+    title: "Financial Planner",
+    department: "Finance",
+    description:
+      "Help clients map out comprehensive strategies to achieve their long-term financial goals.",
+    skills: ["Financial Planning", "Wealth Management", "Consulting"],
   },
   {
-    title: "Physics Faculty teacher",
-    department: "Education",
-    description: "Lead physics sessions with concept-first teaching methods.",
-    skills: ["Physics", "Teaching", "Assessment"],
+    title: "Insurance Expert",
+    department: "Finance",
+    description:
+      "Guide clients in selecting the best insurance policies to protect their assets and families.",
+    skills: ["Risk Assessment", "Insurance Policies", "Client Relations"],
   },
   {
-    title: "French Tutor",
-    department: "Education",
-    description: "Teach French language fundamentals and fluency skills.",
-    skills: ["French", "Tutoring", "Communication"],
-  },
-  {
-    title: "Spanish teacher",
-    department: "Education",
-    description: "Conduct interactive Spanish classes for students.",
-    skills: ["Spanish", "Teaching", "Language Skills"],
-  },
-  {
-    title: "Urdu Teacher",
-    department: "Education",
-    description: "Support Urdu learning with structured language instruction.",
-    skills: ["Urdu", "Teaching", "Student Engagement"],
-  },
-  {
-    title: "Social Science teacher",
-    department: "Education",
-    description: "Teach social science topics through engaging lessons.",
-    skills: ["Social Science", "Teaching", "Curriculum"],
-  },
-  {
-    title: "Japanese Teacher",
-    department: "Education",
-    description: "Help students build Japanese reading and speaking skills.",
-    skills: ["Japanese", "Teaching", "Language Learning"],
+    title: "Business Finance Consultant",
+    department: "Finance",
+    description:
+      "Assist businesses with financial strategy, cash flow management, and capital optimization.",
+    skills: ["Corporate Finance", "Business Strategy", "Financial Analysis"],
   },
 ];
 
 export default function Careers() {
-  const [selectedDepartment, setSelectedDepartment] = useState("All Departments");
-  const [activeSpecializations, setActiveSpecializations] = useState<Set<string> | null>(null);
+  const [selectedDepartment, setSelectedDepartment] =
+    useState("All Departments");
+  const [activeSpecializations, setActiveSpecializations] =
+    useState<Set<string> | null>(null);
 
   useEffect(() => {
     fetch(`${BACKEND_URL}/api/v1/expert/specializations`)
@@ -122,8 +195,11 @@ export default function Careers() {
         if (data.specializations) {
           const active = new Set<string>(
             data.specializations
-              .filter((s: { hasVacancies?: boolean; name: string }) => s.hasVacancies !== false)
-              .map((s: { hasVacancies?: boolean; name: string }) => s.name)
+              .filter(
+                (s: { hasVacancies?: boolean; name: string }) =>
+                  s.hasVacancies !== false,
+              )
+              .map((s: { hasVacancies?: boolean; name: string }) => s.name),
           );
           setActiveSpecializations(active);
         }
@@ -131,13 +207,13 @@ export default function Careers() {
       .catch((err) => {
         console.error("Failed to fetch specializations:", err);
         // On error, fall back to showing all roles
-        setActiveSpecializations(new Set(roles.map(r => r.title)));
+        setActiveSpecializations(new Set(roles.map((r) => r.title)));
       });
   }, []);
 
   const activeRolesList = useMemo(() => {
     if (!activeSpecializations) return roles;
-    return roles.filter(role => activeSpecializations.has(role.title));
+    return roles.filter((role) => activeSpecializations.has(role.title));
   }, [activeSpecializations]);
 
   const departmentFilters = useMemo(() => {
@@ -153,9 +229,10 @@ export default function Careers() {
 
   const filteredRoles = useMemo(() => {
     if (selectedDepartment === "All Departments") return activeRolesList;
-    return activeRolesList.filter((role) => role.department === selectedDepartment);
+    return activeRolesList.filter(
+      (role) => role.department === selectedDepartment,
+    );
   }, [selectedDepartment, activeRolesList]);
-
 
   return (
     <div className="min-h-screen bg-white font-sans">
@@ -171,12 +248,14 @@ export default function Careers() {
             <h1 className="text-[3.5rem] md:text-[4rem] leading-[1.05] font-extrabold text-[#111827] tracking-tight">
               Your work can <br />
               change lives. <br />
-              <span className="text-[#15603A]">Let's build the future together.</span>
+              <span className="text-[#15603A]">
+                Let's build the future together.
+              </span>
             </h1>
             <p className="mt-6 text-[1.1rem] text-[#4b5563] leading-relaxed max-w-[90%]">
-              At MindCurePath, we combine technology, empathy, and
-              expertise to create trusted solutions that make a real
-              difference in people's lives.
+              At MindCurePath, we combine technology, empathy, and expertise to
+              create trusted solutions that make a real difference in people's
+              lives.
             </p>
 
             <div className="mt-10 flex flex-wrap gap-4">
@@ -198,11 +277,19 @@ export default function Careers() {
                 <span>People First</span>
               </div>
               <div className="flex items-center gap-2 text-[#4b5563] text-sm font-semibold">
-                <Rocket size={18} className="text-[#15603A]" strokeWidth={2.5} />
+                <Rocket
+                  size={18}
+                  className="text-[#15603A]"
+                  strokeWidth={2.5}
+                />
                 <span>Continuous Growth</span>
               </div>
               <div className="flex items-center gap-2 text-[#4b5563] text-sm font-semibold">
-                <Laptop size={18} className="text-[#15603A]" strokeWidth={2.5} />
+                <Laptop
+                  size={18}
+                  className="text-[#15603A]"
+                  strokeWidth={2.5}
+                />
                 <span>Remote Friendly</span>
               </div>
             </div>
@@ -211,18 +298,29 @@ export default function Careers() {
           {/* Right Column (Image) */}
           <div className="hidden lg:flex relative h-[650px] w-full mt-10 lg:mt-0 justify-end">
             <div className="absolute top-0 right-[-100px] bottom-0 w-[120%] lg:w-[130%] rounded-l-[300px] overflow-hidden bg-gray-100 z-0">
-              <img src="/team_working.png" alt="Team working" className="w-full h-full object-cover" />
+              <img
+                src="/team_working.png"
+                alt="Team working"
+                className="w-full h-full object-cover"
+              />
             </div>
 
             {/* Floating Card */}
             <div className="absolute -bottom-10 left-0 lg:left-[-20px] bg-white rounded-2xl p-8 shadow-[0_20px_50px_rgba(0,0,0,0.1)] max-w-[340px] border border-gray-50 z-10">
               <div className="text-[#15603A] mb-4">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <svg
+                  width="28"
+                  height="28"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <path d="M14.017 18L14.017 10.609C14.017 4.905 17.748 1.039 23 0L23.995 2.151C21.563 3.068 20 5.789 20 8H24V18H14.017ZM0 18V10.609C0 4.905 3.748 1.038 9 0L9.996 2.151C7.563 3.068 6 5.789 6 8H9.983L9.983 18L0 18Z" />
                 </svg>
               </div>
               <p className="text-[#374151] text-[1.05rem] leading-relaxed font-medium mb-5">
-                I love that my work here directly contributes to helping people make better decisions.
+                I love that my work here directly contributes to helping people
+                make better decisions.
               </p>
               <p className="text-[#6b7280] text-sm font-semibold">
                 — Team Member
@@ -233,7 +331,10 @@ export default function Careers() {
       </main>
 
       {/* Legacy Roles Section - Kept so functionality is not lost */}
-      <section id="open-roles" className="max-w-[1300px] mx-auto px-6 mt-10 mb-20 bg-[#f9fafb] p-8 rounded-3xl border border-gray-100">
+      <section
+        id="open-roles"
+        className="max-w-[1300px] mx-auto px-6 mt-10 mb-20 bg-[#f9fafb] p-8 rounded-3xl border border-gray-100"
+      >
         <div className="mb-8 flex items-center justify-between gap-4">
           <h2 className="text-3xl font-bold text-[#111827]">Open Roles</h2>
         </div>
@@ -244,10 +345,11 @@ export default function Careers() {
               key={item.name}
               type="button"
               onClick={() => setSelectedDepartment(item.name)}
-              className={`rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors ${selectedDepartment === item.name
-                ? "bg-[#15603A] text-white"
-                : "bg-white text-slate-700 hover:bg-[#eefcf2] hover:text-[#15603A] border border-gray-200"
-                }`}
+              className={`rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors ${
+                selectedDepartment === item.name
+                  ? "bg-[#15603A] text-white"
+                  : "bg-white text-slate-700 hover:bg-[#eefcf2] hover:text-[#15603A] border border-gray-200"
+              }`}
             >
               {item.name}
             </button>
@@ -256,23 +358,33 @@ export default function Careers() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {filteredRoles.map((role) => (
-            <div key={role.title} className="rounded-2xl border border-gray-200 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md transition-shadow flex flex-col justify-between">
+            <div
+              key={role.title}
+              className="rounded-2xl border border-gray-200 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md transition-shadow flex flex-col justify-between"
+            >
               <div>
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-                  <h3 className="text-xl font-bold text-slate-900">{role.title}</h3>
+                  <h3 className="text-xl font-bold text-slate-900">
+                    {role.title}
+                  </h3>
                   <span className="rounded-full bg-[#eefcf2] px-3 py-1 text-xs font-bold text-[#15603A]">
                     {role.department}
                   </span>
                 </div>
                 <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-slate-600 font-medium">
                   {role.skills.map((skill) => (
-                    <span key={skill} className="inline-flex items-center gap-1">
+                    <span
+                      key={skill}
+                      className="inline-flex items-center gap-1"
+                    >
                       <span className="text-[#15603A] font-bold">•</span>
                       {skill}
                     </span>
                   ))}
                 </div>
-                <p className="text-sm leading-relaxed text-slate-600 mb-6">{role.description}</p>
+                <p className="text-sm leading-relaxed text-slate-600 mb-6">
+                  {role.description}
+                </p>
               </div>
               <Link
                 to={`/careers/apply?role=${encodeURIComponent(role.title)}`}
@@ -283,10 +395,10 @@ export default function Careers() {
             </div>
           ))}
         </div>
-      </section >
+      </section>
 
       {/* Why Join Section */}
-      < section className="max-w-[1300px] mx-auto px-6 mt-28 mb-32" >
+      <section className="max-w-[1300px] mx-auto px-6 mt-28 mb-32">
         <h2 className="text-[2.2rem] font-bold text-center text-[#111827] mb-16">
           Why Join <span className="text-[#15603A]">MindCurePath?</span>
         </h2>
@@ -297,7 +409,9 @@ export default function Careers() {
             <div className="w-[60px] h-[60px] bg-[#eefcf2] rounded-full flex items-center justify-center mb-5">
               <Users className="w-7 h-7 text-[#15603A]" strokeWidth={2} />
             </div>
-            <h3 className="text-[1.1rem] font-bold text-[#111827] mb-3">Meaningful Impact</h3>
+            <h3 className="text-[1.1rem] font-bold text-[#111827] mb-3">
+              Meaningful Impact
+            </h3>
             <p className="text-[#6b7280] text-[0.95rem] leading-[1.6]">
               Work on products that positively impact millions of lives.
             </p>
@@ -308,7 +422,9 @@ export default function Careers() {
             <div className="w-[60px] h-[60px] bg-[#eefcf2] rounded-full flex items-center justify-center mb-5">
               <Rocket className="w-7 h-7 text-[#15603A]" strokeWidth={2} />
             </div>
-            <h3 className="text-[1.1rem] font-bold text-[#111827] mb-3">Real Ownership</h3>
+            <h3 className="text-[1.1rem] font-bold text-[#111827] mb-3">
+              Real Ownership
+            </h3>
             <p className="text-[#6b7280] text-[0.95rem] leading-[1.6]">
               Take ownership, share ideas, and see your work create real value.
             </p>
@@ -317,11 +433,17 @@ export default function Careers() {
           {/* Item 3 */}
           <div className="px-6 py-8 lg:py-0 lg:px-8 text-center flex flex-col items-center">
             <div className="w-[60px] h-[60px] bg-[#eefcf2] rounded-full flex items-center justify-center mb-5">
-              <GraduationCap className="w-7 h-7 text-[#15603A]" strokeWidth={2} />
+              <GraduationCap
+                className="w-7 h-7 text-[#15603A]"
+                strokeWidth={2}
+              />
             </div>
-            <h3 className="text-[1.1rem] font-bold text-[#111827] mb-3">Grow Together</h3>
+            <h3 className="text-[1.1rem] font-bold text-[#111827] mb-3">
+              Grow Together
+            </h3>
             <p className="text-[#6b7280] text-[0.95rem] leading-[1.6]">
-              Learn, upskill and grow with mentors and a culture that supports you.
+              Learn, upskill and grow with mentors and a culture that supports
+              you.
             </p>
           </div>
 
@@ -330,9 +452,12 @@ export default function Careers() {
             <div className="w-[60px] h-[60px] bg-[#eefcf2] rounded-full flex items-center justify-center mb-5">
               <Monitor className="w-7 h-7 text-[#15603A]" strokeWidth={2} />
             </div>
-            <h3 className="text-[1.1rem] font-bold text-[#111827] mb-3">Flexible & Remote</h3>
+            <h3 className="text-[1.1rem] font-bold text-[#111827] mb-3">
+              Flexible & Remote
+            </h3>
             <p className="text-[#6b7280] text-[0.95rem] leading-[1.6]">
-              Work from anywhere with flexible hours and a healthy work-life balance.
+              Work from anywhere with flexible hours and a healthy work-life
+              balance.
             </p>
           </div>
 
@@ -341,15 +466,18 @@ export default function Careers() {
             <div className="w-[60px] h-[60px] bg-[#eefcf2] rounded-full flex items-center justify-center mb-5">
               <Heart className="w-7 h-7 text-[#15603A]" strokeWidth={2} />
             </div>
-            <h3 className="text-[1.1rem] font-bold text-[#111827] mb-3">Inclusive Culture</h3>
+            <h3 className="text-[1.1rem] font-bold text-[#111827] mb-3">
+              Inclusive Culture
+            </h3>
             <p className="text-[#6b7280] text-[0.95rem] leading-[1.6]">
-              We celebrate diversity and believe in an inclusive, respectful workplace.
+              We celebrate diversity and believe in an inclusive, respectful
+              workplace.
             </p>
           </div>
         </div>
-      </section >
+      </section>
 
       <Footer />
-    </div >
+    </div>
   );
 }

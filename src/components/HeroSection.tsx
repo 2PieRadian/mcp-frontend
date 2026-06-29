@@ -9,7 +9,6 @@ const HERO_CATEGORIES = [
     imageSrc: "/images/hero/hero-wellness.jpg",
     titleKey: "wellness",
     bodyKey: "heroCardWellnessBody",
-    gradient: "from-emerald-500/45 via-teal-500/35 to-cyan-500/30",
     glow: "bg-emerald-300/35",
   },
   {
@@ -18,7 +17,6 @@ const HERO_CATEGORIES = [
     imageSrc: "/images/hero/hero-education.jpg",
     titleKey: "education",
     bodyKey: "heroCardEducationBody",
-    gradient: "from-amber-500/45 via-orange-400/35 to-yellow-400/30",
     glow: "bg-amber-300/35",
   },
   {
@@ -27,7 +25,6 @@ const HERO_CATEGORIES = [
     imageSrc: "/images/hero/hero-finance.jpg",
     titleKey: "finance",
     bodyKey: "heroCardFinanceBody",
-    gradient: "from-sky-500/45 via-blue-500/35 to-indigo-500/30",
     glow: "bg-sky-300/35",
   },
   {
@@ -36,7 +33,6 @@ const HERO_CATEGORIES = [
     imageSrc: "/images/category/it/it_solutions.png",
     titleKey: "digitalTechnologySolutions",
     bodyKey: "heroCardTechnologyBody",
-    gradient: "from-[#149373]/40 via-[#62af9b]/28 to-[#dff3ee]/35",
     glow: "bg-[#149373]/25",
     imageClassName: "object-contain",
   },
@@ -127,9 +123,6 @@ function CategoryCard({
             width={520}
             height={340}
             decoding="async"
-          />
-          <div
-            className={`absolute inset-0 bg-linear-to-br ${category.gradient}`}
           />
         </div>
 
