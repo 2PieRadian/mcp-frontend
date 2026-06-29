@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import PremiumAnimatedBackground from "../components/PremiumAnimatedBackground";
 import { useState, useMemo } from "react";
 import { ChevronDown, HelpCircle } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -151,9 +152,10 @@ export default function FAQ() {
       </div>
 
       <main className="min-h-screen bg-linear-to-b from-slate-50 to-white">
-        {/* Hero Section */}
-        <section className="bg-linear-to-br from-[#0b1220] via-[#0f1d32] to-[#0a1528] py-16 sm:py-20 md:py-24">
-          <div className="mx-auto max-w-4xl px-5 sm:px-6 lg:px-8 text-center">
+        {/* Header Section */}
+        <section className="bg-gradient-to-br from-[#187360] via-[#115e4c] to-[#0d3f33] animate-gradient-x py-16 sm:py-20 md:py-24 relative overflow-hidden">
+          <PremiumAnimatedBackground />
+          <div className="mx-auto max-w-4xl px-5 sm:px-6 lg:px-8 text-center relative z-10">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/10 mb-6">
               <HelpCircle className="w-8 h-8 text-white" />
             </div>

@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import PremiumAnimatedBackground from "../components/PremiumAnimatedBackground";
 import {
   Mail,
   Clock,
@@ -26,14 +27,20 @@ export default function ContactUs() {
         <meta property="og:url" content="https://mindcurepath.com/contact" />
         <meta property="og:title" content={t("meta.ogTitle")} />
         <meta property="og:description" content={t("meta.ogDescription")} />
-        <meta property="og:image" content="https://mindcurepath.com/og-image.jpg" />
+        <meta
+          property="og:image"
+          content="https://mindcurepath.com/og-image.jpg"
+        />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://mindcurepath.com/contact" />
         <meta name="twitter:title" content={t("meta.ogTitle")} />
         <meta name="twitter:description" content={t("meta.ogDescription")} />
-        <meta name="twitter:image" content="https://mindcurepath.com/og-image.jpg" />
+        <meta
+          name="twitter:image"
+          content="https://mindcurepath.com/og-image.jpg"
+        />
 
         {/* Structured Data */}
         <script type="application/ld+json">
@@ -59,8 +66,9 @@ export default function ContactUs() {
 
       <main className="min-h-screen bg-linear-to-b from-slate-50 to-white">
         {/* Hero Section */}
-        <section className="bg-linear-to-br from-[#0b1220] via-[#0f1d32] to-[#0a1528] py-16 sm:py-20 md:py-24">
-          <div className="mx-auto max-w-4xl px-5 sm:px-6 lg:px-8 text-center">
+        <section className="bg-gradient-to-br from-[#187360] via-[#115e4c] to-[#0d3f33] animate-gradient-x py-16 sm:py-20 md:py-24 relative overflow-hidden">
+          <PremiumAnimatedBackground />
+          <div className="mx-auto max-w-4xl px-5 sm:px-6 lg:px-8 text-center relative z-10">
             <h1 className="text-3xl font-bold text-white sm:text-4xl md:text-5xl tracking-tight">
               {t("hero.title")}
             </h1>
@@ -177,12 +185,8 @@ export default function ContactUs() {
               </div>
 
               <div className="space-y-3">
-                <p className="text-slate-600">
-                  {t("weValueEveryMessage")}
-                </p>
-                <p className="text-slate-500 text-sm">
-                  {t("companyName")}
-                </p>
+                <p className="text-slate-600">{t("weValueEveryMessage")}</p>
+                <p className="text-slate-500 text-sm">{t("companyName")}</p>
               </div>
             </div>
           </div>

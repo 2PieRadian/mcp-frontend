@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import PremiumAnimatedBackground from "../components/PremiumAnimatedBackground";
 import ScrollToTopButton from "../components/ScrollToTopButton";
 import {
   Check,
@@ -69,17 +70,16 @@ export default function PrivacyPolicy() {
 
       <main className="min-h-screen bg-linear-to-b from-slate-50 to-white">
         {/* Hero Section */}
-        <section className="bg-linear-to-br from-[#0b1220] via-[#0f1d32] to-[#0a1528] py-16 sm:py-20 md:py-24">
-          <div className="mx-auto max-w-4xl px-5 sm:px-6 lg:px-8 text-center">
+        <section className="bg-gradient-to-br from-[#187360] via-[#115e4c] to-[#0d3f33] animate-gradient-x py-16 sm:py-20 md:py-24 relative overflow-hidden">
+          <PremiumAnimatedBackground />
+          <div className="mx-auto max-w-4xl px-5 sm:px-6 lg:px-8 text-center relative z-10">
             <h1 className="text-3xl font-bold text-white sm:text-4xl md:text-5xl tracking-tight">
               {t("heroTitle")}
             </h1>
-            <p className="mt-4 text-base text-slate-300 sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+            <p className="mt-4 text-base text-slate-100 sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
               {t("heroSubtitle")}
             </p>
-            <p className="mt-2 text-sm text-slate-400">
-              {t("heroCin")}
-            </p>
+            <p className="mt-2 text-sm text-slate-100">{t("heroCin")}</p>
           </div>
         </section>
 
@@ -251,33 +251,25 @@ export default function PrivacyPolicy() {
                       <h4 className="font-semibold text-slate-800 mb-2">
                         {t("s2_2aTitle")}
                       </h4>
-                      <p className="text-slate-600 text-sm">
-                        {t("s2_2aDesc")}
-                      </p>
+                      <p className="text-slate-600 text-sm">{t("s2_2aDesc")}</p>
                     </div>
                     <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
                       <h4 className="font-semibold text-slate-800 mb-2">
                         {t("s2_2bTitle")}
                       </h4>
-                      <p className="text-slate-600 text-sm">
-                        {t("s2_2bDesc")}
-                      </p>
+                      <p className="text-slate-600 text-sm">{t("s2_2bDesc")}</p>
                     </div>
                     <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
                       <h4 className="font-semibold text-slate-800 mb-2">
                         {t("s2_2cTitle")}
                       </h4>
-                      <p className="text-slate-600 text-sm">
-                        {t("s2_2cDesc")}
-                      </p>
+                      <p className="text-slate-600 text-sm">{t("s2_2cDesc")}</p>
                     </div>
                     <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
                       <h4 className="font-semibold text-slate-800 mb-2">
                         {t("s2_2dTitle")}
                       </h4>
-                      <p className="text-slate-600 text-sm">
-                        {t("s2_2dDesc")}
-                      </p>
+                      <p className="text-slate-600 text-sm">{t("s2_2dDesc")}</p>
                     </div>
                   </div>
                 </div>
@@ -311,7 +303,8 @@ export default function PrivacyPolicy() {
                   <div className="grid gap-4 sm:grid-cols-2 mb-4">
                     <div className="p-4 bg-green-50 rounded-xl border border-green-200">
                       <p className="font-semibold text-green-800 mb-2 flex items-center gap-2">
-                        <Check className="w-5 h-5 text-green-600" /> {t("s3_2WeDo")}
+                        <Check className="w-5 h-5 text-green-600" />{" "}
+                        {t("s3_2WeDo")}
                       </p>
                       <ul className="space-y-2 text-green-700 text-sm">
                         <li>{t("s3_2WeDoLi1")}</li>
@@ -321,7 +314,8 @@ export default function PrivacyPolicy() {
                     </div>
                     <div className="p-4 bg-red-50 rounded-xl border border-red-200">
                       <p className="font-semibold text-red-800 mb-2 flex items-center gap-2">
-                        <XCircle className="w-5 h-5 text-red-600" /> {t("s3_2WeDont")}
+                        <XCircle className="w-5 h-5 text-red-600" />{" "}
+                        {t("s3_2WeDont")}
                       </p>
                       <ul className="space-y-2 text-red-700 text-sm">
                         <li>{t("s3_2WeDontLi1")}</li>
@@ -339,18 +333,10 @@ export default function PrivacyPolicy() {
               <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl mb-6 pb-3 border-b-2 border-slate-200">
                 {t("s4Title")}
               </h2>
-              <p className="text-slate-600 leading-relaxed mb-4">
-                {t("s4p1")}
-              </p>
-              <p className="text-slate-600 leading-relaxed mb-4">
-                {t("s4p2")}
-              </p>
-              <p className="text-slate-600 leading-relaxed mb-4">
-                {t("s4p3")}
-              </p>
-              <p className="text-slate-600 leading-relaxed">
-                {t("s4p4")}
-              </p>
+              <p className="text-slate-600 leading-relaxed mb-4">{t("s4p1")}</p>
+              <p className="text-slate-600 leading-relaxed mb-4">{t("s4p2")}</p>
+              <p className="text-slate-600 leading-relaxed mb-4">{t("s4p3")}</p>
+              <p className="text-slate-600 leading-relaxed">{t("s4p4")}</p>
             </section>
 
             {/* Section 5 */}
@@ -403,12 +389,8 @@ export default function PrivacyPolicy() {
               <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl mb-6 pb-3 border-b-2 border-slate-200">
                 {t("s6Title")}
               </h2>
-              <p className="text-slate-600 leading-relaxed mb-4">
-                {t("s6p1")}
-              </p>
-              <p className="text-slate-600 leading-relaxed mb-4">
-                {t("s6p2")}
-              </p>
+              <p className="text-slate-600 leading-relaxed mb-4">{t("s6p1")}</p>
+              <p className="text-slate-600 leading-relaxed mb-4">{t("s6p2")}</p>
               <ul className="space-y-3 text-slate-600 mb-6">
                 <li className="flex items-start gap-3">
                   <span className="mt-2 h-1.5 w-1.5 rounded-full bg-teal-500 shrink-0"></span>
@@ -435,9 +417,7 @@ export default function PrivacyPolicy() {
                   <span>{t("s6li6")}</span>
                 </li>
               </ul>
-              <p className="text-slate-600 leading-relaxed mb-6">
-                {t("s6p3")}
-              </p>
+              <p className="text-slate-600 leading-relaxed mb-6">{t("s6p3")}</p>
 
               <div>
                 <h3 className="text-lg font-semibold text-slate-800 sm:text-xl mb-3">
@@ -464,38 +444,38 @@ export default function PrivacyPolicy() {
               <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl mb-6 pb-3 border-b-2 border-slate-200">
                 {t("s7Title")}
               </h2>
-              <p className="text-slate-600 leading-relaxed mb-4">
-                {t("s7p1")}
-              </p>
-              <p className="text-slate-600 leading-relaxed mb-4">
-                {t("s7p2")}
-              </p>
+              <p className="text-slate-600 leading-relaxed mb-4">{t("s7p1")}</p>
+              <p className="text-slate-600 leading-relaxed mb-4">{t("s7p2")}</p>
               <ul className="space-y-4 text-slate-600">
                 <li className="flex items-start gap-3">
                   <span className="mt-2 h-1.5 w-1.5 rounded-full bg-slate-400 shrink-0"></span>
                   <span>
-                    <strong className="text-slate-800">{t("s7li1Strong")}</strong>{" "}
+                    <strong className="text-slate-800">
+                      {t("s7li1Strong")}
+                    </strong>{" "}
                     {t("s7li1Text")}
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-2 h-1.5 w-1.5 rounded-full bg-slate-400 shrink-0"></span>
                   <span>
-                    <strong className="text-slate-800">{t("s7li2Strong")}</strong>{" "}
+                    <strong className="text-slate-800">
+                      {t("s7li2Strong")}
+                    </strong>{" "}
                     {t("s7li2Text")}
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-2 h-1.5 w-1.5 rounded-full bg-slate-400 shrink-0"></span>
                   <span>
-                    <strong className="text-slate-800">{t("s7li3Strong")}</strong>{" "}
+                    <strong className="text-slate-800">
+                      {t("s7li3Strong")}
+                    </strong>{" "}
                     {t("s7li3Text")}
                   </span>
                 </li>
               </ul>
-              <p className="text-slate-600 leading-relaxed mt-4">
-                {t("s7p3")}
-              </p>
+              <p className="text-slate-600 leading-relaxed mt-4">{t("s7p3")}</p>
             </section>
 
             {/* Section 8 */}
@@ -503,15 +483,9 @@ export default function PrivacyPolicy() {
               <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl mb-6 pb-3 border-b-2 border-slate-200">
                 {t("s8Title")}
               </h2>
-              <p className="text-slate-600 leading-relaxed mb-4">
-                {t("s8p1")}
-              </p>
-              <p className="text-slate-600 leading-relaxed mb-4">
-                {t("s8p2")}
-              </p>
-              <p className="text-slate-600 leading-relaxed">
-                {t("s8p3")}
-              </p>
+              <p className="text-slate-600 leading-relaxed mb-4">{t("s8p1")}</p>
+              <p className="text-slate-600 leading-relaxed mb-4">{t("s8p2")}</p>
+              <p className="text-slate-600 leading-relaxed">{t("s8p3")}</p>
             </section>
 
             {/* Section 9 */}
@@ -519,12 +493,8 @@ export default function PrivacyPolicy() {
               <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl mb-6 pb-3 border-b-2 border-slate-200">
                 {t("s9Title")}
               </h2>
-              <p className="text-slate-600 leading-relaxed mb-4">
-                {t("s9p1")}
-              </p>
-              <p className="text-slate-600 leading-relaxed">
-                {t("s9p2")}
-              </p>
+              <p className="text-slate-600 leading-relaxed mb-4">{t("s9p1")}</p>
+              <p className="text-slate-600 leading-relaxed">{t("s9p2")}</p>
             </section>
 
             {/* Section 10 */}
@@ -541,9 +511,7 @@ export default function PrivacyPolicy() {
               <p className="text-slate-600 leading-relaxed mb-4">
                 {t("s10p3")}
               </p>
-              <p className="text-slate-600 leading-relaxed">
-                {t("s10p4")}
-              </p>
+              <p className="text-slate-600 leading-relaxed">{t("s10p4")}</p>
             </section>
 
             {/* Section 11 */}
@@ -560,9 +528,7 @@ export default function PrivacyPolicy() {
               <p className="text-slate-600 leading-relaxed mb-4">
                 {t("s11p3")}
               </p>
-              <p className="text-slate-600 leading-relaxed">
-                {t("s11p4")}
-              </p>
+              <p className="text-slate-600 leading-relaxed">{t("s11p4")}</p>
             </section>
 
             {/* Section 12 */}
@@ -576,9 +542,7 @@ export default function PrivacyPolicy() {
               <p className="text-slate-600 leading-relaxed mb-4">
                 {t("s12p2")}
               </p>
-              <p className="text-slate-600 leading-relaxed">
-                {t("s12p3")}
-              </p>
+              <p className="text-slate-600 leading-relaxed">{t("s12p3")}</p>
             </section>
 
             {/* Section 13 */}
@@ -605,9 +569,7 @@ export default function PrivacyPolicy() {
               <p className="text-slate-600 leading-relaxed mb-4">
                 {t("s13p3")}
               </p>
-              <p className="text-slate-600 leading-relaxed">
-                {t("s13p4")}
-              </p>
+              <p className="text-slate-600 leading-relaxed">{t("s13p4")}</p>
             </section>
 
             {/* Section 14 */}
@@ -638,9 +600,7 @@ export default function PrivacyPolicy() {
                   <span>{t("s14li3")}</span>
                 </li>
               </ul>
-              <p className="text-slate-600 leading-relaxed">
-                {t("s14p4")}
-              </p>
+              <p className="text-slate-600 leading-relaxed">{t("s14p4")}</p>
             </section>
 
             {/* Section 15 */}
@@ -671,9 +631,7 @@ export default function PrivacyPolicy() {
                   <span>{t("s15li2")}</span>
                 </li>
               </ul>
-              <p className="text-slate-600 leading-relaxed">
-                {t("s15p3")}
-              </p>
+              <p className="text-slate-600 leading-relaxed">{t("s15p3")}</p>
             </section>
 
             {/* Section 16 */}
@@ -710,9 +668,7 @@ export default function PrivacyPolicy() {
                   </p>
                 </div>
 
-                <p className="text-slate-600 leading-relaxed">
-                  {t("s16p2")}
-                </p>
+                <p className="text-slate-600 leading-relaxed">{t("s16p2")}</p>
               </div>
             </section>
 
@@ -730,9 +686,7 @@ export default function PrivacyPolicy() {
               <p className="text-slate-600 leading-relaxed mb-4">
                 {t("s17p3")}
               </p>
-              <p className="text-slate-600 leading-relaxed">
-                {t("s17p4")}
-              </p>
+              <p className="text-slate-600 leading-relaxed">{t("s17p4")}</p>
             </section>
 
             {/* Section 18 */}
@@ -756,9 +710,7 @@ export default function PrivacyPolicy() {
                 </a>
                 {t("s18p3After")}
               </p>
-              <p className="text-slate-600 leading-relaxed">
-                {t("s18p4")}
-              </p>
+              <p className="text-slate-600 leading-relaxed">{t("s18p4")}</p>
             </section>
 
             {/* Section 19 */}
@@ -767,9 +719,7 @@ export default function PrivacyPolicy() {
                 {t("s19Title")}
               </h2>
               <p className="text-slate-600 leading-relaxed mb-4">
-                <strong className="text-slate-800">
-                  {t("s19p1Strong")}
-                </strong>
+                <strong className="text-slate-800">{t("s19p1Strong")}</strong>
               </p>
               <p className="text-slate-600 leading-relaxed mb-4">
                 {t("s19p2")}
@@ -789,9 +739,7 @@ export default function PrivacyPolicy() {
                   </a>
                 </p>
               </div>
-              <p className="text-slate-600 leading-relaxed">
-                {t("s19p4")}
-              </p>
+              <p className="text-slate-600 leading-relaxed">{t("s19p4")}</p>
             </section>
 
             {/* Section 20 */}
@@ -799,9 +747,7 @@ export default function PrivacyPolicy() {
               <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl mb-6 pb-3 border-b-2 border-slate-200">
                 {t("s20Title")}
               </h2>
-              <p className="text-slate-600 leading-relaxed">
-                {t("s20p1")}
-              </p>
+              <p className="text-slate-600 leading-relaxed">{t("s20p1")}</p>
             </section>
 
             {/* Section 21 */}
@@ -824,9 +770,7 @@ export default function PrivacyPolicy() {
               <p className="text-slate-600 leading-relaxed mb-4">
                 {t("s21p3")}
               </p>
-              <p className="text-slate-600 leading-relaxed">
-                {t("s21p4")}
-              </p>
+              <p className="text-slate-600 leading-relaxed">{t("s21p4")}</p>
             </section>
 
             {/* Section 22 */}
@@ -857,9 +801,7 @@ export default function PrivacyPolicy() {
               <p className="text-slate-600 leading-relaxed mb-4">
                 {t("s22p3")}
               </p>
-              <p className="text-slate-600 leading-relaxed">
-                {t("s22p4")}
-              </p>
+              <p className="text-slate-600 leading-relaxed">{t("s22p4")}</p>
             </section>
 
             {/* Section 23 */}

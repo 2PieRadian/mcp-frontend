@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import PremiumAnimatedBackground from "../components/PremiumAnimatedBackground";
 import ScrollToTopButton from "../components/ScrollToTopButton";
 import { Mail, AlertTriangle } from "lucide-react";
 
@@ -38,8 +39,9 @@ export default function TermsOfUse() {
 
       <main className="min-h-screen bg-linear-to-b from-slate-50 to-white">
         {/* Hero Section */}
-        <section className="bg-linear-to-br from-[#0b1220] via-[#0f1d32] to-[#0a1528] py-16 sm:py-20 md:py-24">
-          <div className="mx-auto max-w-4xl px-5 sm:px-6 lg:px-8 text-center">
+        <section className="bg-gradient-to-br from-[#187360] via-[#115e4c] to-[#0d3f33] animate-gradient-x py-16 sm:py-20 md:py-24 relative overflow-hidden">
+          <PremiumAnimatedBackground />
+          <div className="mx-auto max-w-4xl px-5 sm:px-6 lg:px-8 text-center relative z-10">
             <h1 className="text-3xl font-bold text-white sm:text-4xl md:text-5xl tracking-tight">
               Terms of Use
             </h1>

@@ -100,12 +100,6 @@ export default function Footer() {
 
       {/* Premium Animated Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        {/* Giant Blobs */}
-        {/* <div className="absolute -top-[40%] -left-[20%] w-[100%] max-w-[1200px] aspect-square rounded-full bg-[#34d399] blur-[150px] opacity-40 animate-blob" />
-        <div className="absolute top-[0%] -right-[30%] w-[120%] max-w-[1400px] aspect-square rounded-full bg-[#a7f3d0] blur-[180px] opacity-30 animate-blob animation-delay-2000" />
-        <div className="absolute -bottom-[50%] left-[10%] w-[110%] max-w-[1300px] aspect-square rounded-full bg-[#6ee7b7] blur-[160px] opacity-35 animate-blob animation-delay-4000" />
-        <div className="absolute top-[20%] left-[30%] w-[90%] max-w-[1000px] aspect-square rounded-full bg-[#14b8a6] blur-[200px] opacity-30 animate-blob animation-delay-6000" /> */}
-
         {/* Mid-sized Floating Elements (approx 20px radius) */}
         {[...Array(25)].map((_, i) => {
           const size = 20 + (i % 25);
