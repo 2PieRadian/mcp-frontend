@@ -17,204 +17,36 @@ type Role = {
   title: string;
   department: string;
   description: string;
-  skills: [string, string, string];
 };
-
-const roles: Role[] = [
-  // Wellness
-  {
-    title: "Anxiety and Panic Attack Counsellor",
-    department: "Wellness",
-    description:
-      "Provide specialized counseling and coping strategies for individuals experiencing anxiety and panic attacks.",
-    skills: ["Cognitive Behavioral Therapy", "Anxiety Management", "Empathy"],
-  },
-  {
-    title: "Depression Counsellor",
-    department: "Wellness",
-    description:
-      "Offer therapeutic support and emotional guidance to help individuals navigate and overcome depression.",
-    skills: ["Psychotherapy", "Emotional Support", "Crisis Intervention"],
-  },
-  {
-    title: "OCD Counsellor",
-    department: "Wellness",
-    description:
-      "Support clients with Obsessive-Compulsive Disorder through targeted therapeutic interventions.",
-    skills: ["ERP Therapy", "Behavioral Analysis", "Mental Health"],
-  },
-  {
-    title: "ADHD Counsellor",
-    department: "Wellness",
-    description:
-      "Assist individuals in managing ADHD symptoms, improving focus, and developing organizational skills.",
-    skills: ["ADHD Coaching", "Behavioral Strategies", "Client Support"],
-  },
-  {
-    title: "Couple Counsellor",
-    department: "Wellness",
-    description:
-      "Facilitate communication and resolve conflicts to help partners build healthier relationships.",
-    skills: ["Couples Therapy", "Conflict Resolution", "Mediation"],
-  },
-  {
-    title: "Family Counsellor",
-    department: "Wellness",
-    description:
-      "Work with families to address emotional issues, improve communication, and strengthen family bonds.",
-    skills: ["Family Therapy", "Communication", "Interpersonal Skills"],
-  },
-  {
-    title: "Breakup Recovery Expert",
-    department: "Wellness",
-    description:
-      "Guide clients through the emotional process of relationship breakups and help them rebuild their lives.",
-    skills: ["Grief Counseling", "Emotional Healing", "Life Coaching"],
-  },
-  {
-    title: "Loneliness Counsellor",
-    department: "Wellness",
-    description:
-      "Provide compassionate support to individuals struggling with isolation and loneliness.",
-    skills: ["Active Listening", "Compassion", "Social Integration"],
-  },
-  {
-    title: "Divorce / Separation Counsellor",
-    department: "Wellness",
-    description:
-      "Help clients navigate the complex emotional and practical challenges of divorce or separation.",
-    skills: ["Divorce Counseling", "Stress Management", "Emotional Support"],
-  },
-  {
-    title: "Stress / Overthinking Expert",
-    department: "Wellness",
-    description:
-      "Teach effective techniques for managing chronic stress and reducing rumination.",
-    skills: ["Stress Management", "Mindfulness", "CBT Techniques"],
-  },
-  {
-    title: "Dietician",
-    department: "Wellness",
-    description:
-      "Develop personalized nutrition plans and provide expert advice for a healthier lifestyle.",
-    skills: ["Nutrition", "Diet Planning", "Consultation"],
-  },
-  {
-    title: "Yoga Expert",
-    department: "Wellness",
-    description:
-      "Lead yoga sessions focusing on physical health, mental clarity, and overall well-being.",
-    skills: ["Yoga Instruction", "Mindfulness", "Physical Therapy"],
-  },
-
-  // Education
-  {
-    title: "Career Path Finder",
-    department: "Education",
-    description:
-      "Assess skills and interests to guide individuals toward fulfilling and successful career choices.",
-    skills: ["Career Coaching", "Aptitude Testing", "Mentoring"],
-  },
-  {
-    title: "Academic Counsellor",
-    department: "Education",
-    description:
-      "Provide academic guidance, study strategies, and support for student success.",
-    skills: ["Student Counseling", "Academic Planning", "Communication"],
-  },
-  {
-    title: "School Subject Experts",
-    department: "Education",
-    description:
-      "Deliver high-quality tutoring and instructional support for various school-level subjects.",
-    skills: ["Subject Matter Expertise", "Teaching", "Lesson Planning"],
-  },
-  {
-    title: "Foreign Language Trainers",
-    department: "Education",
-    description:
-      "Teach foreign languages and help students achieve fluency and cultural understanding.",
-    skills: ["Language Instruction", "Linguistics", "Cultural Competence"],
-  },
-  {
-    title: "Skill Development Coaches",
-    department: "Education",
-    description:
-      "Train individuals in professional and soft skills necessary for personal and career growth.",
-    skills: ["Skill Training", "Coaching", "Curriculum Design"],
-  },
-
-  // Finance
-  {
-    title: "Investment Expert",
-    department: "Finance",
-    description:
-      "Advise clients on wealth building, portfolio management, and strategic investments.",
-    skills: ["Portfolio Management", "Market Analysis", "Advisory"],
-  },
-  {
-    title: "GST and Tax Expert",
-    department: "Finance",
-    description:
-      "Provide specialized guidance on tax planning, compliance, and GST regulations.",
-    skills: ["Taxation", "Compliance", "Accounting"],
-  },
-  {
-    title: "Financial Planner",
-    department: "Finance",
-    description:
-      "Help clients map out comprehensive strategies to achieve their long-term financial goals.",
-    skills: ["Financial Planning", "Wealth Management", "Consulting"],
-  },
-  {
-    title: "Insurance Expert",
-    department: "Finance",
-    description:
-      "Guide clients in selecting the best insurance policies to protect their assets and families.",
-    skills: ["Risk Assessment", "Insurance Policies", "Client Relations"],
-  },
-  {
-    title: "Business Finance Consultant",
-    department: "Finance",
-    description:
-      "Assist businesses with financial strategy, cash flow management, and capital optimization.",
-    skills: ["Corporate Finance", "Business Strategy", "Financial Analysis"],
-  },
-];
 
 export default function Careers() {
   const [selectedDepartment, setSelectedDepartment] =
     useState("All Departments");
-  const [activeSpecializations, setActiveSpecializations] =
-    useState<Set<string> | null>(null);
+  const [activeRolesList, setActiveRolesList] = useState<Role[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetch(`${BACKEND_URL}/api/v1/expert/specializations`)
       .then((res) => res.json())
       .then((data) => {
         if (data.specializations) {
-          const active = new Set<string>(
-            data.specializations
-              .filter(
-                (s: { hasVacancies?: boolean; name: string }) =>
-                  s.hasVacancies !== false,
-              )
-              .map((s: { hasVacancies?: boolean; name: string }) => s.name),
-          );
-          setActiveSpecializations(active);
+          const fetchedRoles = data.specializations
+            .filter((s: { hasVacancies?: boolean; name: string }) => s.hasVacancies !== false)
+            .map((s: { name: string; domain?: { name: string }; description?: string }) => ({
+              title: s.name,
+              department: s.domain?.name || "Other",
+              description: s.description || "No description available.",
+            }));
+          setActiveRolesList(fetchedRoles);
         }
       })
       .catch((err) => {
         console.error("Failed to fetch specializations:", err);
-        // On error, fall back to showing all roles
-        setActiveSpecializations(new Set(roles.map((r) => r.title)));
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, []);
-
-  const activeRolesList = useMemo(() => {
-    if (!activeSpecializations) return roles;
-    return roles.filter((role) => activeSpecializations.has(role.title));
-  }, [activeSpecializations]);
 
   const departmentFilters = useMemo(() => {
     const counts = new Map<string, number>();
@@ -370,17 +202,6 @@ export default function Careers() {
                   <span className="rounded-full bg-[#eefcf2] px-3 py-1 text-xs font-bold text-[#15603A]">
                     {role.department}
                   </span>
-                </div>
-                <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-slate-600 font-medium">
-                  {role.skills.map((skill) => (
-                    <span
-                      key={skill}
-                      className="inline-flex items-center gap-1"
-                    >
-                      <span className="text-[#15603A] font-bold">•</span>
-                      {skill}
-                    </span>
-                  ))}
                 </div>
                 <p className="text-sm leading-relaxed text-slate-600 mb-6">
                   {role.description}
