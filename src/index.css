@@ -1397,3 +1397,5 @@ input[type="password"]::-ms-reveal {
 .animate-shimmer {
   animation: shimmer 3s ease-in-out infinite;
 }
+
+@keyframes slide-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
