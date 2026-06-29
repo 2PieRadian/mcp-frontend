@@ -62,7 +62,7 @@ export default function Footer() {
   const threadsURL = "https://www.threads.net/@mindcurepath";
 
   return (
-    <footer className="mt-10 w-full bg-[#034242] text-slate-200 pb-[40px] sm:pb-[30px] pt-[10px]">
+    <footer className="mt-10 w-full bg-[#034242] text-white pb-[40px] sm:pb-[30px] pt-[10px]">
       <div>
         <div className="mx-auto max-w-7xl py-10 sm:py-12 md:py-14 lg:py-16 px-5 sm:px-6 lg:px-8">
           {/* Main Footer Content - Single row on desktop */}
@@ -83,13 +83,13 @@ export default function Footer() {
                   <h2 className="text-xl font-bold text-white sm:text-2xl">
                     {t("appName")}
                   </h2>
-                  <p className="text-sm text-slate-300 sm:text-base leading-tight">
+                  <p className="text-sm text-white sm:text-base leading-tight">
                     {t("footerTagline")}
                   </p>
                 </div>
               </Link>
 
-              {/* <p className="text-sm leading-relaxed text-slate-400 text-center lg:text-left sm:text-base max-w-[28ch]">
+              {/* <p className="text-sm leading-relaxed text-white text-center lg:text-left sm:text-base max-w-[28ch]">
                 {t("footerTagline", {
                   defaultValue:
                     "Mental wellness tools and expert-backed guidance.",
@@ -105,7 +105,7 @@ export default function Footer() {
                   href={instagramURL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105"
                   aria-label={t("footerInstagram")}
                 >
                   <Instagram size={18} />
@@ -114,7 +114,7 @@ export default function Footer() {
                   href={linkedinURL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105"
                   aria-label={t("footerLinkedIn")}
                 >
                   <Linkedin size={18} />
@@ -123,7 +123,7 @@ export default function Footer() {
                   href={xURL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105"
                   aria-label={t("footerX")}
                 >
                   <XIcon size={18} />
@@ -132,7 +132,7 @@ export default function Footer() {
                   href={facebookURL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105"
                   aria-label={t("footerFacebook")}
                 >
                   <Facebook size={18} />
@@ -141,7 +141,7 @@ export default function Footer() {
                   href={threadsURL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition-all duration-200 hover:bg-white/10 hover:text-white hover:scale-105"
                   aria-label={t("footerThreads")}
                 >
                   <ThreadsIcon size={18} />
@@ -150,7 +150,7 @@ export default function Footer() {
 
               {/* Language Switcher */}
               <div className="flex flex-col items-center lg:items-start gap-2 mt-[10px]">
-                <span className="text-xs font-semibold tracking-wide text-slate-400 uppercase">
+                <span className="text-xs font-semibold tracking-wide text-white uppercase">
                   {t("footerLanguage")}
                 </span>
                 <LanguageSwitcher variant="footer" />
@@ -167,7 +167,7 @@ export default function Footer() {
                 <h3 className="text-sm font-semibold tracking-wide text-white uppercase">
                   {t("quickLinks")}
                 </h3>
-                <ul className="space-y-2 text-sm text-slate-300">
+                <ul className="space-y-2 text-sm text-white">
                   <li>
                     <Link
                       className="transition-colors duration-200 hover:text-white"
@@ -227,7 +227,7 @@ export default function Footer() {
                 <h3 className="text-sm font-semibold tracking-wide text-white uppercase">
                   {t("support")}
                 </h3>
-                <ul className="space-y-2 text-sm text-slate-300">
+                <ul className="space-y-2 text-sm text-white">
                   <li>
                     <Link
                       className="transition-colors duration-200 hover:text-white"
@@ -271,7 +271,7 @@ export default function Footer() {
                 <h3 className="text-sm font-semibold tracking-wide text-white uppercase">
                   {t("legal")}
                 </h3>
-                <ul className="space-y-2 text-sm text-slate-300">
+                <ul className="space-y-2 text-sm text-white">
                   <li>
                     <Link
                       className="transition-colors duration-200 hover:text-white"
@@ -303,8 +303,8 @@ export default function Footer() {
 
           {/* Disclaimer */}
           <div className="mt-10 border-t border-white/10 pt-6 sm:mt-12 sm:pt-8 w-full">
-            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed text-center sm:text-left w-full">
-              <span className="font-semibold text-slate-300">
+            <p className="text-xs sm:text-sm text-white leading-relaxed text-center sm:text-left w-full">
+              <span className="font-semibold text-white">
                 {t("footerDisclaimerLabel")}
               </span>{" "}
               {t("footerDisclaimerText")}
@@ -314,25 +314,30 @@ export default function Footer() {
           {/* Bottom bar */}
           <div className="mt-8 border-t border-white/10 pt-5 sm:pt-6">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-sm text-slate-400 text-center sm:text-left sm:text-base">
-                © {new Date().getFullYear()} {t("appName")}.{" "}
-                {t("allRightsReserved")}
-              </p>
-              <div className="flex flex-wrap justify-center gap-x-3 gap-y-2 text-sm text-slate-400 sm:justify-end sm:gap-x-5 sm:text-base">
+              <div className="flex flex-col gap-1">
+                <p className="text-sm text-white text-center sm:text-left sm:text-base">
+                  © {new Date().getFullYear()} {t("appName")}.{" "}
+                  {t("allRightsReserved")}
+                </p>
+                <p className="text-xs text-center sm:text-left">
+                  CIN: U62090UP2025PTC239472 | GSTIN: 09AAUCM0962Q1ZO
+                </p>
+              </div>
+              <div className="flex flex-wrap justify-center gap-x-3 gap-y-2 text-sm text-white sm:justify-end sm:gap-x-5 sm:text-base">
                 <Link
                   className="transition-colors duration-200 hover:text-white"
                   to="/privacy-policy"
                 >
                   {t("footerPrivacy")}
                 </Link>
-                <span className="text-slate-600">•</span>
+                <span className="text-white">•</span>
                 <Link
                   className="transition-colors duration-200 hover:text-white"
                   to="/terms-and-conditions"
                 >
                   {t("footerTerms")}
                 </Link>
-                <span className="text-slate-600">•</span>
+                <span className="text-white">•</span>
                 <Link
                   className="transition-colors duration-200 hover:text-white"
                   to="/terms-of-use"
