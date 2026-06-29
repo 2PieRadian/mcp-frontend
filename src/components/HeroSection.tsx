@@ -20,6 +20,7 @@ const HERO_CATEGORIES: readonly HeroCategory[] = [
     titleKey: "wellness",
     bodyKey: "heroCardWellnessBody",
     glow: "bg-emerald-300/35",
+    imageClassName: "object-contain p-2",
   },
   {
     key: "education",
@@ -44,7 +45,7 @@ const HERO_CATEGORIES: readonly HeroCategory[] = [
     titleKey: "digitalTechnologySolutions",
     bodyKey: "heroCardTechnologyBody",
     glow: "bg-[#149373]/25",
-    imageClassName: "object-contain",
+    imageClassName: "object-contain p-2",
   },
 ];
 
@@ -107,10 +108,6 @@ function CategoryCard({
       to={category.to}
       className="group relative isolate flex min-h-[430px] overflow-hidden rounded-4xl border border-stone-100 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md"
     >
-      <div
-        className={`absolute -right-12 -top-12 h-40 w-40 rounded-full blur-3xl transition duration-500 group-hover:scale-125 ${category.glow}`}
-      />
-
       <div className="flex w-full flex-col">
         <div className="relative h-56 overflow-hidden">
           <div className="absolute right-[-24px] top-[-24px] h-28 w-28 rounded-full bg-white/35 blur-2xl" />
