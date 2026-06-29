@@ -6,7 +6,7 @@ const HERO_CATEGORIES = [
   {
     key: "wellness",
     to: "/wellness-experts",
-    imageSrc: "/images/hero/hero-wellness.jpg",
+    imageSrc: "/images/category/wellness/wellness.png",
     titleKey: "wellness",
     bodyKey: "heroCardWellnessBody",
     glow: "bg-emerald-300/35",
@@ -14,7 +14,7 @@ const HERO_CATEGORIES = [
   {
     key: "education",
     to: "/education-experts",
-    imageSrc: "/images/hero/hero-education.jpg",
+    imageSrc: "/images/category/education/education.png",
     titleKey: "education",
     bodyKey: "heroCardEducationBody",
     glow: "bg-amber-300/35",
@@ -22,7 +22,7 @@ const HERO_CATEGORIES = [
   {
     key: "finance",
     to: "/finance-experts",
-    imageSrc: "/images/hero/hero-finance.jpg",
+    imageSrc: "/images/category/finance/finance.png",
     titleKey: "finance",
     bodyKey: "heroCardFinanceBody",
     glow: "bg-sky-300/35",
@@ -104,14 +104,7 @@ function CategoryCard({
       <div className="flex w-full flex-col">
         <div className="relative h-56 overflow-hidden">
           <div className="absolute right-[-24px] top-[-24px] h-28 w-28 rounded-full bg-white/35 blur-2xl" />
-          <div
-            className="pointer-events-none absolute left-5 top-5 z-10 h-[86px] w-[110px] opacity-20"
-            style={{
-              backgroundImage:
-                "radial-gradient(circle, rgba(20,147,115,0.7) 1.4px, transparent 1.6px)",
-              backgroundSize: "12px 12px",
-            }}
-          />
+
           <img
             src={category.imageSrc}
             alt={title}
@@ -120,8 +113,6 @@ function CategoryCard({
                 ? category.imageClassName
                 : "object-cover"
             }`}
-            width={520}
-            height={340}
             decoding="async"
           />
         </div>
