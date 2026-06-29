@@ -1,7 +1,8 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import ResponsiveNavbar from "../components/ResponsiveNavbar";
+import { BACKEND_URL } from "../lib/api";
 import { ArrowRight, Heart, Users, Rocket, Laptop, GraduationCap, Monitor } from "lucide-react";
 
 type Role = {
@@ -112,22 +113,48 @@ const roles: Role[] = [
 
 export default function Careers() {
   const [selectedDepartment, setSelectedDepartment] = useState("All Departments");
+  const [activeSpecializations, setActiveSpecializations] = useState<Set<string> | null>(null);
+
+  useEffect(() => {
+    fetch(`${BACKEND_URL}/api/v1/expert/specializations`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.specializations) {
+          const active = new Set<string>(
+            data.specializations
+              .filter((s: { hasVacancies?: boolean; name: string }) => s.hasVacancies !== false)
+              .map((s: { hasVacancies?: boolean; name: string }) => s.name)
+          );
+          setActiveSpecializations(active);
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to fetch specializations:", err);
+        // On error, fall back to showing all roles
+        setActiveSpecializations(new Set(roles.map(r => r.title)));
+      });
+  }, []);
+
+  const activeRolesList = useMemo(() => {
+    if (!activeSpecializations) return roles;
+    return roles.filter(role => activeSpecializations.has(role.title));
+  }, [activeSpecializations]);
 
   const departmentFilters = useMemo(() => {
     const counts = new Map<string, number>();
-    for (const role of roles) {
+    for (const role of activeRolesList) {
       counts.set(role.department, (counts.get(role.department) ?? 0) + 1);
     }
     return [
-      { name: "All Departments", count: roles.length },
+      { name: "All Departments", count: activeRolesList.length },
       ...Array.from(counts.entries()).map(([name, count]) => ({ name, count })),
     ];
-  }, []);
+  }, [activeRolesList]);
 
   const filteredRoles = useMemo(() => {
-    if (selectedDepartment === "All Departments") return roles;
-    return roles.filter((role) => role.department === selectedDepartment);
-  }, [selectedDepartment]);
+    if (selectedDepartment === "All Departments") return activeRolesList;
+    return activeRolesList.filter((role) => role.department === selectedDepartment);
+  }, [selectedDepartment, activeRolesList]);
 
 
   return (
