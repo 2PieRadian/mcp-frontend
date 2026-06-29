@@ -62,8 +62,83 @@ export default function Footer() {
   const threadsURL = "https://www.threads.net/@mindcurepath";
 
   return (
-    <footer className="mt-10 w-full bg-[#187360] text-white pb-[40px] sm:pb-[30px] pt-[10px]">
-      <div>
+    <footer className="mt-10 w-full bg-gradient-to-br from-[#187360] via-[#115e4c] to-[#0d3f33] animate-gradient-x text-white pb-[40px] sm:pb-[30px] pt-[10px] relative overflow-hidden">
+      <style>
+        {`
+          @keyframes blob-bounce {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(15vw, -15vh) scale(1.4); }
+            66% { transform: translate(-10vw, 10vh) scale(0.8); }
+            100% { transform: translate(0px, 0px) scale(1); }
+          }
+          @keyframes gradient-x {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+          }
+          @keyframes float-up {
+            0% { transform: translateY(0) scale(0.8); opacity: 0; }
+            20% { opacity: 0.6; }
+            80% { opacity: 0.6; }
+            100% { transform: translateY(-800px) scale(1.2); opacity: 0; }
+          }
+          .animate-blob {
+            animation: blob-bounce 18s infinite ease-in-out;
+          }
+          .animate-gradient-x {
+            background-size: 200% 200%;
+            animation: gradient-x 15s ease infinite;
+          }
+          .animate-float {
+            animation: float-up linear infinite;
+            opacity: 0;
+          }
+          .animation-delay-2000 { animation-delay: 2s; }
+          .animation-delay-4000 { animation-delay: 4s; }
+          .animation-delay-6000 { animation-delay: 6s; }
+        `}
+      </style>
+
+      {/* Premium Animated Background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        {/* Giant Blobs */}
+        {/* <div className="absolute -top-[40%] -left-[20%] w-[100%] max-w-[1200px] aspect-square rounded-full bg-[#34d399] blur-[150px] opacity-40 animate-blob" />
+        <div className="absolute top-[0%] -right-[30%] w-[120%] max-w-[1400px] aspect-square rounded-full bg-[#a7f3d0] blur-[180px] opacity-30 animate-blob animation-delay-2000" />
+        <div className="absolute -bottom-[50%] left-[10%] w-[110%] max-w-[1300px] aspect-square rounded-full bg-[#6ee7b7] blur-[160px] opacity-35 animate-blob animation-delay-4000" />
+        <div className="absolute top-[20%] left-[30%] w-[90%] max-w-[1000px] aspect-square rounded-full bg-[#14b8a6] blur-[200px] opacity-30 animate-blob animation-delay-6000" /> */}
+
+        {/* Mid-sized Floating Elements (approx 20px radius) */}
+        {[...Array(25)].map((_, i) => {
+          const size = 20 + (i % 25);
+          const left = (i * 17) % 100;
+          const delay = (i * 0.7) % 15;
+          const duration = 15 + (i % 10);
+          return (
+            <div
+              key={i}
+              className="absolute rounded-full bg-white/10 animate-float backdrop-blur-sm shadow-[0_0_15px_rgba(255,255,255,0.1)]"
+              style={{
+                width: `${size}px`,
+                height: `${size}px`,
+                left: `${left}%`,
+                top: "100%",
+                animationDelay: `${delay}s`,
+                animationDuration: `${duration}s`,
+              }}
+            />
+          );
+        })}
+
+        {/* Animated noise texture overlay for extra premium feel */}
+        <div
+          className="absolute inset-0 opacity-[0.04] mix-blend-overlay"
+          style={{
+            backgroundImage:
+              'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")',
+          }}
+        ></div>
+      </div>
+
+      <div className="relative z-10">
         <div className="mx-auto max-w-7xl py-10 sm:py-12 md:py-14 lg:py-16 px-5 sm:px-6 lg:px-8">
           {/* Main Footer Content - Single row on desktop */}
           <div className="flex flex-col gap-12 sm:gap-14 lg:flex-row lg:gap-12 lg:justify-between">

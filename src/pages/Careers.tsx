@@ -31,12 +31,21 @@ export default function Careers() {
       .then((data) => {
         if (data.specializations) {
           const fetchedRoles = data.specializations
-            .filter((s: { hasVacancies?: boolean; name: string }) => s.hasVacancies !== false)
-            .map((s: { name: string; domain?: { name: string }; description?: string }) => ({
-              title: s.name,
-              department: s.domain?.name || "Other",
-              description: s.description || "No description available.",
-            }));
+            .filter(
+              (s: { hasVacancies?: boolean; name: string }) =>
+                s.hasVacancies !== false,
+            )
+            .map(
+              (s: {
+                name: string;
+                domain?: { name: string };
+                description?: string;
+              }) => ({
+                title: s.name,
+                department: s.domain?.name || "Other",
+                description: s.description || "No description available.",
+              }),
+            );
           setActiveRolesList(fetchedRoles);
         }
       })
@@ -189,32 +198,42 @@ export default function Careers() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {filteredRoles.map((role) => (
-            <div
-              key={role.title}
-              className="rounded-2xl border border-gray-200 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md transition-shadow flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-                  <h3 className="text-xl font-bold text-slate-900">
-                    {role.title}
-                  </h3>
-                  <span className="rounded-full bg-[#eefcf2] px-3 py-1 text-xs font-bold text-[#15603A]">
-                    {role.department}
-                  </span>
-                </div>
-                <p className="text-sm leading-relaxed text-slate-600 mb-6">
-                  {role.description}
-                </p>
-              </div>
-              <Link
-                to={`/careers/apply?role=${encodeURIComponent(role.title)}`}
-                className="inline-flex w-full sm:w-auto items-center justify-center rounded-xl bg-white border-2 border-[#15603A] px-6 py-2.5 text-sm font-bold text-[#15603A] transition-colors hover:bg-[#15603A] hover:text-white"
-              >
-                Apply Now
-              </Link>
+          {isLoading ? (
+            <div className="col-span-1 md:col-span-2 text-center py-10 text-slate-500">
+              Loading roles...
             </div>
-          ))}
+          ) : filteredRoles.length > 0 ? (
+            filteredRoles.map((role) => (
+              <div
+                key={role.title}
+                className="rounded-2xl border border-gray-200 bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md transition-shadow flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                    <h3 className="text-xl font-bold text-slate-900">
+                      {role.title}
+                    </h3>
+                    <span className="rounded-full bg-[#eefcf2] px-3 py-1 text-xs font-bold text-[#15603A]">
+                      {role.department}
+                    </span>
+                  </div>
+                  <p className="text-sm leading-relaxed text-slate-600 mb-6">
+                    {role.description}
+                  </p>
+                </div>
+                <Link
+                  to={`/careers/apply?role=${encodeURIComponent(role.title)}`}
+                  className="inline-flex w-full sm:w-auto items-center justify-center rounded-xl bg-white border-2 border-[#15603A] px-6 py-2.5 text-sm font-bold text-[#15603A] transition-colors hover:bg-[#15603A] hover:text-white"
+                >
+                  Apply Now
+                </Link>
+              </div>
+            ))
+          ) : (
+            <div className="col-span-1 md:col-span-2 text-center py-10 text-slate-500">
+              No roles available matching your criteria.
+            </div>
+          )}
         </div>
       </section>
 

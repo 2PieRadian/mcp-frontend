@@ -2,7 +2,17 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTranslation, Trans } from "react-i18next";
 
-const HERO_CATEGORIES = [
+type HeroCategory = {
+  key: string;
+  to: string;
+  imageSrc: string;
+  titleKey: string;
+  bodyKey: string;
+  glow: string;
+  imageClassName?: string;
+};
+
+const HERO_CATEGORIES: readonly HeroCategory[] = [
   {
     key: "wellness",
     to: "/wellness-experts",
@@ -36,7 +46,7 @@ const HERO_CATEGORIES = [
     glow: "bg-[#149373]/25",
     imageClassName: "object-contain",
   },
-] as const;
+];
 
 function smoothScrollToHash(
   e: React.MouseEvent<HTMLAnchorElement>,
@@ -109,9 +119,7 @@ function CategoryCard({
             src={category.imageSrc}
             alt={title}
             className={`h-full w-full transition duration-700 ease-out group-hover:scale-110 ${
-              "imageClassName" in category
-                ? category.imageClassName
-                : "object-cover"
+              category.imageClassName || "object-cover"
             }`}
             decoding="async"
           />
