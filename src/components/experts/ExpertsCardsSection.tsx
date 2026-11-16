@@ -45,7 +45,7 @@ export default function ExpertsCardsSection({
 
     const professionalTitleLabel = `${
       expert.professionalTitle || specializationName
-    } (${expert.yearsOfExperience}+ yrs of experience)`;
+    }${expert.yearsOfExperience != null ? ` (${expert.yearsOfExperience}+ yrs of experience)` : ""}`;
 
     const tags = expert.expertSpecializations
       ? expert.expertSpecializations

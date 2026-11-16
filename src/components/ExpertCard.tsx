@@ -179,7 +179,7 @@ export default function ExpertCard({
             </p>
 
             {/* Rating */}
-            {rating > 0 && (
+            {rating > 0 && ratingCount > 0 && (
               <div className="flex items-center gap-1.5 mt-2">
                 <Star size={14} className="fill-amber-400 text-amber-400" />
                 <span className="text-sm font-medium text-gray-900">
