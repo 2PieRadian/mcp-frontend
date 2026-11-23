@@ -1,5 +1,6 @@
 import {
   Bell,
+  Clock,
   LogOut,
   MessageSquare,
   Mic,
@@ -67,6 +68,19 @@ export function WebRTCSession({
     message: string;
     type: "join" | "leave";
   } | null>(null);
+
+  const [remainingSeconds, setRemainingSeconds] = useState<number | null>(null);
+  const [totalDurationSeconds, setTotalDurationSeconds] = useState<
+    number | null
+  >(null);
+  const [isMeetingEnded, setIsMeetingEnded] = useState(false);
+  const [meetingEndedMessage, setMeetingEndedMessage] = useState<string>("");
+
+  const formatMeetingTimer = (totalSeconds: number) => {
+    const mins = Math.floor(totalSeconds / 60);
+    const secs = totalSeconds % 60;
+    return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+  };
 
   const [chatNotification, setChatNotification] = useState<{
     senderName: string;
@@ -407,6 +421,33 @@ export function WebRTCSession({
           setRemoteAudioEnabled(true);
         });
 
+        currentSocket.on(
+          "meeting-timer-sync",
+          (data: { remainingSeconds: number; totalDurationSeconds: number }) => {
+            setRemainingSeconds(data.remainingSeconds);
+            if (data.totalDurationSeconds) {
+              setTotalDurationSeconds(data.totalDurationSeconds);
+            }
+          },
+        );
+
+        currentSocket.on(
+          "meeting-ended",
+          (data: { reason: string; message: string }) => {
+            setIsMeetingEnded(true);
+            setMeetingEndedMessage(
+              data.message || "The scheduled duration for this meeting has ended.",
+            );
+            currentStream?.getTracks().forEach((track) => track.stop());
+            if (localScreenStreamRef.current) {
+              localScreenStreamRef.current
+                .getTracks()
+                .forEach((track) => track.stop());
+            }
+            currentPc?.close();
+          },
+        );
+
         // Finally, join room
         currentSocket.emit("join-room", appointmentId, userId);
       } catch (err) {
@@ -469,20 +510,20 @@ export function WebRTCSession({
           kind === "videoinput"
             ? { deviceId: { exact: deviceId } }
             : {
-                deviceId:
-                  selectedVideoInput !== "default"
-                    ? { exact: selectedVideoInput }
-                    : undefined,
-              },
+              deviceId:
+                selectedVideoInput !== "default"
+                  ? { exact: selectedVideoInput }
+                  : undefined,
+            },
         audio:
           kind === "audioinput"
             ? { deviceId: { exact: deviceId } }
             : {
-                deviceId:
-                  selectedAudioInput !== "default"
-                    ? { exact: selectedAudioInput }
-                    : undefined,
-              },
+              deviceId:
+                selectedAudioInput !== "default"
+                  ? { exact: selectedAudioInput }
+                  : undefined,
+            },
       });
 
       if (localStream) {
@@ -651,9 +692,36 @@ export function WebRTCSession({
       {/* Toast Notification */}
       {toastMessage && (
         <div
-          className={`absolute top-4 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-full font-medium text-white shadow-lg transition-all ${toastMessage.type === "join" ? "bg-emerald-500" : "bg-red-500"}`}
+          className={`absolute top-14 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-full font-medium text-white shadow-lg transition-all ${toastMessage.type === "join" ? "bg-emerald-500" : "bg-red-500"}`}
         >
           {toastMessage.message}
+        </div>
+      )}
+
+      {/* Backend Meeting Duration Timer */}
+      {remainingSeconds !== null && (
+        <div
+          title={
+            totalDurationSeconds
+              ? `Session time remaining (Total duration: ${Math.round(totalDurationSeconds / 60)}m)`
+              : "Session time remaining"
+          }
+          className={`absolute top-4 left-1/2 -translate-x-1/2 z-40 flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold backdrop-blur-md border shadow-lg transition-all ${remainingSeconds <= 60
+            ? "bg-red-500/30 text-red-200 border-red-500/50 animate-pulse"
+            : remainingSeconds <= 300
+              ? "bg-amber-500/30 text-amber-200 border-amber-500/50"
+              : "bg-[#121a24]/90 text-stone-200 border-white/15"
+            }`}
+        >
+          <Clock className="w-4 h-4 text-[#7eb8aa]" />
+          <span className="font-mono text-sm tracking-wide">
+            {formatMeetingTimer(remainingSeconds)}
+          </span>
+          {remainingSeconds <= 300 && remainingSeconds > 0 && (
+            <span className="text-[10px] uppercase font-bold text-amber-400 ml-1">
+              (Ending soon)
+            </span>
+          )}
         </div>
       )}
 
@@ -817,11 +885,10 @@ export function WebRTCSession({
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 sm:gap-4 rounded-3xl bg-[#121a24]/90 px-3 sm:px-6 py-2 sm:py-3 shadow-2xl backdrop-blur-xl border border-white/10 w-[95%] max-w-max justify-center overflow-x-auto whitespace-nowrap">
           <button
             onClick={toggleAudio}
-            className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full transition shrink-0 ${
-              isAudioEnabled
-                ? "bg-white/10 text-white hover:bg-white/20"
-                : "bg-red-500 text-white hover:bg-red-600"
-            }`}
+            className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full transition shrink-0 ${isAudioEnabled
+              ? "bg-white/10 text-white hover:bg-white/20"
+              : "bg-red-500 text-white hover:bg-red-600"
+              }`}
           >
             {isAudioEnabled ? (
               <Mic className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -832,11 +899,10 @@ export function WebRTCSession({
 
           <button
             onClick={toggleVideo}
-            className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full transition shrink-0 ${
-              isVideoEnabled
-                ? "bg-white/10 text-white hover:bg-white/20"
-                : "bg-red-500 text-white hover:bg-red-600"
-            }`}
+            className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full transition shrink-0 ${isVideoEnabled
+              ? "bg-white/10 text-white hover:bg-white/20"
+              : "bg-red-500 text-white hover:bg-red-600"
+              }`}
           >
             {isVideoEnabled ? (
               <Video className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -847,11 +913,10 @@ export function WebRTCSession({
 
           <button
             onClick={toggleScreenShare}
-            className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full transition shrink-0 ${
-              isScreenSharing
-                ? "bg-blue-500 text-white hover:bg-blue-600"
-                : "bg-white/10 text-white hover:bg-white/20"
-            }`}
+            className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full transition shrink-0 ${isScreenSharing
+              ? "bg-blue-500 text-white hover:bg-blue-600"
+              : "bg-white/10 text-white hover:bg-white/20"
+              }`}
           >
             <MonitorUp className="h-4 w-4 sm:h-5 sm:w-5" />
           </button>
@@ -879,11 +944,10 @@ export function WebRTCSession({
             onClick={handleNotifyPeer}
             disabled={isNotifying}
             title="Notify Peer"
-            className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full transition shrink-0 ${
-              isNotifying
-                ? "bg-white/5 text-stone-500"
-                : "bg-white/10 text-white hover:bg-amber-500/20 hover:text-amber-400"
-            }`}
+            className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full transition shrink-0 ${isNotifying
+              ? "bg-white/5 text-stone-500"
+              : "bg-white/10 text-white hover:bg-amber-500/20 hover:text-amber-400"
+              }`}
           >
             <Bell
               className={`h-4 w-4 sm:h-5 sm:w-5 ${isNotifying ? "opacity-50" : ""}`}
@@ -1111,6 +1175,31 @@ export function WebRTCSession({
           selectedVideoInput={selectedVideoInput}
           selectedAudioOutput={selectedAudioOutput}
         />
+      )}
+
+      {/* Meeting Ended Modal */}
+      {isMeetingEnded && (
+        <div className="fixed inset-0 z-[600] flex items-center justify-center bg-black/85 backdrop-blur-md p-4 animate-in fade-in">
+          <div className="relative w-full max-w-sm rounded-2xl border border-white/10 bg-[#0c1219] p-6 shadow-2xl text-center flex flex-col items-center gap-4">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-red-500/15 ring-1 ring-red-500/30">
+              <Clock className="h-7 w-7 text-red-400" />
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-white">Meeting Ended</h3>
+              <p className="mt-1.5 text-sm text-stone-400 leading-relaxed">
+                {meetingEndedMessage ||
+                  "The scheduled duration for this meeting has ended."}
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={onLeave}
+              className="w-full rounded-xl bg-[#44666C] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#365a62] cursor-pointer"
+            >
+              Return to Dashboard
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );
