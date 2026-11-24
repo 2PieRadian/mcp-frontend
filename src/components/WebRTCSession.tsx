@@ -631,6 +631,20 @@ export function WebRTCSession({
             if (data.totalDurationSeconds) {
               setTotalDurationSeconds(data.totalDurationSeconds);
             }
+            if (data.remainingSeconds <= 0) {
+              void stopAndUploadRecording();
+              setIsMeetingEnded(true);
+              setMeetingEndedMessage(
+                "The scheduled duration for this meeting has ended.",
+              );
+              currentStream?.getTracks().forEach((track) => track.stop());
+              if (localScreenStreamRef.current) {
+                localScreenStreamRef.current
+                  .getTracks()
+                  .forEach((track) => track.stop());
+              }
+              currentPc?.close();
+            }
           },
         );
 
