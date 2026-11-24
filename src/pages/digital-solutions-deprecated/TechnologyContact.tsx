@@ -14,9 +14,9 @@ import {
   ShieldAlert,
   Sparkles,
 } from "lucide-react";
-import Footer from "../components/Footer";
-import ResponsiveNavbar from "../components/ResponsiveNavbar";
-import ScrollToTopButton from "../components/ScrollToTopButton";
+import Footer from "../../components/Footer";
+import ResponsiveNavbar from "../../components/ResponsiveNavbar";
+import ScrollToTopButton from "../../components/ScrollToTopButton";
 
 const inquiryTopics = [
   "Website Design & Development",

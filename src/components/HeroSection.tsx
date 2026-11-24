@@ -38,15 +38,16 @@ const HERO_CATEGORIES: readonly HeroCategory[] = [
     bodyKey: "heroCardFinanceBody",
     glow: "bg-sky-300/35",
   },
-  {
-    key: "technology",
-    to: "/digital-technology-solutions",
-    imageSrc: "/images/category/it/it_solutions.png",
-    titleKey: "digitalTechnologySolutions",
-    bodyKey: "heroCardTechnologyBody",
-    glow: "bg-[#149373]/25",
-    imageClassName: "object-contain p-2",
-  },
+  // Deprecated Digital and Tech Solutions card
+  // {
+  //   key: "technology",
+  //   to: "/digital-technology-solutions",
+  //   imageSrc: "/images/category/it/it_solutions.png",
+  //   titleKey: "digitalTechnologySolutions",
+  //   bodyKey: "heroCardTechnologyBody",
+  //   glow: "bg-[#149373]/25",
+  //   imageClassName: "object-contain p-2",
+  // },
 ];
 
 function smoothScrollToHash(
@@ -204,7 +205,7 @@ export default function HeroSection() {
             </p>
           </div>
 
-          <div className="grid gap-[10px] md:grid-cols-2 xl:grid-cols-4">
+          <div className="grid gap-[10px] md:grid-cols-2 lg:grid-cols-3">
             {HERO_CATEGORIES.map((category) => (
               <CategoryCard key={category.key} category={category} />
             ))}

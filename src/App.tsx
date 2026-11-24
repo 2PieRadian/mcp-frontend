@@ -42,8 +42,9 @@ import LoginSuccessToast from "./components/LoginSuccessToast";
 import Careers from "./pages/Careers";
 import JobApplication from "./pages/JobApplication";
 import About from "./pages/About";
-import DigitalTechnologySolutions from "./pages/DigitalTechnologySolutions";
-import TechnologyContact from "./pages/TechnologyContact";
+// Deprecated Digital & Tech Solutions pages
+// import DigitalTechnologySolutions from "./pages/digital-solutions-deprecated/DigitalTechnologySolutions";
+// import TechnologyContact from "./pages/digital-solutions-deprecated/TechnologyContact";
 import DeleteAccount from "./pages/DeleteAccount";
 
 export default function App() {
@@ -98,6 +99,7 @@ export default function App() {
               <Route path="/careers" element={<Careers />} />
               <Route path="/careers/apply" element={<JobApplication />} />
               <Route path="/about" element={<About />} />
+              {/* Deprecated Digital & Tech Solutions pages
               <Route
                 path="/digital-technology-solutions"
                 element={<DigitalTechnologySolutions />}
@@ -106,6 +108,7 @@ export default function App() {
                 path="/technology-contact"
                 element={<TechnologyContact />}
               />
+              */}
 
               {/* Self Assessment */}
               <Route path="/self-assessment" element={<SelfAssessment />} />

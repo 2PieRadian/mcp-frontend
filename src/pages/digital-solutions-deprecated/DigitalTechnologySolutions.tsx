@@ -19,9 +19,9 @@ import {
   Workflow,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import Footer from "../components/Footer";
-import ResponsiveNavbar from "../components/ResponsiveNavbar";
-import ScrollToTopButton from "../components/ScrollToTopButton";
+import Footer from "../../components/Footer";
+import ResponsiveNavbar from "../../components/ResponsiveNavbar";
+import ScrollToTopButton from "../../components/ScrollToTopButton";
 
 const digitalServices = [
   {
