@@ -19,6 +19,8 @@ import { DeviceSettingsModal } from "./DeviceSettingsModal";
 import {
   postAppointmentRecordingConsent,
   uploadAppointmentAudioRecording,
+  getTurnCredentials,
+  postExternalMeetingLink,
 } from "../lib/api";
 
 interface WebRTCSessionProps {
@@ -33,12 +35,12 @@ interface WebRTCSessionProps {
   role: "USER" | "EXPERT";
 }
 
-const configuration = {
-  iceServers: [
-    { urls: "stun:stun.l.google.com:19302" },
-    { urls: "stun:stun1.l.google.com:19302" },
-  ],
-};
+// const configuration = {
+//   iceServers: [
+//     { urls: "stun:stun.l.google.com:19302" },
+//     { urls: "stun:stun1.l.google.com:19302" },
+//   ],
+// };
 
 export function WebRTCSession({
   appointmentId,
@@ -203,11 +205,11 @@ export function WebRTCSession({
           try {
             const duration = recordingStartTimeRef.current
               ? Math.max(
-                  1,
-                  Math.round(
-                    (Date.now() - recordingStartTimeRef.current) / 1000,
-                  ),
-                )
+                1,
+                Math.round(
+                  (Date.now() - recordingStartTimeRef.current) / 1000,
+                ),
+              )
               : undefined;
             const blob = new Blob(audioChunksRef.current, {
               type: recorder.mimeType || "audio/webm",
@@ -393,6 +395,13 @@ export function WebRTCSession({
   const [selectedAudioOutput, setSelectedAudioOutput] =
     useState<string>("default");
 
+  // Fallback to external meeting link (e.g. Google Meet)
+  const [externalMeetingLink, setExternalMeetingLink] = useState<string | null>(null);
+  const [fallbackToExternalMeeting, setFallbackToExternalMeeting] = useState(false);
+  const [externalInput, setExternalInput] = useState("");
+  const [isSubmittingExternalLink, setIsSubmittingExternalLink] = useState(false);
+  const isPeerConnectedRef = useRef(false);
+
   const localVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
   const peerConnectionRef = useRef<RTCPeerConnection | null>(null);
@@ -432,8 +441,11 @@ export function WebRTCSession({
         currentSocket = io(backendUrl, { transports: ["websocket"] });
         setSocket(currentSocket);
 
+        // Fetch dynamic TURN/STUN ICE servers (Cloudflare TURN)
+        const { iceServers, hasTurn } = await getTurnCredentials(backendUrl);
+
         // Initialize Peer Connection
-        currentPc = new RTCPeerConnection(configuration);
+        currentPc = new RTCPeerConnection({ iceServers });
         peerConnectionRef.current = currentPc;
 
         currentStream.getTracks().forEach((track) => {
@@ -475,13 +487,40 @@ export function WebRTCSession({
           }
         };
 
+        currentPc.oniceconnectionstatechange = () => {
+          const state = currentPc?.iceConnectionState;
+          if (state === "connected" || state === "completed") {
+            isPeerConnectedRef.current = true;
+          } else if (state === "failed" || state === "disconnected") {
+            isPeerConnectedRef.current = false;
+            if (state === "failed" && !hasTurn) {
+              setFallbackToExternalMeeting(true);
+            }
+          }
+        };
+
         // Socket Events
+        currentSocket.on("external-meeting-link", (data: { meetLink: string }) => {
+          if (data?.meetLink) {
+            setExternalMeetingLink(data.meetLink);
+            setFallbackToExternalMeeting(true);
+          }
+        });
+
         currentSocket.on("user-joined", async () => {
           const message =
             role === "EXPERT"
               ? "A user joined the session"
               : "An expert joined the session";
           setToastMessage({ message, type: "join" });
+
+          if (!hasTurn) {
+            setTimeout(() => {
+              if (!isPeerConnectedRef.current) {
+                setFallbackToExternalMeeting(true);
+              }
+            }, 12000);
+          }
           // A new user joined, we are the initiator so we create the offer
           try {
             const offer = await currentPc!.createOffer();
@@ -684,7 +723,7 @@ export function WebRTCSession({
         audioContextRef.current &&
         audioContextRef.current.state !== "closed"
       ) {
-        void audioContextRef.current.close().catch(() => {});
+        void audioContextRef.current.close().catch(() => { });
       }
     };
   }, [
@@ -914,6 +953,93 @@ export function WebRTCSession({
 
   return (
     <div className="relative flex flex-1 flex-col lg:flex-row overflow-hidden bg-[#070a0f]">
+      {/* External Meeting Fallback Overlay */}
+      {(fallbackToExternalMeeting || externalMeetingLink) && (
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#070a0f]/95 p-6 backdrop-blur-md">
+          {role === "EXPERT" ? (
+            <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#121824] p-8 shadow-2xl text-center">
+              <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-400">
+                <Video className="h-7 w-7" />
+              </div>
+              <h2 className="text-xl font-bold text-white mb-2">Session Meeting Link</h2>
+              <p className="text-sm text-slate-400 mb-6">
+                Provide an external Google Meet link for your client. They will receive it immediately on this screen, via email, and push notification.
+              </p>
+              <button
+                type="button"
+                onClick={() => window.open("https://meet.google.com/new", "_blank")}
+                className="mb-4 flex w-full items-center justify-center gap-2 rounded-xl bg-slate-800 py-3 text-sm font-semibold text-sky-400 hover:bg-slate-700 transition"
+              >
+                Create Google Meet
+              </button>
+              <div className="flex gap-2">
+                <input
+                  type="url"
+                  placeholder="Paste meeting URL (e.g. meet.google.com/xyz)"
+                  value={externalInput}
+                  onChange={(e) => setExternalInput(e.target.value)}
+                  className="flex-1 rounded-xl border border-white/10 bg-slate-900 px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+                />
+                <button
+                  type="button"
+                  disabled={isSubmittingExternalLink || !externalInput.trim()}
+                  onClick={async () => {
+                    let url = externalInput.trim();
+                    if (!url.startsWith("http://") && !url.startsWith("https://")) url = "https://" + url;
+                    setIsSubmittingExternalLink(true);
+                    try {
+                      await postExternalMeetingLink(appointmentId, url, backendUrl);
+                      setExternalMeetingLink(url);
+                    } catch (err: any) {
+                      alert(err.message || "Failed to save link");
+                    } finally {
+                      setIsSubmittingExternalLink(false);
+                    }
+                  }}
+                  className="rounded-xl bg-emerald-600 px-5 py-3 text-sm font-semibold text-white hover:bg-emerald-500 disabled:opacity-50 transition"
+                >
+                  {isSubmittingExternalLink ? "Sending..." : "Send Link"}
+                </button>
+              </div>
+              {externalMeetingLink && (
+                <div className="mt-5 text-sm text-emerald-400">
+                  Active link:{" "}
+                  <a href={externalMeetingLink} target="_blank" rel="noreferrer" className="underline text-sky-400">
+                    {externalMeetingLink}
+                  </a>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#121824] p-8 shadow-2xl text-center">
+              <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-400">
+                <Video className="h-7 w-7" />
+              </div>
+              <h2 className="text-xl font-bold text-white mb-2">
+                {externalMeetingLink ? "Your Meeting Link is Ready" : "Preparing Your Meeting"}
+              </h2>
+              <p className="text-sm text-slate-400 mb-6">
+                {externalMeetingLink
+                  ? "Your expert has provided the meeting link for your consultation. Click below to join."
+                  : "Your expert is setting up the meeting link. It will appear here shortly and has also been emailed to you."}
+              </p>
+              {externalMeetingLink ? (
+                <a
+                  href={externalMeetingLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 py-3.5 text-base font-semibold text-white hover:bg-emerald-500 transition shadow-lg"
+                >
+                  Join Meeting Now
+                </a>
+              ) : (
+                <div className="py-4 text-sm text-slate-500">Waiting for expert...</div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Toast Notification */}
       {toastMessage && (
         <div

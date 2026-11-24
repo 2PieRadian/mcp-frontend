@@ -2218,3 +2218,82 @@ export async function uploadAppointmentAudioRecording(
   }
   return { message: data?.message || "Audio recording uploaded" };
 }
+
+/**
+ * Fetches dynamic WebRTC ICE servers (Cloudflare TURN/STUN) from the backend.
+ * Falls back to public STUN servers if the request fails.
+ */
+export async function getTurnCredentials(
+  backendUrl = BACKEND_URL,
+): Promise<{ iceServers: RTCIceServer[]; hasTurn: boolean }> {
+  const fallback = {
+    iceServers: [
+      { urls: "stun:stun.l.google.com:19302" },
+      { urls: "stun:stun1.l.google.com:19302" },
+    ],
+    hasTurn: false,
+  };
+  try {
+    const token =
+      window.localStorage.getItem("auth:token") ||
+      window.localStorage.getItem("token");
+    const res = await fetch(`${backendUrl}/api/v1/appointments/turn-credentials`, {
+      headers: {
+        Accept: "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+    });
+    if (res.ok) {
+      const data = await res.json();
+      if (
+        data?.iceServers &&
+        Array.isArray(data.iceServers) &&
+        data.iceServers.length > 0
+      ) {
+        return {
+          iceServers: data.iceServers,
+          hasTurn: Boolean(data.hasTurn),
+        };
+      }
+    }
+  } catch (error) {
+    console.warn(
+      "[WebRTC] Could not fetch TURN credentials, using fallback STUN:",
+      error,
+    );
+  }
+  return fallback;
+}
+
+/**
+ * Saves and broadcasts an external meeting link (e.g. Google Meet)
+ * when peers cannot connect via WebRTC.
+ */
+export async function postExternalMeetingLink(
+  appointmentId: string | number,
+  meetLink: string,
+  backendUrl = BACKEND_URL,
+): Promise<{ success: boolean; meetLink: string }> {
+  const token =
+    window.localStorage.getItem("auth:token") ||
+    window.localStorage.getItem("token");
+  const res = await fetch(
+    `${backendUrl}/api/v1/appointments/${appointmentId}/external-meeting-link`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: JSON.stringify({ meetLink }),
+    },
+  );
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data?.message || "Failed to save meeting link");
+  }
+  return data;
+}
+
+
