@@ -16,6 +16,10 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import { DeviceSettingsModal } from "./DeviceSettingsModal";
+import {
+  postAppointmentRecordingConsent,
+  uploadAppointmentAudioRecording,
+} from "../lib/api";
 
 interface WebRTCSessionProps {
   appointmentId: string;
@@ -88,6 +92,205 @@ export function WebRTCSession({
   } | null>(null);
 
   const [unreadCount, setUnreadCount] = useState(0);
+
+  // Audio Recording with User Consent
+  const [showConsentModal, setShowConsentModal] = useState(true);
+  const [consentGiven, setConsentGiven] = useState<boolean | null>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const audioDestinationRef =
+    useRef<MediaStreamAudioDestinationNode | null>(null);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const localAudioSourceRef = useRef<MediaStreamAudioSourceNode | null>(null);
+  const remoteAudioSourceRef = useRef<MediaStreamAudioSourceNode | null>(null);
+  const audioChunksRef = useRef<Blob[]>([]);
+  const recordingStartTimeRef = useRef<number | null>(null);
+  const hasUploadedRef = useRef<boolean>(false);
+
+  const startAudioRecording = (
+    currentLocal: MediaStream | null,
+    currentRemote: MediaStream | null,
+  ) => {
+    try {
+      const AudioCtx =
+        window.AudioContext ||
+        (window as unknown as { webkitAudioContext: typeof AudioContext })
+          .webkitAudioContext;
+      if (!AudioCtx || typeof MediaRecorder === "undefined") return;
+
+      if (!audioContextRef.current) {
+        audioContextRef.current = new AudioCtx();
+      }
+      const ctx = audioContextRef.current;
+      if (ctx.state === "suspended") {
+        void ctx.resume();
+      }
+
+      if (!audioDestinationRef.current) {
+        audioDestinationRef.current = ctx.createMediaStreamDestination();
+      }
+      const dest = audioDestinationRef.current;
+
+      if (
+        currentLocal &&
+        currentLocal.getAudioTracks().length > 0 &&
+        !localAudioSourceRef.current
+      ) {
+        try {
+          const src = ctx.createMediaStreamSource(currentLocal);
+          src.connect(dest);
+          localAudioSourceRef.current = src;
+        } catch (e) {
+          console.warn("Failed to connect local audio to recorder", e);
+        }
+      }
+
+      if (
+        currentRemote &&
+        currentRemote.getAudioTracks().length > 0 &&
+        !remoteAudioSourceRef.current
+      ) {
+        try {
+          const src = ctx.createMediaStreamSource(currentRemote);
+          src.connect(dest);
+          remoteAudioSourceRef.current = src;
+        } catch (e) {
+          console.warn("Failed to connect remote audio to recorder", e);
+        }
+      }
+
+      if (
+        !mediaRecorderRef.current ||
+        mediaRecorderRef.current.state === "inactive"
+      ) {
+        let mimeType = "";
+        if (MediaRecorder.isTypeSupported("audio/webm;codecs=opus")) {
+          mimeType = "audio/webm;codecs=opus";
+        } else if (MediaRecorder.isTypeSupported("audio/webm")) {
+          mimeType = "audio/webm";
+        } else if (MediaRecorder.isTypeSupported("audio/ogg")) {
+          mimeType = "audio/ogg";
+        }
+
+        const recorder = mimeType
+          ? new MediaRecorder(dest.stream, { mimeType })
+          : new MediaRecorder(dest.stream);
+
+        audioChunksRef.current = [];
+        recordingStartTimeRef.current = Date.now();
+
+        recorder.ondataavailable = (e) => {
+          if (e.data && e.data.size > 0) {
+            audioChunksRef.current.push(e.data);
+          }
+        };
+
+        recorder.start(1000);
+        mediaRecorderRef.current = recorder;
+      }
+    } catch (err) {
+      console.error("Failed to start audio recording:", err);
+    }
+  };
+
+  const stopAndUploadRecording = async () => {
+    if (hasUploadedRef.current) return;
+    const recorder = mediaRecorderRef.current;
+    if (!recorder) return;
+    if (recorder.state !== "inactive") {
+      hasUploadedRef.current = true;
+      await new Promise<void>((resolve) => {
+        recorder.onstop = async () => {
+          try {
+            const duration = recordingStartTimeRef.current
+              ? Math.max(
+                  1,
+                  Math.round(
+                    (Date.now() - recordingStartTimeRef.current) / 1000,
+                  ),
+                )
+              : undefined;
+            const blob = new Blob(audioChunksRef.current, {
+              type: recorder.mimeType || "audio/webm",
+            });
+            if (blob.size > 200) {
+              await uploadAppointmentAudioRecording(
+                Number(appointmentId),
+                blob,
+                duration,
+              );
+            }
+          } catch (err) {
+            console.error("Failed to upload recording on session finish:", err);
+          } finally {
+            resolve();
+          }
+        };
+        try {
+          recorder.stop();
+        } catch {
+          resolve();
+        }
+      });
+    }
+  };
+
+  const handleAgreeConsent = async () => {
+    setShowConsentModal(false);
+    setConsentGiven(true);
+    try {
+      await postAppointmentRecordingConsent(Number(appointmentId), true);
+    } catch (err) {
+      console.warn("Failed to register recording consent:", err);
+    }
+    startAudioRecording(localStream, remoteStream);
+  };
+
+  const handleDisagreeConsent = async () => {
+    setShowConsentModal(false);
+    setConsentGiven(false);
+    try {
+      await postAppointmentRecordingConsent(Number(appointmentId), false);
+    } catch (err) {
+      console.warn("Failed to register recording refusal:", err);
+    }
+  };
+
+  useEffect(() => {
+    if (
+      consentGiven &&
+      remoteStream &&
+      audioContextRef.current &&
+      audioDestinationRef.current &&
+      !remoteAudioSourceRef.current
+    ) {
+      try {
+        const src =
+          audioContextRef.current.createMediaStreamSource(remoteStream);
+        src.connect(audioDestinationRef.current);
+        remoteAudioSourceRef.current = src;
+      } catch (err) {
+        console.warn("Failed to connect remote stream to recorder", err);
+      }
+    }
+  }, [remoteStream, consentGiven]);
+
+  useEffect(() => {
+    if (
+      consentGiven &&
+      localStream &&
+      audioContextRef.current &&
+      audioDestinationRef.current &&
+      !localAudioSourceRef.current
+    ) {
+      try {
+        const src = audioContextRef.current.createMediaStreamSource(localStream);
+        src.connect(audioDestinationRef.current);
+        localAudioSourceRef.current = src;
+      } catch (err) {
+        console.warn("Failed to connect local stream to recorder", err);
+      }
+    }
+  }, [localStream, consentGiven]);
 
   const [showMobileChat, setShowMobileChat] = useState(false);
   const showMobileChatRef = useRef(false);
@@ -434,6 +637,7 @@ export function WebRTCSession({
         currentSocket.on(
           "meeting-ended",
           (data: { reason: string; message: string }) => {
+            void stopAndUploadRecording();
             setIsMeetingEnded(true);
             setMeetingEndedMessage(
               data.message || "The scheduled duration for this meeting has ended.",
@@ -458,9 +662,16 @@ export function WebRTCSession({
     init();
 
     return () => {
+      void stopAndUploadRecording();
       currentStream?.getTracks().forEach((track) => track.stop());
       currentPc?.close();
       currentSocket?.disconnect();
+      if (
+        audioContextRef.current &&
+        audioContextRef.current.state !== "closed"
+      ) {
+        void audioContextRef.current.close().catch(() => {});
+      }
     };
   }, [
     appointmentId,
@@ -1152,8 +1363,9 @@ export function WebRTCSession({
                 </button>
                 <button
                   type="button"
-                  onClick={() => {
+                  onClick={async () => {
                     setShowLeaveConfirm(false);
+                    await stopAndUploadRecording();
                     onLeave();
                   }}
                   className="flex-1 rounded-xl bg-red-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-red-600"
@@ -1193,11 +1405,57 @@ export function WebRTCSession({
             </div>
             <button
               type="button"
-              onClick={onLeave}
+              onClick={async () => {
+                await stopAndUploadRecording();
+                onLeave();
+              }}
               className="w-full rounded-xl bg-[#44666C] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#365a62] cursor-pointer"
             >
               Return to Dashboard
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* Session Audio Recording Consent Modal */}
+      {showConsentModal && (
+        <div className="fixed inset-0 z-[700] flex items-center justify-center bg-black/75 backdrop-blur-md p-4 animate-in fade-in duration-200">
+          <div
+            className="relative w-full max-w-md rounded-2xl border border-white/10 bg-[#0c1219] p-6 shadow-2xl text-center flex flex-col items-center gap-5"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="recording-consent-title"
+          >
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-teal-500/15 ring-1 ring-teal-500/30">
+              <Mic className="h-7 w-7 text-teal-400" />
+            </div>
+            <div className="space-y-2">
+              <h3
+                id="recording-consent-title"
+                className="text-lg font-semibold text-white tracking-tight"
+              >
+                Session Audio Recording
+              </h3>
+              <p className="text-sm text-stone-300 leading-relaxed">
+                We&apos;d like to record this session to ensure accurate counselling reports and provide better follow-up care. Your consent is appreciated.
+              </p>
+            </div>
+            <div className="flex w-full gap-3 mt-1">
+              <button
+                type="button"
+                onClick={handleDisagreeConsent}
+                className="flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-stone-300 transition hover:bg-white/10 hover:text-white cursor-pointer"
+              >
+                Disagree
+              </button>
+              <button
+                type="button"
+                onClick={handleAgreeConsent}
+                className="flex-1 rounded-xl bg-[#44666C] hover:bg-[#365a62] px-4 py-2.5 text-sm font-semibold text-white transition shadow-sm cursor-pointer"
+              >
+                Agree & Continue
+              </button>
+            </div>
           </div>
         </div>
       )}

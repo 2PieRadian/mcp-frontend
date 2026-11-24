@@ -24,6 +24,7 @@ import {
   type MyAppointment,
 } from "../lib/api";
 import { WebRTCSession } from "../components/WebRTCSession";
+import { PreMeetingTestScreen } from "../components/PreMeetingTestScreen";
 
 export default function AppointmentVideoSession() {
   const { appointmentId: appointmentIdParam } = useParams<{
@@ -124,8 +125,16 @@ export default function AppointmentVideoSession() {
   const isVideo =
     (appointment?.communicationMedium || "").toUpperCase() === "VIDEO";
 
+  const startMs = appointment ? new Date(appointment.startAt).getTime() : 0;
+  const fiveMinBeforeStartMs = startMs - 5 * 60 * 1000;
+  const isBeforeAllowedJoin = Date.now() < fiveMinBeforeStartMs;
+
   const handleJoinCall = useCallback(async () => {
-    if (!sessionRole || !user?.id) return;
+    if (!sessionRole || !user?.id || !appointment) return;
+    const sMs = new Date(appointment.startAt).getTime();
+    if (Date.now() < sMs - 5 * 60 * 1000) {
+      return;
+    }
     try {
       await postAppointmentJoin(appointmentNumericId, {
         participantId: user.id,
@@ -135,7 +144,7 @@ export default function AppointmentVideoSession() {
       console.error("Failed to record join", e);
     }
     setHasJoinedCall(true);
-  }, [appointmentNumericId, sessionRole, user?.id]);
+  }, [appointment, appointmentNumericId, sessionRole, user?.id]);
 
   if (!authLoading && !user) {
     return (
@@ -270,10 +279,17 @@ export default function AppointmentVideoSession() {
             <button
               type="button"
               onClick={handleJoinCall}
-              className="inline-flex shrink-0 items-center gap-1.5 rounded-xl border border-white/10 bg-[#44666C] px-3 py-2 text-xs font-semibold text-white transition hover:bg-[#365a62] cursor-pointer"
+              disabled={isBeforeAllowedJoin}
+              className={`inline-flex shrink-0 items-center gap-1.5 rounded-xl border border-white/10 px-3 py-2 text-xs font-semibold text-white transition ${
+                isBeforeAllowedJoin
+                  ? "bg-stone-700/50 text-stone-400 cursor-not-allowed border-white/5"
+                  : "bg-[#44666C] hover:bg-[#365a62] cursor-pointer"
+              }`}
             >
               <Video className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline">Join call</span>
+              <span className="hidden sm:inline">
+                {isBeforeAllowedJoin ? "Opens 5m before" : "Join call"}
+              </span>
             </button>
           ) : null}
         </div>
@@ -366,29 +382,14 @@ export default function AppointmentVideoSession() {
             role={sessionRole as "USER" | "EXPERT"}
           />
         ) : (
-          <div className="flex flex-1 flex-col items-center justify-center gap-6 p-8 text-center">
-            <div className="rounded-2xl border border-white/10 bg-white/4 p-8 max-w-md">
-              <p className="text-stone-300">
-                You are ready to join the video session.
-              </p>
-              <div className="mt-5 flex flex-col gap-3">
-                <button
-                  type="button"
-                  onClick={handleJoinCall}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#44666C] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#365a62] cursor-pointer"
-                >
-                  <Video className="h-4 w-4" />
-                  Join Video Call
-                </button>
-                <Link
-                  to={dashboardPath}
-                  className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/10 px-5 py-2.5 text-sm font-medium text-white hover:bg-white/15"
-                >
-                  Back to dashboard
-                </Link>
-              </div>
-            </div>
-          </div>
+          <PreMeetingTestScreen
+            startAt={appointment.startAt}
+            endAt={appointment.endAt}
+            appointmentId={appointmentNumericId}
+            counterpartyName={counterpartyLabel}
+            onJoinCall={handleJoinCall}
+            onLeave={() => navigate(dashboardPath)}
+          />
         )}
       </main>
 

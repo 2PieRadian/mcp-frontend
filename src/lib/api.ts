@@ -2154,3 +2154,67 @@ export async function updateExpertPreferences(
   if (!res.ok) throw new Error(data?.message || "Failed to update preferences");
   return data as { message: string; user: Record<string, unknown> };
 }
+
+/** Record user or expert consent decision for meeting recording. */
+export async function postAppointmentRecordingConsent(
+  appointmentId: number,
+  consentGiven: boolean,
+): Promise<{ message: string; consentGiven: boolean }> {
+  const res = await fetch(
+    `${BACKEND_URL}/api/v1/appointments/${appointmentId}/recording-consent`,
+    {
+      method: "POST",
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ consentGiven }),
+    },
+  );
+  const data = (await res.json().catch(() => ({}))) as {
+    message?: string;
+    consentGiven: boolean;
+  };
+  if (!res.ok) {
+    throw new Error(data?.message || "Failed to submit recording consent");
+  }
+  return {
+    message: data?.message || "Consent updated",
+    consentGiven: data.consentGiven,
+  };
+}
+
+/** Upload session audio recording (recorded in-browser with user consent). */
+export async function uploadAppointmentAudioRecording(
+  appointmentId: number,
+  audioBlob: Blob,
+  durationSeconds?: number,
+): Promise<{ message: string }> {
+  const token =
+    window.localStorage.getItem("auth:token") ||
+    window.localStorage.getItem("token");
+  const formData = new FormData();
+  const ext = audioBlob.type.includes("ogg") ? "ogg" : "webm";
+  formData.append(
+    "audio",
+    audioBlob,
+    `meeting_${appointmentId}_${Date.now()}.${ext}`,
+  );
+  if (durationSeconds) {
+    formData.append("duration", String(durationSeconds));
+  }
+
+  const res = await fetch(
+    `${BACKEND_URL}/api/v1/appointments/${appointmentId}/audio-recording`,
+    {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: formData,
+    },
+  );
+  const data = (await res.json().catch(() => ({}))) as { message?: string };
+  if (!res.ok) {
+    throw new Error(data?.message || "Failed to upload audio recording");
+  }
+  return { message: data?.message || "Audio recording uploaded" };
+}

@@ -31,3 +31,48 @@ export function formatAppointmentStartsIn(
   }
   return t("appointmentStartsInSecondsOnly", { seconds });
 }
+
+/**
+ * Formats "Meeting will start at X to Y" based on startAt and endAt.
+ * e.g., "Meeting will start at 10:00 AM to 10:30 AM"
+ */
+export function formatMeetingSchedule(startAt: string, endAt: string): string {
+  const startDate = new Date(startAt);
+  const endDate = new Date(endAt);
+  if (!Number.isFinite(startDate.getTime()) || !Number.isFinite(endDate.getTime())) {
+    return "Meeting will start soon";
+  }
+
+  const startTime = startDate.toLocaleTimeString("en-IN", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+  const endTime = endDate.toLocaleTimeString("en-IN", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+
+  const isToday = new Date().toDateString() === startDate.toDateString();
+  if (isToday) {
+    return `Meeting will start at ${startTime} to ${endTime}`;
+  }
+
+  const dateStr = startDate.toLocaleDateString("en-IN", {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+  });
+  return `Meeting will start at ${startTime} to ${endTime} (${dateStr})`;
+}
+
+/**
+ * Returns true if current time is strictly before (startAt - 5 minutes).
+ */
+export function isBeforeFiveMinBeforeStart(startAt: string, nowMs: number = Date.now()): boolean {
+  const startMs = new Date(startAt).getTime();
+  if (!Number.isFinite(startMs)) return false;
+  return nowMs < startMs - 5 * 60 * 1000;
+}
+

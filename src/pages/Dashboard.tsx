@@ -13,7 +13,10 @@ import RescheduleAppointmentModal from "../components/RescheduleAppointmentModal
 import ReviewModal from "../components/ReviewModal";
 import RecommendedExpertsModal from "../components/dashboards/RecommendedExpertsModal";
 import { usePollingNow } from "../hooks/usePollingNow";
-import { formatAppointmentStartsIn } from "../lib/appointmentStartsIn";
+import {
+  formatAppointmentStartsIn,
+  formatMeetingSchedule,
+} from "../lib/appointmentStartsIn";
 import {
   getMyAppointments,
   isTerminalAppointmentStatus,
@@ -218,6 +221,9 @@ function AppointmentCard({
     !!onOpenReschedule;
 
   const startAtMs = new Date(apt.startAt).getTime();
+  const fiveMinBeforeStartMs = startAtMs - 5 * 60 * 1000;
+  const isBeforeFiveMin = nowMs < fiveMinBeforeStartMs;
+  const meetingScheduleNotice = formatMeetingSchedule(apt.startAt, apt.endAt);
   const minGateMs = startAtMs + MIN_SESSION_MINUTES * 60 * 1000;
   const canResolve = nowMs >= minGateMs;
   const showSessionActions =
@@ -348,6 +354,17 @@ function AppointmentCard({
           </div>
         ) : null}
 
+        {isBeforeFiveMin && apt.status === "SCHEDULED" ? (
+          <div className="mt-4 rounded-xl border border-[#44666C]/25 bg-[#44666C]/10 px-4 py-3">
+            <p className="text-sm font-bold text-[#44666C]">
+              {meetingScheduleNotice}
+            </p>
+            <p className="text-xs text-gray-500 mt-0.5">
+              Call entry opens 5 minutes before start time. Test your audio and video before joining.
+            </p>
+          </div>
+        ) : null}
+
         {showScheduledJoinHint ? (
           <div
             className="mt-4 rounded-xl border border-emerald-100 bg-emerald-50/90 px-4 py-3"
@@ -404,7 +421,9 @@ function AppointmentCard({
                   <Video className="w-4 h-4" />
                 )}
                 {isVideoSession
-                  ? t("dashboardJoinVideoTracked")
+                  ? isBeforeFiveMin
+                    ? "Test Audio & Video"
+                    : t("dashboardJoinVideoTracked")
                   : t("dashboardJoinSession")}
               </button>
               <button
