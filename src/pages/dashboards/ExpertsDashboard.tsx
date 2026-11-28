@@ -18,6 +18,9 @@ const DashboardTabs = lazy(() => import("./components/DashboardTabs"));
 const ExpertAppointmentsTab = lazy(
   () => import("./components/ExpertAppointmentsTab"),
 );
+const ExpertLiveClassesTab = lazy(
+  () => import("./components/ExpertLiveClassesTab"),
+);
 const AvailabilityManagementTab = lazy(
   () => import("./components/AvailabilityManagementTab"),
 );
@@ -335,6 +338,8 @@ export default function ExpertsDashboard() {
                 onRefetch={fetchExpertAppointments}
               />
             )}
+
+            {activeTab === "liveClasses" && <ExpertLiveClassesTab />}
 
             {activeTab === "urgent" && (
               <ExpertAppointmentsTab

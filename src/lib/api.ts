@@ -2296,4 +2296,240 @@ export async function postExternalMeetingLink(
   return data;
 }
 
+// ── Live 1:1 Classes & Memberships ──────────────────────────────────────────
+
+export type MembershipStatus = "ACTIVE" | "PAUSED" | "EXPIRED" | "CANCELLED";
+
+export type EligibleMembershipTeacher = {
+  id: number;
+  userId: number;
+  name: string;
+  avatar?: string | null;
+  professionalTitle?: string | null;
+  yearsOfExperience?: number | null;
+  rating?: number | null;
+};
+
+export type PublicMembershipPlan = {
+  id: number;
+  title: string;
+  description?: string | null;
+  specializationId: number;
+  durationDays: number;
+  durationLabel: string;
+  price: number;
+  classesPerWeek: number;
+  classDurationMinutes: number;
+  communicationMedium: "VIDEO" | "CALL" | "CHAT";
+  isActive: boolean;
+  specialization: Specialization & { domain?: { id: number; name: string } };
+  eligibleExperts: EligibleMembershipTeacher[];
+};
+
+export type MembershipWeeklyProgress = {
+  classesThisWeek: number;
+  classesPerWeek: number;
+  remainingThisWeek: number;
+  completedClasses: number;
+  scheduledClasses: number;
+  weekStart: string;
+  weekEnd: string;
+};
+
+export type StudentMembershipItem = {
+  id: number;
+  userId: number;
+  expertId?: number | null;
+  planId: number;
+  specializationId: number;
+  status: MembershipStatus;
+  startDate: string;
+  endDate: string;
+  classesPerWeek: number;
+  classDurationMinutes: number;
+  communicationMedium: "VIDEO" | "CALL" | "CHAT";
+  amountPaid: number;
+  notes?: string | null;
+  user?: {
+    id: number;
+    name?: string | null;
+    email?: string;
+    avatar?: string | null;
+    phoneNumber?: string | null;
+  };
+  expert?: {
+    id: number;
+    professionalTitle?: string | null;
+    user?: {
+      id: number;
+      name?: string | null;
+      email?: string;
+      avatar?: string | null;
+    };
+  } | null;
+  plan: PublicMembershipPlan;
+  specialization: Specialization;
+  appointments: MyAppointment[];
+  weeklyProgress: MembershipWeeklyProgress;
+};
+
+function getStoredToken(): string | null {
+  return (
+    window.localStorage.getItem("auth:token") ||
+    window.localStorage.getItem("token")
+  );
+}
+
+export async function getPublicMembershipPlans(params?: {
+  specializationId?: number;
+  domainId?: number;
+}): Promise<PublicMembershipPlan[]> {
+  const qs = new URLSearchParams();
+  if (params?.specializationId) qs.set("specializationId", String(params.specializationId));
+  if (params?.domainId) qs.set("domainId", String(params.domainId));
+  const query = qs.toString() ? `?${qs.toString()}` : "";
+  const res = await fetch(`${BACKEND_URL}/api/v1/memberships/plans${query}`);
+  const data = await res.json();
+  if (!res.ok) throw new Error(data?.message || "Failed to load membership plans");
+  return data.plans || [];
+}
+
+export async function initiateMembershipPurchase(payload: {
+  planId: number;
+  expertId?: number | null;
+  notes?: string;
+}): Promise<{
+  requiresPayment: boolean;
+  orderId?: string;
+  amount?: number;
+  amountInPaise?: number;
+  currency?: string;
+  keyId?: string;
+  plan?: PublicMembershipPlan;
+  membership?: StudentMembershipItem;
+}> {
+  const token = getStoredToken();
+  if (!token) throw new Error("Please log in to enroll");
+  const res = await fetch(`${BACKEND_URL}/api/v1/memberships/initiate`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(payload),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data?.message || "Failed to initiate purchase");
+  return data;
+}
+
+export async function verifyMembershipPurchase(payload: {
+  razorpay_order_id: string;
+  razorpay_payment_id: string;
+  razorpay_signature: string;
+}): Promise<{ message: string; membership: StudentMembershipItem }> {
+  const token = getStoredToken();
+  if (!token) throw new Error("Unauthorized");
+  const res = await fetch(`${BACKEND_URL}/api/v1/memberships/verify`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(payload),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data?.message || "Payment verification failed");
+  return data;
+}
+
+export async function getMyMemberships(): Promise<StudentMembershipItem[]> {
+  const token = getStoredToken();
+  if (!token) throw new Error("Unauthorized");
+  const res = await fetch(`${BACKEND_URL}/api/v1/memberships/my`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data?.message || "Failed to fetch memberships");
+  return data.memberships || [];
+}
+
+export async function getExpertStudentMemberships(): Promise<StudentMembershipItem[]> {
+  const token = getStoredToken();
+  if (!token) throw new Error("Unauthorized");
+  const res = await fetch(`${BACKEND_URL}/api/v1/memberships/expert/students`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data?.message || "Failed to fetch enrolled students");
+  return data.memberships || [];
+}
+
+export async function scheduleLiveClass(
+  membershipId: number,
+  payload: { startAt: string; topic?: string },
+): Promise<{ message: string; appointment: MyAppointment }> {
+  const token = getStoredToken();
+  if (!token) throw new Error("Unauthorized");
+  const res = await fetch(
+    `${BACKEND_URL}/api/v1/memberships/${membershipId}/schedule-class`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(payload),
+    },
+  );
+  const data = await res.json();
+  if (!res.ok) throw new Error(data?.message || "Failed to schedule live class");
+  return data;
+}
+
+export async function rescheduleLiveClass(
+  appointmentId: number,
+  payload: { startAt: string; topic?: string },
+): Promise<{ message: string; appointment: MyAppointment }> {
+  const token = getStoredToken();
+  if (!token) throw new Error("Unauthorized");
+  const res = await fetch(
+    `${BACKEND_URL}/api/v1/memberships/classes/${appointmentId}/reschedule`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(payload),
+    },
+  );
+  const data = await res.json();
+  if (!res.ok) throw new Error(data?.message || "Failed to reschedule live class");
+  return data;
+}
+
+export async function cancelLiveClass(
+  appointmentId: number,
+  reason?: string,
+): Promise<{ message: string }> {
+  const token = getStoredToken();
+  if (!token) throw new Error("Unauthorized");
+  const res = await fetch(
+    `${BACKEND_URL}/api/v1/memberships/classes/${appointmentId}/cancel`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ reason }),
+    },
+  );
+  const data = await res.json();
+  if (!res.ok) throw new Error(data?.message || "Failed to cancel live class");
+  return data;
+}
+
+
 

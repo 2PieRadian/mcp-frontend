@@ -7,13 +7,14 @@ type DashboardTabsProps = {
   onTabChange: (tab: TabType) => void;
 };
 
-const tabs: { key: TabType; labelKey: string; icon: typeof Calendar }[] = [
-  { key: "sessions", labelKey: "tabSessions", icon: Calendar },
-  { key: "urgent", labelKey: "tabUrgent", icon: Zap },
-  { key: "availability", labelKey: "tabAvailability", icon: Clock },
-  { key: "earnings", labelKey: "tabEarnings", icon: Wallet },
-  { key: "qualifications", labelKey: "tabQualifications", icon: GraduationCap },
-  { key: "profile", labelKey: "tabProfile", icon: User },
+const tabs: { key: TabType; labelKey: string; fallback: string; icon: typeof Calendar }[] = [
+  { key: "sessions", labelKey: "tabSessions", fallback: "Sessions", icon: Calendar },
+  { key: "liveClasses", labelKey: "tabLiveClasses", fallback: "Live 1:1 Classes", icon: GraduationCap },
+  { key: "urgent", labelKey: "tabUrgent", fallback: "Urgent", icon: Zap },
+  { key: "availability", labelKey: "tabAvailability", fallback: "Availability", icon: Clock },
+  { key: "earnings", labelKey: "tabEarnings", fallback: "Earnings", icon: Wallet },
+  { key: "qualifications", labelKey: "tabQualifications", fallback: "Qualifications", icon: GraduationCap },
+  { key: "profile", labelKey: "tabProfile", fallback: "Profile", icon: User },
 ];
 
 export default function DashboardTabs({
@@ -28,7 +29,7 @@ export default function DashboardTabs({
       <div className="overflow-x-auto scrollbar-hide -mx-4 px-4 pb-1 sm:mx-0 sm:px-0">
         <div className="flex sm:justify-center gap-2 sm:gap-1 min-w-max sm:min-w-0 py-1">
           <div className="bg-white rounded-full p-1 sm:p-1.5 shadow-sm border border-gray-100 inline-flex gap-1">
-            {tabs.map(({ key, labelKey, icon: Icon }) => {
+            {tabs.map(({ key, labelKey, fallback, icon: Icon }) => {
               const isActive = activeTab === key;
               return (
                 <button
@@ -50,7 +51,7 @@ export default function DashboardTabs({
                   `}
                 >
                   <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                  <span>{t(labelKey)}</span>
+                  <span>{t(labelKey, { defaultValue: fallback })}</span>
                 </button>
               );
             })}

@@ -4,6 +4,7 @@ export type WeeklyAvailability = {
 
 export type TabType =
   | "sessions"
+  | "liveClasses"
   | "urgent"
   | "availability"
   | "earnings"

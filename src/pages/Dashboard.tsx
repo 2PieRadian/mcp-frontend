@@ -46,6 +46,7 @@ import {
   Star,
   AlertCircle,
   Zap,
+  GraduationCap,
 } from "lucide-react";
 
 const MIN_SESSION_MINUTES = 5;
@@ -714,6 +715,13 @@ export default function Dashboard() {
             </p>
           </div>
           <div className="flex items-center gap-3 shrink-0 flex-wrap">
+            <Link
+              to="/live-classes"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-semibold text-sm transition-colors shadow-sm"
+            >
+              <GraduationCap className="w-4 h-4" />
+              Live 1:1 Classes
+            </Link>
             <button
               onClick={() => setShowRecommendedExpertsModal(true)}
               className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#44666C] hover:bg-[#365a62] text-white rounded-xl font-semibold text-sm transition-colors shadow-sm"

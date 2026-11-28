@@ -19,6 +19,7 @@ import OAuthCallback from "./pages/OAuthCallback";
 import ExpertsDashboard from "./pages/dashboards/ExpertsDashboard";
 import Dashboard from "./pages/Dashboard";
 import UrgentRequests from "./pages/UrgentRequests";
+import LiveClasses from "./pages/LiveClasses";
 import AppointmentVideoSession from "./pages/AppointmentVideoSession";
 import ExpertDetails from "./pages/ExpertDetails";
 import Wellness from "./pages/assessments/Wellness";
@@ -211,6 +212,7 @@ export default function App() {
                 path="/dashboard/urgent-requests"
                 element={<UrgentRequests />}
               />
+              <Route path="/live-classes" element={<LiveClasses />} />
               <Route path="/dashboard/expert" element={<ExpertsDashboard />} />
               <Route
                 path="/appointments/:appointmentId/video"
